@@ -3,7 +3,7 @@
 <package version="1.0" packagerversion="1.4.5">
  <name>PHP_CodeSniffer</name>
  <summary>PHP_CodeSniffer tokenises PHP code and detects violations of a defined set of coding standards.</summary>
- <description>PHP_CodeSniffer is a PHP5 script that tokenises PHP code and detects violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. PHP_CodeSniffer "sniffs" PHP code and detects any code that violates your coding standards. It can even help prevent some common semantic errors made by developers.</description>
+ <description>PHP_CodeSniffer is a PHP5 script that tokenises and "sniffs" PHP code to detect violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. It can even help prevent some common semantic errors made by developers.</description>
  <maintainers>
   <maintainer>
    <user>squiz</user>
