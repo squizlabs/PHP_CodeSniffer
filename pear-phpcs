@@ -1,0 +1,211 @@
+#!@php_bin@
+<?php
+/**
+ * +------------------------------------------------------------------------+
+ * | BSD Licence                                                            |
+ * +------------------------------------------------------------------------+
+ * | This software is available to you under the BSD license,               |
+ * | available in the LICENSE file accompanying this software.              |
+ * | You may obtain a copy of the License at                                |
+ * |                                                                        |
+ * | http://matrix.squiz.net/developer/tools/php_cs/licence                 |
+ * |                                                                        |
+ * | THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS    |
+ * | "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT      |
+ * | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  |
+ * | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT   |
+ * | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  |
+ * | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       |
+ * | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  |
+ * | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  |
+ * | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT    |
+ * | (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  |
+ * | OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   |
+ * +------------------------------------------------------------------------+
+ * | Copyright (c), 2006 Squiz Pty Ltd (ABN 77 084 670 600).                |
+ * | All rights reserved.                                                   |
+ * +------------------------------------------------------------------------+
+ *
+ * @package PHP_CodeSniffer
+ * @author  Squiz Pty Ltd
+ */
+
+error_reporting(E_ALL | E_STRICT);
+require_once 'PHP/CodeSniffer.php';
+$php_cs_version = '0.0.4 alpha';
+
+
+/**
+ * Prints out the usage information for this script.
+ *
+ * @return void
+ */
+function print_usage()
+{
+    // Determine if the --standard arg is optional.
+    $standardArg        = '--standard=<standard>';
+    $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+
+    if (count($installedStandards) === 1) {
+        // Only one coding standard installed, so they don't need to supply it.
+        $standardArg = '['.$standardArg.']';
+    }
+
+    echo 'Usage: phpcs [-nvi] [--report=<report>] '.$standardArg." <file> ...\n";
+    echo " <file>     : one or more files and/or directories to check\n";
+    echo " <standard> : the name of the coding standard to use\n";
+    echo " <report>   : print either the \"full\" or \"summary\" report\n";
+    echo " -n         : do not print warnings\n";
+    echo " -v         : print verbose output\n";
+    echo " -i         : show a list of installed coding standards\n";
+    echo " -h --help  : print this help message\n";
+    echo " --version  : print version information\n";
+    exit();
+
+}//end print_usage()
+
+
+/**
+ * Prints out a list of installed coding standards.
+ *
+ * @return void
+ */
+function print_installed_standards()
+{
+    $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+    $numStandards       = count($installedStandards);
+
+    if ($numStandards === 0) {
+        echo "No coding standards are installed.\n";
+    } else {
+        $lastStandard = array_pop($installedStandards);
+        if ($numStandards === 1) {
+            echo "The only coding standard installed is $lastStandard\n";
+        } else {
+            $standardList  = implode(', ', $installedStandards);
+            $standardList .= ' and '.$lastStandard;
+            echo "The installed coding standards are $standardList.\n";
+        }
+    }
+
+}//end print_installed_standards()
+
+
+// First, we need to ensure there is at least one coding standard
+// installed, or they will never be able to run this script.
+$installedStandards = PHP_CodeSniffer::getInstalledStandards();
+if (count($installedStandards) === 0) {
+    echo "ERROR: There are no coding standards installed.\n";
+    exit();
+}
+
+
+// The default values for config settings.
+$files        = array();
+$standard     = NULL;
+$verbose      = FALSE;
+$report       = 'full';
+$showWarnings = TRUE;
+
+for ($i = 1; $i < $_SERVER['argc']; $i++) {
+    $arg = $_SERVER['argv'][$i];
+    if ($arg{0} === '-') {
+
+        /*
+            Check for all "--" switches first.
+            Then check the "-" switches in one go.
+        */
+
+        if ($arg{1} === '-') {
+            if ($arg === '--help') {
+                print_usage();
+            }
+
+            if ($arg === '--version') {
+                echo "PHP_CodeSniffer version $php_cs_version by Squiz Pty Ltd.\n";
+                exit();
+            }
+
+            if (substr($arg, 0, 9) === '--report=') {
+                $report = substr($arg, 9);
+                if ($report !== 'full' && $report !== 'summary') {
+                    echo "ERROR: Report type \"$report\" not known.\n\n";
+                    exit();
+                }
+            } else if (substr($arg, 0, 11) === '--standard=') {
+                $standard = substr($arg, 11);
+            } else {
+                echo "ERROR: option \"$arg\" not known.\n\n";
+                print_usage();
+            }
+        } else {
+            $switches = str_split($arg);
+            foreach ($switches as $switch) {
+                if ($switch === '-') {
+                    continue;
+                }
+
+                switch ($switch) {
+                    case 'h':
+                        print_usage();
+                    break;
+                    case 'i' :
+                        print_installed_standards();
+                        exit();
+                    break;
+                    case 'v' :
+                        $verbose = TRUE;
+                    break;
+                    case 'n' :
+                        $showWarnings = FALSE;
+                    break;
+                    default:
+                        echo "ERROR: option \"$switch\" not known.\n\n";
+                        print_usage();
+                }//end switch
+            }//end foreach
+        }//end else
+    } else {
+        // Assume everything that is not a switch is a file or directory.
+        $files[] = $arg;
+    }
+}//end for
+
+if (empty($files) === TRUE) {
+    echo "ERROR: You must supply at least one file or directory to process.\n\n";
+    print_usage();
+}
+
+foreach ($files as $file) {
+    if (file_exists($file) === FALSE) {
+        echo "ERROR: The file \"$file\" does not exist.\n\n";
+        print_usage();
+    }
+}
+
+if (count($installedStandards) > 1) {
+    if ($standard === NULL) {
+        echo "ERROR: You must supply the name of the coding standard to use.\n\n";
+        print_usage();
+    }
+} else {
+    $standard = array_pop($installedStandards);
+}
+
+if (PHP_CodeSniffer::isInstalledStandard($standard) === FALSE) {
+    // They didn't select a valid coding standard, so help them
+    // out by letting them know which standards are installed.
+    echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+    print_installed_standards();
+    exit();
+}
+
+$phpcs = new PHP_CodeSniffer($verbose);
+$phpcs->process($files, $standard);
+if ($report === 'summary') {
+    $phpcs->printErrorReportSummary($showWarnings);
+} else {
+    $phpcs->printErrorReport($showWarnings);
+}
+
+?>
