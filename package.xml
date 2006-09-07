@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
+<package version="1.0" packagerversion="1.4.5">
+ <name>PHP_CodeSniffer</name>
+ <summary>PHP_CodeSniffer tokenises PHP code and detects violations of a defined set of coding standards.</summary>
+ <description>PHP_CodeSniffer is a PHP5 script that tokenises PHP code and detects violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. PHP_CodeSniffer "sniffs" PHP code and detects any code that violates your coding standards. It can even help prevent some common semantic errors made by developers.</description>
+ <maintainers>
+  <maintainer>
+   <user>squiz</user>
+   <name>Squiz</name>
+   <email>mysource4@squiz.net</email>
+   <role>lead</role>
+  </maintainer>
+ </maintainers>
+ <release>
+  <version>0.0.4</version>
+  <date>2006-08-28</date>
+  <license>BSD License</license>
+  <state>alpha</state>
+  <notes>
+   - Added .bat file for easier running of PHP_CodeSniffer on Windows
+   - Sniff that checks method names now works for PHP4 style code where there is no scope keyword
+   - Sniff that checks method names now works for PHP4 style constructors
+   - Sniff that checks method names no longer incorrectly reports error with magic methods
+   - Sniff that checks method names now reports errors with non-magic methods prefixed with __
+   - Sniff that checks for constant names no longer incorrectly reports errors with heredoc strings
+   - Sniff that checks for constant names no longer incorrectly reports errors with created objects
+   - Sniff that checks indentation no longer incorrectly reports errors with heredoc strings
+   - Sniff that checks indentation now correctly reports errors with improperly indented multi-line strings
+   - Sniff that checks function declarations now checks for spaces before and after an equals sign for default values
+   - Sniff that checks function declarations no longer incorrectly reports errors with multi-line declarations
+   - Sniff that checks included code no longer incorrectly reports errors when return value is used conditionally
+   - Sniff that checks opening brace of function no longer incorrectly reports errors with multi-line declarations
+   - Sniff that checks spacing after commas in function calls no longer reports too many errors for some code
+   - Sniff that checks control structure declarations now gives more descriptive error message
+  </notes>
+  <deps>
+   <dep type="php" rel="ge" version="5.1.0" optional="no"/>
+  </deps>
+  <filelist>
+   <dir name="/">
+    <file role="script" baseinstalldir="/" install-as="phpcs" name="pear-phpcs">
+      <replace type="pear-config" from="@php_bin@" to="php_bin"/>
+    </file>
+    <file role="script" baseinstalldir="/" platform="windows" install-as="phpcs.bat" name="pear-phpcs.bat">
+     <replace type="pear-config" from="@php_bin@" to="php_bin"/>
+     <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
+    </file>
+    <file role="php" baseinstalldir="PHP" name="CodeSniffer.php"/>
+    <dir name="CodeSniffer">
+     <file role="php" baseinstalldir="PHP" name="Exception.php"/>
+     <file role="php" baseinstalldir="PHP" name="File.php"/>
+     <file role="php" baseinstalldir="PHP" name="Sniff.php"/>
+     <file role="php" baseinstalldir="PHP" name="SniffException.php"/>
+     <file role="php" baseinstalldir="PHP" name="Tokens.php"/>
+     <dir name="CommentParser">
+      <file role="php" baseinstalldir="PHP" name="AbstractDocElement.php"/>
+      <file role="php" baseinstalldir="PHP" name="AbstractParser.php"/>
+      <file role="php" baseinstalldir="PHP" name="ClassCommentParser.php"/>
+      <file role="php" baseinstalldir="PHP" name="CommentElement.php"/>
+      <file role="php" baseinstalldir="PHP" name="DocElement.php"/>
+      <file role="php" baseinstalldir="PHP" name="FunctionCommentParser.php"/>
+      <file role="php" baseinstalldir="PHP" name="MemberCommentParser.php"/>
+      <file role="php" baseinstalldir="PHP" name="PairElement.php"/>
+      <file role="php" baseinstalldir="PHP" name="ParameterElement.php"/>
+      <file role="php" baseinstalldir="PHP" name="ParserException.php"/>
+      <file role="php" baseinstalldir="PHP" name="SingleElement.php"/>
+     </dir>
+     <dir name="Standards">
+      <file role="php" baseinstalldir="PHP" name="AbstractPatternSniff.php"/>
+      <file role="php" baseinstalldir="PHP" name="AbstractScopeSniff.php"/>
+      <file role="php" baseinstalldir="PHP" name="AbstractVariableSniff.php"/>
+      <file role="php" baseinstalldir="PHP" name="IncorrectPatternException.php"/>
+      <dir name="PEAR">
+       <dir name="Sniffs">
+        <dir name="Commenting">
+         <file role="php" baseinstalldir="PHP" name="InlineCommentSniff.php"/>
+        </dir>
+        <dir name="Constants">
+         <file role="php" baseinstalldir="PHP" name="ValidConstantNameSniff.php"/>
+        </dir>
+        <dir name="ControlStructures">
+         <file role="php" baseinstalldir="PHP" name="ControlSignatureSniff.php"/>
+        </dir>
+        <dir name="Files">
+         <file role="php" baseinstalldir="PHP" name="IncludingFileSniff.php"/>
+         <file role="php" baseinstalldir="PHP" name="LineLengthSniff.php"/>
+        </dir>
+        <dir name="Methods">
+         <file role="php" baseinstalldir="PHP" name="FunctionCallSignatureSniff.php"/> 
+         <file role="php" baseinstalldir="PHP" name="MethodCallArgumentSpacingSniff.php"/>
+         <file role="php" baseinstalldir="PHP" name="OpeningMethodBraceSniff.php"/>
+         <file role="php" baseinstalldir="PHP" name="ValidDefaultValueSniff.php"/>
+        </dir>
+        <dir name="Misc">
+         <file role="php" baseinstalldir="PHP" name="ShortOpenTagSniff.php"/>
+        </dir>
+        <dir name="NamingConventions">
+         <file role="php" baseinstalldir="PHP" name="ValidClassNameSniff.php"/>
+         <file role="php" baseinstalldir="PHP" name="ValidFunctionNameSniff.php"/>
+        </dir>
+        <dir name="PHP">
+         <file role="php" baseinstalldir="PHP" name="LowerCaseConstantSniff.php"/>
+        </dir>
+        <dir name="Statements">
+         <file role="php" baseinstalldir="PHP" name="MultipleStatementSniff.php"/>
+        </dir>
+        <dir name="WhiteSpace">
+         <file role="php" baseinstalldir="PHP" name="ScopeClosingBraceSniff.php"/>
+         <file role="php" baseinstalldir="PHP" name="ScopeIndentSniff.php"/>
+        </dir>
+       </dir>
+      </dir>
+     </dir>
+    </dir>
+   </dir>
+  </filelist>
+ </release>
+ <changelog>
+  <release>
+   <version>0.0.4</version>
+   <date>2006-08-28</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Added .bat file for easier running of PHP_CodeSniffer on Windows
+    - Sniff that checks method names now works for PHP4 style code where there is no scope keyword
+    - Sniff that checks method names now works for PHP4 style constructors
+    - Sniff that checks method names no longer incorrectly reports error with magic methods
+    - Sniff that checks method names now reports errors with non-magic methods prefixed with __
+    - Sniff that checks for constant names no longer incorrectly reports errors with heredoc strings
+    - Sniff that checks for constant names no longer incorrectly reports errors with created objects
+    - Sniff that checks indentation no longer incorrectly reports errors with heredoc strings
+    - Sniff that checks indentation now correctly reports errors with improperly indented multi-line strings
+    - Sniff that checks function declarations now checks for spaces before and after an equals sign for default values
+    - Sniff that checks function declarations no longer incorrectly reports errors with multi-line declarations
+    - Sniff that checks included code no longer incorrectly reports errors when return value is used conditionally
+    - Sniff that checks opening brace of function no longer incorrectly reports errors with multi-line declarations
+    - Sniff that checks spacing after commas in function calls no longer reports too many errors for some code
+    - Sniff that checks control structure declarations now gives more descriptive error message
+   </notes>
+  </release>
+  <release>
+   <version>0.0.3</version>
+   <date>2006-08-22</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Added sniff to check for invalid class and interface names
+    - Added sniff to check for invalid function and method names
+    - Added sniff to warn if line is greater than 85 characters
+    - Added sniff to check that function calls are in the correct format
+    - Fixed error where comments were not allowed on the same line as a control structure declaration
+    - Added command line arg to print current version (--version)
+   </notes>
+  </release>
+  <release>
+   <version>0.0.2</version>
+   <date>2006-07-25</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Removed the including of checked files to stop errors caused by parsing them
+    - Removed the use of reflection so checked files do not have to be included
+    - Memory usage has been greatly reduced
+    - Much faster tokenising and checking times
+    - Reworked the PEAR coding standard sniffs (much faster now)
+    - Fix some bugs with the PEAR scope indentation standard
+    - Better checking for installed coding standards
+    - Can now accept multiple files and dirs on the command line
+    - Added an option to list installed coding standards
+    - Added an option to print a summary report (number of errors and warnings shown for each file)
+    - Added an option to hide warnings from reports
+    - Added an option to print verbose output (so you know what is going on)
+    - Reordered command line args to put switches first (although order is not enforced)
+    - Switches can now be specified together (eg. php -nv) as well as separately (phpcs -n -v)
+   </notes>
+  </release>
+  <release>
+   <version>0.0.1</version>
+   <date>2006-07-19</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>Initial preview release.</notes>
+  </release>
+ </changelog>
+</package>
