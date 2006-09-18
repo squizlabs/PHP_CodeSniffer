@@ -32,7 +32,7 @@
 
 error_reporting(E_ALL | E_STRICT);
 require_once 'PHP/CodeSniffer.php';
-$php_cs_version = '0.0.4 alpha';
+$php_cs_version = '0.0.5 alpha';
 
 
 /**

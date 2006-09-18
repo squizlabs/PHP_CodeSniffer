@@ -13,26 +13,12 @@
   </maintainer>
  </maintainers>
  <release>
-  <version>0.0.4</version>
-  <date>2006-08-28</date>
+  <version>0.0.5</version>
+  <date>2006-09-18</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
-   - Added .bat file for easier running of PHP_CodeSniffer on Windows
-   - Sniff that checks method names now works for PHP4 style code where there is no scope keyword
-   - Sniff that checks method names now works for PHP4 style constructors
-   - Sniff that checks method names no longer incorrectly reports error with magic methods
-   - Sniff that checks method names now reports errors with non-magic methods prefixed with __
-   - Sniff that checks for constant names no longer incorrectly reports errors with heredoc strings
-   - Sniff that checks for constant names no longer incorrectly reports errors with created objects
-   - Sniff that checks indentation no longer incorrectly reports errors with heredoc strings
-   - Sniff that checks indentation now correctly reports errors with improperly indented multi-line strings
-   - Sniff that checks function declarations now checks for spaces before and after an equals sign for default values
-   - Sniff that checks function declarations no longer incorrectly reports errors with multi-line declarations
-   - Sniff that checks included code no longer incorrectly reports errors when return value is used conditionally
-   - Sniff that checks opening brace of function no longer incorrectly reports errors with multi-line declarations
-   - Sniff that checks spacing after commas in function calls no longer reports too many errors for some code
-   - Sniff that checks control structure declarations now gives more descriptive error message
+   - Fixed .bat file for situation where php.ini cannot be found so include_path is not set
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
@@ -45,6 +31,7 @@
     <file role="script" baseinstalldir="/" platform="windows" install-as="phpcs.bat" name="pear-phpcs.bat">
      <replace type="pear-config" from="@php_bin@" to="php_bin"/>
      <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
+     <replace type="pear-config" from="@php_dir@" to="php_dir"/>
     </file>
     <file role="php" baseinstalldir="PHP" name="CodeSniffer.php"/>
     <dir name="CodeSniffer">
@@ -117,6 +104,15 @@
   </filelist>
  </release>
  <changelog>
+  <release>
+   <version>0.0.5</version>
+   <date>2006-09-18</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Fixed .bat file for situation where php.ini cannot be found so include_path is not set
+   </notes>
+  </release>
   <release>
    <version>0.0.4</version>
    <date>2006-08-28</date>
