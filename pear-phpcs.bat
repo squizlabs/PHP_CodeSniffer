@@ -27,5 +27,4 @@ REM
 REM @package PHP_CodeSniffer
 REM @author  Squiz Pty Ltd
 
-set PHPBIN=@php_bin@
-"@php_bin@" "@bin_dir@/phpcs" %*
+"@php_bin@" -d include_path="@php_dir@" "@bin_dir@\phpcs" %*
