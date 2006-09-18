@@ -29,7 +29,6 @@
  * @author  Squiz Pty Ltd
  */
 
-require_once 'PHP/CodeSniffer/Exception.php';
 require_once 'PHP/CodeSniffer/File.php';
 require_once 'PHP/CodeSniffer/Tokens.php';
 require_once 'PHP/CodeSniffer/Sniff.php';
