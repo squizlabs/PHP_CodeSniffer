@@ -32,7 +32,6 @@
 
 error_reporting(E_ALL | E_STRICT);
 require_once 'PHP/CodeSniffer.php';
-$php_cs_version = '0.0.5 alpha';
 
 
 /**
@@ -122,7 +121,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             }
 
             if ($arg === '--version') {
-                echo "PHP_CodeSniffer version $php_cs_version by Squiz Pty Ltd.\n";
+                echo "PHP_CodeSniffer version 0.1.0 alpha by Squiz Pty Ltd.\n";
                 exit();
             }
 
