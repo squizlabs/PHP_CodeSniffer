@@ -840,7 +840,7 @@ class PHP_CodeSniffer_File
 
             if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
                 // We found the opening scope token for $currType.
-               $opener = $i;
+                $opener = $i;
             } else if ($tokenType === self::$_scopeOpeners[$currType]['end'] && $opener !== null) {
                 if ($ignore === true) {
                     // The last opening bracket must have been for a string
