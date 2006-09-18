@@ -13,88 +13,92 @@
   </maintainer>
  </maintainers>
  <release>
-  <version>0.0.5</version>
-  <date>2006-09-18</date>
+  <version>0.1.0</version>
+  <date>2006-09-19</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
-   - Fixed .bat file for situation where php.ini cannot be found so include_path is not set
+   - Reorganised package contents to conform to PEAR standards
+   - Changed version numbering to conform to PEAR standards
+   - Removed duplicate require_once() of Exception.php from CodeSniffer.php
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
   </deps>
   <filelist>
-   <dir name="/">
-    <file role="script" baseinstalldir="/" install-as="phpcs" name="pear-phpcs">
+   <dir name="/" baseinstalldir="PHP">
+    <file role="php" name="CodeSniffer.php"/>
+    <dir name="scripts" role="script" baseinstalldir="">
+     <file name="phpcs" install-as="phpcs">
+       <replace type="pear-config" from="@php_bin@" to="php_bin"/>
+     </file>
+     <file name="phpcs.bat" install-as="phpcs.bat" platform="windows">
       <replace type="pear-config" from="@php_bin@" to="php_bin"/>
-    </file>
-    <file role="script" baseinstalldir="/" platform="windows" install-as="phpcs.bat" name="pear-phpcs.bat">
-     <replace type="pear-config" from="@php_bin@" to="php_bin"/>
-     <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
-     <replace type="pear-config" from="@php_dir@" to="php_dir"/>
-    </file>
-    <file role="php" baseinstalldir="PHP" name="CodeSniffer.php"/>
-    <dir name="CodeSniffer">
-     <file role="php" baseinstalldir="PHP" name="Exception.php"/>
-     <file role="php" baseinstalldir="PHP" name="File.php"/>
-     <file role="php" baseinstalldir="PHP" name="Sniff.php"/>
-     <file role="php" baseinstalldir="PHP" name="SniffException.php"/>
-     <file role="php" baseinstalldir="PHP" name="Tokens.php"/>
+      <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
+      <replace type="pear-config" from="@php_dir@" to="php_dir"/>
+     </file>
+    </dir>
+    <dir name="CodeSniffer" role="php" baseinstalldir="PHP">
+     <file name="Exception.php"/>
+     <file name="File.php"/>
+     <file name="Sniff.php"/>
+     <file name="SniffException.php"/>
+     <file name="Tokens.php"/>
      <dir name="CommentParser">
-      <file role="php" baseinstalldir="PHP" name="AbstractDocElement.php"/>
-      <file role="php" baseinstalldir="PHP" name="AbstractParser.php"/>
-      <file role="php" baseinstalldir="PHP" name="ClassCommentParser.php"/>
-      <file role="php" baseinstalldir="PHP" name="CommentElement.php"/>
-      <file role="php" baseinstalldir="PHP" name="DocElement.php"/>
-      <file role="php" baseinstalldir="PHP" name="FunctionCommentParser.php"/>
-      <file role="php" baseinstalldir="PHP" name="MemberCommentParser.php"/>
-      <file role="php" baseinstalldir="PHP" name="PairElement.php"/>
-      <file role="php" baseinstalldir="PHP" name="ParameterElement.php"/>
-      <file role="php" baseinstalldir="PHP" name="ParserException.php"/>
-      <file role="php" baseinstalldir="PHP" name="SingleElement.php"/>
+      <file name="AbstractDocElement.php"/>
+      <file name="AbstractParser.php"/>
+      <file name="ClassCommentParser.php"/>
+      <file name="CommentElement.php"/>
+      <file name="DocElement.php"/>
+      <file name="FunctionCommentParser.php"/>
+      <file name="MemberCommentParser.php"/>
+      <file name="PairElement.php"/>
+      <file name="ParameterElement.php"/>
+      <file name="ParserException.php"/>
+      <file name="SingleElement.php"/>
      </dir>
      <dir name="Standards">
-      <file role="php" baseinstalldir="PHP" name="AbstractPatternSniff.php"/>
-      <file role="php" baseinstalldir="PHP" name="AbstractScopeSniff.php"/>
-      <file role="php" baseinstalldir="PHP" name="AbstractVariableSniff.php"/>
-      <file role="php" baseinstalldir="PHP" name="IncorrectPatternException.php"/>
+      <file name="AbstractPatternSniff.php"/>
+      <file name="AbstractScopeSniff.php"/>
+      <file name="AbstractVariableSniff.php"/>
+      <file name="IncorrectPatternException.php"/>
       <dir name="PEAR">
        <dir name="Sniffs">
         <dir name="Commenting">
-         <file role="php" baseinstalldir="PHP" name="InlineCommentSniff.php"/>
+         <file name="InlineCommentSniff.php"/>
         </dir>
         <dir name="Constants">
-         <file role="php" baseinstalldir="PHP" name="ValidConstantNameSniff.php"/>
+         <file name="ValidConstantNameSniff.php"/>
         </dir>
         <dir name="ControlStructures">
-         <file role="php" baseinstalldir="PHP" name="ControlSignatureSniff.php"/>
+         <file name="ControlSignatureSniff.php"/>
         </dir>
         <dir name="Files">
-         <file role="php" baseinstalldir="PHP" name="IncludingFileSniff.php"/>
-         <file role="php" baseinstalldir="PHP" name="LineLengthSniff.php"/>
+         <file name="IncludingFileSniff.php"/>
+         <file name="LineLengthSniff.php"/>
         </dir>
         <dir name="Methods">
-         <file role="php" baseinstalldir="PHP" name="FunctionCallSignatureSniff.php"/> 
-         <file role="php" baseinstalldir="PHP" name="MethodCallArgumentSpacingSniff.php"/>
-         <file role="php" baseinstalldir="PHP" name="OpeningMethodBraceSniff.php"/>
-         <file role="php" baseinstalldir="PHP" name="ValidDefaultValueSniff.php"/>
+         <file name="FunctionCallSignatureSniff.php"/> 
+         <file name="MethodCallArgumentSpacingSniff.php"/>
+         <file name="OpeningMethodBraceSniff.php"/>
+         <file name="ValidDefaultValueSniff.php"/>
         </dir>
         <dir name="Misc">
-         <file role="php" baseinstalldir="PHP" name="ShortOpenTagSniff.php"/>
+         <file name="ShortOpenTagSniff.php"/>
         </dir>
         <dir name="NamingConventions">
-         <file role="php" baseinstalldir="PHP" name="ValidClassNameSniff.php"/>
-         <file role="php" baseinstalldir="PHP" name="ValidFunctionNameSniff.php"/>
+         <file name="ValidClassNameSniff.php"/>
+         <file name="ValidFunctionNameSniff.php"/>
         </dir>
         <dir name="PHP">
-         <file role="php" baseinstalldir="PHP" name="LowerCaseConstantSniff.php"/>
+         <file name="LowerCaseConstantSniff.php"/>
         </dir>
         <dir name="Statements">
-         <file role="php" baseinstalldir="PHP" name="MultipleStatementSniff.php"/>
+         <file name="MultipleStatementSniff.php"/>
         </dir>
         <dir name="WhiteSpace">
-         <file role="php" baseinstalldir="PHP" name="ScopeClosingBraceSniff.php"/>
-         <file role="php" baseinstalldir="PHP" name="ScopeIndentSniff.php"/>
+         <file name="ScopeClosingBraceSniff.php"/>
+         <file name="ScopeIndentSniff.php"/>
         </dir>
        </dir>
       </dir>
@@ -104,6 +108,17 @@
   </filelist>
  </release>
  <changelog>
+  <release>
+   <version>0.1.0</version>
+   <date>2006-09-19</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Reorganised package contents to conform to PEAR standards
+    - Changed version numbering to conform to PEAR standards
+    - Removed duplicate require_once() of Exception.php from CodeSniffer.php
+   </notes>
+  </release>
   <release>
    <version>0.0.5</version>
    <date>2006-09-18</date>
