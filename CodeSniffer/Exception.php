@@ -29,13 +29,15 @@
  * @author  Squiz Pty Ltd
  */
 
+require_once 'PEAR/Exception.php';
+
 /**
  * An exception thrown by PHP_CodeSniffer when it encounters an unrecoverable error.
  *
  * @package PHP_CodeSniffer
  * @author  Squiz Pty Ltd
  */
-class PHP_CodeSniffer_Exception extends Exception
+class PHP_CodeSniffer_Exception extends PEAR_Exception
 {
 
 }//end class
