@@ -500,7 +500,7 @@ class PHP_CodeSniffer
 
             // If verbose output is enabled, we show the results for all files,
             // but if not, we only show files that had errors or warnings.
-            if (VERBOSE === true || $numWarnings > 0 || $numErrors > 0) {
+            if (VERBOSE === true || $numErrors > 0 || ($numWarnings > 0 && $showWarnings === true)) {
                 $errorFiles[$filename] = array(
                                           'warnings' => $numWarnings,
                                           'errors'   => $numErrors,
