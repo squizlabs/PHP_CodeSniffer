@@ -20,6 +20,7 @@
   <notes>
    - Added unit tests for all PEAR sniffs
    - Exception class now extends from PEAR_Exception
+   - Fixed summary report so files without errors but with warnings are not shown when warnings are hidden
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
@@ -173,6 +174,7 @@
    <notes>
     - Added unit tests for all PEAR sniffs
     - Exception class now extends from PEAR_Exception
+    - Fixed summary report so files without errors but with warnings are not shown when warnings are hidden
    </notes>
   </release>
   <release>
