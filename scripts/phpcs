@@ -121,7 +121,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             }
 
             if ($arg === '--version') {
-                echo "PHP_CodeSniffer version 0.1.0 alpha by Squiz Pty Ltd.\n";
+                echo "PHP_CodeSniffer version 0.1.1 alpha by Squiz Pty Ltd.\n";
                 exit();
             }
 

@@ -7,20 +7,19 @@
  <maintainers>
   <maintainer>
    <user>squiz</user>
-   <name>Squiz</name>
+   <name>Greg Sherwood</name>
    <email>mysource4@squiz.net</email>
    <role>lead</role>
   </maintainer>
  </maintainers>
  <release>
-  <version>0.1.0</version>
-  <date>2006-09-19</date>
+  <version>0.1.1</version>
+  <date>2006-09-25</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
-   - Reorganised package contents to conform to PEAR standards
-   - Changed version numbering to conform to PEAR standards
-   - Removed duplicate require_once() of Exception.php from CodeSniffer.php
+   - Added unit tests for all PEAR sniffs
+   - Exception class now extends from PEAR_Exception
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
@@ -37,6 +36,10 @@
       <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
       <replace type="pear-config" from="@php_dir@" to="php_dir"/>
      </file>
+    </dir>
+    <dir name="tests" role="test" baseinstalldir="">
+     <file role="test" name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php"/>
+     <file role="test" name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php"/>
     </dir>
     <dir name="CodeSniffer" role="php" baseinstalldir="PHP">
      <file name="Exception.php"/>
@@ -78,7 +81,7 @@
          <file name="LineLengthSniff.php"/>
         </dir>
         <dir name="Methods">
-         <file name="FunctionCallSignatureSniff.php"/> 
+         <file name="FunctionCallSignatureSniff.php"/>
          <file name="MethodCallArgumentSpacingSniff.php"/>
          <file name="OpeningMethodBraceSniff.php"/>
          <file name="ValidDefaultValueSniff.php"/>
@@ -101,6 +104,60 @@
          <file name="ScopeIndentSniff.php"/>
         </dir>
        </dir>
+       <dir name="Tests" role="test">
+        <dir name="Commenting">
+         <file name="InlineCommentUnitTest.inc"/>
+         <file name="InlineCommentUnitTest.php"/>
+        </dir>
+        <dir name="Constants">
+         <file name="ValidConstantNameUnitTest.inc"/>
+         <file name="ValidConstantNameUnitTest.php"/>
+        </dir>
+        <dir name="ControlStructures">
+         <file name="ControlSignatureUnitTest.inc"/>
+         <file name="ControlSignatureUnitTest.php"/>
+        </dir>
+        <dir name="Files">
+         <file name="IncludingFileUnitTest.inc"/>
+         <file name="IncludingFileUnitTest.php"/>
+         <file name="LineLengthUnitTest.inc"/>
+         <file name="LineLengthUnitTest.php"/>
+        </dir>
+        <dir name="Methods">
+         <file name="FunctionCallSignatureUnitTest.inc"/>
+         <file name="FunctionCallSignatureUnitTest.php"/>
+         <file name="MethodCallArgumentSpacingUnitTest.inc"/>
+         <file name="MethodCallArgumentSpacingUnitTest.php"/>
+         <file name="OpeningMethodBraceUnitTest.inc"/>
+         <file name="OpeningMethodBraceUnitTest.php"/>
+         <file name="ValidDefaultValueUnitTest.inc"/>
+         <file name="ValidDefaultValueUnitTest.php"/>
+        </dir>
+        <dir name="Misc">
+         <file name="ShortOpenTagUnitTest.inc"/>
+         <file name="ShortOpenTagUnitTest.php"/>
+        </dir>
+        <dir name="NamingConventions">
+         <file name="ValidClassNameUnitTest.inc"/>
+         <file name="ValidClassNameUnitTest.php"/>
+         <file name="ValidFunctionNameUnitTest.inc"/>
+         <file name="ValidFunctionNameUnitTest.php"/>
+        </dir>
+        <dir name="PHP">
+         <file name="LowerCaseConstantUnitTest.inc"/>
+         <file name="LowerCaseConstantUnitTest.php"/>
+        </dir>
+        <dir name="Statements">
+         <file name="MultipleStatementUnitTest.inc"/>
+         <file name="MultipleStatementUnitTest.php"/>
+        </dir>
+        <dir name="WhiteSpace">
+         <file name="ScopeClosingBraceUnitTest.inc"/>
+         <file name="ScopeClosingBraceUnitTest.php"/>
+         <file name="ScopeIndentUnitTest.inc"/>
+         <file name="ScopeIndentUnitTest.php"/>
+        </dir>
+       </dir>
       </dir>
      </dir>
     </dir>
@@ -108,6 +165,16 @@
   </filelist>
  </release>
  <changelog>
+  <release>
+   <version>0.1.1</version>
+   <date>2006-09-25</date>
+   <license>BSD License</license>
+   <state>alpha</state>
+   <notes>
+    - Added unit tests for all PEAR sniffs
+    - Exception class now extends from PEAR_Exception
+   </notes>
+  </release>
   <release>
    <version>0.1.0</version>
    <date>2006-09-19</date>
