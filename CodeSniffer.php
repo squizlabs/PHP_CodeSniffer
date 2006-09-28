@@ -156,7 +156,7 @@ class PHP_CodeSniffer
             echo 'Registering sniffs... ';
         }
 
-        $this->_registerTokenListeners($sniffs);
+        $this->_registerTokenListeners($standard, $sniffs);
         if (VERBOSE === true) {
             echo "DONE\n";
         }
@@ -183,20 +183,21 @@ class PHP_CodeSniffer
      * PHP_CodeSniffer_Sniff interface asks them to register. Each of the
      * sniff's class names must be exact as the basename of the sniff file.
      *
-     * @param array $sniffs The sniff names to restrict the allowed
-     *                      listeners to.
+     * @param string $standard The name of the coding standard we are checking.
+     * @param array  $sniffs   The sniff names to restrict the allowed
+     *                         listeners to.
      *
      * @return void
      * @throws PHP_CodeSniffer_Exception If any of the tests failed in the
      *                                   registration process.
      */
-    private function _registerTokenListeners(array $sniffs=array())
+    private function _registerTokenListeners($standard, array $sniffs=array())
     {
         $files = $this->_getSniffFiles($this->_standardDir);
 
         if (empty($sniffs) === false) {
-            // Convert the allowed sniffs to lower case so that its easier to
-            // check.
+            // Convert the allowed sniffs to lower case so
+            // that its easier to check.
             foreach ($sniffs as &$sniff) {
                 $sniff = strtolower($sniff);
             }
@@ -227,6 +228,13 @@ class PHP_CodeSniffer
             $newClasses = $this->_classCache[$file];
 
             foreach ($newClasses as $className) {
+
+                // Only include sniffs that are in our coding standard.
+                // We know those sniffs because their class anem starts
+                // with [STANDARD]_
+                if (preg_match("|^${standard}_|", $className) === 0) {
+                    continue;
+                }
 
                 $rfClass = new ReflectionClass($className);
                 if ($rfClass->implementsInterface('PHP_CodeSniffer_Sniff') === false) {
