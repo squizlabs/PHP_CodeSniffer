@@ -30,11 +30,11 @@
  * @author   Squiz Pty Ltd
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
+require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Files/LineLengthSniff.php';
 
 
 /**
- * PHP_CodeSniffer_Sniffs_PEAR_Files_LineLengthSniff.
+ * PEAR_Sniffs_Files_LineLengthSniff.
  *
  * Checks all lines in the file, and throws warnings if they are over 85
  * characters in length.
@@ -43,7 +43,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
  * @category PEAR_Coding_Standards
  * @author   Squiz Pty Ltd
  */
-class PEAR_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
+class PEAR_Sniffs_Files_LineLengthSniff extends Generic_Sniffs_Files_LineLengthSniff
 {
 
     /**
@@ -51,69 +51,7 @@ class PEAR_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      *
      * @var int
      */
-    const LINE_LIMIT = 85;
-
-
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
-    {
-        return array(T_OPEN_TAG);
-
-    }//end register()
-
-
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens = $phpcsFile->getTokens();
-
-        // Make sure this is the first open tag.
-        $previousOpenTag = $phpcsFile->findPrevious(array(T_OPEN_TAG), $stackPtr - 1);
-        if ($previousOpenTag !== false) {
-            return;
-        }
-
-        $tokenLimit         = count($tokens);
-        $tokenCount         = 0;
-        $currentLineContent = '';
-        $currentLine        = 1;
-        $longLines          = array();
-
-        for (; $tokenCount < $tokenLimit; $tokenCount++) {
-            if ($tokens[$tokenCount]['line'] === $currentLine) {
-                $currentLineContent .= $tokens[$tokenCount]['content'];
-            } else {
-                $currentLineContent = trim($currentLineContent, "\n");
-                $lineLength         = strlen($currentLineContent);
-
-                if ($lineLength > self::LINE_LIMIT) {
-                    $longLines[] = ($tokenCount - 1);
-                }
-
-                $currentLineContent = $tokens[$tokenCount]['content'];
-                $currentLine++;
-            }
-        }
-
-        foreach ($longLines as $lineToken) {
-            $warning = 'Line exceeds '.self::LINE_LIMIT.' characters. It is recommended that this be shortened.';
-            $phpcsFile->addWarning($warning, $lineToken);
-        }
-
-    }//end process()
-
+    protected $lineLimit = 85;
 
 }//end class
 
