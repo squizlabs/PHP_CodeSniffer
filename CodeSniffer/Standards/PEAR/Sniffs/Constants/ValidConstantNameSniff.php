@@ -34,7 +34,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
 
 
 /**
- * PHP_CodeSniffer_Sniffs_Squiz_Members_ValidConstantNameSniff.
+ * PEAR_Sniffs_Constants_ValidConstantNameSniff.
  *
  * Ensures that constants are all Uppercase.
  *
