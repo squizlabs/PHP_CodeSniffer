@@ -25,65 +25,25 @@
  * | All rights reserved.                                                   |
  * +------------------------------------------------------------------------+
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category Squiz_Coding_Standards
+ * @author   Squiz Pty Ltd
  */
+
+require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/LowerCaseConstantSniff.php';
+
 
 /**
- * Unit test class for the LowerCaseConstant sniff.
+ * PEAR_Sniffs_PHP_LowerCaseConstantSniff.
  *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings are stored in this class.
+ * Checks that all uses of true, false and null are lowerrcase.
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category PEAR_Coding_Standards
+ * @author   Squiz Pty Ltd
  */
-class PEAR_Tests_PHP_LowerCaseConstantUnitTest extends AbstractSniffUnitTest
+class PEAR_Sniffs_PHP_ConstantSniff extends Generic_Sniffs_PHP_LowerCaseConstantSniff
 {
-
-
-    /**
-     * Returns the lines where errors should occur.
-     *
-     * The key of the array should represent the line number and the value
-     * should represent the number of errors that should occur on that line.
-     *
-     * @return array(int => int)
-     */
-    public function getErrorList()
-    {
-        return array(
-                 7 => 1,
-                10 => 1,
-                15 => 1,
-                16 => 1,
-                23 => 1,
-                26 => 1,
-                31 => 1,
-                32 => 1,
-                39 => 1,
-                42 => 1,
-                47 => 1,
-                48 => 1,
-               );
-
-    }//end getErrorList()
-
-
-    /**
-     * Returns the lines where warnings should occur.
-     *
-     * The key of the array should represent the line number and the value
-     * should represent the number of warnings that should occur on that line.
-     *
-     * @return array(int => int)
-     */
-    public function getWarningList()
-    {
-        return array();
-
-    }//end getWarningList()
-
 
 }//end class
 
