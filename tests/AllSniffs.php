@@ -77,7 +77,7 @@ class AllSniffs
     {
         $suite = new PHPUnit2_Framework_TestSuite('PHP_CodeSniffer Standards');
 
-        $standards = PHP_CodeSniffer::getInstalledStandards();
+        $standards = PHP_CodeSniffer::getInstalledStandards(true);
         foreach ($standards as $standard) {
             $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
             $di          = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));

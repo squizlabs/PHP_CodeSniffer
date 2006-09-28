@@ -252,7 +252,7 @@ class PHP_CodeSniffer
 
                 if (is_array($tokens) === false) {
                     $msg = 'Sniff '.$className.' register method must return an array';
-                    throw new sniffs_Exception($msg);
+                    throw new PHP_CodeSniffer_Exception($msg);
                 }
 
                 $this->_addTokenListener($listener, $tokens);
@@ -830,10 +830,14 @@ class PHP_CodeSniffer
      * CodeSniffer/Standards directory. Valid coding standards
      * include a Sniffs subdirectory.
      *
+     * @param boolean $includeGeneric If true, the special "Generic"
+     *                                coding standard will be included
+     *                                if installed
+     *
      * @return array
      * @see isInstalledStandard()
      */
-    public static function getInstalledStandards()
+    public static function getInstalledStandards($includeGeneric=false)
     {
         $installedStandards = array();
         $standardsDir       = dirname(__FILE__).'/CodeSniffer/Standards';
@@ -841,6 +845,11 @@ class PHP_CodeSniffer
         $di = new DirectoryIterator($standardsDir);
         foreach ($di as $file) {
             if ($file->isDir() === true && $file->isDot() === false) {
+                // Ignore the special "Generic" standard.
+                if ($includeGeneric === false && $file->getFilename() === 'Generic') {
+                    continue;
+                }
+
                 // Valid coding standard dirs include a "Sniffs"
                 // subdirectory, so check for it.
                 if (is_dir($file->getPathname().'/Sniffs') === true) {
