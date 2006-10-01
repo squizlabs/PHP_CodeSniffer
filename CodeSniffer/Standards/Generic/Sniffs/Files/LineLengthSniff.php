@@ -26,7 +26,7 @@
  * +------------------------------------------------------------------------+
  *
  * @package  PHP_CodeSniffer
- * @category PEAR_Coding_Standards
+ * @category Generic_Coding_Standards
  * @author   Squiz Pty Ltd
  */
 
