@@ -13,14 +13,21 @@
   </maintainer>
  </maintainers>
  <release>
-  <version>0.1.1</version>
-  <date>2006-09-25</date>
+  <version>0.2.0</version>
+  <date>2006-10-01</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
-   - Added unit tests for all PEAR sniffs
-   - Exception class now extends from PEAR_Exception
-   - Fixed summary report so files without errors but with warnings are not shown when warnings are hidden
+   - Added a generic standards package that will contain generic sniffs to be used in specific coding standards
+     (thanks to Frederic Poeydomenge for the idea)
+   - Changed PEAR standard to use generic sniffs where available
+   - Added LowerCaseConstantSniff to Generic standard
+   - Added UpperCaseConstantSniff to Generic standard
+   - Added DisallowShortOpenTagSniff to Generic standard
+   - Added LineLengthSniff to Generic standard
+   - Added UpperCaseConstantNameSniff to Generic standard
+   - Added OpeningMethodBraceBsdAllmanSniff to Generic standard (contrib by Frederic Poeydomenge)
+   - Added OpeningMethodBraceKernighanRitchieSniff to Generic standard (contrib by Frederic Poeydomenge)
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
@@ -31,6 +38,8 @@
     <dir name="scripts" role="script" baseinstalldir="">
      <file name="phpcs" install-as="phpcs">
        <replace type="pear-config" from="@php_bin@" to="php_bin"/>
+       <replace type="package-info" from="@package_version@" to="version"/>
+       <replace type="package-info" from="@package_state@" to="release_state"/>
      </file>
      <file name="phpcs.bat" install-as="phpcs.bat" platform="windows">
       <replace type="pear-config" from="@php_bin@" to="php_bin"/>
@@ -66,13 +75,53 @@
       <file name="AbstractScopeSniff.php"/>
       <file name="AbstractVariableSniff.php"/>
       <file name="IncorrectPatternException.php"/>
-      <dir name="PEAR">
+      <dir name="Generic">
+       <dir name="Sniffs">
+        <dir name="Files">
+         <file name="LineLengthSniff.php"/>
+        </dir>
+        <dir name="Methods">
+         <file name="OpeningMethodBraceBsdAllmanSniff.php"/>
+         <file name="OpeningMethodBraceKernighanRitchieSniff.php"/>
+        </dir>
+        <dir name="NamingConventions">
+         <file name="UpperCaseConstantNameSniff.php"/>
+        </dir>
+        <dir name="PHP">
+         <file name="DisallowShortOpenTagSniff.php"/>
+         <file name="LowerCaseConstantSniff.php"/>
+         <file name="UpperCaseConstantSniff.php"/>
+        </dir>
+       </dir>
+       <dir name="Tests" role="test">
+        <dir name="Files">
+         <file name="LineLengthUnitTest.inc"/>
+         <file name="LineLengthUnitTest.php"/>
+        </dir>
+        <dir name="Methods">
+         <file name="OpeningMethodBraceBsdAllmanUnitTest.inc"/>
+         <file name="OpeningMethodBraceBsdAllmanUnitTest.php"/>
+         <file name="OpeningMethodBraceKernighanRitchieUnitTest.inc"/>
+         <file name="OpeningMethodBraceKernighanRitchieUnitTest.php"/>
+        </dir>
+        <dir name="NamingConventions">
+         <file name="UpperCaseConstantNameUnitTest.inc"/>
+         <file name="UpperCaseConstantNameUnitTest.php"/>
+        </dir>
+        <dir name="PHP">
+         <file name="DisallowShortOpenTagUnitTest.inc"/>
+         <file name="DisallowShortOpenTagUnitTest.php"/>
+         <file name="LowerCaseConstantUnitTest.inc"/>
+         <file name="LowerCaseConstantUnitTest.php"/>
+         <file name="UpperCaseConstantUnitTest.inc"/>
+         <file name="UpperCaseConstantUnitTest.php"/>
+        </dir>
+       </dir>
+      </dir>
+      <dir name="PEAR" role="php">
        <dir name="Sniffs">
         <dir name="Commenting">
          <file name="InlineCommentSniff.php"/>
-        </dir>
-        <dir name="Constants">
-         <file name="ValidConstantNameSniff.php"/>
         </dir>
         <dir name="ControlStructures">
          <file name="ControlSignatureSniff.php"/>
@@ -87,15 +136,14 @@
          <file name="OpeningMethodBraceSniff.php"/>
          <file name="ValidDefaultValueSniff.php"/>
         </dir>
-        <dir name="Misc">
-         <file name="ShortOpenTagSniff.php"/>
-        </dir>
         <dir name="NamingConventions">
          <file name="ValidClassNameSniff.php"/>
+         <file name="ValidConstantNameSniff.php"/>
          <file name="ValidFunctionNameSniff.php"/>
         </dir>
         <dir name="PHP">
-         <file name="LowerCaseConstantSniff.php"/>
+         <file name="ConstantSniff.php"/>
+         <file name="DisallowShortOpenTagSniff.php"/>
         </dir>
         <dir name="Statements">
          <file name="MultipleStatementSniff.php"/>
@@ -110,10 +158,6 @@
          <file name="InlineCommentUnitTest.inc"/>
          <file name="InlineCommentUnitTest.php"/>
         </dir>
-        <dir name="Constants">
-         <file name="ValidConstantNameUnitTest.inc"/>
-         <file name="ValidConstantNameUnitTest.php"/>
-        </dir>
         <dir name="ControlStructures">
          <file name="ControlSignatureUnitTest.inc"/>
          <file name="ControlSignatureUnitTest.php"/>
@@ -121,32 +165,20 @@
         <dir name="Files">
          <file name="IncludingFileUnitTest.inc"/>
          <file name="IncludingFileUnitTest.php"/>
-         <file name="LineLengthUnitTest.inc"/>
-         <file name="LineLengthUnitTest.php"/>
         </dir>
         <dir name="Methods">
          <file name="FunctionCallSignatureUnitTest.inc"/>
          <file name="FunctionCallSignatureUnitTest.php"/>
          <file name="MethodCallArgumentSpacingUnitTest.inc"/>
          <file name="MethodCallArgumentSpacingUnitTest.php"/>
-         <file name="OpeningMethodBraceUnitTest.inc"/>
-         <file name="OpeningMethodBraceUnitTest.php"/>
          <file name="ValidDefaultValueUnitTest.inc"/>
          <file name="ValidDefaultValueUnitTest.php"/>
-        </dir>
-        <dir name="Misc">
-         <file name="ShortOpenTagUnitTest.inc"/>
-         <file name="ShortOpenTagUnitTest.php"/>
         </dir>
         <dir name="NamingConventions">
          <file name="ValidClassNameUnitTest.inc"/>
          <file name="ValidClassNameUnitTest.php"/>
          <file name="ValidFunctionNameUnitTest.inc"/>
          <file name="ValidFunctionNameUnitTest.php"/>
-        </dir>
-        <dir name="PHP">
-         <file name="LowerCaseConstantUnitTest.inc"/>
-         <file name="LowerCaseConstantUnitTest.php"/>
         </dir>
         <dir name="Statements">
          <file name="MultipleStatementUnitTest.inc"/>
