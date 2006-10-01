@@ -34,7 +34,7 @@ require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/LowerCaseConstantSnif
 
 
 /**
- * PEAR_Sniffs_PHP_LowerCaseConstantSniff.
+ * PEAR_Sniffs_PHP_ConstantSniff.
  *
  * Checks that all uses of true, false and null are lowerrcase.
  *
