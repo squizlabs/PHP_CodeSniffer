@@ -225,7 +225,7 @@ class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
                 if ($column < $indent) {
-                    $error  = "Line $i indented incorrectly. Expected at least ";
+                    $error  = 'Line indented incorrectly. Expected at least ';
                     $error .= ($indent - 1).' spaces, but found ';
                     $error .= ($column - 1).'.';
                     $phpcsFile->addError($error, $firstToken);
