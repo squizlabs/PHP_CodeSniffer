@@ -81,8 +81,8 @@ class PEAR_Sniffs_Whitespace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         // as if this is a method with tokens before it (public, static etc)
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
-        $lineStart = $stackPtr;
-        while (($lineStart = $phpcsFile->findPrevious(array(T_WHITESPACE), ($lineStart - 1), null, false)) !== false) {
+        $lineStart = ($stackPtr - 1);
+        for ($lineStart; $lineStart > 0; $lineStart--) {
             if (strpos($tokens[$lineStart]['content'], "\n") !== false) {
                 break;
             }
@@ -90,7 +90,7 @@ class PEAR_Sniffs_Whitespace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         // We found a new line, now go forward and find the first non-whitespace
         // token.
-        $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), $lineStart, null, true);
+        $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), ($lineStart + 1), null, true);
 
         $startColumn = $tokens[$lineStart]['column'];
         $scopeStart  = $tokens[$stackPtr]['scope_opener'];

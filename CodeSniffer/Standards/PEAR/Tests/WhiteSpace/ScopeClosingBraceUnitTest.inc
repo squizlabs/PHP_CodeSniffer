@@ -36,4 +36,12 @@ public function test2()
     $this->{$property} =& new $class_name($this->db_index);
     $this->modules[$module] =& $this->{$property};
 }
+
+foreach ($elements as $element) {
+    if ($something) {
+        // Do IF.
+    } else if ($somethingElse) {
+        // Do ELSE.
+    }
+}
 ?>
