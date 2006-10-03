@@ -246,4 +246,12 @@ function test()
    # $m[] = 'declare';
 }
 
+foreach ($elements as $element) {
+    if ($something) {
+        // Do IF.
+    } else if ($somethingElse) {
+        // Do ELSE.
+    }
+}
+
 ?>

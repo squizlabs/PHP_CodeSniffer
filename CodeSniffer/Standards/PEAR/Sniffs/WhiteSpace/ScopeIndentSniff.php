@@ -148,7 +148,10 @@ class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
                     // If this token does not have a scope_opener indice, then
                     // it's probably an inline scope, so let's skip to the next
                     // semicolon. Inline scopes include inline if's, abstract methods etc.
-                    $i = $phpcsFile->findNext(T_SEMICOLON, $i, $scopeCloser);
+                    $nextToken = $phpcsFile->findNext(T_SEMICOLON, $i, $scopeCloser);
+                    if ($nextToken !== false) {
+                        $i = $nextToken;
+                    }
                 }
                 continue;
             }
