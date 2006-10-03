@@ -157,7 +157,7 @@ class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
             }
 
             // If this is a HEREDOC then we need to ignore it as the whitespace
-            // before the contents within the HEREDOC are considered apart of the content.
+            // before the contents within the HEREDOC are considered part of the content.
             if ($tokens[$i]['code'] === T_START_HEREDOC) {
                 $inHereDoc = true;
                 continue;
@@ -188,8 +188,9 @@ class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
                 if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
                     if (in_array($tokens[$firstToken - 1]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
                         // If we find a string that directly follows another string
-                        // then its just a string that spans multiple lines.
-                        $column = strlen($tokens[$firstToken]['content']) - strlen(ltrim($tokens[$firstToken]['content'])) + 1;
+                        // then its just a string that spans multiple lines, so we
+                        // don't need to check for indenting.
+                        continue;
                     }
                 }
 
@@ -224,7 +225,7 @@ class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
                 if ($column < $indent) {
-                    $error  = 'Line indented incorrectly. Expected at least ';
+                    $error  = "Line $i indented incorrectly. Expected at least ";
                     $error .= ($indent - 1).' spaces, but found ';
                     $error .= ($column - 1).'.';
                     $phpcsFile->addError($error, $firstToken);

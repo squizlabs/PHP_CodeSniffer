@@ -201,27 +201,6 @@ if ($a === true || $a === true || $a === true || $a === true ||
     echo 'hello';
 }
 
-if (true) {
-    $this->warnings[] = 'hello
-    hello';
-}
-
-if (true) {
-    $this->warnings[] = 'hello
-  hello';
-}
-
-if (true) {
-    $this->warnings[] = "hello $var{0}
-    hello $var{0}";
-}
-
-if (true) {
-    $this->warnings[] = "hello $var{0}
-  hello $var{0}";
-}
-
-
 if ($true) {
     /* First comment line
     * 
@@ -252,6 +231,26 @@ foreach ($elements as $element) {
     } else if ($somethingElse) {
         // Do ELSE.
     }
+}
+
+if ($condition) {
+    echo "This is a long
+string that spans $numLines lines
+without indenting.
+";
+}
+
+if ($condition) {
+    echo 'This is a long
+    string that spans nultiple lines
+    with indenting.
+    ';
+}
+
+if ($condition) {
+    echo 'This is a long
+          string that spans nultiple lines
+          with indenting.';
 }
 
 ?>
