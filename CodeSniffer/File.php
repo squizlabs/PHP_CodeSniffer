@@ -906,6 +906,7 @@ class PHP_CodeSniffer_File
         $level      = 0;
         $conditions = array();
         $lastOpener = null;
+        $openers    = array();
 
         for ($i = 0; $i < $numTokens; $i++) {
 
@@ -924,24 +925,36 @@ class PHP_CodeSniffer_File
                     // conditions where there was none. This happens for T_CASE
                     // statements that are using the same break statement.
                     if ($lastOpener !== null && $this->_tokens[$lastOpener]['scope_closer'] === $this->_tokens[$i]['scope_closer']) {
-
-                        for (($x = $this->_tokens[$lastOpener]['scope_opener'] + 1); $x <= $this->_tokens[$i]['scope_opener']; $x++) {
+                        $badToken = $this->_tokens[$lastOpener]['scope_condition'];
+                        for ($x = $this->_tokens[$i]['scope_condition']; $x <= $i; $x++) {
                             $this->_tokens[$x]['level']--;
-                            array_pop($this->_tokens[$x]['conditions']);
+                            unset($this->_tokens[$x]['conditions'][$badToken]);
                         }
-
-                        $lastOpener = $this->_tokens[$i]['scope_opener'];
-                        continue;
+                        unset($conditions[$badToken]);
                     }
+
                     $conditions[$stackPtr] = $this->_tokens[$stackPtr]['code'];
                     $level++;
-                    $lastOpener = $this->_tokens[$i]['scope_opener'];
+
+                    if ($lastOpener === null) {
+                        $lastOpener = $this->_tokens[$i]['scope_opener'];
+                    } else {
+                        $lastOpener = $this->_tokens[$i]['scope_opener'];
+                        $openers[]  = $lastOpener;
+                    }
+
                 } else if ($this->_tokens[$i]['scope_closer'] === $i) {
                     array_pop($conditions);
                     $level--;
                     $this->_tokens[$i]['level']      = $level;
                     $this->_tokens[$i]['conditions'] = $conditions;
-                    $lastOpener = $this->_tokens[$i]['scope_opener'];
+                    //$lastOpener = $this->_tokens[$i]['scope_opener'];
+                    array_pop($openers);
+                    if (empty($openers) === false) {
+                        $lastOpener = $openers[(count($openers) - 1)];
+                    } else {
+                        $lastOpener = null;
+                    }
                 }
             }//end if
         }//end for
@@ -1155,15 +1168,15 @@ class PHP_CodeSniffer_File
 
             switch ($this->_tokens[$i]['code']) {
             case T_PUBLIC:
-                $scope = 'public';
+                $scope          = 'public';
                 $scopeSpecified = true;
             break;
             case T_PRIVATE:
-                $scope = 'private';
+                $scope          = 'private';
                 $scopeSpecified = true;
             break;
             case T_PROTECTED:
-                $scope = 'protected';
+                $scope          = 'protected';
                 $scopeSpecified = true;
             break;
             case T_ABSTRACT:
