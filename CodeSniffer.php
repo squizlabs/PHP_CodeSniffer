@@ -632,23 +632,23 @@ class PHP_CodeSniffer
     {
         $newToken = array();
         switch (strtolower($token[1])) {
-            case 'false':
-                $newToken['type'] = 'T_FALSE';
+        case 'false':
+            $newToken['type'] = 'T_FALSE';
             break;
-            case 'true':
-                $newToken['type'] = 'T_TRUE';
+        case 'true':
+            $newToken['type'] = 'T_TRUE';
             break;
-            case 'null':
-                $newToken['type'] = 'T_FALSE';
+        case 'null':
+            $newToken['type'] = 'T_FALSE';
             break;
-            case 'self':
-                $newToken['type'] = 'T_SELF';
+        case 'self':
+            $newToken['type'] = 'T_SELF';
             break;
-            case 'parent':
-                $newToken['type'] = 'T_PARENT';
+        case 'parent':
+            $newToken['type'] = 'T_PARENT';
             break;
-            default:
-                $newToken['type'] = 'T_STRING';
+        default:
+            $newToken['type'] = 'T_STRING';
             break;
         }
 
@@ -676,78 +676,77 @@ class PHP_CodeSniffer
         $newToken = array();
 
         switch ($token) {
-            case '{':
-                $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
+        case '{':
+            $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
             break;
-            case '}':
-                $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
+        case '}':
+            $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
             break;
-            case '[':
-                $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
+        case '[':
+            $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
             break;
-            case ']':
-                $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
+        case ']':
+            $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
             break;
-            case '(':
-                $newToken['type'] = 'T_OPEN_PARENTHESIS';
+        case '(':
+            $newToken['type'] = 'T_OPEN_PARENTHESIS';
             break;
-            case ')':
-                $newToken['type'] = 'T_CLOSE_PARENTHESIS';
+        case ')':
+            $newToken['type'] = 'T_CLOSE_PARENTHESIS';
             break;
-            case ':':
-                $newToken['type'] = 'T_COLON';
+        case ':':
+            $newToken['type'] = 'T_COLON';
             break;
-            case '.':
-                $newToken['type'] = 'T_STRING_CONCAT';
+        case '.':
+            $newToken['type'] = 'T_STRING_CONCAT';
             break;
-            case '?':
-                $newToken['type'] = 'T_INLINE_THEN';
+        case '?':
+            $newToken['type'] = 'T_INLINE_THEN';
             break;
-            case ';':
-                $newToken['type'] = 'T_SEMICOLON';
+        case ';':
+            $newToken['type'] = 'T_SEMICOLON';
             break;
-            case '=':
-                $newToken['type'] = 'T_EQUAL';
+        case '=':
+            $newToken['type'] = 'T_EQUAL';
             break;
-            case '*':
-                $newToken['type'] = 'T_MULTIPLY';
+        case '*':
+            $newToken['type'] = 'T_MULTIPLY';
             break;
-            case '/':
-                $newToken['type'] = 'T_DIVIDE';
+        case '/':
+            $newToken['type'] = 'T_DIVIDE';
             break;
-            case '+':
-                $newToken['type'] = 'T_PLUS';
+        case '+':
+            $newToken['type'] = 'T_PLUS';
             break;
-            case '-':
-                $newToken['type'] = 'T_MINUS';
+        case '-':
+            $newToken['type'] = 'T_MINUS';
             break;
-            case '%':
-                $newToken['type'] = 'T_MODULUS';
+        case '%':
+            $newToken['type'] = 'T_MODULUS';
             break;
-            case '^':
-                $newToken['type'] = 'T_POWER';
+        case '^':
+            $newToken['type'] = 'T_POWER';
             break;
-            case '&':
-                $newToken['type'] = 'T_BITWISE_AND';
+        case '&':
+            $newToken['type'] = 'T_BITWISE_AND';
             break;
-            case '|':
-                $newToken['type'] = 'T_BITWISE_OR';
+        case '|':
+            $newToken['type'] = 'T_BITWISE_OR';
             break;
-            case '<':
-                $newToken['type'] = 'T_LESS_THAN';
+        case '<':
+            $newToken['type'] = 'T_LESS_THAN';
             break;
-            case '>':
-                $newToken['type'] = 'T_GREATER_THAN';
+        case '>':
+            $newToken['type'] = 'T_GREATER_THAN';
             break;
-            case '!':
-                $newToken['type'] = 'T_BOOLEAN_NOT';
+        case '!':
+            $newToken['type'] = 'T_BOOLEAN_NOT';
             break;
-            case ',':
-                $newToken['type'] = 'T_COMMA';
+        case ',':
+            $newToken['type'] = 'T_COMMA';
             break;
-
-            default:
-                $newToken['type'] = 'T_NONE';
+        default:
+            $newToken['type'] = 'T_NONE';
             break;
 
         }//end switch
