@@ -95,11 +95,11 @@ class PEAR_Sniffs_Methods_MethodCallArgumentSpacingSniff implements PHP_CodeSnif
         while (($nextSeperator = $phpcsFile->findNext(array(T_COMMA, T_VARIABLE), ($nextSeperator + 1), $closeBracket)) !== false) {
             if ($tokens[$nextSeperator]['code'] === T_COMMA) {
                 if ($tokens[$nextSeperator - 1]['code'] === T_WHITESPACE) {
-                    $error = 'Space found before comma.';
+                    $error = 'Space found before comma in function call.';
                     $phpcsFile->addError($error, $stackPtr);
                 }
                 if ($tokens[$nextSeperator + 1]['code'] !== T_WHITESPACE) {
-                    $error = 'No space found after comma.';
+                    $error = 'No space found after comma in function call.';
                     $phpcsFile->addError($error, $stackPtr);
                 } else {
                     // If there is a newline in the space, then the must be formatting
@@ -107,7 +107,7 @@ class PEAR_Sniffs_Methods_MethodCallArgumentSpacingSniff implements PHP_CodeSnif
                     if (strpos($tokens[$nextSeperator + 1]['content'], "\n") === false) {
                         $space = strlen($tokens[$nextSeperator + 1]['content']);
                         if ($space > 1) {
-                            $error  = 'Only 1 space required after comma. ';
+                            $error  = 'Expected 1 space after comma in function call, ';
                             $error .= $space.' found.';
                             $phpcsFile->addError($error, $stackPtr);
                         }
