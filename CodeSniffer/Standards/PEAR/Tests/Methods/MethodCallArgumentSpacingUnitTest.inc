@@ -42,4 +42,8 @@ function myFunction($arg1 = 1,$arg2 = 2)
 $key = array_search($this->getArray(),$this->arrayMap);
 $this->error($obj->getCode(),$obj->getMessage(),$obj->getFile(),$obj->getLine());
 
+make_foo($string /*the string*/ , true /*test*/);
+make_foo($string/*the string*/ ,   /*test*/ true);
+make_foo($string /*the string*/, /*test*/ true);
+
 ?>

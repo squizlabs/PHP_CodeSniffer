@@ -69,6 +69,7 @@ class PEAR_Sniffs_Methods_FunctionCallSignatureSniff implements PHP_CodeSniffer_
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Find the next non-empty token.
         $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
 
         if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
@@ -81,6 +82,7 @@ class PEAR_Sniffs_Methods_FunctionCallSignatureSniff implements PHP_CodeSniffer_
             return;
         }
 
+        // Find the previous non-empty token.
         $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
 
         if ($tokens[$previous]['code'] === T_FUNCTION) {
@@ -89,24 +91,29 @@ class PEAR_Sniffs_Methods_FunctionCallSignatureSniff implements PHP_CodeSniffer_
         }
 
         if (($stackPtr + 1) !== $next) {
-            // The opening parenthesis must contain space or a comment. So error.
+            // Checking this: $value = my_function[*](...).
             $error = 'Space before opening parenthesis of function call prohibited';
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        if (in_array($tokens[$next + 1]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+        if ($tokens[$next + 1]['code'] === T_WHITESPACE) {
+            // Checking this: $value = my_function([*]...).
             $error = 'Space after opening parenthesis of function call prohibited';
             $phpcsFile->addError($error, $stackPtr);
         }
 
         $closer = $tokens[$next]['parenthesis_closer'];
 
-        if (in_array($tokens[$closer - 1]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+        if ($tokens[$closer - 1]['code'] === T_WHITESPACE) {
+            // Checking this: $value = my_function(...[*]).
 
             $between = $phpcsFile->findNext(T_WHITESPACE, $next + 1, null, true);
+
             // Only throw an error if there is some content between the parenthesis.
-            // If there is no content, then we would have thrown an error in the previous
-            // if statement.
+            // IE. Checking for this: $value = my_function().
+            // If there is no content, then we would have thrown an error in the
+            // previous IF statement because it would look like this:
+            // $value = my_function( ).
             if ($between !== $closer) {
                 $error = 'Space before closing parenthesis of function call prohibited';
                 $phpcsFile->addError($error, $closer);

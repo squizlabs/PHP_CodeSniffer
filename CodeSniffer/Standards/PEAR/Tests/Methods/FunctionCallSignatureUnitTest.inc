@@ -22,4 +22,10 @@ public function test ()
 {
 
 }
+
+make_foo($string/*the string*/, true/*test*/);
+make_foo($string/*the string*/, true/*test*/ );
+make_foo($string /*the string*/, true /*test*/);
+make_foo(/*the string*/$string, /*test*/true);
+make_foo( /*the string*/$string, /*test*/true);
 ?>

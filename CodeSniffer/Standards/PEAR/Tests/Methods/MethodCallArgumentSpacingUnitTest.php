@@ -62,6 +62,8 @@ class PEAR_Tests_Methods_MethodCallArgumentSpacingUnitTest extends AbstractSniff
                 13 => 3,
                 42 => 1,
                 43 => 3,
+                45 => 1,
+                46 => 2,
                );
 
     }//end getErrorList()
