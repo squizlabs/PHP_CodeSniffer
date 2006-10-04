@@ -184,6 +184,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_FUNCTION,
                                    T_IF,
                                    T_SWITCH,
+                                   T_CASE,
                                    T_WHILE,
                                    T_ELSE,
                                    T_ELSEIF,
