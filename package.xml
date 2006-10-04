@@ -8,13 +8,19 @@
   <maintainer>
    <user>squiz</user>
    <name>Greg Sherwood</name>
-   <email>mysource4@squiz.net</email>
+   <email>gsherwood@squiz.net</email>
+   <role>lead</role>
+  </maintainer>
+  <maintainer>
+   <user>marchaos</user>
+   <name>Marc McIntyre</name>
+   <email>mmcintyre@squiz.net</email>
    <role>lead</role>
   </maintainer>
  </maintainers>
  <release>
   <version>0.2.0</version>
-  <date>2006-10-01</date>
+  <date>2006-10-04</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
@@ -28,6 +34,10 @@
    - Added UpperCaseConstantNameSniff to Generic standard
    - Added OpeningMethodBraceBsdAllmanSniff to Generic standard (contrib by Frederic Poeydomenge)
    - Added OpeningMethodBraceKernighanRitchieSniff to Generic standard (contrib by Frederic Poeydomenge)
+   - Fixed bug #8834 : Massive memory consumption
+   - Fixed bug #8836 : path case issues in package.xml
+   - Fixed bug #8843 : confusion on nested switch()
+   - Fixed bug #8841 : comments taken as whitespace
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
