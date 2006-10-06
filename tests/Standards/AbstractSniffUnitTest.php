@@ -25,8 +25,9 @@
  * | All rights reserved.                                                   |
  * +------------------------------------------------------------------------+
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category Testing
+ * @author   Squiz Pty Ltd
  */
 
 require_once 'PHP/CodeSniffer.php';
@@ -39,8 +40,9 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * coding standard. Expected errors and warnings that are not found, or
  * warnings and errors that are not expected, are considered test failures.
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category Testing
+ * @author   Squiz Pty Ltd
  */
 abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
 {

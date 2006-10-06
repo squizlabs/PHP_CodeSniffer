@@ -25,14 +25,14 @@
  * | All rights reserved.                                                   |
  * +------------------------------------------------------------------------+
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category Testing
+ * @author   Squiz Pty Ltd
  */
 
 require_once 'PHP/CodeSniffer.php';
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
-require_once 'PHPUnit2/Util/Filter.php';
 
 // Require this here so that the unit tests don't have to try and find the
 // abstract class once it is installed into the PEAR tests directory.
@@ -46,8 +46,9 @@ require_once dirname(__FILE__).'/AbstractSniffUnitTest.php';
  * This test class loads all unit tests for all installed standards into a
  * single test suite and runs them. Errors are reported on the command line.
  *
- * @package PHP_CodeSniffer
- * @author  Squiz Pty Ltd
+ * @package  PHP_CodeSniffer
+ * @category Testing
+ * @author   Squiz Pty Ltd
  */
 class AllSniffs
 {
@@ -75,7 +76,7 @@ class AllSniffs
      */
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('PHP_CodeSniffer Standards');
+        $suite = new PHPUnit2_Framework_TestSuite('PHP CodeSniffer Standards');
 
         $standards = PHP_CodeSniffer::getInstalledStandards(true);
         foreach ($standards as $standard) {
