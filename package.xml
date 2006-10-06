@@ -20,7 +20,7 @@
  </maintainers>
  <release>
   <version>0.2.0</version>
-  <date>2006-10-04</date>
+  <date>2006-10-06</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
@@ -34,6 +34,8 @@
    - Added UpperCaseConstantNameSniff to Generic standard
    - Added OpeningMethodBraceBsdAllmanSniff to Generic standard (contrib by Frederic Poeydomenge)
    - Added OpeningMethodBraceKernighanRitchieSniff to Generic standard (contrib by Frederic Poeydomenge)
+   - Added framework for core PHP_CodeSniffer unit tests
+   - Added unit test for PHP_CodeSniffer:isCamelCaps method
    - Fixed bug #8834 : Massive memory consumption
    - Fixed bug #8836 : path case issues in package.xml
    - Fixed bug #8843 : confusion on nested switch()
@@ -58,8 +60,15 @@
      </file>
     </dir>
     <dir name="tests" role="test" baseinstalldir="">
-     <file role="test" name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php"/>
-     <file role="test" name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php"/>
+     <file name="AllTests.php" install-as="AllTests.php"/>
+     <dir name="Core">
+      <file name="AllTests.php" install-as="CodeSniffer/Core/AllTests.php"/>
+      <file name="IsCamelCapsTest.php" install-as="CodeSniffer/Core/IsCamelCapsTest.php"/>
+     </dir>
+     <dir name="Standards">
+      <file name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php"/>
+      <file name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php"/>
+     </dir>
     </dir>
     <dir name="CodeSniffer" role="php" baseinstalldir="PHP">
      <file name="Exception.php"/>
