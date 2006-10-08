@@ -44,4 +44,28 @@ foreach ($elements as $element) {
         // Do ELSE.
     }
 }
+
+switch ($foo) {
+case 1:
+    switch ($bar) {
+    default:
+        if ($something) {
+            echo $string{1};
+        } else if ($else) {
+            switch ($else) {
+            case 1:
+                // Do something.
+                break;
+            default:
+                // Do something.
+            break;
+            }
+        }
+    }
+break;
+case 2:
+    // Do something;
+    break;
+}
+
 ?>
