@@ -20,7 +20,7 @@
  </maintainers>
  <release>
   <version>0.2.0</version>
-  <date>2006-10-06</date>
+  <date>2006-10-08</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
@@ -36,10 +36,12 @@
    - Added OpeningMethodBraceKernighanRitchieSniff to Generic standard (contrib by Frederic Poeydomenge)
    - Added framework for core PHP_CodeSniffer unit tests
    - Added unit test for PHP_CodeSniffer:isCamelCaps method
+   - ScopeClosingBraceSniff now checks indentation of BREAK statements
    - Fixed bug #8834 : Massive memory consumption
    - Fixed bug #8836 : path case issues in package.xml
    - Fixed bug #8843 : confusion on nested switch()
    - Fixed bug #8841 : comments taken as whitespace
+   - Fixed bug #8884 : another problem with nested switch() statements
   </notes>
   <deps>
    <dep type="php" rel="ge" version="5.1.0" optional="no"/>
