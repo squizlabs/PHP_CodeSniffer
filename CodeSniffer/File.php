@@ -108,8 +108,8 @@ require_once 'PHP/CodeSniffer/Exception.php';
  * </code>
  *
  * Each token within a set of parenthesis also has an array indicy 
- * 'nested_parenthesis' which is an array of the left parenthesis => right parenthesis 
- * token positions.
+ * 'nested_parenthesis' which is an array of the
+ * left parenthesis => right parenthesis token positions.
  *
  * <code>
  *   'nested_parentheisis' => array(
@@ -180,7 +180,7 @@ class PHP_CodeSniffer_File
     private $_warningCount = 0;
 
     /**
-     * An array of PHP_CodeSniffer_Sniff listeners listening to this file's processing.
+     * An array of sniffs listening to this file's processing.
      *
      * @var array(PHP_CodeSniffer_Sniff)
      */
@@ -518,7 +518,7 @@ class PHP_CodeSniffer_File
                 $this->_tokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
             }//end else
-        }//end foreach
+        }//end for
 
         $this->_createLineMap();
         $this->_createParenthesisMap();
@@ -527,6 +527,7 @@ class PHP_CodeSniffer_File
         // Column map requires the line map to be complete.
         $this->_createColumnMap();
         $this->_createLevelMap();
+
 
         if (VERBOSE === true) {
             $numTokens = count($this->_tokens);
@@ -811,10 +812,9 @@ class PHP_CodeSniffer_File
 
             // Is this an opening condition ?
             if (isset(self::$_scopeOpeners[$tokenType]) === true) {
-
                 $isShared = self::$_scopeOpeners[$tokenType]['shared'];
-                if ($currType === $tokenType && $isShared === true) {
 
+                if ($currType === $tokenType && $isShared === true) {
                     $closer = $this->_recurseScopeMap($i);
 
                     foreach (array($stackPtr, $opener, $closer) as $token) {
@@ -826,9 +826,9 @@ class PHP_CodeSniffer_File
                     return $stackPtr;
 
                 } else if ($currType == $tokenType && $isShared === false && $opener === null) {
-                    // We haven't yet found our opener, but we have found another scope opener
-                    // which is the same type as us, and we don't share openers, so
-                    // we will never find one.
+                    // We haven't yet found our opener, but we have found another
+                    // scope opener which is the same type as us, and we don't
+                    // share openers, so we will never find one.
                     return $stackPtr;
                 } else if (isset($this->_tokens[$i]['scope_condition'])) {
                     // We've been here before.
@@ -860,13 +860,14 @@ class PHP_CodeSniffer_File
 
                     $owner = $this->_tokens[$i]['parenthesis_owner'];
                     if (in_array($this->_tokens[$owner]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
-                        // If we get into here, then we opened a parenthesis for a scope
-                        // for example an if or else if. We can just skip to the closing
-                        // parenthesis.
+                        // If we get into here, then we opened a parenthesis for
+                        // a scope (eg. an if or else if). We can just skip to
+                        // the closing parenthesis.
                         $i = $this->_tokens[$i]['parenthesis_closer'];
+
                         // Update the start of the line so that when we check to see
-                        // if the closing parenthesis is more than 3 lines away from the
-                        // statement, we check from the closing parenthesis.
+                        // if the closing parenthesis is more than 3 lines away from
+                        // the statement, we check from the closing parenthesis.
                         $startLine = $this->_tokens[$i]['parenthesis_closer'];
                     }
                 }
@@ -881,6 +882,24 @@ class PHP_CodeSniffer_File
                 // we're not going to find it.
                 if ($this->_tokens[$i]['line'] >= ($startLine + 3)) {
                     return $stackPtr;
+                }
+            } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $endScopeTokens) === true) {
+                if (isset($this->_tokens[$i]['scope_condition']) === false) {
+                    if ($ignore === true) {
+                        // We found the end token for the opener we were ignoring.
+                        $ignore = false;
+                    } else {
+                        // We found a token that closes the scope but it doesn't
+                        // have a condition, so it belongs to another token and
+                        // our token doesn't have a closer, so pretend this is
+                        // the closer.
+                        foreach (array($stackPtr, $opener) as $token) {
+                            $this->_tokens[$token]['scope_condition'] = $stackPtr;
+                            $this->_tokens[$token]['scope_opener']    = $opener;
+                            $this->_tokens[$token]['scope_closer']    = $i;
+                        }
+                        return ($i - 1);
+                    }
                 }
             }
         }//end for
@@ -948,7 +967,7 @@ class PHP_CodeSniffer_File
                     $level--;
                     $this->_tokens[$i]['level']      = $level;
                     $this->_tokens[$i]['conditions'] = $conditions;
-                    //$lastOpener = $this->_tokens[$i]['scope_opener'];
+
                     array_pop($openers);
                     if (empty($openers) === false) {
                         $lastOpener = $openers[(count($openers) - 1)];
@@ -1070,13 +1089,13 @@ class PHP_CodeSniffer_File
             switch ($this->_tokens[$i]['code']) {
             case T_BITWISE_AND:
                 $passByReference = true;
-            break;
+                break;
             case T_VARIABLE:
                 $currVar = $i;
-            break;
+                break;
             case T_ARRAY_HINT:
                 $isArray = true;
-            break;
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -1101,10 +1120,10 @@ class PHP_CodeSniffer_File
                 $passByReference = false;
 
                 $paramCount++;
-            break;
+                break;
             case T_EQUAL:
                 $defaultStart = ($i + 1);
-            break;
+                break;
             }//end switch
         }//end for
 
@@ -1170,24 +1189,24 @@ class PHP_CodeSniffer_File
             case T_PUBLIC:
                 $scope          = 'public';
                 $scopeSpecified = true;
-            break;
+                break;
             case T_PRIVATE:
                 $scope          = 'private';
                 $scopeSpecified = true;
-            break;
+                break;
             case T_PROTECTED:
                 $scope          = 'protected';
                 $scopeSpecified = true;
-            break;
+                break;
             case T_ABSTRACT:
                 $isAbstract = true;
-            break;
+                break;
             case T_FINAL:
                 $isFinal = true;
-            break;
+                break;
             case T_STATIC:
                 $isStatic = true;
-            break;
+                break;
             }
         }//end for
 
@@ -1255,16 +1274,16 @@ class PHP_CodeSniffer_File
             switch ($this->_tokens[$i]['code']) {
             case T_PUBLIC:
                 $scope = 'public';
-            break;
+                break;
             case T_PRIVATE:
                 $scope = 'private';
-            break;
+                break;
             case T_PROTECTED:
                 $scope = 'protected';
-            break;
+                break;
             case T_STATIC:
                 $isStatic = true;
-            break;
+                break;
             }
         }//end for
 
