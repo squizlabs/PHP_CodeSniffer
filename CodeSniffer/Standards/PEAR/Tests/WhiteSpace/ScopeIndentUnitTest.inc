@@ -253,4 +253,39 @@ if ($condition) {
           with indenting.';
 }
 
+switch ($foo) {
+case 1:
+    switch ($bar) {
+    default:
+        echo $string{1};
+    }
+    break;
+}
+
+function temp($foo, $bar) {
+    switch ($foo) {
+    case 1:
+        switch ($bar) {
+        default:
+            return $foo;
+        }
+        break;
+    }
+}
+
+switch ($foo) {
+case 1:
+    switch ($bar) {
+        default:
+        if ($something) {
+            echo $string{1};
+        } else if ($else) {
+            switch ($else) {
+                default:
+            }
+        }
+    }
+    break;
+}
+
 ?>

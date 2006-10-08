@@ -65,6 +65,8 @@ class PEAR_Tests_Whitespace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 126 => 1,
                 224 => 1,
                 225 => 1,
+                279 => 1,
+                284 => 1,
                );
 
     }//end getErrorList()
