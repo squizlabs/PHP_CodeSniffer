@@ -107,13 +107,15 @@ class PHP_CodeSniffer
     /**
      * Constructs a PHP_CodeSniffer object.
      *
-     * @param boolean $verbose Show progress during the script.
+     * @param int $verbosity The verbosity level.
+     *                       1: Print progress information.
+     *                       2: Print developer debug information.
      *
      * @see process()
      */
-    public function __construct($verbose=false)
+    public function __construct($verbosity=0)
     {
-        define('VERBOSE', $verbose);
+        define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
 
     }//end __construct()
 
@@ -152,12 +154,12 @@ class PHP_CodeSniffer
         $this->_listeners = array();
         $this->_files     = array();
 
-        if (VERBOSE === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Registering sniffs... ';
         }
 
         $this->_registerTokenListeners($standard, $sniffs);
-        if (VERBOSE === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo "DONE\n";
         }
 
@@ -376,7 +378,7 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception('Source file '.$file.' does not exist');
         }
 
-        if (VERBOSE === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
             echo 'Processing '.basename($file).' ';
         }
@@ -385,7 +387,7 @@ class PHP_CodeSniffer
         $this->_files[] = $phpcsFile;
         $phpcsFile->start();
 
-        if (VERBOSE === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = time() - $startTime;
             if ($timeTaken === 0) {
                 echo "DONE in < 1 second\n";
@@ -508,7 +510,7 @@ class PHP_CodeSniffer
 
             // If verbose output is enabled, we show the results for all files,
             // but if not, we only show files that had errors or warnings.
-            if (VERBOSE === true || $numErrors > 0 || ($numWarnings > 0 && $showWarnings === true)) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0 || $numErrors > 0 || ($numWarnings > 0 && $showWarnings === true)) {
                 $errorFiles[$filename] = array(
                                           'warnings' => $numWarnings,
                                           'errors'   => $numErrors,

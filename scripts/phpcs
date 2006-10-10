@@ -55,7 +55,7 @@ function print_usage()
     echo " <standard> : the name of the coding standard to use\n";
     echo " <report>   : print either the \"full\" or \"summary\" report\n";
     echo " -n         : do not print warnings\n";
-    echo " -v         : print verbose output\n";
+    echo " -v -vv     : print verbose output\n";
     echo " -i         : show a list of installed coding standards\n";
     echo " -h --help  : print this help message\n";
     echo " --version  : print version information\n";
@@ -102,7 +102,7 @@ if (count($installedStandards) === 0) {
 // The default values for config settings.
 $files        = array();
 $standard     = NULL;
-$verbose      = FALSE;
+$verbosity    = 0;
 $report       = 'full';
 $showWarnings = TRUE;
 
@@ -153,7 +153,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                         exit();
                     break;
                     case 'v' :
-                        $verbose = TRUE;
+                        $verbosity++;
                     break;
                     case 'n' :
                         $showWarnings = FALSE;
@@ -199,7 +199,7 @@ if (PHP_CodeSniffer::isInstalledStandard($standard) === FALSE) {
     exit();
 }
 
-$phpcs = new PHP_CodeSniffer($verbose);
+$phpcs = new PHP_CodeSniffer($verbosity);
 $phpcs->process($files, $standard);
 if ($report === 'summary') {
     $phpcs->printErrorReportSummary($showWarnings);
