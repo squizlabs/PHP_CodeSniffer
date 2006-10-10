@@ -997,6 +997,22 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $numTokens; $i++) {
 
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $type    = $this->_tokens[$i]['type'];
+                $line    = $this->_tokens[$i]['line'];
+                $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                echo str_repeat("\t", ($level + 1));
+                echo "Process token $i on line $line [lvl:$level;";
+                if (empty($conditions) !== true) {
+                    $condString = 'conds;';
+                    foreach ($conditions as $condition) {
+                        $condString .= token_name($condition).',';
+                    }
+                    echo rtrim($condString, ',').';';
+                }
+                echo "]: $type => $content\n";
+            }
+
             $this->_tokens[$i]['level']      = $level;
             $this->_tokens[$i]['conditions'] = $conditions;
 
@@ -1004,6 +1020,13 @@ class PHP_CodeSniffer_File
 
                 // Check to see if this token opened the scope.
                 if ($this->_tokens[$i]['scope_opener'] === $i) {
+                    $stackPtr = $this->_tokens[$i]['scope_condition'];
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", ($level + 1));
+                        echo "=> Found scope opener for $stackPtr ($type)\n";
+                    }
+
                     $stackPtr = $this->_tokens[$i]['scope_condition'];
 
                     // If we find a scope opener that has a shared closer,
@@ -1013,36 +1036,109 @@ class PHP_CodeSniffer_File
                     // statements that are using the same break statement.
                     if ($lastOpener !== null && $this->_tokens[$lastOpener]['scope_closer'] === $this->_tokens[$i]['scope_closer']) {
                         $badToken = $this->_tokens[$lastOpener]['scope_condition'];
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->_tokens[$badToken]['type'];
+                            echo str_repeat("\t", ($level + 1));
+                            echo "* shared closer, cleaning up $badToken ($type) *\n";
+                        }
+
                         for ($x = $this->_tokens[$i]['scope_condition']; $x <= $i; $x++) {
+                            $oldConditions = $this->_tokens[$x]['conditions'];
+                            $oldLevel      = $this->_tokens[$x]['level'];
                             $this->_tokens[$x]['level']--;
                             unset($this->_tokens[$x]['conditions'][$badToken]);
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $type     = $this->_tokens[$x]['type'];
+                                $oldConds = '';
+                                foreach ($oldConditions as $condition) {
+                                    $oldConds .= token_name($condition).',';
+                                }
+                                $oldConds = rtrim($oldConds, ',');
+
+                                $newConds = '';
+                                foreach ($this->_tokens[$x]['conditions'] as $condition) {
+                                    $newConds .= token_name($condition).',';
+                                }
+                                $newConds = rtrim($newConds, ',');
+
+                                $newLevel = $this->_tokens[$x]['level'];
+                                echo str_repeat("\t", ($level + 1));
+                                echo "* cleaned $x ($type) *\n";
+                                echo str_repeat("\t", ($level + 2));
+                                echo "=> level changed from $oldLevel to $newLevel\n";
+                                echo str_repeat("\t", ($level + 2));
+                                echo "=> conditions changed from $oldConds to $newConds\n";
+                            }
                         }
                         unset($conditions[$badToken]);
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->_tokens[$badToken]['type'];
+                            echo str_repeat("\t", ($level + 1));
+                            echo "* token $badToken ($type) removed from conditions array *\n";
+                        }
+
+                        $level--;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", ($level + 2));
+                            echo "* level decreased *\n";
+                        }
+                    }//end if
+
+                    $level++;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", ($level + 1));
+                        echo "* level increased *\n";
                     }
 
                     $conditions[$stackPtr] = $this->_tokens[$stackPtr]['code'];
-                    $level++;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", ($level + 1));
+                        echo "* token $stackPtr ($type) added to conditions array *\n";
+                    }
 
-                    if ($lastOpener === null) {
-                        $lastOpener = $this->_tokens[$i]['scope_opener'];
-                    } else {
-                        $lastOpener = $this->_tokens[$i]['scope_opener'];
+                    $lastOpener = $this->_tokens[$i]['scope_opener'];
+                    if ($lastOpener !== null) {
                         $openers[]  = $lastOpener;
                     }
 
                 } else if ($this->_tokens[$i]['scope_closer'] === $i) {
-                    array_pop($conditions);
-                    $level--;
-                    $this->_tokens[$i]['level']      = $level;
-                    $this->_tokens[$i]['conditions'] = $conditions;
+                    $removedCondition = false;
+                    foreach (array_reverse($openers) as $opener) {
+                        if ($this->_tokens[$opener]['scope_closer'] === $i) {
+                            $oldOpener = array_pop($openers);
+                            if (empty($openers) === false) {
+                                $lastOpener = $openers[(count($openers) - 1)];
+                            } else {
+                                $lastOpener = null;
+                            }
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $type = $this->_tokens[$oldOpener]['type'];
+                                echo str_repeat("\t", ($level + 1));
+                                echo "=> Found scope closer for $oldOpener ($type)\n";
+                            }
 
-                    array_pop($openers);
-                    if (empty($openers) === false) {
-                        $lastOpener = $openers[(count($openers) - 1)];
-                    } else {
-                        $lastOpener = null;
-                    }
-                }
+                            if ($removedCondition === false) {
+                                $oldCondition = array_pop($conditions);
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo str_repeat("\t", ($level + 1));
+                                    echo "* token ".token_name($oldCondition)." removed from conditions array *\n";
+                                }
+
+                                $level--;
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo str_repeat("\t", ($level + 2));
+                                    echo "* level decreased *\n";
+                                }
+
+                                $removedCondition = true;
+                            }
+
+                            $this->_tokens[$i]['level']      = $level;
+                            $this->_tokens[$i]['conditions'] = $conditions;
+                        }//end if
+                    }//end foreach
+                }//end if
             }//end if
         }//end for
 
