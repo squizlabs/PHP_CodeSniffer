@@ -381,6 +381,9 @@ class PHP_CodeSniffer
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
             echo 'Processing '.basename($file).' ';
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\n";
+            }
         }
 
         $phpcsFile = new PHP_CodeSniffer_File($file, $this->_listeners);

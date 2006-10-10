@@ -772,6 +772,10 @@ class PHP_CodeSniffer_File
      */
     private function _createScopeMap()
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START SCOPE MAP ***\n";
+        }
+
         $numTokens = count($this->_tokens);
         for ($i = 0; $i < $numTokens; $i++) {
             // Check to see if the current token starts a new scope.
@@ -779,10 +783,14 @@ class PHP_CodeSniffer_File
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type    = $this->_tokens[$i]['type'];
                     $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
-                    echo "\n\tStart scope map at $i: $type => $content\n";
+                    echo "\tStart scope map at $i: $type => $content\n";
                 }
                 $i = $this->_recurseScopeMap($i);
             }
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END SCOPE MAP ***\n";
         }
 
     }//end _createScopeMap()
@@ -989,6 +997,10 @@ class PHP_CodeSniffer_File
      */
     private function _createLevelMap()
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START LEVEL MAP ***\n";
+        }
+
         $numTokens  = count($this->_tokens);
         $level      = 0;
         $conditions = array();
@@ -1141,6 +1153,10 @@ class PHP_CodeSniffer_File
                 }//end if
             }//end if
         }//end for
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END LEVEL MAP ***\n";
+        }
 
     }//end _createLevelMap()
 
