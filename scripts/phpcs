@@ -101,10 +101,10 @@ if (count($installedStandards) === 0) {
 
 // The default values for config settings.
 $files        = array();
-$standard     = NULL;
+$standard     = null;
 $verbosity    = 0;
 $report       = 'full';
-$showWarnings = TRUE;
+$showWarnings = true;
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
     $arg = $_SERVER['argv'][$i];
@@ -121,7 +121,8 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             }
 
             if ($arg === '--version') {
-                echo "PHP_CodeSniffer version @package_version@ (@package_state@) by Squiz Pty Ltd.\n";
+                echo "PHP_CodeSniffer version @package_version@ (@package_state@) ";
+                echo "by Squiz Pty Ltd.\n";
                 exit();
             }
 
@@ -145,22 +146,22 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 }
 
                 switch ($switch) {
-                    case 'h':
-                        print_usage();
+                case 'h':
+                    print_usage();
                     break;
-                    case 'i' :
-                        print_installed_standards();
-                        exit();
+                case 'i' :
+                    print_installed_standards();
+                    exit();
                     break;
-                    case 'v' :
-                        $verbosity++;
+                case 'v' :
+                    $verbosity++;
                     break;
-                    case 'n' :
-                        $showWarnings = FALSE;
+                case 'n' :
+                    $showWarnings = false;
                     break;
-                    default:
-                        echo "ERROR: option \"$switch\" not known.\n\n";
-                        print_usage();
+                default:
+                    echo "ERROR: option \"$switch\" not known.\n\n";
+                    print_usage();
                 }//end switch
             }//end foreach
         }//end else
@@ -170,20 +171,20 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
     }
 }//end for
 
-if (empty($files) === TRUE) {
+if (empty($files) === true) {
     echo "ERROR: You must supply at least one file or directory to process.\n\n";
     print_usage();
 }
 
 foreach ($files as $file) {
-    if (file_exists($file) === FALSE) {
+    if (file_exists($file) === false) {
         echo "ERROR: The file \"$file\" does not exist.\n\n";
         print_usage();
     }
 }
 
 if (count($installedStandards) > 1) {
-    if ($standard === NULL) {
+    if ($standard === null) {
         echo "ERROR: You must supply the name of the coding standard to use.\n\n";
         print_usage();
     }
@@ -191,7 +192,7 @@ if (count($installedStandards) > 1) {
     $standard = array_pop($installedStandards);
 }
 
-if (PHP_CodeSniffer::isInstalledStandard($standard) === FALSE) {
+if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
     // They didn't select a valid coding standard, so help them
     // out by letting them know which standards are installed.
     echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
