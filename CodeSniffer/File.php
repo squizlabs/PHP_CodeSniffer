@@ -283,7 +283,7 @@ class PHP_CodeSniffer_File
                                      T_DEFAULT       => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
-                                                         'shared' => false,
+                                                         'shared' => true,
                                                     ),
                                      T_START_HEREDOC => array(
                                                          'start'  => T_START_HEREDOC,
@@ -529,7 +529,7 @@ class PHP_CodeSniffer_File
         $this->_createLevelMap();
 
 
-        if (VERBOSE === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numTokens = count($this->_tokens);
             $numLines  = $this->_tokens[($numTokens -1)]['line'];
             echo "[$numTokens tokens in $numLines lines]... ";
@@ -776,6 +776,11 @@ class PHP_CodeSniffer_File
         for ($i = 0; $i < $numTokens; $i++) {
             // Check to see if the current token starts a new scope.
             if (isset(self::$_scopeOpeners[$this->_tokens[$i]['code']]) === true) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type    = $this->_tokens[$i]['type'];
+                    $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                    echo "\n\tStart scope map at $i: $type => $content\n";
+                }
                 $i = $this->_recurseScopeMap($i);
             }
         }
@@ -787,11 +792,12 @@ class PHP_CodeSniffer_File
      * Recurses though the scope openers to build a scope map.
      *
      * @param int $stackPtr The position in the stack of the token that opened
-     *                      the scope (eg. and if token or for token)
+     *                      the scope (eg. an IF token or FOR token).
+     * @param int $dpeth    How many scope levels down we are.
      *
      * @return int The position in the stack that closed the scope.
      */
-    private function _recurseScopeMap($stackPtr)
+    private function _recurseScopeMap($stackPtr, $depth=1)
     {
         $opener         = null;
         $closer         = null;
@@ -810,50 +816,93 @@ class PHP_CodeSniffer_File
         for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
             $tokenType = $this->_tokens[$i]['code'];
 
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $type    = $this->_tokens[$i]['type'];
+                $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                echo str_repeat("\t", $depth);
+                echo "Process token $i [";
+                if ($opener !== null) {
+                    echo "opener:$opener;";
+                }
+                if ($ignore === true) {
+                    echo 'ignore;';
+                }
+                echo "]: $type => $content\n";
+            }
+
             // Is this an opening condition ?
             if (isset(self::$_scopeOpeners[$tokenType]) === true) {
-                $isShared = self::$_scopeOpeners[$tokenType]['shared'];
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "* token is an opening condition *\n";
+                }
 
-                if ($currType === $tokenType && $isShared === true) {
-                    $closer = $this->_recurseScopeMap($i);
+                $isShared = (self::$_scopeOpeners[$tokenType]['shared'] === true);
 
-                    foreach (array($stackPtr, $opener, $closer) as $token) {
-                        $this->_tokens[$token]['scope_condition'] = $stackPtr;
-                        $this->_tokens[$token]['scope_opener']    = $opener;
-                        $this->_tokens[$token]['scope_closer']    = $closer;
+                if (isset($this->_tokens[$i]['scope_condition'])) {
+                    // We've been here before.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "* already processed, skipping *\n";
                     }
 
-                    return $stackPtr;
-
+                    if ($isShared === false && isset($this->_tokens[$i]['scope_closer']) === true) {
+                        $i = $this->_tokens[$i]['scope_closer'];
+                    }
+                    continue;
                 } else if ($currType == $tokenType && $isShared === false && $opener === null) {
                     // We haven't yet found our opener, but we have found another
                     // scope opener which is the same type as us, and we don't
                     // share openers, so we will never find one.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "* it was another token's opener, bailing *\n";
+                    }
                     return $stackPtr;
-                } else if (isset($this->_tokens[$i]['scope_condition'])) {
-                    // We've been here before.
-                    $i = $this->_tokens[$i]['scope_closer'];
                 } else {
-                    $i = $this->_recurseScopeMap($i);
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "* searching for closer *\n";
+                    }
+                    $i = $this->_recurseScopeMap($i, ($depth + 1));
                 }
             }//end if start scope
 
             if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
                 // We found the opening scope token for $currType.
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type = $this->_tokens[$stackPtr]['type'];
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found scope opener for $stackPtr ($type)\n";
+                }
                 $opener = $i;
             } else if ($tokenType === self::$_scopeOpeners[$currType]['end'] && $opener !== null) {
                 if ($ignore === true) {
                     // The last opening bracket must have been for a string
                     // offset or alike, so let's ignore it.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "* finished ignoring curly brace *\n";
+                    }
                     $ignore = false;
                 } else {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", $depth);
+                        echo "=> Found scope closer for $stackPtr ($type)\n";
+                    }
+
                     foreach (array($stackPtr, $opener, $i) as $token) {
                         $this->_tokens[$token]['scope_condition'] = $stackPtr;
                         $this->_tokens[$token]['scope_opener']    = $opener;
                         $this->_tokens[$token]['scope_closer']    = $i;
                     }
 
-                    return $i;
+                    if (self::$_scopeOpeners[$this->_tokens[$stackPtr]['code']]['shared'] === true) {
+                        return $opener;
+                    } else {
+                        return $i;
+                    }
                 }
             } else if ($tokenType === T_OPEN_PARENTHESIS) {
                 if (isset($this->_tokens[$i]['parenthesis_owner']) === true) {
@@ -876,23 +925,42 @@ class PHP_CodeSniffer_File
                 // Examples of this are curly brackets for string offsets etc.
                 // We want to ignore this so that we don't have an invalid scope
                 // map.
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "* ignoring curly brace *\n";
+                }
                 $ignore = true;
             } else if ($opener === null && isset(self::$_scopeOpeners[$currType]) === true) {
                 // If we still haven't found the opener after 3 lines,
                 // we're not going to find it.
                 if ($this->_tokens[$i]['line'] >= ($startLine + 3)) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", $depth);
+                        echo "=> Couldn't find scope opener for $stackPtr ($type), bailing\n";
+                    }
                     return $stackPtr;
                 }
             } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $endScopeTokens) === true) {
                 if (isset($this->_tokens[$i]['scope_condition']) === false) {
                     if ($ignore === true) {
                         // We found the end token for the opener we were ignoring.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "* finished ignoring curly brace *\n";
+                        }
                         $ignore = false;
                     } else {
                         // We found a token that closes the scope but it doesn't
                         // have a condition, so it belongs to another token and
                         // our token doesn't have a closer, so pretend this is
                         // the closer.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->_tokens[$stackPtr]['type'];
+                            echo str_repeat("\t", $depth);
+                            echo "=> Found (unexpected) scope closer for $stackPtr ($type)\n";
+                        }
+
                         foreach (array($stackPtr, $opener) as $token) {
                             $this->_tokens[$token]['scope_condition'] = $stackPtr;
                             $this->_tokens[$token]['scope_opener']    = $opener;

@@ -288,4 +288,19 @@ case 1:
     break;
 }
 
+switch ($name) {
+case "1":
+case "2":
+case "3":
+    return true;
+}
+
+switch ($name) {
+case "1":
+case "2":
+case "3":
+default :
+    return true;
+}
+
 ?>
