@@ -528,7 +528,6 @@ class PHP_CodeSniffer_File
         $this->_createColumnMap();
         $this->_createLevelMap();
 
-
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numTokens = count($this->_tokens);
             $numLines  = $this->_tokens[($numTokens -1)]['line'];
@@ -752,15 +751,22 @@ class PHP_CodeSniffer_File
         $map = array();
         for ($i = 0; $i < $numTokens; $i++) {
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true && $i === $this->_tokens[$i]['parenthesis_opener']) {
+                if (empty($map) === false) {
+                    $this->_tokens[$i]['nested_parenthesis'] = $map;
+                }
                 $map[$this->_tokens[$i]['parenthesis_opener']] = $this->_tokens[$i]['parenthesis_closer'];
             } else if (isset($this->_tokens[$i]['parenthesis_closer']) === true && $i === $this->_tokens[$i]['parenthesis_closer']) {
                 array_pop($map);
+                if (empty($map) === false) {
+                    $this->_tokens[$i]['nested_parenthesis'] = $map;
+                }
             } else {
                 if (empty($map) === false) {
                     $this->_tokens[$i]['nested_parenthesis'] = $map;
                 }
             }
         }
+
     }//end _createParenthesisNestingMap()
 
 
