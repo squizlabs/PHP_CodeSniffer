@@ -368,10 +368,21 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     }
 
                     if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
-                        $found .= $tokens[$stackPtr]['content'];
+                        if (isset($pattern[$i + 1]) === false) {
+                            // This is the last token in the pattern, so just compare
+                            // the next token of content.
+                            $tokenContent = $tokens[$stackPtr]['content'];
+                        } else {
+                            // Get all the whitespace to the next token.
+                            $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                            $tokenContent = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
+                            $stackPtr = $next;
+                        }
+
+                        $found .= $tokenContent;
                     }
 
-                    if ($tokens[$stackPtr]['content'] !== $pattern[$i]['value']) {
+                    if ($tokenContent !== $pattern[$i]['value']) {
                         $hasError = true;
                     }
                 } else {
@@ -503,47 +514,53 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      */
     private function _parse($pattern)
     {
-        $patterns       = array();
-        $length         = strlen($pattern);
-        $lastToken      = 0;
-        $firstToken     = 0;
-        $complexPattern = null;
-        $patternCount   = 0;
+        $patterns         = array();
+        $length           = strlen($pattern);
+        $lastToken        = 0;
+        $firstToken       = 0;
+        $skipPatternCount = 0;
 
         for ($i = 0; $i < $length; $i++) {
 
-            $complexPattern = null;
+            $skipPattern = false;
+            $isLastChar = ($i === ($length - 1));
 
             if (substr($pattern, $i, 3) === '...') {
                 // It's a skip pattern. The skip pattern requires the
-                // content of the token in the from position and the token
+                // content of the token in the "from" position and the token
                 // to skip to.
-                $complexPattern = $this->_createSkipPattern($pattern{$i - 1});
-                $lastToken      = ($i - $firstToken);
-                $i              = ($i + 4);
-                $patternCount++;
+                $skipPattern = $this->_createSkipPattern($pattern{$i - 1});
+                $lastToken   = ($i - $firstToken);
+                $i           = ($i + 4);
+                $skipPatternCount++;
             }
 
-            if ($complexPattern !== null || $i === ($length - 1)) {
+            if ($skipPattern !== false || $isLastChar === true) {
 
                 // If we are at the end of the string, don't worry about a limit.
-                if ($i !== ($length - 1) || $patternCount === 1) {
-                    $str = substr($pattern, $firstToken, $lastToken);
-                } else {
+                if ($isLastChar === true) {
+                    // Get the string from the end of the last skip pattern, if any,
+                    // to the end of the pattern string.
                     $str = substr($pattern, $firstToken);
+                } else {
+                    // Get the string from the end of the last skip pattern, if any,
+                    // to the start of this skip pattern.
+                    $str = substr($pattern, $firstToken, $lastToken);
                 }
 
-                // Reset the first token to the current position in the string.
-                $firstToken    = $i;
                 $tokenPatterns = $this->_createTokenPattern($str);
+                $firstToken = $i;
 
                 foreach ($tokenPatterns as $tokenPattern) {
                     $patterns[] = $tokenPattern;
                 }
             }
 
-            if ($complexPattern !== null) {
-                $patterns[] = $complexPattern;
+            // Add the skip pattern *after* we have processed
+            // all the tokens from the end of the last skip pattern
+            // to the start of this skip pattern.
+            if ($skipPattern !== false) {
+                $patterns[] = $skipPattern;
             }
 
         }//end for
