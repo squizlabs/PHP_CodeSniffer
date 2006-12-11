@@ -144,6 +144,13 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                              'since'      => true,
                             );
 
+    /**
+     * The order of tags
+     *
+     * @var array(string)
+     */
+    public $orders = array();
+
 
     /**
      * Constructs a Doc Comment Parser.
@@ -220,8 +227,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     private function _parseWords()
     {
         $allowedTags     = (self::$_tags + $this->getAllowedTags());
-        $allowedTagNames = array_keys($allowedTags);
 
+        $allowedTagNames = array_keys($allowedTags);
         $foundTags = array();
 
         $prevTagPos    = false;
@@ -239,7 +246,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 if (in_array($tag, $allowedTagNames) === true) {
 
                     if ($allowedTags[$tag] === true && in_array($tag, $foundTags) === true) {
-                        $exception = 'Only one occurence of the @'.$tag.' is allowed';
+                        $exception = 'Only one occurence of the @'.$tag.' tag is allowed';
                         $line      = $this->getLine($wordPos);
                         throw new PHP_CodeSniffer_CommentParser_ParserException($exception, $line);
                     }
@@ -286,7 +293,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      */
     protected function getLine($tokenPos)
     {
-        $newlines = 1;
+        $newlines = 0;
         for ($i = 0; $i < $tokenPos; $i++) {
             $newlines += substr_count("\n", $this->words[$i]);
         }
@@ -336,7 +343,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      */
     protected function parseDeprecated($tokens)
     {
-        $this->deprecated = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElemement, $tokens, 'deprecated');
+        $this->deprecated = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'deprecated');
         return $this->deprecated;
 
     }//end parseDeprecated()
@@ -463,6 +470,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         }
 
         $this->previousElement = $this->$method($tokens);
+        $this->orders[] = $tag;
 
         if ($this->previousElement === null || ($this->previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
             throw new Exception('Parse method must return a DocElement');
@@ -482,6 +490,18 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @return array(string => boolean)
      */
     protected abstract function getAllowedTags();
+
+
+    /**
+     * Returns the tag orders. (index => tagName)
+     *
+     * @return array
+     */
+    public function getTagOrders()
+    {
+        return $this->orders;
+
+    }//end getTagOrders()
 
 
 }//end class

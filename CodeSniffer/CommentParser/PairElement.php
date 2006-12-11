@@ -53,11 +53,25 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
     private $_value = '';
 
     /**
-     * The commeent of the tag.
+     * The comment of the tag.
      *
      * @var string
      */
     private $_comment = '';
+
+    /**
+     * The whitespace that exists before the value elem.
+     *
+     * @var string
+     */
+    private $_valueWhitespace = '';
+
+    /**
+     * The whitespace that exists before the comment elem.
+     *
+     * @var string
+     */
+    private $_commentWhitespace = '';
 
 
     /**
@@ -135,6 +149,16 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
 
     }//end getComment()
 
+    /**
+     * Returns the witespace before the content of this tag.
+     *
+     * @return string
+     */
+    public function getWhitespaceBeforeValue()
+    {
+        return $this->_valueWhitespace;
+
+    }//end getWhitespaceBeforeValue()
 
 }//end class
 

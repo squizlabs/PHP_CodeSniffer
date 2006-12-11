@@ -273,8 +273,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     public function getLine()
     {
         if ($this->previousElement === null) {
-            // There's a  /** comment on line 1, so return 2.
-            return 2;
+            // First element is on line one
+            return 1;
         } else {
             $previousContent = $this->previousElement->getRawContent();
             $previousLine    = $this->previousElement->getLine();

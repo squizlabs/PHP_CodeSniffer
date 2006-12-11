@@ -135,6 +135,25 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
     }//end getWhitespaceBeforeContent()
 
 
+    /**
+     * Processes a content check for single doc element.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
+     * @param int                  $commentStart The line number where the error occurs.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStart)
+    {
+        if ($this->content === '') {
+            $errorPos = $commentStart + $this->getLine();
+            $error = "Content missing for $this->tag tag";
+            $phpcsFile->addError($error, $errorPos);
+        }
+
+    }//end process()
+
+
 }//end class
 
 ?>

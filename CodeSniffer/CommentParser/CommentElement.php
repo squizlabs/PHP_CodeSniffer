@@ -82,6 +82,9 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     public function getHeadlineComment()
     {
         $pos = $this->_getEndHeadlinePos();
+        if ($pos === -1) {
+            return '';
+        }
         return implode('', array_slice($this->tokens, 0, $pos + 1));
 
     }//end getHeadlineComment()
@@ -180,7 +183,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      */
     public function isEmpty()
     {
-        return trim($this->getContent() === '');
+        return (trim($this->getContent()) === '');
 
     }//end isEmpty()
 

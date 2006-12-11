@@ -76,7 +76,6 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     private $_license = null;
 
-
     /**
      * The author elements of this class.
      *
@@ -93,12 +92,12 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
     protected function getAllowedTags()
     {
         return array(
-                'package'   => true,
-                'version'   => true,
-                'author'    => false,
                 'category'  => false,
-                'copyright' => false,
-                'licence'   => false,
+                'package'   => true,
+                'author'    => false,
+                'copyright' => true,
+                'license'   => false,
+                'version'   => true,
                );
 
     }//end getAllowedTags()
@@ -109,7 +108,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @param array $tokens The tokens that comprise this tag.
      *
-     * @return array(PHP_CodeSniffer_CommentParser_SingleElement)
+     * @return PHP_CodeSniffer_CommentParser_PairElement
      */
     protected function parseLicense($tokens)
     {
@@ -124,7 +123,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @param array $tokens The tokens that comprise this tag.
      *
-     * @return array(PHP_CodeSniffer_CommentParser_SingleElement)
+     * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
     protected function parseCopyright($tokens)
     {
@@ -139,7 +138,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      *
      * @param array $tokens The tokens that comprise this tag.
      *
-     * @return array(PHP_CodeSniffer_CommentParser_SingleElement)
+     * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
     protected function parseCategory($tokens)
     {
