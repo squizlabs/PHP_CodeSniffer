@@ -54,7 +54,7 @@ class PEAR_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                3 => 1,
+                2 => 1,
                );
 
     }//end getErrorList()

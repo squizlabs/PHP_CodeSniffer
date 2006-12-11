@@ -54,11 +54,11 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
     public function getErrorList()
     {
         return array(
-                11 => 1,
-                13 => 2,
-                14 => 4,
+                10 => 1,
+                12 => 2,
+                13 => 4,
+                14 => 1,
                 15 => 1,
-                16 => 1,
                );
 
     }//end getErrorList()
