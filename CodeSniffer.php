@@ -856,17 +856,7 @@ class PHP_CodeSniffer
             }
         }
 
-        if ($validName !== true) {
-            $firstBit = array_shift($nameBits);
-            $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-            foreach ($nameBits as $bit) {
-                $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-            }
-            $newName = trim($newName, '_');
-            return $newName;
-        }
-
-        return $string;
+        return $validName;
 
     }//end isUnderscoreName()
 
