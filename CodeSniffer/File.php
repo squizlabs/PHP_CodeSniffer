@@ -107,7 +107,7 @@ require_once 'PHP/CodeSniffer/Exception.php';
  *   );
  * </code>
  *
- * Each token within a set of parenthesis also has an array indicy 
+ * Each token within a set of parenthesis also has an array indicy
  * 'nested_parenthesis' which is an array of the
  * left parenthesis => right parenthesis token positions.
  *
@@ -444,7 +444,7 @@ class PHP_CodeSniffer_File
 
                 $stackPtr = $i;
 
-                // Convert each line within the double quoted string to a 
+                // Convert each line within the double quoted string to a
                 // new token, so it conforms with other multiple line tokens.
                 $tokenLines = explode("\n", $tokenContent);
                 $numLines   = count($tokenLines);
@@ -807,7 +807,7 @@ class PHP_CodeSniffer_File
      *
      * @param int $stackPtr The position in the stack of the token that opened
      *                      the scope (eg. an IF token or FOR token).
-     * @param int $dpeth    How many scope levels down we are.
+     * @param int $depth    How many scope levels down we are.
      *
      * @return int The position in the stack that closed the scope.
      */
