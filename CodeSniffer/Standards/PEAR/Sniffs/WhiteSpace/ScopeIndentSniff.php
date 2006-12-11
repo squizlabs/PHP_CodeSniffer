@@ -43,7 +43,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
  * @category PEAR_Coding_Standards
  * @author   Squiz Pty Ltd
  */
-class PEAR_Sniffs_Whitespace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
+class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
 {
 
 

@@ -38,7 +38,7 @@
  * @package PHP_CodeSniffer
  * @author  Squiz Pty Ltd
  */
-class PEAR_Tests_Whitespace_ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
+class PEAR_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
 {
 
 

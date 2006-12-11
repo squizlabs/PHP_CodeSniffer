@@ -38,7 +38,7 @@
  * @package PHP_CodeSniffer
  * @author  Squiz Pty Ltd
  */
-class PEAR_Tests_Whitespace_ScopeIndentUnitTest extends AbstractSniffUnitTest
+class PEAR_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
 {
 
 
