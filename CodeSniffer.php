@@ -832,6 +832,45 @@ class PHP_CodeSniffer
     }//end isCamelCaps()
 
 
+    /**
+     * Returns true if the specified string is in the underscore caps format.
+     *
+     * @param string  $string The string the verify.
+     *
+     * @return boolean
+     */
+    public static function isUnderscoreName($string)
+    {
+        $validName = true;
+        $nameBits  = explode('_', $string);
+
+        if (preg_match('|^[A-Z]|', $string) === 0) {
+            // Name does not begin with a capital letter.
+            $validName = false;
+        } else {
+            foreach ($nameBits as $bit) {
+                if ($bit{0} !== strtoupper($bit{0})) {
+                    $validName = false;
+                    break;
+                }
+            }
+        }
+
+        if ($validName !== true) {
+            $firstBit = array_shift($nameBits);
+            $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+            foreach ($nameBits as $bit) {
+                $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+            }
+            $newName = trim($newName, '_');
+            return $newName;
+        }
+
+        return $string;
+
+    }//end isUnderscoreName()
+
+
     //-- STANDARDS --//
 
 
@@ -844,7 +883,7 @@ class PHP_CodeSniffer
      *
      * @param boolean $includeGeneric If true, the special "Generic"
      *                                coding standard will be included
-     *                                if installed
+     *                                if installed.
      *
      * @return array
      * @see isInstalledStandard()
