@@ -70,7 +70,7 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
             return;
         }
 
-        $tokens = $phpcsFile->getTokens();
+        $tokens  = $phpcsFile->getTokens();
         $openTag = $tokens[$stackPtr];
 
         if ($openTag['content'] === '<?') {

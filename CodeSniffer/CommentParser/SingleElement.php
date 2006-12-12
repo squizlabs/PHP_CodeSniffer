@@ -136,7 +136,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
     {
         if ($this->content === '') {
             $errorPos = $commentStart + $this->getLine();
-            $error = "Content missing for $this->tag tag";
+            $error    = "Content missing for $this->tag tag";
             $phpcsFile->addError($error, $errorPos);
         }
 

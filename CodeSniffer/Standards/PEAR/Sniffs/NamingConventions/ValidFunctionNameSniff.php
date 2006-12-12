@@ -151,7 +151,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Does this function claim to be magical?
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
-            $error = "Function name $functionName is invalid; only PHP magic methods should be prefixed with a double underscore.";
+            $error     = "Function name $functionName is invalid; only PHP magic methods should be prefixed with a double underscore.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -205,7 +205,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 
         if ($packagePart !== '') {
             // Check that each new word starts with a captial.
-            $nameBits  = explode('_', $packagePart);
+            $nameBits = explode('_', $packagePart);
             foreach ($nameBits as $bit) {
                 if ($bit{0} !== strtoupper($bit{0})) {
                     $newPackagePart = '';
@@ -220,7 +220,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 
         if (!$validName) {
             $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
-            $error = "Function name $functionName is invalid; consider $newName instead.";
+            $error   = "Function name $functionName is invalid; consider $newName instead.";
             $phpcsFile->addError($error, $stackPtr);
         }
 

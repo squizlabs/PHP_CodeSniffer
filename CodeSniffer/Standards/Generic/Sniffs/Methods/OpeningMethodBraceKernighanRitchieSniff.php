@@ -84,7 +84,7 @@ class Generic_Sniffs_Methods_OpeningMethodBraceKernighanRitchieSniff implements 
         // Checks that the closing parenthesis and the opening brace are
         // separated by a whitespace character.
         $closerColumn = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['column'];
-        $braceColumn = $tokens[$openingBrace]['column'];
+        $braceColumn  = $tokens[$openingBrace]['column'];
 
         $columnDifference = $braceColumn - $closerColumn;
 
@@ -96,7 +96,7 @@ class Generic_Sniffs_Methods_OpeningMethodBraceKernighanRitchieSniff implements 
 
         // Check that a tab was not used instead of a space.
         $spaceTokenPtr = ($tokens[$stackPtr]['parenthesis_closer'] + 1);
-        $spaceContent = $tokens[$spaceTokenPtr]['content'];
+        $spaceContent  = $tokens[$spaceTokenPtr]['content'];
         if ($spaceContent !== ' ') {
             $error = 'Expected a single space character between the closing parenthesis and the opening brace, but found "'.$spaceContent.'".';
             $phpcsFile->addError($error, $openingBrace);

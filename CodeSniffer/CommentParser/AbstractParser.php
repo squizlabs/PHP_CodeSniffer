@@ -216,12 +216,10 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     private function _parseWords()
     {
         $allowedTags     = (self::$_tags + $this->getAllowedTags());
-
         $allowedTagNames = array_keys($allowedTags);
-        $foundTags = array();
-
-        $prevTagPos    = false;
-        $wordsWasEmpty = true;
+        $foundTags       = array();
+        $prevTagPos      = false;
+        $wordsWasEmpty   = true;
 
         foreach ($this->words as $wordPos => $word) {
 
@@ -482,7 +480,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
 
 
     /**
-     * Returns the tag orders. (index => tagName)
+     * Returns the tag orders (index => tagName).
      *
      * @return array
      */

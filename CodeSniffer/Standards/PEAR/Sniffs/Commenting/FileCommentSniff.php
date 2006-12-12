@@ -346,9 +346,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $content = $category->getContent();
             if ($content !== '') {
                 if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $nameBits  = explode('_', $content);
-                    $firstBit  = array_shift($nameBits);
-                    $newName   = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $nameBits = explode('_', $content);
+                    $firstBit = array_shift($nameBits);
+                    $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
                     foreach ($nameBits as $bit) {
                         $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
                     }
@@ -379,9 +379,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $content = $package->getContent();
             if ($content !== '') {
                 if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $nameBits  = explode('_', $content);
-                    $firstBit  = array_shift($nameBits);
-                    $newName   = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $nameBits = explode('_', $content);
+                    $firstBit = array_shift($nameBits);
+                    $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
                     foreach ($nameBits as $bit) {
                         $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
                     }

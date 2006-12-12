@@ -365,9 +365,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $tokenContent = $tokens[$stackPtr]['content'];
                         } else {
                             // Get all the whitespace to the next token.
-                            $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                            $next         = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
                             $tokenContent = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
-                            $stackPtr = $next;
+                            $stackPtr     = $next;
                         }
 
                         $found .= $tokenContent;
@@ -514,7 +514,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         for ($i = 0; $i < $length; $i++) {
 
             $skipPattern = false;
-            $isLastChar = ($i === ($length - 1));
+            $isLastChar  = ($i === ($length - 1));
 
             if (substr($pattern, $i, 3) === '...') {
                 // It's a skip pattern. The skip pattern requires the
@@ -540,7 +540,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 }
 
                 $tokenPatterns = $this->_createTokenPattern($str);
-                $firstToken = $i;
+                $firstToken    = $i;
 
                 foreach ($tokenPatterns as $tokenPattern) {
                     $patterns[] = $tokenPattern;
