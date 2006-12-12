@@ -1,33 +1,17 @@
 <?php
 /**
- * +------------------------------------------------------------------------+
- * | BSD Licence                                                            |
- * +------------------------------------------------------------------------+
- * | This software is available to you under the BSD license,               |
- * | available in the LICENSE file accompanying this software.              |
- * | You may obtain a copy of the License at                                |
- * |                                                                        |
- * | http://matrix.squiz.net/developer/tools/php_cs/licence                 |
- * |                                                                        |
- * | THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS    |
- * | "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT      |
- * | LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  |
- * | A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT   |
- * | OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  |
- * | SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       |
- * | LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  |
- * | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  |
- * | THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT    |
- * | (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  |
- * | OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   |
- * +------------------------------------------------------------------------+
- * | Copyright (c), 2006 Squiz Pty Ltd (ABN 77 084 670 600).                |
- * | All rights reserved.                                                   |
- * +------------------------------------------------------------------------+
+ * Parses and verifies the doc comments for functions.
  *
- * @package  PHP_CodeSniffer
- * @category PEAR_Coding_Standards
- * @author   Squiz Pty Ltd
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   CVS: $Id$
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 require_once 'PHP/CodeSniffer/CommentParser/FunctionCommentParser.php';
@@ -49,9 +33,14 @@ require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
  *  <li>Any throw tag must have a comment.</li>
  * </ul>
  *
- * @package  PHP_CodeSniffer
- * @category Squiz_Coding_Standards
- * @author   Squiz Pty Ltd
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_Commenting_FunctionCommentSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
