@@ -20,13 +20,14 @@
  </maintainers>
  <release>
   <version>0.3.0</version>
-  <date>2006-11-23</date>
+  <date>2006-12-12</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
    - Added FileCommentSniff to PEAR standard
    - Added ClassCommentSniff to PEAR standard
    - Added FunctionCommentSniff to PEAR standard
+   - Updated file, class and method comments for all files
    - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    - Fixed bug #9411 : too few pattern characters cause incorrect error report
   </notes>
@@ -35,7 +36,9 @@
   </deps>
   <filelist>
    <dir name="/" baseinstalldir="PHP">
-    <file role="php" name="CodeSniffer.php"/>
+    <file role="php" name="CodeSniffer.php">
+      <replace type="package-info" from="@package_version@" to="version"/>
+    </file>
     <dir name="scripts" role="script" baseinstalldir="">
      <file name="phpcs" install-as="phpcs">
        <replace type="pear-config" from="@php_bin@" to="php_bin"/>
@@ -46,167 +49,314 @@
       <replace type="pear-config" from="@php_bin@" to="php_bin"/>
       <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
       <replace type="pear-config" from="@php_dir@" to="php_dir"/>
+      <replace type="package-info" from="@package_version@" to="version"/>
      </file>
     </dir>
     <dir name="tests" role="test" baseinstalldir="">
-     <file name="AllTests.php" install-as="AllTests.php"/>
+     <file name="AllTests.php" install-as="AllTests.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
      <dir name="Core">
-      <file name="AllTests.php" install-as="CodeSniffer/Core/AllTests.php"/>
-      <file name="IsCamelCapsTest.php" install-as="CodeSniffer/Core/IsCamelCapsTest.php"/>
+      <file name="AllTests.php" install-as="CodeSniffer/Core/AllTests.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="IsCamelCapsTest.php" install-as="CodeSniffer/Core/IsCamelCapsTest.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
      </dir>
      <dir name="Standards">
-      <file name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php"/>
-      <file name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php"/>
+      <file name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
      </dir>
     </dir>
     <dir name="CodeSniffer" role="php" baseinstalldir="PHP">
-     <file name="Exception.php"/>
-     <file name="File.php"/>
-     <file name="Sniff.php"/>
-     <file name="SniffException.php"/>
-     <file name="Tokens.php"/>
+     <file name="Exception.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
+     <file name="File.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
+     <file name="Sniff.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
+     <file name="SniffException.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
+     <file name="Tokens.php">
+       <replace type="package-info" from="@package_version@" to="version"/>
+     </file>
      <dir name="CommentParser">
-      <file name="AbstractDocElement.php"/>
-      <file name="AbstractParser.php"/>
-      <file name="ClassCommentParser.php"/>
-      <file name="CommentElement.php"/>
-      <file name="DocElement.php"/>
-      <file name="FunctionCommentParser.php"/>
-      <file name="MemberCommentParser.php"/>
-      <file name="PairElement.php"/>
-      <file name="ParameterElement.php"/>
-      <file name="ParserException.php"/>
-      <file name="SingleElement.php"/>
+      <file name="AbstractDocElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="AbstractParser.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="ClassCommentParser.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="CommentElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="DocElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="FunctionCommentParser.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="MemberCommentParser.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="PairElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="ParameterElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="ParserException.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="SingleElement.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
      </dir>
      <dir name="Standards">
-      <file name="AbstractPatternSniff.php"/>
-      <file name="AbstractScopeSniff.php"/>
-      <file name="AbstractVariableSniff.php"/>
-      <file name="GeneralDocCommentHelper.php" />
-      <file name="IncorrectPatternException.php"/>
+      <file name="AbstractPatternSniff.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="AbstractScopeSniff.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="AbstractVariableSniff.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="GeneralDocCommentHelper.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
+      <file name="IncorrectPatternException.php">
+        <replace type="package-info" from="@package_version@" to="version"/>
+      </file>
       <dir name="Generic">
        <dir name="Sniffs">
         <dir name="Files">
-         <file name="LineLengthSniff.php"/>
+         <file name="LineLengthSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Methods">
-         <file name="OpeningMethodBraceBsdAllmanSniff.php"/>
-         <file name="OpeningMethodBraceKernighanRitchieSniff.php"/>
+         <file name="OpeningMethodBraceBsdAllmanSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="OpeningMethodBraceKernighanRitchieSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="NamingConventions">
-         <file name="UpperCaseConstantNameSniff.php"/>
+         <file name="UpperCaseConstantNameSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="PHP">
-         <file name="DisallowShortOpenTagSniff.php"/>
-         <file name="LowerCaseConstantSniff.php"/>
-         <file name="UpperCaseConstantSniff.php"/>
+         <file name="DisallowShortOpenTagSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="LowerCaseConstantSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="UpperCaseConstantSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
        </dir>
        <dir name="Tests" role="test">
         <dir name="Files">
          <file name="LineLengthUnitTest.inc"/>
-         <file name="LineLengthUnitTest.php"/>
+         <file name="LineLengthUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Methods">
          <file name="OpeningMethodBraceBsdAllmanUnitTest.inc"/>
-         <file name="OpeningMethodBraceBsdAllmanUnitTest.php"/>
+         <file name="OpeningMethodBraceBsdAllmanUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="OpeningMethodBraceKernighanRitchieUnitTest.inc"/>
-         <file name="OpeningMethodBraceKernighanRitchieUnitTest.php"/>
+         <file name="OpeningMethodBraceKernighanRitchieUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="NamingConventions">
          <file name="UpperCaseConstantNameUnitTest.inc"/>
-         <file name="UpperCaseConstantNameUnitTest.php"/>
+         <file name="UpperCaseConstantNameUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="PHP">
          <file name="DisallowShortOpenTagUnitTest.inc"/>
-         <file name="DisallowShortOpenTagUnitTest.php"/>
+         <file name="DisallowShortOpenTagUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="LowerCaseConstantUnitTest.inc"/>
-         <file name="LowerCaseConstantUnitTest.php"/>
+         <file name="LowerCaseConstantUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="UpperCaseConstantUnitTest.inc"/>
-         <file name="UpperCaseConstantUnitTest.php"/>
+         <file name="UpperCaseConstantUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
        </dir>
       </dir>
       <dir name="PEAR" role="php">
        <dir name="Sniffs">
         <dir name="Commenting">
-         <file name="ClassCommentSniff.php"/>
-         <file name="FileCommentSniff.php"/>
-         <file name="FunctionCommentSniff.php"/>
-         <file name="InlineCommentSniff.php"/>
+         <file name="ClassCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FileCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="ControlStructures">
-         <file name="ControlSignatureSniff.php"/>
+         <file name="ControlSignatureSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Files">
-         <file name="IncludingFileSniff.php"/>
-         <file name="LineLengthSniff.php"/>
+         <file name="IncludingFileSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="LineLengthSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Methods">
-         <file name="FunctionCallSignatureSniff.php"/>
-         <file name="MethodCallArgumentSpacingSniff.php"/>
-         <file name="OpeningMethodBraceSniff.php"/>
-         <file name="ValidDefaultValueSniff.php"/>
+         <file name="FunctionCallSignatureSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="MethodCallArgumentSpacingSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="OpeningMethodBraceSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidDefaultValueSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="NamingConventions">
-         <file name="ValidClassNameSniff.php"/>
-         <file name="ValidConstantNameSniff.php"/>
-         <file name="ValidFunctionNameSniff.php"/>
+         <file name="ValidClassNameSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidConstantNameSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidFunctionNameSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="PHP">
-         <file name="ConstantSniff.php"/>
-         <file name="DisallowShortOpenTagSniff.php"/>
+         <file name="ConstantSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="DisallowShortOpenTagSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Statements">
-         <file name="MultipleStatementSniff.php"/>
+         <file name="MultipleStatementSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="WhiteSpace">
-         <file name="ScopeClosingBraceSniff.php"/>
-         <file name="ScopeIndentSniff.php"/>
+         <file name="ScopeClosingBraceSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ScopeIndentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
        </dir>
        <dir name="Tests" role="test">
         <dir name="Commenting">
          <file name="ClassCommentUnitTest.inc"/>
-         <file name="ClassCommentUnitTest.php"/>
+         <file name="ClassCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="FileCommentUnitTest.inc"/>
-         <file name="FileCommentUnitTest.php"/>
+         <file name="FileCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="FunctionCommentUnitTest.inc"/>
-         <file name="FunctionCommentUnitTest.php"/>
+         <file name="FunctionCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="InlineCommentUnitTest.inc"/>
-         <file name="InlineCommentUnitTest.php"/>
+         <file name="InlineCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="ControlStructures">
          <file name="ControlSignatureUnitTest.inc"/>
-         <file name="ControlSignatureUnitTest.php"/>
+         <file name="ControlSignatureUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Files">
          <file name="IncludingFileUnitTest.inc"/>
-         <file name="IncludingFileUnitTest.php"/>
+         <file name="IncludingFileUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Methods">
          <file name="FunctionCallSignatureUnitTest.inc"/>
-         <file name="FunctionCallSignatureUnitTest.php"/>
+         <file name="FunctionCallSignatureUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="MethodCallArgumentSpacingUnitTest.inc"/>
-         <file name="MethodCallArgumentSpacingUnitTest.php"/>
+         <file name="MethodCallArgumentSpacingUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="ValidDefaultValueUnitTest.inc"/>
-         <file name="ValidDefaultValueUnitTest.php"/>
+         <file name="ValidDefaultValueUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="NamingConventions">
          <file name="ValidClassNameUnitTest.inc"/>
-         <file name="ValidClassNameUnitTest.php"/>
+         <file name="ValidClassNameUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="ValidFunctionNameUnitTest.inc"/>
-         <file name="ValidFunctionNameUnitTest.php"/>
+         <file name="ValidFunctionNameUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Statements">
          <file name="MultipleStatementUnitTest.inc"/>
-         <file name="MultipleStatementUnitTest.php"/>
+         <file name="MultipleStatementUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="WhiteSpace">
          <file name="ScopeClosingBraceUnitTest.inc"/>
-         <file name="ScopeClosingBraceUnitTest.php"/>
+         <file name="ScopeClosingBraceUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="ScopeIndentUnitTest.inc"/>
-         <file name="ScopeIndentUnitTest.php"/>
+         <file name="ScopeIndentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
        </dir>
       </dir>
