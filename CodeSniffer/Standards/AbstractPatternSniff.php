@@ -358,6 +358,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
                     }
 
+                    $tokenContent = '';
                     if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
                         if (isset($pattern[$i + 1]) === false) {
                             // This is the last token in the pattern, so just compare
@@ -435,7 +436,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $found       The actual found string in the code.
      * @param string $patternCode The expected pattern code.
      *
-     * @return string the error message.
+     * @return string The error message.
      */
     protected function prepareError($found, $patternCode)
     {
