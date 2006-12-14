@@ -426,7 +426,7 @@ class PHP_CodeSniffer
             // Merge errors and warnings.
             foreach ($errors as $line => $lineErrors) {
                 $newErrors = array();
-                foreach ($errors[$line] as $message) {
+                foreach ($lineErrors as $message) {
                     $newErrors[] = 'ERROR: '.$message;
                 }
 
@@ -441,7 +441,7 @@ class PHP_CodeSniffer
                     }
 
                     if (isset($errors[$line]) === true) {
-                        $errors[$line] = array_merge($newWarnings, $newErrors);
+                        $errors[$line] = array_merge($newWarnings, $errors[$line]);
                     } else {
                         $errors[$line] = $newWarnings;
                     }
