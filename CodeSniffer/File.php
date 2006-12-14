@@ -572,7 +572,7 @@ class PHP_CodeSniffer_File
         }
 
         $lineNum = $this->_tokens[$stackPtr]['line'];
-        if (isset($this->_warnings[$lineNum]['line']) === false) {
+        if (isset($this->_warnings[$lineNum]) === false) {
             $this->_warnings[$lineNum] = array();
         }
 
