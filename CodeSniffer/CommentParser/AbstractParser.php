@@ -182,22 +182,24 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         // Firstly, remove the comment tags and any stars from the left side.
         $lines = split("\n", $comment);
         foreach ($lines as &$line) {
-            $line = trim($line);
+            if ($line !== '') {
+                $line = trim($line);
 
-            if (substr($line, 0, 3) === '/**') {
-                $line = substr($line, 3);
-            } else if (substr($line, -2, 2) === '*/') {
-                $line = substr($line, 0, -2);
-            } else if ($line{0} === '*') {
-                $line = substr($line, 1);
+                if (substr($line, 0, 3) === '/**') {
+                    $line = substr($line, 3);
+                } else if (substr($line, -2, 2) === '*/') {
+                    $line = substr($line, 0, -2);
+                } else if ($line{0} === '*') {
+                    $line = substr($line, 1);
+                }
+
+                // Add the words to the stack, preserving newlines. Other parsers
+                // might be interested in the spaces between words, so tokenize
+                // spaces as well as separate tokens.
+                $flags = (PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                $words = preg_split('|(\s+)|', $line."\n", -1, $flags);
+                $this->words = array_merge($this->words, $words);
             }
-
-            // Add the words to the stack, preserving newlines. Other parsers
-            // might be interested in the spaces between words, so tokenize
-            // spaces as well as separate tokens.
-            $flags = (PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-            $words = preg_split('|(\s+)|', $line."\n", -1, $flags);
-            $this->words = array_merge($this->words, $words);
         }
 
         $this->_parseWords();
@@ -228,7 +230,19 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
             }
 
             if ($word{0} === '@') {
+
                 $tag = substr($word, 1);
+                // Filter out @ tags in the comment description.
+                if ($prevTagPos === false) {
+                    // A real comment tag should have a space and a newline before it.
+                    if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
+                        continue;
+                    }
+                    if (!isset($this->words[$wordPos-2]) || $this->words[$wordPos-2] !== "\n") {
+                        continue;
+                    }
+                }
+
                 // Check to see if this is a known tag for this parser.
                 if (in_array($tag, $allowedTagNames) === true) {
 
