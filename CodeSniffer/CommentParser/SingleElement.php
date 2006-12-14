@@ -129,14 +129,15 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      *
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $commentStart The line number where the error occurs.
+     * @param string               $docBlock     Whether this is a file or class comment doc
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStart)
+    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStart, $docBlock)
     {
         if ($this->content === '') {
             $errorPos = $commentStart + $this->getLine();
-            $error    = "Content missing for $this->tag tag";
+            $error    = "Content missing for $this->tag tag in $docBlock comment";
             $phpcsFile->addError($error, $errorPos);
         }
 
