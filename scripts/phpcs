@@ -27,16 +27,7 @@ require_once 'PHP/CodeSniffer.php';
  */
 function print_usage()
 {
-    // Determine if the --standard arg is optional.
-    $standardArg        = '--standard=<standard>';
-    $installedStandards = PHP_CodeSniffer::getInstalledStandards();
-
-    if (count($installedStandards) === 1) {
-        // Only one coding standard installed, so they don't need to supply it.
-        $standardArg = '['.$standardArg.']';
-    }
-
-    echo 'Usage: phpcs [-nvi] [--report=<report>] '.$standardArg." <file> ...\n";
+    echo "Usage: phpcs [-nvi] [--report=<report>] [--standard=<standard>] <file> ...\n";
     echo " <file>     : one or more files and/or directories to check\n";
     echo " <standard> : the name of the coding standard to use\n";
     echo " <report>   : print either the \"full\" or \"summary\" report\n";
@@ -87,7 +78,7 @@ if (count($installedStandards) === 0) {
 
 // The default values for config settings.
 $files        = array();
-$standard     = null;
+$standard     = 'PEAR';
 $verbosity    = 0;
 $report       = 'full';
 $showWarnings = true;
