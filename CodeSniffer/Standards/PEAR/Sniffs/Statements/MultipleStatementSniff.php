@@ -152,7 +152,7 @@ class PEAR_Sniffs_Statements_MultipleStatementSniff implements PHP_CodeSniffer_S
 
                 $phpcsFile->addWarning($error, $assignment);
             }
-        }
+        }//end foreach
 
     }//end process()
 

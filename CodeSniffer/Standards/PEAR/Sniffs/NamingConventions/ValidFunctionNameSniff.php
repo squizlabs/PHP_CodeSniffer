@@ -40,7 +40,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @var array
      */
-    private $_magicMethods = Array(
+    private $_magicMethods = array(
                               'construct',
                               'destruct',
                               'call',

@@ -208,7 +208,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
                             $commentOpen = false;
                         }
                     }
-                }
+                }//end if
 
                 // The token at the start of the line, needs to have its' column
                 // greater than the relative indent we set above. If it is less,

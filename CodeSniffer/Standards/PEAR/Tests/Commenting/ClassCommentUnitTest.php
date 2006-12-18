@@ -26,7 +26,6 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
 class PEAR_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
 {
 
