@@ -26,6 +26,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTest
 {
 
@@ -43,9 +44,15 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
         return array(
                 10 => 1,
                 12 => 2,
-                13 => 4,
+                13 => 2,
                 14 => 1,
                 15 => 1,
+                28 => 1,
+                35 => 1,
+                38 => 1,
+                41 => 1,
+                53 => 1,
+                67 => 1,
                );
 
     }//end getErrorList()
