@@ -252,7 +252,8 @@ class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Sniff
             return $indent + 4;
         }
 
-        foreach ($tokens[$stackPtr]['conditions'] as $id => $condition) {
+        $tokenConditions = $tokens[$stackPtr]['conditions'];
+        foreach ($tokenConditions as $id => $condition) {
             // If it's an indenting scope ie. it's not in our array of
             // scopes that don't indent, add it to our condition stack.
             if (in_array($condition, self::$_nonIndentingScopes) === false) {
