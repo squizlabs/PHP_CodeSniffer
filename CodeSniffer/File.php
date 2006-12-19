@@ -379,15 +379,39 @@ class PHP_CodeSniffer_File
      */
     public function start()
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            echo "\t*** START TOKEN PROCESSING ***\n";
+        }
+
         // Foreach of the listeners that have registed to listen for this
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
+            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                $type    = $token['type'];
+                $content = str_replace("\n", '\n', $token['content']);
+                echo "\t\tProcess token $stackPtr: $type => $content\n";
+            }
+
             $tokenType = $token['code'];
             if (isset($this->_listeners[$tokenType]) === true) {
                 foreach ($this->_listeners[$tokenType] as $listener) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                        $startTime = microtime(true);
+                        echo "\t\t\tProcessing ".get_class($listener).'... ';
+                    }
+
                     $listener->process($this, $stackPtr);
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                        $timeTaken = round(microtime(true) - $startTime, 4);
+                        echo "DONE in $timeTaken seconds\n";
+                    }
                 }
             }
+        }//end foreach
+
+        if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            echo "\t*** END TOKEN PROCESSING ***\n";
         }
 
         // We don't need the tokens any more, so get rid of them
