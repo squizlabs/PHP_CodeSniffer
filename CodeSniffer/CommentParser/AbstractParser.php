@@ -246,12 +246,6 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 // Check to see if this is a known tag for this parser.
                 if (in_array($tag, $allowedTagNames) === true) {
 
-                    if ($allowedTags[$tag] === true && in_array($tag, $foundTags) === true) {
-                        $exception = 'Only one occurence of the @'.$tag.' tag is allowed';
-                        $line      = $this->getLine($wordPos);
-                        throw new PHP_CodeSniffer_CommentParser_ParserException($exception, $line);
-                    }
-
                     $foundTags[] = $tag;
 
                     if ($prevTagPos !== false) {
