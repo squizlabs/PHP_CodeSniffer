@@ -22,16 +22,16 @@ require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
  * Comments are in the following format.
  * <code>
  * /** <--this is the start of the comment.
- *  * This is a headline comment.
+ *  * This is a short comment description
  *  *
- *  * this is a body comment.
+ *  * This is a long comment description
  *  * <-- this is the end of the comment
  *  * @return something
  *  {@/}
  *  </code>
  *
- * Note that if there is no period to end the headline, the sentence before two
- * newlines is assumed the headline comment.
+ * Note that the sentence before two newlines is assumed
+ * the short comment description.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -63,66 +63,87 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
 
     /**
-     * Returns the headline comment.
+     * Returns the short comment description.
      *
      * @return string
-     * @see getBodyComment()
+     * @see getLongComment()
      */
-    public function getHeadlineComment()
+    public function getShortComment()
     {
-        $pos = $this->_getEndHeadlinePos();
+        $pos = $this->_getShortCommentEndPos();
         if ($pos === -1) {
             return '';
         }
         return implode('', array_slice($this->tokens, 0, $pos + 1));
 
-    }//end getHeadlineComment()
+    }//end getShortComment()
 
 
     /**
-     * Returns the last token position of the headline.
+     * Returns the last token position of the short comment description
      *
-     * @return int The last token position of the headline.
-     * @see _getStartBodyPos()
+     * @return int The last token position of the short comment description
+     * @see _getLongCommentStartPos()
      */
-    private function _getEndHeadlinePos()
+    private function _getShortCommentEndPos()
     {
-        foreach ($this->tokens as $pos => $token) {
-            if ($token{strlen($token) - 1} === '.') {
-                if ($this->tokens[$pos + 1]{0} === ' ' || $this->tokens[$pos + 1] === "\n") {
-                    return $pos;
-                }
-            }
+        $found      = false;
+        $whiteSpace = array(' ', "\t");
 
+        foreach ($this->tokens as $pos => $token) {
+            $token = str_replace($whiteSpace, '', $token);
             if ($token === "\n") {
-                if ($this->tokens[$pos + 1] === "\n") {
+                if ($found === false) {
+                    // Include newlines before short description.
+                    continue;
+                } else if ($this->tokens[$pos + 1] === "\n") {
                     return ($pos - 1);
                 }
+            } else {
+                $found = true;
             }
-        }
+        }//end foreach
 
         return count($this->tokens) - 1;
 
-    }//end _getEndHeadlinePos()
+    }//end _getShortCommentEndPos()
 
 
     /**
-     * Returns the start position of the body content in $this->tokens.
+     * Returns the long comment description.
      *
-     * Returns -1 if there is no body comment.
-     *
-     * @return int The start position of the body comment.
-     * @see _getEndHeadlinePos()
+     * @return string
+     * @see getShortComment
      */
-    private function _getStartBodyPos()
+    public function getLongComment()
     {
-        $headlinePos = $this->_getEndHeadLinePos() + 1;
-        if ($headlinePos === count($this->tokens) - 1) {
+        $start = $this->_getLongCommentStartPos();
+        if ($start === -1) {
+            return '';
+        }
+
+        return implode('', array_slice($this->tokens, $start));
+
+    }//end getLongComment()
+
+
+    /**
+     * Returns the start position of the long comment description
+     *
+     * Returns -1 if there is no long comment.
+     *
+     * @return int The start position of the long comment description.
+     * @see _getShortCommentEndPos()
+     */
+    private function _getLongCommentStartPos()
+    {
+        $pos = $this->_getShortCommentEndPos() + 1;
+        if ($pos === count($this->tokens) - 1) {
             return -1;
         }
 
         $count = count($this->tokens);
-        for ($i = $headlinePos; $i < $count; $i++) {
+        for ($i = $pos; $i < $count; $i++) {
             if (trim($this->tokens[$i]) !== '') {
                 return $i;
             }
@@ -130,39 +151,45 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
         return -1;
 
-    }//end _getStartBodyPos()
+    }//end _getLongCommentStartPos()
 
 
     /**
-     * Returns the whitespace that exists between the headline and the comment.
+     * Returns the whitespace that exists between
+     * the short and the long comment description.
      *
      * @return string
      */
-    public function getWhitespaceAfterHeadline()
+    public function getWhiteSpaceBetween()
     {
-        $endHeadline = $this->_getEndHeadLinePos() + 1;
-        $startBody   = $this->_getStartBodyPos() - 1;
-        if ($startBody === -1) {
+        $endShort  = $this->_getShortCommentEndPos() + 1;
+        $startLong = $this->_getLongCommentStartPos() - 1;
+        if ($startLong === -1) {
             return '';
         }
 
-        return implode('', array_slice($this->tokens, $endHeadline, $startBody - $endHeadline));
+        return implode('', array_slice($this->tokens, $endShort, $startLong - $endShort));
 
-    }//end getWhitespaceAfterHeadline()
+    }//end getWhiteSpaceBetween()
 
 
     /**
-     * Returns the body comment.
+     * Returns the newline(s) that exist before the tags.
      *
-     * @return string
-     * @see getHeadlineComment()
+     * @return int
      */
-    public function getBodyComment()
+    public function getNewlineAfter()
     {
-        $start = $this->_getStartBodyPos();
-        return implode('', array_slice($this->tokens, $start));
+        $long = $this->getLongComment();
+        if ($long !== '') {
+            return strspn((strrev(rtrim($long, ' '))), "\n");
+        } else {
+            $endShort = $this->_getShortCommentEndPos() + 1;
+            $after    = implode('', array_slice($this->tokens, $endShort));
+            return strspn((trim($after, ' ')), "\n");
+        }
 
-    }//end getBodyComment()
+    }//end getNewlineAfter()
 
 
     /**
