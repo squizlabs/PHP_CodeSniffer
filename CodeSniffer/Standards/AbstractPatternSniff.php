@@ -239,7 +239,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     /**
      * Processes the pattern and varifies the code at $stackPtr.
      *
-     * @param array                $patternInfo The info for the pattern to process.
+     * @param array                $patternInfo Information about the pattern used for
+     *                                          checking, which includes are parsed
+     *                                          otken representation of the pattern.
      * @param PHP_CodeSniffer_File $phpcsFile   The PHP_CodeSniffer file where the
      *                                          token occured.
      * @param int                  $stackPtr    The postion in the tokens stack where
@@ -337,23 +339,22 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $stackPtr = $origStackPtr;
 
         for ($i = $patternInfo['listen_pos']; $i < count($pattern); $i++) {
+
             if ($pattern[$i]['type'] === 'token') {
 
                 if ($pattern[$i]['token'] === T_WHITESPACE) {
 
-                    // If we are ignoring comments, check to see if this current
-                    // token is a comment. If so skip it.
-                    if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
-                        if ($this->_ignoreComments === true) {
+                    if ($this->_ignoreComments === true) {
+                        // If we are ignoring comments, check to see if this current
+                        // token is a comment. If so skip it.
+                        if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                             continue;
                         }
-                    }
-
-                    // If the next token is a comment, the we need to skip the
-                    // current token as we should allow a space before a
-                    // comment for readability.
-                    if (in_array($tokens[$stackPtr + 1]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
-                        if ($this->_ignoreComments === true) {
+                        
+                        // If the next token is a comment, the we need to skip the
+                        // current token as we should allow a space before a
+                        // comment for readability.
+                        if (in_array($tokens[$stackPtr + 1]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                             continue;
                         }
                     }
@@ -374,9 +375,19 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $found .= $tokenContent;
                     }
 
-                    if ($tokenContent !== $pattern[$i]['value']) {
-                        $hasError = true;
+                    if (isset($pattern[$i + 1]) === true && $pattern[$i + 1]['type'] === 'skip') {
+                        // The next token is a skip token, so we just need to make
+                        // sure the whitespace we found has *at least* the
+                        // whitespace required.
+                        if (strpos($tokenContent, $pattern[$i]['value']) !== 0) {
+                            $hasError = true;
+                        }
+                    } else {
+                        if ($tokenContent !== $pattern[$i]['value']) {
+                            $hasError = true;
+                        }
                     }
+
                 } else {
 
                     $next = $phpcsFile->findNext($ignoreTokens, $stackPtr, null, true);
@@ -406,7 +417,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
             } else if ($pattern[$i]['type'] === 'skip') {
                 // Find the previous opener.
-                $next = $phpcsFile->findNext($ignoreTokens, $stackPtr, null, true);
+                $next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$blockOpeners, $stackPtr, null);
                 if ($next === false || isset($tokens[$next][$pattern[$i]['to']]) === false) {
                     // If there was not opener, then we must
                     // be using the wrong pattern.
@@ -417,7 +428,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                 // Skip to the closing token.
                 $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
-            }
+            }//end if
         }//end for
 
         if ($hasError === true) {
@@ -521,7 +532,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 // It's a skip pattern. The skip pattern requires the
                 // content of the token in the "from" position and the token
                 // to skip to.
-                $skipPattern = $this->_createSkipPattern($pattern{$i - 1});
+                $skipPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken   = ($i - $firstToken);
                 $i           = ($i + 4);
                 $skipPatternCount++;
@@ -565,30 +576,37 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     /**
      * Creates a skip pattern.
      *
-     * @param string $from The token content that the skip pattern starts from.
+     * @param string $pattern The pattern being parsed.
+     * @param string $from    The token content that the skip pattern starts from.
      *
      * @return array The pattern step.
      * @see _createTokenPattern()
      * @see _parse()
      */
-    private function _createSkipPattern($from)
+    private function _createSkipPattern($pattern, $from)
     {
         $skip = array(
                  'type' => 'skip',
                 );
 
-        switch ($from) {
-        case '(':
-            $skip['to'] = 'parenthesis_closer';
-            break;
-        case '{':
-            $skip['to'] = 'scope_closer';
-            break;
-        default:
-            // Something else.
-            break;
+        for ($from; $from >=0; $from--) {
+            switch ($pattern[$from]) {
+            case '(':
+                $skip['to'] = 'parenthesis_closer';
+                break;
+            case '{':
+                $skip['to'] = 'scope_closer';
+                break;
+            }
+
+            if (isset($skip['to']) === true) {
+                break;
+            }
         }
 
+        if (isset($skip['to']) === false) {
+            $skip['to'] = 'unknown';
+        }
         return $skip;
 
     }//end _createSkipPattern()
