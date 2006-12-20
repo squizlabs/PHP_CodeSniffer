@@ -215,6 +215,16 @@ final class PHP_CodeSniffer_Tokens
                                 T_BITWISE_OR,
                                );
 
+    /**
+     * Tokens that perform operations.
+     *
+     * @var array(int)
+     */
+    public static $blockOpeners = array(
+                                   T_OPEN_CURLY_BRACKET,
+                                   T_OPEN_SQUARE_BRACKET,
+                                   T_OPEN_PARENTHESIS,
+                                  );
 
     /**
      * Tokens that don't represent code.
