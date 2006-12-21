@@ -225,7 +225,7 @@ class PHP_CodeSniffer
                 // Only include sniffs that are in our coding standard.
                 // We know those sniffs because their class anem starts
                 // with [STANDARD]_
-                if (preg_match("|^${standard}_|", $className) === 0) {
+                if (preg_match("|^${standard}_|i", $className) === 0) {
                     continue;
                 }
 
