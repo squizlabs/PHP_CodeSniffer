@@ -166,9 +166,6 @@ class PHP_CodeSniffer
     }//end process()
 
 
-    //-- REGISTERING TOKEN LISTENERS --//
-
-
     /**
      * Registers installed sniffs in the coding standard being used.
      *
@@ -223,8 +220,8 @@ class PHP_CodeSniffer
             foreach ($newClasses as $className) {
 
                 // Only include sniffs that are in our coding standard.
-                // We know those sniffs because their class anem starts
-                // with [STANDARD]_
+                // We know those sniffs because their class name starts
+                // with "[STANDARD]_".
                 if (preg_match("|^${standard}_|i", $className) === 0) {
                     continue;
                 }
@@ -316,9 +313,6 @@ class PHP_CodeSniffer
         return $files;
 
     }//end _getSniffFiles()
-
-
-    //-- PROCESSING SOURCE FILES --//
 
 
     /**
@@ -419,7 +413,7 @@ class PHP_CodeSniffer
             }
 
             if ($numErrors === 0 && $showWarnings === false) {
-                // Prefect score! (sort of)
+                // Prefect score (sort of).
                 continue;
             }
 
@@ -469,9 +463,19 @@ class PHP_CodeSniffer
             echo "AFFECTING $numLines LINE(S)\n";
             echo str_repeat('-', 80)."\n";
 
+            // Work out the max line number for formatting.
+            $maxLine = 0;
+            foreach ($errors as $line => $lineErrors) {
+                if ($line > $maxLine) {
+                    $maxLine = $line;
+                }
+            }
+            $maxLineLength = strlen($maxLine);
+
             foreach ($errors as $line => $lineErrors) {
                 foreach ($lineErrors as $error) {
-                    echo '[LINE '.$line.'] '.$error."\n";
+                    $padding = ($maxLineLength - strlen($line));
+                    echo '[LINE '.str_repeat(' ', $padding).$line.'] '.$error."\n";
                 }
             }
 
@@ -850,9 +854,6 @@ class PHP_CodeSniffer
         return $validName;
 
     }//end isUnderscoreName()
-
-
-    //-- STANDARDS --//
 
 
     /**
