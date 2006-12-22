@@ -2,34 +2,34 @@
 
 
 // Valid class name.
-class ValidCamelCaseClass {}
+class ValidCamelCaseClass extends MyClass {}
 
 
 // Incorrect usage of camel case.
-class invalidCamelCaseClass {}
-class Invalid_Camel_Case_Class_With_Underscores {}
+class invalidCamelCaseClass extends MyClass {}
+class Invalid_Camel_Case_Class_With_Underscores implements MyClass {}
 
 
 // All lowercase.
-class invalidlowercaseclass {}
-class invalid_lowercase_class_with_underscores {}
+class invalidlowercaseclass extends MyClass {}
+class invalid_lowercase_class_with_underscores extends MyClass {}
 
 
 // All uppercase.
-class INVALIDUPPERCASECLASS {}
-class INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES {}
+class INVALIDUPPERCASECLASS extends MyClass {}
+class INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES extends MyClass {}
 
 
 // Mix camel case with uppercase.
-class InvalidCamelCaseClassWithUPPERCASE {}
+class InvalidCamelCaseClassWithUPPERCASE extends MyClass {}
 
 
 // Invalid usage of numeric characters.
-class InvalidCamelCaseClassWith1Number {}
-class InvalidCamelCaseClassWith12345Numbers {}
-class 5InvalidCamelCaseClassStartingWithNumber {}
-class InvalidCamelCaseClassEndingWithNumber5 {}
-class 12345 {}
+class InvalidCamelCaseClassWith1Number extends MyClass {}
+class InvalidCamelCaseClassWith12345Numbers extends MyClass {}
+class 5InvalidCamelCaseClassStartingWithNumber extends MyClass {}
+class InvalidCamelCaseClassEndingWithNumber5 extends MyClass {}
+class 12345 extends MyClass {}
 
 
 ?>

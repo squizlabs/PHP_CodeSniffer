@@ -65,8 +65,10 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         // Determine the name of the class or interface. Note that we cannot
         // simply look for the first T_STRING because a class name
         // starting with the number will be multiple tokens.
-        $opener = $tokens[$stackPtr]['scope_opener'];
-        $name = trim($phpcsFile->getTokensAsString(($stackPtr + 1), ($opener - $stackPtr -1)));
+        $opener    = $tokens[$stackPtr]['scope_opener'];
+        $nameStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $opener, true);
+        $nameEnd   = $phpcsFile->findNext(T_WHITESPACE, $nameStart, $opener);
+        $name      = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
 
         // Check for camel caps format.
         $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, true);
