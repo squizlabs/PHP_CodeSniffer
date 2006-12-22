@@ -20,13 +20,21 @@
  </maintainers>
  <release>
   <version>0.3.0</version>
-  <date>2006-12-12</date>
+  <date>2006-12-22</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
+   - Specifying coding standard on command line is now optional, even if you have multiple standards installed
+     - PHP_CodeSniffer uses the PEAR coding standard by default if no standard is specified
+   - Added new coding standard, Squiz, that can be used as an alternative to PEAR
+     - also contains more examples of sniffs
+     - some may be moved into the Generic coding standard if required
+   - Added MultipleStatementAlignmentSniff to Generic standard
+   - Added ScopeIndentSniff to Generic standard
    - Added FileCommentSniff to PEAR standard
    - Added ClassCommentSniff to PEAR standard
    - Added FunctionCommentSniff to PEAR standard
+   - Change MultipleStatementSniff to MultipleStatementAlignmentSniff in PEAR standard
    - Updated file, class and method comments for all files
    - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    - Fixed bug #9411 : too few pattern characters cause incorrect error report
@@ -134,9 +142,6 @@
       <file name="AbstractVariableSniff.php">
         <replace type="package-info" from="@package_version@" to="version"/>
       </file>
-      <file name="GeneralDocCommentHelper.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
       <file name="IncorrectPatternException.php">
         <replace type="package-info" from="@package_version@" to="version"/>
       </file>
@@ -144,6 +149,11 @@
        <dir name="Sniffs">
         <dir name="Files">
          <file name="LineLengthSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Formatting">
+         <file name="MultipleStatementAlignmentSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -171,11 +181,22 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="WhiteSpace">
+         <file name="ScopeIndentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
        </dir>
        <dir name="Tests" role="test">
         <dir name="Files">
          <file name="LineLengthUnitTest.inc"/>
          <file name="LineLengthUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Formatting">
+         <file name="MultipleStatementAlignmentUnitTest.inc"/>
+         <file name="MultipleStatementAlignmentUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -206,6 +227,12 @@
          </file>
          <file name="UpperCaseConstantUnitTest.inc"/>
          <file name="UpperCaseConstantUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="WhiteSpace">
+         <file name="ScopeIndentUnitTest.inc"/>
+         <file name="ScopeIndentUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -240,6 +267,11 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="Formatting">
+         <file name="MultipleStatementAlignmentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
         <dir name="Methods">
          <file name="FunctionCallSignatureSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
@@ -270,11 +302,6 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="DisallowShortOpenTagSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Statements">
-         <file name="MultipleStatementSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -342,12 +369,6 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
-        <dir name="Statements">
-         <file name="MultipleStatementUnitTest.inc"/>
-         <file name="MultipleStatementUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
         <dir name="WhiteSpace">
          <file name="ScopeClosingBraceUnitTest.inc"/>
          <file name="ScopeClosingBraceUnitTest.php">
@@ -356,6 +377,230 @@
          <file name="ScopeIndentUnitTest.inc"/>
          <file name="ScopeIndentUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+       </dir>
+      </dir>
+      <dir name="Squiz" role="php">
+       <dir name="Sniffs">
+        <dir name="Arrays">
+         <file name="ArrayDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Classes">
+         <file name="ClassDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ClassFileNameSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SelfMemberReferenceSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidClassNameSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Commenting">
+         <file name="BlockCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ClosingDeclarationCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="EmptyCatchCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="LongConditionClosingCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="PostStatementCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="ControlStructures">
+         <file name="ControlSignatureSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ElseIfDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForEachLoopDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForLoopDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineControlStructureSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineIfDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SwitchDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Files">
+         <file name="LineLengthSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Formatting">
+         <file name="MultipleStatementAlignmentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="OperatorBracketSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="PHP">
+         <file name="EmbeddedPhpSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Strings">
+         <file name="ConcatenationSpacingSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="WhiteSpace">
+         <file name="ControlStructureSpacingSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionClosingBraceSpaceSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="OperatorSpacingSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ScopeIndentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SuperfluousWhitespaceSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+       </dir>
+       <dir name="Tests" role="test">
+        <dir name="Arrays">
+         <file name="ArrayDeclarationUnitTest.inc"/>
+         <file name="ArrayDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Classes">
+         <file name="ClassDeclarationUnitTest.inc"/>
+         <file name="ClassDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ClassFileNameUnitTest.inc"/>
+         <file name="ClassFileNameUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SelfMemberReferenceUnitTest.inc"/>
+         <file name="SelfMemberReferenceUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidClassNameUnitTest.inc"/>
+         <file name="ValidClassNameUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Commenting">
+         <file name="BlockCommentUnitTest.inc"/>
+         <file name="BlockCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ClosingDeclarationCommentUnitTest.inc"/>
+         <file name="ClosingDeclarationCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="EmptyCatchCommentUnitTest.inc"/>
+         <file name="EmptyCatchCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineCommentUnitTest.inc"/>
+         <file name="InlineCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="LongConditionClosingCommentUnitTest.inc"/>
+         <file name="LongConditionClosingCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="PostStatementCommentUnitTest.inc"/>
+         <file name="PostStatementCommentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="ControlStructures">
+         <file name="ControlSignatureUnitTest.inc"/>
+         <file name="ControlSignatureUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ElseIfDeclarationUnitTest.inc"/>
+         <file name="ElseIfDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForEachLoopDeclarationUnitTest.inc"/>
+         <file name="ForEachLoopDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForLoopDeclarationUnitTest.inc"/>
+         <file name="ForLoopDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineControlStructureUnitTest.inc"/>
+         <file name="InlineControlStructureUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InlineIfDeclarationUnitTest.inc"/>
+         <file name="InlineIfDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SwitchDeclarationUnitTest.inc"/>
+         <file name="SwitchDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Formatting">
+         <file name="OperatorBracketUnitTest.inc"/>
+         <file name="OperatorBracketUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="PHP">
+         <file name="EmbeddedPhpUnitTest.inc"/>
+         <file name="EmbeddedPhpUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Strings">
+         <file name="ConcatenationSpacingUnitTest.inc"/>
+         <file name="ConcatenationSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="WhiteSpace">
+         <file name="ControlStructureSpacingUnitTest.inc"/>
+         <file name="ControlStructureSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionClosingBraceSpaceUnitTest.inc"/>
+         <file name="FunctionClosingBraceSpaceUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="OperatorSpacingUnitTest.inc"/>
+         <file name="OperatorSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="SuperfluousWhitespaceUnitTest.inc"/>
+         <file name="SuperfluousWhitespaceUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
        </dir>
