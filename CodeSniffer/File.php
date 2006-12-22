@@ -196,8 +196,9 @@ class PHP_CodeSniffer_File
      * A list of tokens that are allowed to open a scope.
      *
      * This array also contains information about what kind of token the scope
-     * opener uses to oken a scope, and if the token can share a scope closer.
-     * An example of a token that shares a scope closer is a CASE scope.
+     * opener uses to open and close the scope, if the token can share a scope
+     * closer, and who it can be shared with. An example of a token that shares
+     * a scope closer is a CASE scope.
      *
      * @var array
      */
@@ -206,81 +207,97 @@ class PHP_CodeSniffer_File
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_TRY           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_CATCH         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_ELSE          => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_ELSEIF        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_FOR           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_FOREACH       => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_INTERFACE     => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_FUNCTION      => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_CLASS         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_WHILE         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_DO            => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_SWITCH        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                      T_CASE          => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
                                                          'shared' => true,
+                                                         'with'   => array(T_DEFAULT, T_CASE),
                                                     ),
                                      T_DEFAULT       => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
                                                          'shared' => true,
+                                                         'with'   => array(T_CASE),
                                                     ),
                                      T_START_HEREDOC => array(
                                                          'start'  => T_START_HEREDOC,
                                                          'end'    => T_END_HEREDOC,
                                                          'shared' => false,
+                                                         'with'   => array(),
                                                     ),
                                     );
 
@@ -1069,53 +1086,67 @@ class PHP_CodeSniffer_File
                     // conditions where there was none. This happens for T_CASE
                     // statements that are using the same break statement.
                     if ($lastOpener !== null && $this->_tokens[$lastOpener]['scope_closer'] === $this->_tokens[$i]['scope_closer']) {
-                        $badToken = $this->_tokens[$lastOpener]['scope_condition'];
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $type = $this->_tokens[$badToken]['type'];
-                            echo str_repeat("\t", ($level + 1));
-                            echo "* shared closer, cleaning up $badToken ($type) *\n";
-                        }
-
-                        for ($x = $this->_tokens[$i]['scope_condition']; $x <= $i; $x++) {
-                            $oldConditions = $this->_tokens[$x]['conditions'];
-                            $oldLevel      = $this->_tokens[$x]['level'];
-                            $this->_tokens[$x]['level']--;
-                            unset($this->_tokens[$x]['conditions'][$badToken]);
+                        // This opener shares its closer with the previous opener, but
+                        // we still need to check if the two openers share their closer
+                        // with each other directly (like CASE and DEFAULT) or if
+                        // they are just sharing because one doesn't have a closer
+                        // (like CASE with no BREAK using a SWITCHes closer).
+                        $thisType = $this->_tokens[$this->_tokens[$i]['scope_condition']]['code'];
+                        $opener = $this->_tokens[$lastOpener]['scope_condition'];
+                        if (in_array($this->_tokens[$opener]['code'], self::$_scopeOpeners[$thisType]['with']) === true) {
+                            $badToken = $this->_tokens[$lastOpener]['scope_condition'];
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                $type     = $this->_tokens[$x]['type'];
-                                $oldConds = '';
-                                foreach ($oldConditions as $condition) {
-                                    $oldConds .= token_name($condition).',';
-                                }
-                                $oldConds = rtrim($oldConds, ',');
-
-                                $newConds = '';
-                                foreach ($this->_tokens[$x]['conditions'] as $condition) {
-                                    $newConds .= token_name($condition).',';
-                                }
-                                $newConds = rtrim($newConds, ',');
-
-                                $newLevel = $this->_tokens[$x]['level'];
+                                $type = $this->_tokens[$badToken]['type'];
                                 echo str_repeat("\t", ($level + 1));
-                                echo "* cleaned $x ($type) *\n";
-                                echo str_repeat("\t", ($level + 2));
-                                echo "=> level changed from $oldLevel to $newLevel\n";
-                                echo str_repeat("\t", ($level + 2));
-                                echo "=> conditions changed from $oldConds to $newConds\n";
+                                echo "* shared closer, cleaning up $badToken ($type) *\n";
                             }
-                        }
-                        unset($conditions[$badToken]);
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $type = $this->_tokens[$badToken]['type'];
-                            echo str_repeat("\t", ($level + 1));
-                            echo "* token $badToken ($type) removed from conditions array *\n";
-                        }
 
-                        $level--;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            echo str_repeat("\t", ($level + 2));
-                            echo "* level decreased *\n";
-                        }
+                            for ($x = $this->_tokens[$i]['scope_condition']; $x <= $i; $x++) {
+                                $oldConditions = $this->_tokens[$x]['conditions'];
+                                $oldLevel      = $this->_tokens[$x]['level'];
+                                $this->_tokens[$x]['level']--;
+                                unset($this->_tokens[$x]['conditions'][$badToken]);
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    $type     = $this->_tokens[$x]['type'];
+                                    $oldConds = '';
+                                    foreach ($oldConditions as $condition) {
+                                        $oldConds .= token_name($condition).',';
+                                    }
+
+                                    $oldConds = rtrim($oldConds, ',');
+
+                                    $newConds = '';
+                                    foreach ($this->_tokens[$x]['conditions'] as $condition) {
+                                        $newConds .= token_name($condition).',';
+                                    }
+
+                                    $newConds = rtrim($newConds, ',');
+
+                                    $newLevel = $this->_tokens[$x]['level'];
+                                    echo str_repeat("\t", ($level + 1));
+                                    echo "* cleaned $x ($type) *\n";
+                                    echo str_repeat("\t", ($level + 2));
+                                    echo "=> level changed from $oldLevel to $newLevel\n";
+                                    echo str_repeat("\t", ($level + 2));
+                                    echo "=> conditions changed from $oldConds to $newConds\n";
+                                }//end if
+                            }//end for
+
+                            unset($conditions[$badToken]);
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $type = $this->_tokens[$badToken]['type'];
+                                echo str_repeat("\t", ($level + 1));
+                                echo "* token $badToken ($type) removed from conditions array *\n";
+                            }
+                            
+                            unset ($openers[$lastOpener]);
+    
+                            $level--;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", ($level + 2));
+                                echo "* level decreased *\n";
+                            }
+                        }//end if
                     }//end if
 
                     $level++;
@@ -1133,7 +1164,7 @@ class PHP_CodeSniffer_File
 
                     $lastOpener = $this->_tokens[$i]['scope_opener'];
                     if ($lastOpener !== null) {
-                        $openers[] = $lastOpener;
+                        $openers[$lastOpener] = $lastOpener;
                     }
 
                 } else if ($this->_tokens[$i]['scope_closer'] === $i) {
@@ -1142,10 +1173,12 @@ class PHP_CodeSniffer_File
                         if ($this->_tokens[$opener]['scope_closer'] === $i) {
                             $oldOpener = array_pop($openers);
                             if (empty($openers) === false) {
-                                $lastOpener = $openers[(count($openers) - 1)];
+                                $lastOpener = array_pop($openers);
+                                $openers[$lastOpener] = $lastOpener;
                             } else {
                                 $lastOpener = null;
                             }
+
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $type = $this->_tokens[$oldOpener]['type'];
                                 echo str_repeat("\t", ($level + 1));
@@ -1164,8 +1197,6 @@ class PHP_CodeSniffer_File
                                     echo str_repeat("\t", ($level + 2));
                                     echo "* level decreased *\n";
                                 }
-
-                                $removedCondition = true;
                             }
 
                             $this->_tokens[$i]['level']      = $level;
