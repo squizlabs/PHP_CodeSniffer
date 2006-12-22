@@ -145,7 +145,7 @@ foreach ($var as $val) {
     // Line 20
 }
 
-for ($var =1, $var < 20; $var++) {
+for ($var =1; $var < 20; $var++) {
     // Line 1
     // Line 2
     // Line 3
@@ -168,7 +168,7 @@ for ($var =1, $var < 20; $var++) {
     // Line 20
 }//end for
 
-for ($var =1, $var < 20; $var++) {
+for ($var =1; $var < 20; $var++) {
     // Line 1
     // Line 2
     // Line 3
@@ -178,7 +178,7 @@ for ($var =1, $var < 20; $var++) {
     // Line 7
     // Line 8
     // Line 9
-    for ($val =1, $val < 20; $val++) {
+    for ($val =1; $val < 20; $val++) {
         // Short for.
     }
     // Line 13
@@ -308,7 +308,7 @@ foreach ($var as $val) {
     // Line 20
 } //end foreach
 
-for ($var =1, $var < 20; $var++) {
+for ($var =1; $var < 20; $var++) {
     // Line 1
     // Line 2
     // Line 3
