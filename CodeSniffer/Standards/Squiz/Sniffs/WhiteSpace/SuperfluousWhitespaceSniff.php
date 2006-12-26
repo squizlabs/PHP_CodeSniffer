@@ -97,6 +97,11 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for end of file whitespace.
             */
 
+            if (isset($tokens[($stackPtr + 1)]) === false) {
+                // The close PHP token is the last in the file.
+                return;
+            }
+
             for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
                 // If we find something that isn't inline html then there
                 // is more to the file.
