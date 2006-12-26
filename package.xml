@@ -454,11 +454,17 @@
          <file name="MultipleStatementAlignmentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="OutputBufferingIndentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="OperatorBracketSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
         <dir name="PHP">
+         <file name="DisallowObEndFlushSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="EmbeddedPhpSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -473,6 +479,9 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="FunctionClosingBraceSpaceSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionSpacingSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="OperatorSpacingSniff.php">
@@ -572,8 +581,16 @@
          <file name="OperatorBracketUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="OutputBufferingIndentUnitTest.inc"/>
+         <file name="OutputBufferingIndentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="PHP">
+         <file name="DisallowObEndFlushUnitTest.inc"/>
+         <file name="DisallowObEndFlushUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="EmbeddedPhpUnitTest.inc"/>
          <file name="EmbeddedPhpUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -592,6 +609,10 @@
          </file>
          <file name="FunctionClosingBraceSpaceUnitTest.inc"/>
          <file name="FunctionClosingBraceSpaceUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionSpacingUnitTest.inc"/>
+         <file name="FunctionSpacingUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="OperatorSpacingUnitTest.inc"/>
