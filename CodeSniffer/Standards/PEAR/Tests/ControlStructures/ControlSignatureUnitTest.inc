@@ -149,7 +149,7 @@ if ($i == 0)
     $i = 1;
 }
 
-if ($i == 0) /* this is not ok */ {
+if ($i == 0) /* this is ok */ {
 }
 
 ?>

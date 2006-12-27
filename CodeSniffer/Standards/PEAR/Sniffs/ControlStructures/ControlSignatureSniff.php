@@ -51,7 +51,7 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
     {
 
         return array(
-                "do {...} while (...);\n",
+                "do {\n...} while (...);\n",
                 "while (...) {\n",
                 "for (...) {\n",
                 "if (...) {\n",
