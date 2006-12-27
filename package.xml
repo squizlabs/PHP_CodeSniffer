@@ -466,16 +466,16 @@
          </file>
         </dir>
         <dir name="Functions">
-         <file name="FunctionArgumentSpacingSniff.php">
+         <file name="FunctionCallArgumentSpacingSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="FunctionCallArgumentSpacingSniff.php">
+         <file name="FunctionDeclarationArgumentSpacingSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="FunctionDeclarationSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="FunctionOpeningBraceSniff.php">
+         <file name="OpeningFunctionBraceSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="GlobalFunctionSniff.php">
@@ -608,20 +608,12 @@
          </file>
         </dir>
         <dir name="Functions">
-         <file name="FunctionArgumentSpacingUnitTest.inc"/>
-         <file name="FunctionArgumentSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCallArgumentSpacingUnitTest.inc"/>
-         <file name="FunctionCallArgumentSpacingUnitTest.php">
+         <file name="FunctionDeclarationArgumentSpacingUnitTest.inc"/>
+         <file name="FunctionDeclarationArgumentSpacingUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="FunctionDeclarationUnitTest.inc"/>
          <file name="FunctionDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionOpeningBraceUnitTest.inc"/>
-         <file name="FunctionOpeningBraceUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="GlobalFunctionUnitTest.inc"/>
