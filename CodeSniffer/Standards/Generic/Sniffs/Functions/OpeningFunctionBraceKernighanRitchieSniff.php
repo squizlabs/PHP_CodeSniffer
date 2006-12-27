@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff.
+ * Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff.
  *
  * PHP version 5
  *
@@ -18,10 +18,10 @@ require_once 'PHP/CodeSniffer/Sniff.php';
 
 
 /**
- * Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff.
+ * Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff.
  *
- * Checks that the opening brace of a function is on the line after the
- * function declaration.
+ * Checks that the opening brace of a function is on the same line
+ * as the function declaration.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -32,7 +32,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff implements PHP_CodeSniffer_Sniff
 {
 
 
@@ -75,42 +75,32 @@ class Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff implements PHP_Cod
 
         $lineDifference = $braceLine - $functionLine;
 
-        if ($lineDifference === 0) {
-            $error = 'Opening function brace should be on a new line.';
+        if ($lineDifference > 0) {
+            $error = 'Opening function brace should be on the same line as the declaration.';
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
 
-        if ($lineDifference > 1) {
-            $ender = (($lineDifference - 1) === 1) ? 'line' : 'lines';
-            $error = 'Opening function brace should be on the line after the declaration. Found '.($lineDifference - 1).' blank '.$ender.'.';
+        // Checks that the closing parenthesis and the opening brace are
+        // separated by a whitespace character.
+        $closerColumn = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['column'];
+        $braceColumn  = $tokens[$openingBrace]['column'];
+
+        $columnDifference = $braceColumn - $closerColumn;
+
+        if ($columnDifference != 2) {
+            $error = 'Expected 1 space between the closing parenthesis and the opening brace, but found '.($columnDifference - 1).'.';
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
 
-        // We need to actually find the first piece of content on this line,
-        // as if this is a method with tokens before it (public, static etc)
-        // or an if with an else before it, then we need to start the scope
-        // checking from there, rather than the current token.
-        $lineStart = $stackPtr;
-        while (($lineStart = $phpcsFile->findPrevious(array(T_WHITESPACE), ($lineStart - 1), null, false)) !== false) {
-            if (strpos($tokens[$lineStart]['content'], "\n") !== false) {
-                break;
-            }
-        }
-
-        // We found a new line, now go forward and find the first non-whitespace
-        // token.
-        $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), $lineStart, null, true);
-
-        // The opening brace is on the correct line, now it needs to be
-        // checked to be correctly indented.
-        $startColumn = $tokens[$lineStart]['column'];
-        $braceIndent = $tokens[$openingBrace]['column'];
-
-        if ($braceIndent !== $startColumn) {
-            $error = 'Opening Brace Indented Incorrectly. Expected '.($startColumn - 1).' spaces, but found '.($braceIndent - 1).'.';
+        // Check that a tab was not used instead of a space.
+        $spaceTokenPtr = ($tokens[$stackPtr]['parenthesis_closer'] + 1);
+        $spaceContent  = $tokens[$spaceTokenPtr]['content'];
+        if ($spaceContent !== ' ') {
+            $error = 'Expected a single space character between the closing parenthesis and the opening brace, but found "'.$spaceContent.'".';
             $phpcsFile->addError($error, $openingBrace);
+            return;
         }
 
     }//end process()

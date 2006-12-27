@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the OpeningMethodBraceKernighanRitchie sniff.
+ * Unit test class for the OpeningFunctionBraceKernighanRitchie sniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Unit test class for the OpeningMethodBraceKernighanRitchie sniff.
+ * Unit test class for the OpeningFunctionBraceKernighanRitchie sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Methods_OpeningMethodBraceKernighanRitchieUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Functions_OpeningFunctionBraceKernighanRitchieUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * PEAR_Sniffs_Methods_MethodCallArgumentSpacingSniff.
+ * PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
  * PHP version 5
  *
@@ -18,7 +18,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
 
 
 /**
- * PEAR_Sniffs_Methods_MethodCallArgumentSpacingSniff.
+ * PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
  * Checks that calls to methods and functions are spaced correctly.
  *
@@ -31,7 +31,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Methods_MethodCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
+class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
 

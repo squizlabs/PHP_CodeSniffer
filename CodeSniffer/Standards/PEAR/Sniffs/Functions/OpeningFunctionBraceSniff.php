@@ -1,6 +1,6 @@
 <?php
 /**
- * PEAR_Sniffs_Methods_OpeningMethodBraceSniff.
+ * PEAR_Sniffs_Functions_OpeningFunctionBraceSniff.
  *
  * PHP version 5
  *
@@ -14,11 +14,11 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Methods/OpeningMethodBraceBsdAllmanSniff.php';
+require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php';
 
 
 /**
- * PEAR_Sniffs_Methods_OpeningMethodBraceSniff.
+ * PEAR_Sniffs_Functions_OpeningFunctionBraceSniff.
  *
  * Checks that the opening brace of a function is on the line after the
  * function declaration.
@@ -32,7 +32,7 @@ require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Methods/OpeningMethodBrac
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Methods_OpeningMethodBraceSniff extends Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff
+class PEAR_Sniffs_Functions_OpeningFunctionBraceSniff extends Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff
 {
 
 }//end class

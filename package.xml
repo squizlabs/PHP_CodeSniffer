@@ -157,11 +157,11 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
-        <dir name="Methods">
-         <file name="OpeningMethodBraceBsdAllmanSniff.php">
+        <dir name="Functions">
+         <file name="OpeningFunctionBraceBsdAllmanSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="OpeningMethodBraceKernighanRitchieSniff.php">
+         <file name="OpeningFunctionBraceKernighanRitchieSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -200,13 +200,13 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
-        <dir name="Methods">
-         <file name="OpeningMethodBraceBsdAllmanUnitTest.inc"/>
-         <file name="OpeningMethodBraceBsdAllmanUnitTest.php">
+        <dir name="Functions">
+         <file name="OpeningFunctionBraceBsdAllmanUnitTest.inc"/>
+         <file name="OpeningFunctionBraceBsdAllmanUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="OpeningMethodBraceKernighanRitchieUnitTest.inc"/>
-         <file name="OpeningMethodBraceKernighanRitchieUnitTest.php">
+         <file name="OpeningFunctionBraceKernighanRitchieUnitTest.inc"/>
+         <file name="OpeningFunctionBraceKernighanRitchieUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -272,17 +272,19 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
-        <dir name="Methods">
-         <file name="FunctionCallSignatureSniff.php">
+        <dir name="Functions">
+         <file name="FunctionCallArgumentSpacingSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="MethodCallArgumentSpacingSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OpeningMethodBraceSniff.php">
+         <file name="OpeningFunctionBraceSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="ValidDefaultValueSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Methods">
+         <file name="FunctionCallSignatureSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -345,17 +347,19 @@
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
-        <dir name="Methods">
-         <file name="FunctionCallSignatureUnitTest.inc"/>
-         <file name="FunctionCallSignatureUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="MethodCallArgumentSpacingUnitTest.inc"/>
-         <file name="MethodCallArgumentSpacingUnitTest.php">
+        <dir name="Functions">
+         <file name="FunctionCallArgumentSpacingUnitTest.inc"/>
+         <file name="FunctionCallArgumentSpacingUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="ValidDefaultValueUnitTest.inc"/>
          <file name="ValidDefaultValueUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Methods">
+         <file name="FunctionCallSignatureUnitTest.inc"/>
+         <file name="FunctionCallSignatureUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -458,6 +462,23 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="OperatorBracketSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Functions">
+         <file name="FunctionArgumentSpacingSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionCallArgumentSpacingSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionDeclarationSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionOpeningBraceSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="GlobalFunctionSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -583,6 +604,28 @@
          </file>
          <file name="OutputBufferingIndentUnitTest.inc"/>
          <file name="OutputBufferingIndentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Functions">
+         <file name="FunctionArgumentSpacingUnitTest.inc"/>
+         <file name="FunctionArgumentSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionCallArgumentSpacingUnitTest.inc"/>
+         <file name="FunctionCallArgumentSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionDeclarationUnitTest.inc"/>
+         <file name="FunctionDeclarationUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionOpeningBraceUnitTest.inc"/>
+         <file name="FunctionOpeningBraceUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="GlobalFunctionUnitTest.inc"/>
+         <file name="GlobalFunctionUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>

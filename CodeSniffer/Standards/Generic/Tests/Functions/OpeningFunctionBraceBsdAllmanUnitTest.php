@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ValidDefaultValue sniff.
+ * Unit test class for the OpeningFunctionBraceBsdAllman sniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Unit test class for the ValidDefaultValue sniff.
+ * Unit test class for the OpeningFunctionBraceBsdAllman sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_Methods_ValidDefaultValueUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Functions_OpeningFunctionBraceBsdAllmanUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -44,12 +44,24 @@ class PEAR_Tests_Methods_ValidDefaultValueUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                29 => 1,
-                34 => 1,
-                39 => 1,
-                71 => 1,
-                76 => 1,
-                81 => 1,
+                  4 => 1,
+                 13 => 1,
+                 19 => 1,
+                 24 => 1,
+                 30 => 1,
+                 40 => 1,
+                 44 => 1,
+                 50 => 1,
+                 55 => 1,
+                 67 => 1,
+                 78 => 1,
+                 85 => 1,
+                 91 => 1,
+                 98 => 1,
+                110 => 1,
+                115 => 1,
+                122 => 1,
+                128 => 1,
                );
 
     }//end getErrorList()

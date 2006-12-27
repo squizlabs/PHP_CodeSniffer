@@ -1,6 +1,6 @@
 <?php
 /**
- * PEAR_Sniffs_Methods_ValidDefaultValueSniff.
+ * PEAR_Sniffs_Functions_ValidDefaultValueSniff.
  *
  * PHP version 5
  *
@@ -18,7 +18,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
 
 
 /**
- * PEAR_Sniffs_Methods_ValidDefaultValueSniff.
+ * PEAR_Sniffs_Functions_ValidDefaultValueSniff.
  *
  * A Sniff to ensure that parameters defined for a function that have a default
  * value come at the end of the function signature.
@@ -32,7 +32,7 @@ require_once 'PHP/CodeSniffer/Sniff.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Methods_ValidDefaultValueSniff implements PHP_CodeSniffer_Sniff
+class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sniff
 {
 
 
@@ -72,7 +72,7 @@ class PEAR_Sniffs_Methods_ValidDefaultValueSniff implements PHP_CodeSniffer_Snif
         while (($nextArg = $phpcsFile->findNext(T_VARIABLE, $nextArg + 1, $argEnd)) !== false) {
             $argHasDefault = self::_argHasDefault($phpcsFile, $nextArg);
             if (($argHasDefault === false) && ($defaultFound === true)) {
-                $error  = 'Arguments with default values should be at the end';
+                $error  = 'Arguments with default values must be at the end';
                 $error .= ' of the argument list.';
                 $phpcsFile->addError($error, $nextArg);
                 return;
@@ -105,6 +105,7 @@ class PEAR_Sniffs_Methods_ValidDefaultValueSniff implements PHP_CodeSniffer_Snif
         return true;
 
     }//end _argHasDefault()
+
 
 }//end class
 

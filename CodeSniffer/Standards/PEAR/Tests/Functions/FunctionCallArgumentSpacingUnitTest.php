@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the MethodCallArgumentSpacing sniff.
+ * Unit test class for the FunctionCallArgumentSpacing sniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Unit test class for the MethodCallArgumentSpacing sniff.
+ * Unit test class for the FunctionCallArgumentSpacing sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_Methods_MethodCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
+class PEAR_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
 {
 
 
