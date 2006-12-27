@@ -196,7 +196,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
                     $expectedMessage .= "$expectedErrors error(s)";
                     $foundMessage    .= "$numErrors error(s)";
                     if ($numErrors !== 0) {
-                        $foundString .= 'errors';
+                        $foundString .= 'error(s)';
                         $errors      .= implode("\n -> ", $problems['found_errors']);
                     }
 
@@ -204,7 +204,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
                         $expectedMessage .= ' and ';
                         $foundMessage    .= ' and ';
                         if ($numWarnings !== 0) {
-                            $foundString .= ' and ';
+                            if ($foundString !== '') {
+                                $foundString .= ' and ';
+                            }
                         }
                     }
                 }
@@ -213,7 +215,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
                     $expectedMessage .= "$expectedWarnings warning(s)";
                     $foundMessage    .= "$numWarnings warning(s)";
                     if ($numWarnings !== 0) {
-                        $foundString .= 'warnings';
+                        $foundString .= 'warning(s)';
                         $errors      .= implode("\n -> ", $problems['found_warnings']);
                     }
                 }
