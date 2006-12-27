@@ -83,9 +83,10 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff extends PHP_CodeSni
         if ($lineDifference === 2) {
             return;
         } else if ($lineDifference < 2) {
-            $error = 'Empty Line required before closing brace.';
+            $error = "Expected 1 blank line before closing brace; 0 found";
         } else {
-            $error = ($lineDifference - 1).' empty lines found before closing brace. Only 1 is allowed.';
+            $lineDifference--;
+            $error = "Expected 1 blank line before closing brace; $lineDifference found";
         }
 
         $phpcsFile->addError($error, $stackPtr);

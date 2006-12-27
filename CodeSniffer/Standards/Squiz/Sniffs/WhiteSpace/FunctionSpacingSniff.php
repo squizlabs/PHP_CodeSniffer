@@ -91,11 +91,16 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $foundLines = 0;
         } else {
             $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextLineToken + 1), null, true);
-            $foundLines  = $tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line'];
+            if ($nextContent === false) {
+                // We are at the end of the file.
+                $foundLines = 0;
+            } else {
+                $foundLines  = $tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line'];
+            }
         }
 
         if ($foundLines !== 2) {
-            $phpcsFile->addError("Expected 2 blank lines after method; $foundLines line(s) found", $stackPtr);
+            $phpcsFile->addError("Expected 2 blank lines after function; $foundLines found", $stackPtr);
         }
 
         /*
@@ -123,11 +128,11 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
-            // the previous function and no blank line before this one.
+            // the previous function and no blank lines before this one as well.
             $currentLine = $tokens[$prevContent]['line'];
             $prevLine    = ($currentLine - 1);
             $i           = ($stackPtr - 1);
-            while ($currentLine != $prevLine) {
+            while ($currentLine != $prevLine && $currentLine > 1) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];
                     if ($tokens[$scopeCondition]['code'] === T_FUNCTION) {
@@ -145,7 +150,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($foundLines !== 2) {
-            $phpcsFile->addError("Expected 2 blank lines before method; $foundLines line(s) found", $stackPtr);
+            $phpcsFile->addError("Expected 2 blank lines before function; $foundLines found", $stackPtr);
         }
 
     }//end processTokenWithinScope()
