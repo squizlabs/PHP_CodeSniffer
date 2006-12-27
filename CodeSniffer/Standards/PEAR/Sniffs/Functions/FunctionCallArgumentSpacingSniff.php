@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Sniff.php';
 
-
 /**
  * PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
