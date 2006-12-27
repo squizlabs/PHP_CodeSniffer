@@ -95,7 +95,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($foundLines !== 2) {
-            $phpcsFile->addError("Expected 2 blank lines after method; $foundLines lines found", $stackPtr);
+            $phpcsFile->addError("Expected 2 blank lines after method; $foundLines line(s) found", $stackPtr);
         }
 
         /*
@@ -145,7 +145,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($foundLines !== 2) {
-            $phpcsFile->addError("Expected 2 blank lines before method; $foundLines lines found", $stackPtr);
+            $phpcsFile->addError("Expected 2 blank lines before method; $foundLines line(s) found", $stackPtr);
         }
 
     }//end processTokenWithinScope()
