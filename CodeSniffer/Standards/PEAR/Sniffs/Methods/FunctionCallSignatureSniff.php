@@ -1,6 +1,6 @@
 <?php
 /**
- * Verifies that control statements conform to their coding standards.
+ * PEAR_Sniffs_Methods_FunctionCallSignatureSniff.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@
 require_once 'PHP/CodeSniffer/Standards/AbstractPatternSniff.php';
 
 /**
- * Verifies that control statements conform to their coding standards.
+ * PEAR_Sniffs_Methods_FunctionCallSignatureSniff.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -72,9 +72,8 @@ class PEAR_Sniffs_Methods_FunctionCallSignatureSniff implements PHP_CodeSniffer_
 
         // Find the previous non-empty token.
         $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
-
         if ($tokens[$previous]['code'] === T_FUNCTION) {
-            // Its a function definition, not a function call.
+            // It's a function definition, not a function call.
             return;
         }
 
