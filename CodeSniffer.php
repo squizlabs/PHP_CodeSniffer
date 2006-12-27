@@ -421,7 +421,13 @@ class PHP_CodeSniffer
             foreach ($errors as $line => $lineErrors) {
                 $newErrors = array();
                 foreach ($lineErrors as $message) {
-                    $newErrors[] = 'ERROR: '.$message;
+                    if ($showWarnings === true && $numWarnings > 0) {
+                        // Add some extra padding.
+                        $errorMessage = 'ERROR   | '.$message;
+                    } else {
+                        $errorMessage = 'ERROR | '.$message;
+                    }
+                    $newErrors[] = $errorMessage;
                 }
 
                 $errors[$line] = $newErrors;
@@ -431,7 +437,7 @@ class PHP_CodeSniffer
                 foreach ($warnings as $line => $lineWarnings) {
                     $newWarnings = array();
                     foreach ($lineWarnings as $message) {
-                        $newWarnings[] = 'WARNING: '.$message;
+                        $newWarnings[] = 'WARNING | '.$message;
                     }
 
                     if (isset($errors[$line]) === true) {
@@ -475,7 +481,7 @@ class PHP_CodeSniffer
             foreach ($errors as $line => $lineErrors) {
                 foreach ($lineErrors as $error) {
                     $padding = ($maxLineLength - strlen($line));
-                    echo '[LINE '.str_repeat(' ', $padding).$line.'] '.$error."\n";
+                    echo ' '.str_repeat(' ', $padding).$line.' | '.$error."\n";
                 }
             }
 
