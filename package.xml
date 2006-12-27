@@ -20,7 +20,7 @@
  </maintainers>
  <release>
   <version>0.3.0</version>
-  <date>2006-12-22</date>
+  <date>2006-12-28</date>
   <license>BSD License</license>
   <state>alpha</state>
   <notes>
@@ -35,6 +35,8 @@
    - Added ClassCommentSniff to PEAR standard
    - Added FunctionCommentSniff to PEAR standard
    - Change MultipleStatementSniff to MultipleStatementAlignmentSniff in PEAR standard
+   - Replaced Methods directory with Functions directory in Generic and PEAR standards
+     - also renamed some of the sniffs in those directories
    - Updated file, class and method comments for all files
    - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    - Fixed bug #9411 : too few pattern characters cause incorrect error report
@@ -276,15 +278,13 @@
          <file name="FunctionCallArgumentSpacingSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="FunctionCallSignatureSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="OpeningFunctionBraceSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="ValidDefaultValueSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Methods">
-         <file name="FunctionCallSignatureSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -352,14 +352,12 @@
          <file name="FunctionCallArgumentSpacingUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
-         <file name="ValidDefaultValueUnitTest.inc"/>
-         <file name="ValidDefaultValueUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Methods">
          <file name="FunctionCallSignatureUnitTest.inc"/>
          <file name="FunctionCallSignatureUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidDefaultValueUnitTest.inc"/>
+         <file name="ValidDefaultValueUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>

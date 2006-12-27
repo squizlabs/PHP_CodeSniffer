@@ -1,6 +1,6 @@
 <?php
 /**
- * PEAR_Sniffs_Methods_FunctionCallSignatureSniff.
+ * PEAR_Sniffs_Functions_FunctionCallSignatureSniff.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@
 require_once 'PHP/CodeSniffer/Standards/AbstractPatternSniff.php';
 
 /**
- * PEAR_Sniffs_Methods_FunctionCallSignatureSniff.
+ * PEAR_Sniffs_Functions_FunctionCallSignatureSniff.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -28,7 +28,7 @@ require_once 'PHP/CodeSniffer/Standards/AbstractPatternSniff.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Methods_FunctionCallSignatureSniff implements PHP_CodeSniffer_Sniff
+class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffer_Sniff
 {
 
 

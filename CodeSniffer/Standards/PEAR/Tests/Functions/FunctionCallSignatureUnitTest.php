@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_Methods_FunctionCallSignatureUnitTest extends AbstractSniffUnitTest
+class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUnitTest
 {
 
 
