@@ -31,6 +31,7 @@
      - some may be moved into the Generic coding standard if required
    - Added MultipleStatementAlignmentSniff to Generic standard
    - Added ScopeIndentSniff to Generic standard
+   - Added ForbiddenFunctionsSniff to Generic standard
    - Added FileCommentSniff to PEAR standard
    - Added ClassCommentSniff to PEAR standard
    - Added FunctionCommentSniff to PEAR standard
@@ -176,6 +177,9 @@
          <file name="DisallowShortOpenTagSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="ForbiddenFunctionsSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="LowerCaseConstantSniff.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -221,6 +225,10 @@
         <dir name="PHP">
          <file name="DisallowShortOpenTagUnitTest.inc"/>
          <file name="DisallowShortOpenTagUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForbiddenFunctionsUnitTest.inc"/>
+         <file name="ForbiddenFunctionsUnitTest.php">
            <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="LowerCaseConstantUnitTest.inc"/>
@@ -480,11 +488,28 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="NamingConventions">
+         <file name="UpperCasePhpConstantSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
         <dir name="PHP">
          <file name="DisallowObEndFlushSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="EmbeddedPhpSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ForbiddenFunctionsSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="GlobalKeywordSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="HeredocSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InnerFunctionsSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -501,6 +526,12 @@
         </dir>
         <dir name="Strings">
          <file name="ConcatenationSpacingSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="DoubleQuoteUsageSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="EchoedStringsSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -639,6 +670,22 @@
          <file name="EmbeddedPhpUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="ForbiddenFunctionsUnitTest.inc"/>
+         <file name="ForbiddenFunctionsUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="GlobalKeywordUnitTest.inc"/>
+         <file name="GlobalKeywordUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="HeredocUnitTest.inc"/>
+         <file name="HeredocUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="InnerFunctionsUnitTest.inc"/>
+         <file name="InnerFunctionsUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
         </dir>
         <dir name="Scope">
          <file name="MemberVarScopeUnitTest.inc"/>
@@ -657,6 +704,14 @@
         <dir name="Strings">
          <file name="ConcatenationSpacingUnitTest.inc"/>
          <file name="ConcatenationSpacingUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="DoubleQuoteUsageUnitTest.inc"/>
+         <file name="DoubleQuoteUsageUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="EchoedStringsUnitTest.inc"/>
+         <file name="EchoedStringsUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
