@@ -488,6 +488,17 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="Scope">
+         <file name="MemberVarScopeSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="MethodScopeSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="StaticThisUsageSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
         <dir name="Strings">
          <file name="ConcatenationSpacingSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -626,6 +637,20 @@
          </file>
          <file name="EmbeddedPhpUnitTest.inc"/>
          <file name="EmbeddedPhpUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Scope">
+         <file name="MemberVarScopeUnitTest.inc"/>
+         <file name="MemberVarScopeUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="MethodScopeUnitTest.inc"/>
+         <file name="MethodScopeUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="StaticThisUsageUnitTest.inc"/>
+         <file name="StaticThisUsageUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
