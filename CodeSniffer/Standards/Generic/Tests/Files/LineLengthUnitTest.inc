@@ -26,3 +26,7 @@ if (($anotherReallyLongVarName === true) || (is_array($anotherReallyLongVarName)
 // And here are some space exactly 80 chars long.
                                                                                 
 ?>
+<b>Hello</b>b>
+<?php
+echo 'hi';
+?>

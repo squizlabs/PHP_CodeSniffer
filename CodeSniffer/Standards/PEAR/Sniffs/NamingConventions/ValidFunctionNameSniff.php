@@ -86,7 +86,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = substr($methodName, 2);
             if (in_array($magicPart, $this->_magicMethods) === false) {
-                 $error = "Method name $className::$methodName is invalid; only PHP magic methods should be prefixed with a double underscore.";
+                 $error = "Method name \"$className::$methodName\" is invalid; only PHP magic methods should be prefixed with a double underscore.";
                  $phpcsFile->addError($error, $stackPtr);
             }
             return;
@@ -104,14 +104,14 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 
         // If it's a private method, it must have an underscore on the front.
         if ($isPublic === false && $methodName{0} !== '_') {
-            $error = "Private method name $className::$methodName must be prefixed with an underscore.";
+            $error = "Private method name \"$className::$methodName\" must be prefixed with an underscore.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
         // If it's not a private method, it must not have an underscore on the front.
         if ($isPublic === true && $scopeSpecified === true && $methodName{0} === '_') {
-            $error = ucfirst($scope)." method name $className::$methodName must not be prefixed with an underscore.";
+            $error = ucfirst($scope)." method name \"$className::$methodName\" must not be prefixed with an underscore.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -127,7 +127,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         if (PHP_CodeSniffer::isCamelCaps($testMethodName, false, $isPublic, false) === false) {
-            $error = ucfirst($scope)." method name $className::$methodName is not in camel caps format.";
+            $error = ucfirst($scope)." method name \"$className::$methodName\" is not in camel caps format.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -151,7 +151,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Does this function claim to be magical?
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
-            $error     = "Function name $functionName is invalid; only PHP magic methods should be prefixed with a double underscore.";
+            $error     = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -174,21 +174,21 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // If it has a package part, make sure the first letter is a captial.
         if ($packagePart !== '') {
             if ($functionName{0} === '_') {
-                $error = "Function name $functionName is invalid; only private methods should be prefixed with an underscore.";
+                $error = "Function name \"$functionName\" is invalid; only private methods should be prefixed with an underscore.";
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }
 
             if ($functionName{0} !== strtoupper($functionName{0})) {
-                $error = "Function name $functionName is prefixed with a package name but does not begin with a captial letter.";
+                $error = "Function name \"$functionName\" is prefixed with a package name but does not begin with a captial letter.";
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }
         }
 
         // If it doesn't have a camel caps part, it's not valid.
-        if ($camelCapsPart === '') {
-            $error = "Function name $functionName is not valid; name appears incomplete.";
+        if (trim($camelCapsPart) === '') {
+            $error = "Function name \"$functionName\" is not valid; name appears incomplete.";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -219,8 +219,13 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         if (!$validName) {
-            $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
-            $error   = "Function name $functionName is invalid; consider $newName instead.";
+            if ($newPackagePart === '') {
+                $newName = $newCamelCapsPart;
+            } else {
+                $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
+            }
+
+            $error   = "Function name \"$functionName\" is invalid; consider \"$newName\" instead.";
             $phpcsFile->addError($error, $stackPtr);
         }
 

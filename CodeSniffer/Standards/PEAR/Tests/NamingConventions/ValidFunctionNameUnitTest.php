@@ -147,6 +147,9 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
                  164 => 1,
                  165 => 1,
                  166 => 1,
+                 168 => 1,
+                 169 => 1,
+                 170 => 1,
                );
 
     }//end getErrorList()

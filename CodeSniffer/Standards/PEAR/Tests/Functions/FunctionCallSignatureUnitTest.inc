@@ -18,9 +18,13 @@ $something = get($arg1, $arg2) ;
 $something = get($arg1, $arg2)   ;
 
 // No errors as this test only checks for function calls.
-public function test ()
+class TestClass extends MyClass
 {
 
+    const const1 = 'hello';
+    const CONST2 = 'hello';
+
+    public function test () { }
 }
 
 make_foo($string/*the string*/, true/*test*/);

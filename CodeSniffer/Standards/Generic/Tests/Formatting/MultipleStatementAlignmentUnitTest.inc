@@ -64,4 +64,9 @@ $var10    .= 'var1';
 $var100   .= 'var1';
 $var1000  .= 'var1';
 
+// Valid
+$var = 100;
+
+// InValid
+$var  = 100;
 ?>

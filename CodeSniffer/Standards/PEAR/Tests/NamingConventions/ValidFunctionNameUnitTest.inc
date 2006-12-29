@@ -165,4 +165,8 @@ function __autoload() {}
 function __myFunction() {}
 function __my_function() {}
 
+function my_package_function() {}
+function Package_() {}
+function Package() {}
+
 ?>

@@ -129,4 +129,9 @@ class myClass()
     }
 }
 
+interface MyInterface()
+{
+    function myFunction();
+}
+
 ?>
