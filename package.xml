@@ -26,6 +26,7 @@
   <notes>
    - Specifying coding standard on command line is now optional, even if you have multiple standards installed
      - PHP_CodeSniffer uses the PEAR coding standard by default if no standard is specified
+   - Converted all unit tests to PHPUnit 3 format
    - Added new coding standard, Squiz, that can be used as an alternative to PEAR
      - also contains more examples of sniffs
      - some may be moved into the Generic coding standard if required
