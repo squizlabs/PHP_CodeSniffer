@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic_Sniffs_Statements_MultipleStatementSniff.
+ * Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff.
  *
  * PHP version 5
  *
@@ -17,9 +17,8 @@
 require_once 'PHP/CodeSniffer/Sniff.php';
 require_once 'PHP/CodeSniffer/Tokens.php';
 
-
 /**
- * Generic_Sniffs_Statements_MultipleStatementSniff.
+ * Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff.
  *
  * Checks alignment of assignments. If there are multiple adjacent assignments,
  * it will check that the equals signs of each assignment are aligned. It will
@@ -34,7 +33,7 @@ require_once 'PHP/CodeSniffer/Tokens.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Statements_MultipleStatementSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
 
 

@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Sniff.php';
 
-
 /**
  * Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff.
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Statements_MultipleStatementSniff.
+ * Squiz_Sniffs_Formatting_MultipleStatementAlignmentSniff.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@
 require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php';
 
 /**
- * Squiz_Sniffs_Statements_MultipleStatementSniff.
+ * Squiz_Sniffs_Formatting_MultipleStatementAlignmentSniff.
  *
  * Checks alignment of assignments. If there are multiple adjacent assignments,
  * it will check that the equals signs of each assignment are aligned. It will
@@ -32,7 +32,7 @@ require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Formatting/MultipleStatem
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Statements_MultipleStatementSniff extends Generic_Sniffs_Statements_MultipleStatementSniff
+class Squiz_Sniffs_Formatting_MultipleStatementAlignmentSniff extends Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff
 {
 
 }//end class

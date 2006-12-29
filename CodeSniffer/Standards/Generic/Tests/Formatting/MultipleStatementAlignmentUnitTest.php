@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Statements_MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
 {
 
 
