@@ -14,9 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
-require_once 'PHPUnit2/Util/Filter.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 require_once 'IsCamelCapsTest.php';
 
@@ -54,11 +54,11 @@ class Core_AllTests
     /**
      * Add all core unit tests into a test suite.
      *
-     * @return PHPUnit2_Framework_TestSuite
+     * @return PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('PHP CodeSniffer Core');
+        $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
         $suite->addTestSuite('Core_IsCamelCapsTest');
         return $suite;
 

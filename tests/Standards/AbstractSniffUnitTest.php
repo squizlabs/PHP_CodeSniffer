@@ -15,7 +15,7 @@
  */
 
 require_once 'PHP/CodeSniffer.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * An abstract class that all sniff unit tests must extend.
@@ -33,7 +33,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
+abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -62,8 +62,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit2_Framework_TestCase
      * Tests the extending classes Sniff class.
      *
      * @return void
+     * @throws PHPUnit_Framework_Error
      */
-    public final function testSniff()
+    protected final function runTest()
     {
         // The basis for determining file locations.
         $basename = substr(get_class($this), 0, -8);

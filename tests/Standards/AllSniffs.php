@@ -15,8 +15,8 @@
  */
 
 require_once 'PHP/CodeSniffer.php';
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // Require this here so that the unit tests don't have to try and find the
 // abstract class once it is installed into the PEAR tests directory.
@@ -50,7 +50,7 @@ class AllSniffs
      */
     public static function main()
     {
-        PHPUnit2_TextUI_TestRunner::run(self::suite());
+        PHPUnit_TextUI_TestRunner::run(self::suite());
 
     }//end main()
 
@@ -61,11 +61,11 @@ class AllSniffs
      * Sniff unit tests are found by recursing through the 'Tests' directory
      * of each installed coding standard.
      *
-     * @return PHPUnit2_Framework_TestSuite
+     * @return PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('PHP CodeSniffer Standards');
+        $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
 
         $standards = PHP_CodeSniffer::getInstalledStandards(true);
         foreach ($standards as $standard) {
@@ -84,9 +84,11 @@ class AllSniffs
                 $className = str_replace(dirname(__FILE__).'/', '', $filePath);
                 $className = substr($className, 0, -4);
                 $className = str_replace('/', '_', $className);
+                $niceName  = substr($className, (strrpos($className, '_') + 1), -8);
 
                 include_once $file->getPathname();
-                $suite->addTestSuite($className);
+                $class = new $className($niceName);
+                $suite->addTest($class);
             }
         }
 

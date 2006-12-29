@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'PHP/CodeSniffer.php';
 
 /**
@@ -29,7 +29,7 @@ require_once 'PHP/CodeSniffer.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Core_IsCamelCapsTest extends PHPUnit2_Framework_TestCase
+class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
 {
 
 

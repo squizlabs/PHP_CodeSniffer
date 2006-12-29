@@ -14,11 +14,12 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
-
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'CodeSniffer/Core/AllTests.php';
 require_once 'CodeSniffer/Standards/AllSniffs.php';
+set_time_limit(0);
+ini_set('memory_limit', '32M');
 
 /**
  * A test class for running all PHP_CodeSniffer unit tests.
@@ -45,7 +46,7 @@ class AllTests
      */
     public static function main()
     {
-        PHPUnit2_TextUI_TestRunner::run(self::suite());
+        PHPUnit_TextUI_TestRunner::run(self::suite());
 
     }//end main()
 
@@ -53,11 +54,11 @@ class AllTests
     /**
      * Add all PHP_CodeSniffer test suites into a single test suite.
      *
-     * @return PHPUnit2_Framework_TestSuite
+     * @return PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('PHP CodeSniffer');
+        $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer');
 
         $suite->addTest(Core_AllTests::suite());
         $suite->addTest(AllSniffs::suite());
