@@ -52,12 +52,27 @@ echo phpinfo(); }
 
 }
 
-class ClassOne extends ClassTwo, ClassThree
+class ClassOne implements ClassTwo, ClassThree
 {
 }
 
-class ClassOne extends ClassTwo,ClassThree
+class ClassOne implements ClassTwo,ClassThree
 {
 }
 
+class CorrectClassDeclarationWithExtends extends correctClassDeclaration
+
+{
+
+}
+
+class CorrectClassDeclarationWithExtends   extends correctClassDeclaration
+{
+
+}
+
+class   CorrectClassDeclaration
+{
+
+}
 ?>
