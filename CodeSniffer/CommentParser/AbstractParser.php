@@ -134,7 +134,14 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                             );
 
     /**
-     * The order of tags
+     * An array of unknown tags.
+     *
+     * @var array(string)
+     */
+    public $unknown = array();
+
+    /**
+     * The order of tags.
      *
      * @var array(string)
      */
@@ -259,7 +266,32 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     }
 
                     $prevTagPos = $wordPos;
+                } else {
+                    // A real comment tag should have a space and a newline before it.
+                    if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
+                        continue;
+                    }
+                    if (!isset($this->words[$wordPos-2]) || $this->words[$wordPos-2] !== "\n") {
+                        continue;
+                    }
+                    $standardTags = array(
+                                     'access',
+                                     'example',
+                                     'ignore',
+                                     'internal',
+                                     'static',
+                                     'tutorial',
+                                     'package_version@',
+                                    );
+                    if (!in_array($tag, $standardTags)) {
+                        $this->unknown[] = array(
+                                            'tag'  => $tag,
+                                            'line' => $this->getLine($wordPos),
+                                           );
+                    }
+
                 }//end if
+
             }//end if
         }//end foreach
 
@@ -497,6 +529,18 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         return $this->orders;
 
     }//end getTagOrders()
+
+
+    /**
+     * Returns the unknown tags.
+     *
+     * @return array
+     */
+    public function getUnknown()
+    {
+        return $this->unknown;
+
+    }//end getUnknown()
 
 
 }//end class
