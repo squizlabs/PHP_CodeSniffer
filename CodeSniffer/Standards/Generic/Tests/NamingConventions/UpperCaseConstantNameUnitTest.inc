@@ -5,7 +5,7 @@ define('invalidName', true);
 define("VALID_NAME", true);
 define("invalidName", true);
 
-class TestClass extends MyClass
+class TestClass extends MyClass, YourClass
 {
 
     const const1 = 'hello';
