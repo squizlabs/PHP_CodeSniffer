@@ -125,8 +125,17 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             $testMethodName = substr($methodName, 1);
         }
 
+        // PHP4 destructors are allowed to break our rules.
+        if ($testMethodName === $className) {
+            return;
+        }
+
         if (PHP_CodeSniffer::isCamelCaps($testMethodName, false, $isPublic, false) === false) {
-            $error = ucfirst($scope)." method name \"$className::$methodName\" is not in camel caps format.";
+            if ($scopeSpecified === true) {
+                $error = ucfirst($scope)." method name \"$className::$methodName\" is not in camel caps format";
+            } else {
+                $error = "Method name \"$className::$methodName\" is not in camel caps format";
+            }
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -218,13 +227,13 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         if (!$validName) {
+            $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
             if ($newPackagePart === '') {
                 $newName = $newCamelCapsPart;
             } else {
                 $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
             }
-
-            $error   = "Function name \"$functionName\" is invalid; consider \"$newName\" instead.";
+            $error = "Function name \"$functionName\" is invalid; consider \"$newName\" instead.";
             $phpcsFile->addError($error, $stackPtr);
         }
 
