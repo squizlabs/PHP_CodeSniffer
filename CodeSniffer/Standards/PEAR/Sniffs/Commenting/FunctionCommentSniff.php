@@ -121,8 +121,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1);
 
         if ($commentEnd === false) {
-            $error = 'Missing function doc comment';
-            $this->_phpcsFile->addError($error, $stackPtr);
             return;
         }
 
@@ -187,7 +185,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         // Exactly one blank line before params.
         $newlineSpan = $comment->getNewlineAfter();
-        if ($newlineSpan !== 2) {
+        $parameters  = $this->_fp->getParams();
+        if ($newlineSpan !== 2 && (empty($parameters) === false || $this->_fp->getReturn() !== null)) {
             $error = 'There must be exactly one blank line before the parameters in function comment';
             if ($long !== '') {
                 $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);

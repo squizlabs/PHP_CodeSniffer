@@ -86,8 +86,12 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $this->_phpcsFile = $phpcsFile;
 
         // We are only interested if this is the first open tag.
+        $openTags = array(
+                     T_OPEN_TAG,
+                     T_CLOSE_TAG,
+                    );
         if ($stackPtr !== 0) {
-            if ($this->_phpcsFile->findPrevious(T_OPEN_TAG, 0, $stackPtr) === true) {
+            if ($this->_phpcsFile->findPrevious($openTags, 0, $stackPtr) !== false) {
                 return;
             }
         }
@@ -96,7 +100,6 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Find the next non whitespace token.
         $commentStart = $this->_phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-
         // Ignore vim header.
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             if (strstr($tokens[$commentStart]['content'], 'vim:') !== false) {
@@ -104,7 +107,10 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        if ($tokens[$commentStart]['code'] === T_COMMENT) {
+        if ($tokens[$commentStart]['code'] === T_CLOSE_TAG) {
+            // We are only interested if this is the first open tag.
+            return;
+        } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
             $this->_phpcsFile->addError('Consider using "/**" style comment for file comment', $stackPtr + 1);
             return;
         } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT) {
@@ -435,7 +441,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
                     }
                     $validName = trim($newName, '_');
-                    $error     = "Category name \"$content\" is not valid; Consider \"$validName\" instead.";
+                    $error     = "Package name \"$content\" is not valid; Consider \"$validName\" instead.";
                     $this->_phpcsFile->addError($error, $errorPos);
                 }
             } else {

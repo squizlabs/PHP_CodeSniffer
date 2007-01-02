@@ -88,69 +88,59 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         }
         $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
 
-        if ($commentStart !== false && $tokens[$commentStart]['code'] === T_COMMENT) {
-            $this->_phpcsFile->addError('Consider using "/**" instead of "//" for class doc comment', $stackPtr);
+        $comment = $this->_phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+
+        // Parse the class comment.docblock.
+        try {
+            $this->_fp = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
+            $this->_fp->parse();
+        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
+            $line = $e->getLineWithinComment() + $commentStart;
+            $this->_phpcsFile->addError($e->getMessage(), $line);
             return;
-        } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT) {
-            $this->_phpcsFile->addError('Missing class doc comment', $stackPtr);
-            return;
-        } else {
-
-            $comment = $this->_phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
-
-            // Parse the class comment.docblock.
-            try {
-                $this->_fp = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
-                $this->_fp->parse();
-            } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-                $line = $e->getLineWithinComment() + $commentStart;
-                $this->_phpcsFile->addError($e->getMessage(), $line);
-                return;
-            }
-
-            // No extra newline before short description.
-            $comment      = $this->_fp->getComment();
-            $short        = $comment->getShortComment();
-            $newlineCount = 0;
-            $newlineSpan  = strspn($short, "\n");
-            if ($short !== '' && $newlineSpan > 0) {
-                $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-                $error = "Extra $line found before class comment short description";
-                $phpcsFile->addError($error, $commentStart + 1);
-            }
-            $newlineCount = substr_count($short, "\n") + 1;
-
-            // Exactly one blank line between short and long description.
-            $between        = $comment->getWhiteSpaceBetween();
-            $long           = $comment->getLongComment();
-            $newlineBetween = substr_count($between, "\n");
-            if ($newlineBetween !== 2 && $long !== '') {
-                $error = 'There must be exactly one blank line between descriptions in class comment';
-                $phpcsFile->addError($error, $commentStart + $newlineCount + 1);
-            }
-            $newlineCount += $newlineBetween;
-
-            // Exactly one blank line before tags.
-            $newlineSpan = $comment->getNewlineAfter();
-            if ($newlineSpan !== 2) {
-                $error = 'There must be exactly one blank line before the tags in class comment';
-                if ($long !== '') {
-                    $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
-                }
-                $phpcsFile->addError($error, $commentStart + $newlineCount);
-            }
-
-            // Check for unknown/deprecated tags.
-            $unknownTags = $this->_fp->getUnknown();
-            foreach ($unknownTags as $errorTag) {
-                $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
-                $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
-            }
-
-            // Check each tag.
-            $this->processTags($commentStart, $commentEnd);
         }
 
+        // No extra newline before short description.
+        $comment      = $this->_fp->getComment();
+        $short        = $comment->getShortComment();
+        $newlineCount = 0;
+        $newlineSpan  = strspn($short, "\n");
+        if ($short !== '' && $newlineSpan > 0) {
+            $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
+            $error = "Extra $line found before class comment short description";
+            $phpcsFile->addError($error, $commentStart + 1);
+        }
+        $newlineCount = substr_count($short, "\n") + 1;
+
+        // Exactly one blank line between short and long description.
+        $between        = $comment->getWhiteSpaceBetween();
+        $long           = $comment->getLongComment();
+        $newlineBetween = substr_count($between, "\n");
+        if ($newlineBetween !== 2 && $long !== '') {
+            $error = 'There must be exactly one blank line between descriptions in class comment';
+            $phpcsFile->addError($error, $commentStart + $newlineCount + 1);
+        }
+        $newlineCount += $newlineBetween;
+
+        // Exactly one blank line before tags.
+        $newlineSpan = $comment->getNewlineAfter();
+        if ($newlineSpan !== 2) {
+            $error = 'There must be exactly one blank line before the tags in class comment';
+            if ($long !== '') {
+                $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+            }
+            $phpcsFile->addError($error, $commentStart + $newlineCount);
+        }
+
+        // Check for unknown/deprecated tags.
+        $unknownTags = $this->_fp->getUnknown();
+        foreach ($unknownTags as $errorTag) {
+            $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
+            $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+        }
+
+        // Check each tag.
+        $this->processTags($commentStart, $commentEnd);
 
     }//end process()
 
