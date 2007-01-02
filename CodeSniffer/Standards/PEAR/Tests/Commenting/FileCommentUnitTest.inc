@@ -18,7 +18,7 @@
 * @category   _wrong_category
 * @package    PHP_CodeSniffer
 * @package    ADDITIONAL PACKAGE TAG
-* @author     Original Author <author@example.com>
+* @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
 * @author       Rayn Ong rong@squiz.net
 * @author
 * @copyright  1997~1994 The PHP Group
@@ -31,6 +31,7 @@
 * @see        Net_Other
 * @deprecated asd
 * @since      Class available since Release 1.2.0
+* @summary    An unknown summary tag
 */
 
 ?>

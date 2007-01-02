@@ -42,17 +42,17 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
     public function getErrorList()
     {
         return array(
-                10 => 1,
-                12 => 2,
-                13 => 2,
-                14 => 1,
-                15 => 1,
-                28 => 1,
-                35 => 1,
-                38 => 1,
-                41 => 1,
-                53 => 1,
-                67 => 1,
+                10  => 1,
+                12  => 2,
+                13  => 2,
+                14  => 1,
+                15  => 1,
+                28  => 1,
+                35  => 1,
+                38  => 1,
+                41  => 1,
+                53  => 1,
+                109 => 1,
                );
 
     }//end getErrorList()

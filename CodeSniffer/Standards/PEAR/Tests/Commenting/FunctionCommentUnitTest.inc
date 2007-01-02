@@ -7,7 +7,7 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param int $stackPtr   The position in the stack of the token that opened
+     * @param int $stackPtr   The position in @ @unknown the stack of the token that opened
      *                        the scope (eg. an IF token or FOR token).
      * @param int $detph    How many scope levels down we are.
      * @param int    $index    The index
@@ -56,6 +56,48 @@ class PHP_CodeSniffer_File
     {
 
     }//end missingNewlinesBeforeTags()
+
+
+    /**
+     * Access tag should not be treated as a long description
+     *
+     * @access public
+     * @return void
+     */
+    public function accessTag()
+    {
+
+    }//end accessTag()
+
+    /**
+     * Constructor
+     *
+     * No return tag
+     */
+    function PHP_CodeSniffer_File()
+    {
+        return;
+    }
+
+
+    /**
+     * Destructor
+     *
+     * No return tag too
+     */
+    function _PHP_CodeSniffer_File()
+    {
+        return;
+    }
+
+
+    /**
+     * Destructor PHP5
+     */
+    function __destruct()
+    {
+        return;
+    }
 
 
 }//end class

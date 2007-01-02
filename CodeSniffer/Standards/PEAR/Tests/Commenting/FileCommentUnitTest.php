@@ -84,6 +84,7 @@ class PEAR_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 24 => 1,
                 26 => 1,
                 34 => 1,
+                35 => 1,
                );
 
     }//end getWarningList()
