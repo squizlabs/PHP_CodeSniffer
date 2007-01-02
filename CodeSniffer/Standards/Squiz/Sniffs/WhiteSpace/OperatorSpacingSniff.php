@@ -44,6 +44,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff extends PHP_CodeSniffer_Stand
         return array(
                 ' * ',
                 ' + ',
+                ' - ',
                 ' / ',
                 ' *= ',
                 ' /= ',
@@ -86,41 +87,28 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff extends PHP_CodeSniffer_Stand
         if ($phpcsFile->isReference($stackPtr) === false) {
             // Check there is one space before the & operator.
             if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
-                $error = 'Space required before "&" operator.';
+                $error = 'Expected 1 space before "&" operator; 0 found';
                 $phpcsFile->addError($error, $stackPtr);
             } else {
                 if (strlen($tokens[$stackPtr - 1]['content']) !== 1) {
-                    $error  = strlen($tokens[$stackPtr - 1]['content']);
-                    $error .= ' spaces found before "&" operator.';
-                    $error .= ' Expected 1.';
+                    $found = strlen($tokens[$stackPtr - 1]['content']);
+                    $error = "Expected 1 space before \"&\" operator; $found found";
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }
 
             // Check there is one space after the & operator.
             if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
-                $error = 'Space required after "&" operator.';
+                $error = 'Expected 1 space after "&" operator; 0 found';
                 $phpcsFile->addError($error, $stackPtr);
             } else {
                 if (strlen($tokens[$stackPtr + 1]['content']) !== 1) {
-                    $error  = strlen($tokens[$stackPtr + 1]['content']);
-                    $error .= ' spaces found after "&" operator.';
-                    $error .= ' Expected 1.';
+                    $found = strlen($tokens[$stackPtr + 1]['content']);
+                    $error = "Expected 1 space after \"&\" operator; $found found";
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }
-        } else {
-            $tokenBefore = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
-            $tokenAfter  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-
-            if (($tokenAfter - $stackPtr) !== 1) {
-                $error  = 'Expected "';
-                $error .= $tokens[$stackPtr]['content'];
-                $error .= $tokens[$tokenAfter]['content'];
-                $error .= '".';
-                $phpcsFile->addError($error, $stackPtr);
-            }
-        }//end if
+        }
 
     }//end processSupplementary()
 
