@@ -120,8 +120,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1);
 
-        $error = 'Missing function doc comment';
         if ($commentEnd === false) {
+            $error = 'Missing function doc comment';
             $this->_phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -135,6 +135,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $this->_phpcsFile->addError($error, $stackPtr);
             return;
         } else if ($code !== T_DOC_COMMENT) {
+            $error = 'Missing function doc comment';
             $this->_phpcsFile->addError($error, $stackPtr);
             return;
         }
