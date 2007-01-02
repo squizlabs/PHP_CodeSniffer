@@ -158,6 +158,12 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addError($error, $commentStart + $newlineCount);
             }
 
+            // Check for unknown/deprecated tags.
+            $unknownTags = $this->_fp->getUnknown();
+            foreach ($unknownTags as $errorTag) {
+                $error = ucfirst($errorTag['tag']).' tag is not allowed in file comment';
+                $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+            }
 
             // Check the PHP Version.
             if (strstr(strtolower($long), 'php version') === false) {
@@ -465,8 +471,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $local = '\da-zA-Z-_+';
                     // Dot character cannot be the first or last character in the local-part.
                     $local_middle = $local.'.\w';
-                    if (preg_match('/^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*\s+<(['.$local.']['.$local_middle.']*['.$local.']@[\da-zA-Z][-.\w]*[\da-zA-Z]\.[a-zA-Z]{2,7})>$/', $content) === 0) {
-                        $error = 'Content of the author tag must be in the form "Author Name <author@example.com>"';
+                    if (preg_match('/^([^<]*)\s+<(['.$local.']['.$local_middle.']*['.$local.']@[\da-zA-Z][-.\w]*[\da-zA-Z]\.[a-zA-Z]{2,7})>$/', $content) === 0) {
+                        $error = 'Content of the author tag must be in the form "Display Name <username@example.com>"';
                         $this->_phpcsFile->addError($error, $errorPos);
                     }
                 } else {
@@ -559,7 +565,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $this->_phpcsFile->addError($error, $errorPos);
 
             } else if ((strstr($content, 'CVS:')) === false) {
-                $error = "Invalid version \"$content\" in file comment; Consider \"CVS: \$Id$\" instead.";
+                $error = "Invalid version \"$content\" in file comment; Consider \"CVS: <cvs_id>\" instead.";
                 $this->_phpcsFile->addWarning($error, $errorPos);
             }
         }
