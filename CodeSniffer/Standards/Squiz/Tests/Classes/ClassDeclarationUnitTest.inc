@@ -56,7 +56,7 @@ class ClassOne implements ClassTwo, ClassThree
 {
 }
 
-class ClassOne implements ClassTwo,ClassThree
+class ClassOne implements ClassFour   ,ClassFive,  ClassSix
 {
 }
 

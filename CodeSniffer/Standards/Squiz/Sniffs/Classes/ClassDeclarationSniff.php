@@ -75,41 +75,81 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         }
 
         /*
-            Checks the Opening brace is straight after the declaration.
+            Checks the opening brace is straight after the declaration.
         */
 
-        $curlyBrace = $phpcsFile->findNext(array(T_OPEN_CURLY_BRACKET), $stackPtr, null, false);
-
-        $classLine = $tokens[$stackPtr]['line'];
-        $braceLine = $tokens[$curlyBrace]['line'];
+        $curlyBrace = $tokens[$stackPtr]['scope_opener'];
+        $classLine  = $tokens[$stackPtr]['line'];
+        $braceLine  = $tokens[$curlyBrace]['line'];
         if ($braceLine === $classLine) {
             $error  = 'Opening brace of a ';
             $error .= $tokens[$stackPtr]['content'];
             $error .= ' must be on the line after the definition.';
             $phpcsFile->addError($error, $stackPtr);
-            return;
         } else if ($braceLine > ($classLine + 1)) {
             $difference  = ($braceLine - $classLine - 1);
             $difference .= ($difference === 1) ? ' empty line' : ' empty lines';
             $error       = 'Opening brace of a ';
             $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' should be on the line following a ';
+            $error      .= ' must be on the line following a ';
             $error      .= $tokens[$stackPtr]['content'];
             $error      .= ' declaration. Found '.$difference.'.';
             $phpcsFile->addError($error, $curlyBrace);
-            return;
         }
 
-        if ($tokens[$curlyBrace - 1]['content'] === "\n") {
-            // Only a newline behind it.
-            return;
+        if ($tokens[($curlyBrace + 1)]['content'] !== "\n") {
+            $type  = strtolower($tokens[$stackPtr]['content']);
+            $error = "Opening $type brace must be on a line by itself";
+            $phpcsFile->addError($error, $curlyBrace);
         }
 
-        $blankSpace  = substr($tokens[$curlyBrace - 1]['content'], strpos($tokens[$curlyBrace - 1]['content'], "\n"));
-        $spaces      = strlen($blankSpace);
-        $spaces     .= ($spaces === 1) ? ' space' : ' spaces';
-        $error       = 'Found '.$spaces.' before opening brace. Expected 0.';
-        $phpcsFile->addError($error, $curlyBrace);
+        /*
+            Check alignment of the keyword and braces.
+        */
+
+        if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+            $prevContent = $tokens[($stackPtr - 1)]['content'];
+            if ($prevContent !== "\n") {
+                $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
+                $spaces     = strlen($blankSpace);
+                if ($spaces !== 0) {
+                    $type    = strtolower($tokens[$stackPtr]['content']);
+                    $error   = "Expected 0 spaces before $type keyword; $spaces found";
+                    $phpcsFile->addError($error, $stackPtr);
+                }
+            }
+        }
+
+        if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
+            $prevContent = $tokens[($curlyBrace - 1)]['content'];
+            if ($prevContent !== "\n") {
+                $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
+                $spaces     = strlen($blankSpace);
+                if ($spaces !== 0) {
+                    $error   = "Expected 0 spaces before opening brace; $spaces found";
+                    $phpcsFile->addError($error, $curlyBrace);
+                }
+            }
+        }
+
+        $closeBrace = $tokens[$stackPtr]['scope_closer'];
+        if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
+            $prevContent = $tokens[($closeBrace - 1)]['content'];
+            if ($prevContent !== "\n") {
+                $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
+                $spaces     = strlen($blankSpace);
+                if ($spaces !== 0) {
+                    $error   = "Expected 0 spaces before closing brace; $spaces found";
+                    $phpcsFile->addError($error, $closeBrace);
+                }
+            }
+        }
+
+        if ($tokens[($closeBrace + 1)]['content'] !== "\n") {
+            $type  = strtolower($tokens[$stackPtr]['content']);
+            $error = "Closing $type brace must be on a line by itself";
+            $phpcsFile->addError($error, $closeBrace);
+        }
 
         /*
             Check that each of the parent classes or interfaces specified
@@ -118,7 +158,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
 
         // We need to map out each of the possible tokens in the declaration.
         $keyword      = $stackPtr;
-        $openingBrace = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, $stackPtr);
+        $openingBrace = $tokens[$stackPtr]['scope_opener'];
         $className    = $phpcsFile->findNext(T_STRING, $stackPtr);
         $extends      = $phpcsFile->findNext(array(T_IMPLEMENTS, T_EXTENDS), $stackPtr, $openingBrace);
         $parents      = array();
@@ -132,59 +172,51 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             Now check the spacing of each token.
         */
 
-        $name = $tokens[$keyword]['content'];
+        $name = strtolower($tokens[$keyword]['content']);
         // Spacing of the keyword.
         $gap = $tokens[$stackPtr + 1]['content'];
         if (strlen($gap) !== 1) {
-            $error  = strlen($gap).' spaces found between "'.$name;
-            $error .= '" keyword, and '.strtolower($name).' name. Expected 1.';
+            $found = strlen($gap);
+            $error = "Expected 1 space between $name keyword and $name name; $found found";
             $phpcsFile->addError($error, $stackPtr);
         }
 
         // Check after the name.
         $gap = $tokens[$className + 1]['content'];
         if (strlen($gap) !== 1) {
-            $error  = strlen($gap).' spaces found after '.$name;
-            $error .= 'name. Expected 1.';
+            $found = strlen($gap);
+            $error = "Expected 1 space after $name name; $found found";
             $phpcsFile->addError($error, $stackPtr);
         }
 
         // Now check each of the parents.
         $parentCount = count($parents);
         for ($i = 0; $i < $parentCount; $i++) {
-            if ($i === 0) {
-                $spaceBefore = strlen($tokens[$parents[$i] - 1]['content']);
+            if ($tokens[($parents[$i] - 1)]['code'] !== T_WHITESPACE) {
+                $name  = $tokens[$parents[$i]]['content'];
+                $error = "Expected 1 space before \"$name\"; 0 found";
+                $phpcsFile->addError($error, ($nextComma + 1));
+            } else {
+                $spaceBefore = strlen($tokens[($parents[$i] - 1)]['content']);
                 if ($spaceBefore !== 1) {
-                    $error  = $spaceBefore.' spaces found before ';
-                    $error .= '"'.$tokens[$parents[$i]]['content'].'". ';
-                    $error .= 'Expected 1.';
+                    $name  = $tokens[$parents[$i]]['content'];
+                    $error = "Expected 1 space before \"$name\"; $spaceBefore found";
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }
 
-            if ($tokens[$parents[$i] + 1]['code'] !== T_NONE) {
+            if ($tokens[($parents[$i] + 1)]['code'] !== T_COMMA) {
                 if ($i !== ($parentCount - 1)) {
-                    $error  = 'Space found between ';
-                    $error .= $tokens[$parents[$i]]['content'].' and comma.';
-                }
-            } else {
-                if ($tokens[$parents[$i] + 2]['code'] !== T_WHITESPACE) {
-                    $content = $tokens[$parents[$i] + 2]['content'];
-                    $error   = 'Space required before "'.$content.'".';
+                    $found = strlen($tokens[($parents[$i] + 1)]['content']);
+                    $name  = $tokens[$parents[$i]]['content'];
+                    $error = "Expected 0 spaces between \"$name\" and comma; $found found";
                     $phpcsFile->addError($error, $stackPtr);
-                } else {
-                    if ($i !== ($parentCount - 1)) {
-                        $space = strlen($tokens[$parents[$i] + 2]['content']);
-                        if ($space !== 1) {
-                            $content  = $tokens[$parents[$i] + 3]['content'];
-                            $error    = $space.' spaces found before ';
-                            $error   .= '"'.$content.'"';
-                            $error   .= '. Expected 1.';
-                            $phpcsFile->addError($error, $stackPtr);
-                        }
-                    }
                 }
-            }//end if
+
+                $nextComma = $phpcsFile->findNext(T_COMMA, $parents[$i]);
+            } else {
+                $nextComma = ($parents[$i] + 1);
+            }
         }//end for
 
     }//end process()
