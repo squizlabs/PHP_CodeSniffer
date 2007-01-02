@@ -420,6 +420,9 @@
          <file name="ClosingDeclarationCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="DocCommentAlignmentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="EmptyCatchCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -457,6 +460,9 @@
          </file>
         </dir>
         <dir name="Files">
+         <file name="FileExtensionSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="LineLengthSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -491,6 +497,18 @@
         </dir>
         <dir name="NamingConventions">
          <file name="UpperCasePhpConstantSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidConstantNameSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidFunctionNameSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidInterfaceNameSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidVariableNameSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -591,6 +609,10 @@
          <file name="ClosingDeclarationCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="DocCommentAlignmentUnitTest.inc"/>
+         <file name="DocCommentAlignmentUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="EmptyCatchCommentUnitTest.inc"/>
          <file name="EmptyCatchCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -638,6 +660,12 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="Files">
+         <file name="FileExtensionUnitTest.inc"/>
+         <file name="FileExtensionUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
         <dir name="Formatting">
          <file name="OperatorBracketUnitTest.inc"/>
          <file name="OperatorBracketUnitTest.php">
@@ -659,6 +687,20 @@
          </file>
          <file name="GlobalFunctionUnitTest.inc"/>
          <file name="GlobalFunctionUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="NamingConventions">
+         <file name="ValidFunctionNameUnitTest.inc"/>
+         <file name="ValidFunctionNameUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidInterfaceNameUnitTest.inc"/>
+         <file name="ValidInterfaceNameUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidVariableNameUnitTest.inc"/>
+         <file name="ValidVariableNameUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
