@@ -136,7 +136,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      */
     public final function register()
     {
-        return $this->_scopeTokens;
+        if ($this->_listenOutside === false) {
+            return $this->_scopeTokens;
+        } else {
+            return array_merge($this->_scopeTokens, $this->_tokens);
+        }
 
     }//end register()
 
