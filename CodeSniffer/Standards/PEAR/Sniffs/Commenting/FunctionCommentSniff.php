@@ -62,6 +62,13 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     private $_functionToken = null;
 
     /**
+     * The position in the stack where the class token was found.
+     *
+     * @var int
+     */
+    private $_classToken = null;
+
+    /**
      * The function comment parser for the current method.
      *
      * @var PHP_CodeSniffer_Comment_Parser_FunctionCommentParser
@@ -133,6 +140,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         $this->_functionToken = $stackPtr;
+        if ($tokens[$phpcsFile->findPrevious(T_CLASS, $stackPtr - 1)]['code'] === T_CLASS) {
+            $this->_classToken = $phpcsFile->findPrevious(T_CLASS, $stackPtr - 1);
+        }
 
         // Find the first doc comment.
         $commentStart = $this->_phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
@@ -184,6 +194,13 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $phpcsFile->addError($error, $commentStart + $newlineCount);
         }
 
+        // Check for unknown/deprecated tags.
+        $unknownTags = $this->_fp->getUnknown();
+        foreach ($unknownTags as $errorTag) {
+            $error = ucfirst($errorTag['tag']).' tag is not allowed in function comment';
+            $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+        }
+
     }//end process()
 
 
@@ -224,7 +241,16 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      */
     private function _processReturn($commentStart, $commentEnd)
     {
-        if ($this->_methodName !== '__construct') {
+        // Skip constructor and destructor.
+        $className = '';
+        if ($this->_classToken !== null) {
+            $className = $this->_phpcsFile->getDeclarationName($this->_classToken);
+            $className = strtolower(ltrim($className, '_'));
+        }
+        $methodName      = strtolower(ltrim($this->_methodName, '_'));
+        $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
+
+        if (!$isSpecialMethod && $methodName !== $className) {
             // Report missing return tag.
             if ($this->_fp->getReturn() === null) {
                 $error = 'Missing return tag in function comment';
@@ -282,7 +308,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
                 // Make sure that there is only one space before the var type.
                 if ($param->getWhitespaceBeforeType() !== ' ') {
-                    $error = 'Expected one space before variable type';
+                    $error = 'Expected 1 space before variable type';
                     $this->_phpcsFile->addError($error, $errorPos);
                 }
 
