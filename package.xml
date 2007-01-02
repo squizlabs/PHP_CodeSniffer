@@ -512,6 +512,17 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
+        <dir name="Operators">
+         <file name="ComparisonOperatorUsageSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="IncrementDecrementUsageSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidLogicalOperatorsSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
         <dir name="PHP">
          <file name="DisallowObEndFlushSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -701,6 +712,20 @@
          </file>
          <file name="ValidVariableNameUnitTest.inc"/>
          <file name="ValidVariableNameUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+        </dir>
+        <dir name="Operators">
+         <file name="ComparisonOperatorUsageUnitTest.inc"/>
+         <file name="ComparisonOperatorUsageUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="IncrementDecrementUsageUnitTest.inc"/>
+         <file name="IncrementDecrementUsageUnitTest.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="ValidLogicalOperatorsUnitTest.inc"/>
+         <file name="ValidLogicalOperatorsUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
