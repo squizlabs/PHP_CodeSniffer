@@ -5,38 +5,39 @@ class SelfMemberReferenceUnitTestExample
 {
 
 
-    private $test_count = 0;
+    private $testCount = 0;
 
 
-    private $test_results = array();
+    private $testResults = array();
 
 
     public function SelfMemberReferenceUnitTestExample()
     {
-        $test_results =& $this->test_results;
+        $testResults =& $this->testResults;
 
 
         // Correct call to self.
-        $test_results[] = self::selfMemberReferenceUnitTestFunction();
-
+        $testResults[] = self::selfMemberReferenceUnitTestFunction();
+        $testResults[] = parent::selfMemberReferenceUnitTestFunction();
 
         // Incorrect case.
-        $test_results[] = Self::selfMemberReferenceUnitTestFunction();
-        $test_results[] = SELF::selfMemberReferenceUnitTestFunction();
+        $testResults[] = Self::selfMemberReferenceUnitTestFunction();
+        $testResults[] = SELF::selfMemberReferenceUnitTestFunction();
+        $testResults[] = SelfMemberReferenceUnitTestExample::selfMemberReferenceUnitTestFunction();
 
 
         // Incorrect spacing.
-        $test_results[] = self ::selfMemberReferenceUnitTestFunction();
-        $test_results[] = self:: selfMemberReferenceUnitTestFunction();
-        $test_results[] = self :: selfMemberReferenceUnitTestFunction();
+        $testResults[] = self ::selfMemberReferenceUnitTestFunction();
+        $testResults[] = self::  selfMemberReferenceUnitTestFunction();
+        $testResults[] = self  :: selfMemberReferenceUnitTestFunction();
 
     }
 
 
     function selfMemberReferenceUnitTestFunction()
     {
-        $this->test_count = $this->test_count + 1;
-        return $this->test_count;
+        $this->testCount = $this->testCount + 1;
+        return $this->testCount;
 
     }
 

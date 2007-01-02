@@ -65,22 +65,31 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
         $className = ($stackPtr - 1);
         if ($tokens[$className]['code'] === T_SELF) {
             if (strtolower($tokens[$className]['content']) !== $tokens[$className]['content']) {
-                $error = 'Must use "self::" for local static member reference. (Found "'.$tokens[$className]['content'].'").';
+                $error = 'Must use "self::" for local static member reference; found "'.$tokens[$className]['content'].'::"';
                 $phpcsFile->addError($error, $className);
                 return;
             }
         } else if ($tokens[$className]['code'] === T_STRING) {
-            // Make sure this another class ref.
+            // Make sure this is another class reference.
             $declarationName = $phpcsFile->getDeclarationName($currScope);
             if ($declarationName === $tokens[$className]['content']) {
-                $error = 'Must use "self::" for local static member reference.';
+                // Class name is the same as the current class.
+                $error = 'Must use "self::" for local static member reference';
                 $phpcsFile->addError($error, $className);
                 return;
             }
-        } else if ($tokens[$className]['code'] !== T_PARENT) {
-            $error = 'Cannot have "'.$tokens[$className]['content'].'" between "::" and class name.';
+        }
+
+        if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+            $found = strlen($tokens[($stackPtr - 1)]['content']);
+            $error = "Expected 0 spaces before double colon; $found found";
             $phpcsFile->addError($error, $className);
-            return;
+        }
+
+        if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+            $found = strlen($tokens[($stackPtr + 1)]['content']);
+            $error = "Expected 0 spaces after double colon; $found found";
+            $phpcsFile->addError($error, $className);
         }
 
     }//end processTokenWithinScope()
