@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Files/LineLengthSniff.php';
 
-
 /**
  * Squiz_Sniffs_Files_LineLengthSniff.
  *

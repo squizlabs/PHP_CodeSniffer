@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Sniff.php';
 
-
 /**
  * Squiz_Sniffs_Commenting_EmptyCatchCommentSniff.
  *

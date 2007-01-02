@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
 
-
 /**
  * PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff.
  *

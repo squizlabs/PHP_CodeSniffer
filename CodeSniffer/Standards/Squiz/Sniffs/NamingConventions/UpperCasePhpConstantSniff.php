@@ -16,7 +16,6 @@
 
 require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/UpperCaseConstantSniff.php';
 
-
 /**
  * Squiz_Sniffs_NamingConventions_UpperCasePhpConstantSniff.
  *
