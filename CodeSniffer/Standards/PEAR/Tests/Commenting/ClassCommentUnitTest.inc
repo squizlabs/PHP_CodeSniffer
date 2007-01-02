@@ -12,7 +12,7 @@ class No_Comment
 //
 //
 //
-class Invalid_Comment_Style
+class Invalid_Comment_Style1
 {
 
 }//end class
@@ -48,7 +48,7 @@ class Extra_Description_Newlines
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.0
+ * @version
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Missing_Newlines_Before_Tags
@@ -79,9 +79,9 @@ class Missing_Newlines_Before_Tags
  */
 class Checking_Tags
 {
-    class Sub_Class {
+	class Sub_Class {
 
-    }//end class
+	}//end class
 
 
 }//end class

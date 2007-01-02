@@ -7,8 +7,8 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param int $stackPtr   The position in @ @unknown the stack of the token that opened
-     *                        the scope (eg. an IF token or FOR token).
+     * @param int $stackPtr   The position in @ @unknown the stack of the token
+     *                        that opened the scope
      * @param int $detph    How many scope levels down we are.
      * @param int    $index    The index
      * @return
@@ -100,6 +100,52 @@ class PHP_CodeSniffer_File
     }
 
 
+    function missingComment()
+    {
+        return;
+    }
+
+
+    /**
+     * no return tag
+     *
+     */
+    public function noReturn($one)
+    {
+
+    }//end noReturn()
+
+
+    /**
+     * Param not immediate
+     *
+     * @return
+     * @param   int   $threeSpaces
+     * @param int     $superfluous
+     * @param missing
+     * @param
+     */
+    public function missingDescroption($threeSpaces)
+    {
+
+    }//end missingDescroption()
+
+
+    /**
+     * Param not immediate
+     *
+     * @param int      $one   comment
+     * @param int      $two   comment
+     * @param string   $three comment
+     *
+     * @return void
+     */
+    public function oneSpaceAfterLongestVar($one, $two, $three)
+    {
+
+    }//end oneSpaceAfterLongestVar()
+
+
 }//end class
 
 
@@ -113,7 +159,34 @@ class PHP_CodeSniffer_File
 public function functionOutsideClass(&$str)
 {
     return;
-
 }//end functionOutsideClass()
+
+
+function missingCommentOutsideClass()
+{
+    return;
+}//end missingCommentOutsideClass()
+
+
+?><?php
+function tagBeforeComment()
+{
+    return;
+}//end tagBeforeComment()
+
+
+/**
+ * no return tag
+ *
+ *
+ *
+ */
+public function noReturnOutsideClass()
+{
+
+}//end noReturnOutsideClass()
+
+
+
 
 ?>

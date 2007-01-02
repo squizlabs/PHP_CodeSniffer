@@ -1,4 +1,7 @@
 <?php
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
 /**
 *
 * Short description for fileasdasd.
@@ -23,15 +26,21 @@
 * @author
 * @copyright  1997~1994 The PHP Group
 * @license    http://www.php.net/license/3_0.txt
+* @see
+* @see
 * @version    INVALID VERSION CONTENT
-* @see
-* @see
-* @link       sdfsdf
 * @see        Net_Sample::Net_Sample()
 * @see        Net_Other
 * @deprecated asd
 * @since      Class available since Release 1.2.0
 * @summary    An unknown summary tag
 */
-
+?>
+<?php
+/**
+* This bit here is not qualified as file comment
+*
+* as it is not after the first open tag
+*
+*/
 ?>
