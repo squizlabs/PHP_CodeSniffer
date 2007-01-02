@@ -187,6 +187,17 @@ public function noReturnOutsideClass()
 }//end noReturnOutsideClass()
 
 
+/**
+ * Missing param comment
+ *
+ * @param int $one comment
+ *
+ * @return void
+ */
+public function missingTwoParamComment($one, $two, $three)
+{
+
+}//end missingTwoParamComment()
 
 
 ?>
