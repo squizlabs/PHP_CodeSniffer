@@ -140,6 +140,13 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                 $phpcsFile->addError($error, $commentStart + $newlineCount);
             }
 
+            // Check for unknown/deprecated tags.
+            $unknownTags = $this->_fp->getUnknown();
+            foreach ($unknownTags as $errorTag) {
+                $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
+                $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+            }
+
             // Check each tag.
             $this->processTags($commentStart, $commentEnd);
         }
@@ -165,7 +172,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                 $error = 'Content missing for version tag in class comment';
                 $this->_phpcsFile->addError($error, $errorPos);
             } else if ((strstr($content, 'Release:') === false)) {
-                $error = "Invalid version \"$content\" in class comment; Consider \"Release: @package_version@\" instead.";
+                $error = "Invalid version \"$content\" in class comment; Consider \"Release: <package_version>\" instead.";
                 $this->_phpcsFile->addWarning($error, $errorPos);
             }
         }
