@@ -51,7 +51,7 @@ class PEAR_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends AbstractS
                 11 => 2,
                 12 => 2,
                 13 => 3,
-                42 => 1,
+                42 => 3,
                 43 => 3,
                 45 => 1,
                 46 => 2,

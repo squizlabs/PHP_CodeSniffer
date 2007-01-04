@@ -81,6 +81,14 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
 
         $nextSeperator = $openBracket;
         while (($nextSeperator = $phpcsFile->findNext(array(T_COMMA, T_VARIABLE), ($nextSeperator + 1), $closeBracket)) !== false) {
+            // Make sure the comma or variable belongs directly to this function call,
+            // and is not inside a nested function call or array.
+            $brackets    = $tokens[$nextSeperator]['nested_parenthesis'];
+            $lastBracket = array_pop($brackets);
+            if ($lastBracket !== $closeBracket) {
+                continue;
+            }
+
             if ($tokens[$nextSeperator]['code'] === T_COMMA) {
                 if ($tokens[$nextSeperator - 1]['code'] === T_WHITESPACE) {
                     $error = 'Space found before comma in function call.';

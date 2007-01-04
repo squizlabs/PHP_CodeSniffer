@@ -39,7 +39,7 @@ function myFunction($arg1 = 1,$arg2 = 2)
 {
 }
 
-$key = array_search($this->getArray(),$this->arrayMap);
+$key = array_search($this->getArray($one,  $two,$three),$this->arrayMap);
 $this->error($obj->getCode(),$obj->getMessage(),$obj->getFile(),$obj->getLine());
 
 make_foo($string /*the string*/ , true /*test*/);
