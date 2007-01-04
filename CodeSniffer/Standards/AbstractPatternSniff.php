@@ -484,7 +484,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $expected = str_replace("\r", '\r', $patternCode);
         $expected = str_replace("\n", '\n', $expected);
 
-        $error = 'Expected "'.$expected.'" found "'.$found.'".';
+        $error = "Expected \"$expected\"; found \"$found\"";
 
         return $error;
 
