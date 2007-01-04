@@ -83,7 +83,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
         }
 
         if ($error === true) {
-            $message = "Concat operator must not be surrounded by spaces. Found [$found]; expected [$expected]";
+            $message = "Concat operator must not be surrounded by spaces. Found \"$found\"; expected \"$expected\"";
             $phpcsFile->addError($message, $stackPtr);
         }
 

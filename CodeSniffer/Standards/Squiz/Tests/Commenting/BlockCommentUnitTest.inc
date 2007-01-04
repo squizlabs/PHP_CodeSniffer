@@ -58,8 +58,11 @@ $code = 'should not be here';
 
 $code = 'should not be here';
 /*
+
     Block comments require a blank
-    line before them.
+    line before them. */
+
+/*
 */
 
 ?>

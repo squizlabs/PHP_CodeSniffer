@@ -65,9 +65,6 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             return;
         }
 
-        $lastBracket    = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_OPEN_SQUARE_BRACKET), $stackPtr, null, false);
-        $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false);
-
         // There is one instance where brackets aren't needed, which involves
         // the minus sign being used to assign a negative number to a variable.
         if ($tokens[$stackPtr]['code'] === T_MINUS) {
@@ -98,12 +95,21 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
         }//end if
 
-        if (($lastBracket === false) || ($tokens[$lastBracket]['line'] !== $tokens[$stackPtr]['line'])) {
-            $error = 'Arithmetic operation must be bracketed';
+        $lastBracket = $stackPtr;
+        do {
+            $lastBracket = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS), ($lastBracket - 1), null, false, null, true);
+            if ($lastBracket === false) {
+                break;
+            }
+        } while ($tokens[($lastBracket - 1)]['code'] === T_STRING);
+
+        if ($lastBracket === false || $tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
+            $error = 'Arithmetic operation must be bracketed - '.$tokens[$stackPtr]['column'];
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
+        $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {
             $error = 'Arithmetic operation must be bracketed';
             $phpcsFile->addError($error, $stackPtr);

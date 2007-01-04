@@ -71,11 +71,18 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             return;
         }
 
-        $previous = $phpcsFile->findPrevious($this->_ignore, $stackPtr - 1, null, true);
-        if ($previous !== -1 && $tokens[$previous]['code'] === T_DOUBLE_COLON) {
-            // This is a static variable being referenced. This variable name
-            // will get checked in the code below, so igore this.
-            return;
+        $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        if ($tokens[$objOperator]['code'] === T_OBJECT_OPERATOR) {
+            // Check to see if we are using a variable from an object.
+            $var     = $phpcsFile->findNext(array(T_STRING), ($objOperator + 1));
+            $bracket = $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
+            if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
+                $objVarName = $tokens[$var]['content'];
+                if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true) === false) {
+                    $error = "Variable \"$objVarName\" is not in valid camel caps format";
+                    $phpcsFile->addError($error, $var);
+                }
+            }
         }
 
         if (PHP_CodeSniffer::isCamelCaps($varName, false, true) === false) {
@@ -105,13 +112,8 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 
         if ($public === true) {
             if (substr($varName, 0, 1) === '_') {
-                if ($memberProps['scope'] !== '') {
-                    $error = ucfirst($memberProps['scope']);
-                } else {
-                    $error = 'Public';
-                }
-
-                $error .= " member variable \"$varName\" must not contain a leading underscore";
+                $scope = ucfirst($memberProps['scope']);
+                $error = "$scope member variable \"$varName\" must not contain a leading underscore";
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }

@@ -61,7 +61,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         // Array keyword should be lower case.
         if (strtolower($tokens[$stackPtr]['content']) !== $tokens[$stackPtr]['content']) {
-            $error = 'Array keyword should be lower case. Expected "array" but found "'.$tokens[$stackPtr]['content'].'".';
+            $error = 'Array keyword should be lower case; expected "array" but found "'.$tokens[$stackPtr]['content'].'"';
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -75,7 +75,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($content === $arrayEnd) {
                 // Empty array, but if the brackets aren't together, there's a problem.
                 if (($arrayEnd - $arrayStart) !== 1) {
-                    $error = 'Empty array initialisation should have no space between the parentheses';
+                    $error = 'Empty array declaration must have no space between the parentheses';
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }
@@ -93,26 +93,28 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             // Now check each of the double arrows (if any).
             $nextArrow = $arrayStart;
             while (($nextArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $nextArrow + 1, $arrayEnd)) !== false) {
-                if ($tokens[$nextArrow - 1]['code'] !== T_WHITESPACE) {
-                    $error = 'Space required before double arrow in array.';
+                if ($tokens[($nextArrow - 1)]['code'] !== T_WHITESPACE) {
+                    $content = $tokens[($nextArrow - 1)]['content'];
+                    $error   = "Expected 1 space between \"$content\" and double arrow; 0 found";
                     $phpcsFile->addError($error, $nextArrow);
                 } else {
-                    $spaceLength = strlen($tokens[$nextArrow - 1]['content']);
+                    $spaceLength = strlen($tokens[($nextArrow - 1)]['content']);
                     if ($spaceLength !== 1) {
-                        $error  = $spaceLength.' spaces found before ';
-                        $error .= 'double arrow. Expected 1.';
+                        $content = $tokens[($nextArrow - 2)]['content'];
+                        $error = "Expected 1 space between \"$content\" and double arrow; $spaceLength found";
                         $phpcsFile->addError($error, $nextArrow);
                     }
                 }
 
-                if ($tokens[$nextArrow + 1]['code'] !== T_WHITESPACE) {
-                    $error = 'Space required after double arrow in array.';
+                if ($tokens[($nextArrow + 1)]['code'] !== T_WHITESPACE) {
+                    $content = $tokens[($nextArrow + 1)]['content'];
+                    $error   = "Expected 1 space between double arrow and \"$content\"; 0 found";
                     $phpcsFile->addError($error, $nextArrow);
                 } else {
-                    $spaceLength = strlen($tokens[$nextArrow + 1]['content']);
+                    $spaceLength = strlen($tokens[($nextArrow + 1)]['content']);
                     if ($spaceLength !== 1) {
-                        $error  = $spaceLength.' spaces found after ';
-                        $error .= 'double arrow. Expected 1.';
+                        $content = $tokens[($nextArrow + 2)]['content'];
+                        $error = "Expected 1 space between double arrow and \"$content\"; $spaceLength found";
                         $phpcsFile->addError($error, $nextArrow);
                     }
                 }
@@ -122,7 +124,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $conditionCheck = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_SEMICOLON), $stackPtr - 1, null, false);
 
                 if (($conditionCheck === false) || ($tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line'])) {
-                    $error = 'Array with multiple values cannot be on a single line.';
+                    $error = 'Array with multiple values cannot be declared on a single line';
                     $phpcsFile->addError($error, $stackPtr);
                     return;
                 }
@@ -130,8 +132,23 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 // We have a multiple value array that is inside a condition or
                 // function. Check its spacing is correct.
                 foreach ($commas as $comma) {
-                    if ($tokens[$comma + 1]['code'] !== T_WHITESPACE) {
-                        $error = 'Space required after commas in inline array declaration. Expected ", '.$tokens[($comma + 1)]['content'].'" but found ",'.$tokens[($comma + 1)]['content'].'".';
+                    if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
+                        $content = $tokens[($comma + 1)]['content'];
+                        $error   = "Expected 1 space between comma and \"$content\"; 0 found";
+                        $phpcsFile->addError($error, $comma);
+                    } else {
+                        $spaceLength = strlen($tokens[($comma + 1)]['content']);
+                        if ($spaceLength !== 1) {
+                            $content = $tokens[($comma + 2)]['content'];
+                            $error   = "Expected 1 space between comma and \"$content\"; $spaceLength found";
+                            $phpcsFile->addError($error, $comma);
+                        }
+                    }
+
+                    if ($tokens[($comma - 1)]['code'] === T_WHITESPACE) {
+                        $content     = $tokens[($comma - 2)]['content'];
+                        $spaceLength = strlen($tokens[($comma - 1)]['content']);
+                        $error       = "Expected 1 space between \"$content\" and comma; $spaceLength found";
                         $phpcsFile->addError($error, $comma);
                     }
                 }
@@ -143,14 +160,15 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         // Check the closing bracket is on a new line..
         $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $arrayEnd - 1, $arrayStart, true);
         if ($tokens[$lastContent]['line'] !== ($tokens[$arrayEnd]['line'] - 1)) {
-            $phpcsFile->addError('Closing Parenthesis should be on a new line', $arrayEnd);
+            $error = 'Closing parenthesis of array declaration must be on a new line';
+            $phpcsFile->addError($error, $arrayEnd);
         } else if ($tokens[$arrayEnd]['column'] !== $keywordStart) {
             // Check the closing bracket is lined up under the a in array.
             $expected  = $keywordStart;
             $expected .= ($keywordStart === 0) ? ' space' : ' spaces';
             $found     = $tokens[$arrayEnd]['column'];
             $found    .= ($found === 0) ? ' space' : ' spaces';
-            $phpcsFile->addError('Closing Parenthesis not aligned correctly. Expected '.$expected.' but found '.$found.'.', $arrayEnd);
+            $phpcsFile->addError("Closing parenthesis not aligned correctly; expected $expected but found $found", $arrayEnd);
         }
 
 
@@ -173,21 +191,23 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$nextToken]['code'] === T_COMMA) {
                 if ($keyUsed === true && $lastToken === T_COMMA) {
-                    $error = 'No key specified for entry when other array entries have keys.';
+                    $error = 'No key specified for array entry; first entry specifies key';
                     $phpcsFile->addError($error, $nextToken);
                     return;
                 }
 
                 if ($keyUsed === false) {
-                    if ($tokens[$nextToken - 1]['code'] === T_WHITESPACE) {
-                        $error = 'Whitespace found before comma in array declaration.';
+                    if ($tokens[($nextToken - 1)]['code'] === T_WHITESPACE) {
+                        $content     = $tokens[($nextToken - 2)]['content'];
+                        $spaceLength = strlen($tokens[($nextToken - 1)]['content']);
+                        $error       = "Expected 0 spaces between \"$content\" and comma; $spaceLength found";
                         $phpcsFile->addError($error, $nextToken);
-                        return;
                     }
 
-                    $valueContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $nextToken);
+                    // Find the value.
+                    $valueContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($nextToken - 1), $arrayStart, true);
                     $indices[]    = array(
-                                     'value' => ($valueContent + 1),
+                                     'value' => $valueContent,
                                     );
                     $singleUsed = true;
                 }
@@ -198,22 +218,23 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$nextToken]['code'] === T_DOUBLE_ARROW) {
                 if ($singleUsed === true) {
-                    $error = 'Key used for array entry, when other entries have none.';
+                    $error = 'Key specified for array entry; first entry has no key';
                     $phpcsFile->addError($error, $nextToken);
                     return;
                 }
 
                 $currentEntry['arrow'] = $nextToken;
                 $keyUsed               = true;
+
                 // Find the index that uses this double arrow.
-                $index                 = $phpcsFile->findPrevious(array(T_WHITESPACE), $nextToken - 1, $arrayStart, true);
+                $index                 = $phpcsFile->findPrevious(array(T_WHITESPACE), ($nextToken - 1), $arrayStart, true);
                 $currentEntry['index'] = $index;
                 if ($maxLength < strlen($tokens[$index]['content'])) {
                     $maxLength = strlen($tokens[$index]['content']);
                 }
 
                 // Find the value of this index.
-                $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), $nextToken + 1, $arrayEnd, true);
+                $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
                 $currentEntry['value'] = $nextContent;
                 $indices[]             = $currentEntry;
                 $lastToken             = T_DOUBLE_ARROW;
@@ -238,18 +259,18 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $trailingContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMA), $lastIndex + 1, $arrayEnd, true);
             if ($trailingContent !== false) {
                 $indices[] = array('value' => $trailingContent);
-                $error     = 'Comma required after last value in array.';
+                $error     = 'Comma required after last value in array declaration';
                 $phpcsFile->addError($error, $trailingContent);
             }
 
             foreach ($indices as $value) {
-                if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
-                    $error = 'Array value not aligned correctly. Expected '.($keywordStart + 1).' spaces but found '.$tokens[$value['value']]['column'].'.';
-                    $phpcsFile->addError($error, $value['value']);
+                if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
+                    if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
+                        $error = 'Array value not aligned correctly; expected '.($keywordStart + 1).' spaces but found '.$tokens[$value['value']]['column'];
+                        $phpcsFile->addError($error, $value['value']);
+                    }
                 }
             }
-
-            return;
         }
 
         /*
@@ -279,13 +300,21 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $arrowStart   = ($indicesStart + $maxLength + 1);
         $valueStart   = ($arrowStart + 3);
         foreach ($indices as $index) {
+            if (isset($index['index']) === FALSE) {
+                // Array value only.
+                if (($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
+                    $phpcsFile->addError('The first value in a multi-value array must be on a new line', $stackPtr);
+                }
+                continue;
+            }
+
             if (($tokens[$index['index']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
-                $phpcsFile->addError('The first value in a multi-value array must be on a new line.', $stackPtr);
+                $phpcsFile->addError('The first index in a multi-value array must be on a new line', $stackPtr);
                 continue;
             }
 
             if ($tokens[$index['index']]['column'] !== $indicesStart) {
-                $phpcsFile->addError('Array key not aligned correctly. Expected '.$indicesStart.' spaces but found '.$tokens[$index['index']]['column'].'.', $index['index']);
+                $phpcsFile->addError('Array key not aligned correctly; expected '.$indicesStart.' spaces but found '.$tokens[$index['index']]['column'], $index['index']);
                 continue;
             }
 
@@ -293,7 +322,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $expected  = ($arrowStart - (strlen($tokens[$index['index']]['content']) + $tokens[$index['index']]['column']));
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
                 $found     = ($tokens[$index['arrow']]['column'] - (strlen($tokens[$index['index']]['content']) + $tokens[$index['index']]['column']));
-                $phpcsFile->addError('Array Double Arrow not aligned correctly. Expected '.$expected.' but found '.$found.'.', $index['arrow']);
+                $phpcsFile->addError("Array double arrow not aligned correctly; expected $expected but found $found", $index['arrow']);
                 continue;
             }
 
@@ -301,15 +330,23 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $expected  = ($valueStart - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
                 $found     = ($tokens[$index['value']]['column'] - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
-                $phpcsFile->addError('Value not aligned correctly. Expected '.$expected.' but found '.$found.'.', $index['arrow']);
+                $phpcsFile->addError("Array value not aligned correctly; expected $expected but found $found", $index['arrow']);
             }
 
             // Check each line ends in a comma.
             if ($tokens[$index['value']]['code'] !== T_ARRAY) {
-                $nextComma = $phpcsFile->findNext(array(T_COMMA), $index['value'] + 1);
+                $nextComma = $phpcsFile->findNext(array(T_COMMA), ($index['value'] + 1));
                 if (($nextComma === false) || ($tokens[$nextComma]['line'] !== $tokens[$index['value']]['line'])) {
-                    $error = 'Each line in the array must end in a comma.';
+                    $error = 'Each line in an array declaration must end in a comma';
                     $phpcsFile->addError($error, $index['value']);
+                }
+
+                // Check that there is no space before the comma.
+                if ($nextComma !== false && $tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
+                    $content     = $tokens[($nextComma - 2)]['content'];
+                    $spaceLength = strlen($tokens[($nextComma - 1)]['content']);
+                    $error       = "Expected 0 spaces between \"$content\" and comma; $spaceLength found";
+                    $phpcsFile->addError($error, $nextComma);
                 }
             }
         }//end foreach

@@ -29,7 +29,7 @@ function test()
 
 
 
-// Some code goes here!
+// some code goes here!
 
 // This comment contains # multiple
 // hash signs (#) but no

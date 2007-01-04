@@ -50,7 +50,7 @@ class TestClass
         $train = array(
                    TRUE,
                   FALSE,
-                  'aaa',
+                  'aaa'
                  );
 
         $inline = array('aaa', 'bbb', 'ccc');
@@ -73,4 +73,37 @@ class TestClass
 
 }//end class
 
+$value = array( );
+$value = array(  );
+$value = array('1'=>$one, '2'  =>  $two, '3'=> $three, '4' =>$four);
+$value = array('1'=>$one);
+
+if (in_array('1', array('1','2','3')) === TRUE) {
+    $value = in_array('1', array('1'  ,   '2',     '3','4'));
+}
+
+$value = array(
+          '1'=> TRUE,
+          FALSE,
+          '3' => 'aaa',);
+
+$value = array(
+          '1'=> TRUE,
+          FALSE,
+         );
+
+$value = array(
+          TRUE,
+          '1' => FALSE,
+         );
+
+$value = array(1,
+          2 ,
+          3 ,
+         );
+
+$value = array(1 => $one,
+          2 => $two ,
+          3 => $three ,
+         );
 ?>

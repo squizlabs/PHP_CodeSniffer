@@ -81,14 +81,14 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if (count($commentLines) <= 2) {
             // Small comment. Can't be right.
             if (count($commentLines) === 1) {
-                $error = 'Single line block comment not allowed. Use an inline ("// text") comment instead.';
+                $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }
 
             if (trim($tokens[$commentLines[1]]['content']) === '*/') {
                 if (trim($tokens[$stackPtr]['content']) === '/*') {
-                    $error = 'Empty block comment found.';
+                    $error = 'Empty block comment not allowed';
                     $phpcsFile->addError($error, $stackPtr);
                     return;
                 }
@@ -96,15 +96,16 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (trim($tokens[$stackPtr]['content']) !== '/*') {
-            $error = 'Block comment text must start on a new line.';
+            $error = 'Block comment text must start on a new line';
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
         $starColumn = $tokens[$stackPtr]['column'] + 3;
+
         // Make sure first line isn't blank.
         if (trim($tokens[$commentLines[1]]['content']) === '') {
-            $error = 'Blank line found at start of comment.';
+            $error = 'Empty line not allowed at start of comment';
             $phpcsFile->addError($error, $commentLines[1]);
         } else {
             // Check indentation of first line.
@@ -114,7 +115,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace !== $starColumn) {
                 $expected  = $starColumn;
                 $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $error     = "First line of comment not aligned correctly. Expected $expected, found $leadingSpace.";
+                $error     = "First line of comment not aligned correctly; expected $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $commentLines[1]);
             }
         }
@@ -140,7 +141,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace < $starColumn) {
                 $expected  = $starColumn;
                 $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $error     = "Comment line indented incorrectly. Expected at least $expected, found $leadingSpace.";
+                $error     = "Comment line indented incorrectly; expected at least $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $line);
             }
 
@@ -149,7 +150,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         // Finally, test the last line is correct.
         $lastIndex = (count($commentLines) - 1);
         if (trim($tokens[$commentLines[$lastIndex]]['content']) !== '*/') {
-            $error = 'Comment closer must be on a new line.';
+            $error = 'Comment closer must be on a new line';
             $phpcsFile->addError($error, $commentLines[$lastIndex]);
         } else {
             $content      = $tokens[$commentLines[$lastIndex]]['content'];
@@ -158,7 +159,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace !== ($tokens[$stackPtr]['column'] - 1)) {
                 $expected  = ($tokens[$stackPtr]['column'] - 1);
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
-                $error     = "Last line of comment aligned incorrectly. Expected $expected, found $leadingSpace.";
+                $error     = "Last line of comment aligned incorrectly; expected $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $commentLines[$lastIndex]);
             }
 
@@ -167,14 +168,14 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         // Check that the lines before and after this comment are blank.
         $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
         if (($tokens[$stackPtr]['line'] - $tokens[$contentBefore]['line']) < 2) {
-            $error = 'Blank line required before block comment.';
+            $error = 'Empty line required before block comment';
             $phpcsFile->addError($error, $stackPtr);
         }
 
         $commentCloser = $commentLines[$lastIndex];
         $contentAfter  = $phpcsFile->findNext(T_WHITESPACE, ($commentCloser + 1), null, true);
         if (($tokens[$contentAfter]['line'] - $tokens[$commentCloser]['line']) < 2) {
-            $error = 'Blank line required after block comment.';
+            $error = 'Empty line required after block comment';
             $phpcsFile->addError($error, $commentCloser);
         }
 

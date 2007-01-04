@@ -26,4 +26,7 @@ ob_start();
     $contents = ob_get_contents();
     // Hi.
 ob_end_clean();
+
+ob_start();
+    echo $hello;
 ?>

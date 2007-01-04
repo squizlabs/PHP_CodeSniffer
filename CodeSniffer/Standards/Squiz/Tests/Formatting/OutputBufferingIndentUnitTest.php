@@ -49,6 +49,7 @@ class Squiz_Tests_Formatting_OutputBufferingIndentUnitTest extends AbstractSniff
                 12 => 1,
                 24 => 1,
                 25 => 1,
+                30 => 1,
                );
 
     }//end getErrorList()

@@ -60,7 +60,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
-            $error  = 'Perl-style comments are not allowed. Use "// Comment."';
+            $error  = 'Perl-style comments are not allowed; use "// Comment" instead';
             $error .= ' instead.';
             $phpcsFile->addError($error, $stackPtr);
         }
@@ -88,12 +88,12 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($spaceCount === 0) {
-            $error = 'No space before comment text. Expected "// '.substr($comment, 2).'" but found "'.$comment.'"';
+            $error = 'No space before comment text; expected "// '.substr($comment, 2).'" but found "'.$comment.'"';
             $phpcsFile->addError($error, $stackPtr);
         }
 
         if ($spaceCount > 1) {
-            $error = $spaceCount.' spaces found before inline comment. Expected "// '.substr($comment, (2 + $spaceCount)).'" but found "'.$comment.'"';
+            $error = $spaceCount.' spaces found before inline comment; expected "// '.substr($comment, (2 + $spaceCount)).'" but found "'.$comment.'"';
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -127,13 +127,13 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($commentText === '') {
-            $error = 'Blank comments are not allowed.';
+            $error = 'Blank comments are not allowed';
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
         if ($commentText[0] !== strtoupper($commentText[0])) {
-            $error = 'Inline comments must be capitalised.';
+            $error = 'Inline comments must be capitalised';
             $phpcsFile->addError($error, $topComment);
         }
 
@@ -150,7 +150,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                 $error .= ' '.$closerName.',';
             }
 
-            $error = rtrim($error, ',').'.';
+            $error = rtrim($error, ',');
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -168,7 +168,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        $error = 'There must be no blank line following an inline comment.';
+        $error = 'There must be no blank line following an inline comment';
         $phpcsFile->addError($error, $stackPtr);
 
     }//end process()
