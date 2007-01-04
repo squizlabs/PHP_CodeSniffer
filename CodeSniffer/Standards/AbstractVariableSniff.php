@@ -119,7 +119,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
             return;
         } else {
-            // What if we assign a memeber variable to another?
+            // What if we assign a member variable to another?
             // ie. private $_count = $this->_otherCount + 1;.
             $this->processMemberVar($phpcsFile, $stackPtr);
         }
