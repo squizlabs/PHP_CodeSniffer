@@ -1602,16 +1602,19 @@ class PHP_CodeSniffer_File
      * @param int       $end     The end position to fail if no token is found.
      *                           if not specified or null, end will default to
      *                           the start of the token stack.
-     * @param boolean   $exclude If true, find the next token that are NOT of
+     * @param bool      $exclude If true, find the next token that are NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
      *                           If value is ommited, tokens with any value will
      *                           be returned.
+     * @param bool      $local   If true, tokens outside the current statement
+     *                           will not be cheked. IE. checking will stop
+     *                           at the next semi-colon found.
      *
      * @return int
      * @see findNext()
      */
-    public function findPrevious($types, $start, $end=null, $exclude=false, $value=null)
+    public function findPrevious($types, $start, $end=null, $exclude=false, $value=null, $local=false)
     {
         if (is_array($types) === false) {
             $types = array($types);
@@ -1645,6 +1648,10 @@ class PHP_CodeSniffer_File
                     return $i;
                 }
             }
+
+            if ($local && $this->_tokens[$i]['code'] === T_SEMICOLON) {
+                break;
+            }
         }//end for
 
         return false;
@@ -1666,16 +1673,19 @@ class PHP_CodeSniffer_File
      * @param int       $end     The end position to fail if no token is found.
      *                           if not specified or null, end will default to
      *                           the end of the token stack.
-     * @param boolean   $exclude If true, find the next token that are NOT of
+     * @param bool      $exclude If true, find the next token that are NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
      *                           If value is ommited, tokens with any value will
      *                           be returned.
+     * @param bool      $local   If true, tokens outside the current statement
+     *                           will not be cheked. IE. checking will stop
+     *                           at the next semi-colon found.
      *
      * @return int
      * @see findPrevious()
      */
-    public function findNext($types, $start, $end=null, $exclude=false, $value=null)
+    public function findNext($types, $start, $end=null, $exclude=false, $value=null, $local=false)
     {
         if (is_array($types) === false) {
             $types = array($types);
@@ -1708,6 +1718,10 @@ class PHP_CodeSniffer_File
                 } else if ($this->_tokens[$i]['content'] === $value) {
                     return $i;
                 }
+            }
+
+            if ($local && $this->_tokens[$i]['code'] === T_SEMICOLON) {
+                break;
             }
         }//end for
 
