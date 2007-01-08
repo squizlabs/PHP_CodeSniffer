@@ -95,7 +95,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 // We are at the end of the file.
                 $foundLines = 0;
             } else {
-                $foundLines  = $tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line'];
+                $foundLines = $tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line'];
             }
         }
 
@@ -124,7 +124,6 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $foundLines = 0;
         } else {
             $prevContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT), $prevLineToken, null, true);
-            $foundLines  = $tokens[$prevLineToken]['line'] - $tokens[$prevContent]['line'];
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
@@ -132,6 +131,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $currentLine = $tokens[$prevContent]['line'];
             $prevLine    = ($currentLine - 1);
             $i           = ($stackPtr - 1);
+            $foundLines  = 0;
             while ($currentLine != $prevLine && $currentLine > 1) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];
@@ -145,6 +145,12 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 }
 
                 $currentLine = $tokens[$i]['line'];
+                if ($tokens[($i - 1)]['line'] < $currentLine && $tokens[($i + 1)]['line'] > $currentLine) {
+                    // This token is on a line by itself. If it is whitespace, the line is empty.
+                    if ($tokens[$i]['code'] === T_WHITESPACE) {
+                        $foundLines++;
+                    }
+                }
                 $i--;
             }
         }

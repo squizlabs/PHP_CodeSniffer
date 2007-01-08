@@ -98,6 +98,14 @@ class MyClass
 {
 
     /**
+     * The tag that this element represents (omiting the @ symbol).
+     *
+     * @var string
+     */
+    protected $tag = '';
+
+
+    /**
      * Function comment.
      *
      * @return boolean
@@ -105,7 +113,6 @@ class MyClass
     function func1() {
 
     }//end func1()
-
 
     /**
      * Function comment.
