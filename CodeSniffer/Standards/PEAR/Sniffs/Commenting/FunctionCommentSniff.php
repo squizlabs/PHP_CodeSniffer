@@ -381,7 +381,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
             }//end foreach
 
-            if ($spaceBeforeVar !== 1 && $spaceBeforeComment !== 10000) {
+            if ($spaceBeforeVar !== 1 && $spaceBeforeVar !== 10000 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 1 space after the longest type';
                 $this->_phpcsFile->addError($error, $longestType);
             }
