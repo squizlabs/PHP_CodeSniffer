@@ -36,6 +36,13 @@ require_once 'PHP/CodeSniffer/Tokens.php';
 class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * If true, an error will be thrown; otherwise a warning.
+     *
+     * @var bool
+     */
+    protected $error = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -149,7 +156,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     $error = 'Equals sign not aligned with surrounding assignments. Expected '.$expected.', but found '.$found.'.';
                 }
 
-                $phpcsFile->addWarning($error, $assignment);
+                if ($this->error === true) {
+                    $phpcsFile->addError($error, $assignment);
+                } else {
+                    $phpcsFile->addWarning($error, $assignment);
+                }
             }
         }//end foreach
 
@@ -170,18 +181,21 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         if ($stackPtr === false) {
             return false;
         }
-        $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+
         // If there is something other than whitespace on this line before this variable, its not what we want.
+        $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
         if ($tokens[$prevContent]['line'] === $tokens[$stackPtr]['line']) {
             return false;
         }
 
         $nextContent = $phpcsFile->findNext(array(T_VARIABLE, T_OPEN_SQUARE_BRACKET, T_CLOSE_SQUARE_BRACKET, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER), $stackPtr + 1, null, true);
         $nextContent++;
+
         // If this isn't an assignment, then its not what we want.
         if (in_array($tokens[$nextContent]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
             return false;
         }
+
         return true;
 
     }//end _isAssignment()
