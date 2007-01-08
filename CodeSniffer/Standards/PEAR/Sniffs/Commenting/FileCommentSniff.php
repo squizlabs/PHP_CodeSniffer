@@ -86,12 +86,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $this->_phpcsFile = $phpcsFile;
 
         // We are only interested if this is the first open tag.
-        $openTags = array(
-                     T_OPEN_TAG,
-                     T_CLOSE_TAG,
-                    );
         if ($stackPtr !== 0) {
-            if ($this->_phpcsFile->findPrevious($openTags, 0, $stackPtr) !== false) {
+            if ($this->_phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== false) {
                 return;
             }
         }
