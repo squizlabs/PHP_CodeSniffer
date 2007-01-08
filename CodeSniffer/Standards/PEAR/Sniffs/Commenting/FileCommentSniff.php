@@ -107,7 +107,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // We are only interested if this is the first open tag.
             return;
         } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
-            $this->_phpcsFile->addError('Consider using "/**" style comment for file comment', $stackPtr + 1);
+            $this->_phpcsFile->addError('You must use "/**" style comments for a file comment', $stackPtr + 1);
             return;
         } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT) {
             $this->_phpcsFile->addError('Missing file doc comment', $stackPtr + 1);
