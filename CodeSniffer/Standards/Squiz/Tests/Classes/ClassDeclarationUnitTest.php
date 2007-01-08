@@ -45,7 +45,7 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 10 => 1,
-                15 => 1,
+                15 => 2,
                 22 => 4,
                 23 => 4,
                 24 => 4,

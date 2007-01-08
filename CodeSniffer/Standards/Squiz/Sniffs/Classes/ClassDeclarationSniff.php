@@ -112,10 +112,20 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             if ($prevContent !== "\n") {
                 $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
                 $spaces     = strlen($blankSpace);
-                if ($spaces !== 0) {
-                    $type    = strtolower($tokens[$stackPtr]['content']);
-                    $error   = "Expected 0 spaces before $type keyword; $spaces found";
-                    $phpcsFile->addError($error, $stackPtr);
+
+                if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === false) {
+                    if ($spaces !== 0) {
+                        $type  = strtolower($tokens[$stackPtr]['content']);
+                        $error = "Expected 0 spaces before $type keyword; $spaces found";
+                        $phpcsFile->addError($error, $stackPtr);
+                    }
+                } else {
+                    if ($spaces !== 1) {
+                        $type        = strtolower($tokens[$stackPtr]['content']);
+                        $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
+                        $error = "Expected 1 space between $prevContent and $type keywords; $spaces found";
+                        $phpcsFile->addError($error, $stackPtr);
+                    }
                 }
             }
         }
@@ -126,7 +136,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
                 $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
                 $spaces     = strlen($blankSpace);
                 if ($spaces !== 0) {
-                    $error   = "Expected 0 spaces before opening brace; $spaces found";
+                    $error = "Expected 0 spaces before opening brace; $spaces found";
                     $phpcsFile->addError($error, $curlyBrace);
                 }
             }
@@ -139,13 +149,16 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
                 $blankSpace = substr($prevContent, strpos($prevContent, "\n"));
                 $spaces     = strlen($blankSpace);
                 if ($spaces !== 0) {
-                    $error   = "Expected 0 spaces before closing brace; $spaces found";
+                    $error = "Expected 0 spaces before closing brace; $spaces found";
                     $phpcsFile->addError($error, $closeBrace);
                 }
             }
         }
 
-        if ($tokens[($closeBrace + 1)]['content'] !== "\n") {
+        // Check the closing brace is on it's own line, but allow
+        // for comments like "//end class".
+        $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
+        if ($tokens[$nextContent]['content'] !== "\n" && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']) {
             $type  = strtolower($tokens[$stackPtr]['content']);
             $error = "Closing $type brace must be on a line by itself";
             $phpcsFile->addError($error, $closeBrace);

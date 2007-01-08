@@ -7,12 +7,12 @@ class CorrectClassDeclaration
 
 }
 
-class CorrectClassDeclarationWithExtends extends correctClassDeclaration
+abstract class CorrectClassDeclarationWithExtends extends correctClassDeclaration
 {
 
 }
 
-class CorrectClassDeclarationWithImplements implements correctClassDeclaration
+final  class CorrectClassDeclarationWithImplements implements correctClassDeclaration
 {
 
 }
@@ -27,14 +27,14 @@ class IncorrectBracePlacementWithImplements implements correctClassDeclaration {
     class IncorrectIndentedClass
     {
 
-    }
+    }//end class
 
 
 // Incorrect code placement for opening/closing brace.
 class IncorrectCodeAfterOpeningBrace
 { echo phpinfo();
 
-}
+}//end class
 
 class IncorrectCodeAfterClosingBrace
 {
@@ -54,11 +54,11 @@ echo phpinfo(); }
 
 class ClassOne implements ClassTwo, ClassThree
 {
-}
+}//end class
 
 class ClassOne implements ClassFour   ,ClassFive,  ClassSix
 {
-}
+}//end class
 
 class CorrectClassDeclarationWithExtends extends correctClassDeclaration
 
@@ -69,10 +69,10 @@ class CorrectClassDeclarationWithExtends extends correctClassDeclaration
 class CorrectClassDeclarationWithExtends   extends correctClassDeclaration
 {
 
-}
+}//end class
 
 class   CorrectClassDeclaration
 {
 
-}
+}//end class
 ?>
