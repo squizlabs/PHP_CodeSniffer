@@ -61,12 +61,10 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
                 41 => 1,
                 43 => 1,
                 52 => 1,
-                54 => 1,
                 57 => 1,
-                59 => 1,
                 61 => 1,
                 62 => 1,
-                63 => 2,
+                63 => 1,
                 66 => 1,
                );
 

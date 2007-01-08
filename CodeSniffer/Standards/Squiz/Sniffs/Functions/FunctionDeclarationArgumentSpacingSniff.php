@@ -119,9 +119,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             if ($nextComma !== false) {
                 // Comma found.
                 if ($tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
-                    $space  = strlen($tokens[($nextComma - 1)]['content']);
-                    $arg    = $tokens[$nextParam]['content'];
-                    $error  = "Expected 0 spaces between argument \"$arg\" and comma; $space found";
+                    $space = strlen($tokens[($nextComma - 1)]['content']);
+                    $arg   = $tokens[$nextParam]['content'];
+                    $error = "Expected 0 spaces between argument \"$arg\" and comma; $space found";
                     $phpcsFile->addError($error, $nextToken);
                 }
             }
@@ -141,9 +141,23 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     }
                 }
             } else {
-                if ($tokens[$nextParam - 1]['code'] === T_WHITESPACE) {
-                    $error = 'Whitespace found before first argument of function declaration';
-                    $phpcsFile->addError($error, $nextToken);
+                if ($tokens[($nextParam - 1)]['code'] === T_WHITESPACE) {
+                    $gap = strlen($tokens[($nextParam - 1)]['content']);
+                    $arg = $tokens[$nextParam]['content'];
+
+                    // Before we throw an error, make sure there is no type hint.
+                    $bracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($nextParam - 1));
+                    if ($bracket === ($nextParam - 3)) {
+                        // There was a type hint, so just check the spacing between
+                        // the hint and the variable.
+                        if ($gap !== 1) {
+                            $error = "Expected 1 space between type hint and argument \"$arg\"; $gap found";
+                            $phpcsFile->addError($error, $nextToken);
+                        }
+                    } else {
+                        $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
+                        $phpcsFile->addError($error, $nextToken);
+                    }
                 }
             }
 
@@ -154,12 +168,15 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
         if (empty($params) === true) {
             // There are no parameters for this function.
             if (($closeBracket - $openBracket) !== 1) {
-                $space  = strlen($tokens[($closeBracket - 1)]['content']);
-                $error  = "Expected 0 spaces between brackets of function declaration; $space found";
+                $space = strlen($tokens[($closeBracket - 1)]['content']);
+                $error = "Expected 0 spaces between brackets of function declaration; $space found";
                 $phpcsFile->addError($error, $stackPtr);
             }
         } else if ($tokens[($closeBracket - 1)]['code'] === T_WHITESPACE) {
-            $error = 'Whitespace found after last argument of function declaration';
+            $lastParam = array_pop($params);
+            $arg       = $tokens[$lastParam]['content'];
+            $gap       = strlen($tokens[($closeBracket - 1)]['content']);
+            $error     = "Expected 0 spaces between argument \"$arg\" and closing bracket; $gap found";
             $phpcsFile->addError($error, $closeBracket);
         }
 

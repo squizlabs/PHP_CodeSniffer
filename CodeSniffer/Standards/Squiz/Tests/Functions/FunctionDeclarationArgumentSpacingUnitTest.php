@@ -51,6 +51,7 @@ class Squiz_Tests_Functions_FunctionDeclarationArgumentSpacingUnitTest extends A
                  9 => 2,
                 11 => 2,
                 13 => 7,
+                14 => 2,
                );
 
     }//end getErrorList()

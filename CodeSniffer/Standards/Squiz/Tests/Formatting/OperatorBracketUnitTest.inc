@@ -57,4 +57,13 @@ function myFunction()
     $value = (myFunction($var) + myFunction2($var));
     return -1;
 }
+
+$line  = substr($line, 0, -2);
+$words = preg_split('|(\s+)|', $line."\n", -1, $flags);
+if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
+} else if ($this->tokens[$pos + 1] === "\n") {
+}
+
+if ($pos === count($this->tokens) - 1) {
+}
 ?>

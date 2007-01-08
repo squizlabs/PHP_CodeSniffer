@@ -76,17 +76,46 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             // Check to see if we are using a variable from an object.
             $var     = $phpcsFile->findNext(array(T_STRING), ($objOperator + 1));
             $bracket = $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
+
             if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                 $objVarName = $tokens[$var]['content'];
+
+                // There is no way for us to know if the var is public or private,
+                // so we have to ignore a leading underscore if there is one and just
+                // check the main part of the variable name.
+                $originalVarName = $objVarName;
+                if (substr($objVarName, 0, 1) === '_') {
+                    $objVarName = substr($objVarName, 1);
+                }
+
                 if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true) === false) {
-                    $error = "Variable \"$objVarName\" is not in valid camel caps format";
+                    $error = "Variable \"$originalVarName\" is not in valid camel caps format";
                     $phpcsFile->addError($error, $var);
                 }
             }
         }
 
+        // There is no way for us to know if the var is public or private,
+        // so we have to ignore a leading underscore if there is one and just
+        // check the main part of the variable name.
+        $originalVarName = $varName;
+        if (substr($varName, 0, 1) === '_') {
+            $objOperator = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
+            if ($tokens[$objOperator]['code'] === T_DOUBLE_COLON) {
+                // The variable lives within a class, and is reference like
+                // this: MyClass::$_variable, so we don't know its scope.
+                $inClass = true;
+            } else {
+                $inClass = $phpcsFile->hasCondition($stackPtr, array(T_CLASS, T_INTERFACE));
+            }
+
+            if ($inClass === true) {
+                $varName = substr($varName, 1);
+            }
+        }
+
         if (PHP_CodeSniffer::isCamelCaps($varName, false, true) === false) {
-            $error = "Variable \"$varName\" is not in valid camel caps format";
+            $error = "Variable \"$originalVarName\" is not in valid camel caps format";
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -148,9 +177,21 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 
         if (preg_match_all('|\$[a-zA-Z0-9_]+|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches as $match) {
-                if (PHP_CodeSniffer::isCamelCaps(ltrim($match[0], '$'), false, true) === false) {
+                $varName = ltrim($match[0], '$');
+
+                // There is no way for us to know if the var is public or private,
+                // so we have to ignore a leading underscore if there is one and just
+                // check the main part of the variable name.
+                $originalVarName = $varName;
+                if (substr($varName, 0, 1) === '_') {
+                    if ($phpcsFile->hasCondition($stackPtr, array(T_CLASS, T_INTERFACE)) === true) {
+                        $varName = substr($varName, 1);
+                    }
+                }
+
+                if (PHP_CodeSniffer::isCamelCaps($varName, false, true) === false) {
                     $varName = $match[0];
-                    $error   = "Variable \"$varName\" is not in valid camel caps format";
+                    $error   = "Variable \"$originalVarName\" is not in valid camel caps format";
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }

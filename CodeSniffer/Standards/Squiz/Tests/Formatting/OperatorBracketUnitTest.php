@@ -64,6 +64,9 @@ class Squiz_Tests_Formatting_OperatorBracketUnitTest extends AbstractSniffUnitTe
                 50 => 2,
                 55 => 2,
                 56 => 1,
+                63 => 2,
+                64 => 1,
+                67 => 1,
                );
 
     }//end getErrorList()

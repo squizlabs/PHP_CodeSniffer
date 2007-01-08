@@ -95,17 +95,50 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
         }//end if
 
-        $lastBracket = $stackPtr;
-        do {
-            $lastBracket = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS), ($lastBracket - 1), null, false, null, true);
-            if ($lastBracket === false) {
-                break;
+        $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($stackPtr - 1), null, false, null, true);
+        while ($lastBracket !== false) {
+            if ($tokens[($lastBracket - 1)]['code'] !== T_STRING) {
+                $opener = $phpcsFile->findPrevious(T_WHITESPACE, ($lastBracket - 1), null, true, null, true);
+                if (in_array($tokens[$opener]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === false) {
+                    break;
+                }
             }
-        } while ($tokens[($lastBracket - 1)]['code'] === T_STRING);
 
-        if ($lastBracket === false || $tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
-            $error = 'Arithmetic operation must be bracketed - '.$tokens[$stackPtr]['column'];
+            $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($lastBracket - 1), null, false, null, true);
+        }
+
+        if ($lastBracket === false) {
+            // It is not in a bracketed statement at all.
+            $previousToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true, null, true);
+            if ($previousToken !== false) {
+                // A list of tokens that indicate that the token is not
+                // part of an arithmetic operation.
+                $invalidTokens = array(
+                                  T_COMMA,
+                                 );
+
+                if (in_array($tokens[$previousToken]['code'], $invalidTokens) === false) {
+                    $error = 'Arithmetic operation must be bracketed';
+                    $phpcsFile->addError($error, $stackPtr);
+                }
+
+                return;
+            }
+        } else if ($tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
+            // There are a set of brackets in front of it that don't include it.
+            $error = 'Arithmetic operation must be bracketed';
             $phpcsFile->addError($error, $stackPtr);
+            return;
+        } else {
+            // We are enclosed in a set of bracket, so the last thing to
+            // check is that we are not also enclosed in square brackets
+            // like this: ($array[$index+1]), which is invalid.
+            $squareBracket = $phpcsFile->findPrevious(T_OPEN_SQUARE_BRACKET, ($stackPtr - 1), $lastBracket);
+            if ($squareBracket !== false) {
+                $error = 'Arithmetic operation must be bracketed';
+                $phpcsFile->addError($error, $stackPtr);
+            }
+
             return;
         }
 

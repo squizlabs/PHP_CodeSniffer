@@ -35,6 +35,13 @@ require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Formatting/MultipleStatem
 class Squiz_Sniffs_Formatting_MultipleStatementAlignmentSniff extends Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff
 {
 
+    /**
+     * If true, an error will be thrown; otherwise a warning.
+     *
+     * @var bool
+     */
+    protected $error = true;
+
 }//end class
 
 ?>
