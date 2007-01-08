@@ -15,7 +15,7 @@
  */
 
 require_once 'PHP/CodeSniffer/CommentParser/AbstractParser.php';
-require_once 'PHP/CodeSniffer/CommentParser/PairElement.php';
+require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
 
 /**
  * Parses class member comments.
@@ -29,13 +29,13 @@ require_once 'PHP/CodeSniffer/CommentParser/PairElement.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_CommentParser_AbstractParser
+class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_CommentParser_ClassCommentParser
 {
 
     /**
      * Represents a \@var tag in a member comment.
      *
-     * @var PHP_CodeSniffer_CommentParser_PairElement
+     * @var PHP_CodeSniffer_CommentParser_SingleElement
      */
     private $_var = null;
 
@@ -45,11 +45,11 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
      *
      * @param array $tokens The tokens that represent this tag.
      *
-     * @return PHP_CodeSniffer_CommentParser_PairElement
+     * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
     protected function parseVar($tokens)
     {
-        $this->_var = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'var');
+        $this->_var = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'var');
         return $this->_var;
 
     }//end parseVar()
