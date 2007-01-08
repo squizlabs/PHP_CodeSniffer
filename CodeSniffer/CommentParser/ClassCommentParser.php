@@ -38,6 +38,13 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
     private $_package = null;
 
     /**
+     * The subpackage element of this class.
+     *
+     * @var SingleElement
+     */
+    private $_subpackage = null;
+
+    /**
      * The version element of this class.
      *
      * @var SingleElement
@@ -81,12 +88,13 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
     protected function getAllowedTags()
     {
         return array(
-                'category'  => false,
-                'package'   => true,
-                'author'    => false,
-                'copyright' => true,
-                'license'   => false,
-                'version'   => true,
+                'category'   => false,
+                'package'    => true,
+                'subpackage' => true,
+                'author'     => false,
+                'copyright'  => true,
+                'license'    => false,
+                'version'    => true,
                );
 
     }//end getAllowedTags()
@@ -184,6 +192,21 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
 
 
     /**
+     * Parses the package tag found in this test.
+     *
+     * @param array $tokens The tokens that comprise this var.
+     *
+     * @return PHP_CodeSniffer_CommentParser_SingleElement
+     */
+    protected function parseSubpackage($tokens)
+    {
+        $this->_subpackage = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'subpackage');
+        return $this->_subpackage;
+
+    }//end parseSubpackage()
+
+
+    /**
      * Returns the authors of this class comment.
      *
      * @return array(PHP_CodeSniffer_CommentParser_SingleElement)
@@ -253,6 +276,18 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
         return $this->_package;
 
     }//end getPackage()
+
+
+    /**
+     * Returns the subpackage that this class belongs to.
+     *
+     * @return PHP_CodeSniffer_CommentParser_SingleElement
+     */
+    public function getSubpackage()
+    {
+        return $this->_subpackage;
+
+    }//end getSubpackage()
 
 
 }//end class
