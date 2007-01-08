@@ -242,10 +242,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 // Filter out @ tags in the comment description.
                 if ($prevTagPos === false) {
                     // A real comment tag should have a space and a newline before it.
-                    if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
+                    if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
                         continue;
                     }
-                    if (!isset($this->words[$wordPos-2]) || $this->words[$wordPos-2] !== "\n") {
+
+                    if (isset($this->words[($wordPos - 2)]) === false || $this->words[($wordPos - 2)] !== "\n") {
                         continue;
                     }
                 }
@@ -258,22 +259,24 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     if ($prevTagPos !== false) {
                         // There was a tag before this so let's process it.
                         $prevTag = substr($this->words[$prevTagPos], 1);
-                        $this->parseTag($prevTag, $prevTagPos, $wordPos - 1);
+                        $this->parseTag($prevTag, $prevTagPos, ($wordPos - 1));
                     } else {
                         // There must have been a comment before this tag, so
                         // let's process that.
-                        $this->parseTag('comment', 0, $wordPos - 1);
+                        $this->parseTag('comment', 0, ($wordPos - 1));
                     }
 
                     $prevTagPos = $wordPos;
                 } else {
                     // A real comment tag should have a space and a newline before it.
-                    if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
+                    if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
                         continue;
                     }
-                    if (!isset($this->words[$wordPos-2]) || $this->words[$wordPos-2] !== "\n") {
+
+                    if (isset($this->words[($wordPos - 2)]) === false || $this->words[($wordPos - 2)] !== "\n") {
                         continue;
                     }
+
                     $standardTags = array(
                                      'access',
                                      'example',
@@ -283,7 +286,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                                      'tutorial',
                                      'package_version@',
                                     );
-                    if (!in_array($tag, $standardTags)) {
+                    if (in_array($tag, $standardTags) === false) {
                         $this->unknown[] = array(
                                             'tag'  => $tag,
                                             'line' => $this->getLine($wordPos),
@@ -489,7 +492,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     protected function parseTag($tag, $start, $end)
     {
         $method = 'parse'.$tag;
-        $tokens = array_slice($this->words, $start + 1, $end - $start);
+        $tokens = array_slice($this->words, ($start + 1), ($end - $start));
 
         if (method_exists($this, $method) === false) {
             $error = 'Method '.$method.' must be implemented to process '.$tag.' tags';

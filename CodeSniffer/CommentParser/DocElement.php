@@ -31,8 +31,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
 
 
     /**
-     * Returns the name of the tag that this element represents, omitting the
-     * @ symbol.
+     * Returns the name of the tag this element represents, omitting the @ symbol.
      *
      * @return string
      */

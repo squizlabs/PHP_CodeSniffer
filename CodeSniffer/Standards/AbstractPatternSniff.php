@@ -545,27 +545,27 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      */
     private function _parse($pattern)
     {
-        $patterns         = array();
-        $length           = strlen($pattern);
-        $lastToken        = 0;
-        $firstToken       = 0;
+        $patterns   = array();
+        $length     = strlen($pattern);
+        $lastToken  = 0;
+        $firstToken = 0;
 
         for ($i = 0; $i < $length; $i++) {
 
             $specialPattern = false;
-            $isLastChar  = ($i === ($length - 1));
+            $isLastChar     = ($i === ($length - 1));
 
             if (substr($pattern, $i, 3) === '...') {
                 // It's a skip pattern. The skip pattern requires the
                 // content of the token in the "from" position and the token
                 // to skip to.
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
-                $lastToken   = ($i - $firstToken);
-                $i           = ($i + 4);
+                $lastToken      = ($i - $firstToken);
+                $i              = ($i + 4);
             } else if (substr($pattern, $i, 3) === 'abc') {
                 $specialPattern = array('type' => 'string');
-                $lastToken   = ($i - $firstToken);
-                $i           = ($i + 3);
+                $lastToken      = ($i - $firstToken);
+                $i              = ($i + 3);
             }
 
             if ($specialPattern !== false || $isLastChar === true) {

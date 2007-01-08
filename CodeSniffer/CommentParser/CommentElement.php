@@ -74,7 +74,8 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
         if ($pos === -1) {
             return '';
         }
-        return implode('', array_slice($this->tokens, 0, $pos + 1));
+
+        return implode('', array_slice($this->tokens, 0, ($pos + 1)));
 
     }//end getShortComment()
 
@@ -88,7 +89,10 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     private function _getShortCommentEndPos()
     {
         $found      = false;
-        $whiteSpace = array(' ', "\t");
+        $whiteSpace = array(
+                       ' ',
+                       "\t",
+                      );
 
         foreach ($this->tokens as $pos => $token) {
             $token = str_replace($whiteSpace, '', $token);
@@ -96,7 +100,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
                 if ($found === false) {
                     // Include newlines before short description.
                     continue;
-                } else if ($this->tokens[$pos + 1] === "\n") {
+                } else if ($this->tokens[($pos + 1)] === "\n") {
                     return ($pos - 1);
                 }
             } else {
@@ -104,7 +108,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
             }
         }//end foreach
 
-        return count($this->tokens) - 1;
+        return (count($this->tokens) - 1);
 
     }//end _getShortCommentEndPos()
 
@@ -137,8 +141,8 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      */
     private function _getLongCommentStartPos()
     {
-        $pos = $this->_getShortCommentEndPos() + 1;
-        if ($pos === count($this->tokens) - 1) {
+        $pos = ($this->_getShortCommentEndPos() + 1);
+        if ($pos === (count($this->tokens) - 1)) {
             return -1;
         }
 
@@ -149,6 +153,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
                 if ($content{0} === '@') {
                     return -1;
                 }
+
                 return $i;
             }
         }
@@ -166,13 +171,13 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      */
     public function getWhiteSpaceBetween()
     {
-        $endShort  = $this->_getShortCommentEndPos() + 1;
-        $startLong = $this->_getLongCommentStartPos() - 1;
+        $endShort  = ($this->_getShortCommentEndPos() + 1);
+        $startLong = ($this->_getLongCommentStartPos() - 1);
         if ($startLong === -1) {
             return '';
         }
 
-        return implode('', array_slice($this->tokens, $endShort, $startLong - $endShort));
+        return implode('', array_slice($this->tokens, $endShort, ($startLong - $endShort)));
 
     }//end getWhiteSpaceBetween()
 
@@ -188,7 +193,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
         if ($long !== '') {
             return strspn((strrev(rtrim($long, ' '))), "\n");
         } else {
-            $endShort = $this->_getShortCommentEndPos() + 1;
+            $endShort = ($this->_getShortCommentEndPos() + 1);
             $after    = implode('', array_slice($this->tokens, $endShort));
             return strspn((trim($after, ' ')), "\n");
         }

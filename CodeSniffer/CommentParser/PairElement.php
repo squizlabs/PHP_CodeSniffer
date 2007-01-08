@@ -138,6 +138,7 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
 
     }//end getComment()
 
+
     /**
      * Returns the witespace before the content of this tag.
      *
@@ -148,6 +149,7 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
         return $this->_valueWhitespace;
 
     }//end getWhitespaceBeforeValue()
+
 
 }//end class
 

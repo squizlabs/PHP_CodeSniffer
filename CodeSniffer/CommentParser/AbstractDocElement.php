@@ -153,7 +153,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
         }//end foreach
 
         $lastElement     = ltrim($lastElement);
-        $lastElementName = $subElements[$numSubElements - 1];
+        $lastElementName = $subElements[($numSubElements - 1)];
 
         // Process the last element in this tag.
         $this->processSubElement($lastElementName, $lastElement, $lastElementWhitespace);
@@ -224,7 +224,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
         if ($this->previousElement === null) {
             return 1;
         } else {
-            return $this->previousElement->getOrder() + 1;
+            return ($this->previousElement->getOrder() + 1);
         }
 
     }//end getOrder()
@@ -262,7 +262,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     public function getLine()
     {
         if ($this->previousElement === null) {
-            // First element is on line one
+            // First element is on line one.
             return 1;
         } else {
             $previousContent = $this->previousElement->getRawContent();

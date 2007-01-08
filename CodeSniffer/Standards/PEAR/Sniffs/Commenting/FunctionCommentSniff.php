@@ -14,8 +14,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+require_once 'PHP/CodeSniffer/Sniff.php';
 require_once 'PHP/CodeSniffer/CommentParser/FunctionCommentParser.php';
-require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
 
 /**
  * Parses and verifies the doc comments for functions.
@@ -130,30 +130,31 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if ($code === T_COMMENT) {
             $error = 'Consider using "/**" style comment for function comment';
-            $this->_phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr);
             return;
         } else if ($code !== T_DOC_COMMENT) {
             $error = 'Missing function doc comment';
-            $this->_phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
         $this->_functionToken = $stackPtr;
-        if ($tokens[$phpcsFile->findPrevious(T_CLASS, $stackPtr - 1)]['code'] === T_CLASS) {
-            $this->_classToken = $phpcsFile->findPrevious(T_CLASS, $stackPtr - 1);
+        $classToken = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), ($stackPtr - 1));
+        if ($classToken !== false) {
+            $this->_classToken = $classToken;
         }
 
         // Find the first doc comment.
-        $commentStart = $this->_phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
-        $comment      = $this->_phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
-        $this->_methodName = $this->_phpcsFile->getDeclarationName($stackPtr);
+        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
+        $comment      = $phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+        $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         try {
             $this->_fp = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment);
             $this->_fp->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = $e->getLineWithinComment() + $commentStart;
-            $this->_phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line);
             return;
         }
 

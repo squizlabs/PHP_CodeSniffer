@@ -217,7 +217,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
         if (($this->getPreviousElement() instanceof PHP_CodeSniffer_CommentParser_ParameterElement) === false) {
             return 1;
         } else {
-            return $this->getPreviousElement()->getPosition() + 1;
+            return ($this->getPreviousElement()->getPosition() + 1);
         }
 
     }//end getPosition()
@@ -233,12 +233,12 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      */
     public function alignsWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
     {
-        $otherLength  = strlen($other->_typeWhitespace) + strlen($other->_type);
-        $otherLength += strlen($other->_varNameWhitespace) + strlen($other->_varName);
+        $otherLength  = (strlen($other->_typeWhitespace) + strlen($other->_type));
+        $otherLength += (strlen($other->_varNameWhitespace) + strlen($other->_varName));
         $otherLength += strlen($other->_commentWhitespace);
 
-        $myLength  = strlen($this->_typeWhitespace) + strlen($this->_type);
-        $myLength += strlen($this->_varNameWhitespace) + strlen($this->_varName);
+        $myLength  = (strlen($this->_typeWhitespace) + strlen($this->_type));
+        $myLength += (strlen($this->_varNameWhitespace) + strlen($this->_varName));
         $myLength += strlen($this->_commentWhitespace);
 
         return ($myLength === $otherLength);

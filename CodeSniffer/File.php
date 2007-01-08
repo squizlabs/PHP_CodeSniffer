@@ -208,112 +208,126 @@ class PHP_CodeSniffer_File
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_TRY           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_CATCH         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_ELSE          => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_ELSEIF        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_FOR           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_FOREACH       => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_INTERFACE     => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_FUNCTION      => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_CLASS         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_WHILE         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_DO            => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_SWITCH        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                      T_CASE          => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
                                                          'shared' => true,
-                                                         'with'   => array(T_DEFAULT, T_CASE),
-                                                    ),
+                                                         'with'   => array(
+                                                                      T_DEFAULT,
+                                                                      T_CASE,
+                                                                     ),
+                                                        ),
                                      T_DEFAULT       => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
                                                          'shared' => true,
                                                          'with'   => array(T_CASE),
-                                                    ),
+                                                        ),
                                      T_START_HEREDOC => array(
                                                          'start'  => T_START_HEREDOC,
                                                          'end'    => T_END_HEREDOC,
                                                          'shared' => false,
                                                          'with'   => array(),
-                                                    ),
+                                                        ),
                                     );
 
 
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
-     * @param string                       $file      The absolute path to the file
-     *                                                to process.
-     * @param array(PHP_CodeSniffer_Sniff) $listeners The initial listeners listening
-     *                                                to processing of this file.
+     * @param string        $file      The absolute path to the file
+     *                                 to process.
+     * @param array(string) $listeners The initial listeners listening
+     *                                 to processing of this file.
      */
     public function __construct($file, array $listeners)
     {
+        foreach ($listeners as $listenerClass) {
+            $listener = new $listenerClass();
+            $tokens   = $listener->register();
+
+            if (is_array($tokens) === false) {
+                $msg = "Sniff $listenerClass register() method must return an array";
+                throw new PHP_CodeSniffer_Exception($msg);
+            }
+
+            $this->addTokenListener($listener, $tokens);
+        }
+
         $this->_file = $file;
-        $this->_listeners = $listeners;
         $this->_parse();
 
     }//end __construct()
@@ -348,7 +362,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Removes a listener from listening from the specified toekns.
+     * Removes a listener from listening from the specified tokens.
      *
      * @param PHP_CodeSniffer_Sniff $listener The listener to remove from the listener
      *                                        stack.
@@ -414,13 +428,13 @@ class PHP_CodeSniffer_File
                 foreach ($this->_listeners[$tokenType] as $listener) {
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
-                        echo "\t\t\tProcessing ".get_class($listener).'... ';
+                        echo "\t\t\tProcessing $listenerClass... ";
                     }
 
                     $listener->process($this, $stackPtr);
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                        $timeTaken = round(microtime(true) - $startTime, 4);
+                        $timeTaken = round((microtime(true) - $startTime), 4);
                         echo "DONE in $timeTaken seconds\n";
                     }
                 }
@@ -434,6 +448,7 @@ class PHP_CodeSniffer_File
         // We don't need the tokens any more, so get rid of them
         // to save some memory.
         $this->_tokens = null;
+        $this->_listeners = null;
 
     }//end start()
 
@@ -550,7 +565,7 @@ class PHP_CodeSniffer_File
 
                 $this->_tokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
-            }//end else
+            }//end if
         }//end for
 
         $this->_createLineMap();
@@ -563,7 +578,7 @@ class PHP_CodeSniffer_File
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numTokens = count($this->_tokens);
-            $numLines  = $this->_tokens[($numTokens -1)]['line'];
+            $numLines  = $this->_tokens[($numTokens - 1)]['line'];
             echo "[$numTokens tokens in $numLines lines]... ";
         }
 
@@ -716,7 +731,7 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $count; $i++) {
             $this->_tokens[$i]['column'] = $currColumn;
-            if (isset($this->_tokens[$i + 1]['line']) === true && $this->_tokens[$i + 1]['line'] !== $this->_tokens[$i]['line']) {
+            if (isset($this->_tokens[($i + 1)]['line']) === true && $this->_tokens[($i + 1)]['line'] !== $this->_tokens[$i]['line']) {
                 $currColumn = 1;
             } else {
                 $currColumn += strlen($this->_tokens[$i]['content']);
@@ -787,6 +802,7 @@ class PHP_CodeSniffer_File
                 if (empty($map) === false) {
                     $this->_tokens[$i]['nested_parenthesis'] = $map;
                 }
+
                 $map[$this->_tokens[$i]['parenthesis_opener']] = $this->_tokens[$i]['parenthesis_closer'];
             } else if (isset($this->_tokens[$i]['parenthesis_closer']) === true && $i === $this->_tokens[$i]['parenthesis_closer']) {
                 array_pop($map);
@@ -824,6 +840,7 @@ class PHP_CodeSniffer_File
                     $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
                     echo "\tStart scope map at $i: $type => $content\n";
                 }
+
                 $i = $this->_recurseScopeMap($i);
             }
         }
@@ -871,9 +888,11 @@ class PHP_CodeSniffer_File
                 if ($opener !== null) {
                     echo "opener:$opener;";
                 }
+
                 if ($ignore === true) {
                     echo 'ignore;';
                 }
+
                 echo "]: $type => $content\n";
             }
 
@@ -886,7 +905,7 @@ class PHP_CodeSniffer_File
 
                 $isShared = (self::$_scopeOpeners[$tokenType]['shared'] === true);
 
-                if (isset($this->_tokens[$i]['scope_condition'])) {
+                if (isset($this->_tokens[$i]['scope_condition']) === true) {
                     // We've been here before.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
@@ -896,8 +915,9 @@ class PHP_CodeSniffer_File
                     if ($isShared === false && isset($this->_tokens[$i]['scope_closer']) === true) {
                         $i = $this->_tokens[$i]['scope_closer'];
                     }
+
                     continue;
-                } else if ($currType == $tokenType && $isShared === false && $opener === null) {
+                } else if ($currType === $tokenType && $isShared === false && $opener === null) {
                     // We haven't yet found our opener, but we have found another
                     // scope opener which is the same type as us, and we don't
                     // share openers, so we will never find one.
@@ -905,14 +925,16 @@ class PHP_CodeSniffer_File
                         echo str_repeat("\t", $depth);
                         echo "* it was another token's opener, bailing *\n";
                     }
+
                     return $stackPtr;
                 } else {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "* searching for closer *\n";
                     }
+
                     $i = $this->_recurseScopeMap($i, ($depth + 1));
-                }
+                }//end if
             }//end if start scope
 
             if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
@@ -922,6 +944,7 @@ class PHP_CodeSniffer_File
                     echo str_repeat("\t", $depth);
                     echo "=> Found scope opener for $stackPtr ($type)\n";
                 }
+
                 $opener = $i;
             } else if ($tokenType === self::$_scopeOpeners[$currType]['end'] && $opener !== null) {
                 if ($ignore === true) {
@@ -931,6 +954,7 @@ class PHP_CodeSniffer_File
                         echo str_repeat("\t", $depth);
                         echo "* finished ignoring curly brace *\n";
                     }
+
                     $ignore = false;
                 } else {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -950,7 +974,7 @@ class PHP_CodeSniffer_File
                     } else {
                         return $i;
                     }
-                }
+                }//end if
             } else if ($tokenType === T_OPEN_PARENTHESIS) {
                 if (isset($this->_tokens[$i]['parenthesis_owner']) === true) {
 
@@ -976,6 +1000,7 @@ class PHP_CodeSniffer_File
                     echo str_repeat("\t", $depth);
                     echo "* ignoring curly brace *\n";
                 }
+
                 $ignore = true;
             } else if ($opener === null && isset(self::$_scopeOpeners[$currType]) === true) {
                 // If we still haven't found the opener after 3 lines,
@@ -986,6 +1011,7 @@ class PHP_CodeSniffer_File
                         echo str_repeat("\t", $depth);
                         echo "=> Couldn't find scope opener for $stackPtr ($type), bailing\n";
                     }
+
                     return $stackPtr;
                 }
             } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $endScopeTokens) === true) {
@@ -996,6 +1022,7 @@ class PHP_CodeSniffer_File
                             echo str_repeat("\t", $depth);
                             echo "* finished ignoring curly brace *\n";
                         }
+
                         $ignore = false;
                     } else {
                         // We found a token that closes the scope but it doesn't
@@ -1013,10 +1040,11 @@ class PHP_CodeSniffer_File
                             $this->_tokens[$token]['scope_opener']    = $opener;
                             $this->_tokens[$token]['scope_closer']    = $i;
                         }
+
                         return ($i - 1);
-                    }
-                }
-            }
+                    }//end if
+                }//end if
+            }//end if
         }//end for
 
         return $stackPtr;
@@ -1059,8 +1087,10 @@ class PHP_CodeSniffer_File
                     foreach ($conditions as $condition) {
                         $condString .= token_name($condition).',';
                     }
+
                     echo rtrim($condString, ',').';';
                 }
+
                 echo "]: $type => $content\n";
             }
 
@@ -1092,7 +1122,7 @@ class PHP_CodeSniffer_File
                         // they are just sharing because one doesn't have a closer
                         // (like CASE with no BREAK using a SWITCHes closer).
                         $thisType = $this->_tokens[$this->_tokens[$i]['scope_condition']]['code'];
-                        $opener = $this->_tokens[$lastOpener]['scope_condition'];
+                        $opener   = $this->_tokens[$lastOpener]['scope_condition'];
                         if (in_array($this->_tokens[$opener]['code'], self::$_scopeOpeners[$thisType]['with']) === true) {
                             $badToken = $this->_tokens[$lastOpener]['scope_condition'];
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1138,9 +1168,9 @@ class PHP_CodeSniffer_File
                                 echo str_repeat("\t", ($level + 1));
                                 echo "* token $badToken ($type) removed from conditions array *\n";
                             }
-                            
+
                             unset ($openers[$lastOpener]);
-    
+
                             $level--;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 echo str_repeat("\t", ($level + 2));
@@ -1189,7 +1219,7 @@ class PHP_CodeSniffer_File
                                 $oldCondition = array_pop($conditions);
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                     echo str_repeat("\t", ($level + 1));
-                                    echo "* token ".token_name($oldCondition)." removed from conditions array *\n";
+                                    echo '* token '.token_name($oldCondition)." removed from conditions array *\n";
                                 }
 
                                 $level--;
@@ -1315,7 +1345,7 @@ class PHP_CodeSniffer_File
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true) {
                 // Don't do this if its the close parenthesis for the method.
                 if ($i !== $this->_tokens[$i]['parenthesis_closer']) {
-                    $i = $this->_tokens[$i]['parenthesis_closer'] + 1;
+                    $i = ($this->_tokens[$i]['parenthesis_closer'] + 1);
                 }
             }
 
@@ -1440,7 +1470,7 @@ class PHP_CodeSniffer_File
             case T_STATIC:
                 $isStatic = true;
                 break;
-            }
+            }//end switch
         }//end for
 
         return array(
@@ -1528,9 +1558,6 @@ class PHP_CodeSniffer_File
     }//end getMemberProperties()
 
 
-    //-- STACK SEARCHING --//
-
-
     /**
      * Determine if the passed token is a reference operator.
      *
@@ -1548,7 +1575,7 @@ class PHP_CodeSniffer_File
             throw new PHP_CodeSniffer_Exception('$stackPtr must represent a T_BITWISE_AND token');
         }
 
-        $tokenBefore = $this->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+        $tokenBefore = $this->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
         if ($this->_tokens[$tokenBefore]['code'] === T_AS) {
             // Inside a foreach loop, this is a reference.
@@ -1620,9 +1647,8 @@ class PHP_CodeSniffer_File
             $types = array($types);
         }
 
-        $count = 0;
-        if ($end === null || $end > $count) {
-            $end = $count;
+        if ($end === null) {
+            $end = 0;
         }
 
         for ($i = $start; $i >= $end; $i--) {
@@ -1649,7 +1675,7 @@ class PHP_CodeSniffer_File
                 }
             }
 
-            if ($local && $this->_tokens[$i]['code'] === T_SEMICOLON) {
+            if ($local === true && $this->_tokens[$i]['code'] === T_SEMICOLON) {
                 break;
             }
         }//end for
@@ -1720,7 +1746,7 @@ class PHP_CodeSniffer_File
                 }
             }
 
-            if ($local && $this->_tokens[$i]['code'] === T_SEMICOLON) {
+            if ($local === true && $this->_tokens[$i]['code'] === T_SEMICOLON) {
                 break;
             }
         }//end for

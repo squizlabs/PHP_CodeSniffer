@@ -105,9 +105,10 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                             break;
                         }
                     }
+
                     // The end brace becomes the ELSE's end brace.
-                    $stackPtr  = $tokens[$nextToken]['scope_closer'];
-                    $endBrace  = $tokens[$stackPtr];
+                    $stackPtr = $tokens[$nextToken]['scope_closer'];
+                    $endBrace = $tokens[$stackPtr];
                 } else {
                     break;
                 }

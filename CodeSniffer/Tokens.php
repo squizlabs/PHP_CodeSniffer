@@ -47,7 +47,6 @@ define('T_PARENT', 1028);
 define('T_DOUBLE_QUOTED_STRING', 1029);
 define('T_COMMA', 1030);
 
-
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurance in a file.
@@ -74,10 +73,11 @@ final class PHP_CodeSniffer_Tokens
      */
     public static $weightings = array(
                                  T_CLASS               => 1000,
-
                                  T_FUNCTION            => 100,
 
-                                 //-- CONDITIONS --//
+                                 /*
+                                     Conditions.
+                                 */
 
                                  T_WHILE               => 50,
                                  T_FOR                 => 50,
@@ -94,7 +94,9 @@ final class PHP_CodeSniffer_Tokens
                                  T_SELF                => 25,
                                  T_PARENT              => 25,
 
-                                 //-- OPERATORS AND ARITHMETIC --//
+                                 /*
+                                     Operators and arithmetic.
+                                 */
 
                                  T_BITWISE_AND         => 8,
                                  T_BITWISE_OR          => 8,
@@ -120,7 +122,9 @@ final class PHP_CodeSniffer_Tokens
                                  T_BOOLEAN_AND         => 5,
                                  T_BOOLEAN_OR          => 5,
 
-                                 //-- EQUALITY --//
+                                 /*
+                                     Equality.
+                                 */
 
                                  T_IS_EQUAL            => 5,
                                  T_IS_NOT_EQUAL        => 5,
@@ -260,7 +264,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_DOUBLE_QUOTED_STRING,
                                   );
 
-    
+
     /**
      * A PHP_CodeSniffer_Tokens class cannot be constructed.
      *

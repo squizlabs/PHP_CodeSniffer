@@ -41,7 +41,6 @@ require_once 'PHP/CodeSniffer/Standards/PEAR/Sniffs/Commenting/FileCommentSniff.
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
 class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_FileCommentSniff
 {
 
@@ -71,16 +70,17 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
     {
         $this->_phpcsFile = $phpcsFile;
         $tokens = $this->_phpcsFile->getTokens();
-        $find   = array (
+        $find   = array(
                    T_ABSTRACT,
                    T_WHITESPACE,
+                   T_FINAL,
                   );
 
         // Extract the class comment docblock.
-        $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1, null, true);
+        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $this->_phpcsFile->addError('Consider using "/**" style comment for class comment', $stackPtr);
+            $this->_phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
             $this->_phpcsFile->addError('Missing class doc comment', $stackPtr);

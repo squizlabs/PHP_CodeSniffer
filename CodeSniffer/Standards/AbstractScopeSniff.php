@@ -162,11 +162,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         if (in_array($tokens[$stackPtr]['code'], $this->_scopeTokens) === true) {
             $this->currScope = $stackPtr;
             $phpcsFile->addTokenListener($this, $this->_tokens);
-        } else if ($this->currScope !== null && isset($tokens[$this->currScope]['scope_closer']) && $stackPtr > $tokens[$this->currScope]['scope_closer']) {
+        } else if ($this->currScope !== null && isset($tokens[$this->currScope]['scope_closer']) === true && $stackPtr > $tokens[$this->currScope]['scope_closer']) {
             $this->currScope = null;
             if ($this->_listenOutside === true) {
                 // This is a token outside the current scope, so notify the
-                // exender as the wish to know about this.
+                // extender as they wish to know about this.
                 $this->processTokenOutsideScope($phpcsFile, $stackPtr);
             } else {
                 // Don't remove the listener if the extender wants to know about
