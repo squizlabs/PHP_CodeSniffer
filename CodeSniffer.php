@@ -245,47 +245,11 @@ class PHP_CodeSniffer
                     continue;
                 }
 
-                $listener = new $className();
-                $tokens   = $listener->register();
-
-                if (is_array($tokens) === false) {
-                    $msg = 'Sniff '.$className.' register method must return an array';
-                    throw new PHP_CodeSniffer_Exception($msg);
-                }
-
-                $this->_addTokenListener($listener, $tokens);
+                $this->_listeners[] = $className;
             }//end foreach
         }//end foreach
 
     }//end _registerTokenListeners()
-
-
-    /**
-     * Adds a listener to the token stack that listens to the specific tokens.
-     *
-     * When PHP_CodeSniffer encounters on the the tokens specified in $tokens,
-     * it invokes the process method of the sniff.
-     *
-     * @param PHP_CodeSniffer_Sniff $listener The listener to add to the
-     *                                        listener stack.
-     * @param array(int)            $tokens   The token types the listener
-     *                                        wishes to listen to.
-     *
-     * @return void
-     */
-    private function _addTokenListener(PHP_CodeSniffer_Sniff $listener, array $tokens)
-    {
-        foreach ($tokens as $token) {
-            if (isset($this->_listeners[$token]) === false) {
-                $this->_listeners[$token] = array();
-            }
-
-            if (in_array($listener, $this->_listeners[$token]) === false) {
-                $this->_listeners[$token][] = $listener;
-            }
-        }
-
-    }//end _addTokenListener()
 
 
     /**
@@ -376,7 +340,7 @@ class PHP_CodeSniffer
         $phpcsFile->start();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $timeTaken = time() - $startTime;
+            $timeTaken = (time() - $startTime);
             if ($timeTaken === 0) {
                 echo "DONE in < 1 second\n";
             } else if ($timeTaken === 1) {
@@ -427,6 +391,7 @@ class PHP_CodeSniffer
                     } else {
                         $errorMessage = 'ERROR | '.$message;
                     }
+
                     $newErrors[] = $errorMessage;
                 }
 
@@ -454,7 +419,7 @@ class PHP_CodeSniffer
             if (strlen($filename) <= 71) {
                 echo $filename;
             } else {
-                echo '...'.substr($filename, strlen($filename) - 71);
+                echo '...'.substr($filename, (strlen($filename) - 71));
             }
 
             echo "\n";
@@ -462,7 +427,7 @@ class PHP_CodeSniffer
             $numLines = count($errors);
             echo "FOUND $numErrors ERROR(S) ";
 
-            if ($showWarnings) {
+            if ($showWarnings === true) {
                 echo "AND $numWarnings WARNING(S) ";
             }
 
@@ -476,6 +441,7 @@ class PHP_CodeSniffer
                     $maxLine = $line;
                 }
             }
+
             $maxLineLength = strlen($maxLine);
 
             foreach ($errors as $line => $lineErrors) {
@@ -529,7 +495,7 @@ class PHP_CodeSniffer
 
         echo "\nPHP CODE SNIFFER REPORT SUMMARY\n";
         echo str_repeat('-', 80)."\n";
-        if ($showWarnings) {
+        if ($showWarnings === true) {
             echo 'FILE'.str_repeat(' ', 60)."ERRORS  WARNINGS\n";
         } else {
             echo 'FILE'.str_repeat(' ', 70)."ERRORS\n";
@@ -542,21 +508,21 @@ class PHP_CodeSniffer
         $totalFiles    = 0;
 
         foreach ($errorFiles as $file => $errors) {
-            if ($showWarnings) {
+            if ($showWarnings === true) {
                 $padding = (62 - strlen($file));
             } else {
                 $padding = (72 - strlen($file));
             }
 
             if ($padding < 0) {
-                $file    = '...'.substr($file, ($padding * -1) + 3);
+                $file    = '...'.substr($file, (($padding * -1) + 3));
                 $padding = 0;
             }
 
             echo $file.str_repeat(' ', $padding).'  ';
             echo $errors['errors'];
-            if ($showWarnings) {
-                echo str_repeat(' ', 8 - strlen((string) $errors['errors']));
+            if ($showWarnings === true) {
+                echo str_repeat(' ', (8 - strlen((string) $errors['errors'])));
                 echo $errors['warnings'];
             }
 
@@ -569,7 +535,7 @@ class PHP_CodeSniffer
 
         echo str_repeat('-', 80)."\n";
         echo "A TOTAL OF $totalErrors ERROR(S) ";
-        if ($showWarnings) {
+        if ($showWarnings === true) {
             echo "AND $totalWarnings WARNING(S) ";
         }
 
@@ -813,7 +779,7 @@ class PHP_CodeSniffer
             return false;
         }
 
-        if ($strict) {
+        if ($strict === true) {
             // Check that there are not two captial letters next to each other.
             $length          = strlen($string);
             $lastCharWasCaps = ($classFormat === false) ? false : true;
