@@ -1307,6 +1307,7 @@ class PHP_CodeSniffer_File
      *         'name'              => '$var',  // The variable name.
      *         'is_array'          => false,   // An array hint was used.
      *         'pass_by_reference' => false,   // Passed by reference.
+     *         'type_hint'         => false,   // A custom type hint
      *        )
      * </code>
      *
@@ -1335,6 +1336,7 @@ class PHP_CodeSniffer_File
         $paramCount      = 0;
         $isArray         = false;
         $passByReference = false;
+        $typeHint        = '';
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
 
@@ -1359,6 +1361,9 @@ class PHP_CodeSniffer_File
             case T_ARRAY_HINT:
                 $isArray = true;
                 break;
+            case T_STRING:
+                $typeHint = $this->_tokens[$i]['content'];
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -1376,11 +1381,13 @@ class PHP_CodeSniffer_File
 
                 $vars[$paramCount]['is_array']          = $isArray;
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
+                $vars[$paramCount]['type_hint']         = $typeHint;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
                 $isArray         = false;
                 $passByReference = false;
+                $typeHint        = '';
 
                 $paramCount++;
                 break;
