@@ -277,16 +277,23 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                         continue;
                     }
 
-                    $standardTags = array(
-                                     'access',
-                                     'example',
-                                     'ignore',
-                                     'internal',
-                                     'static',
-                                     'tutorial',
-                                     'package_version@',
-                                    );
-                    if (in_array($tag, $standardTags) === false) {
+                     $ignoreTags = array(
+                                    'abstract',
+                                    'access',
+                                    'example',
+                                    'filesource',
+                                    'global',
+                                    'ignore',
+                                    'internal',
+                                    'name',
+                                    'static',
+                                    'staticvar',
+                                    'todo',
+                                    'tutorial',
+                                    'uses',
+                                    'package_version@',
+                                   );
+                    if (!in_array($tag, $ignoreTags)) {
                         $this->unknown[] = array(
                                             'tag'  => $tag,
                                             'line' => $this->getLine($wordPos),
