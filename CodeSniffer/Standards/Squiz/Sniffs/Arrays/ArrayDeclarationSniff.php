@@ -101,7 +101,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $spaceLength = strlen($tokens[($nextArrow - 1)]['content']);
                     if ($spaceLength !== 1) {
                         $content = $tokens[($nextArrow - 2)]['content'];
-                        $error = "Expected 1 space between \"$content\" and double arrow; $spaceLength found";
+                        $error   = "Expected 1 space between \"$content\" and double arrow; $spaceLength found";
                         $phpcsFile->addError($error, $nextArrow);
                     }
                 }
@@ -114,7 +114,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $spaceLength = strlen($tokens[($nextArrow + 1)]['content']);
                     if ($spaceLength !== 1) {
                         $content = $tokens[($nextArrow + 2)]['content'];
-                        $error = "Expected 1 space between double arrow and \"$content\"; $spaceLength found";
+                        $error   = "Expected 1 space between double arrow and \"$content\"; $spaceLength found";
                         $phpcsFile->addError($error, $nextArrow);
                     }
                 }
@@ -300,7 +300,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $arrowStart   = ($indicesStart + $maxLength + 1);
         $valueStart   = ($arrowStart + 3);
         foreach ($indices as $index) {
-            if (isset($index['index']) === FALSE) {
+            if (isset($index['index']) === false) {
                 // Array value only.
                 if (($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
                     $phpcsFile->addError('The first value in a multi-value array must be on a new line', $stackPtr);
