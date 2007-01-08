@@ -1,6 +1,6 @@
 <?php
 
-class My_Class {
+abstract class My_Class {
 
     public function __construct() {}
     public function My_Class() {}
