@@ -77,11 +77,12 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
             $number = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
             if ($tokens[$number]['code'] === T_LNUMBER) {
-                $semi = $phpcsFile->findNext(T_WHITESPACE, $number + 1, null, true);
-                if ($tokens[$semi]['code'] === T_SEMICOLON) {
-                    $previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
-                    if ($previous !== false && (in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
-                        // This is a negative assignment.
+                $previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+                if ($previous !== false) {
+                    $isAssignment = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens);
+                    $isEquality   = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$equalityTokens);
+                    if ($isAssignment === true || $isEquality === true) {
+                        // This is a negative assignment or comparion.
                         // We need to check that the minus and the number are
                         // adjacent.
                         if (($number - $stackPtr) !== 1) {
@@ -95,17 +96,38 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
         }//end if
 
-        $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($stackPtr - 1), null, false, null, true);
+        $lastBracket = $stackPtr;
         while ($lastBracket !== false) {
-            if ($tokens[($lastBracket - 1)]['code'] !== T_STRING) {
-                $opener = $phpcsFile->findPrevious(T_WHITESPACE, ($lastBracket - 1), null, true, null, true);
-                if (in_array($tokens[$opener]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === false) {
-                    break;
+            $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($lastBracket - 1), null, false, null, true);
+
+            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($lastBracket - 1), null, true);
+            $prevCode  = $tokens[$prevToken]['code'];
+
+            if ($prevCode === T_ISSET) {
+                // The isset function has it's own token.
+                continue;
+            }
+
+            if ($prevCode === T_STRING) {
+                // This is a function call.
+                continue;
+            }
+
+            if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+                // This is a scope opener, like FOREACH or IF.
+                continue;
+            }
+
+            if ($prevCode === T_OPEN_PARENTHESIS) {
+                // These are two open parenthesis in a row. If the current
+                // one doesn't enclose the operator, go to the previous one.
+                if ($tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
+                    continue;
                 }
             }
 
-            $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($lastBracket - 1), null, false, null, true);
-        }
+            break;
+        }//end while
 
         if ($lastBracket === false) {
             // It is not in a bracketed statement at all.
@@ -115,6 +137,8 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 // part of an arithmetic operation.
                 $invalidTokens = array(
                                   T_COMMA,
+                                  T_OPEN_PARENTHESIS,
+                                  T_OPEN_SQUARE_BRACKET,
                                  );
 
                 if (in_array($tokens[$previousToken]['code'], $invalidTokens) === false) {
@@ -135,8 +159,11 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             // like this: ($array[$index+1]), which is invalid.
             $squareBracket = $phpcsFile->findPrevious(T_OPEN_SQUARE_BRACKET, ($stackPtr - 1), $lastBracket);
             if ($squareBracket !== false) {
-                $error = 'Arithmetic operation must be bracketed';
-                $phpcsFile->addError($error, $stackPtr);
+                $closeSquareBracket = $phpcsFile->findNext(T_CLOSE_SQUARE_BRACKET, ($stackPtr + 1));
+                if ($closeSquareBracket !== false && $closeSquareBracket < $stackPtr) {
+                    $error = 'Arithmetic operation must be bracketed';
+                    $phpcsFile->addError($error, $stackPtr);
+                }
             }
 
             return;

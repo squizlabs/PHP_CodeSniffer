@@ -65,5 +65,17 @@ if (!isset($this->words[$wordPos-1]) || $this->words[$wordPos-1] !== ' ') {
 }
 
 if ($pos === count($this->tokens) - 1) {
+    $file = '...'.substr($file, (($padding * -1) + 3));
+}
+
+if (substr($basename, -5) !== 'Sniff') {
+    $i = ($this->_tokens[$i]['parenthesis_closer'] + 1);
+}
+
+$pos = $this->_getShortCommentEndPos();
+if ($pos === -1) {
+    $stackPtr = ($tokens[$next][$to] - 1);
+    $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
+    $var = (($var1 + $var2) + $var3 + $var4)
 }
 ?>
