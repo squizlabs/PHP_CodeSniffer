@@ -34,7 +34,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 {
 
     /**
-     * Tokens to igore so that we can find a DOUBLE_COLON.
+     * Tokens to ignore so that we can find a DOUBLE_COLON.
      *
      * @var array
      */
