@@ -275,7 +275,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         if ($patternInfo['listen_pos'] > 0) {
             $stackPtr--;
 
-            for ($i = $patternInfo['listen_pos'] - 1; $i >= 0; $i--) {
+            for ($i = ($patternInfo['listen_pos'] - 1); $i >= 0; $i--) {
 
                 if ($pattern[$i]['type'] === 'token') {
 
@@ -285,8 +285,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $found = $tokens[$stackPtr]['content'].$found;
                         }
 
-                        if ($tokens[$stackPtr]['content'] !== $pattern[$i]['value']) {
-                            $hasError = true;
+                        // Only check the size of the whitespace if this is not
+                        // not the first token. We don't care about the size of
+                        // leading whitespace, just that there is some.
+                        if ($i !== 0) {
+                            if ($tokens[$stackPtr]['content'] !== $pattern[$i]['value']) {
+                                $hasError = true;
+                            }
                         }
 
                     } else {
@@ -302,20 +307,20 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         // If we skipped past some whitespace tokens, then add them
                         // to the found string.
                         if (($stackPtr - $next) > 1) {
-                            for ($j = $stackPtr - 1; $j > $next; $j--) {
+                            for ($j = ($stackPtr - 1); $j > $next; $j--) {
                                 $found = $tokens[$j]['content'].$found;
                             }
                         }
 
                         $found = $tokens[$next]['content'].$found;
 
-                        if (isset($pattern[$i - 1]) === true && $pattern[$i - 1]['type'] === 'skip') {
+                        if (isset($pattern[($i - 1)]) === true && $pattern[($i - 1)]['type'] === 'skip') {
                             $stackPtr = $next;
                         } else {
                             $stackPtr = ($next - 1);
                         }
 
-                    }
+                    }//end if
                 } else if ($pattern[$i]['type'] === 'skip') {
                     // Skip to next piece of relevant code.
                     if ($pattern[$i]['to'] === 'parenthesis_closer') {
@@ -357,18 +362,18 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                             continue;
                         }
-                        
+
                         // If the next token is a comment, the we need to skip the
                         // current token as we should allow a space before a
                         // comment for readability.
-                        if (in_array($tokens[$stackPtr + 1]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (in_array($tokens[($stackPtr + 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                             continue;
                         }
                     }
 
                     $tokenContent = '';
                     if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
-                        if (isset($pattern[$i + 1]) === false) {
+                        if (isset($pattern[($i + 1)]) === false) {
                             // This is the last token in the pattern, so just compare
                             // the next token of content.
                             $tokenContent = $tokens[$stackPtr]['content'];
@@ -384,7 +389,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $found .= $tokens[$stackPtr]['content'];
                     }
 
-                    if (isset($pattern[$i + 1]) === true && $pattern[$i + 1]['type'] === 'skip') {
+                    if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
                         // The next token is a skip token, so we just need to make
                         // sure the whitespace we found has *at least* the
                         // whitespace required.
@@ -429,7 +434,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                     $found .= $tokens[$next]['content'];
 
-                    if (isset($pattern[$i + 1]) === true && $pattern[$i + 1]['type'] === 'skip') {
+                    if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
                         $stackPtr = $next;
                     } else {
                         $stackPtr = ($next + 1);
@@ -592,7 +597,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 foreach ($tokenPatterns as $tokenPattern) {
                     $patterns[] = $tokenPattern;
                 }
-            }
+            }//end if
 
             // Add the skip pattern *after* we have processed
             // all the tokens from the end of the last skip pattern
@@ -642,6 +647,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         if (isset($skip['to']) === false) {
             $skip['to'] = 'unknown';
         }
+
         return $skip;
 
     }//end _createSkipPattern()
@@ -663,7 +669,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $tokens = token_get_all('<?php '.$str.'?>');
 
         // Remove the <?php tag from the front and the end php tag from the back.
-        $tokens = array_slice($tokens, 1, count($tokens) - 2);
+        $tokens = array_slice($tokens, 1, (count($tokens) - 2));
 
         foreach ($tokens as &$token) {
             $token = PHP_CodeSniffer::standardiseToken($token);
