@@ -428,7 +428,7 @@ class PHP_CodeSniffer_File
                 foreach ($this->_listeners[$tokenType] as $listener) {
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
-                        echo "\t\t\tProcessing $listenerClass... ";
+                        echo "\t\t\tProcessing ".get_class($listener).'... ';
                     }
 
                     $listener->process($this, $stackPtr);
