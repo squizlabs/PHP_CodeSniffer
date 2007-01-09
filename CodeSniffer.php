@@ -85,14 +85,14 @@ class PHP_CodeSniffer
 
 
     /**
-     * An array of PHP file extensions.
+     * An array of extensions for files we will check.
      *
      * @var array
      */
-    private static $_validPhpExtensions = array(
-                                           'php',
-                                           'inc',
-                                          );
+    private $_allowedFileExtensions = array(
+                                       'php',
+                                       'inc',
+                                      );
 
 
     /**
@@ -109,6 +109,20 @@ class PHP_CodeSniffer
         define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
 
     }//end __construct()
+
+
+    /**
+     * Sets an array of file extensions that we will allow checking of.
+     *
+     * @param array $extensions An array of file extensions.
+     *
+     * @return void
+     */
+    public function setAllowedFileExtensions(array $extensions)
+    {
+        $this->_allowedFileExtensions = $extensions;
+
+    }//end setAllowedFileExtensions()
 
 
     /**
@@ -296,11 +310,17 @@ class PHP_CodeSniffer
         foreach ($di as $file) {
             $filePath = $file->getPathname();
 
-            $fileParts = explode('.', $filePath);
+            // Check that the file's extension is one we are checking.
+            // Note that because we are doing a whole directory, we
+            // are strick about checking the extension and we don't
+            // let files with no extension through.
+            $fileParts = explode('.', $file);
             $extension = array_pop($fileParts);
+            if ($extension === $file) {
+                continue;
+            }
 
-            // We are only interested in php files.
-            if (in_array($extension, self::$_validPhpExtensions) === false) {
+            if (in_array($extension, $this->_allowedFileExtensions) === false) {
                 continue;
             }
 

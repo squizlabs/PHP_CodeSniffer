@@ -19,26 +19,26 @@
 error_reporting(E_ALL | E_STRICT);
 require_once 'PHP/CodeSniffer.php';
 
-
 /**
  * Prints out the usage information for this script.
  *
  * @return void
  */
-function print_usage()
+function PHP_CodeSniffer_printUsage()
 {
-    echo "Usage: phpcs [-nvi] [--report=<report>] [--standard=<standard>] <file> ...\n";
-    echo " <file>     : one or more files and/or directories to check\n";
-    echo " <standard> : the name of the coding standard to use\n";
-    echo " <report>   : print either the \"full\" or \"summary\" report\n";
-    echo " -n         : do not print warnings\n";
-    echo " -v[v][v]   : print verbose output\n";
-    echo " -i         : show a list of installed coding standards\n";
-    echo " -h --help  : print this help message\n";
-    echo " --version  : print version information\n";
+    echo "Usage: phpcs [-nvi] [--report=<report>] [--standard=<standard>] [--extensions=<extensions>] <file> ...\n";
+    echo " <file>       : one or more files and/or directories to check\n";
+    echo " <standard>   : the name of the coding standard to use\n";
+    echo " <report>     : print either the \"full\" or \"summary\" report\n";
+    echo " <extensions> : a comma separated list of file extensions to check (only valid if checking a directory)\n";
+    echo " -n           : do not print warnings\n";
+    echo " -v[v][v]     : print verbose output\n";
+    echo " -i           : show a list of installed coding standards\n";
+    echo " -h --help    : print this help message\n";
+    echo " --version    : print version information\n";
     exit();
 
-}//end print_usage()
+}//end PHP_CodeSniffer_printUsage()
 
 
 /**
@@ -46,7 +46,7 @@ function print_usage()
  *
  * @return void
  */
-function print_installed_standards()
+function PHP_CodeSniffer_printInstalledStandards()
 {
     $installedStandards = PHP_CodeSniffer::getInstalledStandards();
     $numStandards       = count($installedStandards);
@@ -64,7 +64,7 @@ function print_installed_standards()
         }
     }
 
-}//end print_installed_standards()
+}//end PHP_CodeSniffer_printInstalledStandards()
 
 
 // First, we need to ensure there is at least one coding standard
@@ -82,6 +82,7 @@ $standard     = 'PEAR';
 $verbosity    = 0;
 $report       = 'full';
 $showWarnings = true;
+$extensions   = array();
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
     $arg = $_SERVER['argv'][$i];
@@ -94,7 +95,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
         if ($arg{1} === '-') {
             if ($arg === '--help') {
-                print_usage();
+                PHP_CodeSniffer_printUsage();
             }
 
             if ($arg === '--version') {
@@ -111,9 +112,11 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 }
             } else if (substr($arg, 0, 11) === '--standard=') {
                 $standard = substr($arg, 11);
+            } else if (substr($arg, 0, 13) === '--extensions=') {
+                $extensions = explode(',', substr($arg, 13));
             } else {
                 echo "ERROR: option \"$arg\" not known.\n\n";
-                print_usage();
+                PHP_CodeSniffer_printUsage();
             }
         } else {
             $switches = str_split($arg);
@@ -124,10 +127,10 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
                 switch ($switch) {
                 case 'h':
-                    print_usage();
+                    PHP_CodeSniffer_printUsage();
                     break;
                 case 'i' :
-                    print_installed_standards();
+                    PHP_CodeSniffer_printInstalledStandards();
                     exit();
                     break;
                 case 'v' :
@@ -138,7 +141,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                     break;
                 default:
                     echo "ERROR: option \"$switch\" not known.\n\n";
-                    print_usage();
+                    PHP_CodeSniffer_printUsage();
                 }//end switch
             }//end foreach
         }//end else
@@ -150,20 +153,20 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
 if (empty($files) === true) {
     echo "ERROR: You must supply at least one file or directory to process.\n\n";
-    print_usage();
+    PHP_CodeSniffer_printUsage();
 }
 
 foreach ($files as $file) {
     if (file_exists($file) === false) {
         echo "ERROR: The file \"$file\" does not exist.\n\n";
-        print_usage();
+        PHP_CodeSniffer_printUsage();
     }
 }
 
 if (count($installedStandards) > 1) {
     if ($standard === null) {
         echo "ERROR: You must supply the name of the coding standard to use.\n\n";
-        print_usage();
+        PHP_CodeSniffer_printUsage();
     }
 } else {
     $standard = array_pop($installedStandards);
@@ -173,11 +176,18 @@ if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
     // They didn't select a valid coding standard, so help them
     // out by letting them know which standards are installed.
     echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
-    print_installed_standards();
+    PHP_CodeSniffer_printInstalledStandards();
     exit();
 }
 
 $phpcs = new PHP_CodeSniffer($verbosity);
+
+// Set file extensions if they were specified. Otherwise,
+// let PHP_CodeSniffer decide on the defaults.
+if (empty($extensions) === false) {
+    $phpcs->setAllowedFileExtensions($extensions);
+}
+
 $phpcs->process($files, $standard);
 if ($report === 'summary') {
     $phpcs->printErrorReportSummary($showWarnings);
