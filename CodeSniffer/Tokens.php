@@ -154,6 +154,20 @@ final class PHP_CodeSniffer_Tokens
                                       );
 
     /**
+     * Tokens that represent equality comparisons.
+     *
+     * @var array(int)
+     */
+    public static $equalityTokens = array(
+                                     T_IS_EQUAL,
+                                     T_IS_NOT_EQUAL,
+                                     T_IS_IDENTICAL,
+                                     T_IS_NOT_IDENTICAL,
+                                     T_IS_SMALLER_OR_EQUAL,
+                                     T_IS_GREATER_OR_EQUAL,
+                                    );
+
+    /**
      * Token types that open parethesis.
      *
      * @var array(int)
