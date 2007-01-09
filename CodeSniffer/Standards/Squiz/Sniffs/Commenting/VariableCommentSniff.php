@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
+require_once 'PHP/CodeSniffer/Standards/AbstractVariableSniff.php';
 require_once 'PHP/CodeSniffer/CommentParser/MemberCommentParser.php';
 
 /**
@@ -39,38 +39,11 @@ require_once 'PHP/CodeSniffer/CommentParser/MemberCommentParser.php';
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-class Squiz_Sniffs_Commenting_VariableCommentSniff implements PHP_CodeSniffer_Sniff
+class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
 
     /**
-     * The header comment parser for the current file.
-     *
-     * @var PHP_CodeSniffer_Comment_Parser_ClassCommentParser
-     */
-    protected $_fp = null;
-
-    /**
-    * The current PHP_CodeSniffer_File object we are processing.
-     *
-     * @var PHP_CodeSniffer_File
-     */
-    protected $_phpcsFile = null;
-
-
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
-    {
-        return array(T_VARIABLE);
-
-    }//end register()
-
-
-    /**
-     * Processes this test, when one of its tokens is encountered.
+     * Called to process class member vars.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
@@ -78,26 +51,10 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $this->_phpcsFile = $phpcsFile;
         $tokens = $this->_phpcsFile->getTokens();
-
-        if ($stackPtr >= 2) {
-            $whiteSpace    = $tokens[$stackPtr - 1]['code'];
-            $scope         = $tokens[$stackPtr - 2]['code'];
-            $scopeModifier = array(
-                              T_PRIVATE,
-                              T_PUBLIC,
-                              T_PROTECTED,
-                             );
-            // First non whitespace token before this should be a scope modifier.
-            if ($whiteSpace !== T_WHITESPACE || !in_array($scope, $scopeModifier)) {
-                return;
-            }
-        } else {
-            return ;
-        }
 
         // Extract the var comment docblock.
         $commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 3, null, true);
@@ -311,6 +268,38 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff implements PHP_CodeSniffer_Sn
 
     }//end _processSees()
 
+
+    /**
+     * Called to process a normal variable.
+     *
+     * Not required for this sniff.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param int                  $stackPtr  The position where the double quoted
+     *                                        string was found.
+     *
+     * @return void
+     */
+    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        return;
+    }
+
+    /**
+     * Called to process variables found in duoble quoted strings.
+     *
+     * Not required for this sniff.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param int                  $stackPtr  The position where the double quoted
+     *                                        string was found.
+     *
+     * @return void
+     */
+    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        return;
+    }
 
 }//end class
 ?>

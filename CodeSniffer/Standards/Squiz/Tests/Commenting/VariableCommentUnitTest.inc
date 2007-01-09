@@ -113,5 +113,36 @@ class VariableCommentUnitTest
      */
      public $missingSinceTag = '';
 
+
+    /**
+     * T_VARIABLE check, without scope.
+     *
+     * @var   string
+     * @since 4.0.0
+     */
+     $variableCheck = '';
+
+
+    /**
+     * T_VARIABLE check, var in string and in function.
+     *
+     * @param integer $var1 First variable.
+     * @param integer $var2 Second variable.
+     *
+     * @return integer
+     */
+    protected function checkVariable($var1, $var2)
+    {
+        $var4 = 'A normal variable';
+        $var5 = PHP_CodeSniffer_Tokens::$operators;
+        echo "Printing $var1 $var2 and unknown $var3 in a double quoted  string\n";
+        foreach (self::$_array as $index => $content) {
+            echo $content;
+        }
+
+        return $var1;
+
+    }//end checkVariable()
+
 }//end class
 ?>
