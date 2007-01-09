@@ -123,7 +123,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
                     if ($spaces !== 1) {
                         $type        = strtolower($tokens[$stackPtr]['content']);
                         $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
-                        $error = "Expected 1 space between $prevContent and $type keywords; $spaces found";
+                        $error       = "Expected 1 space between $prevContent and $type keywords; $spaces found";
                         $phpcsFile->addError($error, $stackPtr);
                     }
                 }
