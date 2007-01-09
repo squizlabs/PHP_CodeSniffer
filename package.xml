@@ -417,6 +417,9 @@
          <file name="BlockCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="ClassCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="ClosingDeclarationCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -426,6 +429,12 @@
          <file name="EmptyCatchCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="FileCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionCommentSniff.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="InlineCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
@@ -433,6 +442,9 @@
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
          <file name="PostStatementCommentSniff.php">
+          <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="VariableCommentSniff.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
@@ -616,6 +628,10 @@
          <file name="BlockCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="ClassCommentUnitTest.inc"/>
+         <file name="ClassCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="ClosingDeclarationCommentUnitTest.inc"/>
          <file name="ClosingDeclarationCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -628,6 +644,14 @@
          <file name="EmptyCatchCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
+         <file name="FileCommentUnitTest.inc"/>
+         <file name="FileCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="FunctionCommentUnitTest.inc"/>
+         <file name="FunctionCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
          <file name="InlineCommentUnitTest.inc"/>
          <file name="InlineCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
@@ -639,6 +663,10 @@
          <file name="PostStatementCommentUnitTest.inc"/>
          <file name="PostStatementCommentUnitTest.php">
           <replace type="package-info" from="@package_version@" to="version"/>
+         </file>
+         <file name="VariableCommentUnitTest.inc"/>
+         <file name="VariableCommentUnitTest.php">
+           <replace type="package-info" from="@package_version@" to="version"/>
          </file>
         </dir>
         <dir name="ControlStructures">
