@@ -44,9 +44,9 @@ class Squiz_Tests_Formatting_OperatorBracketUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                 3 => 1,
-                 6 => 1,
-                 9 => 1,
+                3  => 1,
+                6  => 1,
+                9  => 1,
                 12 => 1,
                 15 => 1,
                 18 => 2,

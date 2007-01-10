@@ -44,9 +44,9 @@ class PEAR_Tests_NamingConventions_ValidClassNameUnitTest extends AbstractSniffU
     public function getErrorList()
     {
         return array(
-                 5 => 1,
-                 7 => 2,
-                 9 => 1,
+                5  => 1,
+                7  => 2,
+                9  => 1,
                 19 => 1,
                 24 => 1,
                 26 => 2,

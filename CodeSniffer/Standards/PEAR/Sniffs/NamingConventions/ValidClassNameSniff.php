@@ -89,6 +89,7 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
             foreach ($nameBits as $bit) {
                 $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
             }
+
             $newName = rtrim($newName, '_');
             $error   = ucfirst($tokens[$stackPtr]['content'])." name is not valid; consider $newName instead.";
             $phpcsFile->addError($error, $stackPtr);

@@ -67,7 +67,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         // We don't want end of block comments. If the last comment is a closing
         // curly brace.
-        $previousContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $stackPtr - 1, null, true);
+        $previousContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
         if (($tokens[$previousContent]['line'] === $tokens[$stackPtr]['line']) && ($tokens[$previousContent]['code'] === T_CLOSE_CURLY_BRACKET)) {
             return;
         }
@@ -101,7 +101,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         // The below section determines if a comment block is correctly capitalised,
         // and ends in a full-stop. It will find the last comment in a block, and
         // work its way up.
-        $nextComment = $phpcsFile->findNext(array(T_COMMENT), $stackPtr + 1, null, false);
+        $nextComment = $phpcsFile->findNext(array(T_COMMENT), ($stackPtr + 1), null, false);
 
         if (($nextComment !== false) && (($tokens[$nextComment]['line']) === ($tokens[$stackPtr]['line'] + 1))) {
             return;
@@ -109,7 +109,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         $topComment = $stackPtr;
         $lastComment = $stackPtr;
-        while (($topComment = $phpcsFile->findPrevious(array(T_COMMENT), $lastComment - 1, null, false)) !== false) {
+        while (($topComment = $phpcsFile->findPrevious(array(T_COMMENT), ($lastComment - 1), null, false)) !== false) {
             if ($tokens[$topComment]['line'] !== ($tokens[$lastComment]['line'] - 1)) {
                 break;
             }
@@ -137,7 +137,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->addError($error, $topComment);
         }
 
-        $commentCloser   = $commentText[strlen($commentText) - 1];
+        $commentCloser   = $commentText[(strlen($commentText) - 1)];
         $acceptedClosers = array(
                             'full-stops'        => '.',
                             'exclamation marks' => '!',
@@ -159,11 +159,11 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         $start       = false;
 
         for ($i = ($stackPtr + 1); $i < $totalTokens; $i++) {
-            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line'] + 1) {
+            if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
                     return;
                 }
-            } else if ($tokens[$i]['line'] > $tokens[$stackPtr]['line'] + 1) {
+            } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
                 break;
             }
         }

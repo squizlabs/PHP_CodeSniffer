@@ -90,7 +90,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
         $params    = array();
         while (($nextParam = $phpcsFile->findNext(T_VARIABLE, $nextParam + 1, $closeBracket)) !== false) {
 
-            $nextToken = $phpcsFile->findNext(T_WHITESPACE, $nextParam + 1, $closeBracket + 1, true);
+            $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextParam + 1), ($closeBracket + 1), true);
             if ($nextToken === false) {
                 break;
             }
@@ -100,7 +100,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             if ($nextCode === T_EQUAL) {
                 // Check parameter default spacing.
                 if (($nextToken - $nextParam) > 1) {
-                    $gap   = strlen($tokens[$nextParam + 1]['content']);
+                    $gap   = strlen($tokens[($nextParam + 1)]['content']);
                     $arg   = $tokens[$nextParam]['content'];
                     $error = "Expected 0 spaces between argument \"$arg\" and equals sign; $gap found";
                     $phpcsFile->addError($error, $nextToken);
@@ -114,8 +114,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 }
             }
 
-            // Find and check the comma (if there is one)
-            $nextComma = $phpcsFile->findNext(T_COMMA, $nextParam + 1, $closeBracket);
+            // Find and check the comma (if there is one).
+            $nextComma = $phpcsFile->findNext(T_COMMA, ($nextParam + 1), $closeBracket);
             if ($nextComma !== false) {
                 // Comma found.
                 if ($tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
@@ -127,12 +127,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             }
 
             if ($params !== array()) {
-                if ($tokens[$nextParam - 1]['code'] !== T_WHITESPACE) {
+                if ($tokens[($nextParam - 1)]['code'] !== T_WHITESPACE) {
                     $arg   = $tokens[$nextParam]['content'];
                     $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
                     $phpcsFile->addError($error, $nextToken);
                 } else {
-                    $space = $tokens[$nextParam - 1];
+                    $space = $tokens[($nextParam - 1)];
                     if (strlen($space['content']) !== 1) {
                         $gap   = strlen($space['content']);
                         $arg   = $tokens[$nextParam]['content'];
@@ -159,7 +159,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $phpcsFile->addError($error, $nextToken);
                     }
                 }
-            }
+            }//end if
 
             $params[] = $nextParam;
 

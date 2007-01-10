@@ -44,11 +44,11 @@ class Squiz_Tests_Functions_FunctionDeclarationArgumentSpacingUnitTest extends A
     public function getErrorList()
     {
         return array(
-                 3 => 1,
-                 5 => 2,
-                 7 => 2,
-                 8 => 2,
-                 9 => 2,
+                3  => 1,
+                5  => 2,
+                7  => 2,
+                8  => 2,
+                9  => 2,
                 11 => 2,
                 13 => 7,
                 14 => 2,

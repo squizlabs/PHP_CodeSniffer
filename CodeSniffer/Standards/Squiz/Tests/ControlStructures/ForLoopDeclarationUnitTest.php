@@ -44,7 +44,7 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
     public function getErrorList()
     {
         return array(
-                 8 => 2,
+                8  => 2,
                 11 => 2,
                 14 => 2,
                 17 => 2,

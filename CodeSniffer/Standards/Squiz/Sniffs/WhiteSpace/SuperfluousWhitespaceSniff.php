@@ -140,7 +140,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
             $phpcsFile->addError('Whitespace found at end of line', $stackPtr);
-        }//end else
+        }//end if
 
     }//end process()
 

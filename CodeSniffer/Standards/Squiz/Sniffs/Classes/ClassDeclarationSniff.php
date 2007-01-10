@@ -66,7 +66,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             First, check that this is the only class or interface in the file.
         */
 
-        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), $stackPtr + 1);
+        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), ($stackPtr + 1));
 
         if ($nextClass !== false) {
             // We have another, so an error is thrown.
@@ -128,7 +128,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
                     }
                 }
             }
-        }
+        }//end if
 
         if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
             $prevContent = $tokens[($curlyBrace - 1)]['content'];
@@ -187,7 +187,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
 
         $name = strtolower($tokens[$keyword]['content']);
         // Spacing of the keyword.
-        $gap = $tokens[$stackPtr + 1]['content'];
+        $gap = $tokens[($stackPtr + 1)]['content'];
         if (strlen($gap) !== 1) {
             $found = strlen($gap);
             $error = "Expected 1 space between $name keyword and $name name; $found found";
@@ -195,7 +195,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         }
 
         // Check after the name.
-        $gap = $tokens[$className + 1]['content'];
+        $gap = $tokens[($className + 1)]['content'];
         if (strlen($gap) !== 1) {
             $found = strlen($gap);
             $error = "Expected 1 space after $name name; $found found";

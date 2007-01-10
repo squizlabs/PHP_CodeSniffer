@@ -30,6 +30,7 @@ require_once 'PHP/CodeSniffer/CommentParser/AbstractParser.php';
  */
 class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_CommentParser_AbstractParser
 {
+
     /**
      * The package element of this class.
      *

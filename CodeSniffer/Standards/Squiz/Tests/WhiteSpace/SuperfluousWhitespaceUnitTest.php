@@ -44,11 +44,11 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
     public function getErrorList()
     {
         return array(
-                 2 => 1,
-                 4 => 1,
-                 5 => 1,
-                 6 => 1,
-                 7 => 1,
+                2  => 1,
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                7  => 1,
                 10 => 1,
                );
 

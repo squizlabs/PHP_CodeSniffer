@@ -64,22 +64,22 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
         $expected = '';
         $error    = false;
 
-        if ($tokens[$stackPtr - 1]['code'] === T_WHITESPACE) {
-            $expected .= '...'.substr($tokens[$stackPtr - 2]['content'], -5).$tokens[$stackPtr]['content'];
-            $found    .= '...'.substr($tokens[$stackPtr - 2]['content'], -5).$tokens[$stackPtr - 1]['content'].$tokens[$stackPtr]['content'];
+        if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+            $expected .= '...'.substr($tokens[($stackPtr - 2)]['content'], -5).$tokens[$stackPtr]['content'];
+            $found    .= '...'.substr($tokens[($stackPtr - 2)]['content'], -5).$tokens[($stackPtr - 1)]['content'].$tokens[$stackPtr]['content'];
             $error     = true;
         } else {
-            $found    .= '...'.substr($tokens[$stackPtr - 1]['content'], -5).$tokens[$stackPtr]['content'];
-            $expected .= '...'.substr($tokens[$stackPtr - 1]['content'], -5).$tokens[$stackPtr]['content'];
+            $found    .= '...'.substr($tokens[($stackPtr - 1)]['content'], -5).$tokens[$stackPtr]['content'];
+            $expected .= '...'.substr($tokens[($stackPtr - 1)]['content'], -5).$tokens[$stackPtr]['content'];
         }
 
-        if ($tokens[$stackPtr + 1]['code'] === T_WHITESPACE) {
-            $expected .= substr($tokens[$stackPtr + 2]['content'], 0, 5).'...';
-            $found    .= $tokens[$stackPtr + 1]['content'].substr($tokens[$stackPtr + 2]['content'], 0, 5).'...';
+        if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+            $expected .= substr($tokens[($stackPtr + 2)]['content'], 0, 5).'...';
+            $found    .= $tokens[($stackPtr + 1)]['content'].substr($tokens[($stackPtr + 2)]['content'], 0, 5).'...';
             $error     = true;
         } else {
-            $found    .= $tokens[$stackPtr + 1]['content'];
-            $expected .= $tokens[$stackPtr + 1]['content'];
+            $found    .= $tokens[($stackPtr + 1)]['content'];
+            $expected .= $tokens[($stackPtr + 1)]['content'];
         }
 
         if ($error === true) {

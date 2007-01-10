@@ -88,6 +88,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
                  $error = "Method name \"$className::$methodName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
                  $phpcsFile->addError($error, $stackPtr);
             }
+
             return;
         }
 
@@ -136,6 +137,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             } else {
                 $error = "Method name \"$className::$methodName\" is not in camel caps format";
             }
+
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
@@ -220,19 +222,21 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
                     foreach ($nameBits as $bit) {
                         $newPackagePart .= strtoupper($bit{0}).substr($bit, 1).'_';
                     }
+
                     $validName = false;
                     break;
                 }
             }
         }
 
-        if (!$validName) {
+        if ($validName === false) {
             $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
             if ($newPackagePart === '') {
                 $newName = $newCamelCapsPart;
             } else {
                 $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
             }
+
             $error = "Function name \"$functionName\" is invalid; consider \"$newName\" instead";
             $phpcsFile->addError($error, $stackPtr);
         }

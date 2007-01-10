@@ -65,7 +65,7 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
         }
 
         $commentLine = $tokens[$stackPtr]['line'];
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $stackPtr - 1, null, true);
+        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
 
         if ($tokens[$lastContent]['line'] !== $commentLine) {
             return;

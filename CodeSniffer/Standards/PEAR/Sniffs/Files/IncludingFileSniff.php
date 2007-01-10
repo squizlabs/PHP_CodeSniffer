@@ -79,7 +79,7 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
+        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS) {
             $error  = '"'.$tokens[$stackPtr]['content'].'"';
             $error .= ' is a statement, not a function. ';
@@ -102,7 +102,7 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 
         // Check to see if they are assigning the return value of this including call.
         // If they are then they are probably checking it, so its conditional.
-        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
             // The have assigned the return value to it, so its conditional.
             $inCondition = true;
@@ -131,7 +131,7 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                 $error .= 'Use "require" instead.';
                 $phpcsFile->addError($error, $stackPtr);
             }
-        }
+        }//end if
 
     }//end process()
 

@@ -98,10 +98,11 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
     private static function _argHasDefault(PHP_CodeSniffer_File $phpcsFile, $argPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $argPtr + 1, null, true);
+        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($argPtr + 1), null, true);
         if ($tokens[$nextToken]['code'] !== T_EQUAL) {
             return false;
         }
+
         return true;
 
     }//end _argHasDefault()

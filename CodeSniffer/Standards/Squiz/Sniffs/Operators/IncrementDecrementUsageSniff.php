@@ -45,7 +45,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         return array(
                 T_EQUAL,
                 T_PLUS_EQUAL,
-                T_MINUS_EQUAL
+                T_MINUS_EQUAL,
                );
 
     }//end register()
@@ -64,7 +64,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVar = $phpcsFile->findPrevious(array(T_VARIABLE), $stackPtr - 1, null, false);
+        $assignedVar = $phpcsFile->findPrevious(array(T_VARIABLE), ($stackPtr - 1), null, false);
         // Not an assignment, return.
         if ($assignedVar === false) {
             return;
@@ -73,17 +73,17 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_PARENTHESIS, T_CLOSE_SQUARE_BRACKET, T_CLOSE_CURLY_BRACKET), $stackPtr, null, false);
 
         // If there is anything other than variables, numbers, spaces or operators we need to return.
-        $noiseTokens = $phpcsFile->findNext(array(T_LNUMBER, T_VARIABLE, T_WHITESPACE, T_PLUS, T_MINUS, T_OPEN_PARENTHESIS), $stackPtr + 1, $statementEnd, true);
+        $noiseTokens = $phpcsFile->findNext(array(T_LNUMBER, T_VARIABLE, T_WHITESPACE, T_PLUS, T_MINUS, T_OPEN_PARENTHESIS), ($stackPtr + 1), $statementEnd, true);
 
         if ($noiseTokens !== false) {
             return;
         }
 
-        if ($tokens[$stackPtr]['code'] == T_EQUAL) {
+        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
             $nextVar          = ($stackPtr + 1);
             $previousVariable = ($stackPtr + 1);
             $variableCount    = 0;
-            while (($nextVar = $phpcsFile->findNext(array(T_VARIABLE), $nextVar + 1, $statementEnd, false)) !== false) {
+            while (($nextVar = $phpcsFile->findNext(array(T_VARIABLE), ($nextVar + 1), $statementEnd, false)) !== false) {
                 $previousVariable = $nextVar;
                 $variableCount++;
             }
@@ -103,7 +103,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $nextNumber     = ($stackPtr + 1);
         $previousNumber = ($stackPtr + 1);
         $numberCount    = 0;
-        while (($nextNumber = $phpcsFile->findNext(array(T_LNUMBER), $nextNumber + 1, $statementEnd, false)) !== false) {
+        while (($nextNumber = $phpcsFile->findNext(array(T_LNUMBER), ($nextNumber + 1), $statementEnd, false)) !== false) {
             $previousNumber = $nextNumber;
             $numberCount++;
         }
@@ -114,15 +114,15 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
         $nextNumber = $previousNumber;
         if ($tokens[$nextNumber]['content'] === '1') {
-            if ($tokens[$stackPtr]['code'] == T_EQUAL) {
-                $operator = $tokens[$phpcsFile->findNext(array(T_PLUS, T_MINUS), $stackPtr + 1, $statementEnd, false)]['content'];
+            if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+                $operator = $tokens[$phpcsFile->findNext(array(T_PLUS, T_MINUS), ($stackPtr + 1), $statementEnd, false)]['content'];
             } else {
                 $operator = substr($tokens[$stackPtr]['content'], 0, 1);
             }
 
             $expected = $tokens[$assignedVar]['content'].$operator.$operator;
             $found    = $phpcsFile->getTokensAsString($assignedVar, ($statementEnd - $assignedVar + 1));
-            
+
             if ($operator === '+') {
                 $error = 'Increment';
             } else {

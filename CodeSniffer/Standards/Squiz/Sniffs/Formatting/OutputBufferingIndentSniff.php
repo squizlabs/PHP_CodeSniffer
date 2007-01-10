@@ -64,7 +64,7 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
         }
 
         $bufferEnd = $stackPtr;
-        while (($bufferEnd = $phpcsFile->findNext(array(T_STRING), $bufferEnd + 1, null, false)) !== false) {
+        while (($bufferEnd = $phpcsFile->findNext(array(T_STRING), ($bufferEnd + 1), null, false)) !== false) {
             $stringContent = $tokens[$bufferEnd]['content'];
             if (($stringContent === 'ob_end_clean') || ($stringContent === 'ob_end_flush')) {
                 break;
@@ -76,15 +76,15 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
             return;
         }
 
-        $requiredIndent = $tokens[$stackPtr]['column'] + 3;
+        $requiredIndent = ($tokens[$stackPtr]['column'] + 3);
 
         for ($stackPtr; $stackPtr < $bufferEnd; $stackPtr++) {
             if (strpos($tokens[$stackPtr]['content'], "\n") === false) {
                 continue;
             }
 
-            $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), $stackPtr + 1, $bufferEnd, true);
-            if ($tokens[$nextContent]['line'] !== $tokens[$stackPtr]['line'] + 1) {
+            $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), $bufferEnd, true);
+            if ($tokens[$nextContent]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
                 // Empty line.
                 continue;
             }

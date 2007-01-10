@@ -61,19 +61,19 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (!isset($tokens[$stackPtr]['scope_opener'])) {
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             return;
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
-        // The end of the function occurs at the end of the argument list. Its 
+        // The end of the function occurs at the end of the argument list. Its
         // like this because some people like to break long function declarations
         // over multiple lines.
         $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
-        $lineDifference = $braceLine - $functionLine;
+        $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference > 0) {
             $error = 'Opening function brace should be on the same line as the declaration.';
@@ -86,9 +86,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         $closerColumn = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['column'];
         $braceColumn  = $tokens[$openingBrace]['column'];
 
-        $columnDifference = $braceColumn - $closerColumn;
+        $columnDifference = ($braceColumn - $closerColumn);
 
-        if ($columnDifference != 2) {
+        if ($columnDifference !== 2) {
             $error = 'Expected 1 space between the closing parenthesis and the opening brace, but found '.($columnDifference - 1).'.';
             $phpcsFile->addError($error, $openingBrace);
             return;

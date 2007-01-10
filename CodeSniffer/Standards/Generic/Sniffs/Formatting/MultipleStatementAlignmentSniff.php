@@ -70,7 +70,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $tokens = $phpcsFile->getTokens();
 
         $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE), ($stackPtr - 1), null, false);
-        if (($assignedVariable === false) || (!$this->_isAssignment($phpcsFile, $assignedVariable))) {
+        if (($assignedVariable === false) || $this->_isAssignment($phpcsFile, $assignedVariable) === false) {
             return;
         }
 
@@ -95,10 +95,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxAssignmentLength = 0;
 
         while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $prevAssignment - 1, null, false)) !== false) {
-            if ($tokens[$prevAssignment]['line'] !== $lastLine - 1) {
+            if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
                 break;
             }
-            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE), $prevAssignment - 1, null, false);
+
+            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE), ($prevAssignment - 1), null, false);
             if ($checkingVariable === false) {
                 break;
             }
@@ -107,13 +108,13 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            if (!$this->_isAssignment($phpcsFile, $checkingVariable)) {
+            if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
                 break;
             }
 
             $assignments[] = $prevAssignment;
             $lastLine--;
-        }
+        }//end while
 
         foreach ($assignments as $assignment) {
             $variable = $phpcsFile->findPrevious(array(T_VARIABLE), $assignment, null, false);
@@ -121,13 +122,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            $variableContent = $phpcsFile->getTokensAsString($variable, $assignment - $variable);
+            $variableContent = $phpcsFile->getTokensAsString($variable, ($assignment - $variable));
             $variableContent = rtrim($variableContent);
             $contentLength   = strlen($variableContent);
 
             if ($maxVariableLength < ($contentLength + $tokens[$variable]['column'])) {
                 $maxVariableLength = ($contentLength + $tokens[$variable]['column']);
             }
+
             if ($maxAssignmentLength < strlen($tokens[$assignment]['content'])) {
                 $maxAssignmentLength = strlen($tokens[$assignment]['content']);
             }
@@ -140,15 +142,15 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $actualColumn = ($column + $maxAssignmentLength - strlen($tokens[$assignment]['content']));
             if ($tokens[$assignment]['column'] !== $actualColumn) {
                 $variable        = $phpcsFile->findPrevious(array(T_VARIABLE), $assignment, null, false);
-                $variableContent = $phpcsFile->getTokensAsString($variable, $assignment - $variable);
+                $variableContent = $phpcsFile->getTokensAsString($variable, ($assignment - $variable));
                 $variableContent = rtrim($variableContent);
                 $contentLength   = strlen($variableContent);
 
                 $leadingSpace  = $tokens[$variable]['column'];
                 $expected      = ($actualColumn - ($contentLength + $leadingSpace));
-                $expected     .= ($expected == 1) ? ' space' : ' spaces';
+                $expected     .= ($expected === 1) ? ' space' : ' spaces';
                 $found         = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
-                $found        .= ($found == 1) ? ' space' : ' spaces';
+                $found        .= ($found === 1) ? ' space' : ' spaces';
 
                 if (count($assignments) === 1) {
                     $error = 'Equals sign not aligned correctly. Expected '.$expected.', but found '.$found.'.';
@@ -161,7 +163,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 } else {
                     $phpcsFile->addWarning($error, $assignment);
                 }
-            }
+            }//end if
         }//end foreach
 
     }//end process()
@@ -183,12 +185,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         }
 
         // If there is something other than whitespace on this line before this variable, its not what we want.
-        $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+        $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prevContent]['line'] === $tokens[$stackPtr]['line']) {
             return false;
         }
 
-        $nextContent = $phpcsFile->findNext(array(T_VARIABLE, T_OPEN_SQUARE_BRACKET, T_CLOSE_SQUARE_BRACKET, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER), $stackPtr + 1, null, true);
+        $nextContent = $phpcsFile->findNext(array(T_VARIABLE, T_OPEN_SQUARE_BRACKET, T_CLOSE_SQUARE_BRACKET, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER), ($stackPtr + 1), null, true);
         $nextContent++;
 
         // If this isn't an assignment, then its not what we want.

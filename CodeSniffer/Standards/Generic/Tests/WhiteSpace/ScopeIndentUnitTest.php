@@ -44,14 +44,14 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                 7  => 1,
-                 10 => 1,
-                 17 => 1,
-                 20 => 1,
-                 24 => 1,
-                 27 => 1,
-                 28 => 1,
-                 58 => 1,
+                7   => 1,
+                10  => 1,
+                17  => 1,
+                20  => 1,
+                24  => 1,
+                27  => 1,
+                28  => 1,
+                58  => 1,
                 123 => 1,
                 126 => 1,
                 224 => 1,

@@ -44,8 +44,8 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                 3 => 1,
-                 5 => 1,
+                3  => 1,
+                5  => 1,
                 10 => 1,
                 12 => 1,
                 15 => 1,

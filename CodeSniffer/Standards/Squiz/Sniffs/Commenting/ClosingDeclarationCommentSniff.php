@@ -94,12 +94,12 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
         }
 
         $error = 'Expected '.$comment;
-        if ($tokens[$closingBracket + 1]['code'] !== T_COMMENT) {
+        if ($tokens[($closingBracket + 1)]['code'] !== T_COMMENT) {
             $phpcsFile->addError($error, $closingBracket);
             return;
         }
 
-        if (rtrim($tokens[$closingBracket + 1]['content']) !== $comment) {
+        if (rtrim($tokens[($closingBracket + 1)]['content']) !== $comment) {
             $phpcsFile->addError($error, $closingBracket);
             return;
         }

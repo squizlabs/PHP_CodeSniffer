@@ -62,8 +62,8 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
         $tokens    = $phpcsFile->getTokens();
         $constName = $tokens[$stackPtr]['content'];
 
-        // If this token is in a heredoc, ignore it
-        if ($phpcsFile->hasCondition($stackPtr, T_START_HEREDOC)) {
+        // If this token is in a heredoc, ignore it.
+        if ($phpcsFile->hasCondition($stackPtr, T_START_HEREDOC) === true) {
             return;
         }
 
@@ -93,6 +93,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                     $error = 'Class constants must be uppercase. Expected '.strtoupper($constName)." but found $constName.";
                     $phpcsFile->addError($error, $stackPtr);
                 }
+
                 return;
             }
 
@@ -136,7 +137,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 $error = 'Constants must be uppercase. Expected '.strtoupper($constName)." but found $constName.";
                 $phpcsFile->addError($error, $stackPtr);
             }
-        }
+        }//end if
 
     }//end process()
 

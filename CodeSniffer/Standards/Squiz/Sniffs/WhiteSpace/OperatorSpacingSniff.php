@@ -77,29 +77,29 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // bitwise operator.
             if ($phpcsFile->isReference($stackPtr) === false) {
                 // Check there is one space before the & operator.
-                if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
+                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                     $error = 'Expected 1 space before "&" operator; 0 found';
                     $phpcsFile->addError($error, $stackPtr);
                 } else {
-                    if (strlen($tokens[$stackPtr - 1]['content']) !== 1) {
-                        $found = strlen($tokens[$stackPtr - 1]['content']);
+                    if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+                        $found = strlen($tokens[($stackPtr - 1)]['content']);
                         $error = "Expected 1 space before \"&\" operator; $found found";
                         $phpcsFile->addError($error, $stackPtr);
                     }
                 }
 
                 // Check there is one space after the & operator.
-                if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
+                if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'Expected 1 space after "&" operator; 0 found';
                     $phpcsFile->addError($error, $stackPtr);
                 } else {
-                    if (strlen($tokens[$stackPtr + 1]['content']) !== 1) {
-                        $found = strlen($tokens[$stackPtr + 1]['content']);
+                    if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+                        $found = strlen($tokens[($stackPtr + 1)]['content']);
                         $error = "Expected 1 space after \"&\" operator; $found found";
                         $phpcsFile->addError($error, $stackPtr);
                     }
                 }
-            }
+            }//end if
         } else {
             if ($tokens[$stackPtr]['code'] === T_MINUS) {
                 // Check minus spacing, but make sure we aren't just assigning
@@ -110,12 +110,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     return;
                 }
 
-                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) == true) {
+                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
                     // Just trying to operate on a negative value; eg. ($var * -1).
                     return;
                 }
 
-                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$equalityTokens) == true) {
+                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$equalityTokens) === true) {
                     // Just trying to compare a negative value; eg. ($var === -1).
                     return;
                 }
@@ -169,7 +169,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
         }//end if
 
-    }//end processSupplementary()
+    }//end process()
 
 
 }//end class

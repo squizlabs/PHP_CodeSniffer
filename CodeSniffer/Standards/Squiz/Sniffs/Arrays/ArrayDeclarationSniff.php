@@ -71,7 +71,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
             // Single line array.
             // Find the next non-whitespace character.
-            $content = $phpcsFile->findNext(array(T_WHITESPACE), $arrayStart + 1, $arrayEnd + 1, true);
+            $content = $phpcsFile->findNext(array(T_WHITESPACE), ($arrayStart + 1), ($arrayEnd + 1), true);
             if ($content === $arrayEnd) {
                 // Empty array, but if the brackets aren't together, there's a problem.
                 if (($arrayEnd - $arrayStart) !== 1) {
@@ -85,7 +85,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $nextComma  = $arrayStart;
             $valueCount = 0;
             $commas     = array();
-            while (($nextComma = $phpcsFile->findNext(array(T_COMMA), $nextComma + 1, $arrayEnd)) !== false) {
+            while (($nextComma = $phpcsFile->findNext(array(T_COMMA), ($nextComma + 1), $arrayEnd)) !== false) {
                 $valueCount++;
                 $commas[] = $nextComma;
             }
@@ -121,7 +121,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }//end while
 
             if ($valueCount > 0) {
-                $conditionCheck = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_SEMICOLON), $stackPtr - 1, null, false);
+                $conditionCheck = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_SEMICOLON), ($stackPtr - 1), null, false);
 
                 if (($conditionCheck === false) || ($tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line'])) {
                     $error = 'Array with multiple values cannot be declared on a single line';
@@ -151,14 +151,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $error       = "Expected 1 space between \"$content\" and comma; $spaceLength found";
                         $phpcsFile->addError($error, $comma);
                     }
-                }
-            }
+                }//end foreach
+            }//end if
 
             return;
         }//end if
 
         // Check the closing bracket is on a new line..
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $arrayEnd - 1, $arrayStart, true);
+        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($arrayEnd - 1), $arrayStart, true);
         if ($tokens[$lastContent]['line'] !== ($tokens[$arrayEnd]['line'] - 1)) {
             $error = 'Closing parenthesis of array declaration must be on a new line';
             $phpcsFile->addError($error, $arrayEnd);
@@ -181,7 +181,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $maxLength  = 0;
 
         // Find all the double arrows that reside in this scope.
-        while (($nextToken = $phpcsFile->findNext(array(T_DOUBLE_ARROW, T_COMMA, T_ARRAY), $nextToken + 1, $arrayEnd)) !== false) {
+        while (($nextToken = $phpcsFile->findNext(array(T_DOUBLE_ARROW, T_COMMA, T_ARRAY), ($nextToken + 1), $arrayEnd)) !== false) {
             $currentEntry = array();
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
@@ -254,9 +254,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if ($keyUsed === false) {
             $count     = count($indices);
-            $lastIndex = $indices[$count - 1]['value'];
+            $lastIndex = $indices[($count - 1)]['value'];
 
-            $trailingContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMA), $lastIndex + 1, $arrayEnd, true);
+            $trailingContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMA), ($lastIndex + 1), $arrayEnd, true);
             if ($trailingContent !== false) {
                 $indices[] = array('value' => $trailingContent);
                 $error     = 'Comma required after last value in array declaration';
@@ -305,6 +305,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 if (($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
                     $phpcsFile->addError('The first value in a multi-value array must be on a new line', $stackPtr);
                 }
+
                 continue;
             }
 

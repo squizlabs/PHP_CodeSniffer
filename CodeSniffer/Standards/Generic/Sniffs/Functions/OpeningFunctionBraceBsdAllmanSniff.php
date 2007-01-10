@@ -60,19 +60,19 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (!isset($tokens[$stackPtr]['scope_opener'])) {
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             return;
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
-        // The end of the function occurs at the end of the argument list. Its 
+        // The end of the function occurs at the end of the argument list. Its
         // like this because some people like to break long function declarations
         // over multiple lines.
         $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
-        $lineDifference = $braceLine - $functionLine;
+        $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference === 0) {
             $error = 'Opening function brace should be on a new line.';

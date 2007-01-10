@@ -59,7 +59,7 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return array(
-                 9 => 1,
+                9  => 1,
                 15 => 1,
                 21 => 1,
                 24 => 1,

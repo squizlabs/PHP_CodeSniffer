@@ -69,15 +69,15 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         // the minus sign being used to assign a negative number to a variable.
         if ($tokens[$stackPtr]['code'] === T_MINUS) {
             // Check to see if we are trying to return -n.
-            $prev = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMENT), $stackPtr - 1, null, true);
+            $prev = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMENT), ($stackPtr - 1), null, true);
 
             if ($tokens[$prev]['code'] === T_RETURN) {
                 return;
             }
 
-            $number = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
+            $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             if ($tokens[$number]['code'] === T_LNUMBER) {
-                $previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+                $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($previous !== false) {
                     $isAssignment = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens);
                     $isEquality   = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$equalityTokens);
@@ -167,7 +167,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
 
             return;
-        }
+        }//end if
 
         $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {

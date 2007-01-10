@@ -58,7 +58,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         $tokens = $phpcsFile->getTokens();
 
         // Find the next non-empty token.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
             // Not a function call.
@@ -71,7 +71,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         // Find the previous non-empty token.
-        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$previous]['code'] === T_FUNCTION) {
             // It's a function definition, not a function call.
             return;
@@ -83,7 +83,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        if ($tokens[$next + 1]['code'] === T_WHITESPACE) {
+        if ($tokens[($next + 1)]['code'] === T_WHITESPACE) {
             // Checking this: $value = my_function([*]...).
             $error = 'Space after opening parenthesis of function call prohibited';
             $phpcsFile->addError($error, $stackPtr);
@@ -91,10 +91,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         $closer = $tokens[$next]['parenthesis_closer'];
 
-        if ($tokens[$closer - 1]['code'] === T_WHITESPACE) {
+        if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
             // Checking this: $value = my_function(...[*]).
-
-            $between = $phpcsFile->findNext(T_WHITESPACE, $next + 1, null, true);
+            $between = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
 
             // Only throw an error if there is some content between the parenthesis.
             // IE. Checking for this: $value = my_function().
@@ -107,10 +106,10 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }
         }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, $closer + 1, null, true);
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), null, true);
 
         if ($tokens[$next]['code'] === T_SEMICOLON) {
-            if (in_array($tokens[$closer + 1]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (in_array($tokens[($closer + 1)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 $error = 'Space after closing parenthesis of function call prohibited';
                 $phpcsFile->addError($error, $closer);
             }

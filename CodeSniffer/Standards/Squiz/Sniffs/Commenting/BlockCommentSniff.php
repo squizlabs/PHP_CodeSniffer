@@ -68,7 +68,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         $nextComment  = $stackPtr;
         $lastLine     = $tokens[$stackPtr]['line'];
         // Construct the comment into an array.
-        while (($nextComment = $phpcsFile->findNext(array(T_COMMENT), $nextComment + 1, null, false)) !== false) {
+        while (($nextComment = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1), null, false)) !== false) {
             if (($tokens[$nextComment]['line'] - 1)!== $lastLine) {
                 // Not part of the block.
                 break;
@@ -101,7 +101,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $starColumn = $tokens[$stackPtr]['column'] + 3;
+        $starColumn = ($tokens[$stackPtr]['column'] + 3);
 
         // Make sure first line isn't blank.
         if (trim($tokens[$commentLines[1]]['content']) === '') {
@@ -122,13 +122,13 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Check that each line of the comment is indented past the star.
         foreach ($commentLines as $line) {
-            $leadingSpace = (strlen($tokens[$line]['content'])) - strlen(ltrim($tokens[$line]['content']));
+            $leadingSpace = (strlen($tokens[$line]['content']) - strlen(ltrim($tokens[$line]['content'])));
             // First and last lines (comment opener and closer) are handled seperately.
-            if ($line === $commentLines[count($commentLines) - 1] || $line === $commentLines[0]) {
+            if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
                 continue;
             }
 
-            // First comment line was handled above
+            // First comment line was handled above.
             if ($line === $commentLines[1]) {
                 continue;
             }
@@ -144,8 +144,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                 $error     = "Comment line indented incorrectly; expected at least $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $line);
             }
-
-        }
+        }//end foreach
 
         // Finally, test the last line is correct.
         $lastIndex = (count($commentLines) - 1);
@@ -166,7 +165,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check that the lines before and after this comment are blank.
-        $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+        $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if (($tokens[$stackPtr]['line'] - $tokens[$contentBefore]['line']) < 2) {
             $error = 'Empty line required before block comment';
             $phpcsFile->addError($error, $stackPtr);

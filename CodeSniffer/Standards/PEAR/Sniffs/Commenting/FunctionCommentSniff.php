@@ -118,7 +118,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                  T_OPEN_TAG,
                 );
 
-        $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1);
+        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
         if ($commentEnd === false) {
             return;
@@ -145,15 +145,15 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         // Find the first doc comment.
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
-        $comment      = $phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         try {
             $this->_fp = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment);
             $this->_fp->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-            $line = $e->getLineWithinComment() + $commentStart;
+            $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line);
             return;
         }
@@ -170,9 +170,10 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
             $error = "Extra $line found before function comment short description";
-            $phpcsFile->addError($error, $commentStart + 1);
+            $phpcsFile->addError($error, ($commentStart + 1));
         }
-        $newlineCount = substr_count($short, "\n") + 1;
+
+        $newlineCount = (substr_count($short, "\n") + 1);
 
         // Exactly one blank line between short and long description.
         $between        = $comment->getWhiteSpaceBetween();
@@ -180,8 +181,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $newlineBetween = substr_count($between, "\n");
         if ($newlineBetween !== 2 && $long !== '') {
             $error = 'There must be exactly one blank line between descriptions in function comment';
-            $phpcsFile->addError($error, $commentStart + $newlineCount + 1);
+            $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
         }
+
         $newlineCount += $newlineBetween;
 
         // Exactly one blank line before params.
@@ -192,14 +194,15 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             if ($long !== '') {
                 $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
             }
-            $phpcsFile->addError($error, $commentStart + $newlineCount);
+
+            $phpcsFile->addError($error, ($commentStart + $newlineCount));
         }
 
         // Check for unknown/deprecated tags.
         $unknownTags = $this->_fp->getUnknown();
         foreach ($unknownTags as $errorTag) {
             $error = ucfirst($errorTag['tag']).' tag is not allowed in function comment';
-            $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
         }
 
     }//end process()
@@ -248,10 +251,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $className = $this->_phpcsFile->getDeclarationName($this->_classToken);
             $className = strtolower(ltrim($className, '_'));
         }
+
         $methodName      = strtolower(ltrim($this->_methodName, '_'));
         $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
 
-        if (!$isSpecialMethod && $methodName !== $className) {
+        if ($isSpecialMethod === false && $methodName !== $className) {
             // Report missing return tag.
             if ($this->_fp->getReturn() === null) {
                 $error = 'Missing return tag in function comment';
@@ -283,16 +287,16 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if (empty($params) === false) {
 
-            if (substr_count($params[count($params) - 1]->getWhitespaceAfter(), "\n") !== 2) {
+            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), "\n") !== 2) {
                 $error    = 'Last parameter comment requires a blank newline after it';
-                $errorPos = $params[count($params) - 1]->getLine() + $commentStart;
+                $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
                 $this->_phpcsFile->addError($error, $errorPos);
             }
 
             // Parameters must appear immediately after the comment.
             if ($params[0]->getOrder() !== 2) {
                 $error    = 'Parameters must appear immediately after the comment';
-                $errorPos = $params[0]->getLine() + $commentStart;
+                $errorPos = ($params[0]->getLine() + $commentStart);
                 $this->_phpcsFile->addError($error, $errorPos);
             }
 
@@ -305,7 +309,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             foreach ($params as $param) {
 
                 $paramComment = trim($param->getComment());
-                $errorPos     = $param->getLine() + $commentStart;
+                $errorPos     = ($param->getLine() + $commentStart);
 
                 // Make sure that there is only one space before the var type.
                 if ($param->getWhitespaceBeforeType() !== ' ') {
@@ -343,13 +347,14 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
                 // Make sure the names of the parameter comment matches the
                 // actual parameter.
-                if (isset($realParams[$pos - 1]) === true) {
-                    $realName      = $realParams[$pos - 1]['name'];
+                if (isset($realParams[($pos - 1)]) === true) {
+                    $realName      = $realParams[($pos - 1)]['name'];
                     $foundParams[] = $realName;
-                    // Append ampersand to name if passing by reference
-                    if ($realParams[$pos - 1]['pass_by_reference'] === true) {
+                    // Append ampersand to name if passing by reference.
+                    if ($realParams[($pos - 1)]['pass_by_reference'] === true) {
                         $realName = '&'.$realName;
                     }
+
                     if ($realName !== $param->getVarName()) {
                         $error  = 'Doc comment var "'.$paramName;
                         $error .= '" does not match actual variable name "'.$realName;
@@ -377,6 +382,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $error = 'Missing comment for param "'.$paramName.'" at position '.$pos;
                     $this->_phpcsFile->addError($error, $errorPos);
                 }
+
                 $previousParam = $param;
 
             }//end foreach
@@ -402,7 +408,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $diff = array_diff($realNames, $foundParams);
         foreach ($diff as $neededParam) {
             if (count($params) !== 0) {
-                $errorPos = $params[count($params) - 1]->getLine() + $commentStart;
+                $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
             } else {
                 $errorPos = $commentStart;
             }

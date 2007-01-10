@@ -44,10 +44,10 @@ class PEAR_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends AbstractS
     public function getErrorList()
     {
         return array(
-                 5 => 1,
-                 6 => 1,
-                 7 => 2,
-                 8 => 1,
+                5  => 1,
+                6  => 1,
+                7  => 2,
+                8  => 1,
                 11 => 2,
                 12 => 2,
                 13 => 3,

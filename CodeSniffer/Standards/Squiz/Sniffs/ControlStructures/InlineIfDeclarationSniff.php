@@ -59,7 +59,7 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
     {
         $tokens = $phpcsFile->getTokens();
 
-        $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr + 1, null, false);
+        $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 1), null, false);
 
         // Make sure it's all on the same line.
         if ($tokens[$statementEnd]['line'] !== $tokens[$stackPtr]['line']) {
@@ -69,8 +69,8 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         }
 
         // Make sure there are spaces around the question mark.
-        $contentBefore = $phpcsFile->findPrevious(array(T_WHITESPACE), $stackPtr - 1, null, true);
-        $contentAfter  = $phpcsFile->findNext(array(T_WHITESPACE), $stackPtr + 1, null, true);
+        $contentBefore = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
+        $contentAfter  = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
         if ($tokens[$contentBefore]['code'] !== T_CLOSE_PARENTHESIS) {
             $error = 'Inline shorthand IF statement requires brackets around comparison';
             $phpcsFile->addError($error, $stackPtr);
@@ -90,14 +90,14 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         }
 
         // If there is an else in this condition, make sure it has correct spacing.
-        $inlineElse = $phpcsFile->findNext(array(T_COLON), $stackPtr + 1, $statementEnd, false);
+        $inlineElse = $phpcsFile->findNext(array(T_COLON), ($stackPtr + 1), $statementEnd, false);
         if ($inlineElse === false) {
             // No else condition.
             return;
         }
 
-        $contentBefore = $phpcsFile->findPrevious(array(T_WHITESPACE), $inlineElse - 1, null, true);
-        $contentAfter  = $phpcsFile->findNext(array(T_WHITESPACE), $inlineElse + 1, null, true);
+        $contentBefore = $phpcsFile->findPrevious(array(T_WHITESPACE), ($inlineElse - 1), null, true);
+        $contentAfter  = $phpcsFile->findNext(array(T_WHITESPACE), ($inlineElse + 1), null, true);
 
         $spaceBefore = ($tokens[$inlineElse]['column'] - ($tokens[$contentBefore]['column'] + strlen($tokens[$contentBefore]['content'])));
         if ($spaceBefore !== 1) {

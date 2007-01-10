@@ -44,7 +44,7 @@ class Generic_Tests_Functions_OpeningFunctionBraceKernighanRitchieUnitTest exten
     public function getErrorList()
     {
         return array(
-                 9 => 1,
+                9  => 1,
                 13 => 1,
                 17 => 1,
                 29 => 1,

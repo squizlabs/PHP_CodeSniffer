@@ -107,7 +107,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_INLINE_THEN) {
-            $end   = $phpcsFile->findPrevious(T_CLOSE_PARENTHESIS, $stackPtr - 1);
+            $end   = $phpcsFile->findPrevious(T_CLOSE_PARENTHESIS, ($stackPtr - 1));
             $start = $tokens[$end]['parenthesis_opener'];
         } else {
             $start = $tokens[$stackPtr]['parenthesis_opener'];

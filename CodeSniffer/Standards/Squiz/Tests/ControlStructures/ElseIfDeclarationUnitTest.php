@@ -44,7 +44,7 @@ class Squiz_Tests_ControlStructures_ElseIfDeclarationUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                 8 => 1,
+                8  => 1,
                 13 => 1,
                );
 

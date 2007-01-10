@@ -44,8 +44,8 @@ class Squiz_Tests_Operators_IncrementDecrementUsageUnitTest extends AbstractSnif
     public function getErrorList()
     {
         return array(
-                 2 => 1,
-                 6 => 1,
+                2  => 1,
+                6  => 1,
                 12 => 1,
                 16 => 1,
                );

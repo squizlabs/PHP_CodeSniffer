@@ -68,8 +68,9 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->_phpcsFile = $phpcsFile;
-        $tokens = $this->_phpcsFile->getTokens();
+        $this->currentFile = $phpcsFile;
+
+        $tokens = $phpcsFile->getTokens();
         $find   = array(
                    T_ABSTRACT,
                    T_WHITESPACE,
@@ -80,37 +81,39 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $this->_phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
+            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            $this->_phpcsFile->addError('Missing class doc comment', $stackPtr);
+            $phpcsFile->addError('Missing class doc comment', $stackPtr);
             return;
         }
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
 
-        $comment = $this->_phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+
+        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         // Parse the class comment.docblock.
         try {
-            $this->_fp = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
-            $this->_fp->parse();
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
+            $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-            $line = $e->getLineWithinComment() + $commentStart;
-            $this->_phpcsFile->addError($e->getMessage(), $line);
+            $line = ($e->getLineWithinComment() + $commentStart);
+            $phpcsFile->addError($e->getMessage(), $line);
             return;
         }
 
         // No extra newline before short description.
-        $comment      = $this->_fp->getComment();
+        $comment      = $this->commentParser->getComment();
         $short        = $comment->getShortComment();
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
             $error = "Extra $line found before class comment short description";
-            $phpcsFile->addError($error, $commentStart + 1);
+            $phpcsFile->addError($error, ($commentStart + 1));
         }
-        $newlineCount = substr_count($short, "\n") + 1;
+
+        $newlineCount = (substr_count($short, "\n") + 1);
 
         // Exactly one blank line between short and long description.
         $between        = $comment->getWhiteSpaceBetween();
@@ -118,8 +121,9 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $newlineBetween = substr_count($between, "\n");
         if ($newlineBetween !== 2 && $long !== '') {
             $error = 'There must be exactly one blank line between descriptions in class comment';
-            $phpcsFile->addError($error, $commentStart + $newlineCount + 1);
+            $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
         }
+
         $newlineCount += $newlineBetween;
 
         // Exactly one blank line before tags.
@@ -129,14 +133,15 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             if ($long !== '') {
                 $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
             }
-            $phpcsFile->addError($error, $commentStart + $newlineCount);
+
+            $phpcsFile->addError($error, ($commentStart + $newlineCount));
         }
 
         // Check for unknown/deprecated tags.
-        $unknownTags = $this->_fp->getUnknown();
+        $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
-            $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
         }
 
         // Check each tag.
@@ -154,16 +159,16 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      */
     private function _processVersion($errorPos)
     {
-        $version = $this->_fp->getVersion();
+        $version = $this->commentParser->getVersion();
         if ($version !== null) {
             $content = $version->getContent();
-            $matches = Array();
-            if (empty($content)) {
+            $matches = array();
+            if (empty($content) === true) {
                 $error = 'Content missing for version tag in class comment';
-                $this->_phpcsFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos);
             } else if ((strstr($content, 'Release:') === false)) {
                 $error = "Invalid version \"$content\" in class comment; Consider \"Release: <package_version>\" instead.";
-                $this->_phpcsFile->addWarning($error, $errorPos);
+                $this->currentFile->addWarning($error, $errorPos);
             }
         }
 

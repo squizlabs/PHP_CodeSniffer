@@ -85,7 +85,13 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             $workingString .= $tokens[$i]['content'];
         }
 
-        $allowedChars = array('\n', '\r', '\t', '\'');
+        $allowedChars = array(
+                         '\n',
+                         '\r',
+                         '\t',
+                         '\'',
+                        );
+
         foreach ($allowedChars as $testChar) {
             if (strpos($workingString, $testChar) !== false) {
                 return;

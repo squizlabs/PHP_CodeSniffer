@@ -44,7 +44,7 @@ class Squiz_Tests_PHP_EmbeddedPhpUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                 7 => 1,
+                7  => 1,
                 12 => 1,
                 18 => 1,
                 19 => 2,

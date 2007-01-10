@@ -66,11 +66,11 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
-        if ($tokens[$openingBracket + 1]['code'] === T_WHITESPACE) {
+        if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
             $errors[] = 'Space found after opening bracket of FOREACH loop';
         }
 
-        if ($tokens[$closingBracket - 1]['code'] === T_WHITESPACE) {
+        if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $errors[] = 'Space found before closing bracket of FOREACH loop';
         }
 
@@ -78,21 +78,21 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
         $doubleArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $openingBracket, $closingBracket);
 
         if ($doubleArrow !== false) {
-            if ($tokens[$doubleArrow - 1]['code'] !== T_WHITESPACE) {
+            if ($tokens[($doubleArrow - 1)]['code'] !== T_WHITESPACE) {
                 $errors[] = 'Expected 1 space before "=>"; 0 found';
             } else {
-                if (strlen($tokens[$doubleArrow - 1]['content']) !== 1) {
-                    $spaces   = strlen($tokens[$doubleArrow - 1]['content']);
+                if (strlen($tokens[($doubleArrow - 1)]['content']) !== 1) {
+                    $spaces   = strlen($tokens[($doubleArrow - 1)]['content']);
                     $errors[] = "Expected 1 space before \"=>\"; $spaces found";
                 }
 
             }
 
-            if ($tokens[$doubleArrow + 1]['code'] !== T_WHITESPACE) {
+            if ($tokens[($doubleArrow + 1)]['code'] !== T_WHITESPACE) {
                 $errors[] = 'Expected 1 space after "=>"; 0 found';
             } else {
-                if (strlen($tokens[$doubleArrow + 1]['content']) !== 1) {
-                    $spaces   = strlen($tokens[$doubleArrow + 1]['content']);
+                if (strlen($tokens[($doubleArrow + 1)]['content']) !== 1) {
+                    $spaces   = strlen($tokens[($doubleArrow + 1)]['content']);
                     $errors[] = "Expected 1 space after \"=>\"; $spaces found";
                 }
 
@@ -100,20 +100,20 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
 
         }//end if
 
-        if ($tokens[$asToken + 1]['code'] !== T_WHITESPACE) {
+        if ($tokens[($asToken + 1)]['code'] !== T_WHITESPACE) {
             $errors[] = 'Expected 1 space before "as"; 0 found';
         } else {
-            if (strlen($tokens[$asToken - 1]['content']) !== 1) {
-                $spaces   = strlen($tokens[$asToken - 1]['content']);
+            if (strlen($tokens[($asToken - 1)]['content']) !== 1) {
+                $spaces   = strlen($tokens[($asToken - 1)]['content']);
                 $errors[] = "Expected 1 space before \"as\"; $spaces found";
             }
         }
 
-        if ($tokens[$asToken + 1]['code'] !== T_WHITESPACE) {
+        if ($tokens[($asToken + 1)]['code'] !== T_WHITESPACE) {
             $errors[] = 'Expected 1 space after "as"; 0 found';
         } else {
-            if (strlen($tokens[$asToken + 1]['content']) !== 1) {
-                $spaces   = strlen($tokens[$asToken + 1]['content']);
+            if (strlen($tokens[($asToken + 1)]['content']) !== 1) {
+                $spaces   = strlen($tokens[($asToken + 1)]['content']);
                 $errors[] = "Expected 1 space after \"as\"; $spaces found";
             }
 

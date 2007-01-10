@@ -77,7 +77,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
 
         $function = strtolower($tokens[$stackPtr]['content']);
 
-        if (!in_array($function, array_keys($this->forbiddenFunctions))) {
+        if (in_array($function, array_keys($this->forbiddenFunctions)) === false) {
             return;
         }
 

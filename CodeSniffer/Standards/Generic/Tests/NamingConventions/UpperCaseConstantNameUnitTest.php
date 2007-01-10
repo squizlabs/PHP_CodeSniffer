@@ -44,8 +44,8 @@ class Generic_Tests_NamingConventions_UpperCaseConstantNameUnitTest extends Abst
     public function getErrorList()
     {
         return array(
-                 4 => 1,
-                 6 => 1,
+                4  => 1,
+                6  => 1,
                 11 => 1,
                 21 => 1,
                 22 => 1,

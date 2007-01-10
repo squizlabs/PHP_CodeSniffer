@@ -44,8 +44,8 @@ class PEAR_Tests_Files_IncludingFileUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                 4 => 1,
-                 5 => 1,
+                4  => 1,
+                5  => 1,
                 11 => 1,
                 12 => 1,
                 16 => 1,

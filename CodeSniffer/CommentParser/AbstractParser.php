@@ -293,7 +293,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                                     'uses',
                                     'package_version@',
                                    );
-                    if (!in_array($tag, $ignoreTags)) {
+                    if (in_array($tag, $ignoreTags) === false) {
                         $this->unknown[] = array(
                                             'tag'  => $tag,
                                             'line' => $this->getLine($wordPos),

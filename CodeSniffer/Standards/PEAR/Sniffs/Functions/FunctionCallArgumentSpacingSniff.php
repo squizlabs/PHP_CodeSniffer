@@ -90,18 +90,19 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
             }
 
             if ($tokens[$nextSeperator]['code'] === T_COMMA) {
-                if ($tokens[$nextSeperator - 1]['code'] === T_WHITESPACE) {
+                if ($tokens[($nextSeperator - 1)]['code'] === T_WHITESPACE) {
                     $error = 'Space found before comma in function call.';
                     $phpcsFile->addError($error, $stackPtr);
                 }
-                if ($tokens[$nextSeperator + 1]['code'] !== T_WHITESPACE) {
+
+                if ($tokens[($nextSeperator + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'No space found after comma in function call.';
                     $phpcsFile->addError($error, $stackPtr);
                 } else {
                     // If there is a newline in the space, then the must be formatting
                     // each argument on a newline, which is valid, so ignore it.
-                    if (strpos($tokens[$nextSeperator + 1]['content'], "\n") === false) {
-                        $space = strlen($tokens[$nextSeperator + 1]['content']);
+                    if (strpos($tokens[($nextSeperator + 1)]['content'], "\n") === false) {
+                        $space = strlen($tokens[($nextSeperator + 1)]['content']);
                         if ($space > 1) {
                             $error  = 'Expected 1 space after comma in function call, ';
                             $error .= $space.' found.';
@@ -111,22 +112,22 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
                 }
             } else {
                 // Token is a variable.
-                $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $nextSeperator + 1, $closeBracket, true);
+                $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextSeperator + 1), $closeBracket, true);
                 if ($nextToken !== false) {
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
-                        if (($tokens[$nextToken - 1]['code']) !== T_WHITESPACE) {
+                        if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
                             $error = 'Expected one space before = sign of default value.';
                             $phpcsFile->addError($error, $stackPtr);
                         }
-                        if ($tokens[$nextToken + 1]['code'] !== T_WHITESPACE) {
+
+                        if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
                             $error = 'Expected one space after = sign of default value.';
                             $phpcsFile->addError($error, $stackPtr);
                         }
                     }
                 }
-            }
+            }//end if
         }//end while
-
 
     }//end process()
 

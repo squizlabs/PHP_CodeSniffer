@@ -66,7 +66,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff extends PHP_CodeSni
         }
 
         // Find the last non-whitespace character in the method.
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), $stackPtr - 1, null, true);
+        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
 
         if ($lastContent === false) {
             return;
@@ -74,16 +74,16 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff extends PHP_CodeSni
 
         if (strpos($tokens[$lastContent]['content'], "\n") !== false) {
             // Comments add an extra line, so this extra exception needs to be made.
-            $lineDifference = $tokens[$stackPtr]['line'] - $tokens[$lastContent]['line'];
+            $lineDifference = ($tokens[$stackPtr]['line'] - $tokens[$lastContent]['line']);
         } else {
-            $lineDifference = $tokens[$stackPtr]['line'] - $tokens[$lastContent + 1]['line'];
+            $lineDifference = ($tokens[$stackPtr]['line'] - $tokens[($lastContent + 1)]['line']);
         }
 
         $error = '';
         if ($lineDifference === 2) {
             return;
         } else if ($lineDifference < 2) {
-            $error = "Expected 1 blank line before closing brace; 0 found";
+            $error = 'Expected 1 blank line before closing brace; 0 found';
         } else {
             $lineDifference--;
             $error = "Expected 1 blank line before closing brace; $lineDifference found";

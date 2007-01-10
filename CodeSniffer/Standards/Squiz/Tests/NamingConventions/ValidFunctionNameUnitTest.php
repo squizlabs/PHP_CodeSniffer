@@ -44,12 +44,12 @@ class Squiz_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                 4 => 1,
-                 5 => 1,
-                 6 => 1,
-                 7 => 1,
-                 8 => 1,
-                 9 => 1,
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                8  => 1,
+                9  => 1,
                 11 => 1,
                 12 => 1,
                 13 => 1,

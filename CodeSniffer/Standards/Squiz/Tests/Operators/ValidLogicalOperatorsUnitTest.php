@@ -44,7 +44,7 @@ class Squiz_Tests_Operators_ValidLogicalOperatorsUnitTest extends AbstractSniffU
     public function getErrorList()
     {
         return array(
-                 5 => 1,
+                5  => 1,
                 11 => 1,
                 17 => 2,
                );

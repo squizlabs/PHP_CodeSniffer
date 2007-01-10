@@ -74,7 +74,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
-        $trailingContent = $phpcsFile->findNext(T_WHITESPACE, $scopeCloser + 1, null, true);
+        $trailingContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeCloser + 1), null, true);
         if ($tokens[$trailingContent]['code'] === T_ELSE) {
             if ($tokens[$stackPtr]['code'] === T_IF) {
                 // IF with ELSE.
@@ -87,7 +87,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 if (substr($tokens[$trailingContent]['content'], 0, 5) === '//end') {
                     // There is an end comment, so we have to get the next piece
                     // of content.
-                    $trailingContent = $phpcsFile->findNext(T_WHITESPACE, $trailingContent + 1, null, true);
+                    $trailingContent = $phpcsFile->findNext(T_WHITESPACE, ($trailingContent + 1), null, true);
                 }
             }
         }

@@ -44,11 +44,11 @@ class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUn
     public function getErrorList()
     {
         return array(
-                 5 => 1,
-                 6 => 1,
-                 7 => 1,
-                 8 => 1,
-                 9 => 2,
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                8  => 1,
+                9  => 2,
                 10 => 3,
                 17 => 1,
                 18 => 1,

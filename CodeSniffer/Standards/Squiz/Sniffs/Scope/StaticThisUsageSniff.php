@@ -60,7 +60,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
     public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens   = $phpcsFile->getTokens();
-        $function = $tokens[$stackPtr + 2];
+        $function = $tokens[($stackPtr + 2)];
 
         if ($function['code'] !== T_STRING) {
             return;
@@ -68,13 +68,13 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
 
         $functionName = $function['content'];
         $classOpener  = $tokens[$currScope]['scope_condition'];
-        $className    = $tokens[$classOpener + 2]['content'];
+        $className    = $tokens[($classOpener + 2)]['content'];
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
         if ($methodProps['is_static'] === true) {
             $thisUsage = $stackPtr;
-            while (($thisUsage = $phpcsFile->findNext(array(T_VARIABLE), $thisUsage + 1, $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false) {
+            while (($thisUsage = $phpcsFile->findNext(array(T_VARIABLE), ($thisUsage + 1), $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false) {
                 if ($thisUsage === false) {
                     return;
                 }

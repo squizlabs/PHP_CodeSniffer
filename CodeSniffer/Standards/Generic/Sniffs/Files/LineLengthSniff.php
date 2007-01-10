@@ -68,7 +68,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first open tag.
-        $previousOpenTag = $phpcsFile->findPrevious(array(T_OPEN_TAG), $stackPtr - 1);
+        $previousOpenTag = $phpcsFile->findPrevious(array(T_OPEN_TAG), ($stackPtr - 1));
         if ($previousOpenTag !== false) {
             return;
         }

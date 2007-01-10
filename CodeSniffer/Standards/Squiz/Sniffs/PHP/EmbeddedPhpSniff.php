@@ -84,7 +84,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prevTag = $phpcsFile->findPrevious(T_OPEN_TAG, $stackPtr - 1);
+        $prevTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
         if ($prevTag === false) {
             // This is the first open tag.
             return;
@@ -98,7 +98,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         }
 
         $tokenCount  = count($tokens);
-        $nextContent = $phpcsFile->findNext(T_WHITESPACE, $closingTag + 1, $tokenCount, true);
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closingTag + 1), $tokenCount, true);
         if ($nextContent === false) {
             // Final closing tag. It will be handled elsewhere.
             return;
@@ -111,7 +111,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
         // We have an opening and a closing tag, that lie within other content.
         // They are also on different lines.
-        $firstContent = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, $closingTag, true);
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $closingTag, true);
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
             $phpcsFile->addError($error, $stackPtr);
@@ -181,7 +181,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check that there is one, and only one space at the start of the statement.
-        $firstContent = $phpcsFile->findNext(array(T_WHITESPACE), $stackPtr + 1, null, true);
+        $firstContent = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
 
         if ($firstContent === false || $tokens[$firstContent]['code'] === T_CLOSE_TAG) {
             $error = 'Empty embedded PHP tag found';
@@ -203,7 +203,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         $semiColon      = $stackPtr;
         $lastSemiColon  = $semiColon;
 
-        while (($semiColon = $phpcsFile->findNext(array(T_SEMICOLON), $semiColon + 1, $closeTag)) !== false) {
+        while (($semiColon = $phpcsFile->findNext(array(T_SEMICOLON), ($semiColon + 1), $closeTag)) !== false) {
             $lastSemiColon = $semiColon;
             $semiColonCount++;
         }

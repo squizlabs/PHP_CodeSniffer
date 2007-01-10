@@ -63,7 +63,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
         // We only want to get the first comment in a block. If there is
         // a comment on the line before this one, return.
-        $docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr - 1);
+        $docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
         if ($docComment !== false) {
             if ($tokens[$docComment]['line'] === ($tokens[$stackPtr]['line'] - 1)) {
                 return;

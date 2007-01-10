@@ -66,8 +66,9 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->_phpcsFile = $phpcsFile;
-        $tokens = $this->_phpcsFile->getTokens();
+        $this->currentFile = $phpcsFile;
+
+        $tokens = $phpcsFile->getTokens();
         $find   = array (
                    T_ABSTRACT,
                    T_WHITESPACE,
@@ -78,28 +79,28 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $this->_phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
+            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            $this->_phpcsFile->addError('Missing class doc comment', $stackPtr);
+            $phpcsFile->addError('Missing class doc comment', $stackPtr);
             return;
         }
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
 
-        $comment = $this->_phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         // Parse the class comment docblock.
         try {
-            $this->_fp = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
-            $this->_fp->parse();
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
+            $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = $e->getLineWithinComment() + $commentStart;
-            $this->_phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line);
             return;
         }
 
         // No extra newline before short description.
-        $comment      = $this->_fp->getComment();
+        $comment      = $this->commentParser->getComment();
         $short        = rtrim($comment->getShortComment(), "\n");
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
@@ -123,7 +124,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Exactly one blank line before tags.
-        $tags = $this->_fp->getTagOrders();
+        $tags = $this->commentParser->getTagOrders();
         if (count($tags) > 1) {
             $newlineSpan = $comment->getNewlineAfter();
             if ($newlineSpan !== 2) {
@@ -148,7 +149,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check for unknown/deprecated tags.
-        $unknownTags = $this->_fp->getUnknown();
+        $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
             $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
@@ -171,14 +172,13 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processTags($commentStart, $commentEnd)
     {
-        $fp        = $this->_fp;
-        $foundTags = $fp->getTagOrders();
+        $foundTags = $this->commentParser->getTagOrders();
 
         // Other tags found.
         foreach ($foundTags as $tagName) {
             if ($tagName !== 'comment' && $tagName !== 'since') {
                 $error = 'Only since tag is allowed in class comment';
-                $this->_phpcsFile->addWarning($error, $commentEnd);
+                $this->currentFile->addWarning($error, $commentEnd);
                 break;
             }
         }
@@ -186,22 +186,22 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         // Since tag missing.
         if (!in_array('since', $foundTags)) {
             $error = "Missing required since tag in class comment";
-            $this->_phpcsFile->addError($error, $commentEnd);
+            $this->currentFile->addError($error, $commentEnd);
             return;
         }
 
         // Get the line number for current tag.
-        $since = $fp->getSince();
+        $since = $this->commentParser->getSince();
         if (is_null($since) || empty($since)) {
             return;
         }
-        $errorPos = $commentStart + $since->getLine();
+        $errorPos = ($commentStart + $since->getLine());
 
         // Make sure there is no duplicate tag.
         $foundIndexes = array_keys($foundTags, 'since');
         if (count($foundIndexes) > 1) {
             $error = "Only 1 since tag is allowed in class comment";
-            $this->_phpcsFile->addError($error, $errorPos);
+            $this->currentFile->addError($error, $errorPos);
         }
 
         // Check spacing.
@@ -209,7 +209,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $spacing = substr_count($since->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== 1) {
                 $error = "Expected 1 space but found $spacing before version number in since tag";
-                $this->_phpcsFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos);
             }
         }
 
@@ -231,17 +231,17 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     private function _processSince($errorPos)
     {
-        $since = $this->_fp->getSince();
+        $since = $this->commentParser->getSince();
         if ($since !== null) {
             $content = $since->getContent();
             if (empty($content)) {
                 $error = 'Content missing for since tag in class comment';
-                $this->_phpcsFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos);
 
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
                     $error = 'Expected version number to be in the form x.x.x in since tag';
-                    $this->_phpcsFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos);
                 }
             }
         }

@@ -84,7 +84,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 break;
             }
         }
-        
+
         if (is_null($nextLineToken) === true) {
             // Never found the next line, which means
             // there are 0 blank lines after the function.
@@ -95,7 +95,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 // We are at the end of the file.
                 $foundLines = 0;
             } else {
-                $foundLines = $tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line'];
+                $foundLines = ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
             }
         }
 
@@ -151,15 +151,16 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                         $foundLines++;
                     }
                 }
+
                 $i--;
-            }
-        }
+            }//end while
+        }//end if
 
         if ($foundLines !== 2) {
             $phpcsFile->addError("Expected 2 blank lines before function; $foundLines found", $stackPtr);
         }
 
-    }//end processTokenWithinScope()
+    }//end process()
 
 
 }//end class

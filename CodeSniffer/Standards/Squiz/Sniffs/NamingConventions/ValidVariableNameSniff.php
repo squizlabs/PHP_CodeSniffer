@@ -93,7 +93,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     $phpcsFile->addError($error, $var);
                 }
             }
-        }
+        }//end if
 
         // There is no way for us to know if the var is public or private,
         // so we have to ignore a leading underscore if there is one and just
@@ -195,7 +195,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }
-        }
+        }//end if
 
     }//end processVariableInString()
 

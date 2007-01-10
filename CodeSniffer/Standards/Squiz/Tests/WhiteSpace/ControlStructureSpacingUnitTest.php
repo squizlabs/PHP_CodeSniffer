@@ -44,9 +44,9 @@ class Squiz_Tests_WhiteSpace_ControlStructureSpacingUnitTest extends AbstractSni
     public function getErrorList()
     {
         return array(
-                 3 => 1,
-                 5 => 1,
-                 8 => 1,
+                3  => 1,
+                5  => 1,
+                8  => 1,
                 23 => 1,
                 28 => 1,
                );
