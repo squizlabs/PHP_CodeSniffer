@@ -112,7 +112,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
                 $this->processVariable($phpcsFile, $stackPtr);
             } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
                 // Check to see if this string has a variable in it.
-                if (preg_match('|\$[a-zA-Z0-9_]+|', $tokens[$stackPtr]['content']) !== 0) {
+                if (preg_match('|[^\\\]\$[a-zA-Z0-9_]+|', $tokens[$stackPtr]['content']) !== 0) {
                     $this->processVariableInString($phpcsFile, $stackPtr);
                 }
             }
