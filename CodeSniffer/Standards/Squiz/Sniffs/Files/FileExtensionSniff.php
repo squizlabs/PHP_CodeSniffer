@@ -63,7 +63,7 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
 
         // Make sure this is the first PHP open tag so we don't process
         // the same file twice.
-        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, $stackPtr - 1);
+        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
         if ($prevOpenTag !== false) {
             return;
         }

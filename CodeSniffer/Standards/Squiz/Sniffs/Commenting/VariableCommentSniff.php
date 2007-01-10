@@ -65,7 +65,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $tokens = $phpcsFile->getTokens();
 
         // Extract the var comment docblock.
-        $commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 3, null, true);
+        $commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 3), null, true);
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr);
             return;
@@ -74,15 +74,15 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             return;
         }
 
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1;
-        $comment      = $phpcsFile->getTokensAsString($commentStart, $commentEnd - $commentStart + 1);
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         // Parse the header comment docblock.
         try {
             $this->commentParser = new PHP_CodeSniffer_CommentParser_MemberCommentParser($comment);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-            $line = $e->getLineWithinComment() + $commentStart;
+            $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line);
             return;
         }
@@ -95,19 +95,19 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
             $error = "Extra $line found before variable comment short description";
-            $phpcsFile->addError($error, $commentStart + 1);
+            $phpcsFile->addError($error, ($commentStart + 1));
         }
 
-        $newlineCount = substr_count($short, "\n") + 1;
+        $newlineCount = (substr_count($short, "\n") + 1);
 
         // Exactly one blank line between short and long description.
         $long = $comment->getLongComment();
-        if (!empty($long)) {
+        if (empty($long) === false) {
             $between        = $comment->getWhiteSpaceBetween();
             $newlineBetween = substr_count($between, "\n");
             if ($newlineBetween !== 2) {
                 $error = 'There must be exactly one blank line between descriptions in variable comment';
-                $phpcsFile->addError($error, $commentStart + $newlineCount + 1);
+                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
             }
 
             $newlineCount += $newlineBetween;
@@ -123,21 +123,21 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                     $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
                 }
 
-                $phpcsFile->addError($error, $commentStart + $newlineCount);
+                $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 $short = rtrim($short, "\n ");
             }
         }
 
         // Short description must be single line and end with a full stop.
-        $lastChar = $short[strlen($short)-1];
+        $lastChar = $short[(strlen($short) - 1)];
         if (substr_count($short, "\n") !== 0) {
-            $error = "Variable comment short description must be on a single line";
-            $phpcsFile->addError($error, $commentStart + 1);
+            $error = 'Variable comment short description must be on a single line';
+            $phpcsFile->addError($error, ($commentStart + 1));
         }
 
         if ($lastChar !== '.') {
-            $error = "Variable comment short description must end with a full stop";
-            $phpcsFile->addError($error, $commentStart + 1);
+            $error = 'Variable comment short description must end with a full stop';
+            $phpcsFile->addError($error, ($commentStart + 1));
         }
 
         // Check for unknown/deprecated tags.
@@ -145,7 +145,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         foreach ($unknownTags as $errorTag) {
             // Unknown tags are not parsed, do not process further.
             $error = ucfirst($errorTag['tag']).' tag is not allowed in variable comment';
-            $phpcsFile->addWarning($error, $commentStart + $errorTag['line']);
+            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
             return;
         }
 
@@ -154,7 +154,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $this->_processSince($commentStart, $commentEnd);
         $this->_processSees($commentStart);
 
-    }//end process()
+    }//end processMemberVar()
 
 
     /**
@@ -169,7 +169,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
     {
         $var = $this->commentParser->getVar();
         if ($var !== null) {
-            $errorPos = $commentStart + $var->getLine();
+            $errorPos = ($commentStart + $var->getLine());
             $index    = array_keys($this->commentParser->getTagOrders(), 'var');
             if (count($index) > 1) {
                 $error = 'Only 1 var tag is allowed in variable comment';
@@ -183,7 +183,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
 
             $content = $var->getContent();
-            if (empty($content)) {
+            if (empty($content) === true) {
                 $error = 'Var type missing for var tag in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
@@ -215,10 +215,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
     {
         $since = $this->commentParser->getSince();
         if ($since !== null) {
-            $errorPos  = $commentStart + $since->getLine();
+            $errorPos  = ($commentStart + $since->getLine());
             $foundTags = $this->commentParser->getTagOrders();
             $index     = array_keys($foundTags, 'since');
             $var       = array_keys($foundTags, 'var');
+
             if (count($index) > 1) {
                 $error = 'Only 1 since tag is allowed in variable comment';
                 $this->currentFile->addError($error, $errorPos);
@@ -231,7 +232,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
 
             $content = $since->getContent();
-            if (empty($content)) {
+            if (empty($content) === true) {
                 $error = 'Version number missing for since tag in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
@@ -266,11 +267,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
     private function _processSees($commentStart)
     {
         $sees = $this->commentParser->getSees();
-        if (!empty($sees)) {
+        if (empty($sees) === false) {
             foreach ($sees as $see) {
-                $errorPos = $commentStart + $see->getLine();
+                $errorPos = ($commentStart + $see->getLine());
                 $content  = $see->getContent();
-                if (empty($content)) {
+                if (empty($content) === true) {
                     $error = 'Content missing for see tag in variable comment';
                     $this->currentFile->addError($error, $errorPos);
                     continue;

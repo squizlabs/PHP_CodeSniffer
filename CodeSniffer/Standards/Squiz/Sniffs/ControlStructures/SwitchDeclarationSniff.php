@@ -62,15 +62,15 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
-        $caseAlignment = $switch['column'] + 4;
+        $caseAlignment = ($switch['column'] + 4);
 
-        while (($nextCase = $phpcsFile->findNext(array(T_CASE), $nextCase + 1, $switch['scope_closer'])) !== false) {
+        while (($nextCase = $phpcsFile->findNext(array(T_CASE), ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
                 $error = 'CASE keyword must be indented 4 spaces from SWITCH keyword';
                 $phpcsFile->addError($error, $nextCase);
             }
 
-            $nextBreak = $phpcsFile->findNext(array(T_BREAK), $nextCase + 1, $switch['scope_closer']);
+            $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($nextCase + 1), $switch['scope_closer']);
             if ($nextBreak !== false) {
                 // Only check this BREAK statement if it matches the current CASE
                 // statement. This stops the same break (used for multiple CASEs) being
@@ -87,14 +87,14 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
             // Check that all content within each CASE is indented correctly.
             $nextSpace = $nextCase;
-            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, $nextSpace + 1, $nextBreak)) !== false) {
+            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), $nextBreak)) !== false) {
                 if (strpos($tokens[$nextSpace]['content'], "\n") === false) {
                     continue;
                 }
 
                 // Whitespace has a new line. We need to check that it does not
                 // precede a CASE or a BREAK, and then we can check indentation.
-                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), $nextSpace + 1, null, true);
+                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextSpace + 1), null, true);
                 if ($tokens[$nextContent]['code'] === T_BREAK) {
                     continue;
                 }
@@ -116,7 +116,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
                 // This is on the same line, and not a CASE or a BREAK, so
                 // it needs to be indented at least 4 spaces after the CASE.
-                $requiredIndent = $tokens[$nextCase]['column'] + 4;
+                $requiredIndent = ($tokens[$nextCase]['column'] + 4);
                 if ($tokens[$nextContent]['column'] < $requiredIndent) {
                     $error = 'Line not indented correctly. Expected at least '.$requiredIndent.' spaces, but found '.$tokens[$nextContent]['column'].'.';
                     $phpcsFile->addError($error, $nextContent);
@@ -131,7 +131,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 $phpcsFile->addError($error, $default);
             }
 
-            $nextBreak = $phpcsFile->findNext(array(T_BREAK), $default + 1, $switch['scope_closer']);
+            $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($default + 1), $switch['scope_closer']);
             if ($nextBreak !== false) {
                 if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
                     $error = 'BREAK statement must be indented 4 spaces from SWITCH keyword';
@@ -150,7 +150,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
                 // Whitespace has a new line. We need to check that it does not
                 // precede a BREAK, and then we can check indentation.
-                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), $nextSpace + 1, null, true);
+                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextSpace + 1), null, true);
                 if ($tokens[$nextContent]['code'] === T_BREAK) {
                     continue;
                 }
@@ -168,13 +168,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
                 // This is on the same line, and not a BREAK, so
                 // it needs to be indented at least 4 spaces after the DEFAULT.
-                $requiredIndent = $tokens[$default]['column'] + 4;
+                $requiredIndent = ($tokens[$default]['column'] + 4);
                 if ($tokens[$nextContent]['column'] < $requiredIndent) {
                     $error = 'Line not indented correctly. Expected at least '.$requiredIndent.' spaces, but found '.$tokens[$nextContent]['column'].'.';
                     $phpcsFile->addError($error, $nextContent);
                 }
             }//end while
-        }
+        }//end if
 
         if ($tokens[$switch['scope_closer']]['column'] !== $switch['column']) {
             $error = 'Closing brace of SWITCH statement must be aligned with SWITCH keyword';
