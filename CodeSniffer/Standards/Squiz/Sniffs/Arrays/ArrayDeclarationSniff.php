@@ -157,7 +157,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             return;
         }//end if
 
-        // Check the closing bracket is on a new line..
+        // Check the closing bracket is on a new line.
         $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($arrayEnd - 1), $arrayStart, true);
         if ($tokens[$lastContent]['line'] !== ($tokens[$arrayEnd]['line'] - 1)) {
             $error = 'Closing parenthesis of array declaration must be on a new line';
@@ -170,7 +170,6 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $found    .= ($found === 0) ? ' space' : ' spaces';
             $phpcsFile->addError("Closing parenthesis not aligned correctly; expected $expected but found $found", $arrayEnd);
         }
-
 
         $nextToken  = $stackPtr;
         $lastComma  = $stackPtr;
