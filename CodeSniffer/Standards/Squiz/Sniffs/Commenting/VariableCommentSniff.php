@@ -61,11 +61,18 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      */
     public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+
+
+
         $this->currentFile = $phpcsFile;
-        $tokens = $phpcsFile->getTokens();
+        $tokens       = $phpcsFile->getTokens();
+        $commentToken = array(
+                         T_COMMENT,
+                         T_DOC_COMMENT,
+                        );
 
         // Extract the var comment docblock.
-        $commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 3), null, true);
+        $commentEnd = $phpcsFile->findPrevious($commentToken, ($stackPtr - 3));
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr);
             return;
@@ -171,6 +178,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         if ($var !== null) {
             $errorPos = ($commentStart + $var->getLine());
             $index    = array_keys($this->commentParser->getTagOrders(), 'var');
+
             if (count($index) > 1) {
                 $error = 'Only 1 var tag is allowed in variable comment';
                 $this->currentFile->addError($error, $errorPos);
@@ -225,7 +233,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
-
+            // Only check order if there is one var tag in variable comment.
             if (count($var) === 1 && $index[0] !== 2) {
                 $error = 'The order of since tag is wrong in variable comment';
                 $this->currentFile->addError($error, $errorPos);
