@@ -56,7 +56,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_phpcsFile = null;
+    protected $currentFile = null;
 
 
     /**
@@ -80,8 +80,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      */
     protected final function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
-        if ($this->_phpcsFile !== $phpcsFile) {
-            $this->_phpcsFile   = $phpcsFile;
+        if ($this->currentFile !== $phpcsFile) {
+            $this->currentFile   = $phpcsFile;
             $this->_functionOpen = false;
             $this->_endFunction  = -1;
         }
