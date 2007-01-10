@@ -55,6 +55,7 @@ class Squiz_Tests_Commenting_LongConditionClosingCommentUnitTest extends Abstrac
                 332 => 1,
                 355 => 1,
                 378 => 1,
+                493 => 1,
                );
 
     }//end getErrorList()

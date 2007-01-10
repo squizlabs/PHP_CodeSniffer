@@ -78,4 +78,15 @@ if ($pos === -1) {
     $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
     $var = (($var1 + $var2) + $var3 + $var4)
 }
+
+$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+$commentEnd   = ($this->_phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
+$expected    .= '...'.substr($tokens[($stackPtr - 2)]['content'], -5).$tokens[$stackPtr]['content'];
+
+if (($tokens[$nextToken - 1]['code']) !== T_WHITESPACE) {
+    $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
+}
+
+while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, $nextSpace + 1, $nextBreak)) !== false) {
+}
 ?>

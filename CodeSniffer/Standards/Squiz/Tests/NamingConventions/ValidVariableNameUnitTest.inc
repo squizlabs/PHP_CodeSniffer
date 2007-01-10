@@ -64,4 +64,6 @@ echo $object_name->_varName2;
 
 echo $this->myFunction($one, $two);
 echo $object->myFunction($one_two);
+
+$error = "format is \$GLOBALS['$varName']";
 ?>

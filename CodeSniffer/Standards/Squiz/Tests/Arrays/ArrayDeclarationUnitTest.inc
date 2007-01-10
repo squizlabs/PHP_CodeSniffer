@@ -106,4 +106,9 @@ $value = array(1 => $one,
           2 => $two ,
           3 => $three ,
          );
+
+$value = array(
+          'tag'   => $tag,
+          'space' => $this->_getIndentation($tag, $tagElement),
+         );
 ?>

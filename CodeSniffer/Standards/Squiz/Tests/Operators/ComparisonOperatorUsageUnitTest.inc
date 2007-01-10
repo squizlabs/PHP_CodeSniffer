@@ -38,4 +38,7 @@ if ($one === TRUE || $two === TRUE || $three === FALSE || $four === TRUE) {
 if ($one || $two || !$three || $four) {
 }
 
+if ($var instanceof PHP_CodeSniffer) {
+}
+
 ?>
