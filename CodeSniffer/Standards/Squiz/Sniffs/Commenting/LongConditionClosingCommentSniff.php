@@ -92,15 +92,22 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
             return;
         }
 
-        // IF statements that have an ELSE block need to use
-        // "end if" rather than "end else" or "end elseif".
         if ($startCondition['code'] === T_IF) {
+            // If this is actually and ELSE IF, skip it as the brace
+            // will be checked by the original IF.
+            $else = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$stackPtr]['scope_condition'] - 1), null, true);
+            if ($tokens[$else]['code'] === T_ELSE) {
+                return;
+            }
+
+            // IF statements that have an ELSE block need to use
+            // "end if" rather than "end else" or "end elseif".
             do {
-                $nextToken = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
                 if ($tokens[$nextToken]['code'] === T_ELSE || $tokens[$nextToken]['code'] === T_ELSEIF) {
                     // Check for ELSE IF (2 tokens) as opposed to ELSEIF (1 token).
                     if ($tokens[$nextToken]['code'] === T_ELSE && isset($tokens[$nextToken]['scope_closer']) === false) {
-                        $nextToken = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), null, true);
+                        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
                         if ($tokens[$nextToken]['code'] !== T_IF) {
                             break;
                         }
@@ -124,18 +131,19 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 
         $comment = $phpcsFile->findNext(array(T_COMMENT), $stackPtr, null, false);
         if (($comment === false) || ($tokens[$comment]['line'] !== $endBrace['line'])) {
-            $error = "End comment for long condition not found. Expected \"$expected\".";
+            $error = "End comment for long condition not found; expected \"$expected\"";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
         if (($comment - $stackPtr) !== 1) {
-            $error = "Space found before closing comment. Expected \"}$expected\".";
+            $error = "Space found before closing comment; expected \"$expected\"";
             $phpcsFile->addError($error, $stackPtr);
         }
 
         if ((strpos(trim($tokens[$comment]['content']), $expected)) === false) {
-            $error = "Incorrect closing comment. Expected \"$expected\" but found \"".trim($tokens[$comment]['content']).'".';
+            $found = trim($tokens[$comment]['content']);
+            $error = "Incorrect closing comment; expected \"$expected\" but found \"$found\"";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
