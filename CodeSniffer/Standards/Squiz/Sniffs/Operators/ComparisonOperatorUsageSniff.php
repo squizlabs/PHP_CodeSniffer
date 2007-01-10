@@ -64,6 +64,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                                  T_GREATER_THAN,
                                  T_IS_GREATER_OR_EQUAL,
                                  T_IS_SMALLER_OR_EQUAL,
+                                 T_INSTANCEOF,
                                 );
 
     /**
