@@ -41,4 +41,13 @@ if ($one || $two || !$three || $four) {
 if ($var instanceof PHP_CodeSniffer) {
 }
 
+if (($var instanceof PHP_CodeSniffer) === false) {
+}
+
+if ($good && ($var instanceof PHP_CodeSniffer) === false && $good) {
+}
+
+if ($good === true && ($var instanceof PHP_CodeSniffer) === false) {
+}
+
 ?>
