@@ -92,7 +92,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             // Now check each of the double arrows (if any).
             $nextArrow = $arrayStart;
-            while (($nextArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $nextArrow + 1, $arrayEnd)) !== false) {
+            while (($nextArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, ($nextArrow + 1), $arrayEnd)) !== false) {
                 if ($tokens[($nextArrow - 1)]['code'] !== T_WHITESPACE) {
                     $content = $tokens[($nextArrow - 1)]['content'];
                     $error   = "Expected 1 space between \"$content\" and double arrow; 0 found";
@@ -182,6 +182,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         // Find all the double arrows that reside in this scope.
         while (($nextToken = $phpcsFile->findNext(array(T_DOUBLE_ARROW, T_COMMA, T_ARRAY), ($nextToken + 1), $arrayEnd)) !== false) {
             $currentEntry = array();
+
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
@@ -189,6 +190,18 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($tokens[$nextToken]['code'] === T_COMMA) {
+                $stackPtrCount = 0;
+                if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+                    $stackPtrCount = count($tokens[$stackPtr]['nested_parenthesis']);
+                }
+
+                if (count($tokens[$nextToken]['nested_parenthesis']) > ($stackPtrCount + 1)) {
+                    // This comma is inside more parenthesis than the ARRAY keyword,
+                    // then there it is actually a comma used to seperate arguments
+                    // in a function call.
+                    continue;
+                }
+
                 if ($keyUsed === true && $lastToken === T_COMMA) {
                     $error = 'No key specified for array entry; first entry specifies key';
                     $phpcsFile->addError($error, $nextToken);
