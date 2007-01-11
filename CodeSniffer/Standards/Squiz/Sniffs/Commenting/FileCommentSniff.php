@@ -462,7 +462,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * License tag must be 'http://matrix.squiz.net/evaluations/licence Squiz.Net Open Source Licence'.
+     * License tag must be 'http://matrix.squiz.net/licence Squiz.Net Open Source Licence'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -482,8 +482,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if (empty($url) === true) {
                     $error = 'License URL missing for license tag in file comment';
                     $this->currentFile->addError($error, $errorPos);
-                } else if ($url !== 'http://matrix.squiz.net/evaluations/licence') {
-                    $error = 'Expected "http://matrix.squiz.net/evaluations/licence" for license URL';
+                } else if ($url !== 'http://matrix.squiz.net/licence') {
+                    $error = 'Expected "http://matrix.squiz.net/licence" for license URL';
                     $this->currentFile->addError($error, $errorPos);
                 }
 
