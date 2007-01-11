@@ -1,31 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0" packagerversion="1.4.5">
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.10" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
  <name>PHP_CodeSniffer</name>
+ <channel>pear.php.net</channel>
  <summary>PHP_CodeSniffer tokenises PHP code and detects violations of a defined set of coding standards.</summary>
- <description>PHP_CodeSniffer is a PHP5 script that tokenises and "sniffs" PHP code to detect violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. It can even help prevent some common semantic errors made by developers.</description>
- <maintainers>
-  <maintainer>
-   <user>squiz</user>
-   <name>Greg Sherwood</name>
-   <email>gsherwood@squiz.net</email>
-   <role>lead</role>
-  </maintainer>
-  <maintainer>
-   <user>marchaos</user>
-   <name>Marc McIntyre</name>
-   <email>mmcintyre@squiz.net</email>
-   <role>lead</role>
-  </maintainer>
- </maintainers>
- <release>
-  <version>0.3.0</version>
-  <date>2006-12-28</date>
-  <license>BSD License</license>
-  <state>alpha</state>
-  <notes>
+ <description>PHP_CodeSniffer is a PHP5 script that tokenises and &quot;sniffs&quot; PHP code to detect violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. It can even help prevent some common semantic errors made by developers.
+ </description>
+ <lead>
+  <name>Greg Sherwood</name>
+  <user>squiz</user>
+  <email>gsherwood@squiz.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Marc McIntyre</name>
+  <user>marchaos</user>
+  <email>mmcintyre@squiz.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2007-01-11</date>
+ <time>13:14:28</time>
+ <version>
+  <release>0.3.0</release>
+  <api>0.3.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>BSD License</license>
+ <notes>
+   - Updated package.xml to version 2
    - Specifying coding standard on command line is now optional, even if you have multiple standards installed
      - PHP_CodeSniffer uses the PEAR coding standard by default if no standard is specified
+   - New command line option, --extensions, to specify a comma separated list of file extensions to check
    - Converted all unit tests to PHPUnit 3 format
    - Added new coding standard, Squiz, that can be used as an alternative to PEAR
      - also contains more examples of sniffs
@@ -42,822 +52,901 @@
    - Updated file, class and method comments for all files
    - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    - Fixed bug #9411 : too few pattern characters cause incorrect error report
-  </notes>
-  <deps>
-   <dep type="php" rel="ge" version="5.1.0" optional="no"/>
-  </deps>
-  <filelist>
-   <dir name="/" baseinstalldir="PHP">
-    <file role="php" name="CodeSniffer.php">
-      <replace type="package-info" from="@package_version@" to="version"/>
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="PHP" name="CodeSniffer.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <dir name="scripts">
+    <file baseinstalldir="" name="phpcs" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+     <tasks:replace from="@package_state@" to="state" type="package-info" />
     </file>
-    <dir name="scripts" role="script" baseinstalldir="">
-     <file name="phpcs" install-as="phpcs">
-       <replace type="pear-config" from="@php_bin@" to="php_bin"/>
-       <replace type="package-info" from="@package_version@" to="version"/>
-       <replace type="package-info" from="@package_state@" to="release_state"/>
-     </file>
-     <file name="phpcs.bat" install-as="phpcs.bat" platform="windows">
-      <replace type="pear-config" from="@php_bin@" to="php_bin"/>
-      <replace type="pear-config" from="@bin_dir@" to="bin_dir"/>
-      <replace type="pear-config" from="@php_dir@" to="php_dir"/>
-      <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-    </dir>
-    <dir name="tests" role="test" baseinstalldir="">
-     <file name="AllTests.php" install-as="AllTests.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <dir name="Core">
-      <file name="AllTests.php" install-as="CodeSniffer/Core/AllTests.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="IsCamelCapsTest.php" install-as="CodeSniffer/Core/IsCamelCapsTest.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-     </dir>
-     <dir name="Standards">
-      <file name="AllSniffs.php" install-as="CodeSniffer/Standards/AllSniffs.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="AbstractSniffUnitTest.php" install-as="CodeSniffer/Standards/AbstractSniffUnitTest.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-     </dir>
-    </dir>
-    <dir name="CodeSniffer" role="php" baseinstalldir="PHP">
-     <file name="Exception.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <file name="File.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <file name="Sniff.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <file name="SniffException.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <file name="Tokens.php">
-       <replace type="package-info" from="@package_version@" to="version"/>
-     </file>
-     <dir name="CommentParser">
-      <file name="AbstractDocElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="AbstractParser.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="ClassCommentParser.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="CommentElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="DocElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="FunctionCommentParser.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="MemberCommentParser.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="PairElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="ParameterElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="ParserException.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="SingleElement.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-     </dir>
-     <dir name="Standards">
-      <file name="AbstractPatternSniff.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="AbstractScopeSniff.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="AbstractVariableSniff.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <file name="IncorrectPatternException.php">
-        <replace type="package-info" from="@package_version@" to="version"/>
-      </file>
-      <dir name="Generic">
-       <dir name="Sniffs">
-        <dir name="Files">
-         <file name="LineLengthSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Formatting">
-         <file name="MultipleStatementAlignmentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="OpeningFunctionBraceBsdAllmanSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OpeningFunctionBraceKernighanRitchieSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="UpperCaseConstantNameSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="PHP">
-         <file name="DisallowShortOpenTagSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForbiddenFunctionsSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LowerCaseConstantSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="UpperCaseConstantSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ScopeIndentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-       <dir name="Tests" role="test">
-        <dir name="Files">
-         <file name="LineLengthUnitTest.inc"/>
-         <file name="LineLengthUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Formatting">
-         <file name="MultipleStatementAlignmentUnitTest.inc"/>
-         <file name="MultipleStatementAlignmentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="OpeningFunctionBraceBsdAllmanUnitTest.inc"/>
-         <file name="OpeningFunctionBraceBsdAllmanUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OpeningFunctionBraceKernighanRitchieUnitTest.inc"/>
-         <file name="OpeningFunctionBraceKernighanRitchieUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="UpperCaseConstantNameUnitTest.inc"/>
-         <file name="UpperCaseConstantNameUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="PHP">
-         <file name="DisallowShortOpenTagUnitTest.inc"/>
-         <file name="DisallowShortOpenTagUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForbiddenFunctionsUnitTest.inc"/>
-         <file name="ForbiddenFunctionsUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LowerCaseConstantUnitTest.inc"/>
-         <file name="LowerCaseConstantUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="UpperCaseConstantUnitTest.inc"/>
-         <file name="UpperCaseConstantUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ScopeIndentUnitTest.inc"/>
-         <file name="ScopeIndentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-      </dir>
-      <dir name="PEAR" role="php">
-       <dir name="Sniffs">
-        <dir name="Commenting">
-         <file name="ClassCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FileCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="ControlStructures">
-         <file name="ControlSignatureSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Files">
-         <file name="IncludingFileSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LineLengthSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Formatting">
-         <file name="MultipleStatementAlignmentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="FunctionCallArgumentSpacingSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCallSignatureSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OpeningFunctionBraceSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidDefaultValueSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="ValidClassNameSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidConstantNameSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidFunctionNameSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="PHP">
-         <file name="ConstantSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="DisallowShortOpenTagSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ScopeClosingBraceSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ScopeIndentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-       <dir name="Tests" role="test">
-        <dir name="Commenting">
-         <file name="ClassCommentUnitTest.inc"/>
-         <file name="ClassCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FileCommentUnitTest.inc"/>
-         <file name="FileCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCommentUnitTest.inc"/>
-         <file name="FunctionCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineCommentUnitTest.inc"/>
-         <file name="InlineCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="ControlStructures">
-         <file name="ControlSignatureUnitTest.inc"/>
-         <file name="ControlSignatureUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Files">
-         <file name="IncludingFileUnitTest.inc"/>
-         <file name="IncludingFileUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="FunctionCallArgumentSpacingUnitTest.inc"/>
-         <file name="FunctionCallArgumentSpacingUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCallSignatureUnitTest.inc"/>
-         <file name="FunctionCallSignatureUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidDefaultValueUnitTest.inc"/>
-         <file name="ValidDefaultValueUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="ValidClassNameUnitTest.inc"/>
-         <file name="ValidClassNameUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidFunctionNameUnitTest.inc"/>
-         <file name="ValidFunctionNameUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ScopeClosingBraceUnitTest.inc"/>
-         <file name="ScopeClosingBraceUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ScopeIndentUnitTest.inc"/>
-         <file name="ScopeIndentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-      </dir>
-      <dir name="Squiz" role="php">
-       <dir name="Sniffs">
-        <dir name="Arrays">
-         <file name="ArrayDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Classes">
-         <file name="ClassDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClassFileNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SelfMemberReferenceSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidClassNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Commenting">
-         <file name="BlockCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClassCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClosingDeclarationCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="DocCommentAlignmentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EmptyCatchCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FileCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCommentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LongConditionClosingCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="PostStatementCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="VariableCommentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="ControlStructures">
-         <file name="ControlSignatureSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ElseIfDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForEachLoopDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForLoopDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineControlStructureSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineIfDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SwitchDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Files">
-         <file name="FileExtensionSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LineLengthSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Formatting">
-         <file name="MultipleStatementAlignmentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OutputBufferingIndentSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OperatorBracketSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="FunctionCallArgumentSpacingSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionDeclarationArgumentSpacingSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionDeclarationSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OpeningFunctionBraceSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="GlobalFunctionSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="UpperCasePhpConstantSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidConstantNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidFunctionNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidInterfaceNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidVariableNameSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Operators">
-         <file name="ComparisonOperatorUsageSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="IncrementDecrementUsageSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidLogicalOperatorsSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="PHP">
-         <file name="DisallowObEndFlushSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EmbeddedPhpSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForbiddenFunctionsSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="GlobalKeywordSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="HeredocSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InnerFunctionsSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Scope">
-         <file name="MemberVarScopeSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="MethodScopeSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="StaticThisUsageSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Strings">
-         <file name="ConcatenationSpacingSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="DoubleQuoteUsageSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EchoedStringsSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ControlStructureSpacingSniff.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionClosingBraceSpaceSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionSpacingSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OperatorSpacingSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ScopeIndentSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SuperfluousWhitespaceSniff.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-       <dir name="Tests" role="test">
-        <dir name="Arrays">
-         <file name="ArrayDeclarationUnitTest.inc"/>
-         <file name="ArrayDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Classes">
-         <file name="ClassDeclarationUnitTest.inc"/>
-         <file name="ClassDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClassFileNameUnitTest.inc"/>
-         <file name="ClassFileNameUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SelfMemberReferenceUnitTest.inc"/>
-         <file name="SelfMemberReferenceUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidClassNameUnitTest.inc"/>
-         <file name="ValidClassNameUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Commenting">
-         <file name="BlockCommentUnitTest.inc"/>
-         <file name="BlockCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClassCommentUnitTest.inc"/>
-         <file name="ClassCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ClosingDeclarationCommentUnitTest.inc"/>
-         <file name="ClosingDeclarationCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="DocCommentAlignmentUnitTest.inc"/>
-         <file name="DocCommentAlignmentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EmptyCatchCommentUnitTest.inc"/>
-         <file name="EmptyCatchCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FileCommentUnitTest.inc"/>
-         <file name="FileCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionCommentUnitTest.inc"/>
-         <file name="FunctionCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineCommentUnitTest.inc"/>
-         <file name="InlineCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="LongConditionClosingCommentUnitTest.inc"/>
-         <file name="LongConditionClosingCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="PostStatementCommentUnitTest.inc"/>
-         <file name="PostStatementCommentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="VariableCommentUnitTest.inc"/>
-         <file name="VariableCommentUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="ControlStructures">
-         <file name="ControlSignatureUnitTest.inc"/>
-         <file name="ControlSignatureUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ElseIfDeclarationUnitTest.inc"/>
-         <file name="ElseIfDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForEachLoopDeclarationUnitTest.inc"/>
-         <file name="ForEachLoopDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForLoopDeclarationUnitTest.inc"/>
-         <file name="ForLoopDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineControlStructureUnitTest.inc"/>
-         <file name="InlineControlStructureUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InlineIfDeclarationUnitTest.inc"/>
-         <file name="InlineIfDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SwitchDeclarationUnitTest.inc"/>
-         <file name="SwitchDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Files">
-         <file name="FileExtensionUnitTest.inc"/>
-         <file name="FileExtensionUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Formatting">
-         <file name="OperatorBracketUnitTest.inc"/>
-         <file name="OperatorBracketUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OutputBufferingIndentUnitTest.inc"/>
-         <file name="OutputBufferingIndentUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Functions">
-         <file name="FunctionDeclarationArgumentSpacingUnitTest.inc"/>
-         <file name="FunctionDeclarationArgumentSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionDeclarationUnitTest.inc"/>
-         <file name="FunctionDeclarationUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="GlobalFunctionUnitTest.inc"/>
-         <file name="GlobalFunctionUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="NamingConventions">
-         <file name="ValidFunctionNameUnitTest.inc"/>
-         <file name="ValidFunctionNameUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidInterfaceNameUnitTest.inc"/>
-         <file name="ValidInterfaceNameUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidVariableNameUnitTest.inc"/>
-         <file name="ValidVariableNameUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Operators">
-         <file name="ComparisonOperatorUsageUnitTest.inc"/>
-         <file name="ComparisonOperatorUsageUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="IncrementDecrementUsageUnitTest.inc"/>
-         <file name="IncrementDecrementUsageUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ValidLogicalOperatorsUnitTest.inc"/>
-         <file name="ValidLogicalOperatorsUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="PHP">
-         <file name="DisallowObEndFlushUnitTest.inc"/>
-         <file name="DisallowObEndFlushUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EmbeddedPhpUnitTest.inc"/>
-         <file name="EmbeddedPhpUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="ForbiddenFunctionsUnitTest.inc"/>
-         <file name="ForbiddenFunctionsUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="GlobalKeywordUnitTest.inc"/>
-         <file name="GlobalKeywordUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="HeredocUnitTest.inc"/>
-         <file name="HeredocUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="InnerFunctionsUnitTest.inc"/>
-         <file name="InnerFunctionsUnitTest.php">
-           <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Scope">
-         <file name="MemberVarScopeUnitTest.inc"/>
-         <file name="MemberVarScopeUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="MethodScopeUnitTest.inc"/>
-         <file name="MethodScopeUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="StaticThisUsageUnitTest.inc"/>
-         <file name="StaticThisUsageUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="Strings">
-         <file name="ConcatenationSpacingUnitTest.inc"/>
-         <file name="ConcatenationSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="DoubleQuoteUsageUnitTest.inc"/>
-         <file name="DoubleQuoteUsageUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="EchoedStringsUnitTest.inc"/>
-         <file name="EchoedStringsUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-        <dir name="WhiteSpace">
-         <file name="ControlStructureSpacingUnitTest.inc"/>
-         <file name="ControlStructureSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionClosingBraceSpaceUnitTest.inc"/>
-         <file name="FunctionClosingBraceSpaceUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="FunctionSpacingUnitTest.inc"/>
-         <file name="FunctionSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="OperatorSpacingUnitTest.inc"/>
-         <file name="OperatorSpacingUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-         <file name="SuperfluousWhitespaceUnitTest.inc"/>
-         <file name="SuperfluousWhitespaceUnitTest.php">
-          <replace type="package-info" from="@package_version@" to="version"/>
-         </file>
-        </dir>
-       </dir>
-      </dir>
-     </dir>
-    </dir>
+    <file baseinstalldir="" name="phpcs.bat" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
+     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
    </dir>
+   <dir name="tests">
+    <dir name="Core">
+     <file baseinstalldir="" name="AllTests.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="" name="IsCamelCapsTest.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <dir name="Standards">
+     <file baseinstalldir="" name="AbstractSniffUnitTest.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="" name="AllSniffs.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <file baseinstalldir="" name="AllTests.php" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+   </dir>
+   <dir name="CodeSniffer">
+    <dir name="CommentParser">
+     <file baseinstalldir="PHP" name="AbstractDocElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="AbstractParser.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="ClassCommentParser.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="CommentElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="DocElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="FunctionCommentParser.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="MemberCommentParser.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="PairElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="ParameterElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="ParserException.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="SingleElement.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <dir name="Standards">
+     <dir name="Generic">
+      <dir name="Sniffs">
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="UpperCaseConstantNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowerCaseConstantSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="LineLengthUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineLengthUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="UpperCaseConstantNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="UpperCaseConstantNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+     </dir>
+     <dir name="PEAR">
+      <dir name="Sniffs">
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="ClassCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FileCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlSignatureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="IncludingFileSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCallSignatureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidDefaultValueSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidClassNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidConstantNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="ConstantSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ScopeClosingBraceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="ClassCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlSignatureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ControlSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="IncludingFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="IncludingFileUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidDefaultValueUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidDefaultValueUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidClassNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidClassNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+     </dir>
+     <dir name="Squiz">
+      <dir name="Sniffs">
+       <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClassFileNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SelfMemberReferenceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidClassNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="BlockCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClassCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClosingDeclarationCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DocCommentAlignmentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EmptyCatchCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FileCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LongConditionClosingCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="PostStatementCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="VariableCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlSignatureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ElseIfDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForEachLoopDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForLoopDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineIfDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SwitchDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="FileExtensionSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OperatorBracketSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OutputBufferingIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GlobalFunctionSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="UpperCasePhpConstantSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidConstantNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidInterfaceNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidVariableNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Operators">
+        <file baseinstalldir="PHP" name="ComparisonOperatorUsageSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="IncrementDecrementUsageSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidLogicalOperatorsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowObEndFlushSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EmbeddedPhpSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GlobalKeywordSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="HeredocSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InnerFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Scope">
+        <file baseinstalldir="PHP" name="MemberVarScopeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MethodScopeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="StaticThisUsageSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="ConcatenationSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DoubleQuoteUsageSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EchoedStringsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ControlStructureSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClassFileNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassFileNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SelfMemberReferenceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SelfMemberReferenceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidClassNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidClassNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="BlockCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="BlockCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClassCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClosingDeclarationCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingDeclarationCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EmptyCatchCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EmptyCatchCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="PostStatementCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="PostStatementCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="VariableCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="VariableCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlSignatureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ControlSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForEachLoopDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForEachLoopDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineIfDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineIfDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="OperatorBracketUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OperatorBracketUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OutputBufferingIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OutputBufferingIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GlobalFunctionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="GlobalFunctionUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidInterfaceNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidInterfaceNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Operators">
+        <file baseinstalldir="PHP" name="ComparisonOperatorUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ComparisonOperatorUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="IncrementDecrementUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="IncrementDecrementUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidLogicalOperatorsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidLogicalOperatorsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GlobalKeywordUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="GlobalKeywordUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="HeredocUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="HeredocUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Scope">
+        <file baseinstalldir="PHP" name="MemberVarScopeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MemberVarScopeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MethodScopeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MethodScopeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="StaticThisUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="StaticThisUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="ConcatenationSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ConcatenationSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DoubleQuoteUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DoubleQuoteUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EchoedStringsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EchoedStringsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+     </dir>
+     <file baseinstalldir="PHP" name="AbstractPatternSniff.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="AbstractScopeSniff.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="AbstractVariableSniff.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="IncorrectPatternException.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <file baseinstalldir="PHP" name="Exception.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="File.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="Sniff.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="SniffException.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="Tokens.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease>
+  <installconditions>
+   <os>
+    <name>windows</name>
+   </os>
+  </installconditions>
+  <filelist>
+   <install as="phpcs" name="scripts/phpcs" />
+   <install as="phpcs.bat" name="scripts/phpcs.bat" />
+   <install as="AllTests.php" name="tests/AllTests.php" />
+   <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
+   <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
+   <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
- </release>
+ </phprelease>
+ <phprelease>
+  <filelist>
+   <install as="phpcs" name="scripts/phpcs" />
+   <install as="AllTests.php" name="tests/AllTests.php" />
+   <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
+   <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
+   <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
+   <ignore name="scripts/phpcs.bat" />
+  </filelist>
+ </phprelease>
  <changelog>
   <release>
-   <version>0.2.1</version>
+   <version>
+    <release>0.3.0</release>
+    <api>0.3.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-01-11</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Updated package.xml to version 2
+    - Specifying coding standard on command line is now optional, even if you have multiple standards installed
+      - PHP_CodeSniffer uses the PEAR coding standard by default if no standard is specified
+    - New command line option, --extensions, to specify a comma separated list of file extensions to check
+    - Converted all unit tests to PHPUnit 3 format
+    - Added new coding standard, Squiz, that can be used as an alternative to PEAR
+      - also contains more examples of sniffs
+      - some may be moved into the Generic coding standard if required
+    - Added MultipleStatementAlignmentSniff to Generic standard
+    - Added ScopeIndentSniff to Generic standard
+    - Added ForbiddenFunctionsSniff to Generic standard
+    - Added FileCommentSniff to PEAR standard
+    - Added ClassCommentSniff to PEAR standard
+    - Added FunctionCommentSniff to PEAR standard
+    - Change MultipleStatementSniff to MultipleStatementAlignmentSniff in PEAR standard
+    - Replaced Methods directory with Functions directory in Generic and PEAR standards
+      - also renamed some of the sniffs in those directories
+    - Updated file, class and method comments for all files
+    - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
+    - Fixed bug #9411 : too few pattern characters cause incorrect error report
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.2.1</release>
+    <api>0.2.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-11-09</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    </notes>
   </release>
   <release>
-   <version>0.2.0</version>
+   <version>
+    <release>0.2.0</release>
+    <api>0.2.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-10-13</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Added a generic standards package that will contain generic sniffs to be used in specific coding standards
-      (thanks to Frederic Poeydomenge for the idea)
+      - thanks to Frederic Poeydomenge for the idea
     - Changed PEAR standard to use generic sniffs where available
     - Added LowerCaseConstantSniff to Generic standard
     - Added UpperCaseConstantSniff to Generic standard
@@ -879,10 +968,16 @@
    </notes>
   </release>
   <release>
-   <version>0.1.1</version>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-09-25</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Added unit tests for all PEAR sniffs
     - Exception class now extends from PEAR_Exception
@@ -890,10 +985,16 @@
    </notes>
   </release>
   <release>
-   <version>0.1.0</version>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-09-19</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Reorganised package contents to conform to PEAR standards
     - Changed version numbering to conform to PEAR standards
@@ -901,19 +1002,31 @@
    </notes>
   </release>
   <release>
-   <version>0.0.5</version>
+   <version>
+    <release>0.0.5</release>
+    <api>0.0.5</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-09-18</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Fixed .bat file for situation where php.ini cannot be found so include_path is not set
    </notes>
   </release>
   <release>
-   <version>0.0.4</version>
+   <version>
+    <release>0.0.4</release>
+    <api>0.0.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-08-28</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Added .bat file for easier running of PHP_CodeSniffer on Windows
     - Sniff that checks method names now works for PHP4 style code where there is no scope keyword
@@ -933,10 +1046,16 @@
    </notes>
   </release>
   <release>
-   <version>0.0.3</version>
+   <version>
+    <release>0.0.3</release>
+    <api>0.0.3</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-08-22</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Added sniff to check for invalid class and interface names
     - Added sniff to check for invalid function and method names
@@ -947,10 +1066,16 @@
    </notes>
   </release>
   <release>
-   <version>0.0.2</version>
+   <version>
+    <release>0.0.2</release>
+    <api>0.0.2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-07-25</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
     - Removed the including of checked files to stop errors caused by parsing them
     - Removed the use of reflection so checked files do not have to be included
@@ -969,10 +1094,16 @@
    </notes>
   </release>
   <release>
-   <version>0.0.1</version>
+   <version>
+    <release>0.0.1</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2006-07-19</date>
-   <license>BSD License</license>
-   <state>alpha</state>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>Initial preview release.</notes>
   </release>
  </changelog>
