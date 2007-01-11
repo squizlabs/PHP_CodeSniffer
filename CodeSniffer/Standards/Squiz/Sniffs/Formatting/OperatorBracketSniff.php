@@ -96,38 +96,43 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
         }//end if
 
-        $lastBracket = $stackPtr;
-        while ($lastBracket !== false) {
-            $lastBracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($lastBracket - 1), null, false, null, true);
+        $lastBracket = false;
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $parenthesis = array_reverse(array_keys($tokens[$stackPtr]['nested_parenthesis']));
+            foreach ($parenthesis as $bracket) {
+                $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($bracket - 1), null, true);
+                $prevCode  = $tokens[$prevToken]['code'];
 
-            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($lastBracket - 1), null, true);
-            $prevCode  = $tokens[$prevToken]['code'];
-
-            if ($prevCode === T_ISSET) {
-                // The isset function has it's own token.
-                continue;
-            }
-
-            if ($prevCode === T_STRING) {
-                // This is a function call.
-                continue;
-            }
-
-            if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
-                // This is a scope opener, like FOREACH or IF.
-                continue;
-            }
-
-            if ($prevCode === T_OPEN_PARENTHESIS) {
-                // These are two open parenthesis in a row. If the current
-                // one doesn't enclose the operator, go to the previous one.
-                if ($tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
-                    continue;
+                if ($prevCode === T_ISSET) {
+                    // This operation is inside an isset() call, but has
+                    // no bracket of it's own.
+                    break;
                 }
-            }
 
-            break;
-        }//end while
+                if ($prevCode === T_STRING) {
+                    // This operation is inside a function call, but has
+                    // no bracket of it's own.
+                    break;
+                }
+
+                if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+                    // This operation is inside an a control strucutre like FOREACH
+                    // or IF, but has no bracket of it's own.
+                    break;
+                }
+
+                if ($prevCode === T_OPEN_PARENTHESIS) {
+                    // These are two open parenthesis in a row. If the current
+                    // one doesn't enclose the operator, go to the previous one.
+                    if ($tokens[$bracket]['parenthesis_closer'] < $stackPtr) {
+                        continue;
+                    }
+                }
+
+                $lastBracket = $bracket;
+                break;
+            }//end foreach
+        }//end if
 
         if ($lastBracket === false) {
             // It is not in a bracketed statement at all.
@@ -156,11 +161,16 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         } else {
             // We are enclosed in a set of bracket, so the last thing to
             // check is that we are not also enclosed in square brackets
-            // like this: ($array[$index+1]), which is invalid.
-            $squareBracket = $phpcsFile->findPrevious(T_OPEN_SQUARE_BRACKET, ($stackPtr - 1), $lastBracket);
-            if ($squareBracket !== false) {
-                $closeSquareBracket = $phpcsFile->findNext(T_CLOSE_SQUARE_BRACKET, ($stackPtr + 1));
-                if ($closeSquareBracket !== false && $closeSquareBracket < $stackPtr) {
+            // like this: ($array[$index + 1]), which is invalid.
+            $brackets = array(
+                         T_OPEN_SQUARE_BRACKET,
+                         T_CLOSE_SQUARE_BRACKET,
+                        );
+
+            $squareBracket = $phpcsFile->findPrevious($brackets, ($stackPtr - 1), $lastBracket);
+            if ($squareBracket !== false && $tokens[$squareBracket]['code'] === T_OPEN_SQUARE_BRACKET) {
+                $closeSquareBracket = $phpcsFile->findNext($brackets, ($stackPtr + 1));
+                if ($closeSquareBracket !== false && $tokens[$closeSquareBracket]['code'] === T_CLOSE_SQUARE_BRACKET) {
                     $error = 'Arithmetic operation must be bracketed';
                     $phpcsFile->addError($error, $stackPtr);
                 }
