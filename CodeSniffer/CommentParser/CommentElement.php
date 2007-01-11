@@ -81,7 +81,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
 
     /**
-     * Returns the last token position of the short comment description
+     * Returns the last token position of the short comment description.
      *
      * @return int The last token position of the short comment description
      * @see _getLongCommentStartPos()
@@ -132,7 +132,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
 
     /**
-     * Returns the start position of the long comment description
+     * Returns the start position of the long comment description.
      *
      * Returns -1 if there is no long comment.
      *

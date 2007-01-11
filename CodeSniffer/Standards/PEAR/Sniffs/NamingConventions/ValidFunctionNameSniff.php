@@ -35,7 +35,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 {
 
     /**
-     * A list of all PHP magic method
+     * A list of all PHP magic methods.
      *
      * @var array
      */

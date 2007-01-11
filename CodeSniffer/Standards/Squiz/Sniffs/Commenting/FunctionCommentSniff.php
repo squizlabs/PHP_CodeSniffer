@@ -72,7 +72,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
 
     /**
-     * The index of the current tag we are processing
+     * The index of the current tag we are processing.
      *
      * @var int
      */
@@ -155,7 +155,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
         // Find the first doc comment.
-        $commentStart      = ($phpcsFile->findPrevious(T_DOC_COMMENT, $commentEnd - 1, null, true) + 1);
+        $commentStart      = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $comment           = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 

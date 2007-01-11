@@ -35,7 +35,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 {
 
     /**
-     * The number of spaces code should be indented
+     * The number of spaces code should be indented.
      *
      * @var int
      */

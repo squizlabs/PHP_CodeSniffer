@@ -120,7 +120,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                     break;
                 }
             } while (isset($tokens[$nextToken]['scope_closer']) === true);
-        }
+        }//end if
 
         $lineDifference = ($endBrace['line'] - $startBrace['line']);
         if ($lineDifference < $this->lineLimit) {

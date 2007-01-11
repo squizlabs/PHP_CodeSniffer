@@ -345,11 +345,11 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         foreach ($indentation as $indentInfo) {
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
-                $expected      = (($longestTag - strlen($indentInfo['tag'])) + 1);
-                $space         = ($indentInfo['space'] - strlen($indentInfo['tag']));
-                $error         = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
-                $error        .= "Expected $expected spaces but found $space.";
-                $getTagMethod  = 'get'.ucfirst($indentInfo['tag']);
+                $expected     = (($longestTag - strlen($indentInfo['tag'])) + 1);
+                $space        = ($indentInfo['space'] - strlen($indentInfo['tag']));
+                $error        = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
+                $error       .= "Expected $expected spaces but found $space.";
+                $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
                 if ($tags[$indentInfo['tag']]['allow_multiple'] === true) {
                     $line = $indentInfo['line'];
                 } else {

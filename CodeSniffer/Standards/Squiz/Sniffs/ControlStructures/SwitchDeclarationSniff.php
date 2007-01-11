@@ -143,7 +143,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
             // Check that all content within the DEFAULT case is indented correctly.
             $nextSpace = $default;
-            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, $nextSpace + 1, $nextBreak)) !== false) {
+            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), $nextBreak)) !== false) {
                 if (strpos($tokens[$nextSpace]['content'], "\n") === false) {
                     continue;
                 }

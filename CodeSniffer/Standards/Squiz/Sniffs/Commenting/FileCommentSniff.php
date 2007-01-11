@@ -290,10 +290,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
-                $expected  = ($longestTag - strlen($indentInfo['tag']) + 1);
-                $space     = ($indentInfo['space'] - strlen($indentInfo['tag']));
-                $error     = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
-                $error    .= "Expected $expected spaces but found $space.";
+                $expected = ($longestTag - strlen($indentInfo['tag']) + 1);
+                $space    = ($indentInfo['space'] - strlen($indentInfo['tag']));
+                $error    = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
+                $error   .= "Expected $expected spaces but found $space.";
                 $this->currentFile->addError($error, $indentInfo['errorPos']);
             }
         }
@@ -327,7 +327,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * The version tag must have the exact keyword 'release_version'
+     * The version tag must have the exact keyword 'release_version'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -354,7 +354,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * The package name must be 'MySource4'
+     * The package name must be 'MySource4'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -378,7 +378,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * The subpackage name must be camel-cased
+     * The subpackage name must be camel-cased.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -401,9 +401,9 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
                 }
 
-                $validName  = trim($newName, '_');
-                $error      = "Subpackage name \"$content\" is not valid; ";
-                $error     .= "consider \"$validName\" instead";
+                $validName = trim($newName, '_');
+                $error     = "Subpackage name \"$content\" is not valid; ";
+                $error    .= "consider \"$validName\" instead";
                 $this->currentFile->addError($error, $errorPos);
             }
         }
@@ -412,7 +412,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Author tag must be 'Squiz Pty Ltd <mysource4@squiz.net>'
+     * Author tag must be 'Squiz Pty Ltd <mysource4@squiz.net>'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -437,7 +437,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Copyright tag must be in the form '2006-YYYY Squiz Pty Ltd (ABN 77 084 670 600)'
+     * Copyright tag must be in the form '2006-YYYY Squiz Pty Ltd (ABN 77 084 670 600)'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -462,7 +462,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * License tag must be 'http://matrix.squiz.net/evaluations/licence Squiz.Net Open Source Licence'
+     * License tag must be 'http://matrix.squiz.net/evaluations/licence Squiz.Net Open Source Licence'.
      *
      * @param int $errorPos The line number where the error occurs.
      *

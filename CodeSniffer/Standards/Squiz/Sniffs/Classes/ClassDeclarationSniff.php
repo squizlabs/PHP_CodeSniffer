@@ -177,7 +177,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         $parents      = array();
 
         $nextParent   = ($className + 1);
-        while (($nextParent = $phpcsFile->findNext(T_STRING, $nextParent + 1, $openingBrace)) !== false) {
+        while (($nextParent = $phpcsFile->findNext(T_STRING, ($nextParent + 1), $openingBrace)) !== false) {
             $parents[] = $nextParent;
         }
 

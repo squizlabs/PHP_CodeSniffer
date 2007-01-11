@@ -79,9 +79,9 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {
-            $nextVar  = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
-            $error    = 'Short PHP opening tag used with echo. Found "';
-            $error   .= $openTag['content'].' '.$nextVar['content'].' ..." but expected "<?php echo '.$nextVar['content'].' ...".';
+            $nextVar = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
+            $error   = 'Short PHP opening tag used with echo. Found "';
+            $error  .= $openTag['content'].' '.$nextVar['content'].' ..." but expected "<?php echo '.$nextVar['content'].' ...".';
             $phpcsFile->addError($error, $stackPtr);
         }
 

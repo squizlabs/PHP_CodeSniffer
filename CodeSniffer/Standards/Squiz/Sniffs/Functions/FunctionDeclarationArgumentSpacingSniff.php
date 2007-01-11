@@ -74,7 +74,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                      T_CLOSE_PARENTHESIS,
                     );
         $nextBracket = $openBracket;
-        while (($nextBracket = $phpcsFile->findNext($brackets, $nextBracket + 1)) !== false) {
+        while (($nextBracket = $phpcsFile->findNext($brackets, ($nextBracket + 1))) !== false) {
             if ($tokens[$nextBracket]['code'] === T_OPEN_PARENTHESIS) {
                 $openers[] = $nextBracket;
             } else {
@@ -88,7 +88,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         $nextParam = $openBracket;
         $params    = array();
-        while (($nextParam = $phpcsFile->findNext(T_VARIABLE, $nextParam + 1, $closeBracket)) !== false) {
+        while (($nextParam = $phpcsFile->findNext(T_VARIABLE, ($nextParam + 1), $closeBracket)) !== false) {
 
             $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextParam + 1), ($closeBracket + 1), true);
             if ($nextToken === false) {

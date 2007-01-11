@@ -69,7 +69,7 @@ class Squiz_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             // Ignore the ELSE in ELSE IF. We'll process the IF part later.
-            if (($tokens[$stackPtr]['code'] === T_ELSE) && ($tokens[$stackPtr + 2]['code'] === T_IF)) {
+            if (($tokens[$stackPtr]['code'] === T_ELSE) && ($tokens[($stackPtr + 2)]['code'] === T_IF)) {
                 return;
             }
 

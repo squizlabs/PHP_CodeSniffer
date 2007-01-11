@@ -73,7 +73,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         $comments       = array($stackPtr);
         $currentComment = $stackPtr;
         $lastComment    = $stackPtr;
-        while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, $currentComment + 1)) !== false) {
+        while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1))) !== false) {
             if ($tokens[$lastComment]['line'] === ($tokens[$currentComment]['line'] - 1)) {
                 $comments[]  = $currentComment;
                 $lastComment = $currentComment;

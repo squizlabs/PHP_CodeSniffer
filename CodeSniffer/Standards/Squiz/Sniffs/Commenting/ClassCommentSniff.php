@@ -135,7 +135,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
                 }
 
-                $phpcsFile->addError($error, $commentStart + $newlineCount);
+                $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 $short = rtrim($short, "\n ");
             }
         }
@@ -225,7 +225,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Processes the since tag
+     * Processes the since tag.
      *
      * The since tag must have the exact keyword 'release_version'
      * or is in the form x.x.x

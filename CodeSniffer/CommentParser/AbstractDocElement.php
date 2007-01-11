@@ -106,7 +106,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @param string                                   $tag             The doc element tag this element
      *                                                                  represents.
      */
-    public function __construct($previousElement, $tokens, $tag)
+    public function __construct($previousElement, array $tokens, $tag)
     {
         if ($previousElement !== null && ($previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
             throw new Exception('$previousElement must be an instance of DocElement');
