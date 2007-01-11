@@ -69,4 +69,8 @@ $var = 100;
 
 // InValid
 $var  = 100;
+
+$commentStart = $phpcsFile->findPrevious();
+$commentEnd   = $this->_phpcsFile;
+$expected    .= '...';
 ?>

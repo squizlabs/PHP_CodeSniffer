@@ -80,7 +80,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             so we need to determine if there are more to follow.
         */
 
-        if (($nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr + 1, null, false)) !== false) {
+        if (($nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1), null, false)) !== false) {
             if ($tokens[$nextAssign]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                 return;
             }
@@ -94,7 +94,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxVariableLength   = 0;
         $maxAssignmentLength = 0;
 
-        while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $prevAssignment - 1, null, false)) !== false) {
+        while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1), null, false)) !== false) {
             if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
                 break;
             }
@@ -116,6 +116,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $lastLine--;
         }//end while
 
+        $assignmentData = array();
         foreach ($assignments as $assignment) {
             $variable = $phpcsFile->findPrevious(array(T_VARIABLE), $assignment, null, false);
             if ($this->_isAssignment($phpcsFile, $variable) === false) {
@@ -133,10 +134,31 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             if ($maxAssignmentLength < strlen($tokens[$assignment]['content'])) {
                 $maxAssignmentLength = strlen($tokens[$assignment]['content']);
             }
+
+            $assignmentData[$assignment] = array(
+                                            'variable_length'   => $contentLength + $tokens[$variable]['column'],
+                                            'assignment_length' => strlen($tokens[$assignment]['content']),
+                                           );
+        }//end foreach
+
+        foreach ($assignmentData as $assignment => $data) {
+            if ($data['assignment_length'] === $maxAssignmentLength) {
+                if ($data['variable_length'] === $maxVariableLength) {
+                    // The assignment is the longest possible, so the column that
+                    // everything has to align to is based on it.
+                    $column = ($maxVariableLength + 1);
+                    break;
+                } else {
+                    // The assignment token is the longest out of all of the
+                    // assignments, but the variable name is not, so the column
+                    // the start at can go back more to cover the space
+                    // between the variable name and the assigment operator.
+                    $column = ($maxVariableLength - ($maxAssignmentLength - 1) + 1);
+                }
+            }
         }
 
         // Determine the actual position that each equals sign should be in.
-        $column = ($maxVariableLength + 1);
         foreach ($assignments as $assignment) {
             // Actual column takes into account the length of the assignment operator.
             $actualColumn = ($column + $maxAssignmentLength - strlen($tokens[$assignment]['content']));
@@ -146,16 +168,16 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $variableContent = rtrim($variableContent);
                 $contentLength   = strlen($variableContent);
 
-                $leadingSpace  = $tokens[$variable]['column'];
-                $expected      = ($actualColumn - ($contentLength + $leadingSpace));
-                $expected     .= ($expected === 1) ? ' space' : ' spaces';
-                $found         = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
-                $found        .= ($found === 1) ? ' space' : ' spaces';
+                $leadingSpace = $tokens[$variable]['column'];
+                $expected     = ($actualColumn - ($contentLength + $leadingSpace));
+                $expected    .= ($expected === 1) ? ' space' : ' spaces';
+                $found        = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
+                $found       .= ($found === 1) ? ' space' : ' spaces';
 
                 if (count($assignments) === 1) {
-                    $error = 'Equals sign not aligned correctly. Expected '.$expected.', but found '.$found.'.';
+                    $error = "Equals sign not aligned correctly; expected $expected but found $found";
                 } else {
-                    $error = 'Equals sign not aligned with surrounding assignments. Expected '.$expected.', but found '.$found.'.';
+                    $error = "Equals sign not aligned with surrounding assignments; expected $expected but found $found";
                 }
 
                 if ($this->error === true) {
