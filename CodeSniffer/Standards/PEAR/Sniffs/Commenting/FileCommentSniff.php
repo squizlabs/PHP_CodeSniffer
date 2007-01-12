@@ -128,8 +128,14 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 return;
             }
 
+            $comment = $this->commentParser->getComment();
+            if (is_null($comment) === true) {
+                $error = 'File doc comment is empty';
+                $phpcsFile->addError($error, $commentStart);
+                return;
+            }
+
             // No extra newline before short description.
-            $comment      = $this->commentParser->getComment();
             $short        = $comment->getShortComment();
             $newlineCount = 0;
             $newlineSpan  = strspn($short, "\n");

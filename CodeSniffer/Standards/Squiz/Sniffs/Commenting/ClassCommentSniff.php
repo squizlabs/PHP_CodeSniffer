@@ -99,8 +99,14 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        $comment = $this->commentParser->getComment();
+        if (is_null($comment) === true) {
+            $error = 'Class doc comment is empty';
+            $phpcsFile->addError($error, $commentStart);
+            return;
+        }
+
         // No extra newline before short description.
-        $comment      = $this->commentParser->getComment();
         $short        = rtrim($comment->getShortComment(), "\n");
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");

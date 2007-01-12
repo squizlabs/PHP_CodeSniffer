@@ -183,6 +183,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             return;
         }
 
+        $comment = $this->commentParser->getComment();
+        if (is_null($comment) === true) {
+            $error = 'Function doc comment is empty';
+            $phpcsFile->addError($error, $commentStart);
+            return;
+        }
+
         $this->_processParams($commentStart, $commentEnd);
         $this->_processSince($commentStart, $commentEnd);
         $this->_processSees($commentStart);
@@ -190,7 +197,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $this->_processThrows($commentStart);
 
         // No extra newline before short description.
-        $comment      = $this->commentParser->getComment();
         $short        = $comment->getShortComment();
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");

@@ -73,7 +73,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      *
      * @var PHP_CodeSniffer_Comment_Parser_FunctionCommentParser
      */
-    private $_fp = null;
+    protected $commentParser = null;
 
     /**
      * The current PHP_CodeSniffer_File object we are processing.
@@ -150,11 +150,18 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         try {
-            $this->_fp = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment);
-            $this->_fp->parse();
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment);
+            $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line);
+            return;
+        }
+
+        $comment = $this->commentParser->getComment();
+        if (is_null($comment) === true) {
+            $error = 'Function doc comment is empty';
+            $phpcsFile->addError($error, $commentStart);
             return;
         }
 
@@ -163,7 +170,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $this->_processThrows($commentStart);
 
         // No extra newline before short description.
-        $comment      = $this->_fp->getComment();
         $short        = $comment->getShortComment();
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
@@ -188,8 +194,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         // Exactly one blank line before params.
         $newlineSpan = $comment->getNewlineAfter();
-        $parameters  = $this->_fp->getParams();
-        if ($newlineSpan !== 2 && (empty($parameters) === false || $this->_fp->getReturn() !== null)) {
+        $parameters  = $this->commentParser->getParams();
+        if ($newlineSpan !== 2 && (empty($parameters) === false || $this->commentParser->getReturn() !== null)) {
             $error = 'There must be exactly one blank line before the parameters in function comment';
             if ($long !== '') {
                 $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
@@ -199,7 +205,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         // Check for unknown/deprecated tags.
-        $unknownTags = $this->_fp->getUnknown();
+        $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             $error = ucfirst($errorTag['tag']).' tag is not allowed in function comment';
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
@@ -217,11 +223,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      */
     private function _processThrows($commentStart)
     {
-        if (count($this->_fp->getThrows()) === 0) {
+        if (count($this->commentParser->getThrows()) === 0) {
             return;
         }
 
-        foreach ($this->_fp->getThrows() as $throw) {
+        foreach ($this->commentParser->getThrows() as $throw) {
 
             $comment  = $throw->getComment();
             $errorPos = ($commentStart + $throw->getLine());
@@ -257,12 +263,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if ($isSpecialMethod === false && $methodName !== $className) {
             // Report missing return tag.
-            if ($this->_fp->getReturn() === null) {
+            if ($this->commentParser->getReturn() === null) {
                 $error = 'Missing return tag in function comment';
                 $this->_phpcsFile->addError($error, $commentEnd);
-            } else if (trim($this->_fp->getReturn()->getRawContent()) === '') {
+            } else if (trim($this->commentParser->getReturn()->getRawContent()) === '') {
                 $error    = 'Return tag is empty in function comment';
-                $errorPos = ($commentStart + $this->_fp->getReturn()->getLine());
+                $errorPos = ($commentStart + $this->commentParser->getReturn()->getLine());
                 $this->_phpcsFile->addError($error, $errorPos);
             }
         }
@@ -282,7 +288,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     {
         $realParams = $this->_phpcsFile->getMethodParameters($this->_functionToken);
 
-        $params      = $this->_fp->getParams();
+        $params      = $this->commentParser->getParams();
         $foundParams = array();
 
         if (empty($params) === false) {
