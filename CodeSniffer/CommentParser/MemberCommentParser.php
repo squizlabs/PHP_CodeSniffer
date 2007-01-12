@@ -14,8 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/AbstractParser.php';
-require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
+require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
 
 /**
  * Parses class member comments.
