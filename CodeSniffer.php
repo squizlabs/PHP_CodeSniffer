@@ -224,9 +224,10 @@ class PHP_CodeSniffer
 
             if (isset($this->_classCache[$file]) === false) {
                 // Determine what classes this file contains.
-                $currentClasses = get_declared_classes();
+                $oldClasses = get_declared_classes();
                 include_once $file;
-                $this->_classCache[$file] = array_diff(get_declared_classes(), $currentClasses);
+                $newClasses = get_declared_classes();
+                $this->_classCache[$file] = array_diff($newClasses, $oldClasses);
             }
 
             $newClasses = $this->_classCache[$file];
@@ -249,7 +250,8 @@ class PHP_CodeSniffer
 
                 // If they have specified a list of sniffs to restrict to, check
                 // to see if this sniff is allowed.
-                if (empty($sniffs) === false && in_array(strtolower($className), $sniffs) === false) {
+                $allowed = in_array(strtolower($className), $sniffs);
+                if (empty($sniffs) === false && $allowed === false) {
                     continue;
                 }
 
@@ -344,7 +346,7 @@ class PHP_CodeSniffer
     private function _processFile($file)
     {
         if (file_exists($file) === false) {
-            throw new PHP_CodeSniffer_Exception('Source file '.$file.' does not exist');
+            throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -870,8 +872,10 @@ class PHP_CodeSniffer
         $di = new DirectoryIterator($standardsDir);
         foreach ($di as $file) {
             if ($file->isDir() === true && $file->isDot() === false) {
+                $filename = $file->getFilename();
+
                 // Ignore the special "Generic" standard.
-                if ($includeGeneric === false && $file->getFilename() === 'Generic') {
+                if ($includeGeneric === false && $filename === 'Generic') {
                     continue;
                 }
 
@@ -879,7 +883,7 @@ class PHP_CodeSniffer
                 // subdirectory, so check for it.
                 if (is_dir($file->getPathname().'/Sniffs') === true) {
                     // We found a coding standard directory.
-                    $installedStandards[] = $file->getFilename();
+                    $installedStandards[] = $filename;
                 }
             }
         }
@@ -903,7 +907,8 @@ class PHP_CodeSniffer
      */
     public static function isInstalledStandard($standard)
     {
-        $standardDir = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/Sniffs';
+        $standardDir  = dirname(__FILE__);
+        $standardDir .='/CodeSniffer/Standards/'.$standard.'/Sniffs';
         return (is_dir($standardDir) === true);
 
     }//end isInstalledStandard()
