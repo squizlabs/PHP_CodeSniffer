@@ -79,12 +79,20 @@ class Missing_Newlines_Before_Tags
  */
 class Checking_Tags
 {
-	class Sub_Class {
+    class Sub_Class {
 
-	}//end class
+    }//end class
 
 
 }//end class
 
 
+/**
+ *
+ *
+ */
+class Empty_Class_Doc
+{
+
+}//end class
 ?>

@@ -101,4 +101,15 @@ class Empty_Since
 {
 
 }//end class
+
+
+/**
+ *
+ *
+ *
+ */
+class Empty_Class_Doc
+{
+
+}//end class
 ?>

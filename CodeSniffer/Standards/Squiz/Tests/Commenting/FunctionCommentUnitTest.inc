@@ -298,4 +298,30 @@ public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownT
     return 1;
 
 }//end mixedArrayType()
+
+
+/**
+ */
+function empty1()
+{
+}//end empty1()
+
+
+/**
+ *
+ */
+function empty2()
+{
+}//end empty2()
+
+
+/**
+ *
+ *
+ *
+ */
+function empty3()
+{
+}//end empty3)_
+
 ?>

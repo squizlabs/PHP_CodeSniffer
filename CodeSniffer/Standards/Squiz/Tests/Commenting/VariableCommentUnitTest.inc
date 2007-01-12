@@ -144,5 +144,12 @@ class VariableCommentUnitTest
 
     }//end checkVariable()
 
+
+    /**
+     *
+     *
+     */
+     $emptyVarDoc = '';
+
 }//end class
 ?>

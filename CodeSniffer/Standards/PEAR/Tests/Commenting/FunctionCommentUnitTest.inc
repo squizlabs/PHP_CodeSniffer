@@ -200,4 +200,10 @@ public function missingTwoParamComment($one, $two, $three)
 }//end missingTwoParamComment()
 
 
+/**
+ *
+ */
+function emptyFunctionDocComment()
+{
+}//end emptyFunctionDocComment()
 ?>
