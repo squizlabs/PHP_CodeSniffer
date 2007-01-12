@@ -222,4 +222,80 @@ public function missingReturnType()
 }//end missingReturnType()
 
 
+/**
+ * Case-sensitive var type check with multiple return type.
+ *
+ * @param String  $a1 Comment here.
+ * @param BoOL    $a2 Comment here.
+ * @param INT     $a3 Comment here.
+ * @param aRRay   $a4 Comment here.
+ * @param real    $a5 Comment here.
+ * @param double  $a6 Comment here.
+ * @param Myclass $a7 Comment here.
+ *
+ * @since  4.0.12
+ * @return int|object|double|float|array(int=>MyClass)
+ */
+public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
+{
+
+}//end caseSensitive()
+
+
+/**
+ * More type hint check for custom type and array.
+ *
+ * @param array   $a1 Comment here.
+ * @param array   $a2 Comment here.
+ * @param MyClass $a3 Comment here.
+ * @param MyClass $a4 Comment here.
+ *
+ * @since  4.0.0
+ * @return array(int => MyClass)
+ */
+public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
+{
+    return (3 => 'myclass obj');
+
+}//end typeHint()
+
+
+/**
+ * Mixed variable type separated by a '|'.
+ *
+ * @param array|string $a1 Comment here.
+ * @param mixed        $a2 Comment here.
+ * @param string|array $a3 Comment here.
+ * @param MyClass|int  $a4 Comment here.
+ *
+ * @since 4.0.0
+ * @return bool
+ */
+public function mixedType($a1, $a2, $a3, $a4)
+{
+    return true;
+
+}//end mixedType()
+
+
+/**
+ * Array type.
+ *
+ * @param array(MyClass)         $a1 OK.
+ * @param array()                $a2 Invalid type.
+ * @param array(                 $a3 Typo.
+ * @param array(int)             $a4 Use 'array(integer)' instead.
+ * @param array(int => integer)  $a5 Use 'array(integer => integer)' instead.
+ * @param array(integer => bool) $a6 Use 'array(integer => boolean)' instead.
+ * @param aRRay                  $a7 Use 'array' instead.
+ * @param string                 $a8 String with unknown type hint.
+ *
+ * @since  4.0.0
+ * @return int
+ */
+public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownTypeHint $a8)
+{
+    return 1;
+
+}//end mixedArrayType()
 ?>
