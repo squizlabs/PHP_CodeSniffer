@@ -151,7 +151,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             // Unknown tags are not parsed, do not process further.
-            $error = ucfirst($errorTag['tag']).' tag is not allowed in variable comment';
+            $error = "@$errorTag[tag] tag is not allowed in variable comment";
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
             return;
         }
@@ -180,31 +180,31 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $index    = array_keys($this->commentParser->getTagOrders(), 'var');
 
             if (count($index) > 1) {
-                $error = 'Only 1 var tag is allowed in variable comment';
+                $error = 'Only 1 @var tag is allowed in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
 
             if ($index[0] !== 1) {
-                $error = 'The order of var tag is wrong in variable comment';
+                $error = 'The order of @var tag is wrong in variable comment';
                 $this->currentFile->addError($error, $errorPos);
             }
 
             $content = $var->getContent();
             if (empty($content) === true) {
-                $error = 'Var type missing for var tag in variable comment';
+                $error = 'Var type missing for @var tag in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
 
             $spacing = substr_count($var->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== 3) {
-                $error  = 'Var tag indented incorrectly. ';
+                $error  = '@var tag indented incorrectly. ';
                 $error .= "Expected 3 spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
         } else {
-            $error = 'Missing required var tag in variable comment';
+            $error = 'Missing @var tag in variable comment';
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
@@ -229,36 +229,36 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $var       = array_keys($foundTags, 'var');
 
             if (count($index) > 1) {
-                $error = 'Only 1 since tag is allowed in variable comment';
+                $error = 'Only 1 @since tag is allowed in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
             // Only check order if there is one var tag in variable comment.
             if (count($var) === 1 && $index[0] !== 2) {
-                $error = 'The order of since tag is wrong in variable comment';
+                $error = 'The order of @since tag is wrong in variable comment';
                 $this->currentFile->addError($error, $errorPos);
             }
 
             $content = $since->getContent();
             if (empty($content) === true) {
-                $error = 'Version number missing for since tag in variable comment';
+                $error = 'Version number missing for @since tag in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in since tag';
+                    $error = 'Expected version number to be in the form x.x.x in @since tag';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
 
             $spacing = substr_count($since->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== 1) {
-                $error  = 'Since tag indented incorrectly. ';
+                $error  = '@since tag indented incorrectly. ';
                 $error .= "Expected 1 space but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
         } else {
-            $error = 'Missing required since tag in variable comment';
+            $error = 'Missing @since tag in variable comment';
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
@@ -280,14 +280,14 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $errorPos = ($commentStart + $see->getLine());
                 $content  = $see->getContent();
                 if (empty($content) === true) {
-                    $error = 'Content missing for see tag in variable comment';
+                    $error = 'Content missing for @see tag in variable comment';
                     $this->currentFile->addError($error, $errorPos);
                     continue;
                 }
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== 3) {
-                    $error  = 'See tag indented incorrectly. ';
+                    $error  = '@see tag indented incorrectly. ';
                     $error .= "Expected 3 spaces but found $spacing.";
                     $this->currentFile->addError($error, $errorPos);
                 }

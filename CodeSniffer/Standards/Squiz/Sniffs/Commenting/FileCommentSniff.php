@@ -183,7 +183,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $unknownTags = $this->commentParser->getUnknown();
             foreach ($unknownTags as $errorTag) {
                 // Unknown tags are not parsed, do not process further.
-                $error = ucfirst($errorTag['tag']).' tag is not allowed in file comment';
+                $error = "@$errorTag[tag] tag is not allowed in file comment";
                 $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
             }
 
@@ -223,7 +223,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Required tag missing.
             if (in_array($tag, $foundTags) === false) {
-                $error = "Missing required $tag tag in file comment";
+                $error = "Missing @$tag tag in file comment";
                 $this->currentFile->addError($error, $commentEnd);
                 continue;
             }
@@ -249,7 +249,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // Make sure there is no duplicate tag.
             $foundIndexes = array_keys($foundTags, $tag);
             if (count($foundIndexes) > 1) {
-                $error = "Only 1 $tag tag is allowed in file comment";
+                $error = "Only 1 @$tag tag is allowed in file comment";
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -257,7 +257,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($foundIndexes[0] > $orderIndex) {
                 $orderIndex = $foundIndexes[0];
             } else {
-                $error = "The order of $tag tag is wrong in file comment";
+                $error = "The order of @$tag tag is wrong in file comment";
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -292,7 +292,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
                 $expected = ($longestTag - strlen($indentInfo['tag']) + 1);
                 $space    = ($indentInfo['space'] - strlen($indentInfo['tag']));
-                $error    = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
+                $error    = "@$indentInfo[tag] tag comment indented incorrectly. ";
                 $error   .= "Expected $expected spaces but found $space.";
                 $this->currentFile->addError($error, $indentInfo['errorPos']);
             }
@@ -339,7 +339,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if ($version !== null) {
             $content = $version->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for version tag in file comment';
+                $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
@@ -366,7 +366,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if ($package !== null) {
             $content = $package->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for package tag in file comment';
+                $error = 'Content missing for @package tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if ($content !== 'MySource4') {
                 $error = 'Expected "MySource4" for package name';
@@ -390,7 +390,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if ($subpackage !== null) {
             $content = $subpackage->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for subpackage tag in file comment';
+                $error = 'Content missing for @subpackage tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
                 // Subpackage name must be properly camel-cased.
@@ -425,7 +425,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $author  = $authors[0];
             $content = $author->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for author tag in file comment';
+                $error = 'Content missing for @author tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if ($content !== 'Squiz Pty Ltd <mysource4@squiz.net>') {
                 $error = 'Expected "Squiz Pty Ltd <mysource4@squiz.net>" for author tag';
@@ -449,7 +449,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if ($copyright !== null) {
             $content = $copyright->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for copyright tag in file comment';
+                $error = 'Content missing for @copyright tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
 
             } else if (preg_match('/^([0-9]{4})-([0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $content) === 0) {
@@ -475,12 +475,12 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $url     = $license->getValue();
             $content = $license->getComment();
             if (empty($url) === true && empty($content) === true) {
-                $error = 'Content missing for license tag in file comment';
+                $error = 'Content missing for @license tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else {
                 // Check for license URL.
                 if (empty($url) === true) {
-                    $error = 'License URL missing for license tag in file comment';
+                    $error = 'License URL missing for @license tag in file comment';
                     $this->currentFile->addError($error, $errorPos);
                 } else if ($url !== 'http://matrix.squiz.net/licence') {
                     $error = 'Expected "http://matrix.squiz.net/licence" for license URL';
@@ -489,7 +489,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 // Check for license name.
                 if (empty($content) === true) {
-                    $error = 'License name missing for license tag in file comment';
+                    $error = 'License name missing for @license tag in file comment';
                     $this->currentFile->addError($error, $errorPos);
                 } else if ($content !== 'Squiz.Net Open Source Licence') {
                     $error = 'Expected "Squiz.Net Open Source Licence" for license name';

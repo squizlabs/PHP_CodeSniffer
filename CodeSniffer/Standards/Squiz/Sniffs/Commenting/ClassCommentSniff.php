@@ -155,7 +155,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         // Check for unknown/deprecated tags.
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
-            $error = ucfirst($errorTag['tag']).' tag is not allowed in class comment';
+            $error = "@$errorTag[tag] tag is not allowed in class comment";
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
             return;
         }
@@ -240,12 +240,12 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         if ($since !== null) {
             $content = $since->getContent();
             if (empty($content) === true) {
-                $error = 'Content missing for since tag in class comment';
+                $error = 'Content missing for @since tag in class comment';
                 $this->currentFile->addError($error, $errorPos);
 
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in since tag';
+                    $error = 'Expected version number to be in the form x.x.x in @since tag';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
