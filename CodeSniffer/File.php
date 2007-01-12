@@ -1305,9 +1305,8 @@ class PHP_CodeSniffer_File
      * <code>
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
-     *         'is_array'          => false,   // An array hint was used.
      *         'pass_by_reference' => false,   // Passed by reference.
-     *         'type_hint'         => false,   // A custom type hint
+     *         'type_hint'         => string,  // Type hint for array or custom type
      *        )
      * </code>
      *
@@ -1334,7 +1333,6 @@ class PHP_CodeSniffer_File
         $currVar         = null;
         $defaultStart    = null;
         $paramCount      = 0;
-        $isArray         = false;
         $passByReference = false;
         $typeHint        = '';
 
@@ -1359,7 +1357,7 @@ class PHP_CodeSniffer_File
                 $currVar = $i;
                 break;
             case T_ARRAY_HINT:
-                $isArray = true;
+                $typeHint = $this->_tokens[$i]['content'];
                 break;
             case T_STRING:
                 $typeHint = $this->_tokens[$i]['content'];
@@ -1379,13 +1377,11 @@ class PHP_CodeSniffer_File
                     $vars[$paramCount]['default'] = $this->getTokensAsString($defaultStart, ($i - $defaultStart));
                 }
 
-                $vars[$paramCount]['is_array']          = $isArray;
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['type_hint']         = $typeHint;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
-                $isArray         = false;
                 $passByReference = false;
                 $typeHint        = '';
 
