@@ -84,6 +84,21 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     {
         parent::__construct($previousElement, $tokens, 'param');
 
+        // Handle special variable type: array(x => y).
+        $type = strtolower($this->_type);
+        if ($this->_varName === '=>' && strpos($type, 'array(') !== false) {
+            $rawContent = $this->getRawContent();
+            $matches    = array();
+            if (preg_match('/^(\s+)(array\(.*\))(\s+)(\$\S*)(\s+)(.*)/i', $rawContent, $matches) !== 0) {
+                // Process the sub elements correctly for this special case.
+                if (count($matches) === 7) {
+                    $this->processSubElement('type', $matches[2], $matches[1]);
+                    $this->processSubElement('varName', $matches[4], $matches[3]);
+                    $this->processSubElement('comment', $matches[6], $matches[5]);
+                }
+            }
+        }
+
     }//end __construct()
 
 
