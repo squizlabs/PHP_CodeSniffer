@@ -92,6 +92,21 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      */
     protected $currentFile = null;
 
+    /**
+     * A list of supported param variable types.
+     *
+     * @var array(string)
+     */
+    public $validTypes = array(
+                          'array',
+                          'boolean',
+                          'float',
+                          'integer',
+                          'mixed',
+                          'object',
+                          'string',
+                         );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -230,7 +245,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         // Check for unknown/deprecated tags.
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
-            $error = ucfirst($errorTag['tag']).' tag is not allowed in function comment';
+            $error = "@$errorTag[tag] tag is not allowed in function comment";
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
         }
 
@@ -260,24 +275,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $this->_tagIndex = $firstTag;
             $index = array_keys($this->commentParser->getTagOrders(), 'since');
             if (count($index) > 1) {
-                $error = 'Only 1 since tag is allowed in function comment';
+                $error = 'Only 1 @since tag is allowed in function comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
 
             if ($index[0] !== $firstTag) {
-                $error = 'The order of since tag is wrong in function comment';
+                $error = 'The order of @since tag is wrong in function comment';
                 $this->currentFile->addError($error, $errorPos);
             }
 
             $content = $since->getContent();
             if (empty($content) === true) {
-                $error = 'Version number missing for since tag in function comment';
+                $error = 'Version number missing for @since tag in function comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in since tag';
+                    $error = 'Expected version number to be in the form x.x.x in @since tag';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -288,12 +303,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $correctSpacing = ($return !== null || empty($throws) === false) ? 2 : 1;
 
             if ($spacing !== $correctSpacing) {
-                $error  = 'Since tag indented incorrectly. ';
+                $error  = '@since tag indented incorrectly. ';
                 $error .= "Expected $correctSpacing spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
         } else {
-            $error = 'Missing required since tag in function comment';
+            $error = 'Missing @since tag in function comment';
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
@@ -319,21 +334,21 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[$i] !== $this->_tagIndex) {
-                        $error = 'The order of see tag is wrong in function comment';
+                        $error = 'The order of @see tag is wrong in function comment';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
 
                 $content = $see->getContent();
                 if (empty($content) === true) {
-                    $error = 'Content missing for see tag in function comment';
+                    $error = 'Content missing for @see tag in function comment';
                     $this->currentFile->addError($error, $errorPos);
                     continue;
                 }
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== 4) {
-                    $error  = 'See tag indented incorrectly. ';
+                    $error  = '@see tag indented incorrectly. ';
                     $error .= "Expected 4 spaces but found $spacing.";
                     $this->currentFile->addError($error, $errorPos);
                 }
@@ -372,7 +387,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 $content  = trim($return->getRawContent());
 
                 if (count($index) > 1) {
-                    $error = 'Only 1 return tag is allowed in function comment';
+                    $error = 'Only 1 @return tag is allowed in function comment';
                     $this->currentFile->addError($error, $errorPos);
                     return;
                 }
@@ -381,17 +396,32 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[0] !== $this->_tagIndex) {
-                        $error = 'The order of return tag is wrong in function comment';
+                        $error = 'The order of @return tag is wrong in function comment';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
 
                 if (empty($content) === true) {
-                    $error = 'Return type missing for return tag in function comment';
+                    $error = 'Return type missing for @return tag in function comment';
                     $this->currentFile->addError($error, $errorPos);
+                } else {
+                    // Check return type (can be multiple, separated by '|').
+                    $typeNames      = explode('|', $content);
+                    $suggestedNames = array();
+                    foreach ($typeNames as $i => $typeName) {
+                        $suggestedName = $this->_suggestName($typeName);
+                        if (in_array($suggestedName, $suggestedNames) === false) {
+                            $suggestedNames[] = $suggestedName;
+                        }
+                    }
+                    $suggestedType = implode('|', $suggestedNames);
+                    if ($content !== $suggestedType) {
+                        $error = "Function return type \"$content\" is invalid";
+                        $this->currentFile->addError($error, $errorPos);
+                    }
                 }
             } else {
-                $error = 'Missing required return tag in function comment';
+                $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd);
             }//end if
         }//end if
@@ -420,10 +450,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $content   = $throw->getComment();
             $errorPos  = ($commentStart + $throw->getLine());
             if (empty($exception) === true) {
-                $error = 'Exception type and comment missing for throw tag in function comment';
+                $error = 'Exception type and comment missing for @throws tag in function comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if (empty($content) === true) {
-                $error = 'Comment missing for throw tag in function comment';
+                $error = 'Comment missing for @throws tag in function comment';
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -431,7 +461,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if (count($since) === 1 && $this->_tagIndex !== 0) {
                 $this->_tagIndex++;
                 if ($index[$i] !== $this->_tagIndex) {
-                    $error = 'The order of throw tag is wrong in function comment';
+                    $error = 'The order of @throws tag is wrong in function comment';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -477,15 +507,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $longestType        = 0;
             $longestVar         = 0;
 
-            $varType = array(
-                        'boolean',
-                        'float',
-                        'integer',
-                        'mixed',
-                        'object',
-                        'string',
-                       );
-
             foreach ($params as $param) {
 
                 $paramComment = trim($param->getComment());
@@ -511,8 +532,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 }
 
                 // Make sure they are in the correct order, and have the correct name.
-                $pos = $param->getPosition();
-
+                $pos       = $param->getPosition();
                 $paramName = ($param->getVarName() !== '') ? $param->getVarName() : '[ UNKNOWN ]';
 
                 if ($previousParam !== null) {
@@ -525,36 +545,43 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     }
                 }
 
-                // Check var type.
-                $typeName = $param->getType();
-                if (in_array($typeName, $varType) === false) {
-                    $typeNames = explode('|', $typeName);
-                    if (count($typeNames) === 1) {
-                        // Type hint must be provided for array and custom type.
-                        if ($typeName === 'array') {
-                            if (isset($realParams[($pos - 1)]['is_array']) === false || $realParams[($pos - 1)]['is_array'] === false) {
-                                $error = "Type hint missing for array $paramName at position $pos";
-                                $this->currentFile->addError($error, ($commentEnd + 1));
+                // Variable must be one of the supported standard type.
+                $typeNames = explode('|', $param->getType());
+                foreach ($typeNames as $typeName) {
+                    $suggestedName = $this->_suggestName($typeName);
+                    if ($typeName !== $suggestedName) {
+                        $error  = "Expected \"$suggestedName\" but found";
+                        $error .= " \"$typeName\" for $paramName at position $pos";
+                        $this->currentFile->addError($error, $errorPos);
+                    } else if (count($typeNames) === 1) {
+                        // Check type hint for array and custom type.
+                        $suggestedTypeHint = '';
+                        if (strpos($suggestedName, 'array') !== false) {
+                            $suggestedTypeHint = 'array';
+                        } else if (in_array($typeName, $this->validTypes) === false) {
+                            $suggestedTypeHint = $suggestedName;
+                        }
+                        if ($suggestedTypeHint !== '' && isset($realParams[($pos - 1)]) === true) {
+                            $typeHint = $realParams[($pos - 1)]['type_hint'];
+                            if ($typeHint === '') {
+                                $error = "Type hint \"$suggestedTypeHint\" missing for $paramName at position $pos";
+                                $this->currentFile->addError($error, ($commentEnd + 2));
+                            } else if ($typeHint !== $suggestedTypeHint) {
+                                $error  = 'Type hint "'.$suggestedTypeHint;
+                                $error .= '" does not match actual variable type "'.$typeHint;
+                                $error .= "\" for $paramName at position $pos";
+                                $this->currentFile->addError($error, ($commentEnd + 2));
                             }
-                        } else if ($typeName === 'bool') {
-                            $error = 'Expected "boolean" but found "bool" for variable type';
-                            $this->currentFile->addError($error, $errorPos);
-                        } else if ($typeName === 'int') {
-                            $error = 'Expected "integer" but found "int" for variable type';
-                            $this->currentFile->addError($error, $errorPos);
-                        } else {
-                            if (isset($realParams[($pos - 1)]['type_hint']) === false) {
-                                $error = "Type hint missing for custom type $paramName at position $pos";
-                                $this->currentFile->addError($error, ($commentEnd + 1));
-                            } else if ($realParams[($pos - 1)]['type_hint'] !== $typeName) {
-                                $error  = 'Type hint "'.$realParams[($pos - 1)]['type_hint'];
-                                $error .= '" does not match actual variable type "'.$typeName;
-                                $error .= '" at position '.$pos;
-                                $this->currentFile->addError($error, ($commentEnd + 1));
+                        } else if ($suggestedTypeHint === '' && isset($realParams[($pos - 1)]) === true) {
+                            $typeHint = $realParams[($pos - 1)]['type_hint'];
+                            if ($typeHint !== '') {
+                                $error  = "Unknown type hint \"".$typeHint;
+                                $error .= "\" found for $paramName at position $pos";
+                                $this->currentFile->addError($error, ($commentEnd + 2));
                             }
-                        }//end if
-                    }//end if
-                }//end if
+                        }
+                    }
+                }
 
                 // Make sure the names of the parameter comment matches the
                 // actual parameter.
@@ -630,6 +657,65 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
     }//end _processParams()
 
+
+    /**
+     * Returns a valid variable type.
+     *
+     * If type is not one of the standard type, check camel-case.
+     * Returns the correct type name suggestion if type name is invalid.
+     *
+     * @param string $varType The variable type to process.
+     *
+     * @return string
+     */
+    private function _suggestName($varType)
+    {
+        if ($varType === '') {
+            return '';
+        }
+
+        if (in_array($varType, $this->validTypes) === true) {
+            return $varType;
+        } else {
+            $lowerVarType = strtolower($varType);
+            switch ($lowerVarType) {
+            case 'bool':
+                return 'boolean';
+            case 'double':
+            case 'real':
+                return 'float';
+            case 'int':
+                return 'integer';
+            case 'array()':
+                return 'array';
+            }//end switch
+
+            if (strpos($lowerVarType, 'array(') !== false) {
+                // Valid array declaration: array, array(type), array(type1 => type2).
+                $matches = array();
+                if (preg_match('/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i', $varType, $matches) !== 0) {
+                    $type1 = (isset($matches[1]) === true) ? $matches[1] : '';
+                    $type2 = (isset($matches[3]) === true) ? $matches[3] : '';
+                    $type1 = $this->_suggestName($type1);
+                    $type2 = $this->_suggestName($type2);
+                    if ($type2 !== '') {
+                        $type2 = ' => '.$type2;
+                    }
+                    return "array($type1$type2)";
+                } else {
+                    return 'array';
+                }
+            } else if (in_array($lowerVarType, $this->validTypes) === true) {
+                // A valid type, but not lower cased.
+                return $lowerVarType;
+            } else {
+                // Must be a custom class name.
+                return $varType;
+            }//end if
+
+        }//end if
+
+    }//end _suggestName()
 
 }//end class
 
