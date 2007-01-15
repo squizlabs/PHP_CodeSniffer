@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-01-12</date>
  <time>08:53:28</time>
  <version>
-  <release>0.3.0</release>
-  <api>0.3.0</api>
+  <release>0.3.1</release>
+  <api>0.3.1</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,26 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license>BSD License</license>
  <notes>
-   - Updated package.xml to version 2
-   - Specifying coding standard on command line is now optional, even if you have multiple standards installed
-     - PHP_CodeSniffer uses the PEAR coding standard by default if no standard is specified
-   - New command line option, --extensions, to specify a comma separated list of file extensions to check
-   - Converted all unit tests to PHPUnit 3 format
-   - Added new coding standard, Squiz, that can be used as an alternative to PEAR
-     - also contains more examples of sniffs
-     - some may be moved into the Generic coding standard if required
-   - Added MultipleStatementAlignmentSniff to Generic standard
-   - Added ScopeIndentSniff to Generic standard
-   - Added ForbiddenFunctionsSniff to Generic standard
-   - Added FileCommentSniff to PEAR standard
-   - Added ClassCommentSniff to PEAR standard
-   - Added FunctionCommentSniff to PEAR standard
-   - Change MultipleStatementSniff to MultipleStatementAlignmentSniff in PEAR standard
-   - Replaced Methods directory with Functions directory in Generic and PEAR standards
-     - also renamed some of the sniffs in those directories
-   - Updated file, class and method comments for all files
-   - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
-   - Fixed bug #9411 : too few pattern characters cause incorrect error report
+   - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
  </notes>
  <contents>
   <dir name="/">

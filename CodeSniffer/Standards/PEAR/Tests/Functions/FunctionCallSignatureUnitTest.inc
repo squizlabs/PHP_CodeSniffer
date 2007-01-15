@@ -32,4 +32,13 @@ make_foo($string/*the string*/, true/*test*/ );
 make_foo($string /*the string*/, true /*test*/);
 make_foo(/*the string*/$string, /*test*/true);
 make_foo( /*the string*/$string, /*test*/true);
+
+// No errors should be throw here because
+// this is not a function call per se.
+throw new Exception(
+    'Exception text'
+);
+
+// Or here.
+$obj = new TestClass( );
 ?>
