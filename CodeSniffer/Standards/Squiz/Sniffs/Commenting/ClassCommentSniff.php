@@ -87,7 +87,33 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
-        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+        $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
+        //echo "($commentEnd,$stackPtr) class comment Next: $commentNext ... ".print_r($tokens[$commentNext],1);
+
+        // Distinguish file and class comment.
+        $prevClassToken = $phpcsFile->findPrevious(T_CLASS, ($stackPtr - 1));
+        if ($prevClassToken === false) {
+            // This is the first class token in this file, need extra checks.
+            $prevNonComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentStart - 1), null, true);
+            if ($prevNonComment !== false) {
+                $prevComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($prevNonComment - 1));
+                if ($prevComment === false) {
+                    // There is only 1 doc comment between open tag and class token.
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
+                    if ($newlineToken !== false) {
+                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $stackPtr, false, "\n");
+                        if ($newlineToken !== false) {
+                            // Blank line between the class and the doc block.
+                            // The doc block is most likely a file comment.
+                            $phpcsFile->addError('Missing class doc comment', ($stackPtr + 1));
+                            return;
+                        }
+                    }//end if
+                }//end if
+            }//end if
+        }//end if
+
+        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         // Parse the class comment docblock.
         try {

@@ -1,5 +1,5 @@
 <?php
-define('OK', 1);
+/** File doc comment */
 
 class No_Comment
 {

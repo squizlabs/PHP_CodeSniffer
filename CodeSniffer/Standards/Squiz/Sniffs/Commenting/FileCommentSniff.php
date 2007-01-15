@@ -114,7 +114,29 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Extract the header comment docblock.
             $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
-            $comment    = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+
+            // Check if there is only 1 doc comment between the open tag and class token.
+            $nextToken = array(
+                          T_ABSTRACT,
+                          T_CLASS,
+                          T_DOC_COMMENT,
+                         );
+            $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
+            if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
+                // Found a class token right after comment doc block.
+                $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, "\n");
+                if ($newlineToken !== false) {
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $commentNext, false, "\n");
+                    if ($newlineToken === false) {
+                        // No blank line between the class token and the doc block.
+                        // The doc block is most likely a class comment.
+                        $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+                        return;
+                    }
+                }
+            }
+
+            $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
             // Parse the header comment docblock.
             try {
