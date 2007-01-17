@@ -172,6 +172,18 @@ if (count($installedStandards) > 1) {
     $standard = array_pop($installedStandards);
 }
 
+// Check if the standard name is valid. If not, check that the case
+// was not entered incorrectly before throwing an error.
+if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
+    $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+    foreach ($installedStandards as $validStandard) {
+        if (strtolower($standard) === strtolower($validStandard)) {
+            $standard = $validStandard;
+            break;
+        }
+    }
+}
+
 if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
     // They didn't select a valid coding standard, so help them
     // out by letting them know which standards are installed.
