@@ -100,7 +100,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($foundLines !== 2) {
-            $phpcsFile->addError("Expected 2 blank lines after function; $foundLines found", $stackPtr);
+            $phpcsFile->addError("Expected 2 blank lines after function; $foundLines found", $closer);
         }
 
         /*
