@@ -556,8 +556,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 foreach ($typeNames as $typeName) {
                     $suggestedName = $this->_suggestName($typeName);
                     if ($typeName !== $suggestedName) {
-                        $error  = "Expected \"$suggestedName\" but found";
-                        $error .= " \"$typeName\" for $paramName at position $pos";
+                        $error = "Expected \"$suggestedName\"; found \"$typeName\" for $paramName at position $pos";
                         $this->currentFile->addError($error, $errorPos);
                     } else if (count($typeNames) === 1) {
                         // Check type hint for array and custom type.
@@ -573,16 +572,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 $error = "Type hint \"$suggestedTypeHint\" missing for $paramName at position $pos";
                                 $this->currentFile->addError($error, ($commentEnd + 2));
                             } else if ($typeHint !== $suggestedTypeHint) {
-                                $error  = 'Type hint "'.$suggestedTypeHint;
-                                $error .= '" does not match actual variable type "'.$typeHint;
-                                $error .= "\" for $paramName at position $pos";
+                                $error = "Expected type hint \"$suggestedTypeHint\"; found \"$typeHint\" for $paramName at position $pos";
                                 $this->currentFile->addError($error, ($commentEnd + 2));
                             }
                         } else if ($suggestedTypeHint === '' && isset($realParams[($pos - 1)]) === true) {
                             $typeHint = $realParams[($pos - 1)]['type_hint'];
                             if ($typeHint !== '') {
-                                $error  = "Unknown type hint \"".$typeHint;
-                                $error .= "\" found for $paramName at position $pos";
+                                $error = "Unknown type hint \"$typeHint\" found for $paramName at position $pos";
                                 $this->currentFile->addError($error, ($commentEnd + 2));
                             }
                         }
@@ -625,6 +621,20 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if ($paramComment === '') {
                     $error = 'Missing comment for param "'.$paramName.'" at position '.$pos;
                     $this->currentFile->addError($error, $errorPos);
+                } else {
+                    // Param comments must start with a capital letter and
+                    // end with the full stop.
+                    $firstChar = $paramComment{0};
+                    if (strtoupper($firstChar) !== $firstChar) {
+                        $error = 'Param comment must start with a capital letter';
+                        $this->currentFile->addError($error, $errorPos);
+                    }
+
+                    $lastChar = $paramComment[(strlen($paramComment) - 1)];
+                    if ($lastChar !== '.') {
+                        $error = 'Param comment must end with a full stop';
+                        $this->currentFile->addError($error, $errorPos);
+                    }
                 }
 
                 $previousParam = $param;
@@ -648,7 +658,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $realNames[] = $realParam['name'];
         }
 
-        // Report and missing comments.
+        // Report missing comments.
         $diff = array_diff($realNames, $foundParams);
         foreach ($diff as $neededParam) {
             if (count($params) !== 0) {

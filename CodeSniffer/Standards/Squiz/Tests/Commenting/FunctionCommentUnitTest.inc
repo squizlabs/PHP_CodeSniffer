@@ -132,7 +132,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Param not immediate.
+     * Comments not capitalised.
      *
      * @param integer  $one    comment
      * @param array    $two    comment
