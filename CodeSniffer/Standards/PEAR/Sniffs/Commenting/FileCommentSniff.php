@@ -116,7 +116,29 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Extract the header comment docblock.
             $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
-            $comment    = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+
+            // Check if there is only 1 doc comment between the open tag and class token.
+            $nextToken = array(
+                          T_ABSTRACT,
+                          T_CLASS,
+                          T_DOC_COMMENT,
+                         );
+            $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
+            if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
+                // Found a class token right after comment doc block.
+                $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, "\n");
+                if ($newlineToken !== false) {
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $commentNext, false, "\n");
+                    if ($newlineToken === false) {
+                        // No blank line between the class token and the doc block.
+                        // The doc block is most likely a class comment.
+                        $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+                        return;
+                    }
+                }
+            }
+
+            $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
             // Parse the header comment docblock.
             try {
@@ -148,31 +170,37 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $newlineCount = (substr_count($short, "\n") + 1);
 
             // Exactly one blank line between short and long description.
-            $between        = $comment->getWhiteSpaceBetween();
-            $long           = $comment->getLongComment();
-            $newlineBetween = substr_count($between, "\n");
-            if ($newlineBetween !== 2 && $long !== '') {
-                $error = 'There must be exactly one blank line between descriptions in file comment';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
-            }
-
-            $newlineCount += $newlineBetween;
-
-            // Exactly one blank line before tags.
-            $newlineSpan = $comment->getNewlineAfter();
-            if ($newlineSpan !== 2) {
-                $error = 'There must be exactly one blank line before the tags in file comment';
-                if ($long !== '') {
-                    $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+            $long = $comment->getLongComment();
+            if (empty($long) === false) {
+                $between        = $comment->getWhiteSpaceBetween();
+                $newlineBetween = substr_count($between, "\n");
+                if ($newlineBetween !== 2) {
+                    $error = 'There must be exactly one blank line between descriptions in file comment';
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
                 }
 
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                $newlineCount += $newlineBetween;
+            }
+
+            // Exactly one blank line before tags.
+            $tags = $this->commentParser->getTagOrders();
+            if (count($tags) > 1) {
+                $newlineSpan = $comment->getNewlineAfter();
+                if ($newlineSpan !== 2) {
+                    $error = 'There must be exactly one blank line before the tags in file comment';
+                    if ($long !== '') {
+                        $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+                    }
+
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                    $short = rtrim($short, "\n ");
+                }
             }
 
             // Check for unknown/deprecated tags.
             $unknownTags = $this->commentParser->getUnknown();
             foreach ($unknownTags as $errorTag) {
-                $error = ucfirst($errorTag['tag']).' tag is not allowed in file comment';
+                $error = "@$errorTag[tag] tag is not allowed in file comment";
                 $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
             }
 
@@ -254,7 +282,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Required tag missing.
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
-                $error = "Missing $tag tag in $docBlock comment";
+                $error = "Missing @$tag tag in $docBlock comment";
                 $this->currentFile->addError($error, $commentEnd);
                 continue;
             }
@@ -282,7 +310,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (count($foundIndexes) > 1) {
                 // Multiple occurance not allowed.
                 if ($info['allow_multiple'] === false) {
-                    $error = "Only one $tag tag is allowed in $docBlock comment";
+                    $error = "Only 1 @$tag tag is allowed in $docBlock comment";
                     $this->currentFile->addError($error, $errorPos);
                 } else {
                     // Make sure same tags are grouped together.
@@ -291,7 +319,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     foreach ($foundIndexes as $index) {
                         if ($index !== $count) {
                             $errorPosIndex = ($errorPos + $tagElement[$i]->getLine());
-                            $error         = ucfirst($tag).' tags must be grouped together';
+                            $error         = "@$tag tags must be grouped together";
                             $this->currentFile->addError($error, $errorPosIndex);
                         }
 
@@ -309,7 +337,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $errorPos += $tagElement[0]->getLine();
                 }
 
-                $error = "The order of $tag tag is wrong in $docBlock comment";
+                $error = "The order of @$tag tag is wrong in $docBlock comment";
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -353,7 +381,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
                 $expected     = (($longestTag - strlen($indentInfo['tag'])) + 1);
                 $space        = ($indentInfo['space'] - strlen($indentInfo['tag']));
-                $error        = ucfirst($indentInfo['tag']).' tag comment indented incorrectly. ';
+                $error        = "@$indentInfo[tag] tag comment indented incorrectly. ";
                 $error       .= "Expected $expected spaces but found $space.";
                 $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
                 if ($tags[$indentInfo['tag']]['allow_multiple'] === true) {
@@ -421,7 +449,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $this->currentFile->addError($error, $errorPos);
                 }
             } else {
-                $error = 'Category tag must contain a name';
+                $error = '@category tag must contain a name';
                 $this->currentFile->addError($error, $errorPos);
             }
         }
@@ -455,7 +483,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $this->currentFile->addError($error, $errorPos);
                 }
             } else {
-                $error = 'Package tag must contain a name';
+                $error = '@package tag must contain a name';
                 $this->currentFile->addError($error, $errorPos);
             }
         }
@@ -488,12 +516,12 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     // Dot character cannot be the first or last character in the local-part.
                     $localMiddle = $local.'.\w';
                     if (preg_match('/^([^<]*)\s+<(['.$local.']['.$localMiddle.']*['.$local.']@[\da-zA-Z][-.\w]*[\da-zA-Z]\.[a-zA-Z]{2,7})>$/', $content) === 0) {
-                        $error = 'Content of the author tag must be in the form "Display Name <username@example.com>"';
+                        $error = 'Content of the @author tag must be in the form "Display Name <username@example.com>"';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 } else {
                     $docBlock = (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') ? 'file' : 'class';
-                    $error    = "Content missing for author tag in $docBlock comment";
+                    $error    = "Content missing for @author tag in $docBlock comment";
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -530,11 +558,11 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         }
                     }
                 } else {
-                    $error = 'Copyright tag must contain a year and the name of the copyright holder';
+                    $error = '@copyright tag must contain a year and the name of the copyright holder';
                     $this->currentFile->addError($error, $errorPos);
                 }
             } else {
-                $error = 'Copyright tag must contain a year and the name of the copyright holder';
+                $error = '@copyright tag must contain a year and the name of the copyright holder';
                 $this->currentFile->addError($error, $errorPos);
             }//end if
         }//end if
@@ -556,7 +584,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $value   = $license->getValue();
             $comment = $license->getComment();
             if ($value === '' || $comment === '') {
-                $error = 'License tag must contain a URL and a license name';
+                $error = '@license tag must contain a URL and a license name';
                 $this->currentFile->addError($error, $errorPos);
             }
         }
@@ -578,7 +606,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $content = $version->getContent();
             $matches = array();
             if (empty($content) === true) {
-                $error = 'Content missing for version tag in file comment';
+                $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
 
             } else if ((strstr($content, 'CVS:')) === false) {

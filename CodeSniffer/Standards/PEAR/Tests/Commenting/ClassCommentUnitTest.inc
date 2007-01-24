@@ -75,6 +75,7 @@ class Missing_Newlines_Before_Tags
  * @see        Net_Sample::Net_Sample()
  * @see        Net_Other
  * @deprecated asd
+ * @unknown    Unknown tag
  * @since      Class available since Release 1.2.0
  */
 class Checking_Tags

@@ -65,7 +65,7 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
                 172 => 1,
                 183 => 1,
                 193 => 2,
-                203 => 1,
+                204 => 1,
                );
 
     }//end getErrorList()
@@ -81,7 +81,9 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
      */
     public function getWarningList()
     {
-        return array();
+        return array(
+                196 => 1,
+               );
 
     }//end getWarningList()
 

@@ -193,6 +193,7 @@ public function noReturnOutsideClass()
  * @param int $one comment
  *
  * @return void
+ * @error  Unknown tag
  */
 public function missingTwoParamComment($one, $two, $three)
 {
