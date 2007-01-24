@@ -23,11 +23,13 @@ require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
  * Verifies that :
  * <ul>
  *  <li>A file doc comment exists.</li>
+ *  <li>There is no blank line between the open tag and the file comment.</li>
  *  <li>Short description ends with a full stop.</li>
  *  <li>There is a blank line after the short description.</li>
  *  <li>Each paragraph of the long description ends with a full stop.</li>
  *  <li>There is a blank line between the description and the tags.</li>
  *  <li>Check the order, indentation and content of each tag.</li>
+    <li>There is exactly one blank line after the file comment.</li>
  * </ul>
  *
  * @category  PHP
@@ -94,12 +96,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Find the next non whitespace token.
         $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        // Ignore vim header.
-        if ($tokens[$commentStart]['code'] === T_COMMENT) {
-            if (strstr($tokens[$commentStart]['content'], 'vim:') !== false) {
-                $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($commentStart + 1), null, true);
-            }
-        }
 
         if ($tokens[$commentStart]['code'] === T_CLOSE_TAG) {
             // We are only interested if this is the first open tag.
@@ -133,6 +129,28 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
                         return;
                     }
+                }
+            }
+
+            // No blank line between the open tag and the file comment.
+            $blankLineBefore = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, false, "\n");
+            if ($blankLineBefore !== false && $blankLineBefore < $commentStart) {
+                $error = 'Extra newline found after the open tag';
+                $phpcsFile->addError($error, ($stackPtr + 1));
+            }
+
+            // Exactly one blank line after the file comment
+            $nextTokenStart = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), null, true);
+            if ($nextTokenStart !== false) {
+                $blankLineAfter = 0;
+                for ($i = ($commentEnd + 1); $i < $nextTokenStart; $i++) {
+                    if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === "\n") {
+                        $blankLineAfter++;
+                    }
+                }
+                if ($blankLineAfter !== 2) {
+                    $error = 'There must be exactly one blank line after the file comment';
+                    $phpcsFile->addError($error, ($commentEnd + 1));
                 }
             }
 

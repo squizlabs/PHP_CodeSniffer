@@ -22,7 +22,8 @@ require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
  *
  * Verifies that :
  * <ul>
- *  <li>A file doc comment exists.</li>
+ *  <li>A class doc comment exists.</li>
+ *  <li>There is exactly one blank line before the class comment.</li>
  *  <li>Short description ends with a full stop.</li>
  *  <li>There is a blank line after the short description.</li>
  *  <li>Each paragraph of the long description ends with a full stop.</li>
@@ -88,7 +89,6 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
-        //echo "($commentEnd,$stackPtr) class comment Next: $commentNext ... ".print_r($tokens[$commentNext],1);
 
         // Distinguish file and class comment.
         $prevClassToken = $phpcsFile->findPrevious(T_CLASS, ($stackPtr - 1));
@@ -110,6 +110,22 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         }
                     }//end if
                 }//end if
+
+                // Exactly one blank line before the class comment
+                $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
+                if ($prevTokenEnd !== false) {
+                    $blankLineBefore = 0;
+                    for ($i = ($prevTokenEnd + 1); $i < $commentStart; $i++) {
+                        if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === "\n") {
+                            $blankLineBefore++;
+                        }
+                    }
+                    if ($blankLineBefore !== 2) {
+                       $error = 'There must be exactly one blank line before the class comment';
+                       $phpcsFile->addError($error, ($commentStart - 1));
+                    }
+                }
+
             }//end if
         }//end if
 

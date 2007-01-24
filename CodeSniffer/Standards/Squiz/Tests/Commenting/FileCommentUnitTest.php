@@ -52,6 +52,7 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
+                2  => 1,
                 6  => 3,
                 8  => 1,
                 21 => 1,
@@ -61,6 +62,7 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 26 => 2,
                 27 => 3,
                 28 => 2,
+                30 => 1,
                );
 
     }//end getErrorList()
