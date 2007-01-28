@@ -20,11 +20,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-01-12</date>
+ <date>2007-01-29</date>
  <time>08:53:28</time>
  <version>
-  <release>0.3.1</release>
-  <api>0.3.1</api>
+  <release>0.4.0</release>
+  <api>0.4.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,6 +32,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license>BSD License</license>
  <notes>
+   - Standard name specified with --standard command line argument is no longer case sensitive
+   - Long error and warning messages are now wrapped to 80 characters in the full error report (thanks Endre Czirbesz)
+   - Shortened a lot of error and warning messages so they don't take up so much room
+   - Squiz FunctionCommentSniff now checks that param comments start with a captial letter and end with a full stop
+   - Squiz FunctionSpacingSniff now reports incorrect lines below function on closing brace, not function keyword
    - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
  </notes>
  <contents>
