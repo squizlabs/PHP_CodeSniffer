@@ -73,7 +73,7 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
             $argHasDefault = self::_argHasDefault($phpcsFile, $nextArg);
             if (($argHasDefault === false) && ($defaultFound === true)) {
                 $error  = 'Arguments with default values must be at the end';
-                $error .= ' of the argument list.';
+                $error .= ' of the argument list';
                 $phpcsFile->addError($error, $nextArg);
                 return;
             }

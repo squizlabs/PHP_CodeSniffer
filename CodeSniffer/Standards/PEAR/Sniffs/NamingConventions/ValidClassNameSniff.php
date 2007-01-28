@@ -68,7 +68,7 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
 
         // Make sure the first letter is a captial.
         if (preg_match('|^[A-Z]|', $name) === 0) {
-            $error = ucfirst($tokens[$stackPtr]['content']).' name does not begin with a captial letter.';
+            $error = ucfirst($tokens[$stackPtr]['content']).' name must begin with a captial letter';
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -91,7 +91,7 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
             }
 
             $newName = rtrim($newName, '_');
-            $error   = ucfirst($tokens[$stackPtr]['content'])." name is not valid; consider $newName instead.";
+            $error   = ucfirst($tokens[$stackPtr]['content'])." name is not valid; consider $newName instead";
             $phpcsFile->addError($error, $stackPtr);
         }
 

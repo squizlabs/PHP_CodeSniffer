@@ -90,7 +90,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             if ($tokens[$functionKeyword]['code'] === T_CONST) {
                 // This is a class constant.
                 if (strtoupper($constName) !== $constName) {
-                    $error = 'Class constants must be uppercase. Expected '.strtoupper($constName)." but found $constName.";
+                    $error = 'Class constants must be uppercase; expected '.strtoupper($constName)." but found $constName";
                     $phpcsFile->addError($error, $stackPtr);
                 }
 
@@ -116,7 +116,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             // This is a real constant.
             if (strtoupper($constName) !== $constName) {
-                $error = 'Constants must be uppercase. Expected '.strtoupper($constName)." but found $constName.";
+                $error = 'Constants must be uppercase; expected '.strtoupper($constName)." but found $constName";
                 $phpcsFile->addError($error, $stackPtr);
             }
 
@@ -134,7 +134,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             $constName = $tokens[$constPtr]['content'];
             if (strtoupper($constName) !== $constName) {
-                $error = 'Constants must be uppercase. Expected '.strtoupper($constName)." but found $constName.";
+                $error = 'Constants must be uppercase; expected '.strtoupper($constName)." but found $constName";
                 $phpcsFile->addError($error, $stackPtr);
             }
         }//end if

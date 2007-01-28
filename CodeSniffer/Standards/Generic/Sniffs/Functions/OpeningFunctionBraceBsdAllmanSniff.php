@@ -75,14 +75,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference === 0) {
-            $error = 'Opening function brace should be on a new line.';
+            $error = 'Opening function brace should be on a new line';
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
 
         if ($lineDifference > 1) {
             $ender = (($lineDifference - 1) === 1) ? 'line' : 'lines';
-            $error = 'Opening function brace should be on the line after the declaration. Found '.($lineDifference - 1).' blank '.$ender.'.';
+            $error = 'Opening function brace should be on the line after the declaration; found '.($lineDifference - 1).' blank '.$ender;
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
@@ -108,7 +108,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         $braceIndent = $tokens[$openingBrace]['column'];
 
         if ($braceIndent !== $startColumn) {
-            $error = 'Opening brace indented incorrectly. Expected '.($startColumn - 1).' spaces, but found '.($braceIndent - 1).'.';
+            $error = 'Opening brace indented incorrectly; expected '.($startColumn - 1).' spaces, found '.($braceIndent - 1);
             $phpcsFile->addError($error, $openingBrace);
         }
 

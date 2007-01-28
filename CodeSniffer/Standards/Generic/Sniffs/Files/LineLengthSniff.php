@@ -96,7 +96,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         }
 
         foreach ($longLines as $lineToken) {
-            $warning = 'Line exceeds '.$this->lineLimit.' characters; it is recommended that the line be shortened';
+            $warning = 'Line exceeds '.$this->lineLimit.' characters';
             $phpcsFile->addWarning($warning, $lineToken);
         }
 
