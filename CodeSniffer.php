@@ -407,14 +407,10 @@ class PHP_CodeSniffer
             foreach ($errors as $line => $lineErrors) {
                 $newErrors = array();
                 foreach ($lineErrors as $message) {
-                    if ($showWarnings === true && $numWarnings > 0) {
-                        // Add some extra padding.
-                        $errorMessage = 'ERROR   | '.$message;
-                    } else {
-                        $errorMessage = 'ERROR | '.$message;
-                    }
-
-                    $newErrors[] = $errorMessage;
+                    $newErrors[] = array(
+                                    'message' => $message,
+                                    'type'    => 'ERROR',
+                                   );
                 }
 
                 $errors[$line] = $newErrors;
@@ -424,7 +420,10 @@ class PHP_CodeSniffer
                 foreach ($warnings as $line => $lineWarnings) {
                     $newWarnings = array();
                     foreach ($lineWarnings as $message) {
-                        $newWarnings[] = 'WARNING | '.$message;
+                        $newWarnings[] = array(
+                                          'message' => $message,
+                                          'type'    => 'WARNING',
+                                         );
                     }
 
                     if (isset($errors[$line]) === true) {
@@ -466,12 +465,39 @@ class PHP_CodeSniffer
 
             $maxLineLength = strlen($maxLine);
 
+            // The length of the word ERROR or WARNING; used for padding.
+            if ($showWarnings === true && $numWarnings > 0) {
+                $typeLength = 7;
+            } else {
+                $typeLength = 5;
+            }
+
+            // The padding that all lines will require that are
+            // printing an error message overflow.
+            $paddingLine2  = str_repeat(' ', ($maxLineLength + 1));
+            $paddingLine2 .= ' | ';
+            $paddingLine2 .= str_repeat(' ', $typeLength);
+            $paddingLine2 .= ' | ';
+
+            // The maxium amount of space an error message can use.
+            $maxErrorSpace = (80 - strlen($paddingLine2));
+
             foreach ($errors as $line => $lineErrors) {
                 foreach ($lineErrors as $error) {
-                    $padding = ($maxLineLength - strlen($line));
-                    echo ' '.str_repeat(' ', $padding).$line.' | '.$error."\n";
+                    // The padding that goes on the front of the line.
+                    $padding  = ($maxLineLength - strlen($line));
+                    $errorMsg = wordwrap($error['message'], $maxErrorSpace, "\n$paddingLine2");
+
+                    echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
+                    if ($error['type'] === 'ERROR') {
+                        if ($showWarnings === true && $numWarnings > 0) {
+                            echo '  ';
+                        }
+                    }
+
+                    echo ' | '.$errorMsg."\n";
                 }
-            }
+            }//end foreach
 
             echo str_repeat('-', 80)."\n\n";
 
