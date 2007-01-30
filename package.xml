@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Shortened a lot of error and warning messages so they don't take up so much room
    - Squiz FunctionCommentSniff now checks that param comments start with a captial letter and end with a full stop
    - Squiz FunctionSpacingSniff now reports incorrect lines below function on closing brace, not function keyword
+   - Squiz FileCommentSniff now checks that there are no blank lines between the open PHP tag and the comment
    - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
  </notes>
  <contents>
