@@ -73,6 +73,12 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
         if ($methodProps['is_static'] === true) {
+            if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+                // There is no scope opener or closer, so the function
+                // must be abstract.
+                return;
+            }
+
             $thisUsage = $stackPtr;
             while (($thisUsage = $phpcsFile->findNext(array(T_VARIABLE), ($thisUsage + 1), $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false) {
                 if ($thisUsage === false) {
@@ -82,7 +88,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
                 $error = 'Usage of "$this" in static methods will cause runtime errors';
                 $phpcsFile->addError($error, $thisUsage);
             }
-        }
+        }//end if
 
     }//end processTokenWithinScope()
 

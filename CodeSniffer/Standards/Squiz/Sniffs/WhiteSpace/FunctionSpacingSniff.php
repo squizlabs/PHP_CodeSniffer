@@ -132,7 +132,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $prevLine    = ($currentLine - 1);
             $i           = ($stackPtr - 1);
             $foundLines  = 0;
-            while ($currentLine != $prevLine && $currentLine > 1) {
+            while ($currentLine != $prevLine && $currentLine > 1 && $i > 0) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];
                     if ($tokens[$scopeCondition]['code'] === T_FUNCTION) {
