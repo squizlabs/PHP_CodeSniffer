@@ -108,6 +108,11 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     // This will be handled by the next CASE statement.
                     break;
                 }
+                
+                if ($tokens[$nextContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+                    // This will be handled by the closing brace check.
+                    break;
+                }
 
                 // If the space is an empty line, we don't need to check it.
                 if ($tokens[$nextContent]['line'] !== ($tokens[$nextSpace]['line'] + 1)) {
@@ -118,7 +123,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 // it needs to be indented at least 4 spaces after the CASE.
                 $requiredIndent = ($tokens[$nextCase]['column'] + 4);
                 if ($tokens[$nextContent]['column'] < $requiredIndent) {
-                    $error = 'Line not indented correctly. Expected at least '.$requiredIndent.' spaces, but found '.$tokens[$nextContent]['column'].'.';
+                    $error = 'Line not indented correctly; expected at least '.($requiredIndent - 1).' spaces, found '.($tokens[$nextContent]['column'] - 1);
                     $phpcsFile->addError($error, $nextContent);
                 }
             }//end while
@@ -170,7 +175,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 // it needs to be indented at least 4 spaces after the DEFAULT.
                 $requiredIndent = ($tokens[$default]['column'] + 4);
                 if ($tokens[$nextContent]['column'] < $requiredIndent) {
-                    $error = 'Line not indented correctly. Expected at least '.$requiredIndent.' spaces, but found '.$tokens[$nextContent]['column'].'.';
+                    $error = 'Line not indented correctly; expected at least '.$requiredIndent.' spaces, found '.$tokens[$nextContent]['column'];
                     $phpcsFile->addError($error, $nextContent);
                 }
             }//end while

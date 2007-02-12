@@ -100,4 +100,11 @@ case '2':
     $something = 'hello';
         $other = 'hi';
     }
+
+// Valid
+switch ($condition) {
+    case 'string':
+        $varStr = 'test';
+}
+
 ?>
