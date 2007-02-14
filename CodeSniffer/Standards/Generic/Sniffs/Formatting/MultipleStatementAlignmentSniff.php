@@ -201,15 +201,24 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     private function _isAssignment(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
         if ($stackPtr === false) {
             return false;
         }
 
-        // If there is something other than whitespace on this line before this variable, its not what we want.
+        $tokens = $phpcsFile->getTokens();
+
+        // If there is something other than whitespace on this line before this
+        // variable, its not what we want.
         $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prevContent]['line'] === $tokens[$stackPtr]['line']) {
             return false;
+        }
+
+        // If this variable is followed by an object operator, we need to skip
+        // the member var component.
+        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        if ($tokens[$nextContent]['code'] === T_OBJECT_OPERATOR) {
+            $stackPtr = $phpcsFile->findNext(array(T_WHITESPACE), ($nextContent + 1), null, true);
         }
 
         $nextContent = $phpcsFile->findNext(array(T_VARIABLE, T_OPEN_SQUARE_BRACKET, T_CLOSE_SQUARE_BRACKET, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER), ($stackPtr + 1), null, true);
