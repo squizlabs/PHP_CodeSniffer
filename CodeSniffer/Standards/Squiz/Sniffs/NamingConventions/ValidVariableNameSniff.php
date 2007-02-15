@@ -63,6 +63,10 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                             '_GET',
                             '_POST',
                             '_REQUEST',
+                            '_SESSION',
+                            '_ENV',
+                            '_COOKIE',
+                            '_FILES',
                             'GLOBALS',
                            );
 

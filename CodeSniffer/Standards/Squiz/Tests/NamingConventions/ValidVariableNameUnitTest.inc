@@ -66,4 +66,9 @@ echo $this->myFunction($one, $two);
 echo $object->myFunction($one_two);
 
 $error = "format is \$GLOBALS['$varName']";
+
+echo $_SESSION['var_name'];
+echo $_FILES['var_name'];
+echo $_ENV['var_name'];
+echo $_COOKIE['var_name'];
 ?>
