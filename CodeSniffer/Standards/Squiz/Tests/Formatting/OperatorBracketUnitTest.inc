@@ -89,4 +89,7 @@ if (($tokens[$nextToken - 1]['code']) !== T_WHITESPACE) {
 
 while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, $nextSpace + 1, $nextBreak)) !== false) {
 }
+
+foreach ($attributes as $id => &$attribute) {
+}
 ?>
