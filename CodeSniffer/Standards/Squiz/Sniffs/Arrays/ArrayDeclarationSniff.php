@@ -264,7 +264,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                );
         */
 
-        if ($keyUsed === false) {
+        if ($keyUsed === false && empty($indices) === false) {
             $count     = count($indices);
             $lastIndex = $indices[($count - 1)]['value'];
 

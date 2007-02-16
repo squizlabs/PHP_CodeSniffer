@@ -111,4 +111,18 @@ $value = array(
           'tag'   => $tag,
           'space' => $this->_getIndentation($tag, $tagElement),
          );
+
+$expected = array(
+             array(
+              '1' => 1,
+              '1' => 2,
+             )
+            );
+
+$expected = array(
+             array(
+              '1' => 1,
+              '1' => 2
+             )
+            );
 ?>

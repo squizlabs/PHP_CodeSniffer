@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Fixed incorrect error with switch closing brace in Squiz SwitchDeclarationSniff
    - Fixed missing error when multiple statements are not aligned correctly with object operators
    - Fixed incorrect errors for some PHP special variables in Squiz ValidVariableNameSniff
+   - Fixed incorrect errors for arrays that only contain other arrays in Squiz ArrayDeclarationSniff
    - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
  </notes>
  <contents>
