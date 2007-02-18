@@ -100,7 +100,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
             if ($arg === '--version') {
                 echo "PHP_CodeSniffer version @package_version@ (@package_state@) ";
-                echo "by Squiz Pty Ltd.\n";
+                echo "by Squiz Pty Ltd. (http://www.squiz.net)\n";
                 exit();
             }
 
