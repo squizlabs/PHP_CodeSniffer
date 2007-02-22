@@ -20,11 +20,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-02-19</date>
+ <date>2007-02-23</date>
  <time>09:29:21</time>
  <version>
-  <release>0.4.0</release>
-  <api>0.4.0</api>
+  <release>0.5.0</release>
+  <api>0.5.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,18 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-   - Standard name specified with --standard command line argument is no longer case sensitive
-   - Long error and warning messages are now wrapped to 80 characters in the full error report (thanks Endre Czirbesz)
-   - Shortened a lot of error and warning messages so they don't take up so much room
-   - Squiz FunctionCommentSniff now checks that param comments start with a captial letter and end with a full stop
-   - Squiz FunctionSpacingSniff now reports incorrect lines below function on closing brace, not function keyword
-   - Squiz FileCommentSniff now checks that there are no blank lines between the open PHP tag and the comment
-   - PHP_CodeSniffer_File::isReference() now returns correctly when checking refs on right side of =>
-   - Fixed incorrect error with switch closing brace in Squiz SwitchDeclarationSniff
-   - Fixed missing error when multiple statements are not aligned correctly with object operators
-   - Fixed incorrect errors for some PHP special variables in Squiz ValidVariableNameSniff
-   - Fixed incorrect errors for arrays that only contain other arrays in Squiz ArrayDeclarationSniff
-   - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
+   - Added MemberVarSpacingSniff to Squiz standard
  </notes>
  <contents>
   <dir name="/">
@@ -559,6 +548,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="MemberVarSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -794,6 +786,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MemberVarSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MemberVarSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
