@@ -64,7 +64,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS), array(T_FUNCTION, T_VARIABLE, T_DOUBLE_QUOTED_STRING), true);
+        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION, T_VARIABLE, T_DOUBLE_QUOTED_STRING), true);
 
     }//end __construct()
 
