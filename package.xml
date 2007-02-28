@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
    - Added MemberVarSpacingSniff to Squiz standard
    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
+   - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
  </notes>
  <contents>
   <dir name="/">

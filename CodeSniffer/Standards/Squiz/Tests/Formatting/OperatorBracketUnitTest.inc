@@ -92,4 +92,16 @@ while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, $nextSpace + 1, $nextBre
 
 foreach ($attributes as $id => &$attribute) {
 }
+
+class MyClass
+{
+
+
+    public function myFunction(array &$one, array &$two)
+    {
+
+    }//end myFunction()
+
+
+}//end class
 ?>
