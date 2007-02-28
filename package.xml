@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
    - Added MemberVarSpacingSniff to Squiz standard
+   - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
  </notes>
  <contents>
   <dir name="/">

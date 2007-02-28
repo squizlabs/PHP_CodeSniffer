@@ -94,9 +94,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
             $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
-            // If the function is abstract, then set the end of the function
-            // to it's closing semicolon.
-            if ($methodProps['is_abstract'] === true) {
+            // If the function is abstract, or is in an interface,
+            // then set the end of the function to it's closing semicolon.
+            if ($methodProps['is_abstract'] === true || $tokens[$currScope]['code'] === T_INTERFACE) {
                 $this->_endFunction = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
             } else {
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
