@@ -203,8 +203,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 // Add the words to the stack, preserving newlines. Other parsers
                 // might be interested in the spaces between words, so tokenize
                 // spaces as well as separate tokens.
-                $flags = (PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-                $words = preg_split('|(\s+)|', $line."\n", -1, $flags);
+                $flags       = (PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                $words       = preg_split('|(\s+)|', $line."\n", -1, $flags);
                 $this->words = array_merge($this->words, $words);
             }
         }
@@ -349,7 +349,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      */
     protected function parseSee($tokens)
     {
-        $see = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'see');
+        $see          = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'see');
         $this->sees[] = $see;
         return $see;
 
@@ -410,7 +410,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      */
     protected function parseLink($tokens)
     {
-        $link = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'link');
+        $link          = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'link');
         $this->links[] = $link;
         return $link;
 
@@ -507,7 +507,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         }
 
         $this->previousElement = $this->$method($tokens);
-        $this->orders[] = $tag;
+        $this->orders[]        = $tag;
 
         if ($this->previousElement === null || ($this->previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
             throw new Exception('Parse method must return a DocElement');

@@ -94,7 +94,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      */
     protected function processSubElement($name, $content, $whitespaceBefore)
     {
-        $this->content = $content;
+        $this->content           = $content;
         $this->contentWhitespace = $whitespaceBefore;
 
     }//end processSubElement()

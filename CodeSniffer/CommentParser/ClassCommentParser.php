@@ -155,7 +155,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseAuthor($tokens)
     {
-        $author = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'author');
+        $author           = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'author');
         $this->_authors[] = $author;
         return $author;
 
