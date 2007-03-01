@@ -1570,12 +1570,11 @@ class PHP_CodeSniffer_File
      * @param int $stackPtr The position of the T_BITWISE_AND token.
      *
      * @return boolean
-     * @throws PHP_CodeSniffer_Exception If the token is not T_BITWISE_AND.
      */
     public function isReference($stackPtr)
     {
         if ($this->_tokens[$stackPtr]['code'] !== T_BITWISE_AND) {
-            throw new PHP_CodeSniffer_Exception('$stackPtr must represent a T_BITWISE_AND token');
+            return false;
         }
 
         $tokenBefore = $this->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
