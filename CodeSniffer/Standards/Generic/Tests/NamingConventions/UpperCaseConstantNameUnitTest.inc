@@ -40,6 +40,9 @@ class TestClass extends MyClass, YourClass
         print 'HELLO';
     }
 
+    function myFunc(PHP_CodeSniffer &$blah) {}
+    function myFunc(PHP_CodeSniffer $blah) {}
+
 }
 
 interface MyInterface

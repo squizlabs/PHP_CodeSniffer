@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
+   - Error no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
  </notes>
