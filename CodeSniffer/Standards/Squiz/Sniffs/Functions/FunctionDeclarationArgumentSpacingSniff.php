@@ -126,35 +126,85 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 }
             }
 
-            if ($params !== array()) {
-                if ($tokens[($nextParam - 1)]['code'] !== T_WHITESPACE) {
-                    $arg   = $tokens[$nextParam]['content'];
-                    $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
-                    $phpcsFile->addError($error, $nextToken);
-                } else {
-                    $space = $tokens[($nextParam - 1)];
-                    if (strlen($space['content']) !== 1) {
-                        $gap   = strlen($space['content']);
-                        $arg   = $tokens[$nextParam]['content'];
-                        $error = "Expected 1 space between between comma and argument \"$arg\"; $gap found";
-                        $phpcsFile->addError($error, $nextToken);
-                    }
-                }
+            // Take references into account when expecting the
+            // location of whitespace.
+            if ($phpcsFile->isReference($nextParam - 1) === true) {
+                $whitespace = $tokens[($nextParam - 2)];
             } else {
-                if ($tokens[($nextParam - 1)]['code'] === T_WHITESPACE) {
-                    $gap = strlen($tokens[($nextParam - 1)]['content']);
-                    $arg = $tokens[$nextParam]['content'];
+                $whitespace = $tokens[($nextParam - 1)];
+            }
+
+            if (empty($params) === false) {
+                // This is not the first argument in the function declaration.
+                $arg = $tokens[$nextParam]['content'];
+
+                if ($whitespace['code'] === T_WHITESPACE) {
+                    $gap = strlen($whitespace['content']);
 
                     // Before we throw an error, make sure there is no type hint.
-                    $bracket = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($nextParam - 1));
-                    if ($bracket === ($nextParam - 3)) {
-                        // There was a type hint, so just check the spacing between
-                        // the hint and the variable.
+                    $comma     = $phpcsFile->findPrevious(T_COMMA, ($nextParam - 1));
+                    $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($comma + 1), null, true);
+                    if ($phpcsFile->isReference($nextToken) === true) {
+                        $nextToken++;
+                    }
+
+                    if ($nextToken !== $nextParam) {
+                        // There was a type hint, so check the spacing between
+                        // the hint and the variable as well.
+                        $hint = $tokens[$nextToken]['content'];
+
                         if ($gap !== 1) {
                             $error = "Expected 1 space between type hint and argument \"$arg\"; $gap found";
                             $phpcsFile->addError($error, $nextToken);
                         }
-                    } else {
+
+                        if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
+                            $error = "Expected 1 space between comma and type hint \"$hint\"; 0 found";
+                            $phpcsFile->addError($error, $nextToken);
+                        } else {
+                            $gap = strlen($tokens[($comma + 1)]['content']);
+                            if ($gap !== 1) {
+                                $error = "Expected 1 space between comma and type hint \"$hint\"; $gap found";
+                                $phpcsFile->addError($error, $nextToken);
+                            }
+                        }
+                    } else if ($gap !== 1) {
+                        $error = "Expected 1 space between comma and argument \"$arg\"; $gap found";
+                        $phpcsFile->addError($error, $nextToken);
+                    }
+                } else {
+                    $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
+                    $phpcsFile->addError($error, $nextToken);
+                }
+            } else {
+                // First argument in function declaration
+                if ($whitespace['code'] === T_WHITESPACE) {
+                    $gap = strlen($whitespace['content']);
+                    $arg = $tokens[$nextParam]['content'];
+
+                    // Before we throw an error, make sure there is no type hint.
+                    $bracket   = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($nextParam - 1));
+                    $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($bracket + 1), null, true);
+                    if ($phpcsFile->isReference($nextToken) === true) {
+                        $nextToken++;
+                    }
+
+                    if ($nextToken !== $nextParam) {
+                        // There was a type hint, so check the spacing between
+                        // the hint and the variable as well.
+                        $hint = $tokens[$nextToken]['content'];
+
+                        if ($gap !== 1) {
+                            $error = "Expected 1 space between type hint and argument \"$arg\"; $gap found";
+                            $phpcsFile->addError($error, $nextToken);
+                        }
+
+                        if ($tokens[($bracket + 1)]['code'] === T_WHITESPACE) {
+                            $gap   = strlen($tokens[($bracket + 1)]['content']);
+                            $error = "Expected 0 spaces between opening bracket and type hint \"$hint\"; $gap found";
+                            $phpcsFile->addError($error, $nextToken);
+                        }
+                    } else  {
                         $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
                     }
