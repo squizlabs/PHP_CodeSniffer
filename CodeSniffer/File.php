@@ -353,7 +353,7 @@ class PHP_CodeSniffer_File
                 $this->_listeners[$token] = array();
             }
 
-            if (in_array($listener, $this->_listeners[$token]) === false) {
+            if (in_array($listener, $this->_listeners[$token], true) === false) {
                 $this->_listeners[$token][] = $listener;
             }
         }
