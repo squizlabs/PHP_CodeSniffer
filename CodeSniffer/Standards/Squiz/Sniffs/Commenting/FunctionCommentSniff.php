@@ -92,21 +92,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      */
     protected $currentFile = null;
 
-    /**
-     * A list of supported param variable types.
-     *
-     * @var array(string)
-     */
-    public $validTypes = array(
-                          'array',
-                          'boolean',
-                          'float',
-                          'integer',
-                          'mixed',
-                          'object',
-                          'string',
-                         );
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -196,8 +181,15 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $this->_processReturn($commentStart, $commentEnd);
         $this->_processThrows($commentStart);
 
+        // Check for a comment description.
+        $short = $comment->getShortComment();
+        if (trim($short) === '') {
+            $error = 'Missing short description in function doc comment';
+            $phpcsFile->addError($error, $commentStart);
+            return;
+        }
+
         // No extra newline before short description.
-        $short        = $comment->getShortComment();
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
         if ($short !== '' && $newlineSpan > 0) {
@@ -415,7 +407,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $typeNames      = explode('|', $content);
                     $suggestedNames = array();
                     foreach ($typeNames as $i => $typeName) {
-                        $suggestedName = $this->_suggestName($typeName);
+                        $suggestedName = PHP_CodeSniffer::suggestType($typeName);
                         if (in_array($suggestedName, $suggestedNames) === false) {
                             $suggestedNames[] = $suggestedName;
                         }
@@ -554,7 +546,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 // Variable must be one of the supported standard type.
                 $typeNames = explode('|', $param->getType());
                 foreach ($typeNames as $typeName) {
-                    $suggestedName = $this->_suggestName($typeName);
+                    $suggestedName =  PHP_CodeSniffer::suggestType($typeName);
                     if ($typeName !== $suggestedName) {
                         $error = "Expected \"$suggestedName\"; found \"$typeName\" for $paramName at position $pos";
                         $this->currentFile->addError($error, $errorPos);
@@ -563,7 +555,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $suggestedTypeHint = '';
                         if (strpos($suggestedName, 'array') !== false) {
                             $suggestedTypeHint = 'array';
-                        } else if (in_array($typeName, $this->validTypes) === false) {
+                        } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                             $suggestedTypeHint = $suggestedName;
                         }
                         if ($suggestedTypeHint !== '' && isset($realParams[($pos - 1)]) === true) {
@@ -673,65 +665,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
     }//end _processParams()
 
-
-    /**
-     * Returns a valid variable type.
-     *
-     * If type is not one of the standard type, check camel-case.
-     * Returns the correct type name suggestion if type name is invalid.
-     *
-     * @param string $varType The variable type to process.
-     *
-     * @return string
-     */
-    private function _suggestName($varType)
-    {
-        if ($varType === '') {
-            return '';
-        }
-
-        if (in_array($varType, $this->validTypes) === true) {
-            return $varType;
-        } else {
-            $lowerVarType = strtolower($varType);
-            switch ($lowerVarType) {
-            case 'bool':
-                return 'boolean';
-            case 'double':
-            case 'real':
-                return 'float';
-            case 'int':
-                return 'integer';
-            case 'array()':
-                return 'array';
-            }//end switch
-
-            if (strpos($lowerVarType, 'array(') !== false) {
-                // Valid array declaration: array, array(type), array(type1 => type2).
-                $matches = array();
-                if (preg_match('/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i', $varType, $matches) !== 0) {
-                    $type1 = (isset($matches[1]) === true) ? $matches[1] : '';
-                    $type2 = (isset($matches[3]) === true) ? $matches[3] : '';
-                    $type1 = $this->_suggestName($type1);
-                    $type2 = $this->_suggestName($type2);
-                    if ($type2 !== '') {
-                        $type2 = ' => '.$type2;
-                    }
-                    return "array($type1$type2)";
-                } else {
-                    return 'array';
-                }
-            } else if (in_array($lowerVarType, $this->validTypes) === true) {
-                // A valid type, but not lower cased.
-                return $lowerVarType;
-            } else {
-                // Must be a custom class name.
-                return $varType;
-            }//end if
-
-        }//end if
-
-    }//end _suggestName()
 
 }//end class
 

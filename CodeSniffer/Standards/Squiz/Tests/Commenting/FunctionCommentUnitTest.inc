@@ -322,6 +322,18 @@ function empty2()
  */
 function empty3()
 {
-}//end empty3)_
+}//end empty3
+
+
+/**
+ * @since  4.0.0
+ * @return boolean
+ */
+public function missingShortDescriptionInFunctionComment()
+{
+    return true;
+
+}//end missingShortDescriptionInFunctionComment()
+
 
 ?>
