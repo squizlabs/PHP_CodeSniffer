@@ -101,8 +101,15 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             return;
         }
 
-        // No extra newline before short description.
+        // Check for a comment description.
         $short        = $comment->getShortComment();
+        if (trim($short) === '') {
+            $error = 'Missing short description in variable doc comment';
+            $phpcsFile->addError($error, $commentStart);
+            return;
+        }
+
+        // No extra newline before short description.
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
         if ($short !== '' && $newlineSpan > 0) {
@@ -201,6 +208,12 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $error = 'Var type missing for @var tag in variable comment';
                 $this->currentFile->addError($error, $errorPos);
                 return;
+            } else {
+                $suggestedType = PHP_CodeSniffer::suggestType($content);
+                if ($content != $suggestedType) {
+                    $error = "Expected \"$suggestedType\"; found \"$content\" for @var tag in variable comment";
+                    $this->currentFile->addError($error, $errorPos);
+                }
             }
 
             $spacing = substr_count($var->getWhitespaceBeforeContent(), ' ');

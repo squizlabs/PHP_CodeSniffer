@@ -151,5 +151,39 @@ class VariableCommentUnitTest
      */
      $emptyVarDoc = '';
 
+     /**
+     * Var type checking (int v.s. integer).
+     *
+     * @var   int
+     * @since %release_version%
+     */
+     private $_varSimpleTypeCheck;
+
+
+     /**
+     * Var type checking (array(int => string) v.s. array(int => string)).
+     *
+     * @var   array(int => string)
+     * @since %release_version%
+     */
+     private $_varArrayTypeCheck;
+
+
+     /**
+     * Var type checking (STRING v.s. string).
+     *
+     * @var   STRING
+     * @since %release_version%
+     */
+     private $_varCaseTypeCheck;
+
+
+    /**
+     * @var   integer
+     * @since %release_version%
+     */
+     private $_varWithNoShortComment;
+
+
 }//end class
 ?>

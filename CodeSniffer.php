@@ -94,6 +94,21 @@ class PHP_CodeSniffer
                                        'inc',
                                       );
 
+    /**
+     * An array of variable types for param/var we will check.
+     *
+     * @var array(string)
+     */
+    public static $allowedTypes = array(
+                                     'array',
+                                     'boolean',
+                                     'float',
+                                     'integer',
+                                     'mixed',
+                                     'object',
+                                     'string',
+                                    );
+
 
     /**
      * Constructs a PHP_CodeSniffer object.
@@ -850,7 +865,7 @@ class PHP_CodeSniffer
     /**
      * Returns true if the specified string is in the underscore caps format.
      *
-     * @param string $string The string the verify.
+     * @param string $string The string to verify.
      *
      * @return boolean
      */
@@ -874,6 +889,66 @@ class PHP_CodeSniffer
         return $validName;
 
     }//end isUnderscoreName()
+
+
+    /**
+     * Returns a valid variable type for param/var tag.
+     *
+     * If type is not one of the standard type, it must be a custom type.
+     * Returns the correct type name suggestion if type name is invalid.
+     *
+     * @param string $varType The variable type to process.
+     *
+     * @return string
+     */
+    public static function suggestType($varType)
+    {
+        if ($varType === '') {
+            return '';
+        }
+
+        if (in_array($varType, self::$allowedTypes) === true) {
+            return $varType;
+        } else {
+            $lowerVarType = strtolower($varType);
+            switch ($lowerVarType) {
+            case 'bool':
+                return 'boolean';
+            case 'double':
+            case 'real':
+                return 'float';
+            case 'int':
+                return 'integer';
+            case 'array()':
+                return 'array';
+            }//end switch
+
+            if (strpos($lowerVarType, 'array(') !== false) {
+                // Valid array declaration: array, array(type), array(type1 => type2).
+                $matches = array();
+                if (preg_match('/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i', $varType, $matches) !== 0) {
+                    $type1 = (isset($matches[1]) === true) ? $matches[1] : '';
+                    $type2 = (isset($matches[3]) === true) ? $matches[3] : '';
+                    $type1 = self::suggestType($type1);
+                    $type2 = self::suggestType($type2);
+                    if ($type2 !== '') {
+                        $type2 = ' => '.$type2;
+                    }
+                    return "array($type1$type2)";
+                } else {
+                    return 'array';
+                }
+            } else if (in_array($lowerVarType, self::$allowedTypes) === true) {
+                // A valid type, but not lower cased.
+                return $lowerVarType;
+            } else {
+                // Must be a custom type name.
+                return $varType;
+            }//end if
+
+        }//end if
+
+    }//end suggestType()
 
 
     /**
