@@ -121,8 +121,8 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         }
                     }
                     if ($blankLineBefore !== 2) {
-                       $error = 'There must be exactly one blank line before the class comment';
-                       $phpcsFile->addError($error, ($commentStart - 1));
+                        $error = 'There must be exactly one blank line before the class comment';
+                        $phpcsFile->addError($error, ($commentStart - 1));
                     }
                 }
 
@@ -148,8 +148,15 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // Check for a comment description.
+        $short = rtrim($comment->getShortComment(), "\n");
+        if (trim($short) === '') {
+            $error = 'Missing short description in class doc comment';
+            $phpcsFile->addError($error, $commentStart);
+            return;
+        }
+
         // No extra newline before short description.
-        $short        = rtrim($comment->getShortComment(), "\n");
         $newlineCount = 0;
         $newlineSpan  = strspn($short, "\n");
         if ($short !== '' && $newlineSpan > 0) {

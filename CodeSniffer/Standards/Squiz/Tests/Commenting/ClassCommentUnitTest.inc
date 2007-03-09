@@ -112,4 +112,13 @@ class Empty_Class_Doc
 {
 
 }//end class
+
+
+/**
+ * @since 4.0.0
+ */
+class Missing_Short_Desc
+{
+
+}//end class
 ?>
