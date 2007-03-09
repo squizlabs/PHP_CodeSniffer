@@ -65,11 +65,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
 
         $this->currentFile = $phpcsFile;
-        $tokens       = $phpcsFile->getTokens();
-        $commentToken = array(
-                         T_COMMENT,
-                         T_DOC_COMMENT,
-                        );
+        $tokens            = $phpcsFile->getTokens();
+        $commentToken      = array(
+                              T_COMMENT,
+                              T_DOC_COMMENT,
+                             );
 
         // Extract the var comment docblock.
         $commentEnd = $phpcsFile->findPrevious($commentToken, ($stackPtr - 3));
@@ -102,7 +102,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         }
 
         // Check for a comment description.
-        $short        = $comment->getShortComment();
+        $short = $comment->getShortComment();
         if (trim($short) === '') {
             $error = 'Missing short description in variable doc comment';
             $phpcsFile->addError($error, $commentStart);
