@@ -336,4 +336,29 @@ public function missingShortDescriptionInFunctionComment()
 }//end missingShortDescriptionInFunctionComment()
 
 
+class Another_Class
+{
+
+    /**
+     * Destructor should not include a return tag.
+     *
+     * @since  4.0.0
+     * @return void
+     */
+    function __destruct()
+    {
+        return;
+    }
+
+    /**
+     * Constructor should not include a return tag.
+     *
+     * @return void
+     */
+    function __construct()
+    {
+        return;
+    }
+
+}//end class
 ?>

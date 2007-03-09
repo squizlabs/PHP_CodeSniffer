@@ -149,7 +149,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
         $this->_functionToken = $stackPtr;
-        $classToken = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), ($stackPtr - 1));
+        $classToken           = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), ($stackPtr - 1));
         if ($classToken !== false) {
             $this->_classToken = $classToken;
         }
@@ -271,7 +271,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }
 
             $this->_tagIndex = $firstTag;
-            $index = array_keys($this->commentParser->getTagOrders(), 'since');
+            $index           = array_keys($this->commentParser->getTagOrders(), 'since');
             if (count($index) > 1) {
                 $error = 'Only 1 @since tag is allowed in function comment';
                 $this->currentFile->addError($error, $errorPos);
@@ -375,9 +375,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         $methodName      = strtolower(ltrim($this->_methodName, '_'));
         $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
+        $return          = $this->commentParser->getReturn();
 
         if ($isSpecialMethod === false && $methodName !== $className) {
-            $return = $this->commentParser->getReturn();
             if ($return !== null) {
                 $tagOrder = $this->commentParser->getTagOrders();
                 $index    = array_keys($tagOrder, 'return');
@@ -422,6 +422,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd);
             }//end if
+
+        } else {
+            // No return tag for constructor and destructor.
+            if ($return !== null) {
+                $errorPos = ($commentStart + $return->getLine());
+                $error    = "@return tag is not required for constructor and destructor";
+                $this->currentFile->addError($error, $errorPos);
+            }
         }//end if
 
     }//end _processReturn()
