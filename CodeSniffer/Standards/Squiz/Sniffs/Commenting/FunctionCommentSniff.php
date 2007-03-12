@@ -453,7 +453,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         foreach ($this->commentParser->getThrows() as $i => $throw) {
             $exception = $throw->getValue();
-            $content   = $throw->getComment();
+            $content   = trim($throw->getComment());
             $errorPos  = ($commentStart + $throw->getLine());
             if (empty($exception) === true) {
                 $error = 'Exception type and comment missing for @throws tag in function comment';
@@ -461,6 +461,18 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             } else if (empty($content) === true) {
                 $error = 'Comment missing for @throws tag in function comment';
                 $this->currentFile->addError($error, $errorPos);
+            } else {
+                // Starts with a capital letter and ends with a fullstop.
+                $firstChar = $content{0};
+                if (strtoupper($firstChar) !== $firstChar) {
+                    $error = '@throws tag comment must start with a capital letter';
+                    $this->currentFile->addError($error, $errorPos);
+                }
+                $lastChar = $content[(strlen($content) - 1)];
+                if ($lastChar !== '.') {
+                    $error = '@throws tag comment must end with a full stop';
+                    $this->currentFile->addError($error, $errorPos);
+                }
             }
 
             $since = array_keys($tagOrder, 'since');
