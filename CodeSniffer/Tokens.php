@@ -168,6 +168,35 @@ final class PHP_CodeSniffer_Tokens
                                     );
 
     /**
+     * Tokens that represent comparison operator.
+     *
+     * @var array(int)
+     */
+    public static $comparisonTokens = array(
+                                       T_IS_EQUAL,
+                                       T_IS_IDENTICAL,
+                                       T_IS_NOT_EQUAL,
+                                       T_IS_NOT_IDENTICAL,
+                                       T_LESS_THAN,
+                                       T_GREATER_THAN,
+                                       T_IS_SMALLER_OR_EQUAL,
+                                       T_IS_GREATER_OR_EQUAL,
+                                     );
+
+    /**
+     * Tokens that represent arithmetic operators.
+     *
+     * @var array(int)
+     */
+    public static $arithmeticTokens = array(
+                                       T_PLUS,
+                                       T_MINUS,
+                                       T_MULTIPLY,
+                                       T_DIVIDE,
+                                       T_MODULUS,
+                                      );
+
+    /**
      * Token types that open parethesis.
      *
      * @var array(int)
