@@ -41,20 +41,11 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      */
     public function register()
     {
-        return array(
-                T_MINUS,
-                T_PLUS,
-                T_MULTIPLY,
-                T_DIVIDE,
-                T_MODULUS,
-                T_BITWISE_AND,
-                T_BITWISE_OR,
-                T_CONCAT_EQUAL,
-                T_DIV_EQUAL,
-                T_MUL_EQUAL,
-                T_MINUS_EQUAL,
-                T_PLUS_EQUAL,
-               );
+        $comparison = PHP_CodeSniffer_Tokens::$comparisonTokens;
+        $operators  = PHP_CodeSniffer_Tokens::$operators;
+        $assignment = PHP_CodeSniffer_Tokens::$assignmentTokens;
+
+        return array_unique(array_merge($comparison, $operators, $assignment));
 
     }//end register()
 
@@ -72,6 +63,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
     {
         $tokens = $phpcsFile->getTokens();
 
+        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+            // Skip for '=&' case.
+            if (isset($tokens[$stackPtr+1]) && $tokens[$stackPtr+1]['code'] === T_BITWISE_AND) {
+                return;
+            }
+        }
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
             // If its not a reference, then we expect one space either side of the
             // bitwise operator.
@@ -129,7 +126,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                                  );
 
                 if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
-                    // Just trying to use a ngeative value; eg. myFunction($var, -2).
+                    // Just trying to use a negative value; eg. myFunction($var, -2).
                     return;
                 }
 
