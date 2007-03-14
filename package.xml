@@ -32,13 +32,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-   - Added MemberVarSpacingSniff to Squiz standard
-   - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
-   - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
-   - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
-   - Error no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
+   - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
+   - Added MemberVarSpacingSniff to Squiz standard to enforce one-line spacing between member vars
+   - Add FunctionCommentThrowTag Sniff to Squiz standard to check that @throws tags are correct
+   - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
+   - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
+   - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
+   - Errors now thrown if constructors or destructors have @return tags in Squiz FunctionCommentSniff
+   - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
+   - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff
+   - Errors now thrown for missing doc comment in Squiz VariableCommentSniff
  </notes>
  <contents>
   <dir name="/">
