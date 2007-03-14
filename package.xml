@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
    - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff
    - Errors now thrown for missing doc comment in Squiz VariableCommentSniff
+   - Errors now thrown for unspaced operators in FOR loop declarations in Squiz OperatorSpacingSniff
  </notes>
  <contents>
   <dir name="/">
