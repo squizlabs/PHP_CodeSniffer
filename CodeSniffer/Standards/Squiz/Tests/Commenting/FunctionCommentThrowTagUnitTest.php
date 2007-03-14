@@ -48,12 +48,12 @@ class Squiz_Tests_Commenting_FunctionCommentThrowTagUnitTest extends AbstractSni
     public function getErrorList()
     {
         return array(
-                11 => 1,
-                25 => 1,
-                41 => 1,
-                54 => 1,
-                69 => 1,
-                70 => 1,
+                9  => 1,
+                21 => 1,
+                35 => 1,
+                46 => 1,
+                59 => 1,
+                60 => 1,
                );
 
     }//end getErrorList()

@@ -6,8 +6,6 @@ class FunctionCommentThrowTagUnitTest
     /**
      * Missing throw tag.
      *
-     * @since  4.0.0
-     * @return void
      */
     public function missingThrowTag()
     {
@@ -19,8 +17,6 @@ class FunctionCommentThrowTagUnitTest
     /**
      * Tag and token number mismatch.
      *
-     * @since  4.0.0
-     * @return void
      * @throws PHP_Exception1
      */
     public function oneMoreThrowsTagNeeded()
@@ -34,8 +30,6 @@ class FunctionCommentThrowTagUnitTest
     /**
      * Tag and token number mismatch.
      *
-     * @since  4.0.0
-     * @return void
      * @throws PHP_Exception1
      * @throws PHP_Exception2
      */
@@ -49,8 +43,6 @@ class FunctionCommentThrowTagUnitTest
     /**
      * Wrong exception type name.
      *
-     * @since  4.0.0
-     * @return void
      * @throws PHP_Wrong_Exception
      */
     public function wrongExceptionName()
@@ -63,8 +55,6 @@ class FunctionCommentThrowTagUnitTest
     /**
      * Wrong exception type name.
      *
-     * @since  4.0.0
-     * @return void
      * @throws PHP_Correct_Exception1
      * @throws PHP_Wrong_Exception2
      * @throws PHP_Wrong_Exception3
@@ -76,6 +66,19 @@ class FunctionCommentThrowTagUnitTest
         throw new PHP_Correct_Exception3('Error');
 
     }//end moreWrongExceptionName()
+
+
+    /**
+     * Wrong exception type name.
+     *
+     * @throws PHP_Correct_Exception
+     */
+    public function sameExceptionName()
+    {
+        throw new PHP_Correct_Exception('Error');
+        throw new PHP_Correct_Exception('Error');
+
+    }//end sameExceptionName()
 
 
 }//end class
