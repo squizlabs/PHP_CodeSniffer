@@ -81,5 +81,41 @@ class FunctionCommentThrowTagUnitTest
     }//end sameExceptionName()
 
 
+    /**
+     * This is a valid chunk.
+     *
+     * @throws PHP_Exception1
+     * @throws PHP_Exception2
+     */
+    public function thisShouldWorkOK()
+    {
+        throw new PHP_Exception2('Error');
+        throw new PHP_Exception1('Error');
+        throw new PHP_Exception2('Error');
+        throw new PHP_Exception1('Error');
+        throw new PHP_Exception2('Error');
+
+    }//end thisShouldWorkOK()
+
+
+    /**
+     * This is not OK, missing 2 @throws tag.
+     *
+     * @throws PHP_Exception1
+     * @throws PHP_Exception2
+     */
+    public function notOK()
+    {
+        throw new PHP_Missing_Exception1('Error');
+        throw new PHP_Exception2('Error');
+        throw new PHP_Missing_Exception2('Error');
+        throw new PHP_Missing_Exception2('Error');
+        throw new PHP_Exception1('Error');
+        throw new PHP_Exception2('Error');
+        throw new PHP_Missing_Exception1('Error');
+
+    }//end notOK()
+
+
 }//end class
 ?>

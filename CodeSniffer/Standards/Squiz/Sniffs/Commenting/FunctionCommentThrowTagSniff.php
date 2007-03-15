@@ -95,32 +95,42 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                 $currPos       = $phpcsFile->findNext(T_THROW, ($currPos+1), $currScopeEnd);
             }
         }
+        // Only need one @throws tag for each type of exception thrown.
+        $throwTokens = array_unique($throwTokens);
+        sort($throwTokens);
 
-        // Check token (number, type) against the comment.
         $throws = $this->commentParser->getThrows();
-        if (empty($throws) === false) {
-            // Check whether the number of throw tags matches.
-            $expectedTag = count($throwTokens);
-            $foundTag    = count($throws);
-            if ($foundTag !== $expectedTag) {
-                $tags  = ($expectedTag > 1) ? 'tags' : 'tag';
-                $error = "Expected $expectedTag @throws $tags in function comment; $foundTag found";
+        if (empty($throws) === true) {
+            $error = 'Missing @throws tag in function comment';
+            $phpcsFile->addError($error, $commentEnd);
+        } else {
+            $throwTags  = array();
+            $lineNumber = array();
+            foreach ($throws as $throw) {
+                $throwTags[]                    = $throw->getValue();
+                $lineNumber[$throw->getValue()] = $throw->getLine();
+            }
+            $throwTags = array_unique($throwTags);
+            sort($throwTags);
+
+            // @throw tag count matches throw token count.
+            $tokenCount = count($throwTokens);
+            $tagCount   = count($throwTags);
+            if ($tokenCount !== $tagCount) {
+                $tags  = ($tokenCount > 1) ? 'tags' : 'tag';
+                $error = "Expected $tokenCount @throws $tags in function comment; $tagCount found";
                 $phpcsFile->addError($error, $commentEnd);
                 return;
             } else {
-                // Validate throw tag exception type.
-                foreach ($throws as $i => $throw) {
-                    $exception = $throw->getValue();
-                    if (empty($exception) === false && $exception !== $throwTokens[$i]) {
-                        $error    = "Expected \"$throwTokens[$i]\" but found \"$exception\" for @throws tag exception";
-                        $errorPos = ($commentStart + $throw->getLine());
+                // Exception type in @throws tag must be thrown in the function..
+                foreach ($throwTags as $i => $throwTag) {
+                    $errorPos = $commentStart + $lineNumber[$throwTag];
+                    if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
+                        $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for @throws tag exception";
                         $phpcsFile->addError($error, $errorPos);
                     }
                 }
             }
-        } else {
-            $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError($error, $commentEnd);
         }
 
     }//end processTokenWithinScope()
