@@ -76,13 +76,6 @@ class PHP_CodeSniffer
      */
     private $_listeners = array();
 
-    /**
-     * A cache of classes found within sniff files.
-     *
-     * @var array
-     */
-    private $_classCache = array();
-
 
     /**
      * An array of extensions for files we will check.
@@ -224,47 +217,25 @@ class PHP_CodeSniffer
 
         foreach ($files as $file) {
 
-            if (isset($this->_classCache[$file]) === false) {
-                // Determine what classes this file contains.
-                $oldClasses = get_declared_classes();
-                include_once $file;
-                $newClasses = get_declared_classes();
-                $this->_classCache[$file] = array_diff($newClasses, $oldClasses);
+            if (strpos($file, 'PHP/CodeSniffer/') === false) {
+                continue;
             }
 
-            $newClasses = $this->_classCache[$file];
+            $className = substr($file, strpos($file, 'PHP/CodeSniffer/'));
+            $className = substr($className, 26);
+            $className = substr($className, 0, -4);
+            $className = str_replace('/', '_', $className);
 
-            foreach ($newClasses as $className) {
+            include_once $file;
 
-// Only include sniffs that are in our coding standard.
-// We know those sniffs because their class name starts
-// with "[STANDARD]_".
-#if (preg_match("|^${standard}_|i", $className) === 0) {
-#    continue;
-#}
+            // If they have specified a list of sniffs to restrict to, check
+            // to see if this sniff is allowed.
+            $allowed = in_array(strtolower($className), $sniffs);
+            if (empty($sniffs) === false && $allowed === false) {
+                continue;
+            }
 
-                $rfClass = new ReflectionClass($className);
-                if ($rfClass->implementsInterface('PHP_CodeSniffer_Sniff') === false) {
-                    // It's not a test so lets continue.
-                    unset($rfClass);
-                    continue;
-                }
-
-                // If they have specified a list of sniffs to restrict to, check
-                // to see if this sniff is allowed.
-                $allowed = in_array(strtolower($className), $sniffs);
-                if (empty($sniffs) === false && $allowed === false) {
-                    continue;
-                }
-
-                if ($rfClass->isAbstract() === true) {
-                    // Cannot instantiate abstract classes.
-                    unset($rfClass);
-                    continue;
-                }
-
-                $this->_listeners[] = $className;
-            }//end foreach
+            $this->_listeners[] = $className;
         }//end foreach
 
     }//end _registerTokenListeners()
