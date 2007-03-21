@@ -30,6 +30,19 @@ require_once 'PHP/CodeSniffer/Tokens.php';
 class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
+    /**
+     * A list of classes that don't need to be included.
+     *
+     * @var array(string)
+     */
+    private $_ignore = array(
+                        'self',
+                        'parent',
+                        'channels',
+                        'dal',
+                        'init',
+                       );
+
 
     /**
      * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
@@ -56,8 +69,11 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
         // Determine the name of the class that the static function
         // is being called on.
-        $classNameToken = $phpcsFile->findPrevious(T_STRING, $stackPtr);
+        $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         $className      = $tokens[$classNameToken]['content'];
+        if (in_array(strtolower($className), $this->_ignore) === true) {
+            return;
+        }
 
         // Go searching for includeSystem calls within this function, or the
         // inclusion of .inc files, which would be library files.
@@ -134,8 +150,11 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
         // Determine the name of the class that the static function
         // is being called on.
-        $classNameToken = $phpcsFile->findPrevious(T_STRING, $stackPtr);
+        $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         $className      = $tokens[$classNameToken]['content'];
+        if (in_array(strtolower($className), $this->_ignore) === true) {
+            return;
+        }
 
         $includedClasses = array();
 

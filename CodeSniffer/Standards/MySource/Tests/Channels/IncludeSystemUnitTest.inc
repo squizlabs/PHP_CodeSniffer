@@ -23,7 +23,7 @@ $parserFiles = FileSystem2::listDirectory();
 $siteid = MySystem::getCurrentSiteId();
 $parserFiles = FileSystem::listDirectory();
 
-class MyClass()
+class MyClass
 {
     function one() {
         Channels::includeSystem('MySystem2');
@@ -33,15 +33,16 @@ class MyClass()
     function two() {
         $siteid = MySystem2::getCurrentSiteId();
         $parserFiles = FileSystem2::listDirectory();
+        return parent::two();
     }
 
     function three() {
         include 'libs/FileSystem.inc';
         $siteid = MySystem::getCurrentSiteId();
         $parserFiles = FileSystem::listDirectory();
+        echo self::two();
     }
 }
 
-require_once dirname(dirname(dirname(__FILE__))).'/data/init.inc';
 echo Init::ROOT_DIR;
 ?>
