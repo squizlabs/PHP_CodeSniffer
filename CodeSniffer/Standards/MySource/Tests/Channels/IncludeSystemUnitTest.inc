@@ -41,4 +41,7 @@ class MyClass()
         $parserFiles = FileSystem::listDirectory();
     }
 }
+
+require_once dirname(dirname(dirname(__FILE__))).'/data/init.inc';
+echo Init::ROOT_DIR;
 ?>
