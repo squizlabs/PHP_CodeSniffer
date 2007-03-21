@@ -309,6 +309,19 @@ final class PHP_CodeSniffer_Tokens
 
 
     /**
+     * Tokens that include files.
+     *
+     * @var array(int)
+     */
+    public static $includeTokens = array(
+                                    T_REQUIRE_ONCE,
+                                    T_REQUIRE,
+                                    T_INCLUDE_ONCE,
+                                    T_INCLUDE,
+                                   );
+
+
+    /**
      * A PHP_CodeSniffer_Tokens class cannot be constructed.
      *
      * Only static calls are allowed.
