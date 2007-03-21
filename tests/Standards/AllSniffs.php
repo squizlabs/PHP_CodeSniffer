@@ -70,7 +70,12 @@ class AllSniffs
         $standards = PHP_CodeSniffer::getInstalledStandards(true);
         foreach ($standards as $standard) {
             $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
-            $di          = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
+            if (is_dir($standardDir) === false) {
+                // No tests for this standard.
+                continue;
+            }
+
+            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
 
             foreach ($di as $file) {
                 // Tests must have the extention 'php'.

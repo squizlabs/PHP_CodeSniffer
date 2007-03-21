@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+   - Coding standards now require a class to be added so PHP_CodeSniffer can get information from them
+   - Coding standards can now include sniffs from other standards, or whole standards, without writing new sniff files
    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
@@ -221,6 +223,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
       </dir>
+      <file baseinstalldir="PHP" name="GenericCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
      </dir>
      <dir name="PEAR">
       <dir name="Sniffs">
@@ -251,19 +256,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
-       <dir name="Formatting">
-        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-       </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FunctionCallSignatureSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="OpeningFunctionBraceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ValidDefaultValueSniff.php" role="php">
@@ -274,18 +271,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ValidClassNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="ValidConstantNameSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-       </dir>
-       <dir name="PHP">
-        <file baseinstalldir="PHP" name="ConstantSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="DisallowShortOpenTagSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
@@ -364,6 +350,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
       </dir>
+      <file baseinstalldir="PHP" name="PEARCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
      </dir>
      <dir name="Squiz">
       <dir name="Sniffs">
@@ -467,9 +456,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Functions">
-        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -479,17 +465,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="GlobalFunctionSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="OpeningFunctionBraceSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
        </dir>
        <dir name="NamingConventions">
-        <file baseinstalldir="PHP" name="UpperCasePhpConstantSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="ValidConstantNameSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -567,9 +544,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceSniff.php" role="php">
@@ -821,6 +795,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
       </dir>
+      <file baseinstalldir="PHP" name="SquizCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
      </dir>
      <file baseinstalldir="PHP" name="AbstractPatternSniff.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -829,6 +806,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="AbstractVariableSniff.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="CodingStandard.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="IncorrectPatternException.php" role="php">

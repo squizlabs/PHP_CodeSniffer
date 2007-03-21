@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_PHP_DisallowShortOpenTagSniff.
+ * Bass Coding Standard class.
  *
  * PHP version 5
  *
@@ -13,13 +13,9 @@
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php';
-
-/**
- * Squiz_Sniffs_PHP_DisallowShortOpenTagSniff.
- *
- * Makes sure that shorthand PHP open tags are not used.
+ 
+ /**
+ * Base Coding Standard class.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -30,9 +26,28 @@ require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowShortOpenTagS
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_DisallowShortOpenTagSniff extends Generic_Sniffs_PHP_DisallowShortOpenTagSniff
+class PHP_CodeSniffer_Standards_CodingStandard
 {
 
-}//end class
 
+    /**
+     * Return a list of external sniffs to include with this standard.
+     *
+     * External locations can be single sniffs, a whole directory of sniffs, or
+     * an entire coding standard. Locations start with the standard name. For
+     * example:
+     *  PEAR                              => include all sniffs in this standard
+     *  PEAR/Sniffs/Files                 => include all sniffs in this dir
+     *  PEAR/Sniffs/Files/LineLengthSniff => include this single sniff
+     *
+     * @return array
+     */
+    function getIncludedSniffs()
+    {
+        return array();
+
+    }//end getIncludedSniffs()
+
+
+}//end class
 ?>

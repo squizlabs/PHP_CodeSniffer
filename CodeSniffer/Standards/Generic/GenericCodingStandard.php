@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
+ * Generic Coding Standard.
  *
  * PHP version 5
  *
@@ -14,12 +14,10 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/PEAR/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php';
+require_once 'PHP/CodeSniffer/Standards/CodingStandard.php';
 
-/**
- * Squiz_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
- *
- * Checks that calls to methods and functions are spaced correctly.
+ /**
+ * Generic Coding Standard.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -30,9 +28,9 @@ require_once 'PHP/CodeSniffer/Standards/PEAR/Sniffs/Functions/FunctionCallArgume
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Functions_FunctionCallArgumentSpacingSniff extends PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff
+class PHP_CodeSniffer_Standards_Generic_GenericCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
 {
 
-}//end class
 
+}//end class
 ?>

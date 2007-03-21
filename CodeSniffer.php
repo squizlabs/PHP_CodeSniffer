@@ -212,7 +212,7 @@ class PHP_CodeSniffer
      */
     private function _registerTokenListeners($standard, array $sniffs=array())
     {
-        $files = $this->_getSniffFiles($this->_standardDir);
+        $files = $this->_getSniffFiles($this->_standardDir, $standard);
 
         if (empty($sniffs) === false) {
             // Convert the allowed sniffs to lower case so
@@ -223,19 +223,6 @@ class PHP_CodeSniffer
         }
 
         foreach ($files as $file) {
-
-            $fileParts = explode('.', $file);
-            // We are only interested in php files.
-            if (array_pop($fileParts) !== 'php') {
-                continue;
-            }
-
-            $basename = basename($file, '.php');
-
-            // We are only interested in Sniff files.
-            if (substr($basename, -5) !== 'Sniff') {
-                continue;
-            }
 
             if (isset($this->_classCache[$file]) === false) {
                 // Determine what classes this file contains.
@@ -249,12 +236,12 @@ class PHP_CodeSniffer
 
             foreach ($newClasses as $className) {
 
-                // Only include sniffs that are in our coding standard.
-                // We know those sniffs because their class name starts
-                // with "[STANDARD]_".
-                if (preg_match("|^${standard}_|i", $className) === 0) {
-                    continue;
-                }
+// Only include sniffs that are in our coding standard.
+// We know those sniffs because their class name starts
+// with "[STANDARD]_".
+#if (preg_match("|^${standard}_|i", $className) === 0) {
+#    continue;
+#}
 
                 $rfClass = new ReflectionClass($className);
                 if ($rfClass->implementsInterface('PHP_CodeSniffer_Sniff') === false) {
@@ -284,26 +271,65 @@ class PHP_CodeSniffer
 
 
     /**
-     * Recursively read a specified directory and return sniff files within.
+     * Return a list of sniffs that a coding standard has defined.
      *
-     * @param string $dir The directory where to look for the files.
+     * Sniffs are found by recursing the standard directory and also by
+     * asking the standard for included sniffs.
+     *
+     * @param string $dir      The directory where to look for the files.
+     * @param string $standard The name of the coding standard. If NULL, no
+     *                         included sniffs will be checked for.
      *
      * @return array
      * @throws Exception If there was an error opening the directory.
      */
-    private function _getSniffFiles($dir)
+    private function _getSniffFiles($dir, $standard=null)
     {
         $di    = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
         $files = array();
 
         foreach ($di as $file) {
-            $fileParts   = explode('.', $file);
-            $currFileExt = array_pop($fileParts);
-
-            if ($currFileExt === 'php') {
-                $files[] = $file->getPathname();
+            // We are only interested in PHP and sniff files.
+            $fileParts = explode('.', $file);
+            if (array_pop($fileParts) !== 'php') {
+                continue;
             }
+
+            $basename = basename($file, '.php');
+            if (substr($basename, -5) !== 'Sniff') {
+                continue;
+            }
+
+            $files[] = $file->getPathname();
         }
+
+        // Load the standard class and ask it for a list of external
+        // sniffs to include in the standard.
+        if ($standard !== null && is_file("$dir/{$standard}CodingStandard.php") === true) {
+            require_once "$dir/{$standard}CodingStandard.php";
+            $standardClassName = "PHP_CodeSniffer_Standards_{$standard}_{$standard}CodingStandard";
+            $standardClass     = new $standardClassName;
+
+            $includedSniffs = $standardClass->getIncludedSniffs();
+            foreach ($includedSniffs as $sniff) {
+                $sniffDir = dirname(__FILE__)."/CodeSniffer/Standards/$sniff";
+                if (is_dir($sniffDir) === true) {
+                    if (PHP_CodeSniffer::isInstalledStandard($sniff) === true) {
+                        // We are including a while coding standard.
+                        $files += $this->_getSniffFiles($sniffDir, $sniff);
+                    } else {
+                        // We are including a whole directory of sniffs.
+                        $files += $this->_getSniffFiles($sniffDir);
+                    }
+                } else {
+                    if (substr($sniffDir, -5) !== 'Sniff') {
+                        continue;
+                    }
+
+                    $files[] = "$sniffDir.php";
+                }
+            }
+        }//end if
 
         return $files;
 
@@ -980,9 +1006,8 @@ class PHP_CodeSniffer
                     continue;
                 }
 
-                // Valid coding standard dirs include a "Sniffs"
-                // subdirectory, so check for it.
-                if (is_dir($file->getPathname().'/Sniffs') === true) {
+                // Valid coding standard dirs include a standard class.
+                if (is_file($file->getPathname()."/{$filename}CodingStandard.php") === true) {
                     // We found a coding standard directory.
                     $installedStandards[] = $filename;
                 }
@@ -1009,8 +1034,8 @@ class PHP_CodeSniffer
     public static function isInstalledStandard($standard)
     {
         $standardDir  = dirname(__FILE__);
-        $standardDir .='/CodeSniffer/Standards/'.$standard.'/Sniffs';
-        return (is_dir($standardDir) === true);
+        $standardDir .= '/CodeSniffer/Standards/'.$standard;
+        return (is_file("$standardDir/{$standard}CodingStandard.php") === true);
 
     }//end isInstalledStandard()
 
