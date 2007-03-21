@@ -75,9 +75,19 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             return;
         }
 
+        $includedClasses = array();
+
+        $fileName = strtolower($phpcsFile->getFilename());
+        $matches  = array();
+        if (preg_match('~/systems/([^/]+)/([^/]+)?((actions)|(plugs)).inc$~', $fileName, $matches) !== 0) {
+            // This is an actions or plugs file, which means we don't
+            // have to include the system in which it exists
+            // We know the system from the path.
+            $includedClasses[] = $matches[1];
+        }
+
         // Go searching for includeSystem calls within this function, or the
         // inclusion of .inc files, which would be library files.
-        $includedClasses = array();
         for ($i = ($currScope + 1); $i < $stackPtr; $i++) {
             if (strtolower($tokens[$i]['content']) === 'includesystem') {
                 $systemName        = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
@@ -157,6 +167,15 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         }
 
         $includedClasses = array();
+
+        $fileName = strtolower($phpcsFile->getFilename());
+        $matches  = array();
+        if (preg_match('~/systems/([^/]+)/([^/]+)?((actions)|(plugs)).inc$~', $fileName, $matches) !== 0) {
+            // This is an actions or plugs file, which means we don't
+            // have to include the system in which it exists
+            // We know the system from the path.
+            $includedClasses[] = $matches[1];
+        }
 
         // Go searching for includeSystem or require/include
         // calls outside our scope.
