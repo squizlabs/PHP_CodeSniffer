@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Coding standards can now include sniffs from other standards, or whole standards, without writing new sniff files
    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
+   - PHP_CodeSniffer_File now stores the absolute path to the file so sniffs can check file locations correctly
    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
    - Added MemberVarSpacingSniff to Squiz standard to enforce one-line spacing between member vars
    - Add FunctionCommentThrowTag Sniff to Squiz standard to check that @throws tags are correct

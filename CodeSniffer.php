@@ -357,6 +357,8 @@ class PHP_CodeSniffer
      */
     private function _processFile($file)
     {
+        $file = realpath($file);
+
         if (file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
