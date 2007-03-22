@@ -65,10 +65,22 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
         if ($tokens[$stackPtr]['code'] === T_EQUAL) {
             // Skip for '=&' case.
-            if (isset($tokens[$stackPtr+1]) && $tokens[$stackPtr+1]['code'] === T_BITWISE_AND) {
+            if (isset($tokens[($stackPtr + 1)]) && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
                 return;
             }
+
+            // Skip default values in function declarations.
+            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+                $bracket = end($tokens[$stackPtr]['nested_parenthesis']);
+                if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
+                    $function = $tokens[$bracket]['parenthesis_owner'];
+                    if ($tokens[$function]['code'] === T_FUNCTION) {
+                        return;
+                    }
+                }
+            }
         }
+
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
             // If its not a reference, then we expect one space either side of the
             // bitwise operator.
