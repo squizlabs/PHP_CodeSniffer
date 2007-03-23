@@ -64,9 +64,22 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
         }
 
         $bufferEnd = $stackPtr;
-        while (($bufferEnd = $phpcsFile->findNext(array(T_STRING), ($bufferEnd + 1), null, false)) !== false) {
+        while (($bufferEnd = $phpcsFile->findNext(array(T_STRING, T_FUNCTION), ($bufferEnd + 1), null, false)) !== false) {
+            if ($tokens[$bufferEnd]['code'] === T_FUNCTION) {
+                // We should not cross funtions or move into functions.
+                $bufferEnd = false;
+                break;
+            }
+
             $stringContent = $tokens[$bufferEnd]['content'];
             if (($stringContent === 'ob_end_clean') || ($stringContent === 'ob_end_flush')) {
+                break;
+            }
+
+            if (($stringContent === 'ob_get_clean') || ($stringContent === 'ob_get_flush')) {
+                // Generate the error because the functions are not allowed, but
+                // continue to check the indentation.
+                $phpcsFile->addError('Output buffering must be closed using ob_end_clean or ob_end_flush', $bufferEnd);
                 break;
             }
         }

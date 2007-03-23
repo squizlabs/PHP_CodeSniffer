@@ -27,6 +27,25 @@ ob_start();
     // Hi.
 ob_end_clean();
 
+function myFunc1()
+{
+    ob_start();
+       echo 'hello';
+       $content = ob_get_clean();
+
+    if ($blah) {
+        echo 'blah';
+    }
+}
+
+function myFunc2()
+{
+    ob_start();
+        echo 'hello';
+        $content = ob_get_contents();
+    ob_end_clean();
+}
+
 ob_start();
     echo $hello;
 ?>
