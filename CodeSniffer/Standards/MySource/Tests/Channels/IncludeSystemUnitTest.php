@@ -42,10 +42,14 @@ class MySource_Tests_Channels_IncludeSystemUnitTest extends AbstractSniffUnitTes
     public function getErrorList()
     {
         return array(
-                11 => 1,
-                21 => 1,
+                9  => 1,
+                14 => 1,
                 24 => 1,
-                34 => 1,
+                27 => 1,
+                28 => 1,
+                36 => 1,
+                41 => 1,
+                60 => 1,
                );
 
     }//end getErrorList()

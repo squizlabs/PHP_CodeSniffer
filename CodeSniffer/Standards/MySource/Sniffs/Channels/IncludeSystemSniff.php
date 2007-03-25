@@ -1,6 +1,6 @@
 <?php
 /**
- * A test to ensure that systems are included before they are used.
+ * Ensures that systems, asset types and libs are included before they are used.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@ require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
 require_once 'PHP/CodeSniffer/Tokens.php';
 
 /**
- * A test to ensure that systems are included before they are used.
+ * Ensures that systems, asset types and libs are included before they are used.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer_MySource
@@ -86,13 +86,18 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $includedClasses[] = $matches[1];
         }
 
-        // Go searching for includeSystem calls within this function, or the
-        // inclusion of .inc files, which would be library files.
+        // Go searching for includeSystem and includeAsset calls within this
+        // function, or the inclusion of .inc files, which
+        // would be library files.
         for ($i = ($currScope + 1); $i < $stackPtr; $i++) {
             if (strtolower($tokens[$i]['content']) === 'includesystem') {
                 $systemName        = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $systemName        = trim($tokens[$systemName]['content'], " '");
                 $includedClasses[] = strtolower($systemName);
+            } else if (strtolower($tokens[$i]['content']) === 'includeasset') {
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[] = strtolower($typeName).'assettype';
             } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$includeTokens) === true) {
                 $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $filePath = $tokens[$filePath]['content'];
@@ -103,7 +108,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             }
         }//end for
 
-        // Now go searching for includeSystem or require/include
+        // Now go searching for includeSystem, includeAsset or require/include
         // calls outside our scope. If we are in a class, look outside the
         // class. If we are not, look outside the function.
         $condPtr = $currScope;
@@ -126,6 +131,10 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $systemName        = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $systemName        = trim($tokens[$systemName]['content'], " '");
                 $includedClasses[] = strtolower($systemName);
+            } else if (strtolower($tokens[$i]['content']) === 'includeasset') {
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[] = strtolower($typeName).'assettype';
             } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$includeTokens) === true) {
                 $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $filePath = $tokens[$filePath]['content'];
@@ -177,7 +186,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $includedClasses[] = $matches[1];
         }
 
-        // Go searching for includeSystem or require/include
+        // Go searching for includeSystem, includeAsset or require/include
         // calls outside our scope.
         for ($i = 0; $i < $stackPtr; $i++) {
             // Skip other scopes.
@@ -190,6 +199,10 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $systemName        = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $systemName        = trim($tokens[$systemName]['content'], " '");
                 $includedClasses[] = strtolower($systemName);
+            } else if (strtolower($tokens[$i]['content']) === 'includeasset') {
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[] = strtolower($typeName).'assettype';
             } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$includeTokens) === true) {
                 $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $filePath = $tokens[$filePath]['content'];
