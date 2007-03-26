@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
+   - Errors no longer thrwon for correctly indented buffered lines in Squiz ScopeIndexSniff
    - Errors now thrown if constructors or destructors have @return tags in Squiz FunctionCommentSniff
    - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
    - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff
@@ -548,6 +549,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -789,6 +793,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
