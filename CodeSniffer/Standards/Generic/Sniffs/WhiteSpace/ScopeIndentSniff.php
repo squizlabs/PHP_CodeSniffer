@@ -104,7 +104,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         // Based on the conditions that surround this token, determine the
         // indent that we expect this current content to be.
-        $expectedIndent = $this->_calculateExpectedIndent($tokens, $firstToken);
+        $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
 
         if ($tokens[$firstToken]['column'] !== $expectedIndent) {
             $error  = 'Line indented incorrectly; expected ';
@@ -241,7 +241,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @return int
      */
-    private function _calculateExpectedIndent(array $tokens, $stackPtr)
+    protected function calculateExpectedIndent(array $tokens, $stackPtr)
     {
         $conditionStack = array();
 
@@ -261,7 +261,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         return ((count($conditionStack) * $this->indent) + 1);
 
-    }//end _calculateExpectedIndent()
+    }//end calculateExpectedIndent()
 
 
 }//end class
