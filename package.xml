@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Added MemberVarSpacingSniff to Squiz standard to enforce one-line spacing between member vars
    - Add FunctionCommentThrowTag Sniff to Squiz standard to check that @throws tags are correct
    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
+   - Fixed problems with errors not being thrown for some misaligned @param comments in Squiz FunctionCommentSniff
    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
    - Errors no longer thrwon for correctly indented buffered lines in Squiz ScopeIndexSniff
