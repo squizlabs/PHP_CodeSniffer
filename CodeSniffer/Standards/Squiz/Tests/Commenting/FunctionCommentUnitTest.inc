@@ -361,4 +361,19 @@ class Another_Class
     }
 
 }//end class
+
+
+/**
+ * Comment.
+ *
+ * @param string $id    Comment.
+ * @param array $design Comment.
+ *
+ * @since  4.0.0
+ * @return boolean
+ */
+public static function paint($id, array $design)
+{
+
+}//end paint()
 ?>
