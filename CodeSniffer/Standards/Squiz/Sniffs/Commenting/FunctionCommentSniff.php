@@ -594,8 +594,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 $this->currentFile->addError($error, ($commentEnd + 2));
                             }
                         }
-                    }
-                }
+                    }//end if
+                }//end foreach
 
                 // Make sure the names of the parameter comment matches the
                 // actual parameter.
