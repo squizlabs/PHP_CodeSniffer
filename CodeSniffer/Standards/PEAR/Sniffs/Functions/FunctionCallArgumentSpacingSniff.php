@@ -116,12 +116,12 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
                 if ($nextToken !== false) {
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
                         if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
-                            $error = 'Expected one space before = sign of default value';
+                            $error = 'Expected 1 space before = sign of default value';
                             $phpcsFile->addError($error, $stackPtr);
                         }
 
                         if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
-                            $error = 'Expected one space after = sign of default value';
+                            $error = 'Expected 1 space after = sign of default value';
                             $phpcsFile->addError($error, $stackPtr);
                         }
                     }
