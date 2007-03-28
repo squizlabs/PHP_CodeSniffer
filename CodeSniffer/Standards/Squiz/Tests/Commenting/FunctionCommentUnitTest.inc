@@ -376,5 +376,20 @@ class Another_Class
 public static function paramAlign($varrr1, $vr2, $var3)
 {
 
+}//end paramAlign()
+
+
+/**
+ * Comment.
+ *
+ * @param string $id    Comment.
+ * @param array $design Comment.
+ *
+ * @since  4.0.0
+ * @return boolean
+ */
+public static function paint($id, array $design)
+{
+
 }//end paint()
 ?>
