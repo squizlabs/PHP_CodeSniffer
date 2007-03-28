@@ -125,7 +125,7 @@ class PHP_CodeSniffer_File
      * @param miss
      * @param
      */
-    public function missingDescroption($threeSpaces)
+    public function missingDescription($threeSpaces)
     {
 
     }//end missingDescroption()
@@ -364,15 +364,16 @@ class Another_Class
 
 
 /**
- * Comment.
+ * Comment param alignment test.
  *
- * @param string $id    Comment.
- * @param array $design Comment.
+ * @param string $varrr1 Comment1..
+ * @param string  $vr2    Comment2.
+ * @param string  $var3  Comment3..
  *
  * @since  4.0.0
  * @return boolean
  */
-public static function paint($id, array $design)
+public static function paramAlign($varrr1, $vr2, $var3)
 {
 
 }//end paint()

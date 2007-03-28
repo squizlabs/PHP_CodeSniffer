@@ -63,7 +63,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 112 => 2,
                 122 => 1,
                 123 => 4,
-                124 => 2,
+                124 => 3,
                 125 => 4,
                 126 => 6,
                 127 => 1,
@@ -115,7 +115,8 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 346 => 1,
                 356 => 1,
                 357 => 1,
-                380 => 1,
+                370 => 1,
+                371 => 1,
                );
 
     }//end getErrorList()
