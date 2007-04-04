@@ -44,7 +44,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Fixed problems with errors not being thrown for some misaligned @param comments in Squiz FunctionCommentSniff
    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
-   - Errors no longer thrwon for correctly indented buffered lines in Squiz ScopeIndexSniff
+   - Errors no longer thrown for correctly indented buffered lines in Squiz ScopeIndexSniff
+   - Errors no longer thrown for user-defined functions named as forbidden functions in Generic ForbiddenFunctionsSniff
    - Errors now thrown if constructors or destructors have @return tags in Squiz FunctionCommentSniff
    - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
    - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff

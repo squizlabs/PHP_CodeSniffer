@@ -14,4 +14,9 @@ $size = $class->sizeof($array);
 $size = $class->count($array);
 $class->delete($filepath);
 $class->unset($filepath);
+
+function delete() {}
+function unset() {}
+function sizeof() {}
+function count() {}
 ?>
