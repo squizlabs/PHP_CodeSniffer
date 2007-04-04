@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Errors now thrown for missing doc comment in Squiz VariableCommentSniff
    - Errors now thrown for unspaced operators in FOR loop declarations in Squiz OperatorSpacingSniff
    - Errors now thrown for using ob_get_clean/flush functions to end buffers in Squiz OutputBufferingIndentSniff
+   - Errors now thrown for all missing member variable comments in Squiz VariableCommentSniff
  </notes>
  <contents>
   <dir name="/">

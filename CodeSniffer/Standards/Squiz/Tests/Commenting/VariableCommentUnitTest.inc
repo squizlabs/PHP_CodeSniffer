@@ -184,6 +184,9 @@ class VariableCommentUnitTest
      */
      private $_varWithNoShortComment;
 
+     protected $noComment2 = '';
+
 
 }//end class
+
 ?>

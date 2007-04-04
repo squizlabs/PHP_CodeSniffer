@@ -61,9 +61,6 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      */
     public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-
-
-
         $this->currentFile = $phpcsFile;
         $tokens            = $phpcsFile->getTokens();
         $commentToken      = array(
@@ -79,6 +76,13 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
             $phpcsFile->addError('Missing variable doc comment', $stackPtr);
             return;
+        } else {
+            // Make sure the comment we have found belongs to us.
+            $commentFor = $phpcsFile->findNext(T_VARIABLE, ($commentEnd + 1));
+            if ($commentFor !== $stackPtr) {
+                $phpcsFile->addError('Missing variable doc comment', $stackPtr);
+                return;
+            }
         }
 
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
