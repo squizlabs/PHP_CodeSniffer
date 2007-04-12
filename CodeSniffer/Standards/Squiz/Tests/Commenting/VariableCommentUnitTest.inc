@@ -189,4 +189,19 @@ class VariableCommentUnitTest
 
 }//end class
 
+
+/**
+ * VariableCommentUnitTest2.
+ *
+ * Long description goes here.
+ *
+ * @since 4.0.0
+ */
+class VariableCommentUnitTest2
+{
+
+   public $hello;
+
+}//end class
+
 ?>

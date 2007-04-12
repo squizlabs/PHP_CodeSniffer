@@ -78,7 +78,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             return;
         } else {
             // Make sure the comment we have found belongs to us.
-            $commentFor = $phpcsFile->findNext(T_VARIABLE, ($commentEnd + 1));
+            $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE), ($commentEnd + 1));
             if ($commentFor !== $stackPtr) {
                 $phpcsFile->addError('Missing variable doc comment', $stackPtr);
                 return;
