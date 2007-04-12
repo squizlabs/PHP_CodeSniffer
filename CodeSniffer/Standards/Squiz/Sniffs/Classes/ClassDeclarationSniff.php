@@ -173,19 +173,13 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         $keyword      = $stackPtr;
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
         $className    = $phpcsFile->findNext(T_STRING, $stackPtr);
-        $extends      = $phpcsFile->findNext(array(T_IMPLEMENTS, T_EXTENDS), $stackPtr, $openingBrace);
-        $parents      = array();
-
-        $nextParent   = ($className + 1);
-        while (($nextParent = $phpcsFile->findNext(T_STRING, ($nextParent + 1), $openingBrace)) !== false) {
-            $parents[] = $nextParent;
-        }
 
         /*
             Now check the spacing of each token.
         */
 
         $name = strtolower($tokens[$keyword]['content']);
+
         // Spacing of the keyword.
         $gap = $tokens[($stackPtr + 1)]['content'];
         if (strlen($gap) !== 1) {
@@ -203,8 +197,19 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         }
 
         // Now check each of the parents.
+        $parents    = array();
+        $nextParent = ($className + 1);
+        while (($nextParent = $phpcsFile->findNext(array(T_STRING, T_IMPLEMENTS), ($nextParent + 1), ($openingBrace - 1))) !== false) {
+            $parents[] = $nextParent;
+        }
+
         $parentCount = count($parents);
+
         for ($i = 0; $i < $parentCount; $i++) {
+            if ($tokens[$parents[$i]]['code'] === T_IMPLEMENTS) {
+                continue;
+            }
+
             if ($tokens[($parents[$i] - 1)]['code'] !== T_WHITESPACE) {
                 $name  = $tokens[$parents[$i]]['content'];
                 $error = "Expected 1 space before \"$name\"; 0 found";
@@ -220,10 +225,14 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
 
             if ($tokens[($parents[$i] + 1)]['code'] !== T_COMMA) {
                 if ($i !== ($parentCount - 1)) {
-                    $found = strlen($tokens[($parents[$i] + 1)]['content']);
-                    $name  = $tokens[$parents[$i]]['content'];
-                    $error = "Expected 0 spaces between \"$name\" and comma; $found found";
-                    $phpcsFile->addError($error, $stackPtr);
+                    // This is not the last parent, and the comma
+                    // is not where we expect it to be.
+                    if ($tokens[($parents[$i] + 2)]['code'] !== T_IMPLEMENTS) {
+                        $found = strlen($tokens[($parents[$i] + 1)]['content']);
+                        $name  = $tokens[$parents[$i]]['content'];
+                        $error = "Expected 0 spaces between \"$name\" and comma; $found found";
+                        $phpcsFile->addError($error, $stackPtr);
+                    }
                 }
 
                 $nextComma = $phpcsFile->findNext(T_COMMA, $parents[$i]);

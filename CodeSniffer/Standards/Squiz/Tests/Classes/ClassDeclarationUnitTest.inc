@@ -75,4 +75,10 @@ class   CorrectClassDeclaration
 {
 
 }//end class
+
+
+class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorrectClassDeclaration
+{
+
+}//end class
 ?>

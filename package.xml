@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Add FunctionCommentThrowTag Sniff to Squiz standard to check that @throws tags are correct
    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
    - Fixed problems with errors not being thrown for some misaligned @param comments in Squiz FunctionCommentSniff
+   - Fixed badly spaced comma error being thrown for "extends" class in Squiz ClassDeclarationSniff
    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
    - Errors no longer thrown for correctly indented buffered lines in Squiz ScopeIndexSniff
