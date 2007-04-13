@@ -52,8 +52,16 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
                               'toString',
                               'set_state',
                               'clone',
-                              'autoload',
                              );
+
+    /**
+     * A list of all PHP magic functions.
+     *
+     * @var array
+     */
+    private $_magicFunctions = array(
+                                'autoload',
+                               );
 
 
     /**
@@ -158,11 +166,14 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
 
-        // Does this function claim to be magical?
+        // Is this a magic function. IE. is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
-            $error     = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
-            $phpcsFile->addError($error, $stackPtr);
+            if (in_array($magicPart, $this->_magicFunctions) === false) {
+                 $error     = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
+                 $phpcsFile->addError($error, $stackPtr);
+            }
+
             return;
         }
 

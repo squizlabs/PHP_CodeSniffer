@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
    - Errors no longer thrown for correctly indented buffered lines in Squiz ScopeIndexSniff
    - Errors no longer thrown for user-defined functions named as forbidden functions in Generic ForbiddenFunctionsSniff
+   - Errors no longer thrown on __autoload functions in PEAR ValidFunctionNameSniff
+   - Errors now thrown for __autoload methods in PEAR ValidFunctionNameSniff
    - Errors now thrown if constructors or destructors have @return tags in Squiz FunctionCommentSniff
    - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
    - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff
