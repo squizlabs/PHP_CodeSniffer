@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-02-23</date>
- <time>09:29:21</time>
+ <date>2007-04-17</date>
+ <time>13:13:21</time>
  <version>
   <release>0.5.0</release>
   <api>0.5.0</api>
@@ -32,14 +32,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-   - Coding standards now require a class to be added so PHP_CodeSniffer can get information from them
+   - BC BREAK: Coding standards now require a class to be added so PHP_CodeSniffer can get information from them
+     - Please read the end user docs for info about the new class required for all coding standards
+
    - Coding standards can now include sniffs from other standards, or whole standards, without writing new sniff files
    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
    - PHP_CodeSniffer_File now stores the absolute path to the file so sniffs can check file locations correctly
    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
    - Added MemberVarSpacingSniff to Squiz standard to enforce one-line spacing between member vars
-   - Add FunctionCommentThrowTag Sniff to Squiz standard to check that @throws tags are correct
+   - Add FunctionCommentThrowTagSniff to Squiz standard to check that @throws tags are correct
    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
    - Fixed problems with errors not being thrown for some misaligned @param comments in Squiz FunctionCommentSniff
    - Fixed badly spaced comma error being thrown for "extends" class in Squiz ClassDeclarationSniff
@@ -887,6 +889,46 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>0.5.0</release>
+    <api>0.5.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-04-17</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - BC BREAK: Coding standards now require a class to be added so PHP_CodeSniffer can get information from them
+      - Please read the end user docs for info about the new class required for all coding standards
+
+    - Coding standards can now include sniffs from other standards, or whole standards, without writing new sniff files
+    - PHP_CodeSniffer_File::isReference() now correctly returns for references in function declarations
+    - PHP_CodeSniffer_File::isReference() now returns false if you don't pass it a T_BITWISE_AND token
+    - PHP_CodeSniffer_File now stores the absolute path to the file so sniffs can check file locations correctly
+    - Fixed undefined index error in AbstractVariableSniff for variables inside an interface function definition
+    - Added MemberVarSpacingSniff to Squiz standard to enforce one-line spacing between member vars
+    - Add FunctionCommentThrowTagSniff to Squiz standard to check that @throws tags are correct
+    - Fixed problems caused by references and type hints in Squiz FunctionDeclarationArgumentSpacingSniff
+    - Fixed problems with errors not being thrown for some misaligned @param comments in Squiz FunctionCommentSniff
+    - Fixed badly spaced comma error being thrown for "extends" class in Squiz ClassDeclarationSniff
+    - Errors no longer thrown for class method names in Generic ForbiddenFunctionsSniff
+    - Errors no longer thrown for type hints in front of references in Generic UpperCaseConstantNameSniff
+    - Errors no longer thrown for correctly indented buffered lines in Squiz ScopeIndexSniff
+    - Errors no longer thrown for user-defined functions named as forbidden functions in Generic ForbiddenFunctionsSniff
+    - Errors no longer thrown on __autoload functions in PEAR ValidFunctionNameSniff
+    - Errors now thrown for __autoload methods in PEAR ValidFunctionNameSniff
+    - Errors now thrown if constructors or destructors have @return tags in Squiz FunctionCommentSniff
+    - Errors now thrown if @throws tags dont start with a capital and end with a full stop in Squiz FunctionCommentSniff
+    - Errors now thrown for invalid @var tag values in Squiz VariableCommentSniff
+    - Errors now thrown for missing doc comment in Squiz VariableCommentSniff
+    - Errors now thrown for unspaced operators in FOR loop declarations in Squiz OperatorSpacingSniff
+    - Errors now thrown for using ob_get_clean/flush functions to end buffers in Squiz OutputBufferingIndentSniff
+    - Errors now thrown for all missing member variable comments in Squiz VariableCommentSniff
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.4.0</release>
