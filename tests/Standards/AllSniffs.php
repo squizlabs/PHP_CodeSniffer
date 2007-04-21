@@ -78,6 +78,11 @@ class AllSniffs
             $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
 
             foreach ($di as $file) {
+                // Skip hidden files.
+                if (substr($file->getFilename(), 0, 1) === '.') {
+                    continue;
+                }
+
                 // Tests must have the extention 'php'.
                 $parts = explode('.', $file);
                 $ext   = array_pop($parts);
@@ -85,13 +90,13 @@ class AllSniffs
                     continue;
                 }
 
-                $filePath  = $file->getPathname();
-                $className = str_replace(dirname(__FILE__).'/', '', $filePath);
+                $filePath  = realpath($file->getPathname());
+                $className = str_replace(dirname(__FILE__).DIRECTORY_SEPARATOR, '', $filePath);
                 $className = substr($className, 0, -4);
-                $className = str_replace('/', '_', $className);
+                $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
                 $niceName  = substr($className, (strrpos($className, '_') + 1), -8);
 
-                include_once $file->getPathname();
+                include_once $filePath;
                 $class = new $className($niceName);
                 $suite->addTest($class);
             }
