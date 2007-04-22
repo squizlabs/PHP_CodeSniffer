@@ -198,7 +198,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                     $foundMessage    .= "$numErrors error(s)";
                     if ($numErrors !== 0) {
                         $foundString .= 'error(s)';
-                        $errors      .= implode("\n -> ", $problems['found_errors']);
+                        $errors      .= implode(PHP_EOL.' -> ', $problems['found_errors']);
                     }
 
                     if ($expectedWarnings !== $numWarnings) {
@@ -217,13 +217,13 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                     $foundMessage    .= "$numWarnings warning(s)";
                     if ($numWarnings !== 0) {
                         $foundString .= 'warning(s)';
-                        $errors      .= implode("\n -> ", $problems['found_warnings']);
+                        $errors      .= implode(PHP_EOL.' -> ', $problems['found_warnings']);
                     }
                 }
 
                 $fullMessage = "$lineMessage $expectedMessage $foundMessage.";
                 if ($errors !== '') {
-                    $fullMessage .= " The $foundString found were:\n -> $errors";
+                    $fullMessage .= " The $foundString found were:".PHP_EOL." -> $errors";
                 }
 
                 $failureMessages[] = $fullMessage;
@@ -231,7 +231,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         }//end foreach
 
         if (empty($failureMessages) === false) {
-            $this->fail(implode("\n", $failureMessages));
+            $this->fail(implode(PHP_EOL, $failureMessages));
         }
 
     }//end testSniff()

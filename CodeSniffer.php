@@ -173,7 +173,7 @@ class PHP_CodeSniffer
 
         $this->_registerTokenListeners($standard, $sniffs);
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo "DONE\n";
+            echo 'DONE'.PHP_EOL;
         }
 
         foreach ($files as $file) {
@@ -374,7 +374,7 @@ class PHP_CodeSniffer
             $startTime = time();
             echo 'Processing '.basename($file).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\n";
+                echo PHP_EOL;
             }
         }
 
@@ -385,11 +385,11 @@ class PHP_CodeSniffer
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = (time() - $startTime);
             if ($timeTaken === 0) {
-                echo "DONE in < 1 second\n";
+                echo 'DONE in < 1 second'.PHP_EOL;
             } else if ($timeTaken === 1) {
-                echo "DONE in 1 second\n";
+                echo 'DONE in 1 second'.PHP_EOL;
             } else {
-                echo "DONE in $timeTaken seconds\n";
+                echo "DONE in $timeTaken seconds".PHP_EOL;
             }
         }
 
@@ -457,15 +457,15 @@ class PHP_CodeSniffer
 
             ksort($errors);
 
-            echo "\nFILE: ";
+            echo PHP_EOL.'FILE: ';
             if (strlen($filename) <= 71) {
                 echo $filename;
             } else {
                 echo '...'.substr($filename, (strlen($filename) - 71));
             }
 
-            echo "\n";
-            echo str_repeat('-', 80)."\n";
+            echo PHP_EOL;
+            echo str_repeat('-', 80).PHP_EOL;
             $numLines = count($errors);
             echo "FOUND $numErrors ERROR(S) ";
 
@@ -473,8 +473,8 @@ class PHP_CodeSniffer
                 echo "AND $numWarnings WARNING(S) ";
             }
 
-            echo "AFFECTING $numLines LINE(S)\n";
-            echo str_repeat('-', 80)."\n";
+            echo "AFFECTING $numLines LINE(S)".PHP_EOL;
+            echo str_repeat('-', 80).PHP_EOL;
 
             // Work out the max line number for formatting.
             $maxLine = 0;
@@ -507,7 +507,7 @@ class PHP_CodeSniffer
                 foreach ($lineErrors as $error) {
                     // The padding that goes on the front of the line.
                     $padding  = ($maxLineLength - strlen($line));
-                    $errorMsg = wordwrap($error['message'], $maxErrorSpace, "\n$paddingLine2");
+                    $errorMsg = wordwrap($error['message'], $maxErrorSpace, PHP_EOL."$paddingLine2");
 
                     echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
                     if ($error['type'] === 'ERROR') {
@@ -516,11 +516,11 @@ class PHP_CodeSniffer
                         }
                     }
 
-                    echo ' | '.$errorMsg."\n";
+                    echo ' | '.$errorMsg.PHP_EOL;
                 }
             }//end foreach
 
-            echo str_repeat('-', 80)."\n\n";
+            echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
 
         }//end foreach
 
@@ -562,15 +562,15 @@ class PHP_CodeSniffer
             return;
         }
 
-        echo "\nPHP CODE SNIFFER REPORT SUMMARY\n";
-        echo str_repeat('-', 80)."\n";
+        echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
+        echo str_repeat('-', 80).PHP_EOL;
         if ($showWarnings === true) {
-            echo 'FILE'.str_repeat(' ', 60)."ERRORS  WARNINGS\n";
+            echo 'FILE'.str_repeat(' ', 60).'ERRORS  WARNINGS'.PHP_EOL;
         } else {
-            echo 'FILE'.str_repeat(' ', 70)."ERRORS\n";
+            echo 'FILE'.str_repeat(' ', 70).'ERRORS'.PHP_EOL;
         }
 
-        echo str_repeat('-', 80)."\n";
+        echo str_repeat('-', 80).PHP_EOL;
 
         $totalErrors   = 0;
         $totalWarnings = 0;
@@ -595,21 +595,21 @@ class PHP_CodeSniffer
                 echo $errors['warnings'];
             }
 
-            echo "\n";
+            echo PHP_EOL;
 
             $totalErrors   += $errors['errors'];
             $totalWarnings += $errors['warnings'];
             $totalFiles++;
         }//end foreach
 
-        echo str_repeat('-', 80)."\n";
+        echo str_repeat('-', 80).PHP_EOL;
         echo "A TOTAL OF $totalErrors ERROR(S) ";
         if ($showWarnings === true) {
             echo "AND $totalWarnings WARNING(S) ";
         }
 
-        echo "WERE FOUND IN $totalFiles FILE(S)\n";
-        echo str_repeat('-', 80)."\n\n";
+        echo "WERE FOUND IN $totalFiles FILE(S)".PHP_EOL;
+        echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
 
     }//end printErrorReportSummary()
 

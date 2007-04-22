@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed variable name error causing incorrect error message in Squiz ValidVariableNameSniff
   - Fixed bugs #10751, #10777 : Sniffer class paths handled incorrectly in Windows
     - Thanks to Carsten Wiedmann for the patch.
+  - Now using PHP_EOL instead of hard-coded \n so output looks good on Windows (feature request #10761)
+    - Thanks to Carsten Wiedmann for the patch.
  </notes>
  <contents>
   <dir name="/">
