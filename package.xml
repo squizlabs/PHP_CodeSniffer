@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-04-17</date>
  <time>13:13:21</time>
  <version>
-  <release>0.5.0</release>
-  <api>0.5.1</api>
+  <release>0.6.0</release>
+  <api>0.6.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Thanks to Carsten Wiedmann for the patch.
   - Now using PHP_EOL instead of hard-coded \n so output looks good on Windows (feature request #10761)
     - Thanks to Carsten Wiedmann for the patch.
+  - phpcs now exits with status 0 (no errors) or 1 (errors found) (feature request #10348)
  </notes>
  <contents>
   <dir name="/">

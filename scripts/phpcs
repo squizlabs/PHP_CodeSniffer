@@ -202,9 +202,15 @@ if (empty($extensions) === false) {
 
 $phpcs->process($files, $standard);
 if ($report === 'summary') {
-    $phpcs->printErrorReportSummary($showWarnings);
+    $numErrors = $phpcs->printErrorReportSummary($showWarnings);
 } else {
-    $phpcs->printErrorReport($showWarnings);
+    $numErrors = $phpcs->printErrorReport($showWarnings);
+}
+
+if ($numErrors === 0) {
+    exit(0);
+} else {
+    exit(1);
 }
 
 ?>

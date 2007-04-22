@@ -403,10 +403,12 @@ class PHP_CodeSniffer
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      *
-     * @return void
+     * @return int The number of error and warning messages shown.
      */
     public function printErrorReport($showWarnings=true)
     {
+        $errorsShown = 0;
+
         foreach ($this->_files as $file) {
             $warnings    = $file->getWarnings();
             $errors      = $file->getErrors();
@@ -517,12 +519,15 @@ class PHP_CodeSniffer
                     }
 
                     echo ' | '.$errorMsg.PHP_EOL;
+                    $errorsShown++;
                 }
             }//end foreach
 
             echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
 
         }//end foreach
+
+        return $errorsShown;
 
     }//end printErrorReport()
 
@@ -536,7 +541,7 @@ class PHP_CodeSniffer
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      *
-     * @return void
+     * @return int The number of error and warning messages shown.
      */
     public function printErrorReportSummary($showWarnings=true)
     {
@@ -559,7 +564,7 @@ class PHP_CodeSniffer
 
         if (empty($errorFiles) === true) {
             // Nothing to print.
-            return;
+            return 0;
         }
 
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
@@ -610,6 +615,8 @@ class PHP_CodeSniffer
 
         echo "WERE FOUND IN $totalFiles FILE(S)".PHP_EOL;
         echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
+
+        return ($totalErrors + $totalWarnings);
 
     }//end printErrorReportSummary()
 
