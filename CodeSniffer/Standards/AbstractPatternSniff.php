@@ -348,7 +348,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             }//end for
         }//end if
 
-        $stackPtr = $origStackPtr;
+        $stackPtr          = $origStackPtr;
+        $lastAddedStackPtr = null;
 
         for ($i = $patternInfo['listen_pos']; $i < count($pattern); $i++) {
 
@@ -379,14 +380,20 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $tokenContent = $tokens[$stackPtr]['content'];
                         } else {
                             // Get all the whitespace to the next token.
-                            $next         = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
-                            $tokenContent = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
-                            $stackPtr     = $next;
+                            $next              = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                            $tokenContent      = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
+                            $lastAddedStackPtr = $stackPtr;
+                            $stackPtr          = $next;
                         }
 
-                        $found .= $tokenContent;
+                        if ($stackPtr !== $lastAddedStackPtr) {
+                            $found .= $tokenContent;
+                        }
                     } else {
-                        $found .= $tokens[$stackPtr]['content'];
+                        if ($stackPtr !== $lastAddedStackPtr) {
+                            $found            .= $tokens[$stackPtr]['content'];
+                            $lastAddedStackPtr = $stackPtr;
+                        }
                     }
 
                     if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
@@ -432,7 +439,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
                     }
 
-                    $found .= $tokens[$next]['content'];
+                    if ($next !== $lastAddedStackPtr) {
+                        $found            .= $tokens[$next]['content'];
+                        $lastAddedStackPtr = $next;
+                    }
 
                     if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
                         $stackPtr = $next;
@@ -453,13 +463,17 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $found .= '...'.(($pattern[$i]['to'] === 'parenthesis_closer') ? ')' : '}');
 
                 // Skip to the closing token.
-                $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
+                $stackPtr     = ($tokens[$next][$pattern[$i]['to']] + 1);
             } else if ($pattern[$i]['type'] === 'string') {
                 if ($tokens[$stackPtr]['code'] !== T_STRING) {
                     $hasError = true;
                 }
 
-                $found .= 'abc';
+                if ($stackPtr !== $lastAddedStackPtr) {
+                    $found            .= 'abc';
+                    $lastAddedStackPtr = $stackPtr;
+                }
+
                 $stackPtr++;
             }//end if
         }//end for
