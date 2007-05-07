@@ -127,7 +127,7 @@ class PHP_CodeSniffer_File
      *
      * @var string
      */
-    private $_file = array();
+    private $_file = '';
 
     /**
      * The tokens stack map.
@@ -901,6 +901,18 @@ class PHP_CodeSniffer_File
 
             // Is this an opening condition ?
             if (isset(self::$_scopeOpeners[$tokenType]) === true) {
+                if ($opener === null) {
+                    // Found another opening condition but still haven't
+                    // found our opener, so we are never going to find one.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", $depth);
+                        echo "=> Couldn't find scope opener for $stackPtr ($type), bailing".PHP_EOL;
+                    }
+
+                    return $stackPtr;
+                }
+
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo '* token is an opening condition *'.PHP_EOL;
@@ -933,7 +945,7 @@ class PHP_CodeSniffer_File
                 } else {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
-                        echo '* searching for closer *'.PHP_EOL;
+                        echo '* searching for opener *'.PHP_EOL;
                     }
 
                     $i = $this->_recurseScopeMap($i, ($depth + 1));
