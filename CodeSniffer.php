@@ -385,12 +385,16 @@ class PHP_CodeSniffer
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = (time() - $startTime);
             if ($timeTaken === 0) {
-                echo 'DONE in < 1 second'.PHP_EOL;
+                echo 'DONE in < 1 second';
             } else if ($timeTaken === 1) {
-                echo 'DONE in 1 second'.PHP_EOL;
+                echo 'DONE in 1 second';
             } else {
-                echo "DONE in $timeTaken seconds".PHP_EOL;
+                echo "DONE in $timeTaken seconds";
             }
+
+            $errors = $phpcsFile->getErrorCount();
+            $warnings = $phpcsFile->getWarningCount();
+            echo " ($errors errors, $warnings warnings)".PHP_EOL;
         }
 
     }//end _processFile()
