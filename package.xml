@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - The number of errors and warnings found is now shown for each file if verbosity is enabled
   - Fixed variable name error causing incorrect error message in Squiz ValidVariableNameSniff
   - Fixed bug #10757 : Error in ControlSignatureSniff
   - Fixed bugs #10751, #10777 : Sniffer class paths handled incorrectly in Windows
