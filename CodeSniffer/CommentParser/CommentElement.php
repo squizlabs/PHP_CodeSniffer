@@ -100,8 +100,14 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
                 if ($found === false) {
                     // Include newlines before short description.
                     continue;
-                } else if ($this->tokens[($pos + 1)] === "\n") {
-                    return ($pos - 1);
+                } else {
+                    if (isset($this->tokens[($pos + 1)]) === true) {
+                        if ($this->tokens[($pos + 1)] === "\n") {
+                            return ($pos - 1);
+                        }
+                    } else {
+                        return $pos;
+                    }
                 }
             } else {
                 $found = true;
