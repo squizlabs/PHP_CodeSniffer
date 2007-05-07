@@ -185,7 +185,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         if (count($tags) > 1) {
             $newlineSpan = $comment->getNewlineAfter();
             if ($newlineSpan !== 2) {
-                $error = 'There must be exactly one blank line before the tags in file comment';
+                $error = 'There must be exactly one blank line before the tags in class comment';
                 if ($long !== '') {
                     $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
                 }
