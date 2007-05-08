@@ -765,13 +765,15 @@ class PHP_CodeSniffer_File
                 $openers[] = $i;
             } else if ($this->_tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 // Did we set an owner for this set of parenthesis?
-                $hasOwner = (count($openers) === count($owners));
+                $hasOwner = (empty($openers) === false && count($openers) === count($owners));
 
-                $opener = array_pop($openers);
-                $this->_tokens[$i]['parenthesis_opener']      = $opener;
-                $this->_tokens[$i]['parenthesis_closer']      = $i;
-                $this->_tokens[$opener]['parenthesis_opener'] = $opener;
-                $this->_tokens[$opener]['parenthesis_closer'] = $i;
+                if (empty($openers) === false) {
+                    $opener = array_pop($openers);
+                    $this->_tokens[$i]['parenthesis_opener']      = $opener;
+                    $this->_tokens[$i]['parenthesis_closer']      = $i;
+                    $this->_tokens[$opener]['parenthesis_opener'] = $opener;
+                    $this->_tokens[$opener]['parenthesis_closer'] = $i;
+                }
 
                 // Check to see if this parethesis has an owner. Some
                 // parenthesis do not have owners, for example arithmetic
