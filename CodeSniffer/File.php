@@ -364,8 +364,8 @@ class PHP_CodeSniffer_File
     /**
      * Removes a listener from listening from the specified tokens.
      *
-     * @param PHP_CodeSniffer_Sniff $listener The listener to remove from the listener
-     *                                        stack.
+     * @param PHP_CodeSniffer_Sniff $listener The listener to remove from the
+     *                                        listener stack.
      * @param array(int)            $tokens   The token types the listener wishes to
      *                                        stop listen to.
      *
@@ -403,8 +403,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Starts the stack traversal, alerting PHP_CodeSniffer_Sniff listeners when their
-     * listening tokens are encountered.
+     * Starts the stack traversal and tells listeners when tokens are found.
      *
      * @return void
      */
@@ -447,7 +446,7 @@ class PHP_CodeSniffer_File
 
         // We don't need the tokens any more, so get rid of them
         // to save some memory.
-        $this->_tokens = null;
+        $this->_tokens    = null;
         $this->_listeners = null;
 
     }//end start()
@@ -1131,11 +1130,11 @@ class PHP_CodeSniffer_File
                     // conditions where there was none. This happens for T_CASE
                     // statements that are using the same break statement.
                     if ($lastOpener !== null && $this->_tokens[$lastOpener]['scope_closer'] === $this->_tokens[$i]['scope_closer']) {
-                        // This opener shares its closer with the previous opener, but
-                        // we still need to check if the two openers share their closer
-                        // with each other directly (like CASE and DEFAULT) or if
-                        // they are just sharing because one doesn't have a closer
-                        // (like CASE with no BREAK using a SWITCHes closer).
+                        // This opener shares its closer with the previous opener,
+                        // but we still need to check if the two openers share their
+                        // closer with each other directly (like CASE and DEFAULT)
+                        // or if they are just sharing because one doesn't have a
+                        // closer (like CASE with no BREAK using a SWITCHes closer).
                         $thisType = $this->_tokens[$this->_tokens[$i]['scope_condition']]['code'];
                         $opener   = $this->_tokens[$lastOpener]['scope_condition'];
                         if (in_array($this->_tokens[$opener]['code'], self::$_scopeOpeners[$thisType]['with']) === true) {
@@ -1414,11 +1413,9 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of the method found
-     * at the specified position in the stack.
+     * Returns the visibility and implementation properies of a method.
      *
      * The format of the array is:
-     *
      * <code>
      *   array(
      *    'scope'           => 'public', // public private or protected
@@ -1519,9 +1516,9 @@ class PHP_CodeSniffer_File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a T_VARIABLE
-     *                                   token, or if the position is not a class
-     *                                   member variable.
+     * @throws PHP_CodeSniffer_Exception If the specified position is not a
+     *                                   T_VARIABLE token, or if the position is not
+     *                                   a class member variable.
      */
     public function getMemberProperties($stackPtr)
     {

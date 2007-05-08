@@ -392,7 +392,7 @@ class PHP_CodeSniffer
                 echo "DONE in $timeTaken seconds";
             }
 
-            $errors = $phpcsFile->getErrorCount();
+            $errors   = $phpcsFile->getErrorCount();
             $warnings = $phpcsFile->getWarningCount();
             echo " ($errors errors, $warnings warnings)".PHP_EOL;
         }

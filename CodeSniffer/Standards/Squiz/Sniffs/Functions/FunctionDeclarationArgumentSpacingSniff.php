@@ -204,7 +204,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             $error = "Expected 0 spaces between opening bracket and type hint \"$hint\"; $gap found";
                             $phpcsFile->addError($error, $nextToken);
                         }
-                    } else  {
+                    } else {
                         $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
                     }
