@@ -78,13 +78,18 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
         $nameBits  = explode('_', $name);
         $firstBit  = array_shift($nameBits);
         foreach ($nameBits as $bit) {
-            if ($bit{0} !== strtoupper($bit{0})) {
+            if ($bit === '' || $bit{0} !== strtoupper($bit{0})) {
                 $validName = false;
                 break;
             }
         }
 
         if ($validName !== true) {
+            // Strip underscores because they cause the suggested name
+            // to be incorrect.
+            $nameBits = explode('_', trim($name, '_'));
+            $firstBit = array_shift($nameBits);
+
             $newName = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
             foreach ($nameBits as $bit) {
                 $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
