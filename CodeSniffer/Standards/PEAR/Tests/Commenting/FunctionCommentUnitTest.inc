@@ -217,5 +217,5 @@ function emptyFunctionDocComment()
  * @access public
  * @return bool
  */
-function myFuction($arg1) {}
+function myFunction($arg1) {}
 ?>
