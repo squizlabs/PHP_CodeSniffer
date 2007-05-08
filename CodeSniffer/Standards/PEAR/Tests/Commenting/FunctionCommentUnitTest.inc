@@ -207,4 +207,15 @@ public function missingTwoParamComment($one, $two, $three)
 function emptyFunctionDocComment()
 {
 }//end emptyFunctionDocComment()
+
+
+/**
+ * Test function.
+ *
+ * @param string $arg1 An argument
+ *
+ * @access public
+ * @return bool
+ */
+function myFuction($arg1) {}
 ?>
