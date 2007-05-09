@@ -121,6 +121,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $nextToken = array(
                           T_ABSTRACT,
                           T_CLASS,
+                          T_FUNCTION,
                           T_DOC_COMMENT,
                          );
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
