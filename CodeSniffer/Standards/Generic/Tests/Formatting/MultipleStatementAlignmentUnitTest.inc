@@ -77,4 +77,20 @@ $expected    .= '...';
 // Invalid
 $this->okButton    = new Button();
 $content = new MyClass();
+
+
+$GLOBALS['_PEAR_ERRORSTACK_SINGLETON'] = array();
+
+class MyClass
+{
+    const MODE_DEBUG = 'debug';
+    const MODE_DEBUG2 = 'debug';
+
+    $array[$test] = 'anything';
+    $var          = 'anything';
+
+    const MODE_DEBUG2  = 'debug';
+    $array[$test]    = 'anything';
+    $var             = 'anything';
+}
 ?>

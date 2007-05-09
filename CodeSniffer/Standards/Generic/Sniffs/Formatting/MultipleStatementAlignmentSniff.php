@@ -69,9 +69,15 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE), ($stackPtr - 1), null, false);
-        if (($assignedVariable === false) || $this->_isAssignment($phpcsFile, $assignedVariable) === false) {
+        $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($stackPtr - 1), null, false);
+        if ($assignedVariable === false) {
             return;
+        }
+
+        if ($tokens[$assignedVariable]['type'] === T_VARIABLE) {
+            if ($this->_isAssignment($phpcsFile, $assignedVariable) === false) {
+                return;
+            }
         }
 
         /*
@@ -99,7 +105,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE), ($prevAssignment - 1), null, false);
+            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($prevAssignment - 1), null, false);
             if ($checkingVariable === false) {
                 break;
             }
@@ -108,8 +114,10 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
-                break;
+            if ($tokens[$checkingVariable]['type'] === T_VARIABLE) {
+                if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
+                    break;
+                }
             }
 
             $assignments[] = $prevAssignment;
@@ -118,9 +126,13 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         $assignmentData = array();
         foreach ($assignments as $assignment) {
-            $variable = $phpcsFile->findPrevious(array(T_VARIABLE), $assignment, null, false);
-            if ($this->_isAssignment($phpcsFile, $variable) === false) {
-                break;
+            $variable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment, null, false);
+            if ($tokens[$variable]['type'] === T_VARIABLE) {
+                // Check that this variable is having a value assigned to it.
+                // We don't check constants because they are not ambiguous.
+                if ($this->_isAssignment($phpcsFile, $variable) === false) {
+                    break;
+                }
             }
 
             $variableContent = $phpcsFile->getTokensAsString($variable, ($assignment - $variable));
@@ -163,7 +175,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             // Actual column takes into account the length of the assignment operator.
             $actualColumn = ($column + $maxAssignmentLength - strlen($tokens[$assignment]['content']));
             if ($tokens[$assignment]['column'] !== $actualColumn) {
-                $variable        = $phpcsFile->findPrevious(array(T_VARIABLE), $assignment, null, false);
+                $variable        = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment, null, false);
                 $variableContent = $phpcsFile->getTokensAsString($variable, ($assignment - $variable));
                 $variableContent = rtrim($variableContent);
                 $contentLength   = strlen($variableContent);
