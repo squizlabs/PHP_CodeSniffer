@@ -69,12 +69,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($stackPtr - 1), null, false);
+        $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($stackPtr - 1));
         if ($assignedVariable === false) {
             return;
         }
 
-        if ($tokens[$assignedVariable]['type'] === T_VARIABLE) {
+        if ($tokens[$assignedVariable]['code'] === T_VARIABLE) {
             if ($this->_isAssignment($phpcsFile, $assignedVariable) === false) {
                 return;
             }
@@ -86,7 +86,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             so we need to determine if there are more to follow.
         */
 
-        if (($nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1), null, false)) !== false) {
+        if (($nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1))) !== false) {
             if ($tokens[$nextAssign]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                 return;
             }
@@ -100,12 +100,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxVariableLength   = 0;
         $maxAssignmentLength = 0;
 
-        while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1), null, false)) !== false) {
+        while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1))) !== false) {
             if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
                 break;
             }
 
-            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($prevAssignment - 1), null, false);
+            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($prevAssignment - 1));
             if ($checkingVariable === false) {
                 break;
             }
@@ -114,7 +114,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            if ($tokens[$checkingVariable]['type'] === T_VARIABLE) {
+            if ($tokens[$checkingVariable]['code'] === T_VARIABLE) {
                 if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
                     break;
                 }
@@ -126,8 +126,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         $assignmentData = array();
         foreach ($assignments as $assignment) {
-            $variable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment, null, false);
-            if ($tokens[$variable]['type'] === T_VARIABLE) {
+            $variable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment);
+            if ($tokens[$variable]['code'] === T_VARIABLE) {
                 // Check that this variable is having a value assigned to it.
                 // We don't check constants because they are not ambiguous.
                 if ($this->_isAssignment($phpcsFile, $variable) === false) {
@@ -175,7 +175,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             // Actual column takes into account the length of the assignment operator.
             $actualColumn = ($column + $maxAssignmentLength - strlen($tokens[$assignment]['content']));
             if ($tokens[$assignment]['column'] !== $actualColumn) {
-                $variable        = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment, null, false);
+                $variable        = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment);
                 $variableContent = $phpcsFile->getTokensAsString($variable, ($assignment - $variable));
                 $variableContent = rtrim($variableContent);
                 $contentLength   = strlen($variableContent);
@@ -204,7 +204,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
 
     /**
-     * Determins if the stackPtr is an assignment or not.
+     * Determines if the stackPtr is an assignment or not.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where to token exists.
      * @param int                  $stackPtr  The position in the stack to check.
@@ -219,26 +219,33 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         $tokens = $phpcsFile->getTokens();
 
-        // If there is something other than whitespace on this line before this
-        // variable, its not what we want.
-        $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if ($tokens[$prevContent]['line'] === $tokens[$stackPtr]['line']) {
+        // Look for the first token on the line. If it is a variable and within
+        // the same statement, then that is the real variable we are checking.
+        // This gets around problems with code like this:
+        // $array[($blah + (10 - $test))] = 'anything';
+        $varLine = $tokens[$stackPtr]['line'];
+        for ($stackPtr = ($stackPtr - 1); $stackPtr > 0; $stackPtr--) {
+            if ($tokens[$stackPtr]['line'] !== $varLine) {
+                $stackPtr++;
+                break;
+            }
+
+            if ($tokens[$stackPtr]['content'] === ';') {
+                $stackPtr++;
+                break;
+            }
+        }
+
+        $stackPtr = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+        if ($tokens[$stackPtr]['code'] !== T_VARIABLE) {
             return false;
         }
 
         // If this variable is followed by an object operator, we need to skip
         // the member var component.
-        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$nextContent]['code'] === T_OBJECT_OPERATOR) {
-            $stackPtr = $phpcsFile->findNext(array(T_WHITESPACE), ($nextContent + 1), null, true);
-        }
-
-        $nextContent = $phpcsFile->findNext(array(T_VARIABLE, T_OPEN_SQUARE_BRACKET, T_CLOSE_SQUARE_BRACKET, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER), ($stackPtr + 1), null, true);
-        $nextContent++;
-
-        // If this isn't an assignment, then its not what we want.
-        if (in_array($tokens[$nextContent]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
-            return false;
+            $stackPtr = $phpcsFile->findNext(T_WHITESPACE, ($nextContent + 1), null, true);
         }
 
         return true;

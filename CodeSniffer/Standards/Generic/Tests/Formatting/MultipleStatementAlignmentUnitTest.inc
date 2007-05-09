@@ -92,5 +92,24 @@ class MyClass
     const MODE_DEBUG2  = 'debug';
     $array[$test]    = 'anything';
     $var             = 'anything';
+    $array[($test + 1)] = 'anything';
+    $array[($blah + (10 - $test))] = 'anything';
+}
+
+function myFunction($var=true)
+{
+    if ($strict === true) {
+        $length          = strlen($string);
+        $lastCharWasCaps = ($classFormat === false) ? false : true;
+
+        for ($i = 1; $i < $length; $i++) {
+            $isCaps = (strtoupper($string{$i}) === $string{$i}) ? true : false;
+            if ($isCaps === true && $lastCharWasCaps === true) {
+                return false;
+            }
+
+            $lastCharWasCaps = $isCaps;
+        }
+    }
 }
 ?>

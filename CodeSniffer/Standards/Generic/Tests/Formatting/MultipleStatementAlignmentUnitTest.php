@@ -80,6 +80,7 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                 92 => 1,
                 93 => 1,
                 94 => 1,
+                95 => 1,
                );
 
     }//end getWarningList()
