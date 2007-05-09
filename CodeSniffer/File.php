@@ -534,8 +534,8 @@ class PHP_CodeSniffer_File
                         $newToken['content'] .= "\n";
                     }
 
-                    $newToken['type'] = token_name($token[0]);
-                    $newToken['code'] = $token[0];
+                    $newToken['type']            = token_name($token[0]);
+                    $newToken['code']            = $token[0];
                     $this->_tokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
                 }
@@ -712,7 +712,7 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $count; $i++) {
             $this->_tokens[$i]['line'] = $lineNumber;
-            $lineNumber += substr_count($this->_tokens[$i]['content'], "\n");
+            $lineNumber               += substr_count($this->_tokens[$i]['content'], "\n");
         }
 
     }//end _createLineMap()
@@ -768,7 +768,7 @@ class PHP_CodeSniffer_File
                 $hasOwner = (empty($openers) === false && count($openers) === count($owners));
 
                 if (empty($openers) === false) {
-                    $opener = array_pop($openers);
+                    $opener                                       = array_pop($openers);
                     $this->_tokens[$i]['parenthesis_opener']      = $opener;
                     $this->_tokens[$i]['parenthesis_closer']      = $i;
                     $this->_tokens[$opener]['parenthesis_opener'] = $opener;
@@ -779,7 +779,7 @@ class PHP_CodeSniffer_File
                 // parenthesis do not have owners, for example arithmetic
                 // operations.
                 if ($hasOwner === true) {
-                    $owner = array_pop($owners);
+                    $owner                                       = array_pop($owners);
                     $this->_tokens[$owner]['parenthesis_owner']  = $owner;
                     $this->_tokens[$owner]['parenthesis_opener'] = $opener;
                     $this->_tokens[$owner]['parenthesis_closer'] = $i;
@@ -1219,7 +1219,7 @@ class PHP_CodeSniffer_File
                         if ($this->_tokens[$opener]['scope_closer'] === $i) {
                             $oldOpener = array_pop($openers);
                             if (empty($openers) === false) {
-                                $lastOpener = array_pop($openers);
+                                $lastOpener           = array_pop($openers);
                                 $openers[$lastOpener] = $lastOpener;
                             } else {
                                 $lastOpener = null;
