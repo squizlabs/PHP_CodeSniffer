@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Now using PHP_EOL instead of hard-coded \n so output looks good on Windows (feature request #10761)
     - Thanks to Carsten Wiedmann for the patch.
   - phpcs now exits with status 0 (no errors) or 1 (errors found) (feature request #10348)
+  - Added new -l command line argument to stop recursion into directories (feature request #10979)
   - Fixed variable name error causing incorrect error message in Squiz ValidVariableNameSniff
   - Fixed bug #10757 : Error in ControlSignatureSniff
   - Fixed bugs #10751, #10777 : Sniffer class paths handled incorrectly in Windows

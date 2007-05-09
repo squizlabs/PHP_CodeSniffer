@@ -143,11 +143,12 @@ class PHP_CodeSniffer
      *                               against.
      * @param array        $sniffs   The sniff names to restrict the allowed
      *                               listeners to.
+     * @param boolean      $local    If true, don't recurse into directories.
      *
      * @return void
      * @throws PHP_CodeSniffer_Exception If files or standard are invalid.
      */
-    public function process($files, $standard, array $sniffs=array())
+    public function process($files, $standard, array $sniffs=array(), $local=false)
     {
         if (is_array($files) === false) {
             if (is_string($files) === false || $files === null) {
@@ -179,7 +180,7 @@ class PHP_CodeSniffer
         foreach ($files as $file) {
             $this->_file = $file;
             if (is_dir($this->_file) === true) {
-                $this->_processFiles($this->_file);
+                $this->_processFiles($this->_file, $local);
             } else {
                 $this->_processFile($this->_file);
             }
@@ -320,16 +321,27 @@ class PHP_CodeSniffer
      * Recusively reads the specified directory and performs the PHP_CodeSniffer
      * sniffs on each source file found within the directories.
      *
-     * @param string $dir The directory to process.
+     * @param string  $dir   The directory to process.
+     * @param boolean $local If true, only process files in this directory, not
+     *                       sub directories.
      *
      * @return void
      * @throws Exception If there was an error opening the directory.
      */
-    private function _processFiles($dir)
+    private function _processFiles($dir, $local=false)
     {
-        $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+        if ($local === true) {
+            $di = new DirectoryIterator($dir);
+        } else {
+            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+        }
+
         foreach ($di as $file) {
-            $filePath = $file->getPathname();
+            $filePath = realpath($file->getPathname());
+
+            if (is_dir($filePath) === true) {
+                continue;
+            }
 
             // Check that the file's extension is one we are checking.
             // Note that because we are doing a whole directory, we
