@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #10757 : Error in ControlSignatureSniff
   - Fixed bugs #10751, #10777 : Sniffer class paths handled incorrectly in Windows
     - Thanks to Carsten Wiedmann for the patch.
+  - Fixed bug #10961 : Error "Last parameter comment requires a blank newline after it" thrown
+  - Fixed bug #10983 : phpcs outputs notices when checking invalid PHP
   - Now using PHP_EOL instead of hard-coded \n so output looks good on Windows (feature request #10761)
     - Thanks to Carsten Wiedmann for the patch.
   - phpcs now exits with status 0 (no errors) or 1 (errors found) (feature request #10348)

@@ -164,8 +164,9 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * Initiates the parsing of the doc comment.
      *
      * @return void
-     * @throws PHP_CodeSniffer_CommentParser_ParserException If the parser finds an
-     *                                                       anomilty with the comment.
+     * @throws PHP_CodeSniffer_CommentParser_ParserException If the parser finds a
+     *                                                       problem with the
+     *                                                       comment.
      */
     public function parse()
     {
@@ -219,8 +220,9 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * @return void
      * @see _parse()
-     * @throws PHP_CodeSniffer_CommentParser_ParserException If more than the allowed number of
-     *                                                       occurances of a tag is found.
+     * @throws PHP_CodeSniffer_CommentParser_ParserException If more than the allowed
+     *                                                       number of occurances of
+     *                                                       a tag is found.
      */
     private function _parseWords()
     {
@@ -228,72 +230,65 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         $allowedTagNames = array_keys($allowedTags);
         $foundTags       = array();
         $prevTagPos      = false;
-        $wordsWasEmpty   = true;
+        $wordWasEmpty    = true;
 
         foreach ($this->words as $wordPos => $word) {
 
             if (trim($word) !== '') {
-                $wordsWasEmpty = false;
+                $wordWasEmpty = false;
             }
 
             if ($word{0} === '@') {
 
                 $tag = substr($word, 1);
-                // Filter out @ tags in the comment description.
-                if ($prevTagPos === false) {
-                    // A real comment tag should have a space and a newline before it.
-                    if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
-                        continue;
-                    }
 
-                    if (isset($this->words[($wordPos - 2)]) === false || $this->words[($wordPos - 2)] !== "\n") {
-                        continue;
-                    }
+                // Filter out @ tags in the comment description.
+                // A real comment tag should have a space and a newline before it.
+                if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
+                    continue;
                 }
 
-                // Check to see if this is a known tag for this parser.
-                if (in_array($tag, $allowedTagNames) === true) {
+                if (isset($this->words[($wordPos - 2)]) === false || $this->words[($wordPos - 2)] !== "\n") {
+                    continue;
+                }
 
-                    $foundTags[] = $tag;
+                $foundTags[] = $tag;
 
-                    if ($prevTagPos !== false) {
-                        // There was a tag before this so let's process it.
-                        $prevTag = substr($this->words[$prevTagPos], 1);
-                        $this->parseTag($prevTag, $prevTagPos, ($wordPos - 1));
-                    } else {
-                        // There must have been a comment before this tag, so
-                        // let's process that.
-                        $this->parseTag('comment', 0, ($wordPos - 1));
-                    }
-
-                    $prevTagPos = $wordPos;
+                if ($prevTagPos !== false) {
+                    // There was a tag before this so let's process it.
+                    $prevTag = substr($this->words[$prevTagPos], 1);
+                    $this->parseTag($prevTag, $prevTagPos, ($wordPos - 1));
                 } else {
-                    // A real comment tag should have a space and a newline before it.
-                    if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
-                        continue;
-                    }
+                    // There must have been a comment before this tag, so
+                    // let's process that.
+                    $this->parseTag('comment', 0, ($wordPos - 1));
+                }
 
-                    if (isset($this->words[($wordPos - 2)]) === false || $this->words[($wordPos - 2)] !== "\n") {
-                        continue;
-                    }
+                $prevTagPos = $wordPos;
 
-                     $ignoreTags = array(
-                                    'abstract',
-                                    'access',
-                                    'example',
-                                    'filesource',
-                                    'global',
-                                    'ignore',
-                                    'internal',
-                                    'name',
-                                    'static',
-                                    'staticvar',
-                                    'todo',
-                                    'tutorial',
-                                    'uses',
-                                    'package_version@',
-                                   );
-                    if (in_array($tag, $ignoreTags) === false) {
+                if (in_array($tag, $allowedTagNames) === false) {
+                    // This is not a tag that we process, but let's check to
+                    // see if it is a tag we know about. If we don't know about it,
+                    // we add it to a list of unknown tags.
+
+                    $knownTags = array(
+                                  'abstract',
+                                  'access',
+                                  'example',
+                                  'filesource',
+                                  'global',
+                                  'ignore',
+                                  'internal',
+                                  'name',
+                                  'static',
+                                  'staticvar',
+                                  'todo',
+                                  'tutorial',
+                                  'uses',
+                                  'package_version@',
+                                 );
+
+                    if (in_array($tag, $knownTags) === false) {
                         $this->unknown[] = array(
                                             'tag'  => $tag,
                                             'line' => $this->getLine($wordPos),
@@ -305,8 +300,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
             }//end if
         }//end foreach
 
-        // Only process this tag if their was something to process.
-        if ($wordsWasEmpty === false) {
+        // Only process this tag if there was something to process.
+        if ($wordWasEmpty === false) {
             if ($prevTagPos === false) {
                 // There must only be a comment in this doc comment.
                 $this->parseTag('comment', 0, count($this->words));
@@ -498,16 +493,23 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      */
     protected function parseTag($tag, $start, $end)
     {
-        $method = 'parse'.$tag;
         $tokens = array_slice($this->words, ($start + 1), ($end - $start));
 
-        if (method_exists($this, $method) === false) {
-            $error = 'Method '.$method.' must be implemented to process '.$tag.' tags';
-            throw new Exception($error);
+        $allowedTags     = (self::$_tags + $this->getAllowedTags());
+        $allowedTagNames = array_keys($allowedTags);
+        if ($tag === 'comment' || in_array($tag, $allowedTagNames) === true) {
+            $method = 'parse'.$tag;
+            if (method_exists($this, $method) === false) {
+                $error = 'Method '.$method.' must be implemented to process '.$tag.' tags';
+                throw new Exception($error);
+            }
+
+            $this->previousElement = $this->$method($tokens);
+        } else {
+            $this->previousElement = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, $tag);
         }
 
-        $this->previousElement = $this->$method($tokens);
-        $this->orders[]        = $tag;
+        $this->orders[] = $tag;
 
         if ($this->previousElement === null || ($this->previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
             throw new Exception('Parse method must return a DocElement');
