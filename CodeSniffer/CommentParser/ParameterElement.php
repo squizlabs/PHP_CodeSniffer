@@ -77,8 +77,12 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     /**
      * Constructs a PHP_CodeSniffer_CommentParser_ParameterElement.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element previous to this one.
-     * @param array                                    $tokens          The tokens that make up this element.
+     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element
+     *                                                                  previous to
+     *                                                                  this one.
+     * @param array                                    $tokens          The tokens
+     *                                                                  that make up
+     *                                                                  this element.
      */
     public function __construct($previousElement, $tokens)
     {
@@ -241,8 +245,9 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     /**
      * Returns true if this parameter aligns with the other parameter.
      *
-     * @param PHP_CodeSniffer_CommentParser_ParameterElement $other The other parameter to check alignment
-     *                                                              with.
+     * @param PHP_CodeSniffer_CommentParser_ParameterElement $other The other param
+     *                                                              to check
+     *                                                              alignment with.
      *
      * @return boolean
      */

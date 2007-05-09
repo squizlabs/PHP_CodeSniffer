@@ -468,6 +468,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $error = '@throws tag comment must start with a capital letter';
                     $this->currentFile->addError($error, $errorPos);
                 }
+
                 $lastChar = $content[(strlen($content) - 1)];
                 if ($lastChar !== '.') {
                     $error = '@throws tag comment must end with a full stop';

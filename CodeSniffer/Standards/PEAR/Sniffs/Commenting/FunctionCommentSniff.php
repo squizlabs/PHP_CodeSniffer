@@ -298,9 +298,10 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if (empty($params) === false) {
 
-            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), "\n") !== 2) {
+            $lastParm = (count($params) - 1);
+            if (substr_count($params[$lastParm]->getWhitespaceAfter(), "\n") !== 2) {
                 $error    = 'Last parameter comment requires a blank newline after it';
-                $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
+                $errorPos = ($params[$lastParm]->getLine() + $commentStart);
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -341,7 +342,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $longestVar         = $errorPos;
                 }
 
-                // Make sure they are in the correct order, and have the correct name.
+                // Make sure they are in the correct order,
+                // and have the correct name.
                 $pos = $param->getPosition();
 
                 $paramName = ($param->getVarName() !== '') ? $param->getVarName() : '[ UNKNOWN ]';
