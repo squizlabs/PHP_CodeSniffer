@@ -26,7 +26,7 @@ require_once 'PHP/CodeSniffer.php';
  */
 function PHP_CodeSniffer_printUsage()
 {
-    echo 'Usage: phpcs [-nvi] [--report=<report>] [--standard=<standard>] [--extensions=<extensions>] <file> ...'.PHP_EOL;
+    echo 'Usage: phpcs [-lnvi] [--report=<report>] [--standard=<standard>] [--extensions=<extensions>] <file> ...'.PHP_EOL;
     echo ' <file>       : one or more files and/or directories to check'.PHP_EOL;
     echo ' <standard>   : the name of the coding standard to use'.PHP_EOL;
     echo ' <report>     : print either the "full" or "summary" report'.PHP_EOL;
