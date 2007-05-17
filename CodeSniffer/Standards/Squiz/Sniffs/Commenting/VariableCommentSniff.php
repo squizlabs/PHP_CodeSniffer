@@ -214,7 +214,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 return;
             } else {
                 $suggestedType = PHP_CodeSniffer::suggestType($content);
-                if ($content != $suggestedType) {
+                if ($content !== $suggestedType) {
                     $error = "Expected \"$suggestedType\"; found \"$content\" for @var tag in variable comment";
                     $this->currentFile->addError($error, $errorPos);
                 }
@@ -256,6 +256,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $this->currentFile->addError($error, $errorPos);
                 return;
             }
+
             // Only check order if there is one var tag in variable comment.
             if (count($var) === 1 && $index[0] !== 2) {
                 $error = 'The order of @since tag is wrong in variable comment';

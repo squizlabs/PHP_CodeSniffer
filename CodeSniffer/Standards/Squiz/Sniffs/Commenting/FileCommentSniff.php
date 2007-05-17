@@ -29,7 +29,7 @@ require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
  *  <li>Each paragraph of the long description ends with a full stop.</li>
  *  <li>There is a blank line between the description and the tags.</li>
  *  <li>Check the order, indentation and content of each tag.</li>
-    <li>There is exactly one blank line after the file comment.</li>
+ *  <li>There is exactly one blank line after the file comment.</li>
  * </ul>
  *
  * @category  PHP
@@ -122,7 +122,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Found a class token right after comment doc block.
                 $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, "\n");
                 if ($newlineToken !== false) {
-                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $commentNext, false, "\n");
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $commentNext, false, "\n");
                     if ($newlineToken === false) {
                         // No blank line between the class token and the doc block.
                         // The doc block is most likely a class comment.
@@ -139,7 +139,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addError($error, ($stackPtr + 1));
             }
 
-            // Exactly one blank line after the file comment
+            // Exactly one blank line after the file comment.
             $nextTokenStart = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), null, true);
             if ($nextTokenStart !== false) {
                 $blankLineAfter = 0;
@@ -148,6 +148,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         $blankLineAfter++;
                     }
                 }
+
                 if ($blankLineAfter !== 2) {
                     $error = 'There must be exactly one blank line after the file comment';
                     $phpcsFile->addError($error, ($commentEnd + 1));

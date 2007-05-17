@@ -222,9 +222,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         // Look for the first token on the line. If it is a variable and within
         // the same statement, then that is the real variable we are checking.
         // This gets around problems with code like this:
-        // $array[($blah + (10 - $test))] = 'anything';
+        // $array[($blah + (10 - $test))] = 'anything'.
         $varLine = $tokens[$stackPtr]['line'];
-        for ($stackPtr = ($stackPtr - 1); $stackPtr > 0; $stackPtr--) {
+        for ($stackPtr--; $stackPtr > 0; $stackPtr--) {
             if ($tokens[$stackPtr]['line'] !== $varLine) {
                 $stackPtr++;
                 break;

@@ -58,15 +58,15 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
         // Is this the first throw token within the current function scope?
-        // If so, we have to validate other throw tokens within the same scope
-        $previousThrow = $phpcsFile->findPrevious(T_THROW, ($stackPtr-1), $currScope);
+        // If so, we have to validate other throw tokens within the same scope.
+        $previousThrow = $phpcsFile->findPrevious(T_THROW, ($stackPtr - 1), $currScope);
         if ($previousThrow !== false) {
             return;
         }
 
         // Parse the function comment.
         $tokens       = $phpcsFile->getTokens();
-        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr-1));
+        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
@@ -81,7 +81,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
         // Find the position where the current function scope ends.
         $currScopeEnd = 0;
-        if (isset($tokens[$currScope]['scope_closer'])) {
+        if (isset($tokens[$currScope]['scope_closer']) === true) {
             $currScopeEnd = $tokens[$currScope]['scope_closer'];
         }
 
@@ -92,9 +92,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             while ($currPos < $currScopeEnd && $currPos !== false) {
                 $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd);
                 $throwTokens[] = $tokens[$currException]['content'];
-                $currPos       = $phpcsFile->findNext(T_THROW, ($currPos+1), $currScopeEnd);
+                $currPos       = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
             }
         }
+
         // Only need one @throws tag for each type of exception thrown.
         $throwTokens = array_unique($throwTokens);
         sort($throwTokens);
@@ -110,6 +111,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                 $throwTags[]                    = $throw->getValue();
                 $lineNumber[$throw->getValue()] = $throw->getLine();
             }
+
             $throwTags = array_unique($throwTags);
             sort($throwTags);
 
@@ -124,14 +126,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             } else {
                 // Exception type in @throws tag must be thrown in the function..
                 foreach ($throwTags as $i => $throwTag) {
-                    $errorPos = $commentStart + $lineNumber[$throwTag];
+                    $errorPos = ($commentStart + $lineNumber[$throwTag]);
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
                         $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for @throws tag exception";
                         $phpcsFile->addError($error, $errorPos);
                     }
                 }
             }
-        }
+        }//end if
 
     }//end processTokenWithinScope()
 

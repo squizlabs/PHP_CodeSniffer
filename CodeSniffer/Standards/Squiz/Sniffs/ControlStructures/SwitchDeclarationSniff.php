@@ -108,7 +108,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     // This will be handled by the next CASE statement.
                     break;
                 }
-                
+
                 if ($tokens[$nextContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                     // This will be handled by the closing brace check.
                     break;

@@ -101,7 +101,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     // There is only 1 doc comment between open tag and class token.
                     $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
                     if ($newlineToken !== false) {
-                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $stackPtr, false, "\n");
+                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, "\n");
                         if ($newlineToken !== false) {
                             // Blank line between the class and the doc block.
                             // The doc block is most likely a file comment.
@@ -111,7 +111,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     }//end if
                 }//end if
 
-                // Exactly one blank line before the class comment
+                // Exactly one blank line before the class comment.
                 $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
                 if ($prevTokenEnd !== false) {
                     $blankLineBefore = 0;
@@ -120,6 +120,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                             $blankLineBefore++;
                         }
                     }
+
                     if ($blankLineBefore !== 2) {
                         $error = 'There must be exactly one blank line before the class comment';
                         $phpcsFile->addError($error, ($commentStart - 1));

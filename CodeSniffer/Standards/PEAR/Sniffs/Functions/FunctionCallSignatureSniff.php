@@ -76,7 +76,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             // It's a function definition, not a function call.
             return;
         }
-        
+
         if ($tokens[$previous]['code'] === T_NEW) {
             // We are creating an object, not calling a function.
             return;

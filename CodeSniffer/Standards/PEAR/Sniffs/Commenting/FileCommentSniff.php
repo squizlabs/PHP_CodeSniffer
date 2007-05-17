@@ -129,7 +129,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Found a class token right after comment doc block.
                 $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, "\n");
                 if ($newlineToken !== false) {
-                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken +1), $commentNext, false, "\n");
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $commentNext, false, "\n");
                     if ($newlineToken === false) {
                         // No blank line between the class token and the doc block.
                         // The doc block is most likely a class comment.

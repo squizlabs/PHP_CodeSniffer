@@ -70,7 +70,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      */
     private $_classToken = null;
 
-
     /**
      * The index of the current tag we are processing.
      *
@@ -412,6 +411,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                             $suggestedNames[] = $suggestedName;
                         }
                     }
+
                     $suggestedType = implode('|', $suggestedNames);
                     if ($content !== $suggestedType) {
                         $error = "Function return type \"$content\" is invalid";
@@ -427,7 +427,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             // No return tag for constructor and destructor.
             if ($return !== null) {
                 $errorPos = ($commentStart + $return->getLine());
-                $error    = "@return tag is not required for constructor and destructor";
+                $error    = '@return tag is not required for constructor and destructor';
                 $this->currentFile->addError($error, $errorPos);
             }
         }//end if
@@ -567,7 +567,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 // Variable must be one of the supported standard type.
                 $typeNames = explode('|', $param->getType());
                 foreach ($typeNames as $typeName) {
-                    $suggestedName =  PHP_CodeSniffer::suggestType($typeName);
+                    $suggestedName = PHP_CodeSniffer::suggestType($typeName);
                     if ($typeName !== $suggestedName) {
                         $error = "Expected \"$suggestedName\"; found \"$typeName\" for $paramName at position $pos";
                         $this->currentFile->addError($error, $errorPos);
@@ -579,6 +579,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                             $suggestedTypeHint = $suggestedName;
                         }
+
                         if ($suggestedTypeHint !== '' && isset($realParams[($pos - 1)]) === true) {
                             $typeHint = $realParams[($pos - 1)]['type_hint'];
                             if ($typeHint === '') {

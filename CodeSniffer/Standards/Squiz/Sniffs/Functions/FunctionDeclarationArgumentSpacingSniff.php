@@ -128,7 +128,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
             // Take references into account when expecting the
             // location of whitespace.
-            if ($phpcsFile->isReference($nextParam - 1) === true) {
+            if ($phpcsFile->isReference(($nextParam - 1)) === true) {
                 $whitespace = $tokens[($nextParam - 2)];
             } else {
                 $whitespace = $tokens[($nextParam - 1)];
@@ -171,13 +171,13 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     } else if ($gap !== 1) {
                         $error = "Expected 1 space between comma and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
-                    }
+                    }//end if
                 } else {
                     $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
                     $phpcsFile->addError($error, $nextToken);
-                }
+                }//end if
             } else {
-                // First argument in function declaration
+                // First argument in function declaration.
                 if ($whitespace['code'] === T_WHITESPACE) {
                     $gap = strlen($whitespace['content']);
                     $arg = $tokens[$nextParam]['content'];
@@ -208,7 +208,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
                     }
-                }
+                }//end if
             }//end if
 
             $params[] = $nextParam;

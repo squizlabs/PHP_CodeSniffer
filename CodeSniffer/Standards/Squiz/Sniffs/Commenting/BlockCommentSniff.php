@@ -69,7 +69,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         $lastLine     = $tokens[$stackPtr]['line'];
         // Construct the comment into an array.
         while (($nextComment = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1), null, false)) !== false) {
-            if (($tokens[$nextComment]['line'] - 1)!== $lastLine) {
+            if (($tokens[$nextComment]['line'] - 1) !== $lastLine) {
                 // Not part of the block.
                 break;
             }
