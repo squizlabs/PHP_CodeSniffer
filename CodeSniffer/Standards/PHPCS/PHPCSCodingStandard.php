@@ -63,6 +63,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
     function getExcludedSniffs()
     {
         return array(
+                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff',
                 'Generic/Sniffs/PHP/UpperCaseConstantSniff',
                 'Squiz/Sniffs/Classes/ClassFileNameSniff',
                 'Squiz/Sniffs/Classes/ValidClassNameSniff',
@@ -73,6 +74,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
                 'Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff',
                 'Squiz/Sniffs/Files/FileExtensionSniff',
                 'Squiz/Sniffs/Files/LineLengthSniff',
+                'Squiz/Sniffs/NamingConventions/ValidInterfaceNameSniff',
                 'Squiz/Sniffs/WhiteSpace/ScopeIndentSniff',
                );
 
