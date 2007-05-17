@@ -76,7 +76,6 @@ class PHP_CodeSniffer
      */
     private $_listeners = array();
 
-
     /**
      * An array of extensions for files we will check.
      *
@@ -93,14 +92,14 @@ class PHP_CodeSniffer
      * @var array(string)
      */
     public static $allowedTypes = array(
-                                     'array',
-                                     'boolean',
-                                     'float',
-                                     'integer',
-                                     'mixed',
-                                     'object',
-                                     'string',
-                                    );
+                                   'array',
+                                   'boolean',
+                                   'float',
+                                   'integer',
+                                   'mixed',
+                                   'object',
+                                   'string',
+                                  );
 
 
     /**
@@ -259,8 +258,11 @@ class PHP_CodeSniffer
      */
     private function _getSniffFiles($dir, $standard=null)
     {
-        $di    = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
-        $files = array();
+        $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+
+        $ownSniffs      = array();
+        $includedSniffs = array();
+        $excludedSniffs = array();
 
         foreach ($di as $file) {
             // Skip hidden files.
@@ -279,7 +281,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $files[] = $file->getPathname();
+            $ownSniffs[] = $file->getPathname();
         }
 
         // Load the standard class and ask it for a list of external
@@ -289,26 +291,58 @@ class PHP_CodeSniffer
             $standardClassName = "PHP_CodeSniffer_Standards_{$standard}_{$standard}CodingStandard";
             $standardClass     = new $standardClassName;
 
-            $includedSniffs = $standardClass->getIncludedSniffs();
-            foreach ($includedSniffs as $sniff) {
+            $included = $standardClass->getIncludedSniffs();
+            foreach ($included as $sniff) {
                 $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
                 if (is_dir($sniffDir) === true) {
-                    if (PHP_CodeSniffer::isInstalledStandard($sniff) === true) {
+                    if (self::isInstalledStandard($sniff) === true) {
                         // We are including a whole coding standard.
-                        $files = array_merge($files, $this->_getSniffFiles($sniffDir, $sniff));
+                        $includedSniffs = array_merge($includedSniffs, $this->_getSniffFiles($sniffDir, $sniff));
                     } else {
                         // We are including a whole directory of sniffs.
-                        $files = array_merge($files, $this->_getSniffFiles($sniffDir));
+                        $includedSniffs = array_merge($includedSniffs, $this->_getSniffFiles($sniffDir));
                     }
                 } else {
                     if (substr($sniffDir, -5) !== 'Sniff') {
                         continue;
                     }
 
-                    $files[] = "$sniffDir.php";
+                    $includedSniffs[] = "$sniffDir.php";
                 }
             }
+
+            $excluded = $standardClass->getExcludedSniffs();
+            foreach ($excluded as $sniff) {
+                $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
+                if (is_dir($sniffDir) === true) {
+                    if (self::isInstalledStandard($sniff) === true) {
+                        // We are excluding a whole coding standard.
+                        $excludedSniffs = array_merge($excludedSniffs, $this->_getSniffFiles($sniffDir, $sniff));
+                    } else {
+                        // We are excluding a whole directory of sniffs.
+                        $excludedSniffs = array_merge($excludedSniffs, $this->_getSniffFiles($sniffDir));
+                    }
+                } else {
+                    if (substr($sniffDir, -5) !== 'Sniff') {
+                        continue;
+                    }
+
+                    $excludedSniffs[] = "$sniffDir.php";
+                }
+            }
+
         }//end if
+
+        // Merge our own sniff list with our exnternally included
+        // sniff list, but filter out any excluded sniffs.
+        $files = array();
+        foreach (array_merge($ownSniffs, $includedSniffs) as $sniff) {
+            if (in_array($sniff, $excludedSniffs) === true) {
+                continue;
+            } else {
+                $files[] = $sniff;
+            }
+        }
 
         return $files;
 
@@ -358,7 +392,7 @@ class PHP_CodeSniffer
             }
 
             $this->_processFile($filePath);
-        }
+        }//end foreach
 
     }//end _processFiles()
 
@@ -864,7 +898,7 @@ class PHP_CodeSniffer
         if ($classFormat === false) {
             $legalChars = 'a-zA-Z0-9';
         } else {
-            $legalChars =  'a-zA-Z';
+            $legalChars = 'a-zA-Z';
         }
 
         if (preg_match("|[^$legalChars]|", substr($string, 1)) > 0) {
@@ -963,6 +997,7 @@ class PHP_CodeSniffer
                     if ($type2 !== '') {
                         $type2 = ' => '.$type2;
                     }
+
                     return "array($type1$type2)";
                 } else {
                     return 'array';

@@ -49,5 +49,24 @@ class PHP_CodeSniffer_Standards_CodingStandard
     }//end getIncludedSniffs()
 
 
+    /**
+     * Return a list of external sniffs to exclude from this standard.
+     *
+     * External locations can be single sniffs, a whole directory of sniffs, or
+     * an entire coding standard. Locations start with the standard name. For
+     * example:
+     *  PEAR                              => exclude all sniffs in this standard
+     *  PEAR/Sniffs/Files                 => exclude all sniffs in this dir
+     *  PEAR/Sniffs/Files/LineLengthSniff => exclude this single sniff
+     *
+     * @return array
+     */
+    function getExcludedSniffs()
+    {
+        return array();
+
+    }//end getExcludedSniffs()
+
+
 }//end class
 ?>

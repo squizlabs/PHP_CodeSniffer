@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-05-15</date>
  <time>13:45:00</time>
  <version>
-  <release>0.6.1</release>
-  <api>0.6.1</api>
+  <release>0.7.0</release>
+  <api>0.7.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Fixed error where including a directory of sniffs in a coding standard class did not work
+  - Coding standard classes can now specify a list of sniffs to exclude as well as include (feature request #11056)
  </notes>
  <contents>
   <dir name="/">
