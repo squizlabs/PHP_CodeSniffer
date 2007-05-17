@@ -143,7 +143,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
                 $includedClasses[] = strtolower($filePath);
             }
-        }
+        }//end for
 
         if (in_array(strtolower($className), $includedClasses) === false) {
             $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
@@ -211,7 +211,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
                 $includedClasses[] = strtolower($filePath);
             }
-        }
+        }//end for
 
         if (in_array(strtolower($className), $includedClasses) === false) {
             $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";

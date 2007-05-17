@@ -16,7 +16,7 @@
 
 require_once 'PHP/CodeSniffer/Standards/CodingStandard.php';
 
- /**
+/**
  * Generic Coding Standard.
  *
  * @category  PHP

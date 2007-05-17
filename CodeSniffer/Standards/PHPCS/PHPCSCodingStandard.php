@@ -16,7 +16,7 @@
 
 require_once 'PHP/CodeSniffer/Standards/CodingStandard.php';
 
- /**
+/**
  * PHP_CodeSniffer Coding Standard.
  *
  * @category  PHP
@@ -41,7 +41,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
      *
      * @return array
      */
-    function getIncludedSniffs()
+    public function getIncludedSniffs()
     {
         return array(
                 'PEAR',
@@ -60,7 +60,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
      *
      * @return array
      */
-    function getExcludedSniffs()
+    public function getExcludedSniffs()
     {
         return array(
                 'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff',

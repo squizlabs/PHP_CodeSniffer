@@ -15,7 +15,7 @@
 
 require_once 'PHP/CodeSniffer/Standards/CodingStandard.php';
 
- /**
+/**
  * MySource Coding Standard.
  *
  * @category  PHP
@@ -38,7 +38,7 @@ class PHP_CodeSniffer_Standards_MySource_MySourceCodingStandard extends PHP_Code
      *
      * @return array
      */
-    function getIncludedSniffs()
+    public function getIncludedSniffs()
     {
         return array(
                 'Squiz',

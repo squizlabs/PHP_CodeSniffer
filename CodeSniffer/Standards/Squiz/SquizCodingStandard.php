@@ -16,7 +16,7 @@
 
 require_once 'PHP/CodeSniffer/Standards/CodingStandard.php';
 
- /**
+/**
  * Squiz Coding Standard.
  *
  * @category  PHP
@@ -40,7 +40,7 @@ class PHP_CodeSniffer_Standards_Squiz_SquizCodingStandard extends PHP_CodeSniffe
      *
      * @return array
      */
-    function getIncludedSniffs()
+    public function getIncludedSniffs()
     {
         return array(
                 'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff',
