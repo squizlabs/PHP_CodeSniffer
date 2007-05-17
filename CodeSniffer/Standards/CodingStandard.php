@@ -13,8 +13,8 @@
  * @version   CVS: $Id$
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
- 
- /**
+
+/**
  * Base Coding Standard class.
  *
  * @category  PHP
@@ -42,7 +42,7 @@ class PHP_CodeSniffer_Standards_CodingStandard
      *
      * @return array
      */
-    function getIncludedSniffs()
+    public function getIncludedSniffs()
     {
         return array();
 
@@ -61,7 +61,7 @@ class PHP_CodeSniffer_Standards_CodingStandard
      *
      * @return array
      */
-    function getExcludedSniffs()
+    public function getExcludedSniffs()
     {
         return array();
 

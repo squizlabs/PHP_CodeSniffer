@@ -254,18 +254,18 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     public function alignsWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
     {
         // @param type $variable Comment.
-        //        <-a-><---b---->
+        // @param <-a-><---b---->
         // Compares the index before param variable.
-        $other_var =  strlen($other->_type) + strlen($other->_varNameWhitespace);
-        $this_var  =  strlen($this->_type) + strlen($this->_varNameWhitespace);
-        if ($other_var !== $this_var) {
+        $otherVar = (strlen($other->_type) + strlen($other->_varNameWhitespace));
+        $thisVar  = (strlen($this->_type) + strlen($this->_varNameWhitespace));
+        if ($otherVar !== $thisVar) {
             return false;
         }
 
         // Compares the index before param comment.
-        $other_comment =  strlen($other->_varName) + strlen($other->_commentWhitespace);
-        $this_comment  =  strlen($this->_varName) + strlen($this->_commentWhitespace);
-        if ($other_comment !== $this_comment) {
+        $otherComment = (strlen($other->_varName) + strlen($other->_commentWhitespace));
+        $thisComment  = (strlen($this->_varName) + strlen($this->_commentWhitespace));
+        if ($otherComment !== $thisComment) {
             return false;
         }
 

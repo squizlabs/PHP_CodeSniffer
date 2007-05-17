@@ -48,7 +48,6 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     private $_return = null;
 
-
     /**
      * The throws element list for this function comment.
      *

@@ -105,6 +105,9 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @param array                                    $tokens          The tokens of this element.
      * @param string                                   $tag             The doc element tag this element
      *                                                                  represents.
+     *
+     * @throws Exception If $previousElement in not a DocElement or if
+     *                   getSubElements() does not return an array.
      */
     public function __construct($previousElement, array $tokens, $tag)
     {

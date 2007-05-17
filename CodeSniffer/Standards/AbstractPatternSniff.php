@@ -74,7 +74,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      */
     public function __construct($ignoreComments=false)
     {
-        $this->_ignoreComments = $ignoreComments;
+        $this->_ignoreComments      = $ignoreComments;
         $this->_supplementaryTokens = $this->registerSupplementary();
 
     }//end __construct()
@@ -163,6 +163,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *
      * @return int The postition in the pattern that this test should register
      *             as the listener.
+     * @throws PHP_CodeSniffer_Sniff_Exception If we could not determine a token
+     *                                         to listen for.
      */
     private function _getListenerTokenPos($pattern)
     {
@@ -228,7 +230,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             foreach ($errors as $stackPtr => $error) {
                 if (isset($this->_errorPos[$stackPtr]) === false) {
                     $this->_errorPos[$stackPtr] = true;
-                    $allErrors[$stackPtr] = $error;
+                    $allErrors[$stackPtr]       = $error;
                 }
             }
         }
@@ -394,7 +396,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $found            .= $tokens[$stackPtr]['content'];
                             $lastAddedStackPtr = $stackPtr;
                         }
-                    }
+                    }//end if
 
                     if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
                         // The next token is a skip token, so we just need to make
@@ -463,7 +465,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $found .= '...'.(($pattern[$i]['to'] === 'parenthesis_closer') ? ')' : '}');
 
                 // Skip to the closing token.
-                $stackPtr     = ($tokens[$next][$pattern[$i]['to']] + 1);
+                $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
             } else if ($pattern[$i]['type'] === 'string') {
                 if ($tokens[$stackPtr]['code'] !== T_STRING) {
                     $hasError = true;
@@ -479,7 +481,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         }//end for
 
         if ($hasError === true) {
-            $error = $this->prepareError($found, $patternCode);
+            $error                 = $this->prepareError($found, $patternCode);
             $errors[$origStackPtr] = $error;
         }
 
@@ -643,7 +645,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                  'type' => 'skip',
                 );
 
-        for ($from; $from >=0; $from--) {
+        for ($from; $from >= 0; $from--) {
             switch ($pattern[$from]) {
             case '(':
                 $skip['to'] = 'parenthesis_closer';

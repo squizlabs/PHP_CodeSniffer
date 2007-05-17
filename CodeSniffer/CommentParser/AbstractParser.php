@@ -270,7 +270,6 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     // This is not a tag that we process, but let's check to
                     // see if it is a tag we know about. If we don't know about it,
                     // we add it to a list of unknown tags.
-
                     $knownTags = array(
                                   'abstract',
                                   'access',

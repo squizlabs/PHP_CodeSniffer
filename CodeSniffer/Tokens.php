@@ -181,7 +181,7 @@ final class PHP_CodeSniffer_Tokens
                                        T_GREATER_THAN,
                                        T_IS_SMALLER_OR_EQUAL,
                                        T_IS_GREATER_OR_EQUAL,
-                                     );
+                                      );
 
     /**
      * Tokens that represent arithmetic operators.
@@ -284,7 +284,6 @@ final class PHP_CodeSniffer_Tokens
                                   T_DOC_COMMENT,
                                  );
 
-
     /**
      * Tokens that are comments.
      *
@@ -306,7 +305,6 @@ final class PHP_CodeSniffer_Tokens
                                    T_CONSTANT_ENCAPSED_STRING,
                                    T_DOUBLE_QUOTED_STRING,
                                   );
-
 
     /**
      * Tokens that include files.
