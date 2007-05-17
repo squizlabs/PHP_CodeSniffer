@@ -312,6 +312,9 @@ class PHP_CodeSniffer_File
      *                                 to process.
      * @param array(string) $listeners The initial listeners listening
      *                                 to processing of this file.
+     *
+     * @throws PHP_CodeSniffer_Exception If the register() method does
+     *                                   not return an array.
      */
     public function __construct($file, array $listeners)
     {
@@ -1235,7 +1238,7 @@ class PHP_CodeSniffer_File
                                 $oldCondition = array_pop($conditions);
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                     echo str_repeat("\t", ($level + 1));
-                                    echo '* token '.token_name($oldCondition)." removed from conditions array *".PHP_EOL;
+                                    echo '* token '.token_name($oldCondition).' removed from conditions array *'.PHP_EOL;
                                 }
 
                                 $level--;
