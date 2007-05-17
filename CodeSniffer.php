@@ -295,10 +295,10 @@ class PHP_CodeSniffer
                 if (is_dir($sniffDir) === true) {
                     if (PHP_CodeSniffer::isInstalledStandard($sniff) === true) {
                         // We are including a whole coding standard.
-                        $files += $this->_getSniffFiles($sniffDir, $sniff);
+                        $files = array_merge($files, $this->_getSniffFiles($sniffDir, $sniff));
                     } else {
                         // We are including a whole directory of sniffs.
-                        $files += $this->_getSniffFiles($sniffDir);
+                        $files = array_merge($files, $this->_getSniffFiles($sniffDir));
                     }
                 } else {
                     if (substr($sniffDir, -5) !== 'Sniff') {
