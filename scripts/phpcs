@@ -26,17 +26,21 @@ require_once 'PHP/CodeSniffer.php';
  */
 function PHP_CodeSniffer_printUsage()
 {
-    echo 'Usage: phpcs [-lnvi] [--report=<report>] [--standard=<standard>] [--extensions=<extensions>] <file> ...'.PHP_EOL;
-    echo ' <file>       : one or more files and/or directories to check'.PHP_EOL;
-    echo ' <standard>   : the name of the coding standard to use'.PHP_EOL;
-    echo ' <report>     : print either the "full" or "summary" report'.PHP_EOL;
-    echo ' <extensions> : a comma separated list of file extensions to check (only valid if checking a directory)'.PHP_EOL;
-    echo ' -l           : local directory only, no recursion'.PHP_EOL;
-    echo ' -n           : do not print warnings'.PHP_EOL;
-    echo ' -v[v][v]     : print verbose output'.PHP_EOL;
-    echo ' -i           : show a list of installed coding standards'.PHP_EOL;
-    echo ' -h --help    : print this help message'.PHP_EOL;
-    echo ' --version    : print version information'.PHP_EOL;
+    echo 'Usage: phpcs [-nlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
+    echo '    [--generator=<generator>] [--extensions=<extensions>] <file> ...'.PHP_EOL;
+    echo '        -n           Do not print warnings'.PHP_EOL;
+    echo '        -l           Local directory only, no recursion'.PHP_EOL;
+    echo '        -v[v][v]     Print verbose output'.PHP_EOL;
+    echo '        -i           Show a list of installed coding standards'.PHP_EOL;
+    echo '        --help       Print this help message'.PHP_EOL;
+    echo '        --version    Print version information'.PHP_EOL;
+    echo '        <file>       One or more files and/or directories to check'.PHP_EOL;
+    echo '        <extensions> A comma separated list of file extensions to check'.PHP_EOL;
+    echo '                     (only valid if checking a directory)'.PHP_EOL;
+    echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
+    echo '        <generator>  The name of a doc genertor to use'.PHP_EOL;
+    echo '                     (forces doc generation instead of checking)'.PHP_EOL;
+    echo '        <report>     Print either the "full" or "summary" report'.PHP_EOL;
     exit();
 
 }//end PHP_CodeSniffer_printUsage()
@@ -85,6 +89,7 @@ $local        = false;
 $report       = 'full';
 $showWarnings = true;
 $extensions   = array();
+$generator    = '';
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
     $arg = $_SERVER['argv'][$i];
@@ -116,6 +121,8 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 $standard = substr($arg, 11);
             } else if (substr($arg, 0, 13) === '--extensions=') {
                 $extensions = explode(',', substr($arg, 13));
+            } else if (substr($arg, 0, 12) === '--generator=') {
+                $generator = substr($arg, 12);
             } else {
                 echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
                 PHP_CodeSniffer_printUsage();
@@ -129,6 +136,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
                 switch ($switch) {
                 case 'h':
+                case '?':
                     PHP_CodeSniffer_printUsage();
                     break;
                 case 'i' :
@@ -155,6 +163,12 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
         $files[] = $arg;
     }
 }//end for
+
+if ($generator !== '') {
+    $phpcs = new PHP_CodeSniffer($verbosity);
+    $phpcs->generateDocs($standard, $files, $generator);
+    exit();
+}
 
 if (empty($files) === true) {
     echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;

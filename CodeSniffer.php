@@ -205,7 +205,7 @@ class PHP_CodeSniffer
      */
     private function _registerTokenListeners($standard, array $sniffs=array())
     {
-        $files = $this->_getSniffFiles($this->_standardDir, $standard);
+        $files = self::getSniffFiles($this->_standardDir, $standard);
 
         if (empty($sniffs) === false) {
             // Convert the allowed sniffs to lower case so
@@ -256,7 +256,7 @@ class PHP_CodeSniffer
      * @return array
      * @throws Exception If there was an error opening the directory.
      */
-    private function _getSniffFiles($dir, $standard=null)
+    public static function getSniffFiles($dir, $standard=null)
     {
         $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
 
@@ -297,10 +297,10 @@ class PHP_CodeSniffer
                 if (is_dir($sniffDir) === true) {
                     if (self::isInstalledStandard($sniff) === true) {
                         // We are including a whole coding standard.
-                        $includedSniffs = array_merge($includedSniffs, $this->_getSniffFiles($sniffDir, $sniff));
+                        $includedSniffs = array_merge($includedSniffs, self::getSniffFiles($sniffDir, $sniff));
                     } else {
                         // We are including a whole directory of sniffs.
-                        $includedSniffs = array_merge($includedSniffs, $this->_getSniffFiles($sniffDir));
+                        $includedSniffs = array_merge($includedSniffs, self::getSniffFiles($sniffDir));
                     }
                 } else {
                     if (substr($sniffDir, -5) !== 'Sniff') {
@@ -317,10 +317,10 @@ class PHP_CodeSniffer
                 if (is_dir($sniffDir) === true) {
                     if (self::isInstalledStandard($sniff) === true) {
                         // We are excluding a whole coding standard.
-                        $excludedSniffs = array_merge($excludedSniffs, $this->_getSniffFiles($sniffDir, $sniff));
+                        $excludedSniffs = array_merge($excludedSniffs, self::getSniffFiles($sniffDir, $sniff));
                     } else {
                         // We are excluding a whole directory of sniffs.
-                        $excludedSniffs = array_merge($excludedSniffs, $this->_getSniffFiles($sniffDir));
+                        $excludedSniffs = array_merge($excludedSniffs, self::getSniffFiles($sniffDir));
                     }
                 } else {
                     if (substr($sniffDir, -5) !== 'Sniff') {
@@ -346,7 +346,7 @@ class PHP_CodeSniffer
 
         return $files;
 
-    }//end _getSniffFiles()
+    }//end getSniffFiles()
 
 
     /**
@@ -669,6 +669,27 @@ class PHP_CodeSniffer
         return ($totalErrors + $totalWarnings);
 
     }//end printErrorReportSummary()
+
+
+    /**
+     * Generates documentation for a coding standard.
+     *
+     * @param string $standard  The standard to generate docs for
+     * @param array  $sniffs    A list of sniffs to limit the docs to.
+     * @param string $generator The name of the generator class to use.
+     *
+     * @return void
+     */
+    public function generateDocs($standard, array $sniffs=array(), $generator='text')
+    {
+        include_once 'PHP/CodeSniffer/DocGenerators/'.$generator.'.php';
+
+        $class     = "PHP_CodeSniffer_DocGenerators_$generator";
+        $generator = new $class($standard, $sniffs);
+
+        $generator->generate();
+
+    }//end generateDocs()
 
 
     /**

@@ -110,6 +110,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
+    <dir name="DocGenerators">
+     <file baseinstalldir="PHP" name="Generator.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Text.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
     <dir name="Standards">
      <dir name="Generic">
       <dir name="Sniffs">
@@ -215,6 +223,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </file>
      </dir>
      <dir name="PEAR">
+      <dir name="Docs">
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidClassNameStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ValidFunctionNameStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="ClassCommentSniff.php" role="php">
@@ -342,6 +356,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </file>
      </dir>
      <dir name="Squiz">
+      <dir name="Docs">
+       <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayDeclarationStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Arrays">
         <file baseinstalldir="PHP" name="ArrayDeclarationSniff.php" role="php">
