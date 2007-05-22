@@ -37,13 +37,13 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
     /**
      * Process the documentation for a single sniff.
      *
-     * @param DOMDocument $doc The DOMDocument object for the sniff.
-     *                         It represents the "documentation" tag in the XML
-     *                         standard file.
+     * @param DOMNode $doc The DOMNode object for the sniff.
+     *                     It represents the "documentation" tag in the XML
+     *                     standard file.
      *
      * @return void
      */
-    public function processSniff($doc)
+    public function processSniff(DOMNode $doc)
     {
         $this->printTitle($doc);
 
@@ -91,8 +91,8 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
     protected function printTextBlock($node)
     {
         $text = trim($node->nodeValue);
-        $text = str_replace('<b>', '*', $text);
-        $text = str_replace('</b>', '*', $text);
+        $text = str_replace('<em>', '*', $text);
+        $text = str_replace('</em>', '*', $text);
 
         $lines    = array();
         $tempLine = '';
@@ -168,8 +168,8 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
             $firstTitleLines[] = $tempTitle;
         }
 
-        $first      = str_replace('<b>', '', $first);
-        $first      = str_replace('</b>', '', $first);
+        $first      = str_replace('<em>', '', $first);
+        $first      = str_replace('</em>', '', $first);
         $firstLines = explode("\n", $first);
 
         $second      = trim($codeBlocks->item(1)->nodeValue);
@@ -203,8 +203,8 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
             $secondTitleLines[] = $tempTitle;
         }
 
-        $second      = str_replace('<b>', '', $second);
-        $second      = str_replace('</b>', '', $second);
+        $second      = str_replace('<em>', '', $second);
+        $second      = str_replace('</em>', '', $second);
         $secondLines = explode("\n", $second);
 
         $maxCodeLines  = max(count($firstLines), count($secondLines));
