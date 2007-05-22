@@ -110,7 +110,7 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
                     $lines[]  = $tempLine.$word;
                     $tempLine = '';
                 } else {
-                    $lines[]  = $tempLine;
+                    $lines[]  = rtrim($tempLine);
                     $tempLine = $word.' ';
                 }
             } else {
@@ -119,7 +119,7 @@ class PHP_CodeSniffer_DocGenerators_Text extends PHP_CodeSniffer_DocGenerators_G
         }//end foreach
 
         if ($tempLine !== '') {
-            $lines[] = $tempLine;
+            $lines[] = rtrim($tempLine);
         }
 
         echo implode(PHP_EOL, $lines).PHP_EOL.PHP_EOL;
