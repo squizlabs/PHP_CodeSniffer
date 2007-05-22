@@ -6,38 +6,38 @@
     </standard>
     <standard>
     <![CDATA[
-    The <b>array</b> keyword must be lowercase.
+    The <em>array</em> keyword must be lowercase.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: array keyword lowercase">
         <![CDATA[
-$array = array('val1', 'val2');
+$array = <em>a</em>rray('val1', 'val2');
         ]]>
         </code>
         <code title="Invalid: first letter capitialised">
         <![CDATA[
-$array = Array('val1', 'val2');
+$array = <em>A</em>rray('val1', 'val2');
         ]]>
         </code>
     </code_comparison>
     <standard>
     <![CDATA[
-    The first array key must begin on the line after the <b>array</b> keyword.
+    The first array key must begin on the line after the <em>array</em> keyword.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: first key on second line">
         <![CDATA[
 $array = array(
-          'key1' => 'value1',
+          <em>'key1'</em> => 'value1',
           'key2' => 'value2',
          );
         ]]>
         </code>
         <code title="Invalid: first key on same line">
         <![CDATA[
-$array = array('key1' => 'value1',
+$array = array(<em>'key1'</em> => 'value1',
           'key2' => 'value2',
          );
         ]]>
@@ -45,23 +45,23 @@ $array = array('key1' => 'value1',
     </code_comparison>
     <standard>
     <![CDATA[
-    All array keys must be indented to one space after the start of the <b>array</b> keyword. The closing parenthesis must be aligned with the start of the <b>array</b> keyword.
+    All array keys must be indented to one space after the start of the <em>array</em> keyword. The closing parenthesis must be aligned with the start of the <em>array</em> keyword.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: aligned correctly">
         <![CDATA[
 $array = array(
-          'key1' => 'value1',
-          'key2' => 'value2',
+         <em> </em>'key1' => 'value1',
+         <em> </em>'key2' => 'value2',
          );
         ]]>
         </code>
         <code title="Invalid: keys and parenthesis aligned incorrectly">
         <![CDATA[
 $array = array(
-         'key1' => 'value1',
-         'key2' => 'value2',
+         <em>'</em>key1' => 'value1',
+         <em>'</em>key2' => 'value2',
 );
         ]]>
         </code>
@@ -75,16 +75,16 @@ $array = array(
         <code title="Valid: keys and values aligned">
         <![CDATA[
 $array = array(
-          'keyTen'    => 'ValueTen',
-          'keyTwenty' => 'ValueTwenty',
+          'keyTen'<em>    </em>=> 'ValueTen',
+          'keyTwenty'<em> </em>=> 'ValueTwenty',
          );
         ]]>
         </code>
         <code title="Invalid: alignment incorrect">
         <![CDATA[
 $array = array(
-          'keyTen' => 'ValueTen',
-          'keyTwenty' => 'ValueTwenty',
+          'keyTen'<em> </em>=> 'ValueTen',
+          'keyTwenty'<em> </em>=> 'ValueTwenty',
          );
         ]]>
         </code>
@@ -100,7 +100,7 @@ $array = array(
 $array = array(
           'key1' => 'value1',
           'key2' => 'value2',
-          'key3' => 'value3',
+          'key3' => 'value3'<em>,</em>
          );
         ]]>
         </code>
@@ -109,7 +109,7 @@ $array = array(
 $array = array(
           'key1' => 'value1',
           'key2' => 'value2',
-          'key3' => 'value3'
+          'key3' => 'value3'<em> </em>
          );
         ]]>
         </code>
