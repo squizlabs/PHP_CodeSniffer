@@ -71,7 +71,7 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         $name      = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
 
         // Check for camel caps format.
-        $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, true);
+        $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
             $error = "$type name \"$name\" is not in camel caps format";

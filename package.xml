@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed error where including a directory of sniffs in a coding standard class did not work
   - Coding standard classes can now specify a list of sniffs to exclude as well as include (feature request #11056)
+  - Two uppercase characters can now be placed side-by-side in class names in Squiz ValidClassNameSniff
  </notes>
  <contents>
   <dir name="/">

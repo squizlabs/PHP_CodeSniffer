@@ -16,12 +16,12 @@ class invalid_lowercase_class_with_underscores extends MyClass {}
 
 
 // All uppercase.
-class INVALIDUPPERCASECLASS extends MyClass {}
+class VALIDUPPERCASECLASS extends MyClass {}
 class INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES extends MyClass {}
 
 
 // Mix camel case with uppercase.
-class InvalidCamelCaseClassWithUPPERCASE extends MyClass {}
+class ValidCamelCaseClassWithUPPERCASE extends MyClass {}
 
 
 // Invalid usage of numeric characters.
