@@ -159,7 +159,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment);
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
@@ -190,20 +190,20 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         // No extra newline before short description.
         $newlineCount = 0;
-        $newlineSpan  = strspn($short, "\n");
+        $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
             $error = "Extra $line found before function comment short description";
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 
-        $newlineCount = (substr_count($short, "\n") + 1);
+        $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
         // Exactly one blank line between short and long description.
         $long = $comment->getLongComment();
         if (empty($long) === false) {
             $between        = $comment->getWhiteSpaceBetween();
-            $newlineBetween = substr_count($between, "\n");
+            $newlineBetween = substr_count($between, $phpcsFile->eolChar);
             if ($newlineBetween !== 2) {
                 $error = 'There must be exactly one blank line between descriptions in function comment';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
@@ -219,17 +219,17 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if ($newlineSpan !== 2) {
                 $error = 'There must be exactly one blank line before the tags in function comment';
                 if ($long !== '') {
-                    $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+                    $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
 
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                $short = rtrim($short, "\n ");
+                $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
 
         // Short description must be single line and end with a full stop.
         $lastChar = $short[(strlen($short) - 1)];
-        if (substr_count($short, "\n") !== 0) {
+        if (substr_count($short, $phpcsFile->eolChar) !== 0) {
             $error = 'Function comment short description must be on a single line';
             $phpcsFile->addError($error, ($commentStart + 1));
         }
@@ -507,7 +507,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         if (empty($params) === false) {
 
-            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), "\n") !== 2) {
+            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 2) {
                 $error    = 'Last parameter comment requires a blank newline after it';
                 $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
                 $this->currentFile->addError($error, $errorPos);

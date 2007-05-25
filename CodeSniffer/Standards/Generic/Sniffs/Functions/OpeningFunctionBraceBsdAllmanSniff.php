@@ -93,7 +93,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         // checking from there, rather than the current token.
         $lineStart = $stackPtr;
         while (($lineStart = $phpcsFile->findPrevious(array(T_WHITESPACE), ($lineStart - 1), null, false)) !== false) {
-            if (strpos($tokens[$lineStart]['content'], "\n") !== false) {
+            if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
                 break;
             }
         }

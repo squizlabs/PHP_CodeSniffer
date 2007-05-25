@@ -92,7 +92,7 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
         $requiredIndent = ($tokens[$stackPtr]['column'] + 3);
 
         for ($stackPtr; $stackPtr < $bufferEnd; $stackPtr++) {
-            if (strpos($tokens[$stackPtr]['content'], "\n") === false) {
+            if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
                 continue;
             }
 

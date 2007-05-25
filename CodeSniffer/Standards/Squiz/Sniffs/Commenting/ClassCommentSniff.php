@@ -88,7 +88,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
-        $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
+        $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
 
         // Distinguish file and class comment.
         $prevClassToken = $phpcsFile->findPrevious(T_CLASS, ($stackPtr - 1));
@@ -99,9 +99,9 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 $prevComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($prevNonComment - 1));
                 if ($prevComment === false) {
                     // There is only 1 doc comment between open tag and class token.
-                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, "\n");
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
                     if ($newlineToken !== false) {
-                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, "\n");
+                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, $phpcsFile->eolChar);
                         if ($newlineToken !== false) {
                             // Blank line between the class and the doc block.
                             // The doc block is most likely a file comment.
@@ -116,7 +116,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 if ($prevTokenEnd !== false) {
                     $blankLineBefore = 0;
                     for ($i = ($prevTokenEnd + 1); $i < $commentStart; $i++) {
-                        if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === "\n") {
+                        if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === $phpcsFile->eolChar) {
                             $blankLineBefore++;
                         }
                     }
@@ -134,7 +134,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Parse the class comment docblock.
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
@@ -150,7 +150,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check for a comment description.
-        $short = rtrim($comment->getShortComment(), "\n");
+        $short = rtrim($comment->getShortComment(), $phpcsFile->eolChar);
         if (trim($short) === '') {
             $error = 'Missing short description in class doc comment';
             $phpcsFile->addError($error, $commentStart);
@@ -159,20 +159,20 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         // No extra newline before short description.
         $newlineCount = 0;
-        $newlineSpan  = strspn($short, "\n");
+        $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
             $error = "Extra $line found before class comment short description";
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 
-        $newlineCount = (substr_count($short, "\n") + 1);
+        $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
         // Exactly one blank line between short and long description.
         $long = $comment->getLongComment();
         if (empty($long) === false) {
             $between        = $comment->getWhiteSpaceBetween();
-            $newlineBetween = substr_count($between, "\n");
+            $newlineBetween = substr_count($between, $phpcsFile->eolChar);
             if ($newlineBetween !== 2) {
                 $error = 'There must be exactly one blank line between descriptions in class comment';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
@@ -188,17 +188,17 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             if ($newlineSpan !== 2) {
                 $error = 'There must be exactly one blank line before the tags in class comment';
                 if ($long !== '') {
-                    $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+                    $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
 
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                $short = rtrim($short, "\n ");
+                $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
 
         // Short description must be single line and end with a full stop.
         $lastChar = $short[(strlen($short) - 1)];
-        if (substr_count($short, "\n") !== 0) {
+        if (substr_count($short, $phpcsFile->eolChar) !== 0) {
             $error = 'Class comment short description must be on a single line';
             $phpcsFile->addError($error, ($commentStart + 1));
         }

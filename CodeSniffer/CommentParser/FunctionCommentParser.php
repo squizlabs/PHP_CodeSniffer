@@ -59,11 +59,12 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
     /**
      * Constructs a PHP_CodeSniffer_CommentParser_FunctionCommentParser.
      *
-     * @param string $comment The comment to parse.
+     * @param string               $comment   The comment to parse.
+     * @param PHP_CodeSniffer_File $phpcsFile The file that this comment is in.
      */
-    public function __construct($comment)
+    public function __construct($comment, PHP_CodeSniffer_File $phpcsFile)
     {
-        parent::__construct($comment);
+        parent::__construct($comment, $phpcsFile);
 
     }//end __construct()
 
@@ -77,7 +78,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseParam($tokens)
     {
-        $param           = new PHP_CodeSniffer_CommentParser_ParameterElement($this->previousElement, $tokens);
+        $param           = new PHP_CodeSniffer_CommentParser_ParameterElement($this->previousElement, $tokens, $this->phpcsFile);
         $this->_params[] = $param;
         return $param;
 
@@ -93,7 +94,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseReturn($tokens)
     {
-        $return        = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'return');
+        $return        = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'return', $this->phpcsFile);
         $this->_return = $return;
         return $return;
 
@@ -109,7 +110,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseThrows($tokens)
     {
-        $throws          = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'throws');
+        $throws          = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'throws', $this->phpcsFile);
         $this->_throws[] = $throws;
         return $throws;
 

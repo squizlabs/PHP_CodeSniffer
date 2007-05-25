@@ -130,6 +130,13 @@ class PHP_CodeSniffer_File
     private $_file = '';
 
     /**
+     * The EOL character this file uses.
+     *
+     * @var string
+     */
+    public $eolChar = '';
+
+    /**
      * The tokens stack map.
      *
      * Note that the tokens in this array differ in format to the tokens
@@ -421,7 +428,7 @@ class PHP_CodeSniffer_File
         foreach ($this->_tokens as $stackPtr => $token) {
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
-                $content = str_replace("\n", '\n', $token['content']);
+                $content = str_replace($this->eolChar, '\n', $token['content']);
                 echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -460,10 +467,30 @@ class PHP_CodeSniffer_File
      * conforms with the tests.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If the file could not be processed.
+     * @throws PHP_CodeSniffer_Exception If the file could not be opened.
      */
     private function _parse()
     {
+        // Determine the newline character being used in this file.
+        // Will be either \r, \r\n or \n.
+        $handle = fopen($this->_file, 'r');
+        if ($handle === false) {
+            throw new PHP_CodeSniffer_Exception('File could not be opened; could not auto-detect line endings');
+        } else {
+            $firstLine = fgets($handle);
+            fclose($handle);
+        }
+
+        $eolChar = substr($firstLine, -1);
+        if ($eolChar === "\n") {
+            $secondLastChar = substr($firstLine, -2, 1);
+            if ($secondLastChar === "\r") {
+                $eolChar = "\r\n";
+            }
+        }
+
+        $this->eolChar = $eolChar;
+
         $contents = file_get_contents($this->_file);
         $tokens   = token_get_all($contents);
 
@@ -471,6 +498,24 @@ class PHP_CodeSniffer_File
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
+
+            // If we are using \r\n newline characters, the \r and \n are sometimes
+            // split over two tokens. This normally occurs after comments. We need
+            // to merge these two characters together so that our line endings are
+            // consistent for all lines.
+            if (is_array($token) === true && substr($token[1], -1) === "\r") {
+                if (isset($tokens[($stackPtr + 1)]) === true && is_array($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)][1][0] === "\n") {
+                    $token[1] .= "\n";
+
+                    if ($tokens[($stackPtr + 1)][1] === "\n") {
+                        // The next token's content has been merged into this token,
+                        // so we can skip it.
+                        $stackPtr++;
+                    } else {
+                        $tokens[($stackPtr + 1)][1] = substr($tokens[($stackPtr + 1)][1], 1);
+                    }
+                }
+            }//end if
 
             // If this is a double quoted string, PHP will tokenise the whole
             // thing which causes problems with the scope map when braces are
@@ -496,7 +541,7 @@ class PHP_CodeSniffer_File
 
                 // Convert each line within the double quoted string to a
                 // new token, so it conforms with other multiple line tokens.
-                $tokenLines = explode("\n", $tokenContent);
+                $tokenLines = explode($this->eolChar, $tokenContent);
                 $numLines   = count($tokenLines);
                 $newToken   = array();
 
@@ -507,7 +552,7 @@ class PHP_CodeSniffer_File
                             break;
                         }
                     } else {
-                        $newToken['content'] .= "\n";
+                        $newToken['content'] .= $this->eolChar;
                     }
 
                     $newToken['code']            = T_DOUBLE_QUOTED_STRING;
@@ -523,8 +568,9 @@ class PHP_CodeSniffer_File
             // If this token has newlines in its content, split each line up
             // and create a new token for each line. We do this so it's easier
             // to asertain where errors occur on a line.
-            if (is_array($token) === true && strpos($token[1], "\n") !== false) {
-                $tokenLines = explode("\n", $token[1]);
+            // Note that $token[1] is the token's content.
+            if (is_array($token) === true && strpos($token[1], $this->eolChar) !== false) {
+                $tokenLines = explode($this->eolChar, $token[1]);
                 $numLines   = count($tokenLines);
 
                 for ($i = 0; $i < $numLines; $i++) {
@@ -534,7 +580,7 @@ class PHP_CodeSniffer_File
                             break;
                         }
                     } else {
-                        $newToken['content'] .= "\n";
+                        $newToken['content'] .= $this->eolChar;
                     }
 
                     $newToken['type']            = token_name($token[0]);
@@ -715,7 +761,7 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $count; $i++) {
             $this->_tokens[$i]['line'] = $lineNumber;
-            $lineNumber               += substr_count($this->_tokens[$i]['content'], "\n");
+            $lineNumber               += substr_count($this->_tokens[$i]['content'], $this->eolChar);
         }
 
     }//end _createLineMap()
@@ -844,7 +890,7 @@ class PHP_CodeSniffer_File
             if (isset(self::$_scopeOpeners[$this->_tokens[$i]['code']]) === true) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type    = $this->_tokens[$i]['type'];
-                    $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                    $content = str_replace($this->eolChar, '\n', $this->_tokens[$i]['content']);
                     echo "\tStart scope map at $i: $type => $content".PHP_EOL;
                 }
 
@@ -889,7 +935,7 @@ class PHP_CodeSniffer_File
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $this->_tokens[$i]['type'];
-                $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                $content = str_replace($this->eolChar, '\n', $this->_tokens[$i]['content']);
                 echo str_repeat("\t", $depth);
                 echo "Process token $i [";
                 if ($opener !== null) {
@@ -1098,7 +1144,7 @@ class PHP_CodeSniffer_File
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $this->_tokens[$i]['type'];
                 $line    = $this->_tokens[$i]['line'];
-                $content = str_replace("\n", '\n', $this->_tokens[$i]['content']);
+                $content = str_replace($this->eolChar, '\n', $this->_tokens[$i]['content']);
                 echo str_repeat("\t", ($level + 1));
                 echo "Process token $i on line $line [lvl:$level;";
                 if (empty($conditions) !== true) {

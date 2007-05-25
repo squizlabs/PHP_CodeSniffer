@@ -83,11 +83,11 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$tokenCount]['line'] === $currentLine) {
                 $currentLineContent .= $tokens[$tokenCount]['content'];
             } else {
-                $currentLineContent = trim($currentLineContent, "\n");
+                $currentLineContent = trim($currentLineContent, $phpcsFile->eolChar);
                 $lineLength         = strlen($currentLineContent);
 
                 if ($lineLength > $this->lineLimit) {
-                    $longLines[] = ($tokenCount - 1);
+                    $longLines[($tokenCount - 1)] = $lineLength;
                 }
 
                 $currentLineContent = $tokens[$tokenCount]['content'];
@@ -95,8 +95,8 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        foreach ($longLines as $lineToken) {
-            $warning = 'Line exceeds '.$this->lineLimit.' characters';
+        foreach ($longLines as $lineToken => $lineLength) {
+            $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
             $phpcsFile->addWarning($warning, $lineToken);
         }
 

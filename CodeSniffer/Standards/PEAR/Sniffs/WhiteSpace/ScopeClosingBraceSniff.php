@@ -72,7 +72,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         // checking from there, rather than the current token.
         $lineStart = ($stackPtr - 1);
         for ($lineStart; $lineStart > 0; $lineStart--) {
-            if (strpos($tokens[$lineStart]['content'], "\n") !== false) {
+            if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
                 break;
             }
         }

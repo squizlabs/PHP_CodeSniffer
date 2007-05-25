@@ -48,7 +48,7 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
      */
     protected function parseVar($tokens)
     {
-        $this->_var = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'var');
+        $this->_var = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'var', $this->phpcsFile);
         return $this->_var;
 
     }//end parseVar()

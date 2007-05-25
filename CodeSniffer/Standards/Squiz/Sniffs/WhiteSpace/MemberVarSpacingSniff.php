@@ -51,7 +51,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                 // Skip comments.
                 continue;
-            } else if (strpos($tokens[$i]['content'], "\n") === false) {
+            } else if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
                 // Not the end of the line.
                 continue;
             } else {

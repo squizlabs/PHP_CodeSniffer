@@ -91,6 +91,13 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     protected $tokens = array();
 
     /**
+     * The file this element is in.
+     *
+     * @var array(string)
+     */
+    protected $phpcsFile = null;
+
+    /**
      * The tag that this element represents (omiting the @ symbol).
      *
      * @var string
@@ -105,15 +112,18 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @param array                                    $tokens          The tokens of this element.
      * @param string                                   $tag             The doc element tag this element
      *                                                                  represents.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that this element is in.
      *
      * @throws Exception If $previousElement in not a DocElement or if
      *                   getSubElements() does not return an array.
      */
-    public function __construct($previousElement, array $tokens, $tag)
+    public function __construct($previousElement, array $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
     {
         if ($previousElement !== null && ($previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
             throw new Exception('$previousElement must be an instance of DocElement');
         }
+
+        $this->phpcsFile = $phpcsFile;
 
         $this->previousElement = $previousElement;
         if ($previousElement !== null) {
@@ -271,7 +281,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
             $previousContent = $this->previousElement->getRawContent();
             $previousLine    = $this->previousElement->getLine();
 
-            return ($previousLine + substr_count($previousContent, "\n"));
+            return ($previousLine + substr_count($previousContent, $this->phpcsFile->eolChar));
         }
 
     }//end getLine()

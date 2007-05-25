@@ -126,11 +126,11 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for end of line whitespace.
             */
 
-            if (strpos($tokens[$stackPtr]['content'], "\n") === false) {
+            if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
                 return;
             }
 
-            $tokenContent = rtrim($tokens[$stackPtr]['content'], "\n");
+            $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
             if (empty($tokenContent) === true) {
                 return;
             }

@@ -127,9 +127,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
             if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
                 // Found a class token right after comment doc block.
-                $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, "\n");
+                $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, $phpcsFile->eolChar);
                 if ($newlineToken !== false) {
-                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $commentNext, false, "\n");
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $commentNext, false, $phpcsFile->eolChar);
                     if ($newlineToken === false) {
                         // No blank line between the class token and the doc block.
                         // The doc block is most likely a class comment.
@@ -143,7 +143,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Parse the header comment docblock.
             try {
-                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment);
+                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
                 $this->commentParser->parse();
             } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
                 $line = ($e->getLineWithinComment() + $commentStart);
@@ -161,20 +161,20 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // No extra newline before short description.
             $short        = $comment->getShortComment();
             $newlineCount = 0;
-            $newlineSpan  = strspn($short, "\n");
+            $newlineSpan  = strspn($short, $phpcsFile->eolChar);
             if ($short !== '' && $newlineSpan > 0) {
                 $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
                 $error = "Extra $line found before file comment short description";
                 $phpcsFile->addError($error, ($commentStart + 1));
             }
 
-            $newlineCount = (substr_count($short, "\n") + 1);
+            $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
             // Exactly one blank line between short and long description.
             $long = $comment->getLongComment();
             if (empty($long) === false) {
                 $between        = $comment->getWhiteSpaceBetween();
-                $newlineBetween = substr_count($between, "\n");
+                $newlineBetween = substr_count($between, $phpcsFile->eolChar);
                 if ($newlineBetween !== 2) {
                     $error = 'There must be exactly one blank line between descriptions in file comment';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
@@ -190,11 +190,11 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if ($newlineSpan !== 2) {
                     $error = 'There must be exactly one blank line before the tags in file comment';
                     if ($long !== '') {
-                        $newlineCount += (substr_count($long, "\n") - $newlineSpan + 1);
+                        $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                     }
 
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                    $short = rtrim($short, "\n ");
+                    $short = rtrim($short, $phpcsFile->eolChar.' ');
                 }
             }
 

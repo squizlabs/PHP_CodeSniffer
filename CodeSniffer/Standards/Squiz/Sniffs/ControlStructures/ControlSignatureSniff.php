@@ -40,15 +40,15 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
     protected function getPatterns()
     {
         return array(
-                "try {\n...} catch (...) {\n",
-                "do {\n...} while (...);\n",
-                "while (...) {\n",
-                "for (...) {\n",
-                "if (...) {\n",
-                "foreach (...) {\n",
-                "} else if (...) {\n",
-                "} else {\n",
-                "do {\n",
+                'try {EOL...} catch (...) {EOL',
+                'do {EOL...} while (...);EOL',
+                'while (...) {EOL',
+                'for (...) {EOL',
+                'if (...) {EOL',
+                'foreach (...) {EOL',
+                '} else if (...) {EOL',
+                '} else {EOL',
+                'do {EOL',
                );
 
     }//end getPatterns()

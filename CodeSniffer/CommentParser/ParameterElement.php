@@ -83,10 +83,13 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * @param array                                    $tokens          The tokens
      *                                                                  that make up
      *                                                                  this element.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that
+     *                                                                  this element
+     *                                                                  is in.
      */
-    public function __construct($previousElement, $tokens)
+    public function __construct($previousElement, $tokens, PHP_CodeSniffer_File $phpcsFile)
     {
-        parent::__construct($previousElement, $tokens, 'param');
+        parent::__construct($previousElement, $tokens, 'param', $phpcsFile);
 
         // Handle special variable type: array(x => y).
         $type = strtolower($this->_type);

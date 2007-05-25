@@ -54,10 +54,11 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      *                                                                    element.
      * @param array                                      $tokens          The tokens that
      *                                                                    make up this element.
+     * @param PHP_CodeSniffer_File                       $phpcsFile       The file that this element is in.
      */
-    public function __construct($previousElement, $tokens)
+    public function __construct($previousElement, $tokens, PHP_CodeSniffer_File $phpcsFile)
     {
-        parent::__construct($previousElement, $tokens, 'comment');
+        parent::__construct($previousElement, $tokens, 'comment', $phpcsFile);
 
     }//end __construct()
 
@@ -96,13 +97,13 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
         foreach ($this->tokens as $pos => $token) {
             $token = str_replace($whiteSpace, '', $token);
-            if ($token === "\n") {
+            if ($token === $this->phpcsFile->eolChar) {
                 if ($found === false) {
                     // Include newlines before short description.
                     continue;
                 } else {
                     if (isset($this->tokens[($pos + 1)]) === true) {
-                        if ($this->tokens[($pos + 1)] === "\n") {
+                        if ($this->tokens[($pos + 1)] === $this->phpcsFile->eolChar) {
                             return ($pos - 1);
                         }
                     } else {
@@ -197,11 +198,11 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     {
         $long = $this->getLongComment();
         if ($long !== '') {
-            return strspn((strrev(rtrim($long, ' '))), "\n");
+            return strspn((strrev(rtrim($long, ' '))), $this->phpcsFile->eolChar);
         } else {
             $endShort = ($this->_getShortCommentEndPos() + 1);
             $after    = implode('', array_slice($this->tokens, $endShort));
-            return strspn((trim($after, ' ')), "\n");
+            return strspn((trim($after, ' ')), $this->phpcsFile->eolChar);
         }
 
     }//end getNewlineAfter()

@@ -57,10 +57,11 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element before this one.
      * @param array                                    $tokens          The tokens that comprise this element.
      * @param string                                   $tag             The tag that this element represents.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that this element is in.
      */
-    public function __construct($previousElement, $tokens, $tag)
+    public function __construct($previousElement, $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
     {
-        parent::__construct($previousElement, $tokens, $tag);
+        parent::__construct($previousElement, $tokens, $tag, $phpcsFile);
 
     }//end __construct()
 

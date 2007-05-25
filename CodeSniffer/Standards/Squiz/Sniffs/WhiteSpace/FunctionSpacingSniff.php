@@ -77,7 +77,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         $numTokens     = count($tokens);
         $nextLineToken = null;
         for ($i = $closer; $i < $numTokens; $i++) {
-            if (strpos($tokens[$i]['content'], "\n") === false) {
+            if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
                 continue;
             } else {
                 $nextLineToken = ($i + 1);
@@ -110,7 +110,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
         $prevLineToken = null;
         for ($i = $stackPtr; $i > 0; $i--) {
-            if (strpos($tokens[$i]['content'], "\n") === false) {
+            if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
                 continue;
             } else {
                 $prevLineToken = $i;

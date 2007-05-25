@@ -32,6 +32,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - BC BREAK: EOL character is now auto-detected and used instead of hard-coded \n
+    - Pattern sniffs must now specify "EOL" instead of "\n" or "\r\n" to use auto-detection
+    - Please use $phpcsFile->eolChar to check for newlines instead of hard-coding "\n" or "\r\n"
+    - Comment parser classes now require you to pass $phpcsFile as an additional argument
+
   - Fixed error where including a directory of sniffs in a coding standard class did not work
   - Coding standard classes can now specify a list of sniffs to exclude as well as include (feature request #11056)
   - Two uppercase characters can now be placed side-by-side in class names in Squiz ValidClassNameSniff

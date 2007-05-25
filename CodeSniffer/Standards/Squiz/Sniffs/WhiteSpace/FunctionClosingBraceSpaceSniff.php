@@ -72,7 +72,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff extends PHP_CodeSni
             return;
         }
 
-        if (strpos($tokens[$lastContent]['content'], "\n") !== false) {
+        if (strpos($tokens[$lastContent]['content'], $phpcsFile->eolChar) !== false) {
             // Comments add an extra line, so this extra exception needs to be made.
             $lineDifference = ($tokens[$stackPtr]['line'] - $tokens[$lastContent]['line']);
         } else {

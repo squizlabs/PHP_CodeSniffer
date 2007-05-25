@@ -110,7 +110,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseLicense($tokens)
     {
-        $this->_license = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'license');
+        $this->_license = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'license', $this->phpcsFile);
         return $this->_license;
 
     }//end parseLicense()
@@ -125,7 +125,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseCopyright($tokens)
     {
-        $this->_copyright = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'copyright');
+        $this->_copyright = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'copyright', $this->phpcsFile);
         return $this->_copyright;
 
     }//end parseCopyright()
@@ -140,7 +140,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseCategory($tokens)
     {
-        $this->_category = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'category');
+        $this->_category = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'category', $this->phpcsFile);
         return $this->_category;
 
     }//end parseCategory()
@@ -155,7 +155,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseAuthor($tokens)
     {
-        $author           = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'author');
+        $author           = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'author', $this->phpcsFile);
         $this->_authors[] = $author;
         return $author;
 
@@ -171,7 +171,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseVersion($tokens)
     {
-        $this->_version = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'version');
+        $this->_version = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'version', $this->phpcsFile);
         return $this->_version;
 
     }//end parseVersion()
@@ -186,7 +186,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parsePackage($tokens)
     {
-        $this->_package = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'package');
+        $this->_package = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'package', $this->phpcsFile);
         return $this->_package;
 
     }//end parsePackage()
@@ -201,7 +201,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseSubpackage($tokens)
     {
-        $this->_subpackage = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'subpackage');
+        $this->_subpackage = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'subpackage', $this->phpcsFile);
         return $this->_subpackage;
 
     }//end parseSubpackage()

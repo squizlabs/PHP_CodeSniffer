@@ -51,15 +51,15 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
     {
 
         return array(
-                "do {\n...} while (...);\n",
-                "while (...) {\n",
-                "for (...) {\n",
-                "if (...) {\n",
-                "foreach (...) {\n",
-                "} else if (...) {\n",
-                "} elseif (...) {\n",
-                "} else {\n",
-                "do {\n",
+                'do {EOL...} while (...);EOL',
+                'while (...) {EOL',
+                'for (...) {EOL',
+                'if (...) {EOL',
+                'foreach (...) {EOL',
+                '} else if (...) {EOL',
+                '} elseif (...) {EOL',
+                '} else {EOL',
+                'do {EOL',
                );
 
     }//end getPatterns()
