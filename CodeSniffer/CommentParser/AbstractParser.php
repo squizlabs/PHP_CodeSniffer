@@ -206,9 +206,9 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         // Firstly, remove the comment tags and any stars from the left side.
         $lines = split($this->phpcsFile->eolChar, $comment);
         foreach ($lines as &$line) {
-            if ($line !== '') {
-                $line = trim($line);
+            $line = trim($line);
 
+            if ($line !== '') {
                 if (substr($line, 0, 3) === '/**') {
                     $line = substr($line, 3);
                 } else if (substr($line, -2, 2) === '*/') {
@@ -224,7 +224,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 $words       = preg_split('|(\s+)|', $line.$this->phpcsFile->eolChar, -1, $flags);
                 $this->words = array_merge($this->words, $words);
             }
-        }
+        }//end foreach
 
         $this->_parseWords();
 
