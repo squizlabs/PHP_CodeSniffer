@@ -42,11 +42,11 @@ class PHP_CodeSniffer_Standards_PEAR_PEARCodingStandard extends PHP_CodeSniffer_
     public function getIncludedSniffs()
     {
         return array(
-                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff',
-                'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff',
-                'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff',
-                'Generic/Sniffs/PHP/LowerCaseConstantSniff',
-                'Generic/Sniffs/PHP/DisallowShortOpenTagSniff',
+                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
+                'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php',
+                'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
+                'Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
+                'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
                );
 
     }//end getIncludedSniffs()

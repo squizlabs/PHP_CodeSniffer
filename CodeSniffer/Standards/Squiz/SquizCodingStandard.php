@@ -43,11 +43,11 @@ class PHP_CodeSniffer_Standards_Squiz_SquizCodingStandard extends PHP_CodeSniffe
     public function getIncludedSniffs()
     {
         return array(
-                'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff',
-                'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff',
-                'Generic/Sniffs/PHP/DisallowShortOpenTagSniff',
-                'Generic/Sniffs/PHP/UpperCaseConstantSniff',
-                'PEAR/Sniffs/Functions/FunctionCallArgumentSpacingSniff',
+                'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php',
+                'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
+                'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
+                'Generic/Sniffs/PHP/UpperCaseConstantSniff.php',
+                'PEAR/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php',
                );
 
     }//end getIncludedSniffs()

@@ -254,7 +254,8 @@ class PHP_CodeSniffer
      *                         included sniffs will be checked for.
      *
      * @return array
-     * @throws Exception If there was an error opening the directory.
+     * @throws PHP_CodeSniffer_Exception If an included or excluded sniff does
+     *                                   not exist.
      */
     public static function getSniffFiles($dir, $standard=null)
     {
@@ -282,7 +283,7 @@ class PHP_CodeSniffer
             }
 
             $ownSniffs[] = $file->getPathname();
-        }
+        }//end foreach
 
         // Load the standard class and ask it for a list of external
         // sniffs to include in the standard.
@@ -294,6 +295,11 @@ class PHP_CodeSniffer
             $included = $standardClass->getIncludedSniffs();
             foreach ($included as $sniff) {
                 $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
+
+                if ($sniffDir === false) {
+                    throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
+                }
+
                 if (is_dir($sniffDir) === true) {
                     if (self::isInstalledStandard($sniff) === true) {
                         // We are including a whole coding standard.
@@ -303,17 +309,22 @@ class PHP_CodeSniffer
                         $includedSniffs = array_merge($includedSniffs, self::getSniffFiles($sniffDir));
                     }
                 } else {
-                    if (substr($sniffDir, -5) !== 'Sniff') {
-                        continue;
+                    if (substr($sniffDir, -9) !== 'Sniff.php') {
+                        throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
                     }
 
-                    $includedSniffs[] = "$sniffDir.php";
+                    $includedSniffs[] = $sniffDir;
                 }
-            }
+            }//end foreach
 
             $excluded = $standardClass->getExcludedSniffs();
             foreach ($excluded as $sniff) {
                 $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
+
+                if ($sniffDir === false) {
+                    throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
+                }
+
                 if (is_dir($sniffDir) === true) {
                     if (self::isInstalledStandard($sniff) === true) {
                         // We are excluding a whole coding standard.
@@ -323,14 +334,13 @@ class PHP_CodeSniffer
                         $excludedSniffs = array_merge($excludedSniffs, self::getSniffFiles($sniffDir));
                     }
                 } else {
-                    if (substr($sniffDir, -5) !== 'Sniff') {
-                        continue;
+                    if (substr($sniffDir, -9) !== 'Sniff.php') {
+                        throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
                     }
 
-                    $excludedSniffs[] = "$sniffDir.php";
+                    $excludedSniffs[] = $sniffDir;
                 }
-            }
-
+            }//end foreach
         }//end if
 
         // Merge our own sniff list with our exnternally included

@@ -63,19 +63,19 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
     public function getExcludedSniffs()
     {
         return array(
-                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff',
-                'Generic/Sniffs/PHP/UpperCaseConstantSniff',
-                'Squiz/Sniffs/Classes/ClassFileNameSniff',
-                'Squiz/Sniffs/Classes/ValidClassNameSniff',
-                'Squiz/Sniffs/Commenting/ClassCommentSniff',
-                'Squiz/Sniffs/Commenting/FileCommentSniff',
-                'Squiz/Sniffs/Commenting/FunctionCommentSniff',
-                'Squiz/Sniffs/Commenting/VariableCommentSniff',
-                'Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff',
-                'Squiz/Sniffs/Files/FileExtensionSniff',
-                'Squiz/Sniffs/Files/LineLengthSniff',
-                'Squiz/Sniffs/NamingConventions/ValidInterfaceNameSniff',
-                'Squiz/Sniffs/WhiteSpace/ScopeIndentSniff',
+                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
+                'Generic/Sniffs/PHP/UpperCaseConstantSniff.php',
+                'Squiz/Sniffs/Classes/ClassFileNameSniff.php',
+                'Squiz/Sniffs/Classes/ValidClassNameSniff.php',
+                'Squiz/Sniffs/Commenting/ClassCommentSniff.php',
+                'Squiz/Sniffs/Commenting/FileCommentSniff.php',
+                'Squiz/Sniffs/Commenting/FunctionCommentSniff.php',
+                'Squiz/Sniffs/Commenting/VariableCommentSniff.php',
+                'Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff.php',
+                'Squiz/Sniffs/Files/FileExtensionSniff.php',
+                'Squiz/Sniffs/Files/LineLengthSniff.php',
+                'Squiz/Sniffs/NamingConventions/ValidInterfaceNameSniff.php',
+                'Squiz/Sniffs/WhiteSpace/ScopeIndentSniff.php',
                );
 
     }//end getExcludedSniffs()
