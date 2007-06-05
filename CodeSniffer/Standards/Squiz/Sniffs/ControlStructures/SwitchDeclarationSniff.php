@@ -71,7 +71,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             }
 
             $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($nextCase + 1), $switch['scope_closer']);
-            if ($nextBreak !== false) {
+            if ($nextBreak !== false && isset($tokens[$nextBreak]['scope_condition']) === true) {
                 // Only check this BREAK statement if it matches the current CASE
                 // statement. This stops the same break (used for multiple CASEs) being
                 // checked more than once.
