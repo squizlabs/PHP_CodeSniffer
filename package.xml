@@ -557,6 +557,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="InnerFunctionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="NonExecutableCodeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Scope">
         <file baseinstalldir="PHP" name="MemberVarScopeSniff.php" role="php">
@@ -790,6 +793,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NonExecutableCodeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="NonExecutableCodeUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
