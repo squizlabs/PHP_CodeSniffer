@@ -43,7 +43,11 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_BREAK, T_RETURN, T_EXIT);
+        return array(
+                T_BREAK,
+                T_RETURN,
+                T_EXIT,
+               );
 
     }//end register()
 
@@ -52,8 +56,8 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      *
      * @return void
      */
@@ -97,7 +101,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 if (in_array($condition, $ourConditions) === true) {
                     return;
                 }
-            }
+            }//end for
         } else {
             // Look for other end of execution tokens in the global scope.
             for ($i = ($stackPtr - 1); $i >= 1; $i--) {
@@ -114,7 +118,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 // global scope, so we are not executable.
                 return;
             }
-        }
+        }//end if
 
         if (empty($tokens[$stackPtr]['conditions']) === false) {
             $conditions = array_keys($tokens[$stackPtr]['conditions']);
@@ -149,7 +153,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     // Any tokens between the return and the closer
                     // cannot be executed.
                     $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-                    $end = $tokens[$condition]['scope_closer'];
+                    $end   = $tokens[$condition]['scope_closer'];
                 }//end if
 
                 $lastLine = $tokens[$start]['line'];
@@ -162,8 +166,9 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
                     $line = $tokens[$i]['line'];
                     if ($line > $lastLine) {
-                        $type = substr($tokens[$stackPtr]['type'], 2);
-                        $phpcsFile->addWarning("Code after $type statement cannot be executed", $i);
+                        $type    = substr($tokens[$stackPtr]['type'], 2);
+                        $warning = "Code after $type statement cannot be executed";
+                        $phpcsFile->addWarning($warning, $i);
                         $lastLine = $line;
                     }
                 }
@@ -188,8 +193,9 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
                 $line = $tokens[$i]['line'];
                 if ($line > $lastLine) {
-                    $type = substr($tokens[$stackPtr]['type'], 2);
-                    $phpcsFile->addWarning("Code after $type statement cannot be executed", $i);
+                    $type    = substr($tokens[$stackPtr]['type'], 2);
+                    $warning = "Code after $type statement cannot be executed";
+                    $phpcsFile->addWarning($warning, $i);
                     $lastLine = $line;
                 }
             }
