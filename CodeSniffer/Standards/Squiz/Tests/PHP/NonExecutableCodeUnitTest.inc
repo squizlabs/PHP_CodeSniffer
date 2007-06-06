@@ -38,10 +38,10 @@ function myFunction($var)
 
 foreach ($vars as $var) {
     if ($something === TRUE) {
-        break;
+        continue;
         break;
     } else {
-        break;
+        continue;
         echo 'hi';
     }
 

@@ -45,6 +45,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         return array(
                 T_BREAK,
+                T_CONTINUE,
                 T_RETURN,
                 T_EXIT,
                );
