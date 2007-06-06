@@ -48,6 +48,16 @@ foreach ($vars as $var) {
     echo $var."\n";
 }
 
+switch ($lowerVarType) {
+    case 'bool':
+        return 'boolean';
+        echo 'hi';
+    case 'double':
+    case 'real':
+        return 'float';
+        echo 'hi';
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

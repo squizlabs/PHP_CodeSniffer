@@ -121,10 +121,36 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             $condition  = array_pop($conditions);
 
             if (isset($tokens[$condition]['scope_closer']) === true) {
-                // Any tokens between the return and the closer
-                // cannot be executed.
-                $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-                $end   = $tokens[$condition]['scope_closer'];
+                $closer = $tokens[$condition]['scope_closer'];
+                if ($tokens[$closer]['scope_condition'] !== $condition) {
+                    // The closer for our condition is shared with other openers,
+                    // so we need to throw errors from this token to the next
+                    // shared opener (if there is one), not to the scope closer.
+                    $nextOpener = null;
+                    for ($i = ($stackPtr + 1); $i < $closer; $i++) {
+                        if (isset($tokens[$i]['scope_closer']) === true) {
+                            if ($tokens[$i]['scope_closer'] === $closer) {
+                                // We found an opener that shares the same
+                                // closing token as us.
+                                $nextOpener = $i;
+                                break;
+                            }
+                        }
+                    }//end for
+
+                    $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+
+                    if ($nextOpener === null) {
+                        $end = $closer;
+                    } else {
+                        $end = $nextOpener;
+                    }
+                } else {
+                    // Any tokens between the return and the closer
+                    // cannot be executed.
+                    $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+                    $end = $tokens[$condition]['scope_closer'];
+                }//end if
 
                 $lastLine = $tokens[$start]['line'];
                 $endLine  = $tokens[$end]['line'];
