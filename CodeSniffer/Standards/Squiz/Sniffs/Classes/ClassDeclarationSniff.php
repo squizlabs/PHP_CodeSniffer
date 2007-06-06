@@ -91,9 +91,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             $difference .= ($difference === 1) ? ' empty line' : ' empty lines';
             $error       = 'Opening brace of a ';
             $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' must be on the line following a ';
+            $error      .= ' must be on the line following the ';
             $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' declaration. Found '.$difference.'.';
+            $error      .= ' declaration; found '.$difference;
             $phpcsFile->addError($error, $curlyBrace);
         }
 
