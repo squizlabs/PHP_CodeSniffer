@@ -43,9 +43,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error where including a directory of sniffs in a coding standard class did not work
   - Coding standard classes can now specify a list of sniffs to exclude as well as include (feature request #11056)
   - Two uppercase characters can now be placed side-by-side in class names in Squiz ValidClassNameSniff
-  - Fixed bug #11038 : Allow SVN version tag in PEAR standard file doc block
+  - SVN tags now allowed in PEAR file doc blocks (feature request #11038)
     - Thanks to Torsten Roehr for the patch
-  - Fixed bug #11087 : Change private methods to protected to allow subclassing of standards
+  - Private methods in commenting sniffs and comment parser are now protected (feature request #11087)
+  - Added Generic LineEndingsSniff to check the EOL character of a file
+  - PEAR standard now only throws one error per file for incorrect line endings (eg. /r/n)
+  - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
   - Fixed bug #11120 : Uninitialized string offset in AbstractParser.php on line 200
@@ -160,6 +163,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Sniffs">
        <dir name="Files">
+        <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -204,6 +210,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Files">
+        <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineEndingsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineLengthUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LineLengthUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -277,6 +287,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Sniffs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="ClassCommentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -297,6 +312,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="IncludingFileSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -333,6 +351,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Tests">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="ClassCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClassCommentUnitTest.php" role="test">
