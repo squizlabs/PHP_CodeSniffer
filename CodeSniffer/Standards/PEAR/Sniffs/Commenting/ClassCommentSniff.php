@@ -193,7 +193,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      *
      * @return void
      */
-    private function _processVersion($errorPos)
+    protected function processVersion($errorPos)
     {
         $version = $this->commentParser->getVersion();
         if ($version !== null) {
@@ -208,7 +208,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             }
         }
 
-    }//end _processVersion()
+    }//end processVersion()
 
 
 }//end class

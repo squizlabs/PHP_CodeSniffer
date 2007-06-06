@@ -317,10 +317,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $indentation[] = array(
                               'tag'      => $tag,
                               'errorPos' => $errorPos,
-                              'space'    => $this->_getIndentation($tag, $tagElement),
+                              'space'    => $this->getIndentation($tag, $tagElement),
                              );
 
-            $method = '_process'.$tagName;
+            $method = 'process'.$tagName;
             if (method_exists($this, $method) === true) {
                 // Process each tag if a method is defined.
                 call_user_func(array($this, $method), $errorPos);
@@ -356,7 +356,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _getIndentation($tagName, $tagElement)
+    private function getIndentation($tagName, $tagElement)
     {
         if ($tagElement instanceof PHP_CodeSniffer_CommentParser_SingleElement) {
             if ($tagElement->getContent() !== '') {
@@ -370,7 +370,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         return 0;
 
-    }//end _getIndentation()
+    }//end getIndentation()
 
 
     /**
@@ -380,7 +380,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processVersion($errorPos)
+    protected function processVersion($errorPos)
     {
         $version = $this->commentParser->getVersion();
         if ($version !== null) {
@@ -397,7 +397,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processVersion()
+    }//end processVersion()
 
 
     /**
@@ -407,7 +407,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processPackage($errorPos)
+    protected function processPackage($errorPos)
     {
         $package = $this->commentParser->getPackage();
         if ($package !== null) {
@@ -421,7 +421,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processPackage()
+    }//end processPackage()
 
 
     /**
@@ -431,7 +431,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processSubpackage($errorPos)
+    protected function processSubpackage($errorPos)
     {
         $subpackage = $this->commentParser->getSubpackage();
         if ($subpackage !== null) {
@@ -455,7 +455,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processSubpackage()
+    }//end processSubpackage()
 
 
     /**
@@ -465,7 +465,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processAuthors($errorPos)
+    protected function processAuthors($errorPos)
     {
         $authors = $this->commentParser->getAuthors();
         if (empty($authors) === false) {
@@ -480,7 +480,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processAuthors()
+    }//end processAuthors()
 
 
     /**
@@ -490,7 +490,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processCopyright($errorPos)
+    protected function processCopyright($errorPos)
     {
         $copyright = $this->commentParser->getCopyRight();
         if ($copyright !== null) {
@@ -505,7 +505,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processCopyright()
+    }//end processCopyright()
 
 
     /**
@@ -515,7 +515,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processLicense($errorPos)
+    protected function processLicense($errorPos)
     {
         $license = $this->commentParser->getLicense();
         if ($license !== null) {
@@ -545,7 +545,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }//end if
         }//end if
 
-    }//end _processLicense()
+    }//end processLicense()
 
 
 }//end class

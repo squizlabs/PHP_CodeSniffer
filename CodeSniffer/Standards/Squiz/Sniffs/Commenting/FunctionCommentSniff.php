@@ -174,11 +174,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             return;
         }
 
-        $this->_processParams($commentStart, $commentEnd);
-        $this->_processSince($commentStart, $commentEnd);
-        $this->_processSees($commentStart);
-        $this->_processReturn($commentStart, $commentEnd);
-        $this->_processThrows($commentStart);
+        $this->processParams($commentStart, $commentEnd);
+        $this->processSince($commentStart, $commentEnd);
+        $this->processSees($commentStart);
+        $this->processReturn($commentStart, $commentEnd);
+        $this->processThrows($commentStart);
 
         // Check for a comment description.
         $short = $comment->getShortComment();
@@ -257,7 +257,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    private function _processSince($commentStart, $commentEnd)
+    protected function processSince($commentStart, $commentEnd)
     {
         $since = $this->commentParser->getSince();
         if ($since !== null) {
@@ -309,7 +309,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
-    }//end _processSince()
+    }//end processSince()
 
 
     /**
@@ -319,7 +319,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    private function _processSees($commentStart)
+    protected function processSees($commentStart)
     {
         $sees = $this->commentParser->getSees();
         if (empty($sees) === false) {
@@ -352,7 +352,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }//end foreach
         }//end if
 
-    }//end _processSees()
+    }//end processSees()
 
 
     /**
@@ -363,7 +363,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    private function _processReturn($commentStart, $commentEnd)
+    protected function processReturn($commentStart, $commentEnd)
     {
         // Skip constructor and destructor.
         $className = '';
@@ -432,7 +432,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }
         }//end if
 
-    }//end _processReturn()
+    }//end processReturn()
 
 
     /**
@@ -442,7 +442,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    private function _processThrows($commentStart)
+    protected function processThrows($commentStart)
     {
         if (count($this->commentParser->getThrows()) === 0) {
             return;
@@ -486,7 +486,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }
         }//end foreach
 
-    }//end _processThrows()
+    }//end processThrows()
 
 
     /**
@@ -499,7 +499,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    private function _processParams($commentStart, $commentEnd)
+    protected function processParams($commentStart, $commentEnd)
     {
         $realParams  = $this->currentFile->getMethodParameters($this->_functionToken);
         $params      = $this->commentParser->getParams();
@@ -685,7 +685,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $this->currentFile->addError($error, $errorPos);
         }
 
-    }//end _processParams()
+    }//end processParams()
 
 
 }//end class

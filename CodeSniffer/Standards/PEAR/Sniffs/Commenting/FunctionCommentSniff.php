@@ -165,9 +165,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             return;
         }
 
-        $this->_processParams($commentStart);
-        $this->_processReturn($commentStart, $commentEnd);
-        $this->_processThrows($commentStart);
+        $this->processParams($commentStart);
+        $this->processReturn($commentStart, $commentEnd);
+        $this->processThrows($commentStart);
 
         // No extra newline before short description.
         $short        = $comment->getShortComment();
@@ -226,7 +226,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    private function _processThrows($commentStart)
+    protected function processThrows($commentStart)
     {
         if (count($this->commentParser->getThrows()) === 0) {
             return;
@@ -243,7 +243,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-    }//end _processThrows()
+    }//end processThrows()
 
 
     /**
@@ -254,7 +254,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    private function _processReturn($commentStart, $commentEnd)
+    protected function processReturn($commentStart, $commentEnd)
     {
         // Skip constructor and destructor.
         $className = '';
@@ -278,7 +278,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-    }//end _processReturn()
+    }//end processReturn()
 
 
     /**
@@ -289,7 +289,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    private function _processParams($commentStart)
+    protected function processParams($commentStart)
     {
         $realParams = $this->currentFile->getMethodParameters($this->_functionToken);
 
@@ -430,7 +430,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $this->currentFile->addError($error, $errorPos);
         }
 
-    }//end _processParams()
+    }//end processParams()
 
 
 }//end class

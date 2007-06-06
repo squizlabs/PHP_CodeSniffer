@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Two uppercase characters can now be placed side-by-side in class names in Squiz ValidClassNameSniff
   - Fixed bug #11038 : Allow SVN version tag in PEAR standard file doc block
     - Thanks to Torsten Roehr for the patch
+  - Fixed bug #11087 : Change private methods to protected to allow subclassing of standards
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
   - Fixed bug #11120 : Uninitialized string offset in AbstractParser.php on line 200

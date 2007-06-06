@@ -174,9 +174,9 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         }
 
         // Check each tag.
-        $this->_processVar($commentStart, $commentEnd);
-        $this->_processSince($commentStart, $commentEnd);
-        $this->_processSees($commentStart);
+        $this->processVar($commentStart, $commentEnd);
+        $this->processSince($commentStart, $commentEnd);
+        $this->processSees($commentStart);
 
     }//end processMemberVar()
 
@@ -189,7 +189,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    private function _processVar($commentStart, $commentEnd)
+    protected function processVar($commentStart, $commentEnd)
     {
         $var = $this->commentParser->getVar();
         if ($var !== null) {
@@ -231,7 +231,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
-    }//end _processVar()
+    }//end processVar()
 
 
     /**
@@ -242,7 +242,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    private function _processSince($commentStart, $commentEnd)
+    protected function processSince($commentStart, $commentEnd)
     {
         $since = $this->commentParser->getSince();
         if ($since !== null) {
@@ -286,7 +286,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $this->currentFile->addError($error, $commentEnd);
         }//end if
 
-    }//end _processSince()
+    }//end processSince()
 
 
     /**
@@ -296,7 +296,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    private function _processSees($commentStart)
+    protected function processSees($commentStart)
     {
         $sees = $this->commentParser->getSees();
         if (empty($sees) === false) {
@@ -318,7 +318,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
         }
 
-    }//end _processSees()
+    }//end processSees()
 
 
     /**

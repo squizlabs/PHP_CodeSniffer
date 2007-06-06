@@ -275,7 +275,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check content.
-        $this->_processSince($errorPos);
+        $this->processSince($errorPos);
 
     }//end processTags()
 
@@ -290,7 +290,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function _processSince($errorPos)
+    protected function processSince($errorPos)
     {
         $since = $this->commentParser->getSince();
         if ($since !== null) {
@@ -307,7 +307,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end _processSince()
+    }//end processSince()
 
 
 }//end class
