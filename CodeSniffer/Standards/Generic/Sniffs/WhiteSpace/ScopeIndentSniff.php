@@ -178,9 +178,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
-                    $contentLength        = strlen($tokens[$firstToken]['content']);
                     $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
-                    $column               = ($contentLength - $trimmedContentLength + 1);
+                    if ($trimmedContentLength === 0) {
+                        continue;
+                    }
+
+                    $contentLength = strlen($tokens[$firstToken]['content']);
+                    $column        = ($contentLength - $trimmedContentLength + 1);
                 }
 
                 // Check to see if this constant string spans multiple lines.
