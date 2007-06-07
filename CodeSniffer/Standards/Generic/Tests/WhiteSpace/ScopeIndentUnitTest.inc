@@ -307,6 +307,7 @@ function myFunction()
 {
     ?>
     <dynamic_content>
+
    </dynamic_content>
     <?php
 
