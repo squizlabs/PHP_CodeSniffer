@@ -303,4 +303,13 @@ switch ($name) {
         return true;
 }
 
+function myFunction()
+{
+    ?>
+    <dynamic_content>
+   </dynamic_content>
+    <?php
+
+}
+
 ?>
