@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic LineEndingsSniff to check the EOL character of a file
   - PEAR standard now only throws one error per file for incorrect line endings (eg. /r/n)
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
+  - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
   - Fixed bug #11120 : Uninitialized string offset in AbstractParser.php on line 200
@@ -629,6 +630,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ScopeClosingBraceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -877,6 +881,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
