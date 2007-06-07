@@ -84,49 +84,6 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             } else {
                 $nextBreak = $tokens[$nextCase]['scope_closer'];
             }
-
-            // Check that all content within each CASE is indented correctly.
-            $nextSpace = $nextCase;
-            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), $nextBreak)) !== false) {
-                if (strpos($tokens[$nextSpace]['content'], $phpcsFile->eolChar) === false) {
-                    continue;
-                }
-
-                // Whitespace has a new line. We need to check that it does not
-                // precede a CASE or a BREAK, and then we can check indentation.
-                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextSpace + 1), null, true);
-                if ($tokens[$nextContent]['code'] === T_BREAK) {
-                    continue;
-                }
-
-                if ($tokens[$nextContent]['code'] === T_CASE) {
-                    // This will be handled by the next CASE statement.
-                    break;
-                }
-
-                if ($tokens[$nextContent]['code'] === T_DEFAULT) {
-                    // This will be handled by the next CASE statement.
-                    break;
-                }
-
-                if ($tokens[$nextContent]['code'] === T_CLOSE_CURLY_BRACKET) {
-                    // This will be handled by the closing brace check.
-                    break;
-                }
-
-                // If the space is an empty line, we don't need to check it.
-                if ($tokens[$nextContent]['line'] !== ($tokens[$nextSpace]['line'] + 1)) {
-                    continue;
-                }
-
-                // This is on the same line, and not a CASE or a BREAK, so
-                // it needs to be indented at least 4 spaces after the CASE.
-                $requiredIndent = ($tokens[$nextCase]['column'] + 4);
-                if ($tokens[$nextContent]['column'] < $requiredIndent) {
-                    $error = 'Line not indented correctly; expected at least '.($requiredIndent - 1).' spaces, found '.($tokens[$nextContent]['column'] - 1);
-                    $phpcsFile->addError($error, $nextContent);
-                }
-            }//end while
         }//end while
 
         $default = $phpcsFile->findNext(array(T_DEFAULT), $switch['scope_opener'], $switch['scope_closer']);
@@ -145,40 +102,6 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             } else {
                 $nextBreak = $tokens[$default]['scope_closer'];
             }
-
-            // Check that all content within the DEFAULT case is indented correctly.
-            $nextSpace = $default;
-            while (($nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), $nextBreak)) !== false) {
-                if (strpos($tokens[$nextSpace]['content'], $phpcsFile->eolChar) === false) {
-                    continue;
-                }
-
-                // Whitespace has a new line. We need to check that it does not
-                // precede a BREAK, and then we can check indentation.
-                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextSpace + 1), null, true);
-                if ($tokens[$nextContent]['code'] === T_BREAK) {
-                    continue;
-                }
-
-                // If we have reached the closer and not found a BREAK
-                // we are finished.
-                if ($nextContent === $nextBreak) {
-                    break;
-                }
-
-                // If the space is an empty line, we don't need to check it.
-                if ($tokens[$nextContent]['line'] !== ($tokens[$nextSpace]['line'] + 1)) {
-                    continue;
-                }
-
-                // This is on the same line, and not a BREAK, so
-                // it needs to be indented at least 4 spaces after the DEFAULT.
-                $requiredIndent = ($tokens[$default]['column'] + 4);
-                if ($tokens[$nextContent]['column'] < $requiredIndent) {
-                    $error = 'Line not indented correctly; expected at least '.$requiredIndent.' spaces, found '.$tokens[$nextContent]['column'];
-                    $phpcsFile->addError($error, $nextContent);
-                }
-            }//end while
         }//end if
 
         if ($tokens[$switch['scope_closer']]['column'] !== $switch['column']) {

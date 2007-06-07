@@ -44,25 +44,18 @@ class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                24  => 1,
-                25  => 1,
-                29  => 1,
-                31  => 1,
-                42  => 1,
-                46  => 1,
-                49  => 1,
-                50  => 1,
-                53  => 1,
-                56  => 1,
-                64  => 1,
-                68  => 1,
-                70  => 1,
-                71  => 1,
-                93  => 1,
-                95  => 1,
-                99  => 1,
-                100 => 1,
-                102 => 1,
+                24 => 1,
+                25 => 1,
+                29 => 1,
+                31 => 1,
+                42 => 1,
+                46 => 1,
+                49 => 1,
+                50 => 1,
+                53 => 1,
+                56 => 1,
+                78 => 1,
+                87 => 1,
                );
 
     }//end getErrorList()
