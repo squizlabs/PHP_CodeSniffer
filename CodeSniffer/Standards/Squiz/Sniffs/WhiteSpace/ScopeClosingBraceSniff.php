@@ -77,8 +77,8 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
             }
         }
 
-        // We found a new line, now go forward and find the first non-whitespace
-        // token.
+        // We found a new line, now go forward and find the
+        // first non-whitespace token.
         $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), ($lineStart + 1), null, true);
 
         $startColumn = $tokens[$lineStart]['column'];
@@ -95,8 +95,7 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
 
         // Check now that the closing brace is lined up correctly.
         $braceIndent   = $tokens[$scopeEnd]['column'];
-        $isBreakCloser = ($tokens[$scopeEnd]['code'] === T_BREAK);
-        if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === false || $isBreakCloser === false) {
+        if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === false) {
             if ($braceIndent !== $startColumn) {
                 $error = 'Closing brace indented incorrectly; expected '.($startColumn - 1).' spaces, found '.($braceIndent - 1);
                 $phpcsFile->addError($error, $scopeEnd);

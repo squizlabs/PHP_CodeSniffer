@@ -45,4 +45,12 @@ foreach ($elements as $element) {
     }
 }
 
+switch ($blah) {
+    case 'one':
+        echo 'one';
+    break;
+    default:
+        echo 'another';
+}
+
 ?>
