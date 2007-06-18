@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR standard now only throws one error per file for incorrect line endings (eg. /r/n)
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
+  - Added Squiz EvalSniff to discourage the use of eval()
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
   - Fixed bug #11120 : Uninitialized string offset in AbstractParser.php on line 200
@@ -576,6 +577,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EmbeddedPhpSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EvalSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ForbiddenFunctionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -811,6 +815,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EvalUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EvalUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ForbiddenFunctionsUnitTest.inc" role="test" />
