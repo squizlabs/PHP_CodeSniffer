@@ -35,11 +35,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
+    <dir name="PHP">
+     <file baseinstalldir="PHP/CodeSniffer/Standards/MySource" name="EvalObjectFactorySniff.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
    </dir>
    <dir name="Tests">
     <dir name="Channels">
      <file baseinstalldir="PHP/CodeSniffer/Standards/MySource" name="IncludeSystemUnitTest.inc" role="test" />
      <file baseinstalldir="PHP/CodeSniffer/Standards/MySource" name="IncludeSystemUnitTest.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <dir name="PHP">
+     <file baseinstalldir="PHP/CodeSniffer/Standards/MySource" name="EvalObjectFactoryUnitTest.inc" role="test" />
+     <file baseinstalldir="PHP/CodeSniffer/Standards/MySource" name="EvalObjectFactoryUnitTest.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
@@ -68,6 +79,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <filelist>
    <install as="../PHP_CodeSniffer/CodeSniffer/Standards/MySource/Tests/Channels/IncludeSystemUnitTest.php" name="Tests/Channels/IncludeSystemUnitTest.php" />
    <install as="../PHP_CodeSniffer/CodeSniffer/Standards/MySource/Tests/Channels/IncludeSystemUnitTest.inc" name="Tests/Channels/IncludeSystemUnitTest.inc" />
+   <install as="../PHP_CodeSniffer/CodeSniffer/Standards/MySource/Tests/PHP/EvalObjectFactoryUnitTest.php" name="Tests/PHP/EvalObjectFactoryUnitTest.php" />
+   <install as="../PHP_CodeSniffer/CodeSniffer/Standards/MySource/Tests/PHP/EvalObjectFactoryUnitTest.inc" name="Tests/PHP/EvalObjectFactoryUnitTest.inc" />
   </filelist>
  </phprelease>
  <changelog>
