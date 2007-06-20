@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Private methods in commenting sniffs and comment parser are now protected (feature request #11087)
   - Added Generic LineEndingsSniff to check the EOL character of a file
   - PEAR standard now only throws one error per file for incorrect line endings (eg. /r/n)
+  - Squiz ControlStructureSpacingSniff no longer throws errors if the control structure is at the end of the script
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()

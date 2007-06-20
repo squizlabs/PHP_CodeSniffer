@@ -93,9 +93,13 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         }
 
         if ($tokens[$trailingContent]['code'] !== T_CLOSE_CURLY_BRACKET) {
-            if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-                $error = 'No blank line found after control structure';
-                $phpcsFile->addError($error, $scopeCloser);
+            // Not another control structure's closing brace.
+            if ($tokens[$trailingContent]['code'] !== T_CLOSE_TAG) {
+                // Not at the end of the script or embedded code.
+                if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
+                    $error = 'No blank line found after control structure';
+                    $phpcsFile->addError($error, $scopeCloser);
+                }
             }
         }
 

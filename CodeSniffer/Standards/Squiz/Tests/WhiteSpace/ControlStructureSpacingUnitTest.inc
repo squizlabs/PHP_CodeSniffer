@@ -27,3 +27,18 @@ if ($one) {
 } elseif ($four) {
 }
 ?>
+<table>
+    <tr>
+        <td align="center" valign="center">
+        <?php
+        foreach ($this->children as $child) {
+            // There should be no error after this
+            // foreach, because it is followed by a
+            // close PHP tag.
+        }
+        ?>
+        </td>
+    </tr>
+</table>
+<?php
+?>
