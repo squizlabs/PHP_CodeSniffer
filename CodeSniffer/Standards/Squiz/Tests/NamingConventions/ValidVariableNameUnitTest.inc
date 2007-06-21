@@ -71,4 +71,9 @@ echo $_SESSION['var_name'];
 echo $_FILES['var_name'];
 echo $_ENV['var_name'];
 echo $_COOKIE['var_name'];
+
+$XML       = 'hello';
+$myXML     = 'hello';
+$XMLParser = 'hello';
+$xmlParser = 'hello';
 ?>

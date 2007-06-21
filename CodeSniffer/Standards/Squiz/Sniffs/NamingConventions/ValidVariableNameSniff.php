@@ -92,7 +92,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     $objVarName = substr($objVarName, 1);
                 }
 
-                if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true) === false) {
+                if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true, false) === false) {
                     $error = "Variable \"$originalVarName\" is not in valid camel caps format";
                     $phpcsFile->addError($error, $var);
                 }
@@ -118,7 +118,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             }
         }
 
-        if (PHP_CodeSniffer::isCamelCaps($varName, false, true) === false) {
+        if (PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false) {
             $error = "Variable \"$originalVarName\" is not in valid camel caps format";
             $phpcsFile->addError($error, $stackPtr);
         }

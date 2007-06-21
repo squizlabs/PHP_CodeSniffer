@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR standard now only throws one error per file for incorrect line endings (eg. /r/n)
   - Squiz ControlStructureSpacingSniff no longer throws errors if the control structure is at the end of the script
   - Squiz FunctionCommentSniff now throws error for "return void" if function has return statement
+  - Squiz ValidVariableNameSniff now allows multiple uppercase letters in a row
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
