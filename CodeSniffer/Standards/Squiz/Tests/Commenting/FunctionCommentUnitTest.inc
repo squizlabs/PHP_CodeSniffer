@@ -44,7 +44,7 @@ class PHP_CodeSniffer_File
      */
     public function extraDescriptionNewlines()
     {
-
+        return true;
     }//end extraDescriptionNewlines()
 
 

@@ -417,6 +417,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $error = "Function return type \"$content\" is invalid";
                         $this->currentFile->addError($error, $errorPos);
                     }
+
+                    // If the return type is void, make sure there is
+                    // no return statement in the function.
+                    if ($content === 'void') {
+                        $tokens   = $this->currentFile->getTokens();
+                        $endToken = $tokens[$this->_functionToken]['scope_closer'];
+                        $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
+                        if ($return !== false) {
+                            $error = 'Function return type is void, but function contains return statement';
+                            $this->currentFile->addError($error, $errorPos);
+                        }
+                    }
+
                 }
             } else {
                 $error = 'Missing @return tag in function comment';
