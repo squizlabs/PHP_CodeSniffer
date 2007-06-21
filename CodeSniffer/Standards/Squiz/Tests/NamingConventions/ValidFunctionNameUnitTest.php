@@ -54,6 +54,7 @@ class Squiz_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSn
                 12 => 1,
                 13 => 1,
                 14 => 1,
+                16 => 1,
                );
 
     }//end getErrorList()

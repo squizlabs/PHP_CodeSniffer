@@ -13,4 +13,7 @@ function __destruct() {}
 function __myFunction() {}
 function __my_function() {}
 
+function XMLParser() {}
+function xmlParser() {}
+
 ?>
