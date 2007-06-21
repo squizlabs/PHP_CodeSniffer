@@ -1720,7 +1720,7 @@ class PHP_CodeSniffer_File
      *                           will not be cheked. IE. checking will stop
      *                           at the next semi-colon found.
      *
-     * @return int
+     * @return int | bool
      * @see findNext()
      */
     public function findPrevious($types, $start, $end=null, $exclude=false, $value=null, $local=false)
@@ -1790,7 +1790,7 @@ class PHP_CodeSniffer_File
      *                           will not be cheked. IE. checking will stop
      *                           at the next semi-colon found.
      *
-     * @return int
+     * @return int | bool
      * @see findPrevious()
      */
     public function findNext($types, $start, $end=null, $exclude=false, $value=null, $local=false)
