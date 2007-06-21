@@ -425,8 +425,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $endToken = $tokens[$this->_functionToken]['scope_closer'];
                         $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
                         if ($return !== false) {
-                            $error = 'Function return type is void, but function contains return statement';
-                            $this->currentFile->addError($error, $errorPos);
+                            // If the function is not returning anything, just
+                            // exiting, then there is no problem.
+                            $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
+                            if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
+                                $error = 'Function return type is void, but function contains return statement';
+                                $this->currentFile->addError($error, $errorPos);
+                            }
                         }
                     }
 

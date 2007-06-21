@@ -54,7 +54,7 @@ class PHP_CodeSniffer_File
      */
     public function missingNewlinesBeforeTags()
     {
-
+        return;
     }//end missingNewlinesBeforeTags()
 
 
