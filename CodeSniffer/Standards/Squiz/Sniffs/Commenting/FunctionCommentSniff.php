@@ -422,20 +422,21 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     // no return statement in the function.
                     if ($content === 'void') {
                         $tokens   = $this->currentFile->getTokens();
-                        $endToken = $tokens[$this->_functionToken]['scope_closer'];
-                        $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
-                        if ($return !== false) {
-                            // If the function is not returning anything, just
-                            // exiting, then there is no problem.
-                            $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
-                            if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
-                                $error = 'Function return type is void, but function contains return statement';
-                                $this->currentFile->addError($error, $errorPos);
+                        if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
+                            $endToken = $tokens[$this->_functionToken]['scope_closer'];
+                            $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
+                            if ($return !== false) {
+                                // If the function is not returning anything, just
+                                // exiting, then there is no problem.
+                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
+                                if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
+                                    $error = 'Function return type is void, but function contains return statement';
+                                    $this->currentFile->addError($error, $errorPos);
+                                }
                             }
                         }
                     }
-
-                }
+                }//end if
             } else {
                 $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd);
