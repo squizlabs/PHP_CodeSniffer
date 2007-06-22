@@ -626,7 +626,12 @@ class PHP_CodeSniffer_File
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numTokens = count($this->_tokens);
-            $numLines  = $this->_tokens[($numTokens - 1)]['line'];
+            if ($numTokens === 0) {
+                $numLines = 0;
+            } else {
+                $numLines  = $this->_tokens[($numTokens - 1)]['line'];
+            }
+
             echo "[$numTokens tokens in $numLines lines]... ";
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;

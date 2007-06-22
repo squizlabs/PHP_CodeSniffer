@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
+  - Errors no longer thrown when checking 0 length files with verbosity on
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
   - Fixed bug #11120 : Uninitialized string offset in AbstractParser.php on line 200
