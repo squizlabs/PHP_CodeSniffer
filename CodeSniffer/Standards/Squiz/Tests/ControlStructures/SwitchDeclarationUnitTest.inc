@@ -38,7 +38,7 @@ break;
 switch ($something) {
     case '1':
         $case = '1';
-    Break;
+    break;
     }
 
 // PEAR style.
