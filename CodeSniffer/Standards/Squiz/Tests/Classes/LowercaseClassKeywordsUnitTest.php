@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ClassDeclaration sniff.
+ * Unit test class for the LowercaseClassKeywords sniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Unit test class for the ClassDeclaration sniff.
+ * Unit test class for the LowercaseClassKeywords sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
+class Squiz_Tests_Classes_LowercaseClassKeywordsUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -44,28 +44,10 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                10 => 1,
-                15 => 2,
-                22 => 4,
-                23 => 4,
-                24 => 4,
-                27 => 2,
-                28 => 1,
-                30 => 1,
-                34 => 1,
-                35 => 1,
-                39 => 1,
-                42 => 1,
-                45 => 1,
-                48 => 1,
-                50 => 2,
-                55 => 1,
-                59 => 4,
-                63 => 1,
-                65 => 1,
-                69 => 2,
-                74 => 2,
-                80 => 1,
+                2 => 3,
+                3 => 3,
+                4 => 1,
+                8 => 1,
                );
 
     }//end getErrorList()

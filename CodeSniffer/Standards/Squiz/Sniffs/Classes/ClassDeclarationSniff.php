@@ -63,18 +63,6 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         /*
-            Check that the case is correct.
-        */
-
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
-            $type     = ucfirst($content);
-            $expected = strtolower($content);
-            $error    = "$content keyword must be lowercase; expected \"$expected\" but found \"$content\"";
-            $phpcsFile->addError($error, $stackPtr);
-        }
-
-        /*
             Check that this is the only class or interface in the file.
         */
 

@@ -51,13 +51,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff no longer throws errors if the control structure is at the end of the script
   - Squiz FunctionCommentSniff now throws error for "return void" if function has return statement
   - Squiz ValidVariableNameSniff now allows multiple uppercase letters in a row
-  - Squiz ClassDeclarationSniff now throws errors for CLASS/INTERFACE keyword not being lowercase
   - Squiz ForEachLoopDeclarationSniff now throws error for AS keyword not being lowercase
   - Squiz SwitchDeclarationSniff now throws errors for CASE/DEFAULT/BREAK keywords not being lowercase
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
-  - Added Squiz LowercaseDeclaration to ensure all declaration keywords are lowercase
+  - Added Squiz LowercaseDeclarationSniff to ensure all declaration keywords are lowercase
+  - Added Squiz LowercaseClassKeywordsSniff to ensure all class declaration keywords are lowercase
   - Errors no longer thrown when checking 0 length files with verbosity on
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
@@ -455,6 +455,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ClassFileNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowercaseClassKeywordsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="SelfMemberReferenceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -670,6 +673,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ClassFileNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClassFileNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowercaseClassKeywordsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowercaseClassKeywordsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SelfMemberReferenceUnitTest.inc" role="test" />

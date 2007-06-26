@@ -2,7 +2,7 @@
 
 
 
-Class ClassDeclaration
+class ClassDeclaration
 {
 
 }
@@ -82,7 +82,7 @@ class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorre
 
 }//end class
 
-Interface MyInterface
+interface MyInterface
 {
 
 }
