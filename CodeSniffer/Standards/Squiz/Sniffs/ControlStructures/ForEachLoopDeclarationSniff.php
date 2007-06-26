@@ -79,7 +79,13 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             $errors[] = 'Space found before closing bracket of FOREACH loop';
         }
 
-        $asToken     = $phpcsFile->findNext(T_AS, $openingBracket);
+        $asToken = $phpcsFile->findNext(T_AS, $openingBracket);
+        $content = $tokens[$asToken]['content'];
+        if ($content !== strtolower($content)) {
+            $expected = strtolower($content);
+            $errors[] = "AS keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+        }
+
         $doubleArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $openingBracket, $closingBracket);
 
         if ($doubleArrow !== false) {

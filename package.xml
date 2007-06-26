@@ -51,10 +51,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff no longer throws errors if the control structure is at the end of the script
   - Squiz FunctionCommentSniff now throws error for "return void" if function has return statement
   - Squiz ValidVariableNameSniff now allows multiple uppercase letters in a row
-  - Squiz ClassDeclarationSniff now throws error for class/interface keyword not being lowercase
-  - Squiz ForEachLoopDeclarationSniff now throws error for FOREACH keyword not being lowercase
+  - Squiz ClassDeclarationSniff now throws errors for CLASS/INTERFACE keyword not being lowercase
+  - Squiz ForEachLoopDeclarationSniff now throws errors for FOREACH/AS keywords not being lowercase
   - Squiz ForLoopDeclarationSniff now throws error for FOR keyword not being lowercase
-  - Squiz SwitchDeclarationSniff now throws errors for switch/case/default/break keywords not being lowercase
+  - Squiz SwitchDeclarationSniff now throws errors for SWITCH/CASE/DEFAULT/BREAK keywords not being lowercase
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
