@@ -1,8 +1,8 @@
 <?php
 
 
-//  Correct declarations.
-class CorrectClassDeclaration
+
+Class ClassDeclaration
 {
 
 }
@@ -81,4 +81,9 @@ class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorre
 {
 
 }//end class
+
+Interface MyInterface
+{
+
+}
 ?>

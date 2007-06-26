@@ -63,19 +63,31 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         /*
-            First, check that this is the only class or interface in the file.
+            Check that the case is correct.
+        */
+
+        $content = $tokens[$stackPtr]['content'];
+        if ($content !== strtolower($content)) {
+            $type     = ucfirst($content);
+            $expected = strtolower($content);
+            $error    = "$content keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+            $phpcsFile->addError($error, $stackPtr);
+        }
+
+        /*
+            Check that this is the only class or interface in the file.
         */
 
         $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), ($stackPtr + 1));
 
         if ($nextClass !== false) {
             // We have another, so an error is thrown.
-            $error = 'Only one interface or class is allowed in a file.';
+            $error = 'Only one interface or class is allowed in a file';
             $phpcsFile->addError($error, $nextClass);
         }
 
         /*
-            Checks the opening brace is straight after the declaration.
+            Check that the opening brace is straight after the declaration.
         */
 
         $curlyBrace = $tokens[$stackPtr]['scope_opener'];
@@ -84,7 +96,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
         if ($braceLine === $classLine) {
             $error  = 'Opening brace of a ';
             $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be on the line after the definition.';
+            $error .= ' must be on the line after the definition';
             $phpcsFile->addError($error, $stackPtr);
         } else if ($braceLine > ($classLine + 1)) {
             $difference  = ($braceLine - $classLine - 1);
