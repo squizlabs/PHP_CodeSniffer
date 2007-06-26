@@ -55,7 +55,6 @@ class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSn
                 50 => 1,
                 53 => 1,
                 56 => 1,
-                75 => 1,
                 76 => 1,
                 78 => 1,
                 83 => 1,

@@ -72,7 +72,7 @@ switch ($something) {
 }
 
 // Invalid, and missing BREAKS.
-Switch ($something) {
+switch ($something) {
     Case '1':
         $case = '1';
 case '2':

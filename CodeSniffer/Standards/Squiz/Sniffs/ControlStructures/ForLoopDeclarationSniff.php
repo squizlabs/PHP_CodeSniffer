@@ -62,12 +62,6 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
         $tokens = $phpcsFile->getTokens();
         $errors = array();
 
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
-            $expected = strtolower($content);
-            $errors[] = "FOR keyword must be lowercase; expected \"$expected\" but found \"$content\"";
-        }
-
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 

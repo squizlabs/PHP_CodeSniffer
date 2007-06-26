@@ -44,11 +44,11 @@ class Squiz_Tests_ControlStructures_ForEachLoopDeclarationUnitTest extends Abstr
     public function getErrorList()
     {
         return array(
-                8  => 3,
+                8  => 2,
                 11 => 2,
                 14 => 2,
                 17 => 5,
-                21 => 8,
+                21 => 7,
                );
 
     }//end getErrorList()

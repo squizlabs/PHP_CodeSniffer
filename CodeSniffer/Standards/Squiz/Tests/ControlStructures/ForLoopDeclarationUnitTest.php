@@ -44,11 +44,11 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
     public function getErrorList()
     {
         return array(
-                8  => 3,
+                8  => 2,
                 11 => 2,
                 14 => 2,
                 17 => 2,
-                21 => 7,
+                21 => 6,
                );
 
     }//end getErrorList()

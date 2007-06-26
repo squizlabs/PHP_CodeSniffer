@@ -60,13 +60,6 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
-            $expected = strtolower($content);
-            $error    = "SWITCH keyword must be lowercase; expected \"$expected\" but found \"$content\"";
-            $phpcsFile->addError($error, $stackPtr);
-        }
-
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + 4);
