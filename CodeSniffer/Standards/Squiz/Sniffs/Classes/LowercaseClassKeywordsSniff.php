@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_ControlStructures_LowercaseClassKeywordsSniff.
+ * Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@
 require_once 'PHP/CodeSniffer/Sniff.php';
 
 /**
- * Squiz_Sniffs_ControlStructures_LowercaseClassKeywordsSniff.
+ * Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff.
  *
  * Ensures all class keywords are lowercase.
  *
