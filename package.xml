@@ -59,6 +59,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz LowercaseDeclarationSniff to ensure all declaration keywords are lowercase
   - Added Squiz LowercaseClassKeywordsSniff to ensure all class declaration keywords are lowercase
   - Added Squiz LowercaseFunctionKeywordsSniff to ensure all function declaration keywords are lowercase
+  - Added Squiz LowercasePHPFunctionsSniff to ensure all calls to inbuilt PHP functions are lowercase
   - Errors no longer thrown when checking 0 length files with verbosity on
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
@@ -610,6 +611,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="InnerFunctionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowercasePHPFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="NonExecutableCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -865,6 +869,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="InnerFunctionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowercasePHPFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowercasePHPFunctionsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="NonExecutableCodeUnitTest.inc" role="test" />
