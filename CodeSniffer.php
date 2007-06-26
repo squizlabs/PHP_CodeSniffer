@@ -768,7 +768,7 @@ class PHP_CodeSniffer
             $newToken['type'] = 'T_TRUE';
             break;
         case 'null':
-            $newToken['type'] = 'T_FALSE';
+            $newToken['type'] = 'T_NULL';
             break;
         case 'self':
             $newToken['type'] = 'T_SELF';
