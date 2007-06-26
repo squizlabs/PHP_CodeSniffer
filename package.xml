@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
+  - Added Squiz LowercaseDeclaration to ensure all declaration keywords are lowercase
   - Errors no longer thrown when checking 0 length files with verbosity on
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
@@ -519,6 +520,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="InlineIfDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowercaseDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="SwitchDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -751,6 +755,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="InlineIfDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="InlineIfDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowercaseDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowercaseDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc" role="test" />
