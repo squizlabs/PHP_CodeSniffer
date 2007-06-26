@@ -38,7 +38,7 @@ break;
 switch ($something) {
     case '1':
         $case = '1';
-    break;
+    Break;
     }
 
 // PEAR style.
@@ -72,15 +72,15 @@ switch ($something) {
 }
 
 // Invalid, and missing BREAKS.
-switch ($something) {
-    case '1':
+Switch ($something) {
+    Case '1':
         $case = '1';
 case '2':
     case '3':
         $case = '5';
     case '4':
         $case = '4';
-    default:
+    Default:
         $case = null;
         $something = 'hello';
         $other = 'hi';

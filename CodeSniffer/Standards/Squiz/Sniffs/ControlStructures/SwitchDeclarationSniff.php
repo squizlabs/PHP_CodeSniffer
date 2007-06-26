@@ -60,11 +60,25 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
     {
         $tokens = $phpcsFile->getTokens();
 
+        $content = $tokens[$stackPtr]['content'];
+        if ($content !== strtolower($content)) {
+            $expected = strtolower($content);
+            $error    = "SWITCH keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+            $phpcsFile->addError($error, $stackPtr);
+        }
+
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + 4);
 
         while (($nextCase = $phpcsFile->findNext(array(T_CASE), ($nextCase + 1), $switch['scope_closer'])) !== false) {
+            $content = $tokens[$nextCase]['content'];
+            if ($content !== strtolower($content)) {
+                $expected = strtolower($content);
+                $error    = "CASE keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                $phpcsFile->addError($error, $nextCase);
+            }
+
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
                 $error = 'CASE keyword must be indented 4 spaces from SWITCH keyword';
                 $phpcsFile->addError($error, $nextCase);
@@ -75,6 +89,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 // Only check this BREAK statement if it matches the current CASE
                 // statement. This stops the same break (used for multiple CASEs) being
                 // checked more than once.
+                $content = $tokens[$nextBreak]['content'];
+                if ($content !== strtolower($content)) {
+                    $expected = strtolower($content);
+                    $error    = "BREAK keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                    $phpcsFile->addError($error, $nextBreak);
+                }
+
                 if ($tokens[$nextBreak]['scope_condition'] === $nextCase) {
                     if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
                         $error = 'BREAK statement must be indented 4 spaces from SWITCH keyword';
@@ -88,6 +109,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
         $default = $phpcsFile->findNext(array(T_DEFAULT), $switch['scope_opener'], $switch['scope_closer']);
         if ($default !== false) {
+            $content = $tokens[$default]['content'];
+            if ($content !== strtolower($content)) {
+                $expected = strtolower($content);
+                $error    = "DEFAULT keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                $phpcsFile->addError($error, $default);
+            }
+
             if ($tokens[$default]['column'] !== $caseAlignment) {
                 $error = 'DEFAULT keyword must be indented 4 spaces from SWITCH keyword';
                 $phpcsFile->addError($error, $default);
@@ -95,6 +123,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
             $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($default + 1), $switch['scope_closer']);
             if ($nextBreak !== false) {
+                $content = $tokens[$nextBreak]['content'];
+                if ($content !== strtolower($content)) {
+                    $expected = strtolower($content);
+                    $error    = "BREAK keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                    $phpcsFile->addError($error, $nextBreak);
+                }
+
                 if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
                     $error = 'BREAK statement must be indented 4 spaces from SWITCH keyword';
                     $phpcsFile->addError($error, $nextBreak);
