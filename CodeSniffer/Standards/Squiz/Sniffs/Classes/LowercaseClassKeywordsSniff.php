@@ -49,6 +49,7 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
                 T_ABSTRACT,
                 T_FINAL,
                 T_VAR,
+                T_CONST,
                );
 
     }//end register()

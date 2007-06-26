@@ -48,6 +48,7 @@ class Squiz_Tests_Classes_LowercaseClassKeywordsUnitTest extends AbstractSniffUn
                 3 => 3,
                 4 => 1,
                 8 => 1,
+                9 => 1,
                );
 
     }//end getErrorList()
