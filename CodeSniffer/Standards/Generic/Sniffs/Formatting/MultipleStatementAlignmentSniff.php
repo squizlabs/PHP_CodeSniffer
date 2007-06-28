@@ -69,13 +69,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($stackPtr - 1));
-        if ($assignedVariable === false) {
+        // Make sure this is an assignment.
+        $variable = $phpcsFile->findFirstOnLine(array(T_VARIABLE, T_CONST, T_LIST), $stackPtr);
+        if ($variable === false) {
             return;
         }
 
-        if ($tokens[$assignedVariable]['code'] === T_VARIABLE) {
-            if ($this->_isAssignment($phpcsFile, $assignedVariable) === false) {
+        if ($tokens[$variable]['code'] === T_VARIABLE) {
+            if ($this->_isAssignment($phpcsFile, $variable) === false) {
                 return;
             }
         }
@@ -86,9 +87,25 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             so we need to determine if there are more to follow.
         */
 
-        if (($nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1))) !== false) {
+        $nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1));
+        if ($nextAssign !== false) {
+            $isAssign = true;
             if ($tokens[$nextAssign]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
-                return;
+                // Assignment may be in the same block as this one. Just make sure
+                // it is not used in a condition, like an IF or FOR.
+                if (isset($tokens[$nextAssign]['nested_parenthesis']) === true) {
+                    foreach ($tokens[$nextAssign]['nested_parenthesis'] as $start => $end) {
+                        if (isset($tokens[$start]['parenthesis_owner']) === true) {
+                            // Not an assignment.
+                            $isAssign = false;
+                            break;
+                        }
+                    }
+                }
+
+                if ($isAssign === true) {
+                    return;
+                }
             }
         }
 
@@ -107,21 +124,21 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 break;
             }
 
-            // Make sure the assignment is assgning to a variable.
-            $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($prevAssignment - 1));
-            if ($checkingVariable === false) {
+            // Find the first token a value can be assigned to on the line.
+            $variable = $phpcsFile->findFirstOnLine(array(T_VARIABLE, T_CONST, T_LIST), $prevAssignment);
+            if ($variable === false) {
                 break;
             }
 
             // The variable must be on the same line as the assignment
             // token to be a variable assignment.
-            if ($tokens[$checkingVariable]['line'] !== $tokens[$prevAssignment]['line']) {
+            if ($tokens[$variable]['line'] !== $tokens[$prevAssignment]['line']) {
                 break;
             }
 
             // Make sure it is actually assigning a value.
-            if ($tokens[$checkingVariable]['code'] === T_VARIABLE) {
-                if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
+            if ($tokens[$variable]['code'] === T_VARIABLE) {
+                if ($this->_isAssignment($phpcsFile, $variable) === false) {
                     break;
                 }
             }
@@ -141,7 +158,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         $assignmentData = array();
         foreach ($assignments as $assignment) {
-            $variable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), $assignment);
+            $variable = $phpcsFile->findFirstOnLine(array(T_VARIABLE, T_CONST, T_LIST), $assignment);
             if ($tokens[$variable]['code'] === T_VARIABLE) {
                 // Check that this variable is having a value assigned to it.
                 // We don't check constants because they are not ambiguous.

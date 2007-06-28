@@ -118,4 +118,18 @@ for ($i = 0; $i < 10; $i += 2) {
     $i = ($i - 1);
 }
 
+// Invalid
+foreach ($files as $file) {
+    $saves[$file] = array();
+    $contents = stripslashes(file_get_contents($file));
+    list($assetid, $time, $content) = explode("\n", $contents);
+    $saves[$file]['assetid'] = $assetid;
+}
+
+$i = ($i - 10);
+$ip = ($i - 10);
+for ($i = 0; $i < 10; $i += 2) {
+    $i = ($i - 10);
+}
+
 ?>
