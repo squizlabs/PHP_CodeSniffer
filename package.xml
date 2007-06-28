@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ValidVariableNameSniff now allows multiple uppercase letters in a row
   - Squiz ForEachLoopDeclarationSniff now throws error for AS keyword not being lowercase
   - Squiz SwitchDeclarationSniff now throws errors for CASE/DEFAULT/BREAK keywords not being lowercase
+  - Squiz ArrayDeclarationSniff now handles multi-token array values when checking alignment
   - Generic MultipleStatementAlignmentSniff no longer gets confused by assignments inside FOR conditions
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly

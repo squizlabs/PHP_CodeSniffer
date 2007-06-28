@@ -216,8 +216,20 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->addError($error, $nextToken);
                     }
 
-                    // Find the value.
-                    $valueContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($nextToken - 1), $arrayStart, true);
+                    // Find the value, which will be the first token on the line,
+                    // excluding the leading whitespace.
+                    $valueContent = ($nextToken - 1);
+                    while ($tokens[$valueContent]['line'] === $tokens[$nextToken]['line']) {
+                        if ($valueContent === $arrayStart) {
+                            // Value must have been on the same line as the array
+                            // parenthesis, so we have reached the start of the value.
+                            break;
+                        }
+
+                        $valueContent--;
+                    }
+
+                    $valueContent = $phpcsFile->findNext(T_WHITESPACE, ($valueContent + 1), $nextToken, true);
                     $indices[]    = array(
                                      'value' => $valueContent,
                                     );
@@ -268,15 +280,16 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $count     = count($indices);
             $lastIndex = $indices[($count - 1)]['value'];
 
-            $trailingContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMA), ($lastIndex + 1), $arrayEnd, true);
-            if ($trailingContent !== false) {
-                $indices[] = array('value' => $trailingContent);
+            $trailingContent = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), $lastIndex, true);
+            if ($tokens[$trailingContent]['code'] !== T_COMMA) {
                 $error     = 'Comma required after last value in array declaration';
                 $phpcsFile->addError($error, $trailingContent);
             }
 
             foreach ($indices as $value) {
                 if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
+                   // A whitespace token before this value means that the value
+                   // was indented and not flush with the opening parenthesis.
                     if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
                         $error = 'Array value not aligned correctly; expected '.($keywordStart + 1).' spaces but found '.$tokens[$value['value']]['column'];
                         $phpcsFile->addError($error, $value['value']);

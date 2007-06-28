@@ -125,4 +125,10 @@ $expected = array(
               '1' => 2
              )
             );
+
+// Space in second arg.
+$args = array(
+         '"'.$this->id.'"',
+         (int) $hasSessions,
+        );
 ?>
