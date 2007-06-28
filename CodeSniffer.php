@@ -169,11 +169,15 @@ class PHP_CodeSniffer
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Registering sniffs... ';
+            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                echo PHP_EOL;
+            }
         }
 
         $this->_registerTokenListeners($standard, $sniffs);
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'DONE'.PHP_EOL;
+            $numSniffs = count($this->_listeners);
+            echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
         foreach ($files as $file) {
@@ -238,6 +242,10 @@ class PHP_CodeSniffer
             }
 
             $this->_listeners[] = $className;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                echo "\tRegistered $className".PHP_EOL;
+            }
         }//end foreach
 
     }//end _registerTokenListeners()
