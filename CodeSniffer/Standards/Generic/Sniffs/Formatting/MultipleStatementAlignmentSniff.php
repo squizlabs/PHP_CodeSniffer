@@ -101,22 +101,37 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxAssignmentLength = 0;
 
         while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1))) !== false) {
+            // The assignment must be on the line directly above the current one
+            // to be in the same assignment block.
             if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
                 break;
             }
 
+            // Make sure the assignment is assgning to a variable.
             $checkingVariable = $phpcsFile->findPrevious(array(T_VARIABLE, T_CONST), ($prevAssignment - 1));
             if ($checkingVariable === false) {
                 break;
             }
 
+            // The variable must be on the same line as the assignment
+            // token to be a variable assignment.
             if ($tokens[$checkingVariable]['line'] !== $tokens[$prevAssignment]['line']) {
                 break;
             }
 
+            // Make sure it is actually assigning a value.
             if ($tokens[$checkingVariable]['code'] === T_VARIABLE) {
                 if ($this->_isAssignment($phpcsFile, $checkingVariable) === false) {
                     break;
+                }
+            }
+
+            // Make sure it is not assigned inside a condition (eg. IF, FOR).
+            if (isset($tokens[$prevAssignment]['nested_parenthesis']) === true) {
+                foreach ($tokens[$prevAssignment]['nested_parenthesis'] as $start => $end) {
+                    if (isset($tokens[$start]['parenthesis_owner']) === true) {
+                        break(2);
+                    }
                 }
             }
 
