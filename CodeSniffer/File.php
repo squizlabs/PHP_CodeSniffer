@@ -629,7 +629,7 @@ class PHP_CodeSniffer_File
             if ($numTokens === 0) {
                 $numLines = 0;
             } else {
-                $numLines  = $this->_tokens[($numTokens - 1)]['line'];
+                $numLines = $this->_tokens[($numTokens - 1)]['line'];
             }
 
             echo "[$numTokens tokens in $numLines lines]... ";
@@ -854,7 +854,7 @@ class PHP_CodeSniffer_File
     private function _createParenthesisNestingMap()
     {
         $numTokens = count($this->_tokens);
-        $map = array();
+        $map       = array();
         for ($i = 0; $i < $numTokens; $i++) {
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true && $i === $this->_tokens[$i]['parenthesis_opener']) {
                 if (empty($map) === false) {
@@ -1841,6 +1841,66 @@ class PHP_CodeSniffer_File
         return false;
 
     }//end findNext()
+
+
+    /**
+     * Returns the position of the first token on a line, matching given type.
+     *
+     * Returns false if no token can be found.
+     *
+     * @param int|array $types   The type(s) of tokens to search for.
+     * @param int       $start   The position to start searching from in the
+     *                           token stack. The first token matching on
+     *                           this line before this token will be returned.
+     * @param bool      $exclude If true, find the token that is NOT of
+     *                           the types specified in $types.
+     * @param string    $value   The value that the token must be equal to.
+     *                           If value is ommited, tokens with any value will
+     *                           be returned.
+     *
+     * @return int | bool
+     */
+    public function findFirstOnLine($types, $start, $exclude=false, $value=null)
+    {
+        if (is_array($types) === false) {
+            $types = array($types);
+        }
+
+        $foundToken = false;
+
+        for ($i = $start; $i >= 0; $i--) {
+            if ($this->_tokens[$i]['line'] < $this->_tokens[$start]['line']) {
+                break;
+            }
+
+            $found = ($exclude === true) ? true : false;
+            foreach ($types as $type) {
+                if ($exclude === false) {
+                    if ($this->_tokens[$i]['code'] === $type) {
+                        $found = true;
+                        break;
+                    }
+                } else {
+                    if ($this->_tokens[$i]['code'] === $type) {
+                        $found = false;
+                        break;
+                    }
+                }
+            }
+
+            if ($found === true) {
+                if ($value === null) {
+                    $foundToken = $i;
+                } else if ($this->_tokens[$i]['content'] === $value) {
+                    $foundToken = $i;
+                }
+            }
+
+        }//end for
+
+        return $foundToken;
+
+    }//end findFirstOnLine()
 
 
     /**
