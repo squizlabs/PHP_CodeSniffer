@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Command line arg -vvv now shows list of registered sniffs
   - Squiz ControlStructureSpacingSniff no longer throws errors if the control structure is at the end of the script
   - Squiz FunctionCommentSniff now throws error for "return void" if function has return statement
+  - Squiz FunctionCommentSniff now throws error for functions that return void but specify something else
   - Squiz ValidVariableNameSniff now allows multiple uppercase letters in a row
   - Squiz ForEachLoopDeclarationSniff now throws error for AS keyword not being lowercase
   - Squiz SwitchDeclarationSniff now throws errors for CASE/DEFAULT/BREAK keywords not being lowercase

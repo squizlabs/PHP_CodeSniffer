@@ -418,10 +418,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $this->currentFile->addError($error, $errorPos);
                     }
 
+                    $tokens = $this->currentFile->getTokens();
+
                     // If the return type is void, make sure there is
                     // no return statement in the function.
                     if ($content === 'void') {
-                        $tokens   = $this->currentFile->getTokens();
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
                             $endToken = $tokens[$this->_functionToken]['scope_closer'];
                             $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
@@ -432,6 +433,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
                                     $error = 'Function return type is void, but function contains return statement';
                                     $this->currentFile->addError($error, $errorPos);
+                                }
+                            }
+                        }
+                    } else {
+                        // If return type is not void, there needs to be a
+                        // returns tatement somewhere in the function that
+                        // returns something.
+                        if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
+                            $endToken = $tokens[$this->_functionToken]['scope_closer'];
+                            $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
+                            if ($return === false) {
+                                $error = 'Function return type is not void, but function has no return statement';
+                                $this->currentFile->addError($error, $errorPos);
+                            } else {
+                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
+                                if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
+                                    $error = 'Function return type is not void, but function is returning void here';
+                                    $this->currentFile->addError($error, $return);
                                 }
                             }
                         }

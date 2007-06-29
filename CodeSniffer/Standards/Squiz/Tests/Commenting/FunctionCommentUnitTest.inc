@@ -371,7 +371,7 @@ class Another_Class
  * @param string  $var3  Comment3..
  *
  * @since  4.0.0
- * @return boolean
+ * @return void
  */
 public static function paramAlign($varrr1, $vr2, $var3)
 {
@@ -386,10 +386,60 @@ public static function paramAlign($varrr1, $vr2, $var3)
  * @param array $design Comment.
  *
  * @since  4.0.0
- * @return boolean
+ * @return void
  */
 public static function paint($id, array $design)
 {
 
 }//end paint()
+
+
+/**
+ * Adds specified class name to class attribute of this widget.
+ *
+ * @since  4.0.0
+ * @return string
+ */
+public function myFunction()
+{
+    if ($condition === FALSE) {
+        echo 'hi';
+    }
+
+}//end myFunction()
+
+
+/**
+ * Adds specified class name to class attribute of this widget.
+ *
+ * @since  4.0.0
+ * @return string
+ */
+public function myFunction()
+{
+    if ($condition === FALSE) {
+        echo 'hi';
+        return;
+    }
+
+    return 'blah';
+
+}//end myFunction()
+
+
+/**
+ * Adds specified class name to class attribute of this widget.
+ *
+ * @since  4.0.0
+ * @return string
+ */
+public function myFunction()
+{
+    if ($condition === FALSE) {
+        echo 'hi';
+    }
+
+    return 'blah';
+
+}//end myFunction()
 ?>
