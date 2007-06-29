@@ -56,8 +56,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ForEachLoopDeclarationSniff now throws error for AS keyword not being lowercase
   - Squiz SwitchDeclarationSniff now throws errors for CASE/DEFAULT/BREAK keywords not being lowercase
   - Squiz ArrayDeclarationSniff now handles multi-token array values when checking alignment
+  - Squiz standard now enforces a space after cast tokens
   - Generic MultipleStatementAlignmentSniff no longer gets confused by assignments inside FOR conditions
   - Generic MultipleStatementAlignmentSniff no longer gets confused by the use of list()
+  - Added Generic SpaceAfterCastSniff to ensure there is a single space after a cast token
+  - Added Generic NoSpaceAfterCastSniff to ensure there is no whitespace after a cast token
   - Added PEAR ClassDeclarationSniff to ensure the opening brace of a class is on the line after the keyword
   - Added Squiz ScopeClosingBraceSniff to ensure closing braces are aligned correctly
   - Added Squiz EvalSniff to discourage the use of eval()
@@ -191,6 +194,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="NoSpaceAfterCastSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SpaceAfterCastSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanSniff.php" role="php">
@@ -239,6 +248,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NoSpaceAfterCastUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="NoSpaceAfterCastUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SpaceAfterCastUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SpaceAfterCastUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
