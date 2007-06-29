@@ -68,6 +68,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz LowercaseClassKeywordsSniff to ensure all class declaration keywords are lowercase
   - Added Squiz LowercaseFunctionKeywordsSniff to ensure all function declaration keywords are lowercase
   - Added Squiz LowercasePHPFunctionsSniff to ensure all calls to inbuilt PHP functions are lowercase
+  - Added Squiz CastSpacingSniff to ensure cast statements dont contain whitespace
   - Errors no longer thrown when checking 0 length files with verbosity on
   - Fixed bug #11105 : getIncludedSniffs() not working anymore
     - Thanks to Blair Robertson for the patch
@@ -663,6 +664,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="CastSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ControlStructureSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -931,6 +935,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="CastSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CastSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
