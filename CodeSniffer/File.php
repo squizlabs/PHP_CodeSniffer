@@ -1008,14 +1008,40 @@ class PHP_CodeSniffer_File
             }//end if start scope
 
             if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
-                // We found the opening scope token for $currType.
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $type = $this->_tokens[$stackPtr]['type'];
-                    echo str_repeat("\t", $depth);
-                    echo "=> Found scope opener for $stackPtr ($type)".PHP_EOL;
-                }
+                if ($tokenType === T_OPEN_CURLY_BRACKET) {
+                    // Make sure this is actually an opener and not a
+                    // string offset (e.g., $var{0});
+                    for ($x = ($i - 1); $x > 0; $x--) {
+                        if (in_array($this->_tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                            continue;
+                        } else {
+                            // If the first non-whitespace/comment token is a variable
+                            // then this is an opener for a string offset and not
+                            // a scope.
+                            if ($this->_tokens[$x]['code'] === T_VARIABLE) {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo str_repeat("\t", $depth);
+                                    echo '* ignoring curly brace *'.PHP_EOL;
+                                }
 
-                $opener = $i;
+                                $ignore = true;
+                            }//end if
+
+                            break;
+                        }//end if
+                    }//end for
+                }//end if
+
+                if ($ignore === false) {
+                    // We found the opening scope token for $currType.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $this->_tokens[$stackPtr]['type'];
+                        echo str_repeat("\t", $depth);
+                        echo "=> Found scope opener for $stackPtr ($type)".PHP_EOL;
+                    }
+
+                    $opener = $i;
+                }
             } else if ($tokenType === self::$_scopeOpeners[$currType]['end'] && $opener !== null) {
                 if ($ignore === true) {
                     // The last opening bracket must have been for a string
