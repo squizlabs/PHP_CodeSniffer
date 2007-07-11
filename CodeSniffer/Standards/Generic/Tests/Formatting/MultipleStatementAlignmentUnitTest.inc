@@ -132,4 +132,52 @@ for ($i = 0; $i < 10; $i += 2) {
     $i = ($i - 10);
 }
 
+// Valid
+$variable = 12;
+$var      = a_very(long_line('that', 'contains'),
+                   a_bunch('of long', 'parameters'),
+                   'that_need to be aligned with the equal sign');
+$var2     = 12;
+
+// Valid
+$variable = 12;
+$var      = 'a very long line of text that contains '
+            .$someVar
+            .' and some other stuff that is too long to fit on one line';
+$var2     = 12;
+
+// Invalid
+$variable = 12;
+$var      = a_very(long_line('that', 'contains'),
+                   a_bunch('of long', 'parameters'),
+                   'that_need to be aligned with the equal sign');
+$var2 = 12;
+
+// Invalid
+$variable = 12;
+$var      = 'a very long line of text that contains '
+            .$someVar
+            .' and some other stuff that is too long to fit on one line';
+$var2 = 12;
+
+// Valid
+$variable = 12;
+$var     .= 'a very long line of text that contains '
+            .$someVar
+            .' and some other stuff that is too long to fit on one line';
+$var2     = 12;
+
+// Valid
+$variable += 12;
+$var      .= 'a very long line of text that contains '
+            .$someVar
+            .' and some other stuff that is too long to fit on one line';
+$var2      = 12;
+
+// Invalid
+$variable  = 12;
+$var      .= 'a very long line of text that contains '
+            .$someVar
+            .' and some other stuff that is too long to fit on one line';
+$var2      = 12;
 ?>

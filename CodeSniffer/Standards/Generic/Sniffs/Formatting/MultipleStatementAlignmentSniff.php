@@ -98,10 +98,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             so we need to determine if there are more to follow.
         */
 
-        $nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($stackPtr + 1));
+        // The assignment may span over multiple lines, so look for the
+        // end of the assignment so we can check assignment blocks correctly.
+        $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+
+        $nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($lineEnd + 1));
         if ($nextAssign !== false) {
             $isAssign = true;
-            if ($tokens[$nextAssign]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
+            if ($tokens[$nextAssign]['line'] === ($tokens[$lineEnd]['line'] + 1)) {
                 // Assignment may be in the same block as this one. Just make sure
                 // it is not used in a condition, like an IF or FOR.
                 if (isset($tokens[$nextAssign]['nested_parenthesis']) === true) {
@@ -130,9 +134,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1))) !== false) {
 
-            // The assignment must be on the line directly above the current one
-            // to be in the same assignment block.
-            if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
+            // The assignment's end token must be on the line directly
+            // above the current one to be in the same assignment block.
+            $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($prevAssignment + 1));
+
+            if ($tokens[$lineEnd]['line'] !== ($lastLine - 1)) {
                 break;
             }
 
@@ -165,7 +171,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             }
 
             $assignments[] = $prevAssignment;
-            $lastLine--;
+            $lastLine = $tokens[$prevAssignment]['line'];
         }//end while
 
         $assignmentData = array();

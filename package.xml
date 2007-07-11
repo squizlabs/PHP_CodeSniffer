@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-07-10</date>
  <time>13:15:00</time>
  <version>
-  <release>0.7.1</release>
-  <api>0.7.1</api>
+  <release>0.8.0</release>
+  <api>0.8.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Scope map no longer gets confused by curly braces that act as string offsets
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
+  - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
  </notes>
  <contents>
   <dir name="/">
