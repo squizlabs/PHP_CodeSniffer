@@ -43,6 +43,17 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     protected $error = false;
 
+    /**
+     * The maximum amount of padding before the alignment is ignore.
+     *
+     * If the amount of padding required to align this assignment with the
+     * surrounding assignments exceeds this number, the assignment will be
+     * ignored and no errors or warnings will be thrown.
+     *
+     * @var int
+     */
+    protected $maxPadding = 1000;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -118,6 +129,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxAssignmentLength = 0;
 
         while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1))) !== false) {
+
             // The assignment must be on the line directly above the current one
             // to be in the same assignment block.
             if ($tokens[$prevAssignment]['line'] !== ($lastLine - 1)) {
@@ -213,7 +225,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $contentLength   = strlen($variableContent);
 
                 $leadingSpace = $tokens[$variable]['column'];
+
+                // If the expected number of spaces for alignment exceeds the
+                // maxPadding rule, we can ignore this assignment.
                 $expected     = ($actualColumn - ($contentLength + $leadingSpace));
+                if ($expected > $this->maxPadding) {
+                    continue;
+                }
+
                 $expected    .= ($expected === 1) ? ' space' : ' spaces';
                 $found        = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
                 $found       .= ($found === 1) ? ' space' : ' spaces';
@@ -266,6 +285,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $stackPtr++;
                 break;
             }
+        }
+
+        // If we got to the start of the file, we went too far.
+        if ($stackPtr === 0) {
+            $stackPtr++;
         }
 
         $stackPtr = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);

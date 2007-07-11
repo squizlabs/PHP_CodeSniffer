@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Scope map no longer gets confused by curly braces that act as string offsets
+  - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
  </notes>
  <contents>
   <dir name="/">
