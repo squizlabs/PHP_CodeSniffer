@@ -40,7 +40,7 @@ function PHP_CodeSniffer_printUsage()
     echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
     echo '        <generator>  The name of a doc genertor to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
-    echo '        <report>     Print either the "full" or "summary" report'.PHP_EOL;
+    echo '        <report>     Print either the "full", "xml" or "summary" report'.PHP_EOL;
     exit();
 
 }//end PHP_CodeSniffer_printUsage()
@@ -113,7 +113,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 
             if (substr($arg, 0, 9) === '--report=') {
                 $report = substr($arg, 9);
-                if ($report !== 'full' && $report !== 'summary') {
+                if ($report !== 'full' && $report !== 'xml' && $report !== 'summary') {
                     echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
                     exit();
                 }
@@ -220,10 +220,16 @@ if (empty($extensions) === false) {
 }
 
 $phpcs->process($files, $standard, array(), $local);
-if ($report === 'summary') {
+switch ($report) {
+case 'xml':
+    $numErrors = $phpcs->printXMLErrorReport($showWarnings);
+    break;
+case 'summary':
     $numErrors = $phpcs->printErrorReportSummary($showWarnings);
-} else {
+    break;
+default:
     $numErrors = $phpcs->printErrorReport($showWarnings);
+    break;
 }
 
 if ($numErrors === 0) {

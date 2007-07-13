@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added new XML report format; --report=xml (feature request #11535)
+    -- Thanks to Brett Bieber for the patch
   - Scope map no longer gets confused by curly braces that act as string offsets
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)

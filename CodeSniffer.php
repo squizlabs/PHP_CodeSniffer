@@ -465,17 +465,24 @@ class PHP_CodeSniffer
 
 
     /**
-     * Prints all errors and warnings for each file processed.
+     * Pre-process and package errors and warnings for all files.
      *
-     * Errors and warnings are displayed together, grouped by file.
+     * Used by error reports to get a packaged list of all errors and
+     * warnings in each file.
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      *
-     * @return int The number of error and warning messages shown.
+     * @return array
      */
-    public function printErrorReport($showWarnings=true)
+    public function prepareErrorReport($showWarnings=true)
     {
-        $errorsShown = 0;
+        $report = array(
+                   'totals' => array(
+                                'warnings' => 0,
+                                'errors'   => 0,
+                               ),
+                   'files'  => array(),
+                  );
 
         foreach ($this->_files as $file) {
             $warnings    = $file->getWarnings();
@@ -492,6 +499,20 @@ class PHP_CodeSniffer
             if ($numErrors === 0 && $showWarnings === false) {
                 // Prefect score (sort of).
                 continue;
+            }
+
+            $report['files'][$filename] = array();
+
+            $report['files'][$filename]['errors'] = $numErrors;
+            if ($showWarnings) {
+                $report['files'][$filename]['warnings'] = $numWarnings;
+            } else {
+                $report['files'][$filename]['warnings'] = 0;
+            }
+
+            $report['totals']['errors'] += $numErrors;
+            if ($showWarnings) {
+                $report['totals']['warnings'] += $numWarnings;
             }
 
             // Merge errors and warnings.
@@ -527,6 +548,72 @@ class PHP_CodeSniffer
 
             ksort($errors);
 
+            $report['files'][$filename]['messages'] = $errors;
+
+        }//end foreach
+
+        return $report;
+
+    }//end prepareErrorReport()
+
+
+    /**
+     * Prints all errors and warnings for each file processed, in an XML format.
+     *
+     * Errors and warnings are displayed together, grouped by file.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printXMLErrorReport($showWarnings=true)
+    {
+        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        echo '<phpcs>'.PHP_EOL;
+
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+
+            echo ' <file name="'.$filename.'" errors="'.$file['errors'].'" warnings="'.$file['warnings'].'">'.PHP_EOL;
+
+            foreach ($file['messages'] as $line => $lineErrors) {
+                foreach ($lineErrors as $error) {
+                    $error['type'] = strtolower($error['type']);
+                    echo '  <'.$error['type'].' line="'.$line.'">';
+                    echo htmlspecialchars($error['message']).'</'.$error['type'].'>'.PHP_EOL;
+                    $errorsShown++;
+                }
+            }//end foreach
+
+            echo ' </file>'.PHP_EOL;
+
+        }//end foreach
+
+        echo '</phpcs>'.PHP_EOL;
+
+        return $errorsShown;
+
+    }//end printXMLErrorReport()
+
+
+    /**
+     * Prints all errors and warnings for each file processed.
+     *
+     * Errors and warnings are displayed together, grouped by file.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printErrorReport($showWarnings=true)
+    {
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+
             echo PHP_EOL.'FILE: ';
             if (strlen($filename) <= 71) {
                 echo $filename;
@@ -536,19 +623,19 @@ class PHP_CodeSniffer
 
             echo PHP_EOL;
             echo str_repeat('-', 80).PHP_EOL;
-            $numLines = count($errors);
-            echo "FOUND $numErrors ERROR(S) ";
+
+            echo 'FOUND '.$file['errors'].' ERROR(S) ';
 
             if ($showWarnings === true) {
-                echo "AND $numWarnings WARNING(S) ";
+                echo 'AND '.$file['warnings'].' WARNING(S) ';
             }
 
-            echo "AFFECTING $numLines LINE(S)".PHP_EOL;
+            echo 'AFFECTING '.count($file['messages']).' LINE(S)'.PHP_EOL;
             echo str_repeat('-', 80).PHP_EOL;
 
             // Work out the max line number for formatting.
             $maxLine = 0;
-            foreach ($errors as $line => $lineErrors) {
+            foreach ($file['messages'] as $line => $lineErrors) {
                 if ($line > $maxLine) {
                     $maxLine = $line;
                 }
@@ -557,7 +644,7 @@ class PHP_CodeSniffer
             $maxLineLength = strlen($maxLine);
 
             // The length of the word ERROR or WARNING; used for padding.
-            if ($showWarnings === true && $numWarnings > 0) {
+            if ($showWarnings === true && $file['warnings'] > 0) {
                 $typeLength = 7;
             } else {
                 $typeLength = 5;
@@ -573,7 +660,7 @@ class PHP_CodeSniffer
             // The maxium amount of space an error message can use.
             $maxErrorSpace = (80 - strlen($paddingLine2));
 
-            foreach ($errors as $line => $lineErrors) {
+            foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $error) {
                     // The padding that goes on the front of the line.
                     $padding  = ($maxLineLength - strlen($line));
@@ -581,7 +668,7 @@ class PHP_CodeSniffer
 
                     echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
                     if ($error['type'] === 'ERROR') {
-                        if ($showWarnings === true && $numWarnings > 0) {
+                        if ($showWarnings === true && $file['warnings'] > 0) {
                             echo '  ';
                         }
                     }
