@@ -14,8 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
+}
 
 /**
  * Parses and verifies the doc comments for files.

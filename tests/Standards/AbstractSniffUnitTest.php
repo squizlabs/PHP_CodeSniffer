@@ -14,7 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
@@ -69,8 +68,14 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // The basis for determining file locations.
         $basename = substr(get_class($this), 0, -8);
 
-        // The name of the dummy file we are testing.
-        $testFile = dirname(__FILE__).'/'.str_replace('_', '/', $basename).'UnitTest.inc';
+        if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
+            // We have not been installed.
+            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
+            $testFile = $standardsDir.'/'.str_replace('_', '/', $basename).'UnitTest.inc';
+        } else {
+            // The name of the dummy file we are testing.
+            $testFile = dirname(__FILE__).'/'.str_replace('_', '/', $basename).'UnitTest.inc';
+        }
 
         // The name of the coding standard we are testing.
         $standardName = substr($basename, 0, strpos($basename, '_'));
@@ -93,11 +98,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         $expectedWarnings = $this->getWarningList();
 
         if (is_array($expectedErrors) === false) {
-            throw new Exception('getErrorList() must return an array');
+            throw new PHP_CodeSniffer_Exception('getErrorList() must return an array');
         }
 
         if (is_array($expectedWarnings) === false) {
-            throw new Exception('getWarningList() must return an array');
+            throw new PHP_CodeSniffer_Exception('getWarningList() must return an array');
         }
 
         /*

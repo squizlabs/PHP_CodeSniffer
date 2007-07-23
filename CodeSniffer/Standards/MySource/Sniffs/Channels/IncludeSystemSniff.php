@@ -13,8 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
+if (!class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+}
 
 /**
  * Ensures that systems, asset types and libs are included before they are used.

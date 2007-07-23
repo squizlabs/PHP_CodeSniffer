@@ -14,8 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-
 /**
  * Squiz_Sniffs_Strings_ConcatenationSpacingSniff.
  *
@@ -83,6 +81,13 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
         }
 
         if ($error === true) {
+            $found    = str_replace("\r\n", '\n', $found);
+            $found    = str_replace("\n", '\n', $found);
+            $found    = str_replace("\r", '\n', $found);
+            $expected = str_replace("\r\n", '\n', $expected);
+            $expected = str_replace("\n", '\n', $expected);
+            $expected = str_replace("\r", '\n', $expected);
+
             $message = "Concat operator must not be surrounded by spaces. Found \"$found\"; expected \"$expected\"";
             $phpcsFile->addError($message, $stackPtr);
         }

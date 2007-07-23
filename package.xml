@@ -34,7 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added new XML report format; --report=xml (feature request #11535)
     -- Thanks to Brett Bieber for the patch
+  - Added PHPCS and MySource coding standards into the core install
   - Scope map no longer gets confused by curly braces that act as string offsets
+  - Removed CodeSniffer/SniffException.php as it is no longer used
+  - Unit tests can now be run directly from a CVS checkout
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
  </notes>
@@ -269,6 +272,44 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
+     <dir name="MySource">
+      <dir name="Sniffs">
+       <dir name="Channels">
+        <file baseinstalldir="PHP" name="IncludeSystemSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="EvalObjectFactorySniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ReturnFunctionValueSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Channels">
+        <file baseinstalldir="PHP" name="IncludeSystemUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="IncludeSystemUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="PHP">
+        <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ReturnFunctionValueUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ReturnFunctionValueUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <file baseinstalldir="PHP" name="MySourceCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
      <dir name="PEAR">
       <dir name="Docs">
        <dir name="Files">
@@ -422,6 +463,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <file baseinstalldir="PHP" name="PEARCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="PHPCS">
+      <file baseinstalldir="PHP" name="PHPCSCodingStandard.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
@@ -964,9 +1010,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="Sniff.php" role="php">
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
-    <file baseinstalldir="PHP" name="SniffException.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="Tokens.php" role="php">

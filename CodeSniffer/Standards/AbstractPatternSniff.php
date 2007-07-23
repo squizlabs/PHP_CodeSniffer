@@ -14,10 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/SniffException.php';
-require_once 'PHP/CodeSniffer/Standards/IncorrectPatternException.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
+if (!class_exists('PHP_CodeSniffer_Standards_IncorrectPatternException', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_IncorrectPatternException not found');
+}
 
 /**
  * Processes pattern strings and checks that the code conforms to the pattern.
@@ -163,7 +162,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *
      * @return int The postition in the pattern that this test should register
      *             as the listener.
-     * @throws PHP_CodeSniffer_Sniff_Exception If we could not determine a token
+     * @throws PHP_CodeSniffer_Exception If we could not determine a token
      *                                         to listen for.
      */
     private function _getListenerTokenPos($pattern)
@@ -174,7 +173,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
         // If we could not get a token.
         if ($token === false) {
-            throw new PHP_CodeSniffer_Sniff_Exception('Could not determine a token to listen for');
+            throw new PHP_CodeSniffer_Exception('Could not determine a token to listen for');
         }
 
         return $tokenTypes[$token];

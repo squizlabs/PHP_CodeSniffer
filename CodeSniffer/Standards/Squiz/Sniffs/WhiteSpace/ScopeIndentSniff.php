@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/WhiteSpace/ScopeIndentSniff.php';
+if (!class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_WhiteSpace_ScopeIndentSniff not found');
+}
 
 /**
  * Squiz_Sniffs_Whitespace_ScopeIndentSniff.

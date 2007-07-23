@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/AbstractParser.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractParser not found');
+}
 
 /**
  * Parses Class doc comments.

@@ -15,10 +15,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/SniffException.php';
-require_once 'PHP/CodeSniffer/File.php';
-
 /**
  * An AbstractScopeTest allows for tests that extend from this class to
  * listen for tokens within a particluar scope.

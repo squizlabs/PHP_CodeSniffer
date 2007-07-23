@@ -14,8 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-
 /**
  * PHP_CodeSniffer_Sniffs_PEAR_Commenting_InlineCommentSniff.
  *

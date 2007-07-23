@@ -14,12 +14,24 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'PHP_CodeSniffer_AllTests::main');
+}
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
-require_once 'CodeSniffer/Core/AllTests.php';
-require_once 'CodeSniffer/Standards/AllSniffs.php';
-set_time_limit(0);
-ini_set('memory_limit', '32M');
+
+if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    // We are not installed.
+    include_once 'Core/AllTests.php';
+    include_once 'Standards/AllSniffs.php';
+    include_once dirname(__FILE__).'/../CodeSniffer.php';
+} else {
+    include_once 'CodeSniffer/Core/AllTests.php';
+    include_once 'CodeSniffer/Standards/AllSniffs.php';
+    include_once 'PHP/CodeSniffer.php';
+}
+
 
 /**
  * A test class for running all PHP_CodeSniffer unit tests.
@@ -35,7 +47,7 @@ ini_set('memory_limit', '32M');
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class AllTests
+class PHP_CodeSniffer_AllTests
 {
 
 
@@ -60,8 +72,8 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer');
 
-        $suite->addTest(Core_AllTests::suite());
-        $suite->addTest(AllSniffs::suite());
+        $suite->addTest(PHP_CodeSniffer_Core_AllTests::suite());
+        $suite->addTest(PHP_CodeSniffer_Standards_AllSniffs::suite());
 
         return $suite;
 

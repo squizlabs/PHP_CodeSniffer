@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/DocElement.php';
+if (!interface_exists('PHP_CodeSniffer_CommentParser_DocElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Interface PHP_CodeSniffer_CommentParser_DocElement not found');
+}
 
 /**
  * A class to handle most of the parsing operations of a doc comment element.

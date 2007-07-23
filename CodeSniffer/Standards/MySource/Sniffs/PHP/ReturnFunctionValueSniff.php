@@ -13,8 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-
 /**
  * Warns when function values are returned directly.
  *

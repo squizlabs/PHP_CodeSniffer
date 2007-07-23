@@ -14,9 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
-
 /**
  * Squiz_Sniffs_PHP_NonExecutableCodeSniff.
  *

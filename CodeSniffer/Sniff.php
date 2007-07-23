@@ -14,8 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/File.php';
-
 /**
  * Represents a PHP_CodeSniffer sniff for sniffing coding standards.
  *

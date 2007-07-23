@@ -15,10 +15,23 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/File.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/Exception.php';
+spl_autoload_register(array('PHP_CodeSniffer', 'autoload'));
+
+if (!class_exists('PHP_CodeSniffer_Exception', true)) {
+    throw new Exception('Class PHP_CodeSniffer_Exception not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_File', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_File not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_Tokens', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Tokens not found');
+}
+
+if (!interface_exists('PHP_CodeSniffer_Sniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Interface PHP_CodeSniffer_Sniff not found');
+}
 
 /**
  * PHP_CodeSniffer tokenises PHP code and detects violations of a
@@ -116,6 +129,37 @@ class PHP_CodeSniffer
         define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
 
     }//end __construct()
+
+
+    /**
+     * Autoload static method for loading classes and interfaces.
+     *
+     * @param string $className The name of the class or interface.
+     *
+     * @return void
+     */
+    public static function autoload($className)
+    {
+        if (substr($className, 0, 4) === 'PHP_') {
+            $newClassName = substr($className, 4);
+        } else {
+            $newClassName = $className;
+        }
+
+        $path = str_replace('_', '/', $newClassName).'.php';
+
+        if (is_file(dirname(__FILE__).'/'.$path) === true) {
+            // Check standard file locations based on class name.
+            include dirname(__FILE__).'/'.$path;
+        } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
+            // Check for included sniffs.
+            include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+        } else {
+            // Everything else.
+            include $path;
+        }
+
+    }//end autoload()
 
 
     /**
@@ -219,7 +263,7 @@ class PHP_CodeSniffer
             }
         }
 
-        $csPath = 'PHP'.DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR;
+        $csPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR;
 
         foreach ($files as $file) {
 
@@ -228,7 +272,7 @@ class PHP_CodeSniffer
             }
 
             $className = substr($file, strpos($file, $csPath));
-            $className = substr($className, 26);
+            $className = substr($className, strlen($csPath) + 10);
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
@@ -1155,10 +1199,13 @@ class PHP_CodeSniffer
      * @return array
      * @see isInstalledStandard()
      */
-    public static function getInstalledStandards($includeGeneric=false)
+    public static function getInstalledStandards($includeGeneric=false, $standardsDir='')
     {
         $installedStandards = array();
-        $standardsDir       = dirname(__FILE__).'/CodeSniffer/Standards';
+
+        if ($standardsDir === '') {
+            $standardsDir = dirname(__FILE__).'/CodeSniffer/Standards';
+        }
 
         $di = new DirectoryIterator($standardsDir);
         foreach ($di as $file) {

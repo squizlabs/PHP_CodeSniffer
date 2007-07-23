@@ -15,10 +15,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
-require_once 'PHP/CodeSniffer/Exception.php';
-
 /**
  * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
  * associated with it.

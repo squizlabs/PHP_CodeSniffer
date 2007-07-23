@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Files/LineLengthSniff.php';
+if (!class_exists('Generic_Sniffs_Files_LineLengthSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Files_LineLengthSniff not found');
+}
 
 /**
  * Squiz_Sniffs_Files_LineLengthSniff.

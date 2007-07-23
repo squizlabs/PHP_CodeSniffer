@@ -15,7 +15,6 @@
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHP/CodeSniffer.php';
 
 /**
  * Tests for the PHP_CodeSniffer:isCamelCaps method.

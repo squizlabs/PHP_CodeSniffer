@@ -14,8 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/AbstractPatternSniff.php';
-
 /**
  * PEAR_Sniffs_Functions_FunctionCallSignatureSniff.
  *

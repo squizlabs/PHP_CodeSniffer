@@ -14,8 +14,13 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/AbstractVariableSniff.php';
-require_once 'PHP/CodeSniffer/CommentParser/MemberCommentParser.php';
+if (!class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_MemberCommentParser not found');
+}
 
 /**
  * Parses and verifies the variable doc comment.

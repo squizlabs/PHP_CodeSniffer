@@ -14,9 +14,13 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/CommentParser/ClassCommentParser.php';
-require_once 'PHP/CodeSniffer/Standards/PEAR/Sniffs/Commenting/FileCommentSniff.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
+}
+
+if (!class_exists('PEAR_Sniffs_Commenting_FileCommentSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PEAR_Sniffs_Commenting_FileCommentSniff not found');
+}
 
 /**
  * Parses and verifies the doc comments for classes.

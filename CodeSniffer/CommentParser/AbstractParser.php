@@ -14,9 +14,17 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
-require_once 'PHP/CodeSniffer/CommentParser/CommentElement.php';
-require_once 'PHP/CodeSniffer/CommentParser/ParserException.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_CommentElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_CommentElement not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_ParserException', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ParserException not found');
+}
 
 /**
  * Parses doc comments.

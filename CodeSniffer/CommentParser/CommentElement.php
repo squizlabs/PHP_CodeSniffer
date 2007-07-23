@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
+}
 
 /**
  * A class to represent Comments of a doc comment.

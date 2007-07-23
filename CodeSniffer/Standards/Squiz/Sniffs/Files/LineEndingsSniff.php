@@ -14,8 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/Files/LineEndingsSniff.php';
-
+if (!class_exists('Generic_Sniffs_Files_LineEndingsSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Files_LineEndingsSniff not found');
+}
 
 /**
  * Squiz_Sniffs_Files_LineEndingsSniff.

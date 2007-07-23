@@ -14,10 +14,21 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/CommentParser/AbstractParser.php';
-require_once 'PHP/CodeSniffer/CommentParser/ParameterElement.php';
-require_once 'PHP/CodeSniffer/CommentParser/PairElement.php';
-require_once 'PHP/CodeSniffer/CommentParser/SingleElement.php';
+if (!class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractParser not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_ParameterElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ParameterElement not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_PairElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_PairElement not found');
+}
+
+if (!class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
+}
 
 /**
  * Parses function doc comments.

@@ -13,9 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
-
 /**
  * Ensures that eval() is not used to create objects.
  *

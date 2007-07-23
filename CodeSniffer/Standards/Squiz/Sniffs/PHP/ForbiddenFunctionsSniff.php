@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php';
+if (!class_exists('Generic_Sniffs_PHP_ForbiddenFunctionsSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_PHP_ForbiddenFunctionsSniff not found');
+}
 
 /**
  * Squiz_Sniffs_PHP_ForbiddenFunctionsSniff.

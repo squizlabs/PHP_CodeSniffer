@@ -14,8 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Sniff.php';
-
 /**
  * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.
  *

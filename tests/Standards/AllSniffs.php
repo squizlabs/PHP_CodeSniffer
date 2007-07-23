@@ -14,10 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
 // Require this here so that the unit tests don't have to try and find the
 // abstract class once it is installed into the PEAR tests directory.
 require_once dirname(__FILE__).'/AbstractSniffUnitTest.php';
@@ -39,7 +35,7 @@ require_once dirname(__FILE__).'/AbstractSniffUnitTest.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class AllSniffs
+class PHP_CodeSniffer_Standards_AllSniffs
 {
 
 
@@ -67,9 +63,24 @@ class AllSniffs
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
 
-        $standards = PHP_CodeSniffer::getInstalledStandards(true);
+        $isInstalled = !is_file(dirname(__FILE__).'/../../CodeSniffer.php');
+
+        if ($isInstalled === false) {
+            // We have not been installed.
+            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
+        } else {
+            $standardsDir = '';
+        }
+
+        $standards    = PHP_CodeSniffer::getInstalledStandards(true, $standardsDir);
+
         foreach ($standards as $standard) {
-            $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
+            if ($isInstalled === false) {
+                $standardDir = realpath($standardsDir.'/'.$standard.'/Tests/');
+            } else {
+                $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
+            }
+
             if (is_dir($standardDir) === false) {
                 // No tests for this standard.
                 continue;
@@ -90,17 +101,28 @@ class AllSniffs
                     continue;
                 }
 
-                $filePath  = realpath($file->getPathname());
-                $className = str_replace(dirname(__FILE__).DIRECTORY_SEPARATOR, '', $filePath);
+                $filePath = realpath($file->getPathname());
+
+                if ($isInstalled === false) {
+                    $className = str_replace($standardDir.DIRECTORY_SEPARATOR, '', $filePath);
+                } else {
+                    $className = str_replace(dirname(__FILE__).DIRECTORY_SEPARATOR, '', $filePath);
+                }
+
                 $className = substr($className, 0, -4);
                 $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
+
+                if ($isInstalled === false) {
+                    $className = $standard.'_Tests_'.$className;
+                }
+
                 $niceName  = substr($className, (strrpos($className, '_') + 1), -8);
 
                 include_once $filePath;
                 $class = new $className($niceName);
                 $suite->addTest($class);
-            }
-        }
+            }//end foreach
+        }//end foreach
 
         return $suite;
 

@@ -16,7 +16,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/AbstractScopeSniff.php';
+if (!class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+}
 
 /**
  * Verifies that a @throws tag exists for a function that throws exceptions.

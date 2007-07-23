@@ -14,8 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/AbstractVariableSniff.php';
-require_once 'PHP/CodeSniffer/Tokens.php';
+if (!class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
+}
 
 /**
  * Verifies that class members are spaced correctly.

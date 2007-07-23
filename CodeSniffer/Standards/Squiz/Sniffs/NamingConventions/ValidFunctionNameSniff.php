@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/Standards/PEAR/Sniffs/NamingConventions/ValidFunctionNameSniff.php';
+if (!class_exists('PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff', true)) {
+    throw new PHP_CodeSniffer_Exception('Class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff not found');
+}
 
 /**
  * Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff.
