@@ -18,7 +18,8 @@
  * Generic_Sniffs_Files_LineLengthSniff.
  *
  * Checks all lines in the file, and throws warnings if they are over 80
- * characters in length.
+ * characters in length and errors if they are over 100. Both these
+ * figures can be changed by extending this sniff in your own standard.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -38,6 +39,16 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      * @var int
      */
     protected $lineLimit = 80;
+
+
+    /**
+     * The limit that the length of a line must not exceed.
+     *
+     * Set to zero (0) to disable.
+     *
+     * @var int
+     */
+    protected $absoluteLineLimit = 100;
 
 
     /**
@@ -94,8 +105,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         }
 
         foreach ($longLines as $lineToken => $lineLength) {
-            $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
-            $phpcsFile->addWarning($warning, $lineToken);
+            if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
+                $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
+                $phpcsFile->addError($error, $lineToken);
+            } else {
+                $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
+                $phpcsFile->addWarning($warning, $lineToken);
+            }
         }
 
     }//end process()

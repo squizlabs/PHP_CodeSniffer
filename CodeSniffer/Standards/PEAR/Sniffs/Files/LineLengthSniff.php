@@ -43,6 +43,15 @@ class PEAR_Sniffs_Files_LineLengthSniff extends Generic_Sniffs_Files_LineLengthS
      */
     protected $lineLimit = 85;
 
+    /**
+     * The limit that the length of a line must not exceed.
+     *
+     * Set to zero (0) to disable.
+     *
+     * @var int
+     */
+    protected $absoluteLineLimit = 0;
+
 }//end class
 
 ?>

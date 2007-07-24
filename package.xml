@@ -40,6 +40,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Unit tests can now be run directly from a CVS checkout
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
+  - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
+    -- BC BREAK: Override the protected member var absoluteLineLimit and set it to zero in custom LineLength sniffs
+    -- Thanks to Johann-Peter Hartmann for the contribution
  </notes>
  <contents>
   <dir name="/">

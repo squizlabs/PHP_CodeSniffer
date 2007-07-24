@@ -43,7 +43,10 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return array(
+                31 => 1,
+                34 => 1,
+               );
 
     }//end getErrorList()
 
@@ -63,6 +66,8 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
                 15 => 1,
                 21 => 1,
                 24 => 1,
+                29 => 1,
+                37 => 1,
                );
 
     }//end getWarningList()
