@@ -40,7 +40,6 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      */
     protected $lineLimit = 80;
 
-
     /**
      * The limit that the length of a line must not exceed.
      *
