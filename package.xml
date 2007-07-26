@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Scope map no longer gets confused by curly braces that act as string offsets
   - Removed CodeSniffer/SniffException.php as it is no longer used
   - Unit tests can now be run directly from a CVS checkout
+  - Made private vars and functions protected in PHP_CodeSniffer class so this package can be overridden
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
   - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings

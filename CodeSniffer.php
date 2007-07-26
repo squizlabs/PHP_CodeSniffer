@@ -66,38 +66,38 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    private $_file = array();
+    protected $_file = array();
 
     /**
      * The directory where to search for tests.
      *
      * @var string
      */
-    private $_standardDir = '';
+    protected $_standardDir = '';
 
     /**
      * The files that have been processed.
      *
      * @var array(PHP_CodeSniffer_FILE)
      */
-    private $_files = array();
+    protected $_files = array();
 
     /**
      * The listeners array.
      *
      * @var array(PHP_CodeSniffer_Sniff)
      */
-    private $_listeners = array();
+    protected $_listeners = array();
 
     /**
      * An array of extensions for files we will check.
      *
      * @var array
      */
-    private $_allowedFileExtensions = array(
-                                       'php',
-                                       'inc',
-                                      );
+    protected $_allowedFileExtensions = array(
+                                         'php',
+                                         'inc',
+                                        );
 
     /**
      * An array of variable types for param/var we will check.
@@ -251,7 +251,7 @@ class PHP_CodeSniffer
      * @throws PHP_CodeSniffer_Exception If any of the tests failed in the
      *                                   registration process.
      */
-    private function _registerTokenListeners($standard, array $sniffs=array())
+    protected function _registerTokenListeners($standard, array $sniffs=array())
     {
         $files = self::getSniffFiles($this->_standardDir, $standard);
 
@@ -424,7 +424,7 @@ class PHP_CodeSniffer
      * @return void
      * @throws Exception If there was an error opening the directory.
      */
-    private function _processFiles($dir, $local=false)
+    protected function _processFiles($dir, $local=false)
     {
         if ($local === true) {
             $di = new DirectoryIterator($dir);
@@ -470,7 +470,7 @@ class PHP_CodeSniffer
      * @return void
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
      */
-    private function _processFile($file)
+    protected function _processFile($file)
     {
         $file = realpath($file);
 
