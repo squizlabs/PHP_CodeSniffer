@@ -27,7 +27,8 @@ require_once 'PHP/CodeSniffer.php';
 function PHP_CodeSniffer_printUsage()
 {
     echo 'Usage: phpcs [-nlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
-    echo '    [--generator=<generator>] [--extensions=<extensions>] <file> ...'.PHP_EOL;
+    echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
+    echo '    [--ignore=<patterns>] <file> ...'.PHP_EOL;
     echo '        -n           Do not print warnings'.PHP_EOL;
     echo '        -l           Local directory only, no recursion'.PHP_EOL;
     echo '        -v[v][v]     Print verbose output'.PHP_EOL;
@@ -37,6 +38,8 @@ function PHP_CodeSniffer_printUsage()
     echo '        <file>       One or more files and/or directories to check'.PHP_EOL;
     echo '        <extensions> A comma separated list of file extensions to check'.PHP_EOL;
     echo '                     (only valid if checking a directory)'.PHP_EOL;
+    echo '        <ignore>     A comma separated list of patterns that are used'.PHP_EOL;
+    echo '                     to ignore directories and files'.PHP_EOL;
     echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
     echo '        <generator>  The name of a doc genertor to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
@@ -89,6 +92,7 @@ $local        = false;
 $report       = 'full';
 $showWarnings = true;
 $extensions   = array();
+$ignored      = array();
 $generator    = '';
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
@@ -121,6 +125,8 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 $standard = substr($arg, 11);
             } else if (substr($arg, 0, 13) === '--extensions=') {
                 $extensions = explode(',', substr($arg, 13));
+            } else if (substr($arg, 0, 9) === '--ignore=') {
+                $ignored = explode(',', substr($arg, 9));
             } else if (substr($arg, 0, 12) === '--generator=') {
                 $generator = substr($arg, 12);
             } else {
@@ -217,6 +223,11 @@ $phpcs = new PHP_CodeSniffer($verbosity);
 // let PHP_CodeSniffer decide on the defaults.
 if (empty($extensions) === false) {
     $phpcs->setAllowedFileExtensions($extensions);
+}
+
+// Set ignore patterns if they were specified.
+if (empty($ignored) === false) {
+    $phpcs->setIgnorePatterns($ignored);
 }
 
 $phpcs->process($files, $standard, array(), $local);
