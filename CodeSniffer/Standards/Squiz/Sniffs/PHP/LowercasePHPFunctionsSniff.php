@@ -101,6 +101,11 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         }
 
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($tokens[$prev]['code'] === T_FUNCTION) {
+            // Function declaration, not a function call.
+            return;
+        }
+
         if ($tokens[$prev]['code'] === T_OBJECT_OPERATOR) {
             // Not an inbuilt function.
             return;

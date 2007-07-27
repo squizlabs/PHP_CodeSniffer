@@ -29,4 +29,6 @@ if (Function_Exists('myFunction') === TRUE) {
     $keys = Array_Keys($array);
 }
 
+function getType() {}
+
 ?>
