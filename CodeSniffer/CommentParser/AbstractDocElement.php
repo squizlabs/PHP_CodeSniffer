@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!interface_exists('PHP_CodeSniffer_CommentParser_DocElement', true)) {
+if (interface_exists('PHP_CodeSniffer_CommentParser_DocElement', true) === false) {
     throw new PHP_CodeSniffer_Exception('Interface PHP_CodeSniffer_CommentParser_DocElement not found');
 }
 

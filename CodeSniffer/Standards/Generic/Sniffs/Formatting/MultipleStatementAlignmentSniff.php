@@ -168,7 +168,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             }
 
             $assignments[] = $prevAssignment;
-            $lastLine = $tokens[$prevAssignment]['line'];
+            $lastLine      = $tokens[$prevAssignment]['line'];
         }//end while
 
         $assignmentData = array();
@@ -231,14 +231,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
                 // If the expected number of spaces for alignment exceeds the
                 // maxPadding rule, we can ignore this assignment.
-                $expected     = ($actualColumn - ($contentLength + $leadingSpace));
+                $expected = ($actualColumn - ($contentLength + $leadingSpace));
                 if ($expected > $this->maxPadding) {
                     continue;
                 }
 
-                $expected    .= ($expected === 1) ? ' space' : ' spaces';
-                $found        = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
-                $found       .= ($found === 1) ? ' space' : ' spaces';
+                $expected .= ($expected === 1) ? ' space' : ' spaces';
+                $found     = ($tokens[$assignment]['column'] - ($contentLength + $leadingSpace));
+                $found    .= ($found === 1) ? ' space' : ' spaces';
 
                 if (count($assignments) === 1) {
                     $error = "Equals sign not aligned correctly; expected $expected but found $found";

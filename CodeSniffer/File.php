@@ -1006,7 +1006,7 @@ class PHP_CodeSniffer_File
             if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
                     // Make sure this is actually an opener and not a
-                    // string offset (e.g., $var{0});
+                    // string offset (e.g., $var{0}).
                     for ($x = ($i - 1); $x > 0; $x--) {
                         if (in_array($this->_tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                             continue;

@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
 }
 
@@ -113,11 +113,11 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
 
             // Check if there is only 1 doc comment between the open tag and class token.
-            $nextToken = array(
-                          T_ABSTRACT,
-                          T_CLASS,
-                          T_DOC_COMMENT,
-                         );
+            $nextToken   = array(
+                            T_ABSTRACT,
+                            T_CLASS,
+                            T_DOC_COMMENT,
+                           );
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
             if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
                 // Found a class token right after comment doc block.
@@ -357,7 +357,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function getIndentation($tagName, $tagElement)
+    protected function getIndentation($tagName, $tagElement)
     {
         if ($tagElement instanceof PHP_CodeSniffer_CommentParser_SingleElement) {
             if ($tagElement->getContent() !== '') {

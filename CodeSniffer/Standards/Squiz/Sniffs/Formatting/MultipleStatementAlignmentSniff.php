@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff', true)) {
+if (class_exists('Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff not found');
 }
 

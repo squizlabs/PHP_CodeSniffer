@@ -231,8 +231,8 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $indices[]    = array(
                                      'value' => $valueContent,
                                     );
-                    $singleUsed = true;
-                }
+                    $singleUsed   = true;
+                }//end if
 
                 $lastToken = T_COMMA;
                 continue;
@@ -280,21 +280,21 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             $trailingContent = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), $lastIndex, true);
             if ($tokens[$trailingContent]['code'] !== T_COMMA) {
-                $error     = 'Comma required after last value in array declaration';
+                $error = 'Comma required after last value in array declaration';
                 $phpcsFile->addError($error, $trailingContent);
             }
 
             foreach ($indices as $value) {
                 if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
-                   // A whitespace token before this value means that the value
-                   // was indented and not flush with the opening parenthesis.
+                    // A whitespace token before this value means that the value
+                    // was indented and not flush with the opening parenthesis.
                     if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
                         $error = 'Array value not aligned correctly; expected '.($keywordStart + 1).' spaces but found '.$tokens[$value['value']]['column'];
                         $phpcsFile->addError($error, $value['value']);
                     }
                 }
             }
-        }
+        }//end if
 
         /*
             Below the actual indentation of the array is checked.

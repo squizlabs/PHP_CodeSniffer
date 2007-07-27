@@ -14,11 +14,11 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true)) {
+if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
 }
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_MemberCommentParser not found');
 }
 

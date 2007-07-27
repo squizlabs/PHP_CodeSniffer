@@ -66,11 +66,11 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
         $closeBracket = $stackPtr;
 
         // Search through and find the closing bracket.
-        $openers  = array($openBracket);
-        $brackets = array(
-                     T_OPEN_PARENTHESIS,
-                     T_CLOSE_PARENTHESIS,
-                    );
+        $openers     = array($openBracket);
+        $brackets    = array(
+                        T_OPEN_PARENTHESIS,
+                        T_CLOSE_PARENTHESIS,
+                       );
         $nextBracket = $openBracket;
         while (($nextBracket = $phpcsFile->findNext($brackets, ($nextBracket + 1))) !== false) {
             if ($tokens[$nextBracket]['code'] === T_OPEN_PARENTHESIS) {

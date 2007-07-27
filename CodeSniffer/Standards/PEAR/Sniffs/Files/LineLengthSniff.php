@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('Generic_Sniffs_Files_LineLengthSniff', true)) {
+if (class_exists('Generic_Sniffs_Files_LineLengthSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Files_LineLengthSniff not found');
 }
 

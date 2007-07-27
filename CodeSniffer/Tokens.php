@@ -208,7 +208,7 @@ final class PHP_CodeSniffer_Tokens
                                  T_ARRAY_CAST,
                                  T_BOOL_CAST,
                                  T_OBJECT_CAST,
-                                 T_UNSET_CAST
+                                 T_UNSET_CAST,
                                 );
 
     /**

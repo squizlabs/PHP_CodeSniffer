@@ -14,19 +14,19 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractParser not found');
 }
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_ParameterElement', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_ParameterElement', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ParameterElement not found');
 }
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_PairElement', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_PairElement', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_PairElement not found');
 }
 
-if (!class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true)) {
+if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
 }
 

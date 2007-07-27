@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!class_exists('PHP_CodeSniffer_Standards_IncorrectPatternException', true)) {
+if (class_exists('PHP_CodeSniffer_Standards_IncorrectPatternException', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_IncorrectPatternException not found');
 }
 
@@ -524,7 +524,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                 if ($stackPtr !== $lastAddedStackPtr) {
                     $found            .= $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
-                    $diff = $next - $stackPtr;
+                    $diff              = ($next - $stackPtr);
                     $lastAddedStackPtr = $next;
                 }
 
