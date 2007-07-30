@@ -40,6 +40,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Removed CodeSniffer/SniffException.php as it is no longer used
   - Unit tests can now be run directly from a CVS checkout
   - Made private vars and functions protected in PHP_CodeSniffer class so this package can be overridden
+  - Added new Metrics category to Generic conding standard
+    -- Contains Cyclomatic Complexity and Nesting Level sniffs
+    -- Thanks to Johann-Peter Hartmann for the contribution
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
   - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
@@ -182,6 +185,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Metrics">
+        <file baseinstalldir="PHP" name="CyclomaticComplexitySniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NestingLevelSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="NamingConventions">
         <file baseinstalldir="PHP" name="UpperCaseConstantNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -239,6 +250,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Metrics">
+        <file baseinstalldir="PHP" name="CyclomaticComplexityUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CyclomaticComplexityUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NestingLevelUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="NestingLevelUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
