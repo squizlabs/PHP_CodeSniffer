@@ -18,7 +18,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'PHP_CodeSniffer_AllTests::main');
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
@@ -31,7 +31,6 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
     include_once 'CodeSniffer/Standards/AllSniffs.php';
     include_once 'PHP/CodeSniffer.php';
 }
-
 
 /**
  * A test class for running all PHP_CodeSniffer unit tests.
@@ -70,7 +69,9 @@ class PHP_CodeSniffer_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer');
+        // Use a special PHP_CodeSniffer test suite so that we can
+        // unset our autoload function after the run.
+        $suite = new PHP_CodeSniffer_TestSuite('PHP CodeSniffer');
 
         $suite->addTest(PHP_CodeSniffer_Core_AllTests::suite());
         $suite->addTest(PHP_CodeSniffer_Standards_AllSniffs::suite());

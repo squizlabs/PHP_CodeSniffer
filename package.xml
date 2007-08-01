@@ -87,6 +87,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="" name="AllTests.php" role="test">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
+    <file baseinstalldir="" name="TestSuite.php" role="test">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
    </dir>
    <dir name="CodeSniffer">
     <dir name="CommentParser">
