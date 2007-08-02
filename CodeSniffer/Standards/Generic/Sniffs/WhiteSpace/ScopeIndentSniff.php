@@ -18,7 +18,8 @@
  * Generic_Sniffs_Whitespace_ScopeIndentSniff.
  *
  * Checks that control structures are structured correctly, and their content
- * is indented correctly.
+ * is indented correctly. This sniff will throw errors if tabs are used
+ * for indentation rather than spaces.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
