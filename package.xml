@@ -43,6 +43,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Metrics category to Generic conding standard
     -- Contains Cyclomatic Complexity and Nesting Level sniffs
     -- Thanks to Johann-Peter Hartmann for the contribution
+  - Added new Generic DisallowTabIndentSniff to throw errors if tabs are used for indentation (feature request #11738)
+    -- PEAR and Squiz standards use this new sniff to throw more specific indentation errors
   - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
   - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
   - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
@@ -217,6 +219,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowTabIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -292,6 +297,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1068,6 +1077,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpcs" name="scripts/phpcs" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
    <install as="AllTests.php" name="tests/AllTests.php" />
+   <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -1078,6 +1088,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <filelist>
    <install as="phpcs" name="scripts/phpcs" />
    <install as="AllTests.php" name="tests/AllTests.php" />
+   <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />

@@ -49,6 +49,7 @@ class PHP_CodeSniffer_Standards_PEAR_PEARCodingStandard extends PHP_CodeSniffer_
                 'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
                 'Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
                 'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
+                'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
                );
 
     }//end getIncludedSniffs()
