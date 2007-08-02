@@ -38,7 +38,7 @@ function PHP_CodeSniffer_printUsage()
     echo '        <file>       One or more files and/or directories to check'.PHP_EOL;
     echo '        <extensions> A comma separated list of file extensions to check'.PHP_EOL;
     echo '                     (only valid if checking a directory)'.PHP_EOL;
-    echo '        <ignore>     A comma separated list of patterns that are used'.PHP_EOL;
+    echo '        <patterns>   A comma separated list of patterns that are used'.PHP_EOL;
     echo '                     to ignore directories and files'.PHP_EOL;
     echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
     echo '        <generator>  The name of a doc genertor to use'.PHP_EOL;
