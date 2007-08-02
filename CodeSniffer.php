@@ -1112,14 +1112,21 @@ class PHP_CodeSniffer
             $lastCharWasCaps = ($classFormat === false) ? false : true;
 
             for ($i = 1; $i < $length; $i++) {
-                $isCaps = (strtoupper($string{$i}) === $string{$i}) ? true : false;
+                $ascii = ord($string{$i});
+                if ($ascii >= 48 && $ascii <= 57) {
+                    // The character is a number, so it cant be a captial.
+                    $isCaps = false;
+                } else {
+                    $isCaps = (strtoupper($string{$i}) === $string{$i}) ? true : false;
+                }
+
                 if ($isCaps === true && $lastCharWasCaps === true) {
                     return false;
                 }
 
                 $lastCharWasCaps = $isCaps;
             }
-        }
+        }//end if
 
         return true;
 

@@ -77,6 +77,8 @@ class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(PHP_CodeSniffer::isCamelCaps('_thisIsCamelCaps', false, false, true));
         $this->assertTrue(PHP_CodeSniffer::isCamelCaps('_thisISCamelCaps', false, false, false));
+        $this->assertTrue(PHP_CodeSniffer::isCamelCaps('_i18N', false, false, true));
+        $this->assertTrue(PHP_CodeSniffer::isCamelCaps('_i18n', false, false, true));
 
     }//end testValidNotClassFormatPrivate()
 
