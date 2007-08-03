@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
     -- BC BREAK: Override the protected member var absoluteLineLimit and set it to zero in custom LineLength sniffs
     -- Thanks to Johann-Peter Hartmann for the contribution
+  - Comment sniff errors about incorrect tag orders are now more descriptive (feature request #11693)
   - Fixed bug #11473 : Invalid CamelCaps name when numbers used in names
  </notes>
  <contents>

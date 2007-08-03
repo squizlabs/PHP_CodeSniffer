@@ -254,12 +254,12 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     {
         // Required tags in correct order.
         $tags = array(
-                 'version',
-                 'package',
-                 'subpackage',
-                 'author',
-                 'copyright',
-                 'license',
+                 'version'    => 'precedes @package',
+                 'package'    => 'follows @version',
+                 'subpackage' => 'follows @package',
+                 'author'     => 'follows @subpackage',
+                 'copyright'  => 'follows @author',
+                 'license'    => 'follows @copyright',
                 );
 
         $foundTags   = $this->commentParser->getTagOrders();
@@ -267,7 +267,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $orderIndex  = 0;
         $longestTag  = 0;
         $indentation = array();
-        foreach ($tags as $tag) {
+        foreach ($tags as $tag => $orderText) {
 
             // Required tag missing.
             if (in_array($tag, $foundTags) === false) {
@@ -305,7 +305,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($foundIndexes[0] > $orderIndex) {
                 $orderIndex = $foundIndexes[0];
             } else {
-                $error = "The order of @$tag tag is wrong in file comment";
+                $error = "The @$tag tag is in the wrong order; the tag $orderText";;
                 $this->currentFile->addError($error, $errorPos);
             }
 

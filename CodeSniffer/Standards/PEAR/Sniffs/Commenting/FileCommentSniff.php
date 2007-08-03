@@ -234,42 +234,52 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                  'category'   => array(
                                   'required'       => true,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'precedes @package',
                                  ),
                  'package'    => array(
                                   'required'       => true,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @category',
                                  ),
                  'author'     => array(
                                   'required'       => true,
                                   'allow_multiple' => true,
+                                  'order_text'     => 'follows @package',
                                  ),
                  'copyright'  => array(
                                   'required'       => false,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @author',
                                  ),
                  'license'    => array(
                                   'required'       => true,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @copyright (if used) or @author',
                                  ),
                  'version'    => array(
                                   'required'       => false,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @licence',
                                  ),
                  'link'       => array(
                                   'required'       => true,
                                   'allow_multiple' => true,
+                                  'order_text'     => 'follows @version',
                                  ),
                  'see'        => array(
                                   'required'       => false,
                                   'allow_multiple' => true,
+                                  'order_text'     => 'follows @link',
                                  ),
                  'since'      => array(
                                   'required'       => false,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @see (if used) or @link',
                                  ),
                  'deprecated' => array(
                                   'required'       => false,
                                   'allow_multiple' => false,
+                                  'order_text'     => 'follows @since (if used) or @see (if used) or @link',
                                  ),
                 );
 
@@ -312,7 +322,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (count($foundIndexes) > 1) {
                 // Multiple occurance not allowed.
                 if ($info['allow_multiple'] === false) {
-                    $error = "Only 1 @$tag tag is allowed in $docBlock comment";
+                    $error = "Only 1 @$tag tag is allowed in a $docBlock comment";
                     $this->currentFile->addError($error, $errorPos);
                 } else {
                     // Make sure same tags are grouped together.
@@ -339,7 +349,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $errorPos += $tagElement[0]->getLine();
                 }
 
-                $error = "The order of @$tag tag is wrong in $docBlock comment";
+                $orderText = $info['order_text'];
+                $error     = "The @$tag tag is in the wrong order; the tag $orderText";
                 $this->currentFile->addError($error, $errorPos);
             }
 

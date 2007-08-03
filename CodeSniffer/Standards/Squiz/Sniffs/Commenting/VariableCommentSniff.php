@@ -197,6 +197,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
     protected function processVar($commentStart, $commentEnd)
     {
         $var = $this->commentParser->getVar();
+
         if ($var !== null) {
             $errorPos = ($commentStart + $var->getLine());
             $index    = array_keys($this->commentParser->getTagOrders(), 'var');
@@ -208,7 +209,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
 
             if ($index[0] !== 1) {
-                $error = 'The order of @var tag is wrong in variable comment';
+                $error = 'The @var tag must be the first tag in a variable comment';
                 $this->currentFile->addError($error, $errorPos);
             }
 

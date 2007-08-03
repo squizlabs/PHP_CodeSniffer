@@ -261,6 +261,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
     protected function processSince($commentStart, $commentEnd)
     {
         $since = $this->commentParser->getSince();
+
         if ($since !== null) {
             $errorPos = ($commentStart + $since->getLine());
             $tagOrder = $this->commentParser->getTagOrders();
@@ -279,7 +280,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }
 
             if ($index[0] !== $firstTag) {
-                $error = 'The order of @since tag is wrong in function comment';
+                $error = 'The @since tag is in the wrong order; the tag preceds @see (if used) or @return';
                 $this->currentFile->addError($error, $errorPos);
             }
 
@@ -301,8 +302,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $correctSpacing = ($return !== null || empty($throws) === false) ? 2 : 1;
 
             if ($spacing !== $correctSpacing) {
-                $error  = '@since tag indented incorrectly. ';
-                $error .= "Expected $correctSpacing spaces but found $spacing.";
+                $error  = '@since tag indented incorrectly; ';
+                $error .= "expected $correctSpacing spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
         } else {
@@ -332,7 +333,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[$i] !== $this->_tagIndex) {
-                        $error = 'The order of @see tag is wrong in function comment';
+                        $error = 'The @see tag is in the wrong order; the tag follows @since';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
@@ -346,8 +347,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== 4) {
-                    $error  = '@see tag indented incorrectly. ';
-                    $error .= "Expected 4 spaces but found $spacing.";
+                    $error  = '@see tag indented incorrectly; ';
+                    $error .= "expected 4 spaces but found $spacing";
                     $this->currentFile->addError($error, $errorPos);
                 }
             }//end foreach
@@ -394,7 +395,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[0] !== $this->_tagIndex) {
-                        $error = 'The order of @return tag is wrong in function comment';
+                        $error = 'The @return tag is in the wrong order; the tag follows @see (if used) or @since';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
@@ -519,7 +520,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if (count($since) === 1 && $this->_tagIndex !== 0) {
                 $this->_tagIndex++;
                 if ($index[$i] !== $this->_tagIndex) {
-                    $error = 'The order of @throws tag is wrong in function comment';
+                    $error = 'The @throws tag is in the wrong order; the tag follows @return';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
