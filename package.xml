@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-07-10</date>
- <time>13:15:00</time>
+ <date>2007-08-08</date>
+ <time>15:55:00</time>
  <version>
   <release>0.8.0</release>
   <api>0.8.0</api>
@@ -1098,6 +1098,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>0.8.0</release>
+    <api>0.8.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-08-08</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added new XML report format; --report=xml (feature request #11535)
+      -- Thanks to Brett Bieber for the patch
+    - Added new command line argument --ignore to specify a list of files to skip (feature request #11556)
+    - Added PHPCS and MySource coding standards into the core install
+    - Scope map no longer gets confused by curly braces that act as string offsets
+    - Removed CodeSniffer/SniffException.php as it is no longer used
+    - Unit tests can now be run directly from a CVS checkout
+    - Made private vars and functions protected in PHP_CodeSniffer class so this package can be overridden
+    - Added new Metrics category to Generic conding standard
+      -- Contains Cyclomatic Complexity and Nesting Level sniffs
+      -- Thanks to Johann-Peter Hartmann for the contribution
+    - Added new Generic DisallowTabIndentSniff to throw errors if tabs are used for indentation (feature request #11738)
+      -- PEAR and Squiz standards use this new sniff to throw more specific indentation errors
+    - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
+    - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
+    - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
+      -- BC BREAK: Override the protected member var absoluteLineLimit and set it to zero in custom LineLength sniffs
+      -- Thanks to Johann-Peter Hartmann for the contribution
+    - Comment sniff errors about incorrect tag orders are now more descriptive (feature request #11693)
+    - Fixed bug #11473 : Invalid CamelCaps name when numbers used in names
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.7.0</release>
