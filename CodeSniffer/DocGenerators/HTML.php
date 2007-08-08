@@ -45,21 +45,21 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
     public function generate()
     {
         ob_start();
-            $this->printHeader();
+        $this->printHeader();
 
-            $standardFiles = $this->getStandardFiles();
-            $this->printToc($standardFiles);
+        $standardFiles = $this->getStandardFiles();
+        $this->printToc($standardFiles);
 
-            foreach ($standardFiles as $standard) {
-                $doc = new DOMDocument();
-                $doc->load($standard);
-                $documentation = $doc->getElementsByTagName('documentation')->item(0);
-                $this->processSniff($documentation);
-            }
+        foreach ($standardFiles as $standard) {
+            $doc = new DOMDocument();
+            $doc->load($standard);
+            $documentation = $doc->getElementsByTagName('documentation')->item(0);
+            $this->processSniff($documentation);
+        }
 
-            $this->printFooter();
+        $this->printFooter();
 
-            $content = ob_get_contents();
+        $content = ob_get_contents();
         ob_end_clean();
 
         echo $content;
@@ -155,6 +155,8 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      * Print the table of contents for the standard.
      *
      * The TOC is just an unordered list of bookmarks to sniffs on the page.
+     *
+     * @param array $standardFiles An array of paths to the XML standard files.
      *
      * @return void
      */
