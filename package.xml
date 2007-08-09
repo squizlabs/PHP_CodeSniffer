@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-08-08</date>
  <time>15:55:00</time>
  <version>
-  <release>0.8.0</release>
-  <api>0.8.0</api>
+  <release>0.9.0</release>
+  <api>0.9.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,26 +32,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added new XML report format; --report=xml (feature request #11535)
-    -- Thanks to Brett Bieber for the patch
-  - Added new command line argument --ignore to specify a list of files to skip (feature request #11556)
-  - Added PHPCS and MySource coding standards into the core install
-  - Scope map no longer gets confused by curly braces that act as string offsets
-  - Removed CodeSniffer/SniffException.php as it is no longer used
-  - Unit tests can now be run directly from a CVS checkout
-  - Made private vars and functions protected in PHP_CodeSniffer class so this package can be overridden
-  - Added new Metrics category to Generic conding standard
-    -- Contains Cyclomatic Complexity and Nesting Level sniffs
-    -- Thanks to Johann-Peter Hartmann for the contribution
-  - Added new Generic DisallowTabIndentSniff to throw errors if tabs are used for indentation (feature request #11738)
-    -- PEAR and Squiz standards use this new sniff to throw more specific indentation errors
-  - Generic MultipleStatementAlignmentSniff has new private var to set a padding size limit (feature request #11555)
-  - Generic MultipleStatementAlignmentSniff can now handle assignments that span multiple lines (feature request #11561)
-  - Generic LineLengthSniff now has a max line length after which errors are thrown instead of warnings
-    -- BC BREAK: Override the protected member var absoluteLineLimit and set it to zero in custom LineLength sniffs
-    -- Thanks to Johann-Peter Hartmann for the contribution
-  - Comment sniff errors about incorrect tag orders are now more descriptive (feature request #11693)
-  - Fixed bug #11473 : Invalid CamelCaps name when numbers used in names
+  - Added new Zend coding standard to check code against the Zend Framework standards
+    -- The complete standard is not yet implemeneted
+    -- Specify --standard=Zend to use
+    -- Thanks to Johann-Peter Hartmann for the contribution of some sniffs
  </notes>
  <contents>
   <dir name="/">
@@ -1024,6 +1008,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <file baseinstalldir="PHP" name="SquizCodingStandard.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="Zend">
+      <dir name="Sniffs">
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="ClosingTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidVariableNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <file baseinstalldir="PHP" name="ZendCodingStandard.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
