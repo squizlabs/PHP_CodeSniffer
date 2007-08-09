@@ -108,7 +108,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
         if (substr($varName, 0, 1) === '_') {
             $objOperator = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
             if ($tokens[$objOperator]['code'] === T_DOUBLE_COLON) {
-                // The variable lives within a class, and is reference like
+                // The variable lives within a class, and is referenced like
                 // this: MyClass::$_variable, so we don't know its scope.
                 $inClass = true;
             } else {
@@ -160,7 +160,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             }
         }
 
-        if (PHP_CodeSniffer::isCamelCaps($varName, false, $public) === false) {
+        if (PHP_CodeSniffer::isCamelCaps($varName, false, $public, false) === false) {
             $error = "Variable \"$varName\" is not in valid camel caps format";
             $phpcsFile->addError($error, $stackPtr);
         }
@@ -193,7 +193,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     }
                 }
 
-                if (PHP_CodeSniffer::isCamelCaps($varName, false, true) === false) {
+                if (PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false) {
                     $varName = $matches[0];
                     $error   = "Variable \"$originalVarName\" is not in valid camel caps format";
                     $phpcsFile->addError($error, $stackPtr);
