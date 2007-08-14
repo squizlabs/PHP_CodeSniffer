@@ -136,11 +136,6 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             $testMethodName = substr($methodName, 1);
         }
 
-        // PHP4 destructors are allowed to break our rules.
-        if ($testMethodName === $className) {
-            return;
-        }
-
         if (PHP_CodeSniffer::isCamelCaps($testMethodName, false, $isPublic, false) === false) {
             if ($scopeSpecified === true) {
                 $error = ucfirst($scope)." method name \"$className::$methodName\" is not in camel caps format";
