@@ -28,10 +28,14 @@ class IncorrectCodeAfterOpeningBrace
 
 }//end class
 
-class CorrectClassDeclarationWithExtends extends correctClassDeclaration
+class IncorrectClassDeclarationWithExtends extends correctClassDeclaration
 
 {
 
 }
+
+class IncorrectBracePlacement
+ {
+ }
 
 ?>
