@@ -44,6 +44,7 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
      */
     public function run(PHPUnit_Framework_TestResult $result=null, $filter=false)
     {
+        spl_autoload_register(array('PHP_CodeSniffer', 'autoload'));
         $result = parent::run($result, $filter);
         spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
         return $result;

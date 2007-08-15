@@ -76,6 +76,11 @@ class PHP_CodeSniffer_AllTests
         $suite->addTest(PHP_CodeSniffer_Core_AllTests::suite());
         $suite->addTest(PHP_CodeSniffer_Standards_AllSniffs::suite());
 
+        // Unregister this here because the PEAR tester loads
+        // all package suites before running then, so our autoloader
+        // will cause problems for the packages included after us.
+        spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
+
         return $suite;
 
     }//end suite()
