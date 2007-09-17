@@ -27,6 +27,7 @@ require_once 'PHP/CodeSniffer.php';
 function PHP_CodeSniffer_printUsage()
 {
     echo 'Usage: phpcs [-nlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
+    echo '    [--config-set key value] [--config-show]'.PHP_EOL;
     echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
     echo '    [--ignore=<patterns>] <file> ...'.PHP_EOL;
     echo '        -n           Do not print warnings'.PHP_EOL;
@@ -112,6 +113,19 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             if ($arg === '--version') {
                 echo 'PHP_CodeSniffer version @package_version@ (@package_state@) ';
                 echo 'by Squiz Pty Ltd. (http://www.squiz.net)'.PHP_EOL;
+                exit();
+            }
+
+            if ($arg === '--config-set') {
+                $key   = $_SERVER['argv'][($i + 1)];
+                $value = $_SERVER['argv'][($i + 2)];
+                PHP_CodeSniffer::setConfigData($key, $value);
+                exit();
+            }
+
+            if ($arg === '--config-show') {
+                $data = PHP_CodeSniffer::getALlConfigData();
+                print_r($data);
                 exit();
             }
 

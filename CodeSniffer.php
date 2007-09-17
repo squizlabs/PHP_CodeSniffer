@@ -78,7 +78,7 @@ class PHP_CodeSniffer
     /**
      * The files that have been processed.
      *
-     * @var array(PHP_CodeSniffer_FILE)
+     * @var array(PHP_CodeSniffer_File)
      */
     protected $files = array();
 
@@ -1290,6 +1290,95 @@ class PHP_CodeSniffer
         return (is_file("$standardDir/{$standard}CodingStandard.php") === true);
 
     }//end isInstalledStandard()
+
+
+    /**
+     * Get a single config value.
+     *
+     * Config data is stored in the data dir, in a file called
+     * CodeSniffer.conf. It is a simple PHP array.
+     *
+     * @param string $key The name of the config value.
+     *
+     * @return string
+     * @see setConfigData()
+     * @see getAllConfigData()
+     */
+    public static function getConfigData($key)
+    {
+        $phpCodeSnifferConfig = PHP_CodeSniffer::getAllConfigData();
+
+        if (is_null($phpCodeSnifferConfig) === true) {
+            return null;
+        }
+
+        if (isset($phpCodeSnifferConfig[$key]) === false) {
+            return null;
+        }
+
+        return $phpCodeSnifferConfig[$key];
+
+    }//end getConfigData()
+
+
+    /**
+     * Set a single config value.
+     *
+     * Config data is stored in the data dir, in a file called
+     * CodeSniffer.conf. It is a simple PHP array.
+     *
+     * @param string $key   The name of the config value.
+     * @param string $value The value to set.
+     *
+     * @return boolean
+     * @see getConfigData()
+     */
+    public static function setConfigData($key, $value)
+    {
+        $configFile = dirname(__FILE__).'/data/CodeSniffer.conf';
+        if (is_file($configFile) === false) {
+            $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
+        }
+
+        $phpCodeSnifferConfig = PHP_CodeSniffer::getAllConfigData();
+        $phpCodeSnifferConfig[$key] = $value;
+
+        $output = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
+        $output .= var_export($phpCodeSnifferConfig, true);
+        $output .= "\n?".'>';
+
+        if (file_put_contents($configFile, $output) === false) {
+            return false;
+        }
+
+        return true;
+
+    }//end setConfigData()
+
+
+    /**
+     * Get all config data in an array.
+     *
+     * @param string $key The name of the config value.
+     *
+     * @return string
+     * @see getConfigData()
+     */
+    public static function getAllConfigData()
+    {
+        $configFile = dirname(__FILE__).'/data/CodeSniffer.conf';
+        if (is_file($configFile) === false) {
+            $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
+        }
+
+        if (is_file($configFile) === false) {
+            return null;
+        }
+
+        include $configFile;
+        return $phpCodeSnifferConfig;
+
+    }//end getAllConfigData()
 
 
 }//end class
