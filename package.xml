@@ -32,16 +32,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added a config system for setting config data across phpcs runs
   - Added new Zend coding standard to check code against the Zend Framework standards
-    -- The complete standard is not yet implemeneted
+    -- The complete standard is not yet implemented
     -- Specify --standard=Zend to use
     -- Thanks to Johann-Peter Hartmann for the contribution of some sniffs
+    -- Thanks to Holger Kral for the Code Analyzer sniff
  </notes>
  <contents>
   <dir name="/">
    <file baseinstalldir="PHP" name="CodeSniffer.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
+   <dir name="data">
+    <file baseinstalldir="PHP" name="CodeSniffer.conf" role="data" />
+   </dir>
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
@@ -1013,6 +1019,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </dir>
      <dir name="Zend">
       <dir name="Sniffs">
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="CodeAnalyzerSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="ClosingTagSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1028,6 +1039,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Tests">
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="CodeAnalyzerUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CodeAnalyzerUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="ClosingTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClosingTagUnitTest.php" role="test">
