@@ -87,7 +87,7 @@ if (count($installedStandards) === 0) {
 
 // The default values for config settings.
 $files        = array();
-$standard     = 'PEAR';
+$standard     = null;
 $verbosity    = 0;
 $local        = false;
 $report       = 'full';
@@ -204,8 +204,13 @@ foreach ($files as $file) {
 
 if (count($installedStandards) > 1) {
     if ($standard === null) {
-        echo 'ERROR: You must supply the name of the coding standard to use.'.PHP_EOL.PHP_EOL;
-        PHP_CodeSniffer_printUsage();
+        // They did not supply a standard to use.
+        // Try to get the default from the config system.
+        $standard = PHP_CodeSniffer::getConfigData('default_standard');
+        if ($standard === null) {
+            echo 'ERROR: You must supply the name of the coding standard to use.'.PHP_EOL.PHP_EOL;
+            PHP_CodeSniffer_printUsage();
+        }
     }
 } else {
     $standard = array_pop($installedStandards);
