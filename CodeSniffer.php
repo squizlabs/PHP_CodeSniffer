@@ -1341,11 +1341,7 @@ class PHP_CodeSniffer
             $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
         }
 
-        if (is_file($configFile) === false) {
-            throw new PHP_CodeSniffer_Exception("Config file $configFile does not exist");
-        }
-
-        if (is_writable($configFile) === false) {
+        if (is_file($configFile) === true && is_writable($configFile) === false) {
             throw new PHP_CodeSniffer_Exception("Config file $configFile is not writable");
         }
 
