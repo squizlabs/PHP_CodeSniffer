@@ -163,7 +163,7 @@ class PHP_CodeSniffer
             include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
         } else {
             // Everything else.
-            include $path;
+            @include $path;
         }
 
     }//end autoload()
@@ -235,7 +235,7 @@ class PHP_CodeSniffer
         $this->files     = array();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Registering sniffs... ';
+            echo "Registering sniffs in $standard standard... ";
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo PHP_EOL;
             }
@@ -1332,12 +1332,21 @@ class PHP_CodeSniffer
      *
      * @return boolean
      * @see getConfigData()
+     * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
     public static function setConfigData($key, $value)
     {
         $configFile = dirname(__FILE__).'/data/CodeSniffer.conf';
         if (is_file($configFile) === false) {
             $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
+        }
+
+        if (is_file($configFile) === false) {
+            throw new PHP_CodeSniffer_Exception("Config file $configFile does not exist");
+        }
+
+        if (is_writable($configFile) === false) {
+            throw new PHP_CodeSniffer_Exception("Config file $configFile is not writable");
         }
 
         $phpCodeSnifferConfig       = self::getAllConfigData();
