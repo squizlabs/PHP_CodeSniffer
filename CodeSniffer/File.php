@@ -918,7 +918,6 @@ class PHP_CodeSniffer_File
     private function _recurseScopeMap($stackPtr, $depth=1)
     {
         $opener         = null;
-        $closer         = null;
         $currType       = $this->_tokens[$stackPtr]['code'];
         $endScopeTokens = $this->_getEndScopeTokens();
         $startLine      = $this->_tokens[$stackPtr]['line'];
@@ -1345,7 +1344,7 @@ class PHP_CodeSniffer_File
     private function _getEndScopeTokens()
     {
         $endScopeTokens = array();
-        foreach (self::$_scopeOpeners as $type => $scopeInfo) {
+        foreach (self::$_scopeOpeners as $scopeInfo) {
             $endScopeTokens[] = $scopeInfo['end'];
         }
 

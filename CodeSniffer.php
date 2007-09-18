@@ -1306,7 +1306,7 @@ class PHP_CodeSniffer
      */
     public static function getConfigData($key)
     {
-        $phpCodeSnifferConfig = PHP_CodeSniffer::getAllConfigData();
+        $phpCodeSnifferConfig = self::getAllConfigData();
 
         if (is_null($phpCodeSnifferConfig) === true) {
             return null;
@@ -1340,10 +1340,10 @@ class PHP_CodeSniffer
             $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
         }
 
-        $phpCodeSnifferConfig = PHP_CodeSniffer::getAllConfigData();
+        $phpCodeSnifferConfig       = self::getAllConfigData();
         $phpCodeSnifferConfig[$key] = $value;
 
-        $output = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
+        $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
         $output .= var_export($phpCodeSnifferConfig, true);
         $output .= "\n?".'>';
 
@@ -1358,8 +1358,6 @@ class PHP_CodeSniffer
 
     /**
      * Get all config data in an array.
-     *
-     * @param string $key The name of the config value.
      *
      * @return string
      * @see getConfigData()
