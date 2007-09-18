@@ -47,9 +47,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <dir name="data">
-    <file baseinstalldir="PHP" name="CodeSniffer.conf" role="data" />
-   </dir>
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
