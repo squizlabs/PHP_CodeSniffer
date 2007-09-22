@@ -124,7 +124,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             }
 
             if ($arg === '--config-show') {
-                $data = PHP_CodeSniffer::getALlConfigData();
+                $data = PHP_CodeSniffer::getAllConfigData();
                 print_r($data);
                 exit();
             }
