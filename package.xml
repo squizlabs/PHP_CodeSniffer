@@ -1135,6 +1135,28 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>0.9.0</release>
+    <api>0.9.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-09-24</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added a config system for setting config data across phpcs runs
+    - You can now change the default coding standard from PEAR to something else
+      -- Run: phpcs --config-set default_standard [standard]
+    - Added new Zend coding standard to check code against the Zend Framework standards
+      -- The complete standard is not yet implemented
+      -- Specify --standard=Zend to use
+      -- Thanks to Johann-Peter Hartmann for the contribution of some sniffs
+      -- Thanks to Holger Kral for the Code Analyzer sniff
+   </notes>
+  </release>
+  <release>
+   <version>
     <release>0.8.0</release>
     <api>0.8.0</api>
    </version>
