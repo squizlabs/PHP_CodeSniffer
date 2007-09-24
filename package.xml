@@ -21,7 +21,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
  <date>2007-09-24</date>
- <time>15:17:00</time>
+ <time>15:35:00</time>
  <version>
   <release>0.9.0</release>
   <api>0.9.0</api>
@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
+   <file baseinstalldir="PHP" name="CodeSniffer.sample.conf" role="data" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
