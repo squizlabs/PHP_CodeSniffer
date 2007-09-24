@@ -1336,9 +1336,9 @@ class PHP_CodeSniffer
      */
     public static function setConfigData($key, $value)
     {
-        $configFile = dirname(__FILE__).'/data/CodeSniffer.conf';
+        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
         if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/data/CodeSniffer.conf';
+            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
         }
 
         if (is_file($configFile) === true && is_writable($configFile) === false) {
