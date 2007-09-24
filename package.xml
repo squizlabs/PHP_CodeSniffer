@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-08-08</date>
- <time>15:55:00</time>
+ <date>2007-09-24</date>
+ <time>15:17:00</time>
  <version>
   <release>0.9.0</release>
   <api>0.9.0</api>
