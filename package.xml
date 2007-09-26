@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-09-24</date>
  <time>15:35:00</time>
  <version>
-  <release>0.9.0</release>
-  <api>0.9.0</api>
+  <release>0.9.1</release>
+  <api>0.9.1</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,14 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added a config system for setting config data across phpcs runs
-  - You can now change the default coding standard from PEAR to something else
-    -- Run: phpcs --config-set default_standard [standard]
-  - Added new Zend coding standard to check code against the Zend Framework standards
-    -- The complete standard is not yet implemented
-    -- Specify --standard=Zend to use
-    -- Thanks to Johann-Peter Hartmann for the contribution of some sniffs
-    -- Thanks to Holger Kral for the Code Analyzer sniff
+  - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
  </notes>
  <contents>
   <dir name="/">

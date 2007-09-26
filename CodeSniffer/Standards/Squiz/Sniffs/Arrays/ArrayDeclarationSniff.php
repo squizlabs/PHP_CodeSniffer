@@ -248,11 +248,22 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $currentEntry['arrow'] = $nextToken;
                 $keyUsed               = true;
 
-                // Find the index that uses this double arrow.
-                $index                 = $phpcsFile->findPrevious(array(T_WHITESPACE), ($nextToken - 1), $arrayStart, true);
-                $currentEntry['index'] = $index;
-                if ($maxLength < strlen($tokens[$index]['content'])) {
-                    $maxLength = strlen($tokens[$index]['content']);
+                // Find the start of index that uses this double arrow.
+                $indexEnd              = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $arrayStart, true);
+                $indexStart            = $phpcsFile->findPrevious(T_WHITESPACE, $indexEnd, $arrayStart);
+
+                if ($indexStart === false) {
+                    $index = $indexEnd;
+                } else {
+                    $index = $indexStart + 1;
+                }
+
+                $currentEntry['index']         = $index;
+                $currentEntry['index_content'] = $phpcsFile->getTokensAsString($index, ($indexEnd - $index + 1));
+
+                $indexLength = strlen($currentEntry['index_content']);
+                if ($maxLength < $indexLength) {
+                    $maxLength = $indexLength;
                 }
 
                 // Find the value of this index.
@@ -343,9 +354,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($tokens[$index['arrow']]['column'] !== $arrowStart) {
-                $expected  = ($arrowStart - (strlen($tokens[$index['index']]['content']) + $tokens[$index['index']]['column']));
+                $expected  = ($arrowStart - (strlen($index['index_content']) + $tokens[$index['index']]['column']));
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
-                $found     = ($tokens[$index['arrow']]['column'] - (strlen($tokens[$index['index']]['content']) + $tokens[$index['index']]['column']));
+                $found     = ($tokens[$index['arrow']]['column'] - (strlen($index['index_content']) + $tokens[$index['index']]['column']));
                 $phpcsFile->addError("Array double arrow not aligned correctly; expected $expected but found $found", $index['arrow']);
                 continue;
             }
