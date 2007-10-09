@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
   - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
+  - Fixed error where constants used as defulat values in function declarations were seen as type hints
  </notes>
  <contents>
   <dir name="/">

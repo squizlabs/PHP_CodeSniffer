@@ -1451,6 +1451,16 @@ class PHP_CodeSniffer_File
                 $typeHint = $this->_tokens[$i]['content'];
                 break;
             case T_STRING:
+                // This is a string, so it may be a type hint, but it could
+                // also be a constant used as a default value.
+                $prevComma = $this->findPrevious(T_COMMA, $i, $opener);
+                if ($prevComma !== false) {
+                    $nextEquals = $this->findNext(T_EQUAL, $prevComma, $i);
+                    if ($nextEquals !== false) {
+                        break;
+                    }
+                }
+
                 $typeHint = $this->_tokens[$i]['content'];
                 break;
             case T_CLOSE_PARENTHESIS:
