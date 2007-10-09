@@ -472,10 +472,10 @@ class PHP_CodeSniffer_File
         $handle = fopen($this->_file, 'r');
         if ($handle === false) {
             throw new PHP_CodeSniffer_Exception('File could not be opened; could not auto-detect line endings');
-        } else {
-            $firstLine = fgets($handle);
-            fclose($handle);
         }
+
+        $firstLine = fgets($handle);
+        fclose($handle);
 
         $eolChar = substr($firstLine, -1);
         if ($eolChar === "\n") {
