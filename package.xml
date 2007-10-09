@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-09-24</date>
  <time>15:35:00</time>
  <version>
-  <release>0.9.1</release>
-  <api>0.9.1</api>
+  <release>0.10.0</release>
+  <api>0.10.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,7 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added new Squiz SemicolonSpacingSniff to thow errors if whitespace is found before a semicolon
+  - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
+  - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
  </notes>
  <contents>
@@ -503,6 +504,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Sniffs">
        <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayBracketSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ArrayDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -732,6 +736,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayBracketSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ArrayBracketSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
