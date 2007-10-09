@@ -48,6 +48,8 @@ class Squiz_Tests_WhiteSpace_SemicolonSpacingUnitTest extends AbstractSniffUnitT
                 4 => 1,
                 5 => 2,
                 6 => 1,
+                8 => 1,
+                9 => 1,
                );
 
     }//end getErrorList()

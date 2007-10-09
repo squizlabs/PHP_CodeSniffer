@@ -57,8 +57,9 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[($stackPtr - 1)]['type'] === 'T_WHITESPACE') {
-            $nonSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 2), null, true);
+        $prevType = $tokens[($stackPtr - 1)]['code'];
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
             $expected = $tokens[$nonSpace]['content'].';';
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
             $error    = "Space found before semicolon; expected \"$expected\" but found \"$found\"";
