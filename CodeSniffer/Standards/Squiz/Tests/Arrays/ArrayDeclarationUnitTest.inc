@@ -131,4 +131,10 @@ $args = array(
          '"'.$this->id.'"',
          (int) $hasSessions,
         );
+
+// No errors.
+$paths = array(
+          Init::ROOT_DIR.'/Systems'   => 'Systems',
+          Init::ROOT_DIR.'/Installer' => 'Systems',
+         );
 ?>
