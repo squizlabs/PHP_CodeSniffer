@@ -94,6 +94,28 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
             return;
         }
 
+        // Deal with this type of variable: self::$var by setting the var
+        // token to be "self" rather than "$var".
+        if ($tokens[($varToken - 1)]['code'] === T_DOUBLE_COLON) {
+            $varToken = ($varToken - 2);
+        }
+
+        // Deal with this type of variable: $$var by setting the var
+        // token to be "$" rather than "$var".
+        if ($tokens[($varToken - 1)]['content'] === '$') {
+            $varToken--;
+        }
+
+        // Ignore member var definitions.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($varToken - 1), null, true);
+        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers) === true) {
+            return;
+        }
+
+        if ($tokens[$prev]['code'] === T_STATIC) {
+            return;
+        }
+
         // Make sure this variable is the first thing on the line.
         $varLine  = $tokens[$varToken]['line'];
         $prevLine = 0;
@@ -112,16 +134,16 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         // Ignore the first part of FOR loops as we are allowed to
         // assign variables there even though the variable is not the
-        // first thing on the line.
+        // first thing on the line. Also ignore WHILE loops.
         if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS && isset($tokens[$i]['parenthesis_owner']) === true) {
             $owner = $tokens[$i]['parenthesis_owner'];
-            if ($tokens[$owner]['code'] === T_FOR) {
+            if ($tokens[$owner]['code'] === T_FOR || $tokens[$owner]['code'] === T_WHILE) {
                 return;
             }
         }
 
         if ($prevLine === $varLine) {
-            $error = 'Assignments must the first block of code on a line';
+            $error = 'Assignments must be the first block of code on a line';
             $phpcsFile->addError($error, $stackPtr);
         }
 

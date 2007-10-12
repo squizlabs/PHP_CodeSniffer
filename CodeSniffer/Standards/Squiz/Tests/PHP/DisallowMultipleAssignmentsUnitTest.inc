@@ -15,5 +15,20 @@ function getVar($varname='var', $var='var')
         }
     }
 
+    while ($row = $query->fetch(PDO::FETCH_NUM)) {
+        $result[$row[0]] = array()
+        $result[$row[0]][] = $current;
+
+        self::$_inTransaction = TRUE;
+        $$varName = $varValue;
+    }
+
 }//end getVar()
+
+class myClass
+{
+    private static $_dbh = NULL;
+    public $dbh = NULL;
+    protected $dbh = NULL;
+}
 ?>
