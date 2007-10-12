@@ -17,7 +17,12 @@
  */
 
 error_reporting(E_ALL | E_STRICT);
-require_once 'PHP/CodeSniffer.php';
+
+if (is_file('../CodeSniffer.php') === true) {
+    include_once '../CodeSniffer.php';
+} else {
+    include_once 'PHP/CodeSniffer.php';
+}
 
 /**
  * Prints out the usage information for this script.
@@ -208,8 +213,7 @@ if (count($installedStandards) > 1) {
         // Try to get the default from the config system.
         $standard = PHP_CodeSniffer::getConfigData('default_standard');
         if ($standard === null) {
-            echo 'ERROR: You must supply the name of the coding standard to use.'.PHP_EOL.PHP_EOL;
-            PHP_CodeSniffer_printUsage();
+            $standard = 'PEAR';
         }
     }
 } else {

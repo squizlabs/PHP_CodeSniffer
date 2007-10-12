@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Main phpcs script can now be run from a CVS checkout without installing the package
+  - Fixed a problem where PEAR was no longer the default standard
   - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
   - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
   - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
