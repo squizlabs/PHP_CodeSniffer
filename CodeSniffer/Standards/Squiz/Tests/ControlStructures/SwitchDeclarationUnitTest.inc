@@ -5,13 +5,16 @@ switch ($something) {
     case '1':
         $case = '1';
     break;
+
     case '2':
     case '3':
         $case = '5';
     break;
+
     case '4':
         $case = '4';
     break;
+
     default:
         $case = null;
     break;
@@ -22,13 +25,16 @@ switch ($something) {
     case '1':
         $case = '1';
         break;
+
 case '2':
     case '3':
         $case = '5';
     break;
+
 case '4':
     $case = '4';
 break;
+
     default:
         $case = null;
     break;
@@ -62,25 +68,31 @@ default:
 switch ($something) {
     case '1':
         $case = '1';
+
     case '2':
     case '3':
         $case = '5';
+
     case '4':
         $case = '4';
+
     default:
         $case = null;
 }
 
 // Invalid, and missing BREAKS.
 switch ($something) {
-    Case '1':
+    Case '1' :
         $case = '1';
-case '2':
-    case '3':
+
+case  '2':
+    case  '3' :
         $case = '5';
-    case '4':
+
+    case'4':
         $case = '4';
-    Default:
+
+    Default :
         $case = null;
         $something = 'hello';
         $other = 'hi';
@@ -90,6 +102,41 @@ case '2':
 switch ($condition) {
     case 'string':
         $varStr = 'test';
+
+    default:
+        // Ignore the default.
+    break;
+}
+
+// No default comment
+switch ($condition) {
+    case 'string':
+        $varStr = 'test';
+
+    default:
+    break;
+}
+
+// Break problems
+switch ($condition) {
+    case 'string':
+
+
+        $varStr = 'test';
+
+    break;
+
+
+    case 'bool':
+        $varStr = 'test';
+
+
+    break;
+    default:
+
+        $varStr = 'test';
+    break;
+
 }
 
 ?>
