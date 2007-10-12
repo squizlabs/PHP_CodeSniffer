@@ -83,6 +83,11 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 continue;
             }
 
+            if (isset($tokens[$varToken]['bracket_opener']) === true) {
+                $varToken = $tokens[$varToken]['bracket_opener'];
+                continue;
+            }
+
             if ($tokens[$varToken]['type'] === 'T_VARIABLE') {
                 // We found our variable.
                 break;
