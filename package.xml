@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
   - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
   - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
+  - Added new Squiz DisallowMultipleAssignmentsSniff to throw errors if multiple assignments are on the same line
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz SwitchDeclarationSniff now contains more checks
@@ -159,7 +160,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
-        <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" /> 
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseConstantStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantStandard.xml" role="php" />
        </dir>
@@ -666,6 +667,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowObEndFlushSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -932,6 +936,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
