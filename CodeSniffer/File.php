@@ -613,6 +613,7 @@ class PHP_CodeSniffer_File
         }//end for
 
         $this->_createLineMap();
+        $this->_createBracketMap();
         $this->_createParenthesisMap();
         $this->_createParenthesisNestingMap();
         $this->_createScopeMap();
@@ -791,6 +792,38 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createColumnMap()
+
+
+    /**
+     * Creates a map for opening and closing of square brackets.
+     *
+     * Each bracket token (T_OPEN_SQUARE_BRACKET and T_CLOSE_SQUARE_BRACKET)
+     * has a reference to their opening and closing bracket
+     * (bracket_opener and bracket_closer).
+     *
+     * @return void
+     */
+    private function _createBracketMap()
+    {
+        $openers   = array();
+        $numTokens = count($this->_tokens);
+        $owners    = array();
+
+        for ($i = 0; $i < $numTokens; $i++) {
+            if ($this->_tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
+                $openers[] = $i;
+            } else if ($this->_tokens[$i]['code'] === T_CLOSE_SQUARE_BRACKET) {
+                if (empty($openers) === false) {
+                    $opener                                   = array_pop($openers);
+                    $this->_tokens[$i]['bracket_opener']      = $opener;
+                    $this->_tokens[$i]['bracket_closer']      = $i;
+                    $this->_tokens[$opener]['bracket_opener'] = $opener;
+                    $this->_tokens[$opener]['bracket_closer'] = $i;
+                }
+            }
+        }
+
+    }//end _createBracketMap()
 
 
     /**
