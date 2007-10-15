@@ -57,7 +57,25 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
     {
         $tokens = $phpcsFile->getTokens();
 
-        $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 1), null, false);
+        // Find the opening bracket of the inline IF.
+        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+            if (isset($tokens[$i]['parenthesis_opener']) === true && $tokens[$i]['parenthesis_opener'] < $i) {
+                $i = $tokens[$i]['parenthesis_opener'];
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+                break;
+            }
+        }
+
+        if ($i <= 0) {
+            // Could not find the begining of the statement, so we can't
+            // find the end either.
+            return;
+        }
+
+        $statementEnd = $tokens[$i]['parenthesis_closer'];
 
         // Make sure it's all on the same line.
         if ($tokens[$statementEnd]['line'] !== $tokens[$stackPtr]['line']) {

@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Break statements must be followed by a blank line or the closing brace
     -- There must be no blank line before a break statement
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
+  - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
   - Fixed error where constants used as defulat values in function declarations were seen as type hints
  </notes>
  <contents>

@@ -52,6 +52,7 @@ class Squiz_Tests_ControlStructures_InlineIfDeclarationUnitTest extends Abstract
                 9  => 1,
                 10 => 1,
                 13 => 1,
+                20 => 1,
                );
 
     }//end getErrorList()
