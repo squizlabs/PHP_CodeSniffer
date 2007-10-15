@@ -58,6 +58,18 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Should this test be skipped for some reason.
+     *
+     * @return void
+     */
+    protected function shouldSkipTest()
+    {
+        return false;
+
+    }//end shouldSkipTest()
+
+
+    /**
      * Tests the extending classes Sniff class.
      *
      * @return void
@@ -65,6 +77,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      */
     protected final function runTest()
     {
+        // Skip this test if we can't run in this environment.
+        if ($this->shouldSkipTest() === true) {
+            $this->markTestSkipped();
+        }
+
         // The basis for determining file locations.
         $basename = substr(get_class($this), 0, -8);
 

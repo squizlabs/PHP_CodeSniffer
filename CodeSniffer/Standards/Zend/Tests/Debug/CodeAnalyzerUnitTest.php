@@ -34,6 +34,19 @@ class Zend_Tests_Debug_CodeAnalyzerUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Should this test be skipped for some reason.
+     *
+     * @return void
+     */
+    protected function shouldSkipTest()
+    {
+        $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
+        return (is_null($analyzerPath));
+
+    }//end shouldSkipTest()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
