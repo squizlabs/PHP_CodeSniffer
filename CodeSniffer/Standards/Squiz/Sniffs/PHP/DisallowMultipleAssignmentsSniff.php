@@ -78,7 +78,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         for ($varToken = ($stackPtr - 1); $varToken >= 0; $varToken--) {
             // Skip brackets.
-            if (isset($tokens[$varToken]['parenthesis_opener']) === true) {
+            if (isset($tokens[$varToken]['parenthesis_opener']) === true && $tokens[$varToken]['parenthesis_opener'] < $varToken) {
                 $varToken = $tokens[$varToken]['parenthesis_opener'];
                 continue;
             }
@@ -94,7 +94,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
             }
         }
 
-        if ($varToken === 0) {
+        if ($varToken <= 0) {
             // Didn't find a variable.
             return;
         }
