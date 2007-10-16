@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
   - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
   - Added new Squiz DisallowMultipleAssignmentsSniff to throw errors if multiple assignments are on the same line
+  - Added new Squiz ScopeKeywordSpacingSniff to throw errors if there is not a single space after a scope modifier
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz SwitchDeclarationSniff now contains more checks
@@ -750,6 +751,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ScopeIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ScopeKeywordSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="SemicolonSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1042,6 +1046,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ScopeKeywordSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeKeywordSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.inc" role="test" />
