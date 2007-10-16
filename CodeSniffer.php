@@ -674,6 +674,38 @@ class PHP_CodeSniffer
 
 
     /**
+     * Prints all errors and warnings for each file processed, in a CSV format.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printCSVErrorReport($showWarnings=true)
+    {
+        echo 'File,Line,Type,Message'.PHP_EOL;
+
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+
+            foreach ($file['messages'] as $line => $lineErrors) {
+                foreach ($lineErrors as $error) {
+                    $message = str_replace('"', '\"', $error['message']);
+                    $type = strtolower($error['type']);
+                    echo "$filename,$line,$type,\"$message\"".PHP_EOL;
+                    $errorsShown++;
+                }
+            }//end foreach
+
+        }//end foreach
+
+        return $errorsShown;
+
+    }//end printCSVErrorReport()
+
+
+    /**
      * Prints all errors and warnings for each file processed.
      *
      * Errors and warnings are displayed together, grouped by file.

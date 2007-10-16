@@ -33,6 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Main phpcs script can now be run from a CVS checkout without installing the package
+  - Added a new CSV report format
+    -- Header row indicates what position each element is in
+    -- Always use the header row to determine positions rather than assuming the format, as it may change
   - Fixed a problem where PEAR was no longer the default standard
   - Square bracket tokens now have bracket_opener and bracket_closer set
   - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
