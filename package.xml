@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
   - Added new Squiz DisallowMultipleAssignmentsSniff to throw errors if multiple assignments are on the same line
   - Added new Squiz ScopeKeywordSpacingSniff to throw errors if there is not a single space after a scope modifier
+  - Added new Squiz ObjectInstantiationSniff to throw errors is new objects are not assigned to a variable
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz SwitchDeclarationSniff now contains more checks
@@ -661,6 +662,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Objects">
+        <file baseinstalldir="PHP" name="ObjectInstantiationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Operators">
         <file baseinstalldir="PHP" name="ComparisonOperatorUsageSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -927,6 +933,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Objects">
+        <file baseinstalldir="PHP" name="ObjectInstantiationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ObjectInstantiationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
