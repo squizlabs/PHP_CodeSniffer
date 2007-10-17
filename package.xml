@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ObjectInstantiationSniff to throw errors is new objects are not assigned to a variable
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
+  - Squiz ForbiddenFunctionsSniff now recommends echo() instead of print()
   - Squiz SwitchDeclarationSniff now contains more checks
     -- A single space is required after the case keyword
     -- No space is allowed before the colon in a case or default statement

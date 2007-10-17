@@ -47,8 +47,25 @@ class Squiz_Sniffs_PHP_ForbiddenFunctionsSniff extends Generic_Sniffs_PHP_Forbid
     protected $forbiddenFunctions = array(
                                      'sizeof'          => 'count',
                                      'delete'          => 'unset',
+                                     'print'           => 'echo',
                                      'create_function' => null,
                                     );
+
+
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     */
+    public function register()
+    {
+        return array(
+                T_STRING,
+                T_PRINT,
+               );
+
+    }//end register()
+
 
 }//end class
 
