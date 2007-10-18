@@ -121,7 +121,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
             if (in_array($type, array_keys(self::$_invalidOps)) === true) {
                 $error  = 'Operator '.$tokens[$i]['content'].' prohibited;';
                 $error .= ' use '.self::$_invalidOps[$type].' instead';
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $i);
                 $foundOps++;
             } else if (in_array($type, self::$_validOps) === true) {
                 $foundOps++;
