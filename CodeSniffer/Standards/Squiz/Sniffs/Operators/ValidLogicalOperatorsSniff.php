@@ -44,7 +44,6 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                 T_LOGICAL_AND,
                 T_LOGICAL_OR,
                 T_LOGICAL_XOR,
-                T_IS_NOT_EQUAL,
                );
 
     }//end register()
@@ -67,7 +66,6 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                          'and' => '&&',
                          'or'  => '||',
                          'xor' => '^',
-                         '<>'  => '!==',
                         );
 
         $operator = $tokens[$stackPtr]['content'];
