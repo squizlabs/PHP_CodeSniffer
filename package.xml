@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Header row indicates what position each element is in
     -- Always use the header row to determine positions rather than assuming the format, as it may change
   - Fixed a problem where PEAR was no longer the default standard
+  - XML and CSV report formats now contain information about which column the error occurred at
+    -- Useful if you want to highlight the token that caused the error in a custom application
   - Square bracket tokens now have bracket_opener and bracket_closer set
   - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
   - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets

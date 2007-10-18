@@ -654,12 +654,17 @@ class PHP_CodeSniffer_File
         }
 
         $lineNum = $this->_tokens[$stackPtr]['line'];
+        $column  = $this->_tokens[$stackPtr]['column'];
 
         if (isset($this->_errors[$lineNum]) === false) {
             $this->errors[$lineNum] = array();
         }
 
-        $this->_errors[$lineNum][] = $error;
+        if (isset($this->_errors[$lineNum][$column]) === false) {
+            $this->errors[$lineNum][$column] = array();
+        }
+
+        $this->_errors[$lineNum][$column][] = $error;
         $this->_errorCount++;
 
     }//end addError()
@@ -681,11 +686,17 @@ class PHP_CodeSniffer_File
         }
 
         $lineNum = $this->_tokens[$stackPtr]['line'];
+        $column  = $this->_tokens[$stackPtr]['column'];
+
         if (isset($this->_warnings[$lineNum]) === false) {
             $this->_warnings[$lineNum] = array();
         }
 
-        $this->_warnings[$lineNum][] = $warning;
+        if (isset($this->_warnings[$lineNum][$column]) === false) {
+            $this->_warnings[$lineNum][$column] = array();
+        }
+
+        $this->_warnings[$lineNum][$column][] = $warning;
         $this->_warningCount++;
 
     }//end addWarning()

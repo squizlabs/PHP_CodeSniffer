@@ -592,34 +592,42 @@ class PHP_CodeSniffer
 
             // Merge errors and warnings.
             foreach ($errors as $line => $lineErrors) {
-                $newErrors = array();
-                foreach ($lineErrors as $message) {
-                    $newErrors[] = array(
-                                    'message' => $message,
-                                    'type'    => 'ERROR',
-                                   );
-                }
+                foreach ($lineErrors as $column => $colErrors) {
+                    $newErrors = array();
+                    foreach ($colErrors as $message) {
+                        $newErrors[] = array(
+                                        'message' => $message,
+                                        'type'    => 'ERROR',
+                                       );
+                    }
 
-                $errors[$line] = $newErrors;
-            }
+                    $errors[$line][$column] = $newErrors;
+                }
+            }//end foreach
 
             if ($showWarnings === true) {
                 foreach ($warnings as $line => $lineWarnings) {
-                    $newWarnings = array();
-                    foreach ($lineWarnings as $message) {
-                        $newWarnings[] = array(
-                                          'message' => $message,
-                                          'type'    => 'WARNING',
-                                         );
-                    }
+                    foreach ($lineWarnings as $column => $colWarnings) {
+                        $newWarnings = array();
+                        foreach ($colWarnings as $message) {
+                            $newWarnings[] = array(
+                                              'message' => $message,
+                                              'type'    => 'WARNING',
+                                             );
+                        }
 
-                    if (isset($errors[$line]) === true) {
-                        $errors[$line] = array_merge($newWarnings, $errors[$line]);
-                    } else {
-                        $errors[$line] = $newWarnings;
+                        if (isset($errors[$line]) === false) {
+                            $errors[$line] = array();
+                        }
+
+                        if (isset($errors[$line][$column]) === true) {
+                            $errors[$line][$column] = array_merge($newWarnings, $errors[$line][$column]);
+                        } else {
+                            $errors[$line][$column] = $newWarnings;
+                        }
                     }
-                }
-            }
+                }//end foreach
+            }//end if
 
             ksort($errors);
 
@@ -654,11 +662,13 @@ class PHP_CodeSniffer
             echo ' <file name="'.$filename.'" errors="'.$file['errors'].'" warnings="'.$file['warnings'].'">'.PHP_EOL;
 
             foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $error) {
-                    $error['type'] = strtolower($error['type']);
-                    echo '  <'.$error['type'].' line="'.$line.'">';
-                    echo htmlspecialchars($error['message']).'</'.$error['type'].'>'.PHP_EOL;
-                    $errorsShown++;
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $error['type'] = strtolower($error['type']);
+                        echo '  <'.$error['type'].' line="'.$line.'" column="'.$column.'">';
+                        echo htmlspecialchars($error['message']).'</'.$error['type'].'>'.PHP_EOL;
+                        $errorsShown++;
+                    }
                 }
             }//end foreach
 
@@ -682,7 +692,7 @@ class PHP_CodeSniffer
      */
     public function printCSVErrorReport($showWarnings=true)
     {
-        echo 'File,Line,Type,Message'.PHP_EOL;
+        echo 'File,Line,Column,Type,Message'.PHP_EOL;
 
         $errorsShown = 0;
 
@@ -690,11 +700,13 @@ class PHP_CodeSniffer
         foreach ($report['files'] as $filename => $file) {
 
             foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $error) {
-                    $message = str_replace('"', '\"', $error['message']);
-                    $type = strtolower($error['type']);
-                    echo "$filename,$line,$type,\"$message\"".PHP_EOL;
-                    $errorsShown++;
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $message = str_replace('"', '\"', $error['message']);
+                        $type = strtolower($error['type']);
+                        echo "$filename,$line,$column,$type,\"$message\"".PHP_EOL;
+                        $errorsShown++;
+                    }
                 }
             }//end foreach
 
@@ -768,21 +780,23 @@ class PHP_CodeSniffer
             $maxErrorSpace = (80 - strlen($paddingLine2));
 
             foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $error) {
-                    // The padding that goes on the front of the line.
-                    $padding  = ($maxLineLength - strlen($line));
-                    $errorMsg = wordwrap($error['message'], $maxErrorSpace, PHP_EOL."$paddingLine2");
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        // The padding that goes on the front of the line.
+                        $padding  = ($maxLineLength - strlen($line));
+                        $errorMsg = wordwrap($error['message'], $maxErrorSpace, PHP_EOL."$paddingLine2");
 
-                    echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
-                    if ($error['type'] === 'ERROR') {
-                        if ($showWarnings === true && $file['warnings'] > 0) {
-                            echo '  ';
+                        echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
+                        if ($error['type'] === 'ERROR') {
+                            if ($showWarnings === true && $file['warnings'] > 0) {
+                                echo '  ';
+                            }
                         }
-                    }
 
-                    echo ' | '.$errorMsg.PHP_EOL;
-                    $errorsShown++;
-                }
+                        echo ' | '.$errorMsg.PHP_EOL;
+                        $errorsShown++;
+                    }//end foreach
+                }//end foreach
             }//end foreach
 
             echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
