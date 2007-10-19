@@ -131,17 +131,20 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
         $allProblems = array();
 
-        foreach ($foundErrors as $line => $errors) {
-            if (isset($allProblems[$line]) === false) {
-                $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
+        foreach ($foundErrors as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $errors) {
+                if (isset($allProblems[$line]) === false) {
+                    $allProblems[$line] = array(
+                                           'expected_errors'   => 0,
+                                           'expected_warnings' => 0,
+                                           'found_errors'      => array(),
+                                           'found_warnings'    => array(),
+                                          );
+                }
+
+                $allProblems[$line]['found_errors'] = array_merge($allProblems[$line]['found_errors'], $errors);
             }
 
-            $allProblems[$line]['found_errors'] = $errors;
             if (isset($expectedErrors[$line]) === true) {
                 $allProblems[$line]['expected_errors'] = $expectedErrors[$line];
             } else {
@@ -149,7 +152,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             }
 
             unset($expectedErrors[$line]);
-        }
+        }//end foreach
 
         foreach ($expectedErrors as $line => $numErrors) {
             if (isset($allProblems[$line]) === false) {
