@@ -58,31 +58,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
         $tokens = $phpcsFile->getTokens();
 
         $functionName = $phpcsFile->findNext(array(T_STRING), $stackPtr);
-        $openBracket  = $phpcsFile->findNext(array(T_OPEN_PARENTHESIS), $functionName);
-        if ($tokens[$openBracket]['line'] !== $tokens[$functionName]['line']) {
-            return;
-        }
-
-        $closeBracket = $stackPtr;
-
-        // Search through and find the closing bracket.
-        $openers     = array($openBracket);
-        $brackets    = array(
-                        T_OPEN_PARENTHESIS,
-                        T_CLOSE_PARENTHESIS,
-                       );
-        $nextBracket = $openBracket;
-        while (($nextBracket = $phpcsFile->findNext($brackets, ($nextBracket + 1))) !== false) {
-            if ($tokens[$nextBracket]['code'] === T_OPEN_PARENTHESIS) {
-                $openers[] = $nextBracket;
-            } else {
-                array_pop($openers);
-                if ($openers === array()) {
-                    $closeBracket = $nextBracket;
-                    break;
-                }
-            }
-        }
+        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
         $nextParam = $openBracket;
         $params    = array();
