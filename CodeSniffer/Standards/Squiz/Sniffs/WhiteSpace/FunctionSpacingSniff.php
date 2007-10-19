@@ -126,8 +126,8 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
             // the previous function and no blank lines before this one as well.
-            $currentLine = $tokens[$prevContent]['line'];
-            $prevLine    = ($currentLine - 1);
+            $currentLine = $tokens[$stackPtr]['line'];
+            $prevLine    = ($tokens[$prevContent]['line'] - 1);
             $i           = ($stackPtr - 1);
             $foundLines  = 0;
             while ($currentLine != $prevLine && $currentLine > 1 && $i > 0) {
