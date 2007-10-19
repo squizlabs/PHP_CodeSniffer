@@ -45,7 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
   - Added new Squiz DisallowMultipleAssignmentsSniff to throw errors if multiple assignments are on the same line
   - Added new Squiz ScopeKeywordSpacingSniff to throw errors if there is not a single space after a scope modifier
-  - Added new Squiz ObjectInstantiationSniff to throw errors is new objects are not assigned to a variable
+  - Added new Squiz ObjectInstantiationSniff to throw errors if new objects are not assigned to a variable
+  - Added new Squiz FunctionDuplicateArgumentSniff to throw errors if argument is declared multiple times in a function
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz ForbiddenFunctionsSniff now recommends echo() instead of print()
@@ -648,6 +649,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="FunctionDuplicateArgumentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="GlobalFunctionSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -915,6 +919,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionDuplicateArgumentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionDuplicateArgumentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="GlobalFunctionUnitTest.inc" role="test" />
