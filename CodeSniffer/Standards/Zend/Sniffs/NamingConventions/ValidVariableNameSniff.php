@@ -97,7 +97,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                 if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true, false) === false) {
                     $error = "Variable \"$originalVarName\" is not in valid camel caps format";
                     $phpcsFile->addError($error, $var);
-                }  else if (preg_match('|\d|', $objVarName)) {
+                } else if (preg_match('|\d|', $objVarName)) {
                     $warning = "Variable \"$originalVarName\" contains numbers but this is discouraged";
                     $phpcsFile->addWarning($warning, $stackPtr);
                 }
