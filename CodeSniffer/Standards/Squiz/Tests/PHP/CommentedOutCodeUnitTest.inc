@@ -19,4 +19,14 @@ function myFunction()
 #eval('$var = 4;');
 #$string = '$var = 4;';
 #eval($string);
+
+if ($blah) {
+    // This is a multi-line comment that goes over two indented
+    // lines.
+}
+
+// short.
+
+                // If it's null, then there must be no parameters for this
+                // method.
 ?>

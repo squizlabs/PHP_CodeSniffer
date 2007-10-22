@@ -111,6 +111,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                         T_WHITESPACE,
                         T_STRING,
                         T_STRING_CONCAT,
+                        T_ENCAPSED_AND_WHITESPACE,
                        );
 
         $numTokens  = count($stringTokens);
@@ -134,7 +135,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             $numTokens -= 4;
         }
 
-        if ($numCode > 2) {
+        if ($numCode >= 2) {
             $numCode -= 2;
         }
 
