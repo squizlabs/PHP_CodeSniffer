@@ -98,6 +98,30 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     }
 
                     /*
+                        Ensure empty CASE statements are not allowed.
+                        They must have some code content in them. A comment is not
+                        enough.
+                    */
+
+                    $foundContent = false;
+                    for ($i = ($tokens[$nextCase]['scope_opener'] + 1); $i < $nextBreak; $i++) {
+                        if ($tokens[$i]['code'] === T_CASE) {
+                            $i = $tokens[$i]['scope_opener'];
+                            continue;
+                        }
+
+                        if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                            $foundContent = true;
+                            break;
+                        }
+                    }
+
+                    if ($foundContent === false) {
+                        $error = 'Empty CASE statements are not allowed';
+                        $phpcsFile->addError($error, $nextCase);
+                    }
+
+                    /*
                         Ensure there is no blank line before
                         the BREAK statement.
                     */

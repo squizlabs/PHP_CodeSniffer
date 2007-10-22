@@ -139,4 +139,22 @@ switch ($condition) {
 
 }
 
+switch ($var) {
+    case 'one':
+    case 'two':
+    break;
+
+    case 'three':
+        // Nothing to do.
+    break;
+
+    case 'four':
+        echo $hi;
+    break;
+
+    default:
+        // No default.
+    break;
+}
+
 ?>
