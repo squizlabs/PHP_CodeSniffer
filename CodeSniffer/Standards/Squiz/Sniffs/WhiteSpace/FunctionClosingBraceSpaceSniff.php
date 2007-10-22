@@ -14,15 +14,10 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
-}
-
 /**
  * Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff.
  *
- * Checks that an empty line is present before the closing brace of any
- * function.
+ * Checks that there is one empty line before the closing brace of a function.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -33,67 +28,48 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_CodeSniffer_Sniff
 {
 
 
     /**
-     * Constructs the test with the tokens it wishes to listen for.
+     * Returns an array of tokens this test wants to listen for.
      *
-     * @return void
+     * @return array
      */
-    public function __construct()
+    public function register()
     {
-        parent::__construct(array(T_FUNCTION), array(T_CLOSE_CURLY_BRACKET));
+        return array(T_FUNCTION);
 
-    }//end __construct()
+    }//end register()
 
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The current file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     * @param int                  $currScope A pointer to the start of the scope.
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
-    public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        // If this is not an end of function curly brace, return.
-        if ((isset($tokens[$currScope]['scope_closer']) === false) || $tokens[$currScope]['scope_closer'] !== $stackPtr) {
-            return;
+
+        $closeBrace  = $tokens[$stackPtr]['scope_closer'];
+        $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
+
+        $braceLine = $tokens[$closeBrace]['line'];
+        $prevLine  = $tokens[$prevContent]['line'];
+
+        $found = ($braceLine - $prevLine - 1);
+        if ($found !== 1) {
+            $error = "Expected 1 blank line before closing function brace; $found found";
+            $phpcsFile->addError($error, $closeBrace);
         }
 
-        // Find the last non-whitespace character in the method.
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
-
-        if ($lastContent === false) {
-            return;
-        }
-
-        if (strpos($tokens[$lastContent]['content'], $phpcsFile->eolChar) !== false) {
-            // Comments add an extra line, so this extra exception needs to be made.
-            $lineDifference = ($tokens[$stackPtr]['line'] - $tokens[$lastContent]['line']);
-        } else {
-            $lineDifference = ($tokens[$stackPtr]['line'] - $tokens[($lastContent + 1)]['line']);
-        }
-
-        $error = '';
-        if ($lineDifference === 2) {
-            return;
-        } else if ($lineDifference < 2) {
-            $error = 'Expected 1 blank line before closing brace; 0 found';
-        } else {
-            $lineDifference--;
-            $error = "Expected 1 blank line before closing brace; $lineDifference found";
-        }
-
-        $phpcsFile->addError($error, $stackPtr);
-
-    }//end processTokenWithinScope()
+    }//end process()
 
 
 }//end class
