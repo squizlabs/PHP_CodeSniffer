@@ -18,8 +18,8 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-if (is_file('../CodeSniffer.php') === true) {
-    include_once '../CodeSniffer.php';
+if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer.php';
 } else {
     include_once 'PHP/CodeSniffer.php';
 }
