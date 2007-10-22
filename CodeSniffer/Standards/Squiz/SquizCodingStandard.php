@@ -53,6 +53,7 @@ class PHP_CodeSniffer_Standards_Squiz_SquizCodingStandard extends PHP_CodeSniffe
                 'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
                 'Generic/Sniffs/PHP/UpperCaseConstantSniff.php',
                 'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
+                'PEAR/Sniffs/Files/IncludingFileSniff.php',
                 'PEAR/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php',
                 'Zend/Sniffs/Debug/CodeAnalyzerSniff.php',
                );

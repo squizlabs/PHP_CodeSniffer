@@ -79,8 +79,8 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS) {
             $error  = '"'.$tokens[$stackPtr]['content'].'"';
-            $error .= ' is a statement, not a function. ';
-            $error .= 'No parentheses are required.';
+            $error .= ' is a statement, not a function; ';
+            $error .= 'no parentheses are required';
             $phpcsFile->addError($error, $stackPtr);
         }
 
@@ -109,23 +109,23 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         if ($inCondition === true) {
             // We are inside a conditional statement. We need an include_once.
             if ($tokenCode === T_REQUIRE_ONCE) {
-                $error  = 'File is being conditionally included. ';
-                $error .= 'Use "include_once" instead.';
+                $error  = 'File is being conditionally included; ';
+                $error .= 'use "include_once" instead';
                 $phpcsFile->addError($error, $stackPtr);
             } else if ($tokenCode === T_REQUIRE) {
-                $error  = 'File is being conditionally included. ';
-                $error .= 'Use "include" instead.';
+                $error  = 'File is being conditionally included; ';
+                $error .= 'use "include" instead';
                 $phpcsFile->addError($error, $stackPtr);
             }
         } else {
             // We are unconditionally including, we need a require_once.
             if ($tokenCode === T_INCLUDE_ONCE) {
-                $error  = 'File is being unconditionally included. ';
-                $error .= 'Use "require_once" instead.';
+                $error  = 'File is being unconditionally included; ';
+                $error .= 'use "require_once" instead';
                 $phpcsFile->addError($error, $stackPtr);
             } else if ($tokenCode === T_INCLUDE) {
-                $error  = 'File is being unconditionally included. ';
-                $error .= 'Use "require" instead.';
+                $error  = 'File is being unconditionally included; ';
+                $error .= 'use "require" instead';
                 $phpcsFile->addError($error, $stackPtr);
             }
         }//end if
