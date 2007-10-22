@@ -29,5 +29,10 @@ class MyClass
     }
 }
 
+function emptyFunction()
+{
+
+}//end emptyFunction();
+
 
 ?>

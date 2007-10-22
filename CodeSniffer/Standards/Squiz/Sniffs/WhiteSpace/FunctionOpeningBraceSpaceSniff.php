@@ -60,6 +60,13 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
         $openBrace   = $tokens[$stackPtr]['scope_opener'];
         $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($openBrace + 1), null, true);
 
+        if ($nextContent === $tokens[$stackPtr]['scope_closer']) {
+             // The next bit of content is the closing brace, so this
+             // is an empty function and should have a blank line
+             // between the opening and closing braces.
+            return;
+        }
+
         $braceLine = $tokens[$openBrace]['line'];
         $nextLine  = $tokens[$nextContent]['line'];
 
