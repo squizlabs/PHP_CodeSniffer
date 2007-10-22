@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ObjectInstantiationSniff to throw errors if new objects are not assigned to a variable
   - Added new Squiz FunctionDuplicateArgumentSniff to throw errors if argument is declared multiple times in a function
   - Added new Squiz FunctionOpeningBraceSpaceSniff to ensure there are no blank lines after a function open brace
+  - Added new Squiz CommentedOutCodeSniff to warn about comments that looks like they are commented out code blocks
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz ForbiddenFunctionsSniff now recommends echo() instead of print()
@@ -689,6 +690,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -974,6 +978,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowMultipleAssignmentsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
