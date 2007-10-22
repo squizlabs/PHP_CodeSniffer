@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Squiz ScopeKeywordSpacingSniff to throw errors if there is not a single space after a scope modifier
   - Added new Squiz ObjectInstantiationSniff to throw errors if new objects are not assigned to a variable
   - Added new Squiz FunctionDuplicateArgumentSniff to throw errors if argument is declared multiple times in a function
+  - Added new Squiz FunctionOpeningBraceSpaceSniff to ensure there are no blank lines after a function open brace
   - Added CyclomaticComplexitySniff to Squiz standard
   - Added NestingLevelSniff to Squiz standard
   - Squiz ForbiddenFunctionsSniff now recommends echo() instead of print()
@@ -750,6 +751,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="FunctionOpeningBraceSpaceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="FunctionSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1049,6 +1053,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionClosingBraceSpaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionOpeningBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionOpeningBraceSpaceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc" role="test" />
