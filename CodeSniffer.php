@@ -703,7 +703,7 @@ class PHP_CodeSniffer
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
                         $message = str_replace('"', '\"', $error['message']);
-                        $type = strtolower($error['type']);
+                        $type    = strtolower($error['type']);
                         echo "$filename,$line,$column,$type,\"$message\"".PHP_EOL;
                         $errorsShown++;
                     }
