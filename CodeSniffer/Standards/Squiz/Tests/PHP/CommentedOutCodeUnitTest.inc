@@ -23,10 +23,18 @@ function myFunction()
 if ($blah) {
     // This is a multi-line comment that goes over two indented
     // lines.
+
+    // If it's null, then there must be no parameters for this
+    // method.
 }
 
 // short.
 
-                // If it's null, then there must be no parameters for this
-                // method.
+// Continue, as we're done with this token.
+
+/**
+ * The listeners array.
+ *
+ * @var array(PHP_CodeSniffer_Sniff)
+ */
 ?>

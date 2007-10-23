@@ -92,6 +92,14 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
+            if (substr($tokenContent, 0, 1) === '*') {
+                $tokenContent = substr($tokenContent, 1);
+            }
+
+            if (substr($tokenContent, 0, 3) === '/**') {
+                $tokenContent = substr($tokenContent, 3);
+            }
+
             if (substr($tokenContent, 0, 2) === '/*') {
                 $tokenContent = substr($tokenContent, 2);
             }
@@ -114,7 +122,36 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                         T_ENCAPSED_AND_WHITESPACE,
                        );
 
-        $numTokens  = count($stringTokens);
+        $numTokens = count($stringTokens);
+
+        /*
+            We know what the first two and last two tokens should be
+            (because we put them there) so ignore this comment if those
+            tokens were not parsed correctly. It obvously means this is not
+            valid code.
+        */
+
+        // First token is always the opening PHP tag.
+        if ($stringTokens[0]['code'] !== T_OPEN_TAG) {
+            return;
+        }
+
+        // Second token is always plain whitespace.
+        if ($stringTokens[1]['code'] !== T_WHITESPACE) {
+            return;
+        }
+
+        // Last token is always the closing PHP tag.
+        if ($stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG) {
+            return;
+        }
+
+        // Second last token is always whitespace or a comment, depending
+        // on the code inside the comment.
+        if (in_array($stringTokens[($numTokens - 2)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            return;
+        }
+
         $numComment = 0;
         $numCode    = 0;
 
