@@ -658,7 +658,7 @@ class PHP_CodeSniffer_File
      */
     public static function tokenizeString($string, $eolChar='\n')
     {
-        $tokens      = token_get_all($string);
+        $tokens      = @token_get_all($string);
         $finalTokens = array();
 
         $newStackPtr = 0;
