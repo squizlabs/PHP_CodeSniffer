@@ -19,7 +19,9 @@ class MyClass
     function MyFunction4() {
         // Some code goes here.
     }
+
+    public function register();
 }
 
-
+public function register();
 ?>

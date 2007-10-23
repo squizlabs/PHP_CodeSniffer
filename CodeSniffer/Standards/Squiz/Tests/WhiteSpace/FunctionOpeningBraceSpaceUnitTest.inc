@@ -27,6 +27,8 @@ class MyClass
         // Some code goes here.
         echo $code;
     }
+
+    public function register();
 }
 
 function emptyFunction()
@@ -34,5 +36,5 @@ function emptyFunction()
 
 }//end emptyFunction();
 
-
+public function register();
 ?>

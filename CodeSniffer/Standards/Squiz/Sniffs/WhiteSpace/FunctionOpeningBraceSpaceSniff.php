@@ -57,6 +57,11 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            // Probably an interface method.
+            return;
+        }
+
         $openBrace   = $tokens[$stackPtr]['scope_opener'];
         $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($openBrace + 1), null, true);
 

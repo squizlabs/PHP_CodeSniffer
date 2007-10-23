@@ -57,6 +57,11 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            // Probably an interface method.
+            return;
+        }
+
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];
         $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
 
