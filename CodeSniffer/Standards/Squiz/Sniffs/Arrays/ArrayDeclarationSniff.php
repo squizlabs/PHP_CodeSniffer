@@ -249,13 +249,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $keyUsed               = true;
 
                 // Find the start of index that uses this double arrow.
-                $indexEnd              = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $arrayStart, true);
-                $indexStart            = $phpcsFile->findPrevious(T_WHITESPACE, $indexEnd, $arrayStart);
+                $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $arrayStart, true);
+                $indexStart = $phpcsFile->findPrevious(T_WHITESPACE, $indexEnd, $arrayStart);
 
                 if ($indexStart === false) {
                     $index = $indexEnd;
                 } else {
-                    $index = $indexStart + 1;
+                    $index = ($indexStart + 1);
                 }
 
                 $currentEntry['index']         = $index;

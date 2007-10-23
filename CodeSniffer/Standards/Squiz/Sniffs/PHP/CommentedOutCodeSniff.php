@@ -109,7 +109,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             }
 
             $content .= ' '.$tokenContent;
-        }
+        }//end for
 
         $content .= ' ?>';
 

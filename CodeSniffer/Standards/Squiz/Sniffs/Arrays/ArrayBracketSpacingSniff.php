@@ -76,7 +76,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
             if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 $nonSpace = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 2), null, true);
                 $expected = $tokens[$stackPtr]['content'].$tokens[$nonSpace]['content'];
-                $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace- $stackPtr + 1));
+                $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace - $stackPtr + 1));
                 $error    = "Space found after square bracket; expected \"$expected\" but found \"$found\"";
                 $phpcsFile->addError($error, $stackPtr);
             }

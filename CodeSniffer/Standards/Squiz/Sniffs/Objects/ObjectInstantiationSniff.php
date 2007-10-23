@@ -57,7 +57,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
     {
         $tokens = $phpcsFile->getTokens();
 
-        $allowedTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $allowedTokens   = PHP_CodeSniffer_Tokens::$emptyTokens;
         $allowedTokens[] = T_BITWISE_AND;
 
         $prev = $phpcsFile->findPrevious($allowedTokens, ($stackPtr - 1), null, true);

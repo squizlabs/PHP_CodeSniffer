@@ -154,6 +154,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
     }//end process()
 
+
 }//end class
 
 ?>

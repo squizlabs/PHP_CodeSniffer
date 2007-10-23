@@ -51,7 +51,6 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
      */
     protected function getPatterns()
     {
-
         return array(
                 'do {EOL...} while (...);EOL',
                 'while (...) {EOL',
