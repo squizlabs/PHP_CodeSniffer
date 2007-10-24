@@ -36,7 +36,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added a new CSV report format
     -- Header row indicates what position each element is in
     -- Always use the header row to determine positions rather than assuming the format, as it may change
-  - Fixed a problem where PEAR was no longer the default standard
   - XML and CSV report formats now contain information about which column the error occurred at
     -- Useful if you want to highlight the token that caused the error in a custom application
   - Square bracket tokens now have bracket_opener and bracket_closer set
@@ -67,6 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
   - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
   - Fixed error where constants used as defulat values in function declarations were seen as type hints
+  - Fixed bug #12316 : PEAR is no longer the default standard
  </notes>
  <contents>
   <dir name="/">
