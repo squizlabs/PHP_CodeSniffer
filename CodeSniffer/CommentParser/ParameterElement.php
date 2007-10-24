@@ -248,7 +248,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
 
 
     /**
-     * Returns true if this parameter aligns with the other parameter.
+     * Returns true if this parameter's variable aligns with the other's.
      *
      * @param PHP_CodeSniffer_CommentParser_ParameterElement $other The other param
      *                                                              to check
@@ -256,7 +256,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      *
      * @return boolean
      */
-    public function alignsWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
+    public function alignsVariableWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
     {
         // @param type $variable Comment.
         // @param <-a-><---b---->
@@ -267,10 +267,50 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
             return false;
         }
 
+        return true;
+
+    }//end alignsVariableWith()
+
+
+    /**
+     * Returns true if this parameter's comment aligns with the other's.
+     *
+     * @param PHP_CodeSniffer_CommentParser_ParameterElement $other The other param
+     *                                                              to check
+     *                                                              alignment with.
+     *
+     * @return boolean
+     */
+    public function alignsCommentWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
+    {
         // Compares the index before param comment.
         $otherComment = (strlen($other->_varName) + strlen($other->_commentWhitespace));
         $thisComment  = (strlen($this->_varName) + strlen($this->_commentWhitespace));
         if ($otherComment !== $thisComment) {
+            return false;
+        }
+
+        return true;
+
+    }//end alignsCommentWith()
+
+
+    /**
+     * Returns true if this parameter aligns with the other paramter.
+     *
+     * @param PHP_CodeSniffer_CommentParser_ParameterElement $other The other param
+     *                                                              to check
+     *                                                              alignment with.
+     *
+     * @return boolean
+     */
+    public function alignsWith(PHP_CodeSniffer_CommentParser_ParameterElement $other)
+    {
+        if ($this->alignsVariableWith($other) === false) {
+            return false;
+        }
+
+        if ($this->alignsCommentWith($other) === false) {
             return false;
         }
 

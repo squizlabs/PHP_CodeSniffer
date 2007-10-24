@@ -353,11 +353,16 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $previousName = ($previousParam->getVarName() !== '') ? $previousParam->getVarName() : 'UNKNOWN';
 
                     // Check to see if the parameters align properly.
-                    if ($param->alignsWith($previousParam) === false) {
-                        $error = 'Parameters '.$previousName.' ('.($pos - 1).') and '.$paramName.' ('.$pos.') do not align';
+                    if ($param->alignsVariableWith($previousParam) === false) {
+                        $error = 'The variable names for parameters '.$previousName.' ('.($pos - 1).') and '.$paramName.' ('.$pos.') do not align';
                         $this->currentFile->addError($error, $errorPos);
                     }
-                }
+
+                    if ($param->alignsCommentWith($previousParam) === false) {
+                        $error = 'The comments for parameters '.$previousName.' ('.($pos - 1).') and '.$paramName.' ('.$pos.') do not align';
+                        $this->currentFile->addError($error, $errorPos);
+                    }
+                }//end if
 
                 // Make sure the names of the parameter comment matches the
                 // actual parameter.
