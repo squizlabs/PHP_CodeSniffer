@@ -218,4 +218,18 @@ function emptyFunctionDocComment()
  * @return bool
  */
 function myFunction($arg1) {}
+
+
+/**
+ * Test function.
+ *
+ * @param string $arg1 An argument
+ *
+ * @access public
+ * @return bool
+ */
+
+echo $blah;
+
+function myFunction($arg1) {}
 ?>

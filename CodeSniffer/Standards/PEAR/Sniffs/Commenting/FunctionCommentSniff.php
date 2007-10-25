@@ -107,10 +107,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->currentFile = $phpcsFile;
-
-        $tokens = $phpcsFile->getTokens();
-
         $find = array(
                  T_COMMENT,
                  T_DOC_COMMENT,
@@ -125,6 +121,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             return;
         }
 
+        $this->currentFile = $phpcsFile;
+        $tokens            = $phpcsFile->getTokens();
+
         // If the token that we found was a class or a function, then this
         // function has no doc comment.
         $code = $tokens[$commentEnd]['code'];
@@ -134,8 +133,18 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $phpcsFile->addError($error, $stackPtr);
             return;
         } else if ($code !== T_DOC_COMMENT) {
-            $error = 'Missing function doc comment';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError('Missing function doc comment', $stackPtr);
+            return;
+        }
+
+        // If there is any code between the function keyword and the doc block
+        // then the doc block is not for us.
+        $ignore   = PHP_CodeSniffer_Tokens::$scopeModifiers;
+        $ignore[] = T_STATIC;
+        $ignore[] = T_WHITESPACE;
+        $prevToken = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        if ($prevToken !== $commentEnd) {
+            $phpcsFile->addError('Missing function doc comment', $stackPtr);
             return;
         }
 
@@ -145,8 +154,18 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $this->_classToken = $classToken;
         }
 
-        // Find the first doc comment.
-        $commentStart      = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        // If the first T_OPEN_TAG is right before the comment, it is probably
+        // a file comment.
+        $commentStart  = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        $prevToken     = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
+        if ($tokens[$prevToken]['code'] === T_OPEN_TAG) {
+            // Is this the first open tag?
+            if ($stackPtr === 0 || $phpcsFile->findPrevious(T_OPEN_TAG, ($prevToken - 1)) === false) {
+                $phpcsFile->addError('Missing function doc comment', $stackPtr);
+                return;
+            }
+        }
+
         $comment           = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 

@@ -67,6 +67,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
   - Fixed error where constants used as defulat values in function declarations were seen as type hints
   - Fixed bug #12316 : PEAR is no longer the default standard
+  - Fixed bug #12321 : wrong detection of missing function docblock
  </notes>
  <contents>
   <dir name="/">
