@@ -37,4 +37,10 @@ if ($blah) {
  *
  * @var array(PHP_CodeSniffer_Sniff)
  */
+
+//
+
+/*
+*/
+
 ?>

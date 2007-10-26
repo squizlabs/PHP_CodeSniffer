@@ -92,10 +92,6 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
-            if (substr($tokenContent, 0, 1) === '*') {
-                $tokenContent = substr($tokenContent, 1);
-            }
-
             if (substr($tokenContent, 0, 3) === '/**') {
                 $tokenContent = substr($tokenContent, 3);
             }
@@ -105,7 +101,11 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             }
 
             if (substr($tokenContent, -2) === '*/') {
-                $tokenContent = substr($tokenContent, 0, - 2);
+                $tokenContent = substr($tokenContent, 0, -2);
+            }
+
+            if (substr($tokenContent, 0, 1) === '*') {
+                $tokenContent = substr($tokenContent, 1);
             }
 
             $content .= ' '.$tokenContent;
