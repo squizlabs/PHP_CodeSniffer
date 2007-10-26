@@ -25,6 +25,7 @@
 * @author       Rayn Ong rong@squiz.net
 * @author
 * @copyright  1997~1994 The PHP Group
+* @copyright  1997~1994 The PHP Group
 * @license    http://www.php.net/license/3_0.txt
 * @see
 * @see

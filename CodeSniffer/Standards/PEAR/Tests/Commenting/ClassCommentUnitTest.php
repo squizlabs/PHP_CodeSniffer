@@ -79,7 +79,6 @@ class PEAR_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
         return array(
                 69 => 1,
                 71 => 1,
-                78 => 1,
                );
 
     }//end getWarningList()
