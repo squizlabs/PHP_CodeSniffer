@@ -63,6 +63,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Break statements must be followed by a blank line or the closing brace
     -- There must be no blank line before a break statement
   - Squiz standard is now using the PEAR IncludingFileSniff
+  - PEAR ClassCommentSniff no longer complains about unknown tags
+  - PEAR FileCommentSniff no longer complains about unknown tags
+  - PEAR FileCommentSniff now accepts multiple @copyright tags
+  - Squiz BlockCommentSniff now checks that comment starts with a capital letter
+  - Squiz InlineCommentSniff now has better checking to ensure comment starts with a capital letter
+  - Squiz ClassCommentSniff now checks that short and long comments start with a capital letter
+  - Squiz FunctionCommentSniff now checks that short and long comments start with a capital letter
+  - Squiz VariableCommentSniff now checks that short and long comments start with a capital letter
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
   - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
   - Fixed error where constants used as defulat values in function declarations were seen as type hints

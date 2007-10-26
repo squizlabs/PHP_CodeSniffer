@@ -198,7 +198,13 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 $newlineCount += $newlineBetween;
-            }
+
+                $testLong = trim($long);
+                if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+                    $error = 'File comment long description must start with a captial letter';
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                }
+            }//end if
 
             // Exactly one blank line before tags.
             $tags = $this->commentParser->getTagOrders();
@@ -216,9 +222,15 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Short description must be single line and end with a full stop.
-            $lastChar = $short[(strlen($short) - 1)];
-            if (substr_count($short, $phpcsFile->eolChar) !== 0) {
+            $testShort = trim($short);
+            $lastChar  = $testShort[(strlen($testShort) - 1)];
+            if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
                 $error = 'File comment short description must be on a single line';
+                $phpcsFile->addError($error, ($commentStart + 1));
+            }
+
+            if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+                $error = 'File comment short description must start with a captial letter';
                 $phpcsFile->addError($error, ($commentStart + 1));
             }
 
@@ -278,8 +290,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Get the line number for current tag.
             $tagName = ucfirst($tag);
-            if ($tagName === 'Author') {
-                // Author tag is different because it returns an array.
+            if ($tagName === 'Author' || $tagName === 'Copyright') {
+                // These tags are different because they return an array.
                 $tagName .= 's';
             }
 
@@ -392,7 +404,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
                     // Separate keyword so it does not get replaced when we commit.
-                    $error = 'Expected keyword "%'.'release version%" for version number';
+                    $error = 'Expected keyword "%'.'release_version%" for version number';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -491,9 +503,11 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processCopyright($errorPos)
+    protected function processCopyrights($errorPos)
     {
-        $copyright = $this->commentParser->getCopyRight();
+        $copyrights = $this->commentParser->getCopyrights();
+        $copyright  = $copyrights[0];
+
         if ($copyright !== null) {
             $content = $copyright->getContent();
             if (empty($content) === true) {
@@ -506,7 +520,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processCopyright()
+    }//end processCopyrights()
 
 
     /**

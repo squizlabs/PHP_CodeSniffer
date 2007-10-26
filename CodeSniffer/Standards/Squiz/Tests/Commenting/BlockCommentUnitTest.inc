@@ -5,7 +5,7 @@
 */
 
 /*
-    Same with multi-line
+    same with multi-line
     comments.
 */
 
@@ -16,7 +16,7 @@
 */
 
 /*
-    This is not valid:
+    - This is not valid:
    Not indented correctly.
 */
 

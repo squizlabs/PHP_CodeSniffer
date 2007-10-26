@@ -140,7 +140,13 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
 
             $newlineCount += $newlineBetween;
-        }
+
+            $testLong = trim($long);
+            if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+                $error = 'Variable comment long description must start with a captial letter';
+                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+            }
+        }//end if
 
         // Exactly one blank line before tags.
         $tags = $this->commentParser->getTagOrders();
@@ -158,9 +164,15 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         }
 
         // Short description must be single line and end with a full stop.
-        $lastChar = $short[(strlen($short) - 1)];
-        if (substr_count($short, $phpcsFile->eolChar) !== 0) {
+        $testShort = trim($short);
+        $lastChar  = $testShort[(strlen($testShort) - 1)];
+        if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
             $error = 'Variable comment short description must be on a single line';
+            $phpcsFile->addError($error, ($commentStart + 1));
+        }
+
+        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+            $error = 'Variable comment short description must start with a captial letter';
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 

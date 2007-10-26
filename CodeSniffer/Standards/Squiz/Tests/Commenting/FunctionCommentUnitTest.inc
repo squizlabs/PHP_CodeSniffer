@@ -3,7 +3,7 @@ class PHP_CodeSniffer_File
 {
 
     /**
-     * A simple function comment.
+     * a simple function comment.
      *
      * long desc here
      *
@@ -37,7 +37,7 @@ class PHP_CodeSniffer_File
      * Span multiple line
      *
      *
-     * Long description with extra blank line before and after
+     * 0Long description with extra blank line before and after
      *
      *
      * @return void
@@ -49,7 +49,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * A simple function comment.
+     * -A simple function comment.
      * @return void
      */
     public function missingNewlinesBeforeTags()

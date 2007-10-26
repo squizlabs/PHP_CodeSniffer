@@ -55,6 +55,7 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 2  => 1,
                 6  => 3,
                 8  => 1,
+                10 => 1,
                 21 => 1,
                 22 => 3,
                 23 => 2,

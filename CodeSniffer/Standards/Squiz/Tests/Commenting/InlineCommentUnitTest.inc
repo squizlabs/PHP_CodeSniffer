@@ -51,7 +51,7 @@ function test()
     Or does it?
 */
 
-// This is a simple multi-line
+// 0This is a simple multi-line
 // comment!
 $code = 'hello';
 

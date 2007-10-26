@@ -41,6 +41,8 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
+                6   => 1,
+                8   => 1,
                 10  => 4,
                 12  => 3,
                 13  => 3,
@@ -50,9 +52,11 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 28  => 1,
                 35  => 3,
                 38  => 1,
+                40  => 1,
                 41  => 1,
                 43  => 1,
                 44  => 1,
+                52  => 1,
                 53  => 1,
                 54  => 1,
                 66  => 1,
@@ -61,6 +65,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 96  => 1,
                 103 => 1,
                 109 => 1,
+                110 => 1,
                 112 => 2,
                 122 => 1,
                 123 => 4,
@@ -78,6 +83,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 160 => 2,
                 168 => 1,
                 175 => 1,
+                182 => 1,
                 184 => 1,
                 185 => 3,
                 186 => 1,

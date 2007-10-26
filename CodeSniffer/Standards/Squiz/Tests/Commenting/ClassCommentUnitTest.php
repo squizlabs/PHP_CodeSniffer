@@ -43,7 +43,7 @@ class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
         return array(
                 4   => 1,
                 15  => 1,
-                22  => 2,
+                22  => 1,
                 25  => 1,
                 28  => 1,
                 32  => 1,
@@ -56,6 +56,10 @@ class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
                 96  => 1,
                 106 => 1,
                 117 => 1,
+                127 => 1,
+                129 => 1,
+                140 => 1,
+                142 => 1,
                );
 
     }//end getErrorList()

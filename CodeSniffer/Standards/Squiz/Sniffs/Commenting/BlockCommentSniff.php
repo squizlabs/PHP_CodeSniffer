@@ -116,6 +116,11 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                 $error     = "First line of comment not aligned correctly; expected $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $commentLines[1]);
             }
+
+            if (preg_match('|[A-Z]|', $commentText[0]) === 0) {
+                $error = 'Block comments must start with a captial letter';
+                $phpcsFile->addError($error, $commentLines[1]);
+            }
         }
 
         // Check that each line of the comment is indented past the star.

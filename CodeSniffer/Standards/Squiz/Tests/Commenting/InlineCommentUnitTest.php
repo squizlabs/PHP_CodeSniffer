@@ -50,6 +50,7 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
                 32 => 2,
                 36 => 1,
                 44 => 2,
+                54 => 1,
                 58 => 1,
                 61 => 1,
                 64 => 2,

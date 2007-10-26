@@ -121,4 +121,30 @@ class Missing_Short_Desc
 {
 
 }//end class
+
+
+/**
+ * sample class comment.
+ *
+ * - long description with extra blank line before and after
+ *
+ * @since 4.0.0
+ */
+class Incorect_Case
+{
+
+}//end class
+
+
+/**
+ * 0sample class comment.
+ *
+ * long description with extra blank line before and after
+ *
+ * @since 4.0.0
+ */
+class Incorect_Case2
+{
+
+}//end class
 ?>
