@@ -69,7 +69,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz BlockCommentSniff now checks that comment starts with a capital letter
   - Squiz InlineCommentSniff now has better checking to ensure comment starts with a capital letter
   - Squiz ClassCommentSniff now checks that short and long comments start with a capital letter
-  - Squiz FunctionCommentSniff now checks that short and long comments start with a capital letter
+  - Squiz FunctionCommentSniff now checks that short, long and param comments start with a capital letter
   - Squiz VariableCommentSniff now checks that short and long comments start with a capital letter
   - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
   - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff

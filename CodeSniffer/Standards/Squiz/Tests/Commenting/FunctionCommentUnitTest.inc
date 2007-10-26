@@ -135,8 +135,8 @@ class PHP_CodeSniffer_File
      * Comments not capitalised.
      *
      * @param integer  $one    comment
-     * @param array    $two    comment
-     * @param MyClas   $three  comment
+     * @param array    $two    -comment
+     * @param MyClas   $three  0comment
      *
      * @since
      * @return void

@@ -696,7 +696,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     // Param comments must start with a capital letter and
                     // end with the full stop.
                     $firstChar = $paramComment{0};
-                    if (strtoupper($firstChar) !== $firstChar) {
+                    if (preg_match('|[A-Z]|', $firstChar) === 0) {
                         $error = 'Param comment must start with a capital letter';
                         $this->currentFile->addError($error, $errorPos);
                     }
