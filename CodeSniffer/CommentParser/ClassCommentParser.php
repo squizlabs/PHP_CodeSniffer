@@ -62,11 +62,11 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
     private $_category = null;
 
     /**
-     * The copyright element of this class.
+     * The copyright elements of this class.
      *
-     * @var SingleElement
+     * @var array(SingleElement)
      */
-    private $_copyright = null;
+    private $_copyrights = array();
 
     /**
      * The licence element of this class.
@@ -119,7 +119,7 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
 
 
     /**
-     * Parses the copyright tag of this class comment.
+     * Parses the copyright tags of this class comment.
      *
      * @param array $tokens The tokens that comprise this tag.
      *
@@ -127,8 +127,9 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseCopyright($tokens)
     {
-        $this->_copyright = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'copyright', $this->phpcsFile);
-        return $this->_copyright;
+        $copyright           = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'copyright', $this->phpcsFile);
+        $this->_copyrights[] = $copyright;
+        return $copyright;
 
     }//end parseCopyright()
 
@@ -246,15 +247,15 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
 
 
     /**
-     * Returns the copyright of this class comment.
+     * Returns the copyrights of this class comment.
      *
      * @return PHP_CodeSniffer_CommentParser_SingleElement
      */
-    public function getCopyright()
+    public function getCopyrights()
     {
-        return $this->_copyright;
+        return $this->_copyrights;
 
-    }//end getCopyright()
+    }//end getCopyrights()
 
 
     /**

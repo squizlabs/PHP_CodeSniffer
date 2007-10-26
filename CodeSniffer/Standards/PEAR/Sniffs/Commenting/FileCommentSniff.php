@@ -199,13 +199,6 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            // Check for unknown/deprecated tags.
-            $unknownTags = $this->commentParser->getUnknown();
-            foreach ($unknownTags as $errorTag) {
-                $error = "@$errorTag[tag] tag is not allowed in file comment";
-                $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
-            }
-
             // Check the PHP Version.
             if (strstr(strtolower($long), 'php version') === false) {
                 $error = 'PHP version not specified';
@@ -248,7 +241,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                  ),
                  'copyright'  => array(
                                   'required'       => false,
-                                  'allow_multiple' => false,
+                                  'allow_multiple' => true,
                                   'order_text'     => 'follows @author',
                                  ),
                  'license'    => array(
@@ -512,7 +505,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      * the errorPos for each element separately
      *
      * @param int $commentStart The position in the stack where
-     *                          the comment started..
+     *                          the comment started.
      *
      * @return void
      */
@@ -544,16 +537,18 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Process the copyright tag.
+     * Process the copyright tags.
      *
-     * @param int $errorPos The line number where the error occurs.
+     * @param int $commentStart The position in the stack where
+     *                          the comment started.
      *
      * @return void
      */
-    protected function processCopyright($errorPos)
+    protected function processCopyrights($commentStart)
     {
-        $copyright = $this->commentParser->getCopyRight();
-        if ($copyright !== null) {
+        $copyrights = $this->commentParser->getCopyrights();
+        foreach ($copyrights as $copyright) {
+            $errorPos = ($commentStart + $copyright->getLine());
             $content = $copyright->getContent();
             if ($content !== '') {
                 $matches = array();
@@ -580,7 +575,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }//end if
         }//end if
 
-    }//end processCopyright()
+    }//end processCopyrights()
 
 
     /**
