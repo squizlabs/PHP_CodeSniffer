@@ -167,17 +167,20 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             $allProblems[$line]['expected_errors'] = $numErrors;
         }
 
-        foreach ($foundWarnings as $line => $warnings) {
-            if (isset($allProblems[$line]) === false) {
-                $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
+        foreach ($foundWarnings as $line => $lineWarnings) {
+            foreach ($lineWarnings as $column => $warnings) {
+                if (isset($allProblems[$line]) === false) {
+                    $allProblems[$line] = array(
+                                           'expected_errors'   => 0,
+                                           'expected_warnings' => 0,
+                                           'found_errors'      => array(),
+                                           'found_warnings'    => array(),
+                                          );
+                }
+
+                $allProblems[$line]['found_warnings'] = $warnings;
             }
 
-            $allProblems[$line]['found_warnings'] = $warnings;
             if (isset($expectedWarnings[$line]) === true) {
                 $allProblems[$line]['expected_warnings'] = $expectedWarnings[$line];
             } else {
@@ -185,7 +188,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             }
 
             unset($expectedWarnings[$line]);
-        }
+        }//end foreach
 
         foreach ($expectedWarnings as $line => $numWarnings) {
             if (isset($allProblems[$line]) === false) {
@@ -242,7 +245,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                     $foundMessage    .= "$numWarnings warning(s)";
                     if ($numWarnings !== 0) {
                         $foundString .= 'warning(s)';
-                        $errors      .= implode(PHP_EOL.' -> ', $problems['found_warnings']);
+                        if (empty($errors) === false) {
+                            $errors .= PHP_EOL.' -> ';
+                        }
+
+                        $errors .= implode(PHP_EOL.' -> ', $problems['found_warnings']);
                     }
                 }
 
