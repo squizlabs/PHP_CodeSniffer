@@ -177,13 +177,6 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             }
         }
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            $error = "@$errorTag[tag] tag is not allowed in class comment";
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
-        }
-
         // Check each tag.
         $this->processTags($commentStart, $commentEnd);
 
