@@ -692,7 +692,7 @@ class PHP_CodeSniffer
      */
     public function printCSVErrorReport($showWarnings=true)
     {
-        echo 'File,Line,Column,Type,Message'.PHP_EOL;
+        echo 'File,Line,Column,Severity,Message'.PHP_EOL;
 
         $errorsShown = 0;
 
@@ -702,9 +702,10 @@ class PHP_CodeSniffer
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
-                        $message = str_replace('"', '\"', $error['message']);
-                        $type    = strtolower($error['type']);
-                        echo "$filename,$line,$column,$type,\"$message\"".PHP_EOL;
+                        $filename = str_replace('"', '\"', $filename);
+                        $message  = str_replace('"', '\"', $error['message']);
+                        $type     = strtolower($error['type']);
+                        echo "\"$filename\",$line,$column,$type,\"$message\"".PHP_EOL;
                         $errorsShown++;
                     }
                 }
