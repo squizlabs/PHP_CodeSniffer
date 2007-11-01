@@ -20,11 +20,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-09-24</date>
- <time>15:35:00</time>
+ <date>2007-11-01</date>
+ <time>13:34:00</time>
  <version>
-  <release>0.10.0</release>
-  <api>0.10.0</api>
+  <release>1.0.0RC1</release>
+  <api>1.0.0RC1</api>
  </version>
  <stability>
   <release>beta</release>
@@ -1236,6 +1236,64 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.0.0RC1</release>
+    <api>1.0.0RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-11-01</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Main phpcs script can now be run from a CVS checkout without installing the package
+    - Added a new CSV report format
+      -- Header row indicates what position each element is in
+      -- Always use the header row to determine positions rather than assuming the format, as it may change
+    - XML and CSV report formats now contain information about which column the error occurred at
+      -- Useful if you want to highlight the token that caused the error in a custom application
+    - Square bracket tokens now have bracket_opener and bracket_closer set
+    - Added new Squiz SemicolonSpacingSniff to throw errors if whitespace is found before a semicolon
+    - Added new Squiz ArrayBracketSpacingSniff to throw errors if whitespace is found around square brackets
+    - Added new Squiz ObjectOperatorSpacingSniff to throw errors if whitespace is found around object operators
+    - Added new Squiz DisallowMultipleAssignmentsSniff to throw errors if multiple assignments are on the same line
+    - Added new Squiz ScopeKeywordSpacingSniff to throw errors if there is not a single space after a scope modifier
+    - Added new Squiz ObjectInstantiationSniff to throw errors if new objects are not assigned to a variable
+    - Added new Squiz FunctionDuplicateArgumentSniff to throw errors if argument is declared multiple times in a function
+    - Added new Squiz FunctionOpeningBraceSpaceSniff to ensure there are no blank lines after a function open brace
+    - Added new Squiz CommentedOutCodeSniff to warn about comments that looks like they are commented out code blocks
+    - Added CyclomaticComplexitySniff to Squiz standard
+    - Added NestingLevelSniff to Squiz standard
+    - Squiz ForbiddenFunctionsSniff now recommends echo() instead of print()
+    - Squiz ValidLogicalOperatorsSniff now recommends ^ instead of xor
+    - Squiz SwitchDeclarationSniff now contains more checks
+      -- A single space is required after the case keyword
+      -- No space is allowed before the colon in a case or default statement
+      -- All switch statements now require a default case
+      -- Default case must contain a break statement
+      -- Empty default case must contain a comment describing why the default is ignored
+      -- Empty case statements are not allowed
+      -- Case and default statements must not be followed by a blank line
+      -- Break statements must be followed by a blank line or the closing brace
+      -- There must be no blank line before a break statement
+    - Squiz standard is now using the PEAR IncludingFileSniff
+    - PEAR ClassCommentSniff no longer complains about unknown tags
+    - PEAR FileCommentSniff no longer complains about unknown tags
+    - PEAR FileCommentSniff now accepts multiple @copyright tags
+    - Squiz BlockCommentSniff now checks that comment starts with a capital letter
+    - Squiz InlineCommentSniff now has better checking to ensure comment starts with a capital letter
+    - Squiz ClassCommentSniff now checks that short and long comments start with a capital letter
+    - Squiz FunctionCommentSniff now checks that short, long and param comments start with a capital letter
+    - Squiz VariableCommentSniff now checks that short and long comments start with a capital letter
+    - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
+    - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
+    - Fixed error where constants used as defulat values in function declarations were seen as type hints
+    - Fixed bug #12316 : PEAR is no longer the default standard
+    - Fixed bug #12321 : wrong detection of missing function docblock
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.9.0</release>
