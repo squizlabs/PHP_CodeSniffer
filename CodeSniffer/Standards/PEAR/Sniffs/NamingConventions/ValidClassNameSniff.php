@@ -64,13 +64,13 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
         $className = $phpcsFile->findNext(T_STRING, $stackPtr);
         $name      = trim($tokens[$className]['content']);
 
-        // Make sure the first letter is a captial.
+        // Make sure the first letter is a capital.
         if (preg_match('|^[A-Z]|', $name) === 0) {
-            $error = ucfirst($tokens[$stackPtr]['content']).' name must begin with a captial letter';
+            $error = ucfirst($tokens[$stackPtr]['content']).' name must begin with a capital letter';
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        // Check that each new word starts with a captial as well, but don't
+        // Check that each new word starts with a capital as well, but don't
         // check the first word, as it is checked above.
         $validName = true;
         $nameBits  = explode('_', $name);

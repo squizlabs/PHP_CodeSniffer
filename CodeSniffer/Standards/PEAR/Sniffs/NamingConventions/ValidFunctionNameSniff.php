@@ -189,7 +189,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             $packagePart = ltrim($packagePart, '_');
         }
 
-        // If it has a package part, make sure the first letter is a captial.
+        // If it has a package part, make sure the first letter is a capital.
         if ($packagePart !== '') {
             if ($functionName{0} === '_') {
                 $error = "Function name \"$functionName\" is invalid; only private methods should be prefixed with an underscore";
@@ -198,7 +198,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             }
 
             if ($functionName{0} !== strtoupper($functionName{0})) {
-                $error = "Function name \"$functionName\" is prefixed with a package name but does not begin with a captial letter";
+                $error = "Function name \"$functionName\" is prefixed with a package name but does not begin with a capital letter";
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }
@@ -222,7 +222,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         if ($packagePart !== '') {
-            // Check that each new word starts with a captial.
+            // Check that each new word starts with a capital.
             $nameBits = explode('_', $packagePart);
             foreach ($nameBits as $bit) {
                 if ($bit{0} !== strtoupper($bit{0})) {

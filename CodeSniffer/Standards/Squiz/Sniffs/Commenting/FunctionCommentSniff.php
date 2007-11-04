@@ -214,7 +214,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
             $testLong = trim($long);
             if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
-                $error = 'Function comment long description must start with a captial letter';
+                $error = 'Function comment long description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
             }
         }//end if
@@ -243,7 +243,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
         if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-            $error = 'Function comment short description must start with a captial letter';
+            $error = 'Function comment short description must start with a capital letter';
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 

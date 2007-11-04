@@ -183,7 +183,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
             $testLong = trim($long);
             if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
-                $error = 'Class comment long description must start with a captial letter';
+                $error = 'Class comment long description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
             }
         }
@@ -212,7 +212,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-            $error = 'Class comment short description must start with a captial letter';
+            $error = 'Class comment short description must start with a capital letter';
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 

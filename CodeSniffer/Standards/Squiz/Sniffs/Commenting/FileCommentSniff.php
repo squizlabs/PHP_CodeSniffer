@@ -201,7 +201,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $testLong = trim($long);
                 if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
-                    $error = 'File comment long description must start with a captial letter';
+                    $error = 'File comment long description must start with a capital letter';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 }
             }//end if
@@ -230,7 +230,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-                $error = 'File comment short description must start with a captial letter';
+                $error = 'File comment short description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + 1));
             }
 
