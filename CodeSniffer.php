@@ -566,6 +566,12 @@ class PHP_CodeSniffer
             $numErrors   = $file->getErrorCount();
             $filename    = $file->getFilename();
 
+            $report['files'][$filename] = array(
+                                           'errors'   => 0,
+                                           'warnings' => 0,
+                                           'messages' => array(),
+                                          );
+
             if ($numErrors === 0 && $numWarnings === 0) {
                 // Prefect score!
                 continue;
@@ -575,8 +581,6 @@ class PHP_CodeSniffer
                 // Prefect score (sort of).
                 continue;
             }
-
-            $report['files'][$filename] = array();
 
             $report['files'][$filename]['errors'] = $numErrors;
             if ($showWarnings === true) {
@@ -652,12 +656,16 @@ class PHP_CodeSniffer
     public function printXMLErrorReport($showWarnings=true)
     {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<phpcs>'.PHP_EOL;
+        echo '<phpcs version="@package_version@">'.PHP_EOL;
 
         $errorsShown = 0;
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
+
+            if (empty($file['messages']) === true) {
+                continue;
+            }
 
             echo ' <file name="'.$filename.'" errors="'.$file['errors'].'" warnings="'.$file['warnings'].'">'.PHP_EOL;
 
@@ -681,6 +689,53 @@ class PHP_CodeSniffer
         return $errorsShown;
 
     }//end printXMLErrorReport()
+    
+    
+    /**
+     * Prints all errors and warnings for each file processed, in a Checkstyle XML format.
+     *
+     * Errors and warnings are displayed together, grouped by file.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printCheckstyleErrorReport($showWarnings=true)
+    {
+        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        echo '<checkstyle version="@package_version@">'.PHP_EOL;
+
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+
+            echo ' <file name="'.$filename.'">'.PHP_EOL;
+
+            foreach ($file['messages'] as $line => $lineErrors) {
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $error['type'] = strtolower($error['type']);
+                        echo '  <error';
+                        echo ' line="'.$line.' "column="'.$column.'"';
+                        echo ' severity="'.$error['type'].'"';
+                        $message = htmlspecialchars($error['message']);
+                        echo ' message="'.$message.'"';
+                        echo '/>'.PHP_EOL;
+                        $errorsShown++;
+                    }
+                }
+            }//end foreach
+
+            echo ' </file>'.PHP_EOL;
+
+        }//end foreach
+
+        echo '</checkstyle>'.PHP_EOL;
+
+        return $errorsShown;
+
+    }//end printCheckstyleErrorReport()
 
 
     /**
@@ -733,6 +788,10 @@ class PHP_CodeSniffer
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
+
+            if (empty($file['messages']) === true) {
+                continue;
+            }
 
             echo PHP_EOL.'FILE: ';
             if (strlen($filename) <= 71) {

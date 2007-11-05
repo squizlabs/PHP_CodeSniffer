@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added a new Checkstyle report format
+    -- Like the current XML format but modified to look like Checkstyle output
+    -- Thanks to Manuel Pichler for helping get the format correct
   - Added FunctionCallSignatureSniff to Squiz standard
   - Added @subpackage support to file and class comment sniffs in PEAR standard (feature request #12382)
     -- Thanks to Carsten Wiedmann for the patch
