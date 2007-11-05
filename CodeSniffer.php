@@ -1189,6 +1189,11 @@ class PHP_CodeSniffer
      */
     public static function isUnderscoreName($string)
     {
+        // If there are space in the name, it can't be valid.
+        if (strpos($string, ' ') !== false) {
+            return false;
+        }
+
         $validName = true;
         $nameBits  = explode('_', $string);
 
