@@ -21,6 +21,7 @@
 * @category   _wrong_category
 * @package    PHP_CodeSniffer
 * @package    ADDITIONAL PACKAGE TAG
+* @subpackage SUBPACKAGE TAG
 * @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
 * @author       Rayn Ong rong@squiz.net
 * @author

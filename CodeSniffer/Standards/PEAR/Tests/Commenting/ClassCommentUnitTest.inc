@@ -63,6 +63,7 @@ class Missing_Newlines_Before_Tags
  * @category   _wrong_category
  * @package    PHP_CodeSniffer
  * @package    ADDITIONAL PACKAGE TAG
+ * @subpackage SUBPACKAGE TAG
  * @author     Original Author <author@example.com>
  * @author       Rayn Ong rong@squiz.net
  * @author

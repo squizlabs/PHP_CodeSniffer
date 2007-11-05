@@ -234,10 +234,15 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                   'allow_multiple' => false,
                                   'order_text'     => 'follows @category',
                                  ),
+                 'subpackage' => array(
+                                  'required'       => false,
+                                  'allow_multiple' => false,
+                                  'order_text'     => 'follows @package',
+                                 ),
                  'author'     => array(
                                   'required'       => true,
                                   'allow_multiple' => true,
-                                  'order_text'     => 'follows @package',
+                                  'order_text'     => 'follows @subpackage (if used) or @package',
                                  ),
                  'copyright'  => array(
                                   'required'       => false,
@@ -443,15 +448,16 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $content = $category->getContent();
             if ($content !== '') {
                 if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $nameBits = explode('_', $content);
-                    $firstBit = array_shift($nameBits);
-                    $newName  = ucfirst($firstBit).'_';
+                    $newContent = str_replace(' ', '_', $content);
+                    $nameBits   = explode('_', $newContent);
+                    $firstBit   = array_shift($nameBits);
+                    $newName    = ucfirst($firstBit).'_';
                     foreach ($nameBits as $bit) {
                         $newName .= ucfirst($bit).'_';
                     }
 
                     $validName = trim($newName, '_');
-                    $error     = "Category name \"$content\" is not valid; Consider \"$validName\" instead.";
+                    $error     = "Category name \"$content\" is not valid; consider \"$validName\" instead";
                     $this->currentFile->addError($error, $errorPos);
                 }
             } else {
@@ -477,15 +483,16 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $content = $package->getContent();
             if ($content !== '') {
                 if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $nameBits = explode('_', $content);
-                    $firstBit = array_shift($nameBits);
-                    $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $newContent = str_replace(' ', '_', $content);
+                    $nameBits   = explode('_', $newContent);
+                    $firstBit   = array_shift($nameBits);
+                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
                     foreach ($nameBits as $bit) {
                         $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
                     }
 
                     $validName = trim($newName, '_');
-                    $error     = "Package name \"$content\" is not valid; Consider \"$validName\" instead.";
+                    $error     = "Package name \"$content\" is not valid; consider \"$validName\" instead";
                     $this->currentFile->addError($error, $errorPos);
                 }
             } else {
@@ -495,6 +502,41 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }//end processPackage()
+
+
+    /**
+     * Process the subpackage tag.
+     *
+     * @param int $errorPos The line number where the error occurs.
+     *
+     * @return void
+     */
+    protected function processSubpackage($errorPos)
+    {
+        $package = $this->commentParser->getSubpackage();
+        if ($package !== null) {
+            $content = $package->getContent();
+            if ($content !== '') {
+                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+                    $newContent = str_replace(' ', '_', $content);
+                    $nameBits   = explode('_', $newContent);
+                    $firstBit   = array_shift($nameBits);
+                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    foreach ($nameBits as $bit) {
+                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                    }
+
+                    $validName = trim($newName, '_');
+                    $error     = "Subpackage name \"$content\" is not valid; consider \"$validName\" instead";
+                    $this->currentFile->addError($error, $errorPos);
+                }
+            } else {
+                $error = '@subpackage tag must contain a name';
+                $this->currentFile->addError($error, $errorPos);
+            }
+        }
+
+    }//end processSubpackage()
 
 
     /**
@@ -561,7 +603,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         }
 
                         if ($matches[4] !== '' && $matches[4] < $matches[1]) {
-                            $error = "Invalid year span \"$matches[1]$matches[3]$matches[4]\" found; Consider \"$matches[4]-$matches[1]\" instead.";
+                            $error = "Invalid year span \"$matches[1]$matches[3]$matches[4]\" found; consider \"$matches[4]-$matches[1]\" instead";
                             $this->currentFile->addWarning($error, $errorPos);
                         }
                     }
