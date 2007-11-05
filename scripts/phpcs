@@ -37,11 +37,12 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
  */
 function PHP_CodeSniffer_printUsage()
 {
-    echo 'Usage: phpcs [-nlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
+    echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
     echo '    [--config-set key value] [--config-show]'.PHP_EOL;
     echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
     echo '    [--ignore=<patterns>] <file> ...'.PHP_EOL;
     echo '        -n           Do not print warnings'.PHP_EOL;
+    echo '        -w           Print both warnings and errors (on by default)'.PHP_EOL;
     echo '        -l           Local directory only, no recursion'.PHP_EOL;
     echo '        -v[v][v]     Print verbose output'.PHP_EOL;
     echo '        -i           Show a list of installed coding standards'.PHP_EOL;
@@ -56,6 +57,7 @@ function PHP_CodeSniffer_printUsage()
     echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
     echo '        <report>     Print either the "full", "xml", "checkstyle", "csv" or "summary" report'.PHP_EOL;
+    echo '                     (the "full" report is printed by default)'.PHP_EOL;
 
 }//end PHP_CodeSniffer_printUsage()
 
@@ -101,10 +103,16 @@ $standard     = null;
 $verbosity    = 0;
 $local        = false;
 $report       = 'full';
-$showWarnings = true;
 $extensions   = array();
 $ignored      = array();
 $generator    = '';
+
+$showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
+if ($showWarnings === null) {
+    $showWarnings = true;
+} else {
+    $showWarnings = (bool) $showWarnings;
+}
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
     $arg = $_SERVER['argv'][$i];
@@ -185,6 +193,9 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                     break;
                 case 'n' :
                     $showWarnings = false;
+                    break;
+                case 'w' :
+                    $showWarnings = true;
                     break;
                 default:
                     echo 'ERROR: option "'.$switch.'" not known.'.PHP_EOL.PHP_EOL;
