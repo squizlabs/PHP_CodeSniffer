@@ -180,4 +180,19 @@ $var      .= 'a very long line of text that contains '
             .$someVar
             .' and some other stuff that is too long to fit on one line';
 $var2      = 12;
+
+// Valid
+$error = false;
+while (list($h, $f) = each($handle)) {
+    $error = true;
+}
+
+// Valid
+$value = false;
+function blah ($value = true) {
+    $value = false;
+    if ($value === true) {
+        $value = false;
+    }
+}
 ?>

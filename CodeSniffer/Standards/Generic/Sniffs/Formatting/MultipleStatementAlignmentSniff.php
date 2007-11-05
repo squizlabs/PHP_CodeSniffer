@@ -89,6 +89,15 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             }
         }
 
+        // Ignore assignments used in a condition, like an IF or FOR.
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $start => $end) {
+                if (isset($tokens[$start]['parenthesis_owner']) === true) {
+                    return;
+                }
+            }
+        }
+
         /*
             By this stage, it is known that there is an assignment on this line.
             We only want to process the block once we reach the last assignment,
