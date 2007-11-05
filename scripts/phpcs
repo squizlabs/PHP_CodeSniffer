@@ -56,7 +56,8 @@ function PHP_CodeSniffer_printUsage()
     echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
     echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
-    echo '        <report>     Print either the "full", "xml", "checkstyle", "csv" or "summary" report'.PHP_EOL;
+    echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
+    echo '                     "csv" or "summary" report'.PHP_EOL;
     echo '                     (the "full" report is printed by default)'.PHP_EOL;
 
 }//end PHP_CodeSniffer_printUsage()
