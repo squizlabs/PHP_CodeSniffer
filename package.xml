@@ -35,6 +35,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added FunctionCallSignatureSniff to Squiz standard
   - Added @subpackage support to file and class comment sniffs in PEAR standard (feature request #12382)
     -- Thanks to Carsten Wiedmann for the patch
+  - An error is now displayed if you use a PHP version less than 5.1.0 (feature request #12380)
+    -- Thanks to Carsten Wiedmann for the patch
+  - phpcs now exits with status 2 if it receives invalid input (feature request #12380)
+    -- This is distinct from status 1, which indicates errors or warnings were found
   - Fixed bug #12368 : Autoloader cannot be found due to include_path override
     -- Thanks to Richard Quadling for the patch
   - Fixed bug #12378 : equal sign alignments problem with while()

@@ -16,6 +16,12 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+// Check the PHP version.
+if (version_compare(PHP_VERSION, '5.1.0') === -1) {
+    echo 'ERROR: PHP_CodeSniffer requires PHP version 5.1.0 or greater.'.PHP_EOL;
+    exit(2);
+}
+
 error_reporting(E_ALL | E_STRICT);
 
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
@@ -50,7 +56,6 @@ function PHP_CodeSniffer_printUsage()
     echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
     echo '        <report>     Print either the "full", "xml", "csv" or "summary" report'.PHP_EOL;
-    exit();
 
 }//end PHP_CodeSniffer_printUsage()
 
@@ -86,7 +91,7 @@ function PHP_CodeSniffer_printInstalledStandards()
 $installedStandards = PHP_CodeSniffer::getInstalledStandards();
 if (count($installedStandards) === 0) {
     echo 'ERROR: There are no coding standards installed.'.PHP_EOL;
-    exit();
+    exit(2);
 }
 
 
@@ -113,32 +118,33 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
         if ($arg{1} === '-') {
             if ($arg === '--help') {
                 PHP_CodeSniffer_printUsage();
+                exit(0);
             }
 
             if ($arg === '--version') {
                 echo 'PHP_CodeSniffer version @package_version@ (@package_state@) ';
                 echo 'by Squiz Pty Ltd. (http://www.squiz.net)'.PHP_EOL;
-                exit();
+                exit(0);
             }
 
             if ($arg === '--config-set') {
                 $key   = $_SERVER['argv'][($i + 1)];
                 $value = $_SERVER['argv'][($i + 2)];
                 PHP_CodeSniffer::setConfigData($key, $value);
-                exit();
+                exit(0);
             }
 
             if ($arg === '--config-show') {
                 $data = PHP_CodeSniffer::getAllConfigData();
                 print_r($data);
-                exit();
+                exit(0);
             }
 
             if (substr($arg, 0, 9) === '--report=') {
                 $report = substr($arg, 9);
                 if ($report !== 'full' && $report !== 'xml' && $report !== 'csv' && $report !== 'summary') {
                     echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
-                    exit();
+                    exit(2);
                 }
             } else if (substr($arg, 0, 11) === '--standard=') {
                 $standard = substr($arg, 11);
@@ -151,6 +157,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             } else {
                 echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
                 PHP_CodeSniffer_printUsage();
+                exit(2);
             }
         } else {
             $switches = str_split($arg);
@@ -163,10 +170,11 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 case 'h':
                 case '?':
                     PHP_CodeSniffer_printUsage();
+                    exit(0);
                     break;
                 case 'i' :
                     PHP_CodeSniffer_printInstalledStandards();
-                    exit();
+                    exit(0);
                     break;
                 case 'v' :
                     $verbosity++;
@@ -180,6 +188,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 default:
                     echo 'ERROR: option "'.$switch.'" not known.'.PHP_EOL.PHP_EOL;
                     PHP_CodeSniffer_printUsage();
+                    exit(2);
                 }//end switch
             }//end foreach
         }//end else
@@ -192,18 +201,20 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
 if ($generator !== '') {
     $phpcs = new PHP_CodeSniffer($verbosity);
     $phpcs->generateDocs($standard, $files, $generator);
-    exit();
+    exit(0);
 }
 
 if (empty($files) === true) {
     echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
     PHP_CodeSniffer_printUsage();
+    exit(2);
 }
 
 foreach ($files as $file) {
     if (file_exists($file) === false) {
         echo 'ERROR: The file "'.$file.'" does not exist.'.PHP_EOL.PHP_EOL;
         PHP_CodeSniffer_printUsage();
+        exit(2);
     }
 }
 
@@ -237,7 +248,7 @@ if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
     // out by letting them know which standards are installed.
     echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
     PHP_CodeSniffer_printInstalledStandards();
-    exit();
+    exit(2);
 }
 
 $phpcs = new PHP_CodeSniffer($verbosity);
