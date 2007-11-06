@@ -229,13 +229,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            $error = "@$errorTag[tag] tag is not allowed in function comment";
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
-        }
-
     }//end process()
 
 

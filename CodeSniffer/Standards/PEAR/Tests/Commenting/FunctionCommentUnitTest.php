@@ -82,9 +82,7 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
      */
     public function getWarningList()
     {
-        return array(
-                196 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 
