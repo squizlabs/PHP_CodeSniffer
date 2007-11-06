@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Carsten Wiedmann for the patch
   - phpcs now exits with status 2 if it receives invalid input (feature request #12380)
     -- This is distinct from status 1, which indicates errors or warnings were found
+  - Added new Squiz LanguageConstructSpacingSniff to throw errors for additional whitespace after echo etc.
   - Fixed bug #12368 : Autoloader cannot be found due to include_path override
     -- Thanks to Richard Quadling for the patch
   - Fixed bug #12378 : equal sign alignments problem with while()
@@ -744,6 +745,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="MemberVarSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1052,6 +1056,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="MemberVarSpacingUnitTest.inc" role="test" />
