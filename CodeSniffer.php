@@ -1438,8 +1438,10 @@ class PHP_CodeSniffer
      * Config data is stored in the data dir, in a file called
      * CodeSniffer.conf. It is a simple PHP array.
      *
-     * @param string $key   The name of the config value.
-     * @param string $value The value to set.
+     * @param string      $key   The name of the config value.
+     * @param string|null $value The value to set. If null, the config
+     *                           entry is deleted, reverting it to the
+     *                           default value.
      *
      * @return boolean
      * @see getConfigData()
@@ -1456,8 +1458,15 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception("Config file $configFile is not writable");
         }
 
-        $phpCodeSnifferConfig       = self::getAllConfigData();
-        $phpCodeSnifferConfig[$key] = $value;
+        $phpCodeSnifferConfig = self::getAllConfigData();
+
+        if ($value === null) {
+            if (isset($phpCodeSnifferConfig[$key]) === true) {
+                unset($phpCodeSnifferConfig[$key]);
+            }
+        } else {
+            $phpCodeSnifferConfig[$key] = $value;
+        }
 
         $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
         $output .= var_export($phpCodeSnifferConfig, true);

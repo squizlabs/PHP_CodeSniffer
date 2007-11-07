@@ -38,7 +38,7 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
 function PHP_CodeSniffer_printUsage()
 {
     echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
-    echo '    [--config-set key value] [--config-show]'.PHP_EOL;
+    echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
     echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
     echo '    [--ignore=<patterns>] <file> ...'.PHP_EOL;
     echo '        -n           Do not print warnings'.PHP_EOL;
@@ -140,6 +140,12 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 $key   = $_SERVER['argv'][($i + 1)];
                 $value = $_SERVER['argv'][($i + 2)];
                 PHP_CodeSniffer::setConfigData($key, $value);
+                exit(0);
+            }
+
+            if ($arg === '--config-delete') {
+                $key = $_SERVER['argv'][($i + 1)];
+                PHP_CodeSniffer::setConfigData($key, null);
                 exit(0);
             }
 
