@@ -591,7 +591,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $copyrights = $this->commentParser->getCopyrights();
         foreach ($copyrights as $copyright) {
             $errorPos = ($commentStart + $copyright->getLine());
-            $content = $copyright->getContent();
+            $content  = $copyright->getContent();
             if ($content !== '') {
                 $matches = array();
                 if (preg_match('/^([0-9]{4})((.{1})([0-9]{4}))? (.+)$/', $content, $matches) !== 0) {
