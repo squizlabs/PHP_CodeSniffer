@@ -48,6 +48,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This is distinct from status 1, which indicates errors or warnings were found
   - Added new Squiz LanguageConstructSpacingSniff to throw errors for additional whitespace after echo etc.
   - PEAR FunctionCommentSniff no longer complains about unknown tags
+  - Fixed incorrect errors about missing function comments in PEAR FunctionCommentSniff
+  - Fixed incorrect function docblock detection in Squiz FunctionCommentSniff
   - Fixed bug #12368 : Autoloader cannot be found due to include_path override
     -- Thanks to Richard Quadling for the patch
   - Fixed bug #12378 : equal sign alignments problem with while()

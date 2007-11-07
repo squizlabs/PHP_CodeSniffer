@@ -232,4 +232,14 @@ function myFunction($arg1) {}
 echo $blah;
 
 function myFunction($arg1) {}
+
+
+class MyClass() {
+    /**
+     * An abstract function.
+     *
+     * @return array(string)
+     */
+    abstract final protected function myFunction();
+}
 ?>
