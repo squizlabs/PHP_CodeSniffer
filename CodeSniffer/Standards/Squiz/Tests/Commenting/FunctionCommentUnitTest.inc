@@ -442,4 +442,27 @@ public function myFunction()
     return 'blah';
 
 }//end myFunction()
+
+/**
+ * Test function.
+ *
+ * @param string $arg1 An argument
+ *
+ * @access public
+ * @return bool
+ */
+
+echo $blah;
+
+function myFunction($arg1) {}
+
+class MyClass() {
+    /**
+     * An abstract function.
+     *
+     * @since  4.0.0
+     * @return array(string)
+     */
+    abstract final protected function myFunction();
+}
 ?>

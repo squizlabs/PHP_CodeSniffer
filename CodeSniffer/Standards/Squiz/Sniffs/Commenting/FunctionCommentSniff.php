@@ -148,6 +148,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             return;
         }
 
+        // If there is any code between the function keyword and the doc block
+        // then the doc block is not for us.
+        $ignore    = PHP_CodeSniffer_Tokens::$scopeModifiers;
+        $ignore[]  = T_STATIC;
+        $ignore[]  = T_WHITESPACE;
+        $ignore[]  = T_ABSTRACT;
+        $ignore[]  = T_FINAL;
+        $prevToken = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        if ($prevToken !== $commentEnd) {
+            $phpcsFile->addError('Missing function doc comment', $stackPtr);
+            return;
+        }
+
         $this->_functionToken = $stackPtr;
         $classToken           = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), ($stackPtr - 1));
         if ($classToken !== false) {
