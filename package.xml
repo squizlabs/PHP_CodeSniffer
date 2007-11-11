@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Run: phpcs --config-set show_warnings 0
       -- If warnings are hidden by default, use the new -w command line argument to override
   - Added new command line argument --config-delete to delete a config value and revert to the default
+  - Improved overall performance by optimising tokenising and next/prev methods (feature request #12421)
+    -- Thanks to Christian Weiske for the patch
   - Added FunctionCallSignatureSniff to Squiz standard
   - Added @subpackage support to file and class comment sniffs in PEAR standard (feature request #12382)
     -- Thanks to Carsten Wiedmann for the patch

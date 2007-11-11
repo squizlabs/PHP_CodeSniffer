@@ -664,13 +664,14 @@ class PHP_CodeSniffer_File
         $newStackPtr = 0;
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
-            $token = $tokens[$stackPtr];
+            $token        = $tokens[$stackPtr];
+            $tokenIsArray = is_array($token);
 
             // If we are using \r\n newline characters, the \r and \n are sometimes
             // split over two tokens. This normally occurs after comments. We need
             // to merge these two characters together so that our line endings are
             // consistent for all lines.
-            if (is_array($token) === true && substr($token[1], -1) === "\r") {
+            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
                 if (isset($tokens[($stackPtr + 1)]) === true && is_array($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)][1][0] === "\n") {
                     $token[1] .= "\n";
 
@@ -688,17 +689,19 @@ class PHP_CodeSniffer_File
             // thing which causes problems with the scope map when braces are
             // within the string. So we need to merge the tokens together to
             // provide a single string.
-            if (is_array($token) === false && $token === '"') {
+            if ($tokenIsArray === false && $token === '"') {
 
                 $tokenContent = '"';
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    if (is_array($tokens[$i]) === true) {
+                    $subTokenIsArray = is_array($tokens[$i]);
+
+                    if ($subTokenIsArray === true) {
                         $tokenContent .= $tokens[$i][1];
                     } else {
                         $tokenContent .= $tokens[$i];
                     }
 
-                    if (is_array($tokens[$i]) === false && $tokens[$i] === '"') {
+                    if ($subTokenIsArray === false && $tokens[$i] === '"') {
                         // We found the other end of the double quoted string.
                         break;
                     }
@@ -736,7 +739,7 @@ class PHP_CodeSniffer_File
             // and create a new token for each line. We do this so it's easier
             // to asertain where errors occur on a line.
             // Note that $token[1] is the token's content.
-            if (is_array($token) === true && strpos($token[1], $eolChar) !== false) {
+            if ($tokenIsArray === true && strpos($token[1], $eolChar) !== false) {
                 $tokenLines = explode($eolChar, $token[1]);
                 $numLines   = count($tokenLines);
 
@@ -1863,9 +1866,7 @@ class PHP_CodeSniffer_File
      */
     public function findPrevious($types, $start, $end=null, $exclude=false, $value=null, $local=false)
     {
-        if (is_array($types) === false) {
-            $types = array($types);
-        }
+        $types = (array) $types;
 
         if ($end === null) {
             $end = 0;
@@ -1933,9 +1934,7 @@ class PHP_CodeSniffer_File
      */
     public function findNext($types, $start, $end=null, $exclude=false, $value=null, $local=false)
     {
-        if (is_array($types) === false) {
-            $types = array($types);
-        }
+        $types = (array) $types;
 
         $count = count($this->_tokens);
         if ($end === null || $end > $count) {
