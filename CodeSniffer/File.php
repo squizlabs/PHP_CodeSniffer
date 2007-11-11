@@ -742,6 +742,7 @@ class PHP_CodeSniffer_File
             if ($tokenIsArray === true && strpos($token[1], $eolChar) !== false) {
                 $tokenLines = explode($eolChar, $token[1]);
                 $numLines   = count($tokenLines);
+                $tokenName  = token_name($token[0]);
 
                 for ($i = 0; $i < $numLines; $i++) {
                     $newToken['content'] = $tokenLines[$i];
@@ -753,7 +754,7 @@ class PHP_CodeSniffer_File
                         $newToken['content'] .= $eolChar;
                     }
 
-                    $newToken['type']          = token_name($token[0]);
+                    $newToken['type']          = $tokenName;
                     $newToken['code']          = $token[0];
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
@@ -791,6 +792,7 @@ class PHP_CodeSniffer_File
         self::_createParenthesisMap($finalTokens, $eolChar);
         self::_createParenthesisNestingMap($finalTokens, $eolChar);
         self::_createScopeMap($finalTokens, $eolChar);
+
         // Column map requires the line map to be complete.
         self::_createColumnMap($finalTokens, $eolChar);
         self::_createLevelMap($finalTokens, $eolChar);
