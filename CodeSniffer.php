@@ -689,8 +689,8 @@ class PHP_CodeSniffer
         return $errorsShown;
 
     }//end printXMLErrorReport()
-    
-    
+
+
     /**
      * Prints all errors and warnings for each file processed, in a Checkstyle XML format.
      *
