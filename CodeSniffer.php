@@ -280,7 +280,7 @@ class PHP_CodeSniffer
 
         if (empty($sniffs) === false) {
             // Convert the allowed sniffs to lower case so
-            // that its easier to check.
+            // they are easier to check.
             foreach ($sniffs as &$sniff) {
                 $sniff = strtolower($sniff);
             }
