@@ -41,4 +41,37 @@ if ($one) {
     </tr>
 </table>
 <?php
+
+switch ($blah) {
+    case 'one':
+        if ($blah) {
+            // There are no spaces before break.
+        }
+    break;
+
+    default:
+        if ($blah) {
+            // There are no spaces before break.
+        }
+    break;
+}
+
+switch ($blah) {
+    case 'one':
+        if ($blah) {
+            // There are no spaces before break.
+        }
+    break;
+
+    default:
+        if ($blah) {
+            // Code here.
+        }
+}
+
+foreach ($blah as $var) {
+    if ($blah) {
+    }
+    break;
+}
 ?>

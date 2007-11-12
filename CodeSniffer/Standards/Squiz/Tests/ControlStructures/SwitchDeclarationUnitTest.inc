@@ -157,4 +157,15 @@ switch ($var) {
     break;
 }
 
+switch ($var) {
+    case 'one':
+        if ($blah) {
+        }
+
+    break;
+
+    default:
+        // No default.
+    break;
+}
 ?>

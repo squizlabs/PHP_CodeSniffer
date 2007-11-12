@@ -90,15 +90,30 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             }
         }
 
-        if ($tokens[$trailingContent]['code'] !== T_CLOSE_CURLY_BRACKET) {
-            // Not another control structure's closing brace.
-            if ($tokens[$trailingContent]['code'] !== T_CLOSE_TAG) {
-                // Not at the end of the script or embedded code.
-                if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-                    $error = 'No blank line found after control structure';
-                    $phpcsFile->addError($error, $scopeCloser);
+        if ($tokens[$trailingContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+            // Another control structure's closing brace.
+            return;
+        }
+
+        if ($tokens[$trailingContent]['code'] === T_BREAK) {
+            // If this BREAK is closing a CASE, we don't need the
+            // blank line after this control structure.
+            if (isset($tokens[$trailingContent]['scope_condition']) === true) {
+                $condition = $tokens[$trailingContent]['scope_condition'];
+                if ($tokens[$condition]['code'] === T_CASE || $tokens[$condition]['code'] === T_DEFAULT) {
+                    return;
                 }
             }
+        }
+
+        if ($tokens[$trailingContent]['code'] === T_CLOSE_TAG) {
+            // At the end of the script or embedded code.
+            return;
+        }
+
+        if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
+            $error = 'No blank line found after control structure';
+            $phpcsFile->addError($error, $scopeCloser);
         }
 
     }//end process()

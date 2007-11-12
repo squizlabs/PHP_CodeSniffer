@@ -48,6 +48,7 @@ class Squiz_Tests_WhiteSpace_ControlStructureSpacingUnitTest extends AbstractSni
                 5  => 1,
                 8  => 1,
                 23 => 1,
+                74 => 1,
                );
 
     }//end getErrorList()
