@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR FunctionCommentSniff no longer complains about unknown tags
   - Fixed incorrect errors about missing function comments in PEAR FunctionCommentSniff
   - Fixed incorrect function docblock detection in Squiz FunctionCommentSniff
+  - Fixed incorrect errors for list() in Squiz DisallowMultipleAssignmentsSniff
   - Fixed bug #12368 : Autoloader cannot be found due to include_path override
     -- Thanks to Richard Quadling for the patch
   - Fixed bug #12378 : equal sign alignments problem with while()

@@ -31,4 +31,7 @@ class myClass
     public $dbh = NULL;
     protected $dbh = NULL;
 }
+
+$var = $var2;
+list ($a, $b) = explode(',', $c);
 ?>

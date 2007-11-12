@@ -88,7 +88,13 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 continue;
             }
 
-            if ($tokens[$varToken]['type'] === 'T_VARIABLE') {
+            if ($tokens[$varToken]['code'] === T_SEMICOLON) {
+                // We've reached the next statement, so we
+                // didn't find a variable.
+                return;
+            }
+
+            if ($tokens[$varToken]['code'] === T_VARIABLE) {
                 // We found our variable.
                 break;
             }
