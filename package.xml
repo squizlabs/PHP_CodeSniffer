@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - phpcs now exits with status 2 if it receives invalid input (feature request #12380)
     -- This is distinct from status 1, which indicates errors or warnings were found
   - Added new Squiz LanguageConstructSpacingSniff to throw errors for additional whitespace after echo etc.
+  - Removed Squiz ValidInterfaceNameSniff
   - PEAR FunctionCommentSniff no longer complains about unknown tags
   - Fixed incorrect errors about missing function comments in PEAR FunctionCommentSniff
   - Fixed incorrect function docblock detection in Squiz FunctionCommentSniff
@@ -657,9 +658,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="ValidInterfaceNameSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="ValidVariableNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -940,10 +938,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="NamingConventions">
         <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="ValidInterfaceNameUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="ValidInterfaceNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.inc" role="test" />
