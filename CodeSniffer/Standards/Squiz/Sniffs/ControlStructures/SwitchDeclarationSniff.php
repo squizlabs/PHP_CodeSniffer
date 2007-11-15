@@ -62,7 +62,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + 4);
 
-        while (($nextCase = $phpcsFile->findNext(array(T_CASE), ($nextCase + 1), $switch['scope_closer'])) !== false) {
+        while (($nextCase = $phpcsFile->findNext(array(T_CASE, T_SWITCH), ($nextCase + 1), $switch['scope_closer'])) !== false) {
+            // Skip nested SWITCH statements; they are handled on their own.
+            if ($tokens[$nextCase]['code'] === T_SWITCH) {
+                $nextCase = $tokens[$nextCase]['scope_closer'];
+                continue;
+            }
+
             $content = $tokens[$nextCase]['content'];
             if ($content !== strtolower($content)) {
                 $expected = strtolower($content);
@@ -184,7 +190,15 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             }
         }//end while
 
-        $default = $phpcsFile->findNext(array(T_DEFAULT), $switch['scope_opener'], $switch['scope_closer']);
+        $default = $phpcsFile->findPrevious(T_DEFAULT, $switch['scope_closer'], $switch['scope_opener']);
+        if ($default !== false) {
+            // Make sure this default belongs to us.
+            $prevSwitch = $phpcsFile->findPrevious(T_SWITCH, $default);
+            if ($prevSwitch !== $stackPtr) {
+                $default = false;
+            }
+        }
+
         if ($default !== false) {
             $content = $tokens[$default]['content'];
             if ($content !== strtolower($content)) {

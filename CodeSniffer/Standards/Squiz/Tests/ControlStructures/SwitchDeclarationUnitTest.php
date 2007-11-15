@@ -74,6 +74,7 @@ class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSn
                 143 => 1,
                 147 => 1,
                 165 => 1,
+                172 => 1,
                );
 
     }//end getErrorList()

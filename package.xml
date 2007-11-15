@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Improved performance by optimising the way the scope map is created during tokenising
+  - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
  </notes>
  <contents>
   <dir name="/">

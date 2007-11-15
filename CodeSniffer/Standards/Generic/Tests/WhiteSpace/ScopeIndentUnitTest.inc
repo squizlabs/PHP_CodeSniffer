@@ -313,4 +313,17 @@ function myFunction()
 
 }
 
+switch ($name) {
+    case "1":
+        switch ($name2) {
+            case "1":
+            break;
+            case "2":
+            break;
+        }
+    break;
+    case "2":
+    break;
+}
+
 ?>

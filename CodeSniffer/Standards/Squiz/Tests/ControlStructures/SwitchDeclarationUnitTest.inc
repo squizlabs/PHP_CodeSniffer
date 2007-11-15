@@ -168,4 +168,38 @@ switch ($var) {
         // No default.
     break;
 }
+
+switch ($name) {
+    case "1":
+        switch ($name2) {
+            case "1":
+                return true;
+            break;
+
+            case "2":
+                return true;
+            break;
+
+            default:
+                // No default.
+            break;
+        }
+    break;
+
+    case "2":
+switch ($name2) {
+    case "1":
+        return true;
+    break;
+
+    case "2":
+        return true;
+    break;
+
+    default:
+        // No default.
+    break;
+}
+    break;
+}
 ?>
