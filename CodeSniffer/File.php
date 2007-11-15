@@ -307,6 +307,21 @@ class PHP_CodeSniffer_File
                                                         ),
                                     );
 
+    /**
+     * A list of tokens that end the scope.
+     *
+     * This array is just a unique collection of the end tokens
+     * from the _scopeOpeners array. The data is duplicated here to
+     * save time during parsing of the file.
+     *
+     * @var array
+     */
+    private static $_endScopeTokens = array(
+                                       T_CLOSE_CURLY_BRACKET,
+                                       T_BREAK,
+                                       T_END_HEREDOC,
+                                      );
+
 
     /**
      * Constructs a PHP_CodeSniffer_File.
@@ -997,7 +1012,7 @@ class PHP_CodeSniffer_File
                     echo "\tStart scope map at $i: $type => $content".PHP_EOL;
                 }
 
-                $i = self::_recurseScopeMap($tokens, $eolChar, $i);
+                $i = self::_recurseScopeMap($tokens, $numTokens, $eolChar, $i);
             }
         }
 
@@ -1011,21 +1026,21 @@ class PHP_CodeSniffer_File
     /**
      * Recurses though the scope openers to build a scope map.
      *
-     * @param array  &$tokens  The array of tokens to process.
-     * @param string $eolChar  The EOL character to use for splitting strings.
-     * @param int    $stackPtr The position in the stack of the token that
-     *                         opened the scope (eg. an IF token or FOR token).
-     * @param int    $depth    How many scope levels down we are.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param int    $numTokens The size of the tokens array.
+     * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param int    $stackPtr  The position in the stack of the token that
+     *                          opened the scope (eg. an IF token or FOR token).
+     * @param int    $depth     How many scope levels down we are.
      *
      * @return int The position in the stack that closed the scope.
      */
-    private static function _recurseScopeMap(&$tokens, $eolChar, $stackPtr, $depth=1)
+    private static function _recurseScopeMap(&$tokens, $numTokens, $eolChar, $stackPtr, $depth=1)
     {
-        $opener         = null;
-        $currType       = $tokens[$stackPtr]['code'];
-        $endScopeTokens = self::_getEndScopeTokens();
-        $startLine      = $tokens[$stackPtr]['line'];
-        $ignore         = false;
+        $opener    = null;
+        $currType  = $tokens[$stackPtr]['code'];
+        $startLine = $tokens[$stackPtr]['line'];
+        $ignore    = false;
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
@@ -1033,7 +1048,6 @@ class PHP_CodeSniffer_File
             $opener = $stackPtr;
         }
 
-        $numTokens = count($tokens);
         for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
             $tokenType = $tokens[$i]['code'];
 
@@ -1102,7 +1116,7 @@ class PHP_CodeSniffer_File
                         echo '* searching for opener *'.PHP_EOL;
                     }
 
-                    $i = self::_recurseScopeMap($tokens, $eolChar, $i, ($depth + 1));
+                    $i = self::_recurseScopeMap($tokens, $numTokens, $eolChar, $i, ($depth + 1));
                 }//end if
             }//end if start scope
 
@@ -1209,7 +1223,7 @@ class PHP_CodeSniffer_File
 
                     return $stackPtr;
                 }
-            } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $endScopeTokens) === true) {
+            } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, self::$_endScopeTokens) === true) {
                 if (isset($tokens[$i]['scope_condition']) === false) {
                     if ($ignore === true) {
                         // We found the end token for the opener we were ignoring.
@@ -1440,24 +1454,6 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createLevelMap()
-
-
-    /**
-     * Returns the tokens that can end scopes.
-     *
-     * @return array(int)
-     * @see _createScopeMap
-     */
-    private static function _getEndScopeTokens()
-    {
-        $endScopeTokens = array();
-        foreach (self::$_scopeOpeners as $scopeInfo) {
-            $endScopeTokens[] = $scopeInfo['end'];
-        }
-
-        return array_unique($endScopeTokens);
-
-    }//end _getEndScopeTokens()
 
 
     /**
@@ -2057,11 +2053,9 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        if (is_array($types) === false) {
-            $types = array($types);
-        }
-
+        $types      = (array) $types;
         $conditions = $this->_tokens[$stackPtr]['conditions'];
+
         foreach ($types as $type) {
             if (in_array($type, $conditions) === true) {
                 // We found a token with the required type.

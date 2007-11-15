@@ -23,8 +23,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-11-14</date>
  <time>11:31:00</time>
  <version>
-  <release>1.0.0RC2</release>
-  <api>1.0.0RC2</api>
+  <release>1.0.0RC3</release>
+  <api>1.0.0RC3</api>
  </version>
  <stability>
   <release>beta</release>
@@ -32,32 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added a new Checkstyle report format
-    -- Like the current XML format but modified to look like Checkstyle output
-    -- Thanks to Manuel Pichler for helping get the format correct
-  - You can now hide warnings by default
-      -- Run: phpcs --config-set show_warnings 0
-      -- If warnings are hidden by default, use the new -w command line argument to override
-  - Added new command line argument --config-delete to delete a config value and revert to the default
-  - Improved overall performance by optimising tokenising and next/prev methods (feature request #12421)
-    -- Thanks to Christian Weiske for the patch
-  - Added FunctionCallSignatureSniff to Squiz standard
-  - Added @subpackage support to file and class comment sniffs in PEAR standard (feature request #12382)
-    -- Thanks to Carsten Wiedmann for the patch
-  - An error is now displayed if you use a PHP version less than 5.1.0 (feature request #12380)
-    -- Thanks to Carsten Wiedmann for the patch
-  - phpcs now exits with status 2 if it receives invalid input (feature request #12380)
-    -- This is distinct from status 1, which indicates errors or warnings were found
-  - Added new Squiz LanguageConstructSpacingSniff to throw errors for additional whitespace after echo etc.
-  - Removed Squiz ValidInterfaceNameSniff
-  - PEAR FunctionCommentSniff no longer complains about unknown tags
-  - Fixed incorrect errors about missing function comments in PEAR FunctionCommentSniff
-  - Fixed incorrect function docblock detection in Squiz FunctionCommentSniff
-  - Fixed incorrect errors for list() in Squiz DisallowMultipleAssignmentsSniff
-  - Errors no longer thrown if control structure is followed by a CASE's BREAK in Squiz ControlStructureSpacingSniff
-  - Fixed bug #12368 : Autoloader cannot be found due to include_path override
-    -- Thanks to Richard Quadling for the patch
-  - Fixed bug #12378 : equal sign alignments problem with while()
+  - Improved performance by optimising the way the scope map is created during tokenising
  </notes>
  <contents>
   <dir name="/">
