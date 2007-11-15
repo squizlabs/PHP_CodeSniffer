@@ -151,9 +151,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         $this->_functionToken = $stackPtr;
-        $classToken           = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), ($stackPtr - 1));
-        if ($classToken !== false) {
-            $this->_classToken = $classToken;
+
+        foreach ($tokens[$stackPtr]['conditions'] as $condPtr => $condition) {
+            if ($condition === T_CLASS || $condition === T_INTERFACE) {
+                $this->_classToken = $condPtr;
+                break;
+            }
         }
 
         // If the first T_OPEN_TAG is right before the comment, it is probably
