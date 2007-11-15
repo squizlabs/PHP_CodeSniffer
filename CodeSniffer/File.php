@@ -682,10 +682,13 @@ class PHP_CodeSniffer_File
             $token        = $tokens[$stackPtr];
             $tokenIsArray = is_array($token);
 
-            // If we are using \r\n newline characters, the \r and \n are sometimes
-            // split over two tokens. This normally occurs after comments. We need
-            // to merge these two characters together so that our line endings are
-            // consistent for all lines.
+            /*
+                If we are using \r\n newline characters, the \r and \n are sometimes
+                split over two tokens. This normally occurs after comments. We need
+                to merge these two characters together so that our line endings are
+                consistent for all lines.
+            */
+
             if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
                 if (isset($tokens[($stackPtr + 1)]) === true && is_array($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)][1][0] === "\n") {
                     $token[1] .= "\n";
@@ -700,10 +703,13 @@ class PHP_CodeSniffer_File
                 }
             }//end if
 
-            // If this is a double quoted string, PHP will tokenise the whole
-            // thing which causes problems with the scope map when braces are
-            // within the string. So we need to merge the tokens together to
-            // provide a single string.
+            /*
+                If this is a double quoted string, PHP will tokenise the whole
+                thing which causes problems with the scope map when braces are
+                within the string. So we need to merge the tokens together to
+                provide a single string.
+            */
+
             if ($tokenIsArray === false && $token === '"') {
 
                 $tokenContent = '"';
@@ -750,10 +756,74 @@ class PHP_CodeSniffer_File
                 continue;
             }//end if
 
-            // If this token has newlines in its content, split each line up
-            // and create a new token for each line. We do this so it's easier
-            // to asertain where errors occur on a line.
-            // Note that $token[1] is the token's content.
+            /*
+                If this is a heredoc, PHP will tokenise the whole
+                thing which causes problems when heredocs don't
+                contain real PHP code, which is almost never.
+                We want to leave the start and end heredoc tokens
+                alone though.
+            */
+
+            if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
+
+                // Add the start heredoc token to the final array.
+                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($token);
+                $newStackPtr++;
+
+                $tokenContent = '';
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    $subTokenIsArray = is_array($tokens[$i]);
+                    if ($subTokenIsArray === true && $tokens[$i][0] === T_END_HEREDOC) {
+                        // We found the other end of the heredoc.
+                        break;
+                    }
+
+                    if ($subTokenIsArray === true) {
+                        $tokenContent .= $tokens[$i][1];
+                    } else {
+                        $tokenContent .= $tokens[$i];
+                    }
+                }
+
+                $stackPtr = $i;
+
+                // Convert each line within the heredoc to a
+                // new token, so it conforms with other multiple line tokens.
+                $tokenLines = explode($eolChar, $tokenContent);
+                $numLines   = count($tokenLines);
+                $newToken   = array();
+
+                for ($j = 0; $j < $numLines; $j++) {
+                    $newToken['content'] = $tokenLines[$j];
+                    if ($j === ($numLines - 1)) {
+                        if ($tokenLines[$j] === '') {
+                            break;
+                        }
+                    } else {
+                        $newToken['content'] .= $eolChar;
+                    }
+
+                    $newToken['code']          = T_HEREDOC;
+                    $newToken['type']          = 'T_HEREDOC';
+                    $finalTokens[$newStackPtr] = $newToken;
+                    $newStackPtr++;
+                }
+
+                // Add the end heredoc token to the final array.
+                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
+                $newStackPtr++;
+
+                // Continue, as we're done with this token.
+                continue;
+            }//end if
+
+            /*
+                If this token has newlines in its content, split each line up
+                and create a new token for each line. We do this so it's easier
+                to asertain where errors occur on a line.
+                Note that $token[1] is the token's content.
+            */
+
             if ($tokenIsArray === true && strpos($token[1], $eolChar) !== false) {
                 $tokenLines = explode($eolChar, $token[1]);
                 $numLines   = count($tokenLines);

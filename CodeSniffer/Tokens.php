@@ -46,6 +46,7 @@ define('T_SELF', 1027);
 define('T_PARENT', 1028);
 define('T_DOUBLE_QUOTED_STRING', 1029);
 define('T_COMMA', 1030);
+define('T_HEREDOC', 1031);
 
 /**
  * The Tokens class contains weightings for tokens based on their
