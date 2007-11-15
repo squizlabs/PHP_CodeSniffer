@@ -191,10 +191,12 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
         }//end while
 
         $default = $phpcsFile->findPrevious(T_DEFAULT, $switch['scope_closer'], $switch['scope_opener']);
+
+        // Make sure this default belongs to us.
         if ($default !== false) {
-            // Make sure this default belongs to us.
-            $prevSwitch = $phpcsFile->findPrevious(T_SWITCH, $default);
-            if ($prevSwitch !== $stackPtr) {
+            $conditions = array_keys($tokens[$default]['conditions']);
+            $owner = array_pop($conditions);
+            if ($owner !== $stackPtr) {
                 $default = false;
             }
         }

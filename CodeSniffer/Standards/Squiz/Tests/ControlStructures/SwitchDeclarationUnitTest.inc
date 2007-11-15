@@ -202,4 +202,22 @@ switch ($name2) {
 }
     break;
 }
+
+switch ($name) {
+    case "1":
+        switch ($name2) {
+            case "1":
+                return true;
+            break;
+
+            default:
+                // No default.
+            break;
+        }
+    break;
+
+    default:
+        // No default.
+    break;
+}
 ?>
