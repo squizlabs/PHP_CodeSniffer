@@ -85,7 +85,6 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         $tokenCount         = 0;
         $currentLineContent = '';
         $currentLine        = 1;
-        $longLines          = array();
 
         for (; $tokenCount < $tokenLimit; $tokenCount++) {
             if ($tokens[$tokenCount]['line'] === $currentLine) {
@@ -94,22 +93,16 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
                 $currentLineContent = trim($currentLineContent, $phpcsFile->eolChar);
                 $lineLength         = strlen($currentLineContent);
 
-                if ($lineLength > $this->lineLimit) {
-                    $longLines[($tokenCount - 1)] = $lineLength;
+                if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
+                    $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
+                    $phpcsFile->addError($error, ($tokenCount - 1));
+                } else if ($lineLength > $this->lineLimit) {
+                    $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
+                    $phpcsFile->addWarning($warning, ($tokenCount - 1));
                 }
 
                 $currentLineContent = $tokens[$tokenCount]['content'];
                 $currentLine++;
-            }
-        }
-
-        foreach ($longLines as $lineToken => $lineLength) {
-            if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
-                $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addError($error, $lineToken);
-            } else {
-                $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addWarning($warning, $lineToken);
             }
         }
 
