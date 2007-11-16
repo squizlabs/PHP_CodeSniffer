@@ -81,12 +81,11 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $tokenLimit         = count($tokens);
         $tokenCount         = 0;
         $currentLineContent = '';
         $currentLine        = 1;
 
-        for (; $tokenCount < $tokenLimit; $tokenCount++) {
+        for (; $tokenCount < $phpcsFile->numTokens; $tokenCount++) {
             if ($tokens[$tokenCount]['line'] === $currentLine) {
                 $currentLineContent .= $tokens[$tokenCount]['content'];
             } else {

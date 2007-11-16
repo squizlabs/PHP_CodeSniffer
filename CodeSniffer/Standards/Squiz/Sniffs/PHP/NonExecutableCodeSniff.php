@@ -63,17 +63,18 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Break statements can themselves be scope closers, so it this
+        // Break statements can themselves be scope closers, so if this
         // is a closer, skip it.
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
             return;
         }
 
-        // Skip this token if it is non-executable code itself.
-        if (empty($tokens[$stackPtr]['conditions']) === false) {
-            $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
-            $ourTokens     = $this->register();
+        $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
+        $ourTokens     = $this->register();
+        $hasConditions = empty($ourConditions);
 
+        // Skip this token if it is non-executable code itself.
+        if ($hasConditions === false) {
             for ($i = ($stackPtr - 1); $i >= 1; $i--) {
                 // Skip tokens that close the scope. They don't end
                 // the execution of code.
@@ -103,7 +104,6 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         } else {
             // Look for other end of execution tokens in the global scope.
             for ($i = ($stackPtr - 1); $i >= 1; $i--) {
-                $ourTokens = $this->register();
                 if (in_array($tokens[$i]['code'], $ourTokens) === false) {
                     continue;
                 }
@@ -118,9 +118,8 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-        if (empty($tokens[$stackPtr]['conditions']) === false) {
-            $conditions = array_keys($tokens[$stackPtr]['conditions']);
-            $condition  = array_pop($conditions);
+        if ($hasConditions === false) {
+            $condition = array_pop($ourConditions);
 
             if (isset($tokens[$condition]['scope_closer']) === true) {
                 $closer = $tokens[$condition]['scope_closer'];
@@ -179,7 +178,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
             // Throw an error for all lines until the end of the file.
             $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-            $end   = (count($tokens) - 1);
+            $end   = ($phpcsFile->numTokens - 1);
 
             $lastLine = $tokens[$start]['line'];
             $endLine  = $tokens[$end]['line'];

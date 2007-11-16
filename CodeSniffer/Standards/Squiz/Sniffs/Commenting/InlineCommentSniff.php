@@ -153,10 +153,8 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         // Finally, the line below the last comment cannot be empty.
-        $totalTokens = count($tokens);
-        $start       = false;
-
-        for ($i = ($stackPtr + 1); $i < $totalTokens; $i++) {
+        $start = false;
+        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
                     return;

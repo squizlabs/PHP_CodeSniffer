@@ -133,6 +133,15 @@ class PHP_CodeSniffer_File
     public $eolChar = '';
 
     /**
+     * The number of tokens in this file.
+     *
+     * Stored here to save calling count() everywhere.
+     *
+     * @var int
+     */
+    public $numTokens = 0;
+
+    /**
      * The tokens stack map.
      *
      * Note that the tokens in this array differ in format to the tokens
@@ -483,18 +492,18 @@ class PHP_CodeSniffer_File
     {
         $this->eolChar = self::detectLineEndings($this->_file);
 
-        $contents      = file_get_contents($this->_file);
-        $this->_tokens = self::tokenizeString($contents, $this->eolChar);
+        $contents        = file_get_contents($this->_file);
+        $this->_tokens   = self::tokenizeString($contents, $this->eolChar);
+        $this->numTokens = count($this->_tokens);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $numTokens = count($this->_tokens);
-            if ($numTokens === 0) {
+            if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {
-                $numLines = $this->_tokens[($numTokens - 1)]['line'];
+                $numLines = $this->_tokens[($this->numTokens - 1)]['line'];
             }
 
-            echo "[$numTokens tokens in $numLines lines]... ";
+            echo "[$this->numTokens tokens in $numLines lines]... ";
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
             }
@@ -996,9 +1005,10 @@ class PHP_CodeSniffer_File
                 $openers[] = $i;
             } else if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 // Did we set an owner for this set of parenthesis?
-                $hasOwner = (empty($openers) === false && count($openers) === count($owners));
+                $numOpeners = count($openers);
+                $hasOwner   = ($numOpeners !== 0 && $numOpeners === count($owners));
 
-                if (empty($openers) === false) {
+                if ($numOpeners !== 0) {
                     $opener                                = array_pop($openers);
                     $tokens[$i]['parenthesis_opener']      = $opener;
                     $tokens[$i]['parenthesis_closer']      = $i;
@@ -2004,9 +2014,8 @@ class PHP_CodeSniffer_File
     {
         $types = (array) $types;
 
-        $count = count($this->_tokens);
-        if ($end === null || $end > $count) {
-            $end = $count;
+        if ($end === null || $end > $this->numTokens) {
+            $end = $this->numTokens;
         }
 
         for ($i = $start; $i < $end; $i++) {

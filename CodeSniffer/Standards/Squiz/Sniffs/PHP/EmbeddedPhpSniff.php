@@ -95,8 +95,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $tokenCount  = count($tokens);
-        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closingTag + 1), $tokenCount, true);
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closingTag + 1), $phpcsFile->numTokens, true);
         if ($nextContent === false) {
             // Final closing tag. It will be handled elsewhere.
             return;

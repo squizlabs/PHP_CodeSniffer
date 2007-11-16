@@ -486,9 +486,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $stackPtr++;
             } else if ($pattern[$i]['type'] === 'newline') {
                 // Find the next token that contains a newline character.
-                $numTokens = count($tokens);
-                $newline   = 0;
-                for ($j = $stackPtr; $j < $numTokens; $j++) {
+                $newline = 0;
+                for ($j = $stackPtr; $j < $phpcsFile->numTokens; $j++) {
                     if (strpos($tokens[$j]['content'], $phpcsFile->eolChar) !== false) {
                         $newline = $j;
                         break;
@@ -497,7 +496,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                 if ($newline === 0) {
                     // We didn't find a newline character in the rest of the file.
-                    $next     = ($numTokens - 1);
+                    $next     = ($phpcsFile->numTokens - 1);
                     $hasError = true;
                 } else {
                     if ($this->_ignoreComments === false) {
