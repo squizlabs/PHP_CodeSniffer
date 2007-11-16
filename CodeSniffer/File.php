@@ -1951,18 +1951,11 @@ class PHP_CodeSniffer_File
         }
 
         for ($i = $start; $i >= $end; $i--) {
-            $found = ($exclude === true) ? true : false;
+            $found = (bool) $exclude;
             foreach ($types as $type) {
-                if ($exclude === false) {
-                    if ($this->_tokens[$i]['code'] === $type) {
-                        $found = true;
-                        break;
-                    }
-                } else {
-                    if ($this->_tokens[$i]['code'] === $type) {
-                        $found = false;
-                        break;
-                    }
+                if ($this->_tokens[$i]['code'] === $type) {
+                    $found = !$exclude;
+                    break;
                 }
             }
 
@@ -1998,8 +1991,8 @@ class PHP_CodeSniffer_File
      * @param int       $end     The end position to fail if no token is found.
      *                           if not specified or null, end will default to
      *                           the end of the token stack.
-     * @param bool      $exclude If true, find the next token that are NOT of
-     *                           the types specified in $types.
+     * @param bool      $exclude If true, find the next token that is NOT of
+     *                           a type specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
      *                           If value is ommited, tokens with any value will
      *                           be returned.
@@ -2019,18 +2012,11 @@ class PHP_CodeSniffer_File
         }
 
         for ($i = $start; $i < $end; $i++) {
-            $found = ($exclude === true) ? true : false;
+            $found = (bool) $exclude;
             foreach ($types as $type) {
-                if ($exclude === false) {
-                    if ($this->_tokens[$i]['code'] === $type) {
-                        $found = true;
-                        break;
-                    }
-                } else {
-                    if ($this->_tokens[$i]['code'] === $type) {
-                        $found = false;
-                        break;
-                    }
+                if ($this->_tokens[$i]['code'] === $type) {
+                    $found = !$exclude;
+                    break;
                 }
             }
 
