@@ -717,7 +717,7 @@ class PHP_CodeSniffer
                     foreach ($colErrors as $error) {
                         $error['type'] = strtolower($error['type']);
                         echo '  <error';
-                        echo ' line="'.$line.' "column="'.$column.'"';
+                        echo ' line="'.$line.'" column="'.$column.'"';
                         echo ' severity="'.$error['type'].'"';
                         $message = htmlspecialchars($error['message']);
                         echo ' message="'.$message.'"';

@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved performance by optimising the way the scope map is created during tokenising
   - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
   - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
+  - Fixed bug #12471 : Checkstyle report is broken
  </notes>
  <contents>
   <dir name="/">
