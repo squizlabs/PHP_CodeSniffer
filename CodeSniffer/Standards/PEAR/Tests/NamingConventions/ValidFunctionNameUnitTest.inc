@@ -4,6 +4,7 @@ abstract class My_Class {
 
     public function __construct() {}
     public function My_Class() {}
+    public function _My_Class() {}
 
     public function getSomeValue() {}
     public function parseMyDSN() {}

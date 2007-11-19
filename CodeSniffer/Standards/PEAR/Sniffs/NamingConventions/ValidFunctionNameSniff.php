@@ -107,6 +107,11 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             return;
         }
 
+        // PHP4 destructors are allowed to break our rules.
+        if ($methodName === '_'.$className) {
+            return;
+        }
+
         $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
         $isPublic       = ($methodProps['scope'] === 'private') ? false : true;
         $scope          = $methodProps['scope'];
