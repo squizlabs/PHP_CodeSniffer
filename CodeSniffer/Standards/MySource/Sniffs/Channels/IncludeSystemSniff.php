@@ -40,6 +40,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                         'self',
                         'parent',
                         'channels',
+                        'basesystem',
                         'dal',
                         'init',
                         'pdo',
