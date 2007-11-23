@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
   - Fixed bug #12471 : Checkstyle report is broken
   - Fixed bug #12476 : PHP4 destructors are reported as error
+  - Fixed bug #12513 : Checkstyle XML messages need to be utf8_encode()d
+    -- Thanks to Sebastian Bergmann for the patch.
  </notes>
  <contents>
   <dir name="/">

@@ -719,7 +719,7 @@ class PHP_CodeSniffer
                         echo '  <error';
                         echo ' line="'.$line.'" column="'.$column.'"';
                         echo ' severity="'.$error['type'].'"';
-                        $message = htmlspecialchars($error['message']);
+                        $message = utf8_encode(htmlspecialchars($error['message']));
                         echo ' message="'.$message.'"';
                         echo '/>'.PHP_EOL;
                         $errorsShown++;
