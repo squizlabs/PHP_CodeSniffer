@@ -97,7 +97,7 @@ class MyClass
 {
 
 
-    public function myFunction(array &$one, array &$two)
+    public function &myFunction(array &$one, array &$two)
     {
 
     }//end myFunction()

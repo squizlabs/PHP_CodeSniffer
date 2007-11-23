@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
   - PEAR FunctionCommentSniff no longer complains about missing comments for @throws tags
   - PEAR FunctionCommentSniff now throws error for missing exception class name for @throws tags
+  - PHP_CodeSniffer_File::isReference() now correctly returns for functions that return references
   - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
   - Fixed bug #12471 : Checkstyle report is broken
   - Fixed bug #12476 : PHP4 destructors are reported as error

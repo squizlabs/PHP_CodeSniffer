@@ -1861,6 +1861,11 @@ class PHP_CodeSniffer_File
 
         $tokenBefore = $this->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
+        if ($this->_tokens[$tokenBefore]['code'] === T_FUNCTION) {
+            // Function returns a reference.
+            return true;
+        }
+
         if ($this->_tokens[$tokenBefore]['code'] === T_DOUBLE_ARROW) {
             // Inside a foreach loop, this is a reference.
             return true;
