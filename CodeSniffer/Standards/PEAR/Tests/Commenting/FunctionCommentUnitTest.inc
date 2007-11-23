@@ -233,6 +233,15 @@ echo $blah;
 
 function myFunction($arg1) {}
 
+/**
+ * Test function.
+ *
+ * @access public
+ * @return bool
+ * @throws MyException
+ * @throws MyException When I feel like it
+ */
+function myFunction() {}
 
 class MyClass() {
     /**

@@ -32,8 +32,8 @@ if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) ==
  *  <li>Parameter comments are complete</li>
  *  <li>A space is present before the first and after the last parameter</li>
  *  <li>A return type exists</li>
- *  <li>If a body comment exists, it must be one blank newline from the headline comment.</li>
- *  <li>Any throw tag must have a comment.</li>
+ *  <li>There must be one blank line between body and headline comments.</li>
+ *  <li>Any throw tag must have an exception class.</li>
  * </ul>
  *
  * @category  PHP
@@ -240,7 +240,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     /**
      * Process any throw tags that this function comment has.
      *
-     * @param int $commentStart The position in the stack where the comment started.
+     * @param int $commentStart The position in the stack where the
+     *                          comment started.
      *
      * @return void
      */
@@ -252,11 +253,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         foreach ($this->commentParser->getThrows() as $throw) {
 
-            $comment  = $throw->getComment();
-            $errorPos = ($commentStart + $throw->getLine());
+            $exception = $throw->getValue();
+            $errorPos  = ($commentStart + $throw->getLine());
 
-            if ($comment === '') {
-                $error = '@throws tag must contain a comment';
+            if ($exception === '') {
+                $error = '@throws tag must contain the exception class name';
                 $this->currentFile->addError($error, $errorPos);
             }
         }
