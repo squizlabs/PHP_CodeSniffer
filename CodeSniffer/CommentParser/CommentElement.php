@@ -192,7 +192,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
 
     /**
-     * Returns the newline(s) that exist before the tags.
+     * Returns the number of newlines that exist before the tags.
      *
      * @return int
      */
@@ -200,12 +200,17 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     {
         $long = $this->getLongComment();
         if ($long !== '') {
-            return strspn((strrev(rtrim($long, ' '))), $this->phpcsFile->eolChar);
+            $long     = rtrim($long, ' ');
+            $long     = strrev($long);
+            $newlines = strspn($long, $this->phpcsFile->eolChar);
         } else {
             $endShort = ($this->_getShortCommentEndPos() + 1);
             $after    = implode('', array_slice($this->tokens, $endShort));
-            return strspn((trim($after, ' ')), $this->phpcsFile->eolChar);
+            $after    = trim($after, ' ');
+            $newlines = strspn($after, $this->phpcsFile->eolChar);
         }
+
+        return ($newlines / strlen($this->phpcsFile->eolChar));
 
     }//end getNewlineAfter()
 

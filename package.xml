@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #12476 : PHP4 destructors are reported as error
   - Fixed bug #12513 : Checkstyle XML messages need to be utf8_encode()d
     -- Thanks to Sebastian Bergmann for the patch.
+  - Fixed bug #12517 : getNewlineAfter() and dos files
  </notes>
  <contents>
   <dir name="/">
