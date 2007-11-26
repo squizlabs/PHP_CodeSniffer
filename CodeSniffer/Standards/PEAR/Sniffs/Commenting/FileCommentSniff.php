@@ -659,7 +659,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if (strstr($content, 'CVS:') === false && strstr($content, 'SVN:') === false) {
-                $error = "Invalid version \"$content\" in file comment; consider \"CVS: <cvs_id>\" or \"SVN: <svn_id>\" instead.";
+                $error = "Invalid version \"$content\" in file comment; consider \"CVS: <cvs_id>\" or \"SVN: <svn_id>\" instead";
                 $this->currentFile->addWarning($error, $errorPos);
             }
         }

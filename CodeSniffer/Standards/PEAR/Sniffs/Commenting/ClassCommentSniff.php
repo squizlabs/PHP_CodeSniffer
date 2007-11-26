@@ -200,7 +200,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                 $error = 'Content missing for @version tag in class comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if ((strstr($content, 'Release:') === false)) {
-                $error = "Invalid version \"$content\" in class comment; Consider \"Release: <package_version>\" instead.";
+                $error = "Invalid version \"$content\" in class comment; consider \"Release: <package_version>\" instead";
                 $this->currentFile->addWarning($error, $errorPos);
             }
         }
