@@ -40,3 +40,12 @@ if (($anotherReallyLongVarName === true) || (is_array($anotherReallyLongVarName)
 <?php
 echo 'hi';
 ?>
+
+<?php
+/**
+ * Comments contining CVS IDs can be long, but should be ignored because
+ * they cannot be changed by the developer.
+ *
+ * @version CVS: $Id$
+ */
+ ?>
