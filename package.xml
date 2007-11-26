@@ -32,6 +32,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added new command line argument --tab-width that will convert tabs to spaces before testing
+    -- This allows you to use the existing sniffs that check for spaces even when you use tabs
+    -- Can also be set via a config var: phpcs --config-set tab_width 4
+    -- A value of zero (the default) tells PHP_CodeSniffer not to replace tabs with spaces
   - Improved performance by optimising the way the scope map is created during tokenising
   - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
   - PEAR FunctionCommentSniff no longer complains about missing comments for @throws tags

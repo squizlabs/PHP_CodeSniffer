@@ -40,7 +40,7 @@ function PHP_CodeSniffer_printUsage()
     echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
     echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
     echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
-    echo '    [--ignore=<patterns>] <file> ...'.PHP_EOL;
+    echo '    [--ignore=<patterns>] [--tab-width=<width>] <file> ...'.PHP_EOL;
     echo '        -n           Do not print warnings'.PHP_EOL;
     echo '        -w           Print both warnings and errors (on by default)'.PHP_EOL;
     echo '        -l           Local directory only, no recursion'.PHP_EOL;
@@ -54,6 +54,7 @@ function PHP_CodeSniffer_printUsage()
     echo '        <patterns>   A comma separated list of patterns that are used'.PHP_EOL;
     echo '                     to ignore directories and files'.PHP_EOL;
     echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
+    echo '        <width>      The number of spaces each tab represents'.PHP_EOL;
     echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
     echo '                     (forces doc generation instead of checking)'.PHP_EOL;
     echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
@@ -99,20 +100,27 @@ if (count($installedStandards) === 0) {
 
 
 // The default values for config settings.
-$files        = array();
-$standard     = null;
-$verbosity    = 0;
-$local        = false;
-$report       = 'full';
-$extensions   = array();
-$ignored      = array();
-$generator    = '';
+$files      = array();
+$standard   = null;
+$verbosity  = 0;
+$local      = false;
+$report     = 'full';
+$extensions = array();
+$ignored    = array();
+$generator  = '';
 
 $showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
 if ($showWarnings === null) {
     $showWarnings = true;
 } else {
     $showWarnings = (bool) $showWarnings;
+}
+
+$tabWidth = PHP_CodeSniffer::getConfigData('tab_width');
+if ($tabWidth === null) {
+    $tabWidth = 0;
+} else {
+    $tabWidth = (int) $tabWidth;
 }
 
 for ($i = 1; $i < $_SERVER['argc']; $i++) {
@@ -170,6 +178,8 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
                 $ignored = explode(',', substr($arg, 9));
             } else if (substr($arg, 0, 12) === '--generator=') {
                 $generator = substr($arg, 12);
+            } else if (substr($arg, 0, 12) === '--tab-width=') {
+                $tabWidth = (int) substr($arg, 12);
             } else {
                 echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
                 PHP_CodeSniffer_printUsage();
@@ -270,7 +280,7 @@ if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
     exit(2);
 }
 
-$phpcs = new PHP_CodeSniffer($verbosity);
+$phpcs = new PHP_CodeSniffer($verbosity, $tabWidth);
 
 // Set file extensions if they were specified. Otherwise,
 // let PHP_CodeSniffer decide on the defaults.

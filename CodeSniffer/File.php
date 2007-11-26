@@ -887,6 +887,12 @@ class PHP_CodeSniffer_File
         self::_createParenthesisNestingMap($finalTokens, $eolChar);
         self::_createScopeMap($finalTokens, $eolChar);
 
+        // If we know the width of each tab, convert tabs
+        // into spaces so sniffs can use one method of checking.
+        if (PHP_CODESNIFFER_TAB_WIDTH > 0) {
+            self::_convertTabs($finalTokens, $eolChar);
+        }
+
         // Column map requires the line map to be complete.
         self::_createColumnMap($finalTokens, $eolChar);
         self::_createLevelMap($finalTokens, $eolChar);
@@ -915,6 +921,87 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createLineMap()
+    
+    
+    /**
+     * Converts tabs into spaces.
+     *
+     * Each tab can represent between 1 and $width spaces, so
+     * this cannot be a straight string replace.
+     *
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return void
+     */
+    private static function _convertTabs(&$tokens, $eolChar)
+    {
+        $currColumn = 1;
+        $count      = count($tokens);
+
+        for ($i = 0; $i < $count; $i++) {
+            $tokenContent = $tokens[$i]['content'];
+            $printContent = str_replace("\t", '[TAB]', $tokenContent);
+
+            if (strpos($tokenContent, "\t") === false) {
+                // There are no tabs in this content.
+                $currColumn += strlen($tokenContent) - 1;
+            } else {
+                // We need to determine the length of each tab.
+                $tabs         = preg_split("|(\t)|", $tokenContent, -1, PREG_SPLIT_DELIM_CAPTURE);
+                $tabNum       = 0;
+                $adjustedTab  = false;
+                $tabsToSpaces = array();
+                $newContent   = '';
+
+                foreach ($tabs as $content) {
+                    $printContent = str_replace("\t", '[TAB]', $content);
+                    if ($content == '') {
+                        continue;
+                    }
+
+                    if (strpos($content, "\t") === false) {
+                        // This piece of content is not a tab.
+                        $currColumn += strlen($content);
+                        $newContent .= $content;
+                    } else {
+                        $lastCurrColumn = $currColumn;
+                        $tabNum++;
+
+                        // Move the pointer to the next tab stop.
+                        if (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) === 0) {
+                            // This is the first tab, and we are already at a
+                            // tab stop, so this tab counts as a single space.
+                            $currColumn++;
+                            $adjustedTab = true;
+                        } else {
+                            $currColumn++;
+                            while (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) != 0) {
+                                $currColumn++;
+                            }
+
+                            $currColumn++;
+                        }
+                        $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
+                    }
+                }//end foreach
+
+                if ($tabNum == 1 && $adjustedTab) {
+                    $currColumn--;
+                }
+
+                $newContent            = str_replace(' ', '.', $newContent);
+                $tokens[$i]['content'] = $newContent;
+            }//end if
+
+            if (isset($tokens[($i + 1)]['line']) === true && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']) {
+                $currColumn = 1;
+            } else {
+                $currColumn++;
+            }
+        }
+
+    }//end _convertTabs()
 
 
     /**

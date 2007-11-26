@@ -128,12 +128,16 @@ class PHP_CodeSniffer
      * @param int $verbosity The verbosity level.
      *                       1: Print progress information.
      *                       2: Print developer debug information.
+     * @param int $tabWidth  The number of spaces each tab represents.
+     *                       If greater than zero, tabs will be replaced
+     *                       by spaces before testing each file.
      *
      * @see process()
      */
-    public function __construct($verbosity=0)
+    public function __construct($verbosity=0, $tabWidth=0)
     {
         define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
 
     }//end __construct()
 
