@@ -117,5 +117,41 @@ class FunctionCommentThrowTagUnitTest
     }//end notOK()
 
 
+    /**
+     * Needs at least 1 throws tag, even though we
+     * don't know what it is.
+     */
+    public function notOKVariable()
+    {
+        try {
+            // Do something.
+        } catch (PHP_Exception2 $e) {
+            logError();
+            throw $e;
+        }
+
+    }//end notOKVariable()
+
+
+    /**
+     * Needs at least 1 throws tag, even though we
+     * don't know what it is.
+     *
+     * @throws PHP_Exception1
+     */
+    public function okVariable()
+    {
+        throw new PHP_Exception1('Error');
+
+        try {
+            // Do something.
+        } catch (PHP_Exception1 $e) {
+            logError();
+            throw $e;
+        }
+
+    }//end okVariable()
+
+
 }//end class
 ?>
