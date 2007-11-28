@@ -104,10 +104,14 @@ $files      = array();
 $standard   = null;
 $verbosity  = 0;
 $local      = false;
-$report     = 'full';
 $extensions = array();
 $ignored    = array();
 $generator  = '';
+
+$report = PHP_CodeSniffer::getConfigData('report_format');
+if ($report === null) {
+    $report = 'full';
+}
 
 $showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
 if ($showWarnings === null) {

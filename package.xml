@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows you to use the existing sniffs that check for spaces even when you use tabs
     -- Can also be set via a config var: phpcs --config-set tab_width 4
     -- A value of zero (the default) tells PHP_CodeSniffer not to replace tabs with spaces
+  - You can now change the default report format from "full" to something else
+      -- Run: phpcs --config-set report_format [format]
   - Improved performance by optimising the way the scope map is created during tokenising
   - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
   - PEAR FunctionCommentSniff no longer complains about missing comments for @throws tags
