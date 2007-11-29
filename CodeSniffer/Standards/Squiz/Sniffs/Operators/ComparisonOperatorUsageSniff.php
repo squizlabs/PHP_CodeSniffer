@@ -106,8 +106,37 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_INLINE_THEN) {
-            $end   = $phpcsFile->findPrevious(T_CLOSE_PARENTHESIS, ($stackPtr - 1));
-            $start = $tokens[$end]['parenthesis_opener'];
+            $end = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            if ($tokens[$end]['code'] !== T_CLOSE_PARENTHESIS) {
+                // This inline IF statement does not have its condition
+                // bracketed, so we need to guess where it starts.
+                for ($i = ($end - 1); $i >= 0; $i--) {
+                    if ($tokens[$i]['code'] === T_SEMICOLON) {
+                        // Stop here as we assume it is the end
+                        // of the previous statement.
+                        break;
+                    } else if ($tokens[$i]['code'] === T_OPEN_TAG) {
+                        // Stop here as this is the start of the file.
+                        break;
+                    } else if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET) {
+                        // Stop if this is the closing brace of
+                        // a code block.
+                        if (isset($tokens[$i]['scope_opener']) === true) {
+                            break;
+                        }
+                    } else if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
+                        // Stop if this is the opening brace of
+                        // a code block.
+                        if (isset($tokens[$i]['scope_closer']) === true) {
+                            break;
+                        }
+                    }
+                }//end for
+
+                $start = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
+            } else {
+                $start = $tokens[$end]['parenthesis_opener'];
+            }
         } else {
             $start = $tokens[$stackPtr]['parenthesis_opener'];
             $end   = $tokens[$stackPtr]['parenthesis_closer'];

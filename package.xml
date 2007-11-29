@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LineLengthSniff no longer warns about @version lines with CVS or SVN id tags
   - Generic LineLengthSniff no longer warns about @license lines with long URLs
   - Squiz FunctionCommentThrowTagSniff no longer complains about throwing variables
+  - Squiz ComparisonOperatorUsageSniff no longer throws incorrect errors for inline IF statements
   - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
   - Fixed bug #12471 : Checkstyle report is broken
   - Fixed bug #12476 : PHP4 destructors are reported as error

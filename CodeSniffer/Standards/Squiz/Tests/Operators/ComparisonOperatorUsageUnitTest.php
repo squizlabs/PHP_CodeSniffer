@@ -56,6 +56,11 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
                 32 => 2,
                 38 => 4,
                 47 => 2,
+                69 => 1,
+                72 => 1,
+                75 => 1,
+                78 => 1,
+                80 => 1,
                );
 
     }//end getErrorList()
