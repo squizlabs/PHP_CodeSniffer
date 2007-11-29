@@ -72,8 +72,8 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
             The general rule is:
             Find an equal sign and go backwards along the line. If you hit an
             end bracket, skip to the opening bracket. When you find a variable,
-            stop. That variable must be the first non-empty token on the line.
-            If not, throw an error.
+            stop. That variable must be the first non-empty token on the line
+            or in the statement. If not, throw an error.
         */
 
         for ($varToken = ($stackPtr - 1); $varToken >= 0; $varToken--) {
@@ -127,19 +127,31 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
             return;
         }
 
-        // Make sure this variable is the first thing on the line.
+        // Make sure this variable is the first thing in the statement.
         $varLine  = $tokens[$varToken]['line'];
         $prevLine = 0;
         for ($i = ($varToken - 1); $i >= 0; $i--) {
+            if ($tokens[$i]['code'] === T_SEMICOLON) {
+                // We reached the end of the statement.
+                return;
+            }
+
+            if ($tokens[$i]['code'] === T_INLINE_THEN) {
+                // We reached the end of the inline THEN statement.
+                return;
+            }
+
+            if ($tokens[$i]['code'] === T_COLON) {
+                $then = $phpcsFile->findPrevious(T_INLINE_THEN, ($i - 1), null, false, null, true);
+                if ($then !== false) {
+                    // We reached the end of the inline ELSE statement.
+                    return;
+                }
+            }
+
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
-            }
-
-            if ($tokens[$i]['code'] === T_SEMICOLON) {
-                // We reached the end of the statement, so the
-                // line numbers do not matter.
-                return;
             }
         }
 

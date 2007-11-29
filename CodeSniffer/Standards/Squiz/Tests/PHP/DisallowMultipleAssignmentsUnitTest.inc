@@ -34,4 +34,5 @@ class myClass
 
 $var = $var2;
 list ($a, $b) = explode(',', $c);
+$var1 ? $var2 = 0 : $var2 = 1;
 ?>
