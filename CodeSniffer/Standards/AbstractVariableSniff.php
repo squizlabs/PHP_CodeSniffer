@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -66,7 +67,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION, T_VARIABLE, T_DOUBLE_QUOTED_STRING), true);
+        $listen = array(T_CLASS, T_INTERFACE);
+        $scopes = array(T_FUNCTION, T_VARIABLE, T_DOUBLE_QUOTED_STRING);
+        parent::__construct($listen, $scopes, true);
 
     }//end __construct()
 
@@ -74,7 +77,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     /**
      * Processes the token in the specified PHP_CodeSniffer_File.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      * @param array                $currScope The current scope opener token.
      *
@@ -114,7 +118,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
                 $this->processVariable($phpcsFile, $stackPtr);
             } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
                 // Check to see if this string has a variable in it.
-                if (preg_match('|[^\\\]\$[a-zA-Z0-9_]+|', $tokens[$stackPtr]['content']) !== 0) {
+                $pattern = '|[^\\\]\$[a-zA-Z0-9_]+|';
+                if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
                     $this->processVariableInString($phpcsFile, $stackPtr);
                 }
             }
@@ -132,7 +137,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     /**
      * Processes the token outside the scope in the file.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
      * @return void
@@ -153,7 +159,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     /**
      * Called to process class member vars.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
      * @return void
@@ -164,7 +171,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     /**
      * Called to process normal member vars.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
      * @return void
@@ -178,7 +186,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * Note that there may be more than one variable in the string, which will
      * result only in one call for the string.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     *                                        token was found.
      * @param int                  $stackPtr  The position where the double quoted
      *                                        string was found.
      *

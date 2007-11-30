@@ -15,19 +15,23 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_AbstractParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractParser not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_AbstractParser not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 if (class_exists('PHP_CodeSniffer_CommentParser_ParameterElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ParameterElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_ParameterElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 if (class_exists('PHP_CodeSniffer_CommentParser_PairElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_PairElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_PairElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_SingleElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**

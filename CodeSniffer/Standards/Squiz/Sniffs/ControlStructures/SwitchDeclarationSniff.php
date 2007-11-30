@@ -195,7 +195,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
         // Make sure this default belongs to us.
         if ($default !== false) {
             $conditions = array_keys($tokens[$default]['conditions']);
-            $owner = array_pop($conditions);
+            $owner      = array_pop($conditions);
             if ($owner !== $stackPtr) {
                 $default = false;
             }

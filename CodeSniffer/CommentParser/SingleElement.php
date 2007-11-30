@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_AbstractDocElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -56,10 +57,18 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
     /**
      * Constructs a SingleElement doc tag.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element before this one.
-     * @param array                                    $tokens          The tokens that comprise this element.
-     * @param string                                   $tag             The tag that this element represents.
-     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that this element is in.
+     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element
+     *                                                                  before this
+     *                                                                  one.
+     * @param array                                    $tokens          The tokens
+     *                                                                  that comprise
+     *                                                                  this element.
+     * @param string                                   $tag             The tag that
+     *                                                                  this element
+     *                                                                  represents.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that
+     *                                                                  this element
+     *                                                                  is in.
      */
     public function __construct($previousElement, $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
     {
@@ -131,8 +140,10 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      * Processes a content check for single doc element.
      *
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $commentStart The line number where the error occurs.
-     * @param string               $docBlock     Whether this is a file or class comment doc
+     * @param int                  $commentStart The line number where
+     *                                           the error occurs.
+     * @param string               $docBlock     Whether this is a file or
+     *                                           class comment doc.
      *
      * @return void
      */

@@ -17,10 +17,10 @@
 /**
  * Represents a PHP_CodeSniffer sniff for sniffing coding standards.
  *
- * A sniff registers what token types it wishes to listen for, then, when PHP_CodeSniffer
- * encounters that token, the sniff is invoked and passed information about where
- * the token was found in the stack, and the PHP_CodeSniffer file in which the token was
- * found.
+ * A sniff registers what token types it wishes to listen for, then, when
+ * PHP_CodeSniffer encounters that token, the sniff is invoked and passed
+ * information about where the token was found in the stack, and the
+ * PHP_CodeSniffer file in which the token was found.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -78,9 +78,11 @@ interface PHP_CodeSniffer_Sniff
      *    $phpcsFile->addError('Encountered an error', $stackPtr);
      * </code>
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the token was found.
-     * @param int                  $stackPtr  The position in the PHP_CodeSniffer file's token
-     *                                        stack where the token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
+     *                                        token was found.
+     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
+     *                                        file's token stack where the token
+     *                                        was found.
      *
      * @return void
      */

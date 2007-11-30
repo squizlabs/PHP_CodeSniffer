@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_IncorrectPatternException', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_IncorrectPatternException not found');
+    $error = 'Class PHP_CodeSniffer_Standards_IncorrectPatternException not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -173,7 +174,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
         // If we could not get a token.
         if ($token === false) {
-            throw new PHP_CodeSniffer_Exception('Could not determine a token to listen for');
+            $error = 'Could not determine a token to listen for';
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         return $tokenTypes[$token];
@@ -244,9 +246,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     /**
      * Processes the pattern and varifies the code at $stackPtr.
      *
-     * @param array                $patternInfo Information about the pattern used for
-     *                                          checking, which includes are parsed
-     *                                          otken representation of the pattern.
+     * @param array                $patternInfo Information about the pattern used
+     *                                          for checking, which includes are
+     *                                          parsed token representation of the
+     *                                          pattern.
      * @param PHP_CodeSniffer_File $phpcsFile   The PHP_CodeSniffer file where the
      *                                          token occured.
      * @param int                  $stackPtr    The postion in the tokens stack where
@@ -298,8 +301,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     } else {
 
                         // Check to see if this important token is the same as the
-                        // previous important token in the pattern. If it is not, then
-                        // the pattern cannot be for this piece of code.
+                        // previous important token in the pattern. If it is not,
+                        // then the pattern cannot be for this piece of code.
                         $prev = $phpcsFile->findPrevious($ignoreTokens, $stackPtr, null, true);
                         if ($prev === false || $tokens[$prev]['code'] !== $pattern[$i]['token']) {
                             return false;
@@ -441,8 +444,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
 
                         // Even when ignoring comments, we are not allowed to include
-                        // newlines without the pattern specifying them, so everything
-                        // should be on the same line.
+                        // newlines without the pattern specifying them, so
+                        // everything should be on the same line.
                         if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
                             $hasError = true;
                         }
@@ -509,8 +512,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     if ($newline === $stackPtr) {
                         $next = ($stackPtr + 1);
                     } else {
-                        // Check that there were no significant tokens that we skipped
-                        // over to find our newline character.
+                        // Check that there were no significant tokens that we
+                        // skipped over to find our newline character.
                         $next = $phpcsFile->findNext($ignoreTokens, $stackPtr, null, true);
                         if ($next < $newline) {
                             // We skipped a non-ignored token.

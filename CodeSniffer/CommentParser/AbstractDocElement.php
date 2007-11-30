@@ -15,7 +15,8 @@
  */
 
 if (interface_exists('PHP_CodeSniffer_CommentParser_DocElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Interface PHP_CodeSniffer_CommentParser_DocElement not found');
+    $error = 'Interface PHP_CodeSniffer_CommentParser_DocElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -110,11 +111,18 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     /**
      * Constructs a Doc Element.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element that ocurred before this.
-     * @param array                                    $tokens          The tokens of this element.
-     * @param string                                   $tag             The doc element tag this element
+     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element
+     *                                                                  that ocurred
+     *                                                                  before this.
+     * @param array                                    $tokens          The tokens of
+     *                                                                  this element.
+     * @param string                                   $tag             The doc
+     *                                                                  element tag
+     *                                                                  this element
      *                                                                  represents.
-     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that this element is in.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that
+     *                                                                  this element
+     *                                                                  is in.
      *
      * @throws Exception If $previousElement in not a DocElement or if
      *                   getSubElements() does not return an array.
@@ -122,7 +130,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     public function __construct($previousElement, array $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
     {
         if ($previousElement !== null && ($previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
-            throw new Exception('$previousElement must be an instance of DocElement');
+            $error = '$previousElement must be an instance of DocElement';
+            throw new Exception($error);
         }
 
         $this->phpcsFile = $phpcsFile;

@@ -1227,7 +1227,11 @@ class PHP_CodeSniffer
                     // The character is a number, so it cant be a captial.
                     $isCaps = false;
                 } else {
-                    $isCaps = (strtoupper($string{$i}) === $string{$i}) ? true : false;
+                    if (strtoupper($string{$i}) === $string{$i}) {
+                        $isCaps = true;
+                    } else {
+                        $isCaps = false;
+                    }
                 }
 
                 if ($isCaps === true && $lastCharWasCaps === true) {
@@ -1310,9 +1314,11 @@ class PHP_CodeSniffer
             }//end switch
 
             if (strpos($lowerVarType, 'array(') !== false) {
-                // Valid array declaration: array, array(type), array(type1 => type2).
+                // Valid array declaration:
+                // array, array(type), array(type1 => type2).
                 $matches = array();
-                if (preg_match('/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i', $varType, $matches) !== 0) {
+                $pattern = '/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i';
+                if (preg_match($pattern, $varType, $matches) !== 0) {
                     $type1 = (isset($matches[1]) === true) ? $matches[1] : '';
                     $type2 = (isset($matches[3]) === true) ? $matches[3] : '';
                     $type1 = self::suggestType($type1);
@@ -1374,7 +1380,8 @@ class PHP_CodeSniffer
                 }
 
                 // Valid coding standard dirs include a standard class.
-                if (is_file($file->getPathname()."/{$filename}CodingStandard.php") === true) {
+                $csFile = $file->getPathname()."/{$filename}CodingStandard.php";
+                if (is_file($csFile) === true) {
                     // We found a coding standard directory.
                     $installedStandards[] = $filename;
                 }
@@ -1459,7 +1466,8 @@ class PHP_CodeSniffer
         }
 
         if (is_file($configFile) === true && is_writable($configFile) === false) {
-            throw new PHP_CodeSniffer_Exception("Config file $configFile is not writable");
+            $error = "Config file $configFile is not writable";
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         $phpCodeSnifferConfig = self::getAllConfigData();

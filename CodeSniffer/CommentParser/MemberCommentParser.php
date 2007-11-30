@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**

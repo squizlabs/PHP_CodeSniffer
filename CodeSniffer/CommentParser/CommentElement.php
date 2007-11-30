@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_SingleElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_SingleElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_SingleElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -51,12 +52,19 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     /**
      * Constructs a PHP_CodeSniffer_CommentParser_CommentElement.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElemement $previousElement The element that
-     *                                                                    appears before this
+     * @param PHP_CodeSniffer_CommentParser_DocElemement $previousElement The element
+     *                                                                    that
+     *                                                                    appears
+     *                                                                    before this
      *                                                                    element.
-     * @param array                                      $tokens          The tokens that
-     *                                                                    make up this element.
-     * @param PHP_CodeSniffer_File                       $phpcsFile       The file that this element is in.
+     * @param array                                      $tokens          The tokens
+     *                                                                    that make
+     *                                                                    up this
+     *                                                                    element.
+     * @param PHP_CodeSniffer_File                       $phpcsFile       The file
+     *                                                                    that this
+     *                                                                    element is
+     *                                                                    in.
      */
     public function __construct($previousElement, $tokens, PHP_CodeSniffer_File $phpcsFile)
     {

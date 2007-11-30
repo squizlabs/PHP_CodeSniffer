@@ -526,7 +526,8 @@ class PHP_CodeSniffer_File
         // Will be either \r, \r\n or \n.
         $handle = fopen($file, 'r');
         if ($handle === false) {
-            throw new PHP_CodeSniffer_Exception('File could not be opened; could not auto-detect line endings');
+            $error = 'File could not be opened; could not auto-detect line endings';
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         $firstLine = fgets($handle);
@@ -1295,9 +1296,9 @@ class PHP_CodeSniffer_File
                         if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                             continue;
                         } else {
-                            // If the first non-whitespace/comment token is a variable
-                            // then this is an opener for a string offset and not
-                            // a scope.
+                            // If the first non-whitespace/comment token is a
+                            // variable then this is an opener for a string offset
+                            // and not a scope.
                             if ($tokens[$x]['code'] === T_VARIABLE) {
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                     echo str_repeat("\t", $depth);

@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_AbstractDocElement', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_AbstractDocElement not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -68,10 +69,18 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
     /**
      * Constructs a PHP_CodeSniffer_CommentParser_PairElement doc tag.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element before this one.
-     * @param array                                    $tokens          The tokens that comprise this element.
-     * @param string                                   $tag             The tag that this element represents.
-     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that this element is in.
+     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element
+     *                                                                  before this
+     *                                                                  one.
+     * @param array                                    $tokens          The tokens
+     *                                                                  that comprise
+     *                                                                  this element.
+     * @param string                                   $tag             The tag that
+     *                                                                  this element
+     *                                                                  represents.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file that
+     *                                                                  this element
+     *                                                                  is in.
      */
     public function __construct($previousElement, $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
     {

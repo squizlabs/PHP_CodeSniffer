@@ -21,19 +21,19 @@
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
- *    class ClassScopeTest extends PHP_CodeSniffer_Standards_AbstractScopeSniff
- *    {
- *        public function __construct()
- *        {
- *            parent::__construct(array(T_CLASS), array(T_FUNCTION));
- *        }
+ * class ClassScopeTest extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+ * {
+ *     public function __construct()
+ *     {
+ *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
+ *     }
  *
- *        protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $)
- *        {
- *            $className = $phpcsFile->getDeclarationName($currScope);
- *            echo 'encountered a method within class '.$className;
- *        }
- *    }
+ *     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $)
+ *     {
+ *         $className = $phpcsFile->getDeclarationName($currScope);
+ *         echo 'encountered a method within class '.$className;
+ *     }
+ * }
  * </code>
  *
  * @category  PHP
@@ -86,7 +86,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                               within the scope.
      * @param boolean $listenOutside If true this test will also alert the
      *                               extending class when a token is found outside
-     *                               the scope, by calling the processTokenOutideScope.
+     *                               the scope, by calling the
+     *                               processTokenOutideScope method.
      *
      * @see PHP_CodeSniffer.getValidScopeTokeners()
      * @throws PHP_CodeSniffer_Test_Exception If the specified tokens array is empty.
@@ -94,23 +95,27 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     public function __construct(array $scopeTokens, array $tokens, $listenOutside=false)
     {
         if (empty($scopeTokens) === true) {
-            throw new PHP_CodeSniffer_Test_Exception('The scope tokens list cannot be empty');
+            $error = 'The scope tokens list cannot be empty';
+            throw new PHP_CodeSniffer_Test_Exception($error);
         }
 
         if (empty($tokens) === true) {
-            throw new PHP_CodeSniffer_Test_Exception('The tokens list cannot be empty');
+            $error ='The tokens list cannot be empty';
+            throw new PHP_CodeSniffer_Test_Exception($error);
         }
 
         $invalidScopeTokens = array_diff($scopeTokens, PHP_CodeSniffer_File::getValidScopeOpeners());
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);
-            throw new PHP_CodeSniffer_Test_Exception("Supplied scope tokens [$invalid] are not valid scope opener");
+            $error   = "Scope tokens [$invalid] are not valid scope opener";
+            throw new PHP_CodeSniffer_Test_Exception($error);
         }
 
         $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);
-            throw new PHP_CodeSniffer_Test_Exception("Supplied scope tokens [$invalid] cannot be in the tokens array");
+            $error   = "Scope tokens [$invalid] cant be in the tokens array";
+            throw new PHP_CodeSniffer_Test_Exception($error);
         }
 
         $this->_listenOutside = $listenOutside;
@@ -145,8 +150,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * Processes the tokens that this test is listening for.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position in the stack where this token
-     *                                        was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
      *
      * @return void
      * @see processTokenWithinScope()
@@ -183,8 +188,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * listening to.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position in the stack where this token
-     *                                        was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
      * @param int                  $currScope The position in the tokens array that
      *                                        opened the scope that this test is
      *                                        listening for.
@@ -199,8 +204,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * listening to.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position in the stack where this token
-     *                                        was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
      *
      * @return void
      */
