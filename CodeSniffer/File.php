@@ -208,9 +208,9 @@ class PHP_CodeSniffer_File
      * A list of tokens that are allowed to open a scope.
      *
      * This array also contains information about what kind of token the scope
-     * opener uses to open and close the scope, if the token can share a scope
-     * closer, and who it can be shared with. An example of a token that shares
-     * a scope closer is a CASE scope.
+     * opener uses to open and close the scope, if the token strictly requires
+     * an opener, if the token can share a scope closer, and who it can be shared
+     * with. An example of a token that shares a scope closer is a CASE scope.
      *
      * @var array
      */
@@ -218,84 +218,98 @@ class PHP_CodeSniffer_File
                                      T_IF            => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_TRY           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_CATCH         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_ELSE          => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_ELSEIF        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_FOR           => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_FOREACH       => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_INTERFACE     => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_FUNCTION      => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_CLASS         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_WHILE         => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => false,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_DO            => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_SWITCH        => array(
                                                          'start'  => T_OPEN_CURLY_BRACKET,
                                                          'end'    => T_CLOSE_CURLY_BRACKET,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
                                      T_CASE          => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
+                                                         'strict' => true,
                                                          'shared' => true,
                                                          'with'   => array(
                                                                       T_DEFAULT,
@@ -305,12 +319,14 @@ class PHP_CodeSniffer_File
                                      T_DEFAULT       => array(
                                                          'start'  => T_COLON,
                                                          'end'    => T_BREAK,
+                                                         'strict' => true,
                                                          'shared' => true,
                                                          'with'   => array(T_CASE),
                                                         ),
                                      T_START_HEREDOC => array(
                                                          'start'  => T_START_HEREDOC,
                                                          'end'    => T_END_HEREDOC,
+                                                         'strict' => true,
                                                          'shared' => false,
                                                          'with'   => array(),
                                                         ),
@@ -1365,7 +1381,12 @@ class PHP_CodeSniffer_File
                         // Update the start of the line so that when we check to see
                         // if the closing parenthesis is more than 3 lines away from
                         // the statement, we check from the closing parenthesis.
-                        $startLine = $tokens[$i]['parenthesis_closer'];
+                        $startLine = $tokens[$tokens[$i]['parenthesis_closer']]['line'];
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo '* skipping parenthesis *'.PHP_EOL;
+                        }
                     }
                 }
             } else if ($tokenType === T_OPEN_CURLY_BRACKET && $opener !== null) {
@@ -1381,15 +1402,25 @@ class PHP_CodeSniffer_File
                 $ignore = true;
             } else if ($opener === null && isset(self::$_scopeOpeners[$currType]) === true) {
                 // If we still haven't found the opener after 3 lines,
-                // we're not going to find it.
+                // we're not going to find it, unless we know it requires
+                // an opener, in which case we better keep looking.
                 if ($tokens[$i]['line'] >= ($startLine + 3)) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $type = $tokens[$stackPtr]['type'];
-                        echo str_repeat("\t", $depth);
-                        echo "=> Couldn't find scope opener for $stackPtr ($type), bailing".PHP_EOL;
-                    }
+                    if (self::$_scopeOpeners[$currType]['strict'] === true) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type  = $tokens[$stackPtr]['type'];
+                            $lines = $tokens[$i]['line'] - $startLine;
+                            echo str_repeat("\t", $depth);
+                            echo "=> Still looking for $stackPtr ($type) scope opener after $lines lines".PHP_EOL;
+                        }
+                    } else {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$stackPtr]['type'];
+                            echo str_repeat("\t", $depth);
+                            echo "=> Couldn't find scope opener for $stackPtr ($type), bailing".PHP_EOL;
+                        }
 
-                    return $stackPtr;
+                        return $stackPtr;
+                    }
                 }
             } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, self::$_endScopeTokens) === true) {
                 if (isset($tokens[$i]['scope_condition']) === false) {

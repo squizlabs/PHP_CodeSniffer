@@ -23,38 +23,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2007-11-30</date>
  <time>13:42:00</time>
  <version>
-  <release>1.0.0RC3</release>
-  <api>1.0.0RC3</api>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added new command line argument --tab-width that will convert tabs to spaces before testing
-    -- This allows you to use the existing sniffs that check for spaces even when you use tabs
-    -- Can also be set via a config var: phpcs --config-set tab_width 4
-    -- A value of zero (the default) tells PHP_CodeSniffer not to replace tabs with spaces
-  - You can now change the default report format from "full" to something else
-      -- Run: phpcs --config-set report_format [format]
-  - Improved performance by optimising the way the scope map is created during tokenising
-  - Added new Squiz DisallowInlineIfSniff to disallow the usage of inline IF statements
-  - Fixed incorrect errors being thrown for nested switches in Squiz SwitchDeclarationSniff
-  - PEAR FunctionCommentSniff no longer complains about missing comments for @throws tags
-  - PEAR FunctionCommentSniff now throws error for missing exception class name for @throws tags
-  - PHP_CodeSniffer_File::isReference() now correctly returns for functions that return references
-  - Generic LineLengthSniff no longer warns about @version lines with CVS or SVN id tags
-  - Generic LineLengthSniff no longer warns about @license lines with long URLs
-  - Squiz FunctionCommentThrowTagSniff no longer complains about throwing variables
-  - Squiz ComparisonOperatorUsageSniff no longer throws incorrect errors for inline IF statements
-  - Squiz DisllowMultipleAssignmentsSniff no longer throws errors for assignments in inline IF statements
-  - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
-  - Fixed bug #12471 : Checkstyle report is broken
-  - Fixed bug #12476 : PHP4 destructors are reported as error
-  - Fixed bug #12513 : Checkstyle XML messages need to be utf8_encode()d
-    -- Thanks to Sebastian Bergmann for the patch.
-  - Fixed bug #12517 : getNewlineAfter() and dos files
+  - Modified the scope map to keep checking after 3 lines for some tokens (feature request #12561)
+    -- Those tokens that must have an opener (like T_CLASS) now keep looking until EOF
+    -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
+  - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
  </notes>
  <contents>
   <dir name="/">
