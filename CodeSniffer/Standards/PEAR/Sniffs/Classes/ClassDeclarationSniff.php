@@ -60,18 +60,19 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $curlyBrace = $tokens[$stackPtr]['scope_opener'];
-        $classLine  = $tokens[$stackPtr]['line'];
-        $braceLine  = $tokens[$curlyBrace]['line'];
+        $curlyBrace  = $tokens[$stackPtr]['scope_opener'];
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBrace - 1), $stackPtr, true);
+        $classLine   = $tokens[$lastContent]['line'];
+        $braceLine   = $tokens[$curlyBrace]['line'];
         if ($braceLine === $classLine) {
             $error  = 'Opening brace of a ';
             $error .= $tokens[$stackPtr]['content'];
             $error .= ' must be on the line after the definition.';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $curlyBrace);
             return;
         } else if ($braceLine > ($classLine + 1)) {
             $difference  = ($braceLine - $classLine - 1);
-            $difference .= ($difference === 1) ? ' empty line' : ' empty lines';
+            $difference .= ($difference === 1) ? ' line' : ' lines';
             $error       = 'Opening brace of a ';
             $error      .= $tokens[$stackPtr]['content'];
             $error      .= ' must be on the line following the ';

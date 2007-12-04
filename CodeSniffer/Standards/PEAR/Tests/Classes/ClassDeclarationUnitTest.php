@@ -50,6 +50,7 @@ class PEAR_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 27 => 1,
                 33 => 1,
                 38 => 1,
+                49 => 1,
                );
 
     }//end getErrorList()

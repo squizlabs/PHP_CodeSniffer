@@ -38,4 +38,26 @@ class IncorrectBracePlacement
  {
  }
 
+abstract class CodeSnifferFail
+    extends
+        ArrayObject
+    implements
+        Serializable,
+        Iterator,
+        Countable,
+        OuterIterator,
+        RecursiveIterator {
+}
+
+abstract class CodeSnifferFail
+    extends
+        ArrayObject
+    implements
+        Serializable,
+        Iterator,
+        Countable,
+        OuterIterator,
+        RecursiveIterator
+{
+}
 ?>
