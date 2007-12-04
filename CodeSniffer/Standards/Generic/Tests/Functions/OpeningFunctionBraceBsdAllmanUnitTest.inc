@@ -134,4 +134,24 @@ interface MyInterface()
     function myFunction();
 }
 
+function myFunction(
+                    $arg1,
+                    $arg2,
+                    $arg3,
+                    $arg4,
+                    $arg5,
+                    $arg6
+                    )
+{
+}
+
+function myFunction(
+                    $arg1,
+                    $arg2,
+                    $arg3,
+                    $arg4,
+                    $arg5,
+                    $arg6
+                    ) {
+}
 ?>
