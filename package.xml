@@ -38,7 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now esacpe commas in ignore patterns so they can be matched in file names
     -- Thanks to Carsten Wiedmann for the patch
   - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
-  - Squiz ClassDeclaration now ensures there is one blank line after a class closing brace
+  - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
  </notes>
  <contents>
   <dir name="/">
