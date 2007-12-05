@@ -67,7 +67,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         if ($braceLine === $classLine) {
             $error  = 'Opening brace of a ';
             $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be on the line after the definition.';
+            $error .= ' must be on the line after the definition';
             $phpcsFile->addError($error, $curlyBrace);
             return;
         } else if ($braceLine > ($classLine + 1)) {
