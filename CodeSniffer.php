@@ -507,7 +507,8 @@ class PHP_CodeSniffer
 
         // If the file's path matches one of our ignore patterns, skip it.
         foreach ($this->ignorePatterns as $pattern) {
-            $pattern = str_replace('*', '.*', $pattern);
+            $replacements = array('\\,' => ',', '*' => '.*');
+            $pattern      = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $file) === 1) {
                 return;
             }

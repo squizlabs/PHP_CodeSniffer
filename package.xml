@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Modified the scope map to keep checking after 3 lines for some tokens (feature request #12561)
     -- Those tokens that must have an opener (like T_CLASS) now keep looking until EOF
     -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
+  - You can now esacpe commas in ignore patterns so they can be matched in file names
+    -- Thanks to Carsten Wiedmann for the patch
   - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
  </notes>
  <contents>

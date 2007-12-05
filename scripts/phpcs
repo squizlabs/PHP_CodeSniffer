@@ -179,7 +179,9 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
             } else if (substr($arg, 0, 13) === '--extensions=') {
                 $extensions = explode(',', substr($arg, 13));
             } else if (substr($arg, 0, 9) === '--ignore=') {
-                $ignored = explode(',', substr($arg, 9));
+                // Split the ignore string on commas, unless the comma is escaped
+                // using 1 or 3 slashes (\, or \\\,).
+                $ignored = preg_split('/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/', substr($arg, 9));
             } else if (substr($arg, 0, 12) === '--generator=') {
                 $generator = substr($arg, 12);
             } else if (substr($arg, 0, 12) === '--tab-width=') {
