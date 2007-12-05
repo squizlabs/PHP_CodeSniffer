@@ -46,16 +46,17 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
         return array(
                 10 => 1,
                 15 => 2,
-                22 => 4,
-                23 => 4,
-                24 => 4,
+                18 => 1,
+                22 => 3,
+                23 => 3,
+                24 => 3,
                 27 => 2,
                 28 => 1,
-                30 => 1,
+                30 => 2,
                 34 => 1,
                 35 => 1,
                 39 => 1,
-                42 => 1,
+                42 => 2,
                 45 => 1,
                 48 => 1,
                 50 => 2,
@@ -65,8 +66,10 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 65 => 1,
                 69 => 2,
                 74 => 2,
+                77 => 1,
                 80 => 1,
                 85 => 1,
+                88 => 1,
                );
 
     }//end getErrorList()

@@ -14,10 +14,15 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+if (class_exists('PEAR_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
+    $error = 'Class PEAR_Sniffs_Classes_ClassDeclarationSniff not found';
+    throw new PHP_CodeSniffer_Exception($error);
+}
+
 /**
  * Class Declaration Test.
  *
- * Checks the declaration of the class and its' inheritance is correct.
+ * Checks the declaration of the class and its inheritance is correct.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
+class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_ClassDeclarationSniff
 {
 
 
@@ -51,13 +56,16 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens.
      *
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        // We want all the errors from the PEAR standard, plus some of our own.
+        parent::process($phpcsFile, $stackPtr);
+
         $tokens = $phpcsFile->getTokens();
 
         /*
@@ -70,35 +78,6 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             // We have another, so an error is thrown.
             $error = 'Only one interface or class is allowed in a file';
             $phpcsFile->addError($error, $nextClass);
-        }
-
-        /*
-            Check that the opening brace is straight after the declaration.
-        */
-
-        $curlyBrace = $tokens[$stackPtr]['scope_opener'];
-        $classLine  = $tokens[$stackPtr]['line'];
-        $braceLine  = $tokens[$curlyBrace]['line'];
-        if ($braceLine === $classLine) {
-            $error  = 'Opening brace of a ';
-            $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be on the line after the definition';
-            $phpcsFile->addError($error, $stackPtr);
-        } else if ($braceLine > ($classLine + 1)) {
-            $difference  = ($braceLine - $classLine - 1);
-            $difference .= ($difference === 1) ? ' empty line' : ' empty lines';
-            $error       = 'Opening brace of a ';
-            $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' must be on the line following the ';
-            $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' declaration; found '.$difference;
-            $phpcsFile->addError($error, $curlyBrace);
-        }
-
-        if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {
-            $type  = strtolower($tokens[$stackPtr]['content']);
-            $error = "Opening $type brace must be on a line by itself";
-            $phpcsFile->addError($error, $curlyBrace);
         }
 
         /*
@@ -128,18 +107,6 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
             }
         }//end if
 
-        if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
-            $prevContent = $tokens[($curlyBrace - 1)]['content'];
-            if ($prevContent !== $phpcsFile->eolChar) {
-                $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
-                $spaces     = strlen($blankSpace);
-                if ($spaces !== 0) {
-                    $error = "Expected 0 spaces before opening brace; $spaces found";
-                    $phpcsFile->addError($error, $curlyBrace);
-                }
-            }
-        }
-
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
         if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
             $prevContent = $tokens[($closeBrace - 1)]['content'];
@@ -151,6 +118,23 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Snif
                     $phpcsFile->addError($error, $closeBrace);
                 }
             }
+        }
+
+        // Check that the closing brace has one blank line after it.
+        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
+        $nextLine    = $tokens[$nextContent]['line'];
+        $braceLine   = $tokens[$closeBrace]['line'];
+        if ($braceLine === $nextLine) {
+            $error  = 'Closing brace of a ';
+            $error .= $tokens[$stackPtr]['content'];
+            $error .= ' must be followed by a single blank line';
+            $phpcsFile->addError($error, $closeBrace);
+        } else if ($nextLine !== ($braceLine + 2)) {
+            $difference  = ($nextLine - $braceLine - 1).' lines';
+            $error       = 'Closing brace of a ';
+            $error      .= $tokens[$stackPtr]['content'];
+            $error      .= ' must be followed by a single blank line; found '.$difference;
+            $phpcsFile->addError($error, $closeBrace);
         }
 
         // Check the closing brace is on it's own line, but allow
