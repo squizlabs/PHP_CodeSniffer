@@ -103,7 +103,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
 
         }//end if
 
-        if ($tokens[($asToken + 1)]['code'] !== T_WHITESPACE) {
+        if ($tokens[($asToken - 1)]['code'] !== T_WHITESPACE) {
             $errors[] = 'Expected 1 space before "as"; 0 found';
         } else {
             if (strlen($tokens[($asToken - 1)]['content']) !== 1) {
