@@ -122,20 +122,29 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
 
         // Check that the closing brace has one blank line after it.
         $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
-        $nextLine    = $tokens[$nextContent]['line'];
-        $braceLine   = $tokens[$closeBrace]['line'];
-        if ($braceLine === $nextLine) {
+        if ($nextContent === false) {
+            // No content found, so we reached the end of the file.
+            // That means there was no closing tag either.
             $error  = 'Closing brace of a ';
             $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be followed by a single blank line';
+            $error .= ' must be followed by a blank line and then a closing PHP tag';
             $phpcsFile->addError($error, $closeBrace);
-        } else if ($nextLine !== ($braceLine + 2)) {
-            $difference  = ($nextLine - $braceLine - 1).' lines';
-            $error       = 'Closing brace of a ';
-            $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' must be followed by a single blank line; found '.$difference;
-            $phpcsFile->addError($error, $closeBrace);
-        }
+        } else {
+            $nextLine  = $tokens[$nextContent]['line'];
+            $braceLine = $tokens[$closeBrace]['line'];
+            if ($braceLine === $nextLine) {
+                $error  = 'Closing brace of a ';
+                $error .= $tokens[$stackPtr]['content'];
+                $error .= ' must be followed by a single blank line';
+                $phpcsFile->addError($error, $closeBrace);
+            } else if ($nextLine !== ($braceLine + 2)) {
+                $difference  = ($nextLine - $braceLine - 1).' lines';
+                $error       = 'Closing brace of a ';
+                $error      .= $tokens[$stackPtr]['content'];
+                $error      .= ' must be followed by a single blank line; found '.$difference;
+                $phpcsFile->addError($error, $closeBrace);
+            }
+        }//end if
 
         // Check the closing brace is on it's own line, but allow
         // for comments like "//end class".

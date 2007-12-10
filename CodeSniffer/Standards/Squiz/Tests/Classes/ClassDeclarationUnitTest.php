@@ -70,6 +70,8 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 80 => 1,
                 85 => 1,
                 88 => 1,
+                93 => 1,
+                96 => 1,
                );
 
     }//end getErrorList()

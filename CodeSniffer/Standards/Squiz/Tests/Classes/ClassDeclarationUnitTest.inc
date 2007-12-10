@@ -87,3 +87,10 @@ interface MyInterface
 
 }
 ?>
+
+<?php
+
+class CorrectClassDeclaration
+{
+
+}//end class

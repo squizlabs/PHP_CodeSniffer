@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Carsten Wiedmann for the patch
   - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
   - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
+  - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
   - Fixed bug #12621 : "space after AS" check is wrong
     -- Thanks to Satoshi Oikawa for the patch
  </notes>
