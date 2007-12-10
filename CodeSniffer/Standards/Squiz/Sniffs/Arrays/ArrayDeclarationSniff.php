@@ -146,7 +146,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     if ($tokens[($comma - 1)]['code'] === T_WHITESPACE) {
                         $content     = $tokens[($comma - 2)]['content'];
                         $spaceLength = strlen($tokens[($comma - 1)]['content']);
-                        $error       = "Expected 1 space between \"$content\" and comma; $spaceLength found";
+                        $error       = "Expected 0 spaces between \"$content\" and comma; $spaceLength found";
                         $phpcsFile->addError($error, $comma);
                     }
                 }//end foreach

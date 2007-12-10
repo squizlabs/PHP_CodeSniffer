@@ -42,6 +42,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
   - Fixed bug #12621 : "space after AS" check is wrong
     -- Thanks to Satoshi Oikawa for the patch
+  - Fixed bug #12645 : error message is wrong
+    -- Thanks to Renoiv for the patch
  </notes>
  <contents>
   <dir name="/">
