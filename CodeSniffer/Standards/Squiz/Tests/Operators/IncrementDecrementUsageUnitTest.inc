@@ -18,4 +18,7 @@ $var -= 2;
 $var -= $one;
 $var -= (1 + 2)
 $var  = myFunction($var, ($one - 1));
+
+$var -= $var - 1;
+$var += $var - 1;
 ?>

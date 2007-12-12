@@ -67,7 +67,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             return;
         }
 
-        $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_PARENTHESIS, T_CLOSE_SQUARE_BRACKET, T_CLOSE_CURLY_BRACKET), $stackPtr, null, false);
+        $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_PARENTHESIS, T_CLOSE_SQUARE_BRACKET, T_CLOSE_CURLY_BRACKET), $stackPtr);
 
         // If there is anything other than variables, numbers, spaces or operators we need to return.
         $noiseTokens = $phpcsFile->findNext(array(T_LNUMBER, T_VARIABLE, T_WHITESPACE, T_PLUS, T_MINUS, T_OPEN_PARENTHESIS), ($stackPtr + 1), $statementEnd, true);
@@ -76,11 +76,20 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             return;
         }
 
+        // If we are already using += or -=, we need to ignore
+        // the statement if a variable is being used.
+        if ($tokens[$stackPtr]['code'] !== T_EQUAL) {
+            $nextVar = $phpcsFile->findNext(T_VARIABLE, ($stackPtr + 1), $statementEnd);
+            if ($nextVar !== false) {
+                return;
+            }
+        }
+
         if ($tokens[$stackPtr]['code'] === T_EQUAL) {
             $nextVar          = ($stackPtr + 1);
             $previousVariable = ($stackPtr + 1);
             $variableCount    = 0;
-            while (($nextVar = $phpcsFile->findNext(array(T_VARIABLE), ($nextVar + 1), $statementEnd, false)) !== false) {
+            while (($nextVar = $phpcsFile->findNext(T_VARIABLE, ($nextVar + 1), $statementEnd)) !== false) {
                 $previousVariable = $nextVar;
                 $variableCount++;
             }
@@ -119,9 +128,11 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
             // If we are adding or subtracting negative value, the operator
             // needs to be reversed.
-            $negative = $phpcsFile->findPrevious(T_MINUS, ($nextNumber - 1), $stackPtr);
-            if ($negative !== false) {
-                $operator = ($operator === '+') ? '-' : '+';
+            if ($tokens[$stackPtr]['code'] !== T_EQUAL) {
+                $negative = $phpcsFile->findPrevious(T_MINUS, ($nextNumber - 1), $stackPtr);
+                if ($negative !== false) {
+                    $operator = ($operator === '+') ? '-' : '+';
+                }
             }
 
             $expected = $tokens[$assignedVar]['content'].$operator.$operator;
