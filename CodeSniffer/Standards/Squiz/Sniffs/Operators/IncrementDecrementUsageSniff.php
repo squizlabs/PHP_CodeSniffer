@@ -112,9 +112,16 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $nextNumber = $previousNumber;
         if ($tokens[$nextNumber]['content'] === '1') {
             if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-                $operator = $tokens[$phpcsFile->findNext(array(T_PLUS, T_MINUS), ($stackPtr + 1), $statementEnd, false)]['content'];
+                $operator = $tokens[$phpcsFile->findNext(array(T_PLUS, T_MINUS), ($stackPtr + 1), $statementEnd)]['content'];
             } else {
                 $operator = substr($tokens[$stackPtr]['content'], 0, 1);
+            }
+
+            // If we are adding or subtracting negative value, the operator
+            // needs to be reversed.
+            $negative = $phpcsFile->findPrevious(T_MINUS, ($nextNumber - 1), $stackPtr);
+            if ($negative !== false) {
+                $operator = ($operator === '+') ? '-' : '+';
             }
 
             $expected = $tokens[$assignedVar]['content'].$operator.$operator;

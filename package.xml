@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Satoshi Oikawa for the patch
   - Fixed bug #12645 : error message is wrong
     -- Thanks to Renoiv for the patch
+  - Fixed bug #12651 : Increment/Decrement Operators Usage at -1
  </notes>
  <contents>
   <dir name="/">
