@@ -232,7 +232,13 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception('$standard must be a string');
         }
 
-        $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+        if (is_dir($standard) === true) {
+            // This is a custom standard.
+            $this->standardDir = $standard;
+            $standard          = basename($standard);
+        } else {
+            $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+        }
 
         // Reset the members.
         $this->listeners = array();
@@ -373,10 +379,18 @@ class PHP_CodeSniffer
 
             $included = $standardClass->getIncludedSniffs();
             foreach ($included as $sniff) {
-                $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
-
-                if ($sniffDir === false) {
-                    throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
+                if (is_dir($sniff) === true) {
+                    // Trying to include from a custom standard.
+                    $sniffDir = $sniff;
+                    $sniff    = basename($sniff);
+                } else if (is_file($sniff) === true) {
+                    // Trying to include a custom sniff.
+                    $sniffDir = $sniff;
+                } else {
+                    $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
+                    if ($sniffDir === false) {
+                        throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
+                    }
                 }
 
                 if (is_dir($sniffDir) === true) {
@@ -398,10 +412,18 @@ class PHP_CodeSniffer
 
             $excluded = $standardClass->getExcludedSniffs();
             foreach ($excluded as $sniff) {
-                $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
-
-                if ($sniffDir === false) {
-                    throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
+                if (is_dir($sniff) === true) {
+                    // Trying to exclude from a custom standard.
+                    $sniffDir = $sniff;
+                    $sniff    = basename($sniff);
+                } else if (is_file($sniff) === true) {
+                    // Trying to exclude a custom sniff.
+                    $sniffDir = $sniff;
+                } else {
+                    $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
+                    if ($sniffDir === false) {
+                        throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
+                    }
                 }
 
                 if (is_dir($sniffDir) === true) {
@@ -1410,7 +1432,14 @@ class PHP_CodeSniffer
     {
         $standardDir  = dirname(__FILE__);
         $standardDir .= '/CodeSniffer/Standards/'.$standard;
-        return (is_file("$standardDir/{$standard}CodingStandard.php") === true);
+        if (is_file("$standardDir/{$standard}CodingStandard.php") === true) {
+            return true;
+        } else {
+            // This could be a custom standard, installed outside our
+            // standards directory.
+            $standardFile = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.basename($standard).'CodingStandard.php';
+            return (is_file($standardFile) === true);
+        }
 
     }//end isInstalledStandard()
 

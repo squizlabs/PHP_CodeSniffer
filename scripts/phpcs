@@ -90,15 +90,6 @@ function PHP_CodeSniffer_printInstalledStandards()
 }//end PHP_CodeSniffer_printInstalledStandards()
 
 
-// First, we need to ensure there is at least one coding standard
-// installed, or they will never be able to run this script.
-$installedStandards = PHP_CodeSniffer::getInstalledStandards();
-if (count($installedStandards) === 0) {
-    echo 'ERROR: There are no coding standards installed.'.PHP_EOL;
-    exit(2);
-}
-
-
 // The default values for config settings.
 $files      = array();
 $standard   = null;
@@ -253,17 +244,13 @@ foreach ($files as $file) {
     }
 }
 
-if (count($installedStandards) > 1) {
+if ($standard === null) {
+    // They did not supply a standard to use.
+    // Try to get the default from the config system.
+    $standard = PHP_CodeSniffer::getConfigData('default_standard');
     if ($standard === null) {
-        // They did not supply a standard to use.
-        // Try to get the default from the config system.
-        $standard = PHP_CodeSniffer::getConfigData('default_standard');
-        if ($standard === null) {
-            $standard = 'PEAR';
-        }
+        $standard = 'PEAR';
     }
-} else {
-    $standard = array_pop($installedStandards);
 }
 
 // Check if the standard name is valid. If not, check that the case
