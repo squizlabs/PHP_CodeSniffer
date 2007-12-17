@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
   - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
   - Squiz IncrementDecrementUsageSniff no longer throws errors when -= and += are being used with vars
+  - MySource IncludeSystemSniff no longer throws errors for the Util package
   - Fixed bug #12621 : "space after AS" check is wrong
     -- Thanks to Satoshi Oikawa for the patch
   - Fixed bug #12645 : error message is wrong

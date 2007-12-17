@@ -60,4 +60,5 @@ UserAssetType::create();
 FolderAssetType::create();
 $query->fetch(PDO::FETCH_NUM)
 BaseSystem::getDataDir();
+Util::getArrayIndex(array(), '');
 ?>
