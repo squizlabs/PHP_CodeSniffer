@@ -296,16 +296,16 @@ class PHP_CodeSniffer
             }
         }
 
-        $csPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR;
-
         foreach ($files as $file) {
 
-            if (strpos($file, $csPath) === false) {
-                continue;
-            }
+            // Work out where the position of /StandardName/Sniffs/... is
+            // so we can determine what the class will be called.
+            $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
+            if ($sniffPos === false) continue;
+            $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
+            if ($slashPos === false) continue;
 
-            $className = substr($file, strpos($file, $csPath));
-            $className = substr($className, (strlen($csPath) + 10));
+            $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
