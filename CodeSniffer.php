@@ -1018,6 +1018,18 @@ class PHP_CodeSniffer
 
 
     /**
+     * Gets the array of PHP_CodeSniffer_Sniff's.
+     *
+     * @return array(PHP_CodeSniffer_Sniff)
+     */
+    public function getSniffs()
+    {
+        return $this->listeners;
+
+    }//end getSniffs()
+
+
+    /**
      * Takes a token produced from <code>token_get_all()</code> and produces a
      * more uniform token.
      *
