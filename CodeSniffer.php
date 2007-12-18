@@ -1495,21 +1495,26 @@ class PHP_CodeSniffer
      * @param string|null $value The value to set. If null, the config
      *                           entry is deleted, reverting it to the
      *                           default value.
+     * @param boolean     $temp  Set this config data temporarily for this
+     *                           script run. This will not write the config
+     *                           data to the config file.
      *
      * @return boolean
      * @see getConfigData()
      * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
-    public static function setConfigData($key, $value)
+    public static function setConfigData($key, $value, $temp=false)
     {
-        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-        if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-        }
+        if ($temp === false) {
+            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
+            if (is_file($configFile) === false) {
+                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            }
 
-        if (is_file($configFile) === true && is_writable($configFile) === false) {
-            $error = "Config file $configFile is not writable";
-            throw new PHP_CodeSniffer_Exception($error);
+            if (is_file($configFile) === true && is_writable($configFile) === false) {
+                $error = "Config file $configFile is not writable";
+                throw new PHP_CodeSniffer_Exception($error);
+            }
         }
 
         $phpCodeSnifferConfig = self::getAllConfigData();
@@ -1522,13 +1527,17 @@ class PHP_CodeSniffer
             $phpCodeSnifferConfig[$key] = $value;
         }
 
-        $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
-        $output .= var_export($phpCodeSnifferConfig, true);
-        $output .= "\n?".'>';
+        if ($temp === false) {
+            $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
+            $output .= var_export($phpCodeSnifferConfig, true);
+            $output .= "\n?".'>';
 
-        if (file_put_contents($configFile, $output) === false) {
-            return false;
+            if (file_put_contents($configFile, $output) === false) {
+                return false;
+            }
         }
+
+        $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'] = $phpCodeSnifferConfig;
 
         return true;
 
@@ -1543,6 +1552,10 @@ class PHP_CodeSniffer
      */
     public static function getAllConfigData()
     {
+        if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG_DATA']) === true) {
+            return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
+        }
+
         $configFile = dirname(__FILE__).'/CodeSniffer.conf';
         if (is_file($configFile) === false) {
             $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
@@ -1553,7 +1566,8 @@ class PHP_CodeSniffer
         }
 
         include $configFile;
-        return $phpCodeSnifferConfig;
+        $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'] = $phpCodeSnifferConfig;
+        return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
 
     }//end getAllConfigData()
 

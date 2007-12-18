@@ -41,6 +41,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
   - You can now esacpe commas in ignore patterns so they can be matched in file names
     -- Thanks to Carsten Wiedmann for the patch
+  - Config data is now cached in a global var so the file system is not hit so often
+    -- You can also set config data temporarily for the script if you are using your own external script
+    -- Pass TRUE as the third argument to PHP_CodeSniffer::setConfigData()
   - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
   - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
   - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
