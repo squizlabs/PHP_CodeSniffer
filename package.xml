@@ -33,9 +33,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - You can now specify the full path to a coding standard on the command line (feature request #11886)
-    - This allows you to use standards that are stored outside of PHP_CodeSniffer's own Standard dir
-    - You can also specify full paths in the CodingStandard.php include and exclude methods
-    - Classes, dirs and files need to be names as if the standard was part of PHP_CodeSniffer
+    -- This allows you to use standards that are stored outside of PHP_CodeSniffer's own Standard dir
+    -- You can also specify full paths in the CodingStandard.php include and exclude methods
+    -- Classes, dirs and files need to be names as if the standard was part of PHP_CodeSniffer
+    -- Thanks to Dirk Thomas for the doc generator patch and testing
   - Modified the scope map to keep checking after 3 lines for some tokens (feature request #12561)
     -- Those tokens that must have an opener (like T_CLASS) now keep looking until EOF
     -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
@@ -48,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
   - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
   - Squiz IncrementDecrementUsageSniff no longer throws errors when -= and += are being used with vars
+  - Squiz SwitchDeclarationSniff now throws errors for switch statements that do not contain a case statement
+    -- Thanks to Sertan Danis for the patch
   - MySource IncludeSystemSniff no longer throws errors for the Util package
   - Fixed bug #12621 : "space after AS" check is wrong
     -- Thanks to Satoshi Oikawa for the patch

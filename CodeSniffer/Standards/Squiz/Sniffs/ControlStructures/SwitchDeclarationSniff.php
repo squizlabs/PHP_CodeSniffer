@@ -61,6 +61,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + 4);
+        $caseCount     = 0;
 
         while (($nextCase = $phpcsFile->findNext(array(T_CASE, T_SWITCH), ($nextCase + 1), $switch['scope_closer'])) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
@@ -68,6 +69,8 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 $nextCase = $tokens[$nextCase]['scope_closer'];
                 continue;
             }
+
+            $caseCount++;
 
             $content = $tokens[$nextCase]['content'];
             if ($content !== strtolower($content)) {
@@ -299,6 +302,11 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
         if ($tokens[$switch['scope_closer']]['column'] !== $switch['column']) {
             $error = 'Closing brace of SWITCH statement must be aligned with SWITCH keyword';
             $phpcsFile->addError($error, $switch['scope_closer']);
+        }
+
+        if ($caseCount === 0) {
+            $error = 'SWITCH statements must contain at least one CASE statement';
+            $phpcsFile->addError($error, $stackPtr);
         }
 
     }//end process()

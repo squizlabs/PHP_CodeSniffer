@@ -220,4 +220,10 @@ switch ($name) {
         // No default.
     break;
 }
+
+switch ($name2) {
+    default:
+        // No default.
+    break;
+}
 ?>
