@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-11-30</date>
- <time>13:42:00</time>
+ <date>2007-12-21</date>
+ <time>13:51:00</time>
  <version>
   <release>1.0.0</release>
   <api>1.0.0</api>
@@ -1224,6 +1224,45 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2007-12-21</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - You can now specify the full path to a coding standard on the command line (feature request #11886)
+      -- This allows you to use standards that are stored outside of PHP_CodeSniffer's own Standard dir
+      -- You can also specify full paths in the CodingStandard.php include and exclude methods
+      -- Classes, dirs and files need to be names as if the standard was part of PHP_CodeSniffer
+      -- Thanks to Dirk Thomas for the doc generator patch and testing
+    - Modified the scope map to keep checking after 3 lines for some tokens (feature request #12561)
+      -- Those tokens that must have an opener (like T_CLASS) now keep looking until EOF
+      -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
+    - You can now esacpe commas in ignore patterns so they can be matched in file names
+      -- Thanks to Carsten Wiedmann for the patch
+    - Config data is now cached in a global var so the file system is not hit so often
+      -- You can also set config data temporarily for the script if you are using your own external script
+      -- Pass TRUE as the third argument to PHP_CodeSniffer::setConfigData()
+    - PEAR ClassDeclarationSniff no longer throws errors for multi-line class declarations
+    - Squiz ClassDeclarationSniff now ensures there is one blank line after a class closing brace
+    - Squiz ClassDeclarationSniff now throws errors for a missing end PHP tag after the end class tag
+    - Squiz IncrementDecrementUsageSniff no longer throws errors when -= and += are being used with vars
+    - Squiz SwitchDeclarationSniff now throws errors for switch statements that do not contain a case statement
+      -- Thanks to Sertan Danis for the patch
+    - MySource IncludeSystemSniff no longer throws errors for the Util package
+    - Fixed bug #12621 : "space after AS" check is wrong
+      -- Thanks to Satoshi Oikawa for the patch
+    - Fixed bug #12645 : error message is wrong
+      -- Thanks to Renoiv for the patch
+    - Fixed bug #12651 : Increment/Decrement Operators Usage at -1
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.0.0RC3</release>
