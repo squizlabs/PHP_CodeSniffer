@@ -135,10 +135,10 @@ class PHP_CodeSniffer_DocGenerators_Generator
         if (is_dir($this->_standard) === true) {
             // This is a custom standard.
             $standardDir = $this->_standard;
-            $standard = basename($this->_standard);
+            $standard    = basename($this->_standard);
         } else {
             $standardDir = realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
-            $standard = $this->_standard;
+            $standard    = $this->_standard;
         }
 
         $sniffs = PHP_CodeSniffer::getSniffFiles($standardDir, $standard);

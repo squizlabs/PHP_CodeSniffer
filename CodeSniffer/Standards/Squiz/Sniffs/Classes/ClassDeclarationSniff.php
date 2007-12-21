@@ -138,10 +138,10 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 $error .= ' must be followed by a single blank line';
                 $phpcsFile->addError($error, $closeBrace);
             } else if ($nextLine !== ($braceLine + 2)) {
-                $difference  = ($nextLine - $braceLine - 1).' lines';
-                $error       = 'Closing brace of a ';
-                $error      .= $tokens[$stackPtr]['content'];
-                $error      .= ' must be followed by a single blank line; found '.$difference;
+                $difference = ($nextLine - $braceLine - 1).' lines';
+                $error      = 'Closing brace of a ';
+                $error     .= $tokens[$stackPtr]['content'];
+                $error     .= ' must be followed by a single blank line; found '.$difference;
                 $phpcsFile->addError($error, $closeBrace);
             }
         }//end if
