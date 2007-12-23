@@ -139,6 +139,10 @@ class PHP_CodeSniffer
         define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
         define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
 
+        // Change into a directory that we know about to stop any
+        // relative path conflicts.
+        chdir(dirname(__FILE__).'/CodeSniffer/');
+
     }//end __construct()
 
 
