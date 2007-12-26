@@ -76,4 +76,6 @@ $XML       = 'hello';
 $myXML     = 'hello';
 $XMLParser = 'hello';
 $xmlParser = 'hello';
+
+echo "{$_SERVER['HOSTNAME']} $var_name";
 ?>

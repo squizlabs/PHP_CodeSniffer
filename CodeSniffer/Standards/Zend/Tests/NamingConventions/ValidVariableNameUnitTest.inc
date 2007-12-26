@@ -92,4 +92,6 @@ $myXML      = 'hello';
 $XMLParser  = 'hello';
 $xmlParser  = 'hello';
 $xmlParser2 = 'hello';
+
+echo "{$_SERVER['HOSTNAME']} $var_name";
 ?>

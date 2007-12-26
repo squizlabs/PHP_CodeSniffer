@@ -181,8 +181,25 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
     {
         $tokens = $phpcsFile->getTokens();
 
+        $phpReservedVars = array(
+                            '_SERVER',
+                            '_GET',
+                            '_POST',
+                            '_REQUEST',
+                            '_SESSION',
+                            '_ENV',
+                            '_COOKIE',
+                            '_FILES',
+                            'GLOBALS',
+                           );
+
         if (preg_match_all('|[^\\\]\$([a-zA-Z0-9_]+)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
+                // If it's a php reserved var, then its ok.
+                if (in_array($varName, $phpReservedVars) === true) {
+                    continue;
+                }
+
                 // There is no way for us to know if the var is public or private,
                 // so we have to ignore a leading underscore if there is one and just
                 // check the main part of the variable name.
