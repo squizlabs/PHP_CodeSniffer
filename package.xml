@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir
   - Fixed bug #12773 : Reserved variables are not detected in strings
     -- Thanks to Wilfried Loche for the patch
+  - Fixed bug #12832 : Tab to space conversion does not work
  </notes>
  <contents>
   <dir name="/">

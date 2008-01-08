@@ -938,8 +938,8 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createLineMap()
-    
-    
+
+
     /**
      * Converts tabs into spaces.
      *
@@ -958,7 +958,6 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $count; $i++) {
             $tokenContent = $tokens[$i]['content'];
-            $printContent = str_replace("\t", '[TAB]', $tokenContent);
 
             if (strpos($tokenContent, "\t") === false) {
                 // There are no tabs in this content.
@@ -972,7 +971,6 @@ class PHP_CodeSniffer_File
                 $newContent   = '';
 
                 foreach ($tabs as $content) {
-                    $printContent = str_replace("\t", '[TAB]', $content);
                     if ($content == '') {
                         continue;
                     }
@@ -999,15 +997,15 @@ class PHP_CodeSniffer_File
 
                             $currColumn++;
                         }
+
                         $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
-                    }
+                    }//end if
                 }//end foreach
 
                 if ($tabNum == 1 && $adjustedTab) {
                     $currColumn--;
                 }
 
-                $newContent            = str_replace(' ', '.', $newContent);
                 $tokens[$i]['content'] = $newContent;
             }//end if
 
@@ -1016,7 +1014,7 @@ class PHP_CodeSniffer_File
             } else {
                 $currColumn++;
             }
-        }
+        }//end for
 
     }//end _convertTabs()
 
