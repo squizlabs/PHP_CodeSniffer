@@ -513,7 +513,7 @@ class PHP_CodeSniffer
 
 
     /**
-     * Run the code sniffs over a signle given file.
+     * Run the code sniffs over a single given file.
      *
      * Processes the file and runs the PHP_CodeSniffer sniffs to verify that it
      * conforms with the standard.
@@ -525,8 +525,6 @@ class PHP_CodeSniffer
      */
     protected function processFile($file)
     {
-        $file = realpath($file);
-
         if (file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }

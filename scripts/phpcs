@@ -220,7 +220,7 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
         }//end else
     } else {
         // Assume everything that is not a switch is a file or directory.
-        $files[] = $arg;
+        $files[] = realpath($arg);
     }
 }//end for
 
