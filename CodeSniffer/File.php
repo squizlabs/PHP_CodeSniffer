@@ -1098,36 +1098,37 @@ class PHP_CodeSniffer_File
     {
         $openers   = array();
         $numTokens = count($tokens);
-        $owners    = array();
+        $openOwner = null;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$parenthesisOpeners) === true) {
-                $owners[] = $i;
+                $tokens[$i]['parenthesis_opener'] = null;
+                $tokens[$i]['parenthesis_closer'] = null;
+                $tokens[$i]['parenthesis_owner']  = $i;
+                $openOwner                        = $i;
             } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $openers[] = $i;
+                $openers[]                        = $i;
+                $tokens[$i]['parenthesis_opener'] = $i;
+                if ($openOwner !== null) {
+                    $tokens[$openOwner]['parenthesis_opener'] = $i;
+                    $tokens[$i]['parenthesis_owner']          = $openOwner;
+                    $openOwner                                = null;
+                }
             } else if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 // Did we set an owner for this set of parenthesis?
                 $numOpeners = count($openers);
-                $hasOwner   = ($numOpeners !== 0 && $numOpeners === count($owners));
-
                 if ($numOpeners !== 0) {
-                    $opener                                = array_pop($openers);
+                    $opener = array_pop($openers);
+                    if (isset($tokens[$opener]['parenthesis_owner']) === true) {
+                        $owner = $tokens[$opener]['parenthesis_owner'];
+
+                        $tokens[$owner]['parenthesis_closer'] = $i;
+                        $tokens[$i]['parenthesis_owner']      = $owner;
+                    }
+
                     $tokens[$i]['parenthesis_opener']      = $opener;
                     $tokens[$i]['parenthesis_closer']      = $i;
-                    $tokens[$opener]['parenthesis_opener'] = $opener;
                     $tokens[$opener]['parenthesis_closer'] = $i;
-                }
-
-                // Check to see if this parethesis has an owner. Some
-                // parenthesis do not have owners, for example arithmetic
-                // operations.
-                if ($hasOwner === true) {
-                    $owner                                = array_pop($owners);
-                    $tokens[$owner]['parenthesis_owner']  = $owner;
-                    $tokens[$owner]['parenthesis_opener'] = $opener;
-                    $tokens[$owner]['parenthesis_closer'] = $i;
-                    $tokens[$i]['parenthesis_owner']      = $owner;
-                    $tokens[$opener]['parenthesis_owner'] = $owner;
                 }
             }//end if
         }//end for
