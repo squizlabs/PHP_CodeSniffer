@@ -66,6 +66,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
         $arrayEnd     = $tokens[$arrayStart]['parenthesis_closer'];
         $keywordStart = $tokens[$stackPtr]['column'];
+
+        if ($arrayStart != ($stackPtr + 1)) {
+            $error = 'There must be no space between the Array keyword and the opening parenthesis';
+            $phpcsFile->addError($error, $stackPtr);
+        }
+
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
             // Single line array.
             // Find the next non-whitespace character.

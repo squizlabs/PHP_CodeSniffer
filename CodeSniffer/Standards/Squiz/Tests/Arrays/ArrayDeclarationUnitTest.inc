@@ -4,7 +4,7 @@ function test()
 {
     $a = array();
 
-    $b = Array();
+    $b = Array ();
 
     $c = Array(
             'a' => 1,
@@ -47,7 +47,7 @@ class TestClass
                 'height' => ''
                );
 
-        $train = array(
+        $train = array  (
                    TRUE,
                   FALSE,
                   'aaa'
@@ -73,7 +73,7 @@ class TestClass
 
 }//end class
 
-$value = array( );
+$value = array ( );
 $value = array(  );
 $value = array('1'=>$one, '2'  =>  $two, '3'=> $three, '4' =>$four);
 $value = array('1'=>$one);

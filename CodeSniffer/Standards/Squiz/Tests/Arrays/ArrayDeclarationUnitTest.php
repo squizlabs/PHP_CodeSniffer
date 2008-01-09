@@ -44,7 +44,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                7   => 1,
+                7   => 2,
                 9   => 1,
                 10  => 1,
                 22  => 1,
@@ -57,6 +57,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 41  => 1,
                 46  => 1,
                 47  => 1,
+                50 =>  1,
                 51  => 1,
                 53  => 1,
                 56  => 1,
@@ -68,7 +69,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 65  => 1,
                 66  => 2,
                 70  => 1,
-                76  => 1,
+                76  => 2,
                 77  => 1,
                 78  => 7,
                 79  => 2,

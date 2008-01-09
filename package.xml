@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Squiz ArrayDeclarationSniff now throws error if the array keyword is followed by a space
+  - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
   - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir
   - Fixed bug #12773 : Reserved variables are not detected in strings
     -- Thanks to Wilfried Loche for the patch
