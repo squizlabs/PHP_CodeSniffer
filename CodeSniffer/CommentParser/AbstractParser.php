@@ -270,8 +270,8 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 $tag = substr($word, 1);
 
                 // Filter out @ tags in the comment description.
-                // A real comment tag should have a space and a newline before it.
-                if (isset($this->words[($wordPos - 1)]) === false || $this->words[($wordPos - 1)] !== ' ') {
+                // A real comment tag should have whitespace and a newline before it.
+                if (isset($this->words[($wordPos - 1)]) === false || trim($this->words[($wordPos - 1)]) !== '') {
                     continue;
                 }
 

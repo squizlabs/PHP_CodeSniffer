@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #12773 : Reserved variables are not detected in strings
     -- Thanks to Wilfried Loche for the patch
   - Fixed bug #12832 : Tab to space conversion does not work
+  - Fixed bug #12888 : extra space indentation = Notice: Uninitialized string offset...
  </notes>
  <contents>
   <dir name="/">
