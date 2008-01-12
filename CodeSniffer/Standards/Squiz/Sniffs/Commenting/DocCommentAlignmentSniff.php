@@ -86,7 +86,29 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         $requiredColumn += $tokens[$stackPtr]['column'];
 
         foreach ($comments as $commentPointer) {
-            $currentColumn  = strpos($tokens[$commentPointer]['content'], '*');
+            // Check the spacing after each asterisk.
+            $content   = $tokens[$commentPointer]['content'];
+            $firstChar = substr($content, 0, 1);
+            $lastChar  = substr($content, -1);
+            if ($firstChar !== '/' &&  $lastChar !== '/') {
+                $matches = array();
+                preg_match('|^(\s+)?\*(\s+)?@|', $content, $matches);
+                if (empty($matches) === false) {
+                    if (isset($matches[2]) === false) {
+                        $error = "Expected 1 space between asterisk and tag; 0 found";
+                        $phpcsFile->addError($error, $commentPointer);
+                    } else {
+                        $length = strlen($matches[2]);
+                        if ($length !== 1) {
+                            $error = "Expected 1 space between asterisk and tag; $length found";
+                            $phpcsFile->addError($error, $commentPointer);
+                        }
+                    }
+                }
+            }//end foreach
+
+            // Check the alignment of each asterisk.
+            $currentColumn  = strpos($content, '*');
             $currentColumn += $tokens[$commentPointer]['column'];
 
             if ($currentColumn === $requiredColumn) {
@@ -99,7 +121,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
             $found     = ($currentColumn - 1);
             $error     = "Expected $expected before asterisk; $found found";
             $phpcsFile->addError($error, $commentPointer);
-        }
+        }//end foreach
 
     }//end process()
 

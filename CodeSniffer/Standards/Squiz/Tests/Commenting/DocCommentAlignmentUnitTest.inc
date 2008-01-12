@@ -8,21 +8,21 @@ class MyClass
     /**
      * Some info about the function here.
      *
-     * @return void
+     *@return void
      */
     function myFunction() {}
 }
 
 /**
-  * Some info about the class here
+  *  Some info about the class here
   *
   */
 class MyClass
 {
     /**
-      * Some info about the function here.
+      *Some info about the function here.
       *
-      * @return void
+      *  @return void
       */
     function myFunction() {}
 }
