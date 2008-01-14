@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Squiz ArrayDeclarationSniff now throws error if the array keyword is followed by a space
   - Squiz ArrayDeclarationSniff now throws error for empty multi-line arrays
+  - Squiz ArrayDeclarationSniff now throws error for multi-line arrays with a single value
   - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
   - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir

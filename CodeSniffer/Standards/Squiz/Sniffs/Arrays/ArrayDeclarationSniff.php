@@ -72,13 +72,17 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        // Find the next non-whitespace character.
+        // Check for empty arrays.
         $content = $phpcsFile->findNext(array(T_WHITESPACE), ($arrayStart + 1), ($arrayEnd + 1), true);
         if ($content === $arrayEnd) {
             // Empty array, but if the brackets aren't together, there's a problem.
             if (($arrayEnd - $arrayStart) !== 1) {
                 $error = 'Empty array declaration must have no space between the parentheses';
                 $phpcsFile->addError($error, $stackPtr);
+
+                // We can return here because there is nothing else to check. All code
+                // below can assume that the array is not empty.
+                return;
             }
         }
 
@@ -189,6 +193,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
+                $indices[] = array(
+                              'value' => $nextToken,
+                             );
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
                 continue;
             }
@@ -280,6 +287,17 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }//end if
         }//end while
 
+        // Check for mutli-line arrays that should be single-line.
+        if (count($indices) <= 1) {
+            if ((empty($indices) === true || $tokens[$indices[0]['value']]['code'] !== T_ARRAY) && isset($indices[0]['arrow']) === false) {
+                // Array cannot be empty, so this is a multi-line array with
+                // a single value. It should be defined on single line.
+                $error = 'Multi-line array contains a single value; use single-line array instead';
+                $phpcsFile->addError($error, $stackPtr);
+                return;
+            }
+        }
+
         /*
             This section checks for arrays that don't specify keys.
 
@@ -349,7 +367,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            if (($tokens[$index['index']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
+            if (($tokens[$index['index']]['line'] === $tokens[$stackPtr]['line'])) {
                 $phpcsFile->addError('The first index in a multi-value array must be on a new line', $stackPtr);
                 continue;
             }

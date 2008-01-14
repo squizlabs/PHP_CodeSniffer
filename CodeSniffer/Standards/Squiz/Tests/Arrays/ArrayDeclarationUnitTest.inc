@@ -116,7 +116,7 @@ $expected = array(
              array(
               '1' => 1,
               '1' => 2,
-             )
+             ),
             );
 
 $expected = array(
@@ -139,5 +139,12 @@ $paths = array(
          );
 
 $x = array(
+     );
+
+$x = array('test'
+     );
+$x = array('test',
+     );
+$x = array('name' => 'test',
      );
 ?>
