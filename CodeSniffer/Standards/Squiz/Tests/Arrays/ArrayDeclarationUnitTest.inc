@@ -137,4 +137,7 @@ $paths = array(
           Init::ROOT_DIR.'/Systems'   => 'Systems',
           Init::ROOT_DIR.'/Installer' => 'Systems',
          );
+
+$x = array(
+     );
 ?>

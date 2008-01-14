@@ -72,18 +72,18 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $stackPtr);
         }
 
+        // Find the next non-whitespace character.
+        $content = $phpcsFile->findNext(array(T_WHITESPACE), ($arrayStart + 1), ($arrayEnd + 1), true);
+        if ($content === $arrayEnd) {
+            // Empty array, but if the brackets aren't together, there's a problem.
+            if (($arrayEnd - $arrayStart) !== 1) {
+                $error = 'Empty array declaration must have no space between the parentheses';
+                $phpcsFile->addError($error, $stackPtr);
+            }
+        }
+
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
             // Single line array.
-            // Find the next non-whitespace character.
-            $content = $phpcsFile->findNext(array(T_WHITESPACE), ($arrayStart + 1), ($arrayEnd + 1), true);
-            if ($content === $arrayEnd) {
-                // Empty array, but if the brackets aren't together, there's a problem.
-                if (($arrayEnd - $arrayStart) !== 1) {
-                    $error = 'Empty array declaration must have no space between the parentheses';
-                    $phpcsFile->addError($error, $stackPtr);
-                }
-            }
-
             // Check if there are multiple values. If so, then it has to be multiple lines
             // unless it is contained inside a function call or condition.
             $nextComma  = $arrayStart;
