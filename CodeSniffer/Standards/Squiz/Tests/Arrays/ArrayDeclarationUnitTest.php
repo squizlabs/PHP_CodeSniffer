@@ -45,8 +45,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 7   => 2,
-                9   => 1,
-                10  => 1,
+                9   => 2,
                 22  => 1,
                 23  => 1,
                 24  => 1,
@@ -67,7 +66,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 63  => 1,
                 64  => 1,
                 65  => 1,
-                66  => 2,
+                66  => 3,
                 70  => 1,
                 76  => 2,
                 77  => 1,
@@ -91,6 +90,8 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 144 => 1,
                 146 => 1,
                 148 => 1,
+                151 => 1,
+                157 => 1,
                );
 
     }//end getErrorList()

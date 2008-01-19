@@ -288,14 +288,35 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         }//end while
 
         // Check for mutli-line arrays that should be single-line.
-        if (count($indices) <= 1) {
-            if ((empty($indices) === true || $tokens[$indices[0]['value']]['code'] !== T_ARRAY) && isset($indices[0]['arrow']) === false) {
-                // Array cannot be empty, so this is a multi-line array with
-                // a single value. It should be defined on single line.
-                $error = 'Multi-line array contains a single value; use single-line array instead';
-                $phpcsFile->addError($error, $stackPtr);
-                return;
+        $singleValue = false;
+
+        if (empty($indices) === true) {
+            $singleValue = true;
+        } else if (count($indices) === 1) {
+            if ($lastToken === T_COMMA) {
+                // There may be another array value without a comma.
+                $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
+                $exclude[]   = T_COMMA;
+                $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
+                if ($nextContent === false) {
+                    $singleValue = true;
+                }
             }
+
+            if ($singleValue === false && isset($indices[0]['arrow']) === false) {
+                // A single nested array as a value is fine.
+                if ($tokens[$indices[0]['value']]['code'] !== T_ARRAY) {
+                    $singleValue === true;
+                }
+            }
+        }
+
+        if ($singleValue === true) {
+            // Array cannot be empty, so this is a multi-line array with
+            // a single value. It should be defined on single line.
+            $error = 'Multi-line array contains a single value; use single-line array instead';
+            $phpcsFile->addError($error, $stackPtr);
+            return;
         }
 
         /*

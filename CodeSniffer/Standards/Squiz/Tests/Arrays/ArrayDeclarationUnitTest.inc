@@ -147,4 +147,13 @@ $x = array('test',
      );
 $x = array('name' => 'test',
      );
+
+$x = array(
+      $x,
+     );
+
+$func = array(
+         $x,
+         'get'.$x.'Replacement'
+        );
 ?>
