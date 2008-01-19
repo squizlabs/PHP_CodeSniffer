@@ -995,7 +995,7 @@ class PHP_CodeSniffer
      *
      * @return void
      */
-    public function generateDocs($standard, array $sniffs=array(), $generator='text')
+    public function generateDocs($standard, array $sniffs=array(), $generator='Text')
     {
         include_once 'PHP/CodeSniffer/DocGenerators/'.$generator.'.php';
 
