@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ArrayDeclarationSniff now throws error for empty multi-line arrays
   - Squiz ArrayDeclarationSniff now throws error for multi-line arrays with a single value
   - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
+  - Squiz ForbiddenFunctionsSniff now disallows is_null() to force use of (=== NULL) instead
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
   - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir
   - Fixed bug #12773 : Reserved variables are not detected in strings

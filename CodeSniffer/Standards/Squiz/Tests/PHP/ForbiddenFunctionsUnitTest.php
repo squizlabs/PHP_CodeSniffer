@@ -47,6 +47,7 @@ class Squiz_Tests_PHP_ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
                 2 => 1,
                 3 => 1,
                 4 => 1,
+                5 => 1,
                );
 
     }//end getErrorList()
