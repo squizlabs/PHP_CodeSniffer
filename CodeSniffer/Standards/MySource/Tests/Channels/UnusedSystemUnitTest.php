@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the IncludeSystem sniff.
+ * Unit test class for the UnusedSystem sniff.
  *
  * PHP version 5
  *
