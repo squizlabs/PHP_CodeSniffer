@@ -58,7 +58,7 @@ class Squiz_Sniffs_PHP_DisallowCountInLoopsSniff implements PHP_CodeSniffer_Snif
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['code'] === T_STRING && $tokens[$i]['content'] = 'count') {
+            if ($tokens[$i]['code'] === T_STRING && $tokens[$i]['content'] === 'count') {
                 $error = 'The use of count() inside a loop condition is not allowed. Assign the return value of count() to a variable and use the variable in the loop condition instead.';
                 $phpcsFile->addError($error, $i);
             }

@@ -10,4 +10,7 @@ while ($i < count($array)) {
 do {
 } while ($i < count($array));
 
+for ($i = 0; $i < count($this->children); $i++) {
+}
+
 ?>

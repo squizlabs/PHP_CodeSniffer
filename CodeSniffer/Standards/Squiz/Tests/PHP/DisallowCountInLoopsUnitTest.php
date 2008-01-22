@@ -47,6 +47,7 @@ class Squiz_Tests_PHP_DisallowCountInLoopsUnitTest extends AbstractSniffUnitTest
                 2  => 1,
                 7  => 1,
                 11 => 1,
+                13 => 1,
                );
 
     }//end getErrorList()
