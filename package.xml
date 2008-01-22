@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #12888 : extra space indentation = Notice: Uninitialized string offset...
   - Fixed bug #12909 : Default generateDocs function does not work under linux
     -- Thanks to Paul Smith for the patch
+  - Fixed bug #12957 : PHP 5.3 magic method __callStatic
+    -- Thanks to Manuel Pichler for the patch
  </notes>
  <contents>
   <dir name="/">

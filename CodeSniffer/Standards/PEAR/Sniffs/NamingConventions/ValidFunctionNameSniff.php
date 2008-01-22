@@ -45,6 +45,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
                               'construct',
                               'destruct',
                               'call',
+                              'callStatic',
                               'get',
                               'set',
                               'isset',

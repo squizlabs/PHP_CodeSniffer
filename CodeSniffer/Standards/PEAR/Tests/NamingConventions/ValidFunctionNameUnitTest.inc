@@ -136,6 +136,7 @@ class Magic_Test {
     function __construct() {}
     function __destruct() {}
     function __call() {}
+    function __callStatic() {}
     function __get() {}
     function __set() {}
     function __isset() {}
@@ -153,6 +154,7 @@ class Magic_Test {
 function __construct() {}
 function __destruct() {}
 function __call() {}
+function __callStatic() {}
 function __get() {}
 function __set() {}
 function __isset() {}
