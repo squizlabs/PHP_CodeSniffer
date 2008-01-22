@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ArrayDeclarationSniff now throws error for multi-line arrays with a single value
   - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
   - Squiz ForbiddenFunctionsSniff now disallows is_null() to force use of (=== NULL) instead
+  - Added Squiz DisallowCountInLoopsSniff to check for the use of count() in FOR and WHILE loop conditions
   - Added MySource UnusedSystemSniff to check for included classes that are never used
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
   - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir
@@ -677,6 +678,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowCountInLoopsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -966,6 +970,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="PHP">
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowCountInLoopsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowCountInLoopsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfUnitTest.inc" role="test" />
