@@ -54,7 +54,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      */
     public function __construct()
     {
-        parent::__construct(array(T_FUNCTION), array(T_DOUBLE_COLON), true);
+        parent::__construct(array(T_FUNCTION), array(T_DOUBLE_COLON, T_EXTENDS), true);
 
     }//end __construct()
 
@@ -172,10 +172,18 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Determine the name of the class that the static function
-        // is being called on.
-        $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        $className      = $tokens[$classNameToken]['content'];
+        if ($tokens[$stackPtr]['code'] === T_EXTENDS) {
+            // Find the class name.
+            $classNameToken = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
+            $className      = $tokens[$classNameToken]['content'];
+        } else {
+            // Determine the name of the class that the static function
+            // is being called on.
+            $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $className      = $tokens[$classNameToken]['content'];
+        }
+
+        // Some systems are always available.
         if (in_array(strtolower($className), $this->_ignore) === true) {
             return;
         }
@@ -219,7 +227,12 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         }//end for
 
         if (in_array(strtolower($className), $includedClasses) === false) {
-            $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
+            if ($tokens[$stackPtr]['code'] === T_EXTENDS) {
+                $error = "Class extends non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
+            } else {
+                $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
+            }
+
             $phpcsFile->addError($error, $stackPtr);
         }
 

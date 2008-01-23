@@ -47,6 +47,7 @@ class MySource_Tests_Channels_IncludeSystemUnitTest extends AbstractSniffUnitTes
                 24 => 1,
                 27 => 1,
                 28 => 1,
+                31 => 1,
                 36 => 1,
                 41 => 1,
                 60 => 1,

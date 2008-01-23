@@ -74,16 +74,44 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                 break;
             }
 
-            if ($tokens[$i]['code'] !== T_DOUBLE_COLON) {
+            $validTokens = array(T_DOUBLE_COLON, T_EXTENDS, T_IMPLEMENTS);
+            if (in_array($tokens[$i]['code'], $validTokens) === false) {
                 continue;
             }
 
-            $usedName = strtolower($tokens[($i - 1)]['content']);
-            if ($usedName === $systemName) {
-                // The included system was used, so it is fine.
-                return;
-            }
-        }
+            switch ($tokens[$i]['code']) {
+            case T_DOUBLE_COLON:
+                $usedName = strtolower($tokens[($i - 1)]['content']);
+                if ($usedName === $systemName) {
+                    // The included system was used, so it is fine.
+                    return;
+                }
+
+                break;
+            case T_EXTENDS:
+                $classNameToken = $phpcsFile->findNext(T_STRING, ($i + 1));
+                $className      = strtolower($tokens[$classNameToken]['content']);
+                if ($className === $systemName) {
+                    // The included system was used, so it is fine.
+                    return;
+                }
+
+                break;
+            case T_IMPLEMENTS:
+                $endImplements = $phpcsFile->findNext(array(T_EXTENDS, T_OPEN_CURLY_BRACKET), ($i + 1));
+                for ($x = ($i + 1); $x < $endImplements; $x++) {
+                    if ($tokens[$x]['code'] === T_STRING) {
+                        $className = strtolower($tokens[$x]['content']);
+                        if ($className === $systemName) {
+                            // The included system was used, so it is fine.
+                            return;
+                        }
+                    }
+                }
+
+                break;
+            }//end switch
+        }//end for
 
         // If we get to here, the system was not use.
         $error = "Included system \"$systemName\" is never used";

@@ -28,7 +28,7 @@ $parserFiles = FileSystem::listDirectory();
 Page::create();
 PageAssetType::create();
 
-class MyClass
+class AssetListingAssetType extends AssetAssetType
 {
     function one() {
         Channels::includeSystem('MySystem2');

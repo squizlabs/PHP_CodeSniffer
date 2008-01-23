@@ -16,7 +16,8 @@ function two() {
     Folder::getFolder();
 }
 
-class MyClass
+Channels::includeAsset('Asset');
+class AssetListingAssetType extends AssetAssetType
 {
     function one() {
         Channels::includeSystem('MySystem2');
@@ -28,4 +29,16 @@ class MyClass
         $siteid = Page2::getCurrentSiteId();
     }
 }
+
+Channels::includeSystem('Log');
+Channels::includeSystem('Log4');
+class MyLog implements Dog, Log extends LogMe {}
+
+Channels::includeSystem('Log1');
+class MyLog implements Dog, Log1 extends LogMe {}
+
+class MyLog implements Log2 {}
+
+Channels::includeSystem('Log3');
+class MyLog implements Log3 {}
 ?>

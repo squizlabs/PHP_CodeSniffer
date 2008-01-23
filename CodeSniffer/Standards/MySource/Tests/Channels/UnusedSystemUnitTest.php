@@ -45,7 +45,8 @@ class MySource_Tests_Channels_UnusedSystemUnitTest extends AbstractSniffUnitTest
                 2  => 1,
                 5  => 1,
                 8  => 1,
-                23 => 1,
+                24 => 1,
+                34 => 1,
                );
 
     }//end getErrorList()
