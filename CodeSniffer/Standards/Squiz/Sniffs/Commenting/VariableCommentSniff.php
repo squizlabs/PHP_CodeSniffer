@@ -115,36 +115,53 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         if (trim($short) === '') {
             $error = 'Missing short description in variable doc comment';
             $phpcsFile->addError($error, $commentStart);
-            return;
-        }
-
-        // No extra newline before short description.
-        $newlineCount = 0;
-        $newlineSpan  = strspn($short, $phpcsFile->eolChar);
-        if ($short !== '' && $newlineSpan > 0) {
-            $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-            $error = "Extra $line found before variable comment short description";
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
-        $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
-
-        // Exactly one blank line between short and long description.
-        $long = $comment->getLongComment();
-        if (empty($long) === false) {
-            $between        = $comment->getWhiteSpaceBetween();
-            $newlineBetween = substr_count($between, $phpcsFile->eolChar);
-            if ($newlineBetween !== 2) {
-                $error = 'There must be exactly one blank line between descriptions in variable comment';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+        } else {
+            // No extra newline before short description.
+            $newlineCount = 0;
+            $newlineSpan  = strspn($short, $phpcsFile->eolChar);
+            if ($short !== '' && $newlineSpan > 0) {
+                $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
+                $error = "Extra $line found before variable comment short description";
+                $phpcsFile->addError($error, ($commentStart + 1));
             }
 
-            $newlineCount += $newlineBetween;
+            $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
-            $testLong = trim($long);
-            if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
-                $error = 'Variable comment long description must start with a capital letter';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+            // Exactly one blank line between short and long description.
+            $long = $comment->getLongComment();
+            if (empty($long) === false) {
+                $between        = $comment->getWhiteSpaceBetween();
+                $newlineBetween = substr_count($between, $phpcsFile->eolChar);
+                if ($newlineBetween !== 2) {
+                    $error = 'There must be exactly one blank line between descriptions in variable comment';
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+                }
+
+                $newlineCount += $newlineBetween;
+
+                $testLong = trim($long);
+                if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+                    $error = 'Variable comment long description must start with a capital letter';
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                }
+            }//end if
+
+            // Short description must be single line and end with a full stop.
+            $testShort = trim($short);
+            $lastChar  = $testShort[(strlen($testShort) - 1)];
+            if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
+                $error = 'Variable comment short description must be on a single line';
+                $phpcsFile->addError($error, ($commentStart + 1));
+            }
+
+            if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+                $error = 'Variable comment short description must start with a capital letter';
+                $phpcsFile->addError($error, ($commentStart + 1));
+            }
+
+            if ($lastChar !== '.') {
+                $error = 'Variable comment short description must end with a full stop';
+                $phpcsFile->addError($error, ($commentStart + 1));
             }
         }//end if
 
@@ -163,31 +180,12 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
         }
 
-        // Short description must be single line and end with a full stop.
-        $testShort = trim($short);
-        $lastChar  = $testShort[(strlen($testShort) - 1)];
-        if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
-            $error = 'Variable comment short description must be on a single line';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
-        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-            $error = 'Variable comment short description must start with a capital letter';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
-        if ($lastChar !== '.') {
-            $error = 'Variable comment short description must end with a full stop';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
         // Check for unknown/deprecated tags.
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             // Unknown tags are not parsed, do not process further.
             $error = "@$errorTag[tag] tag is not allowed in variable comment";
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
-            return;
         }
 
         // Check each tag.

@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ArrayDeclarationSniff now throws error for multi-line arrays with a single value
   - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
   - Squiz ForbiddenFunctionsSniff now disallows is_null() to force use of (=== NULL) instead
+  - Squiz VariableCommentSniff now continues throwing errors after the first one is found
   - Added Squiz DisallowCountInLoopsSniff to check for the use of count() in FOR and WHILE loop conditions
   - Added MySource UnusedSystemSniff to check for included classes that are never used
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
