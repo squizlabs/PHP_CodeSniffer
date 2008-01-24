@@ -41,4 +41,11 @@ class MyLog implements Log2 {}
 
 Channels::includeSystem('Log3');
 class MyLog implements Log3 {}
+
+if (self::systemExists($systemName) === FALSE) {
+    return $actions;
+} else {
+    // Shouldnt throw an error because we dont know the system name.
+    self::includeSystem($systemName);
+}
 ?>
