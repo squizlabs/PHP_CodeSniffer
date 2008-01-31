@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - MySource UnusedSystemSniff now checks extended and implemented class names
   - MySource IncludedSystemSniff now supports includeWidget()
   - MySource UnusedSystemSniff now supports includeWidget()
+  - Added PEAR ValidVariableNameSniff to check that only private member vars are prefixed with an underscore
   - Added Squiz DisallowCountInLoopsSniff to check for the use of count() in FOR and WHILE loop conditions
   - Added MySource UnusedSystemSniff to check for included classes that are never used
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
@@ -431,6 +432,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ValidFunctionNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ValidVariableNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP" name="ScopeClosingBraceSniff.php" role="php">
@@ -499,6 +503,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ValidFunctionNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ValidVariableNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
