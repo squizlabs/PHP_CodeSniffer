@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz VariableCommentSniff now continues throwing errors after the first one is found
   - MySource IncludedSystemSniff now checks extended class names
   - MySource UnusedSystemSniff now checks extended and implemented class names
+  - MySource IncludedSystemSniff now supports includeWidget()
+  - MySource UnusedSystemSniff now supports includeWidget()
   - Added Squiz DisallowCountInLoopsSniff to check for the use of count() in FOR and WHILE loop conditions
   - Added MySource UnusedSystemSniff to check for included classes that are never used
   - Fixed a problem that caused the parentheses map to sometimes contain incorrect values

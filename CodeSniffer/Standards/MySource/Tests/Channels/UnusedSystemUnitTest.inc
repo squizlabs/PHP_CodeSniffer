@@ -48,4 +48,8 @@ if (self::systemExists($systemName) === FALSE) {
     // Shouldnt throw an error because we dont know the system name.
     self::includeSystem($systemName);
 }
+
+Channels::includeSystem('Widget');
+Widget::includeWidget('AbstractContainer');
+class MyOtherWidget extends BookWidgetType {}
 ?>

@@ -53,23 +53,22 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         // Check if this is a call to includeSystem or includeAsset.
-        if (strtolower($tokens[($stackPtr + 1)]['content']) === 'includesystem') {
+        $methodName = strtolower($tokens[($stackPtr + 1)]['content']);
+        if (in_array($methodName, array('includesystem', 'includeasset', 'includewidget')) === true) {
             $systemName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 2), null, false, null, true);
             if ($systemName === false) {
                 return;
             }
 
             $systemName = trim($tokens[$systemName]['content'], " '");
-        } else if (strtolower($tokens[($stackPtr + 1)]['content']) === 'includeasset') {
-            $systemName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 2), null, false, null, true);
-            if ($systemName === false) {
-                return;
-            }
-
-            $systemName  = trim($tokens[$systemName]['content'], " '");
-            $systemName .= 'assettype';
         } else {
             return;
+        }
+
+        if ($methodName === 'includeasset') {
+            $systemName .= 'assettype';
+        } else if ($methodName === 'includewidget') {
+            $systemName .= 'widgettype';
         }
 
         $systemName = strtolower($systemName);

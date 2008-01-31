@@ -216,6 +216,10 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $typeName          = trim($tokens[$typeName]['content'], " '");
                 $includedClasses[] = strtolower($typeName).'assettype';
+            } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[] = strtolower($typeName).'widgettype';
             } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$includeTokens) === true) {
                 $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
                 $filePath = $tokens[$filePath]['content'];
