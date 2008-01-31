@@ -1928,8 +1928,9 @@ class PHP_CodeSniffer_File
                   T_DOC_COMMENT,
                  );
 
-        $scope    = 'public';
-        $isStatic = false;
+        $scope          = 'public';
+        $scopeSpecified = false;
+        $isStatic       = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
 
@@ -1939,13 +1940,16 @@ class PHP_CodeSniffer_File
 
             switch ($this->_tokens[$i]['code']) {
             case T_PUBLIC:
-                $scope = 'public';
+                $scope          = 'public';
+                $scopeSpecified = true;
                 break;
             case T_PRIVATE:
-                $scope = 'private';
+                $scope          = 'private';
+                $scopeSpecified = true;
                 break;
             case T_PROTECTED:
-                $scope = 'protected';
+                $scope          = 'protected';
+                $scopeSpecified = true;
                 break;
             case T_STATIC:
                 $isStatic = true;
@@ -1954,8 +1958,9 @@ class PHP_CodeSniffer_File
         }//end for
 
         return array(
-                'scope'     => $scope,
-                'is_static' => $isStatic,
+                'scope'           => $scope,
+                'scope_specified' => $scopeSpecified,
+                'is_static'       => $isStatic,
                );
 
     }//end getMemberProperties()
