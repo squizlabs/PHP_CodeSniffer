@@ -76,14 +76,11 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
      */
     protected function getAllowedTags()
     {
-        return array(
-                'var' => true,
-               );
+        return array('var' => true);
 
     }//end getAllowedTags()
 
 
 }//end class
-
 
 ?>

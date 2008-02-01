@@ -53,9 +53,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
-        return array(
-                T_STRING,
-               );
+        return array(T_STRING);
 
     }//end register()
 

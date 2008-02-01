@@ -67,8 +67,17 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      */
     public function __construct()
     {
-        $listen = array(T_CLASS, T_INTERFACE);
-        $scopes = array(T_FUNCTION, T_VARIABLE, T_DOUBLE_QUOTED_STRING);
+        $listen = array(
+                   T_CLASS,
+                   T_INTERFACE,
+                  );
+
+        $scopes = array(
+                   T_FUNCTION,
+                   T_VARIABLE,
+                   T_DOUBLE_QUOTED_STRING,
+                  );
+
         parent::__construct($listen, $scopes, true);
 
     }//end __construct()
@@ -107,7 +116,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
             } else {
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
             }
-
 
         } else if ($stackPtr > $this->_endFunction) {
             $this->_functionOpen = false;

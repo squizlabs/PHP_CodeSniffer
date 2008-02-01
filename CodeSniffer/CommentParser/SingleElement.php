@@ -86,9 +86,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      */
     protected function getSubElements()
     {
-        return array(
-                'content',
-               );
+        return array('content');
 
     }//end getSubElements()
 

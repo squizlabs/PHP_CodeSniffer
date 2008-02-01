@@ -35,4 +35,5 @@ class PHP_CodeSniffer_Standards_Generic_GenericCodingStandard extends PHP_CodeSn
 
 
 }//end class
+
 ?>

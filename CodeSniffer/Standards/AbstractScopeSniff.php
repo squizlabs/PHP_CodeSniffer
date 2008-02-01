@@ -100,7 +100,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         }
 
         if (empty($tokens) === true) {
-            $error ='The tokens list cannot be empty';
+            $error = 'The tokens list cannot be empty';
             throw new PHP_CodeSniffer_Test_Exception($error);
         }
 

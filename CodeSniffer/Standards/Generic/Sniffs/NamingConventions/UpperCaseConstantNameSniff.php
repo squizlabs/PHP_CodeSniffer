@@ -39,9 +39,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
      */
     public function register()
     {
-        return array(
-                T_STRING,
-               );
+        return array(T_STRING);
 
     }//end register()
 

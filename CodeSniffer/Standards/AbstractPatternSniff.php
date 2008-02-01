@@ -265,9 +265,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $errors      = array();
         $found       = '';
 
-        $ignoreTokens = array(
-                         T_WHITESPACE,
-                        );
+        $ignoreTokens = array(T_WHITESPACE);
 
         if ($this->_ignoreComments === true) {
             $ignoreTokens = array_merge($ignoreTokens, PHP_CodeSniffer_Tokens::$commentTokens);
@@ -341,7 +339,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         return false;
                     }
 
-                    $found = (($to === 'parenthesis_opener') ? '{' : '(').$found;
+                    if ($to === 'parenthesis_opener') {
+                        $found = '{'.$found;
+                    } else {
+                        $found = '('.$found;
+                    }
+
                     $found = '...'.$found;
 
                     // Skip to the opening token.
@@ -356,8 +359,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
         $stackPtr          = $origStackPtr;
         $lastAddedStackPtr = null;
+        $patternLen        = count($pattern);
 
-        for ($i = $patternInfo['listen_pos']; $i < count($pattern); $i++) {
+        for ($i = $patternInfo['listen_pos']; $i < $patternLen; $i++) {
 
             if ($pattern[$i]['type'] === 'token') {
 
@@ -472,7 +476,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     return false;
                 }
 
-                $found .= '...'.(($pattern[$i]['to'] === 'parenthesis_closer') ? ')' : '}');
+                $found = '...';
+                if ($pattern[$i]['to'] === 'parenthesis_closer') {
+                    $found .= ')';
+                } else {
+                    $found .= '}';
+                }
 
                 // Skip to the closing token.
                 $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
@@ -702,9 +711,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      */
     private function _createSkipPattern($pattern, $from)
     {
-        $skip = array(
-                 'type' => 'skip',
-                );
+        $skip = array('type' => 'skip');
 
         for ($from; $from >= 0; $from--) {
             switch ($pattern[$from]) {

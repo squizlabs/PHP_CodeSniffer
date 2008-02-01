@@ -69,4 +69,5 @@ class PHP_CodeSniffer_Standards_CodingStandard
 
 
 }//end class
+
 ?>

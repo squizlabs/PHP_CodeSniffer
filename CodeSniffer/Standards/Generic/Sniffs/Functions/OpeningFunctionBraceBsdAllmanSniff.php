@@ -79,7 +79,11 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         }
 
         if ($lineDifference > 1) {
-            $ender = (($lineDifference - 1) === 1) ? 'line' : 'lines';
+            $ender = 'line';
+            if (($lineDifference - 1) !== 1) {
+                $ender .= 's';
+            }
+
             $error = 'Opening function brace should be on the line after the declaration; found '.($lineDifference - 1).' blank '.$ender;
             $phpcsFile->addError($error, $openingBrace);
             return;
