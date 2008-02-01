@@ -305,9 +305,14 @@ class PHP_CodeSniffer
             // Work out where the position of /StandardName/Sniffs/... is
             // so we can determine what the class will be called.
             $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
-            if ($sniffPos === false) continue;
+            if ($sniffPos === false) {
+                continue;
+            }
+
             $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
-            if ($slashPos === false) continue;
+            if ($slashPos === false) {
+                continue;
+            }
 
             $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
@@ -531,8 +536,12 @@ class PHP_CodeSniffer
 
         // If the file's path matches one of our ignore patterns, skip it.
         foreach ($this->ignorePatterns as $pattern) {
-            $replacements = array('\\,' => ',', '*' => '.*');
-            $pattern      = strtr($pattern, $replacements);
+            $replacements = array(
+                             '\\,' => ',',
+                             '*'   => '.*',
+                            );
+
+            $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $file) === 1) {
                 return;
             }
@@ -1256,7 +1265,7 @@ class PHP_CodeSniffer
         if ($strict === true) {
             // Check that there are not two captial letters next to each other.
             $length          = strlen($string);
-            $lastCharWasCaps = ($classFormat === false) ? false : true;
+            $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {
                 $ascii = ord($string{$i});
@@ -1356,8 +1365,16 @@ class PHP_CodeSniffer
                 $matches = array();
                 $pattern = '/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i';
                 if (preg_match($pattern, $varType, $matches) !== 0) {
-                    $type1 = (isset($matches[1]) === true) ? $matches[1] : '';
-                    $type2 = (isset($matches[3]) === true) ? $matches[3] : '';
+                    $type1 = '';
+                    if (isset($matches[1]) === true) {
+                        $type1 = $matches[1];
+                    }
+
+                    $type2 = '';
+                    if (isset($matches[3]) === true) {
+                        $type2 = $matches[3];
+                    }
+
                     $type1 = self::suggestType($type1);
                     $type2 = self::suggestType($type2);
                     if ($type2 !== '') {
@@ -1367,7 +1384,7 @@ class PHP_CodeSniffer
                     return "array($type1$type2)";
                 } else {
                     return 'array';
-                }
+                }//end if
             } else if (in_array($lowerVarType, self::$allowedTypes) === true) {
                 // A valid type, but not lower cased.
                 return $lowerVarType;
@@ -1474,7 +1491,7 @@ class PHP_CodeSniffer
     {
         $phpCodeSnifferConfig = self::getAllConfigData();
 
-        if (is_null($phpCodeSnifferConfig) === true) {
+        if ($phpCodeSnifferConfig === null) {
             return null;
         }
 

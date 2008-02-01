@@ -961,7 +961,7 @@ class PHP_CodeSniffer_File
 
             if (strpos($tokenContent, "\t") === false) {
                 // There are no tabs in this content.
-                $currColumn += strlen($tokenContent) - 1;
+                $currColumn += (strlen($tokenContent) - 1);
             } else {
                 // We need to determine the length of each tab.
                 $tabs         = preg_split("|(\t)|", $tokenContent, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -971,7 +971,7 @@ class PHP_CodeSniffer_File
                 $newContent   = '';
 
                 foreach ($tabs as $content) {
-                    if ($content == '') {
+                    if ($content === '') {
                         continue;
                     }
 
@@ -1002,7 +1002,7 @@ class PHP_CodeSniffer_File
                     }//end if
                 }//end foreach
 
-                if ($tabNum == 1 && $adjustedTab) {
+                if ($tabNum === 1 && $adjustedTab === true) {
                     $currColumn--;
                 }
 
@@ -1407,7 +1407,7 @@ class PHP_CodeSniffer_File
                     if (self::$_scopeOpeners[$currType]['strict'] === true) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type  = $tokens[$stackPtr]['type'];
-                            $lines = $tokens[$i]['line'] - $startLine;
+                            $lines = ($tokens[$i]['line'] - $startLine);
                             echo str_repeat("\t", $depth);
                             echo "=> Still looking for $stackPtr ($type) scope opener after $lines lines".PHP_EOL;
                         }
@@ -2196,7 +2196,7 @@ class PHP_CodeSniffer_File
                 break;
             }
 
-            $found = ($exclude === true) ? true : false;
+            $found = $exclude;
             foreach ($types as $type) {
                 if ($exclude === false) {
                     if ($this->_tokens[$i]['code'] === $type) {
