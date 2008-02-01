@@ -49,7 +49,10 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
                 5  => 1,
                 6  => 1,
                 7  => 1,
-                10 => 1,
+                16 => 1,
+                23 => 1,
+                30 => 1,
+                36 => 1,
                );
 
     }//end getErrorList()

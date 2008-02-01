@@ -18,7 +18,8 @@
  * Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff.
  *
  * Checks that no whitespace proceeds the first content of the file, exists
- * after the last content of the file, or resides after content on any line.
+ * after the last content of the file, resides after content on any line, or
+ * are two empty lines in functions.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -128,15 +129,30 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
             $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
-            if (empty($tokenContent) === true) {
-                return;
+            if (empty($tokenContent) === false) {
+                if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
+                    $phpcsFile->addError('Whitespace found at end of line', $stackPtr);
+                }
             }
 
-            if (preg_match('|^.*\s+$|', $tokenContent) === 0) {
-                return;
+            /*
+                Check for multiple blanks lines in a function.
+            */
+
+            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
+                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line'] && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']) {
+                    // This is an empty line and the line before this one is not
+                    //  empty, so this could be the start of a multiple empty
+                    // line block.
+                    $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                    $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
+                    if ($lines > 1) {
+                        $error = "Functions must not contain multiple empty lines in a row; found $lines empty lines";
+                        $phpcsFile->addError($error, $stackPtr);
+                    }
+                }
             }
 
-            $phpcsFile->addError('Whitespace found at end of line', $stackPtr);
         }//end if
 
     }//end process()

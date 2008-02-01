@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
   - Squiz ForbiddenFunctionsSniff now disallows is_null() to force use of (=== NULL) instead
   - Squiz VariableCommentSniff now continues throwing errors after the first one is found
+  - Squiz SuperfluousWhitespaceSniff now throws errors for multiple blank lines inside functions
   - MySource IncludedSystemSniff now checks extended class names
   - MySource UnusedSystemSniff now checks extended and implemented class names
   - MySource IncludedSystemSniff now supports includeWidget()
