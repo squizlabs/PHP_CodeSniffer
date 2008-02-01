@@ -69,7 +69,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $content = '<?php ';
+        $content = '<?php';
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']) {
                 break;
@@ -106,10 +106,10 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
-            $content .= ' '.$tokenContent;
+            $content .= $phpcsFile->eolChar.$tokenContent;
         }//end for
 
-        $content .= ' ?>';
+        $content .= $phpcsFile->eolChar.'?>';
 
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content);
 
