@@ -69,7 +69,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $content = '<?php';
+        $content = '<?php ';
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']) {
                 break;
@@ -106,10 +106,10 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
-            $content .= $phpcsFile->eolChar.$tokenContent;
+            $content .= $tokenContent.$phpcsFile->eolChar;
         }//end for
 
-        $content .= $phpcsFile->eolChar.'?>';
+        $content = trim($content).' ?>';
 
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content);
 
@@ -131,11 +131,6 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         // First token is always the opening PHP tag.
         if ($stringTokens[0]['code'] !== T_OPEN_TAG) {
-            return;
-        }
-
-        // Second token is always plain whitespace.
-        if ($stringTokens[1]['code'] !== T_WHITESPACE) {
             return;
         }
 
@@ -163,11 +158,11 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        // We subtract 4 from the token number so we ignore the start/end tokens
+        // We subtract 3 from the token number so we ignore the start/end tokens
         // and their surrounding whitespace. We take 2 off the number of code
         // tokens so we ignore the start/end tokens.
-        if ($numTokens > 4) {
-            $numTokens -= 4;
+        if ($numTokens > 3) {
+            $numTokens -= 3;
         }
 
         if ($numCode >= 2) {
@@ -176,6 +171,9 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         $percentCode = ceil((($numCode / $numTokens) * 100));
         if ($percentCode > $this->maxPercentage) {
+            // Just in case.
+            $percentCode = min(100, $percentCode);
+
             $error = "This comment is ${percentCode}% valid code; is this commented out code?";
             $phpcsFile->addWarning($error, $stackPtr);
         }
