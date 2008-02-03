@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2007-12-21</date>
- <time>13:51:00</time>
+ <date>2008-02-04</date>
+ <time>09:51:00</time>
  <version>
   <release>1.0.1</release>
   <api>1.0.1</api>
@@ -1244,6 +1244,44 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-02-04</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Squiz ArrayDeclarationSniff now throws error if the array keyword is followed by a space
+    - Squiz ArrayDeclarationSniff now throws error for empty multi-line arrays
+    - Squiz ArrayDeclarationSniff now throws error for multi-line arrays with a single value
+    - Squiz DocCommentAlignmentSniff now checks for a single space before tags inside docblocks
+    - Squiz ForbiddenFunctionsSniff now disallows is_null() to force use of (=== NULL) instead
+    - Squiz VariableCommentSniff now continues throwing errors after the first one is found
+    - Squiz SuperfluousWhitespaceSniff now throws errors for multiple blank lines inside functions
+    - MySource IncludedSystemSniff now checks extended class names
+    - MySource UnusedSystemSniff now checks extended and implemented class names
+    - MySource IncludedSystemSniff now supports includeWidget()
+    - MySource UnusedSystemSniff now supports includeWidget()
+    - Added PEAR ValidVariableNameSniff to check that only private member vars are prefixed with an underscore
+    - Added Squiz DisallowCountInLoopsSniff to check for the use of count() in FOR and WHILE loop conditions
+    - Added MySource UnusedSystemSniff to check for included classes that are never used
+    - Fixed a problem that caused the parentheses map to sometimes contain incorrect values
+    - Fixed bug #12767 : Cant run phpcs from dir with PEAR subdir
+    - Fixed bug #12773 : Reserved variables are not detected in strings
+      -- Thanks to Wilfried Loche for the patch
+    - Fixed bug #12832 : Tab to space conversion does not work
+    - Fixed bug #12888 : extra space indentation = Notice: Uninitialized string offset...
+    - Fixed bug #12909 : Default generateDocs function does not work under linux
+      -- Thanks to Paul Smith for the patch
+    - Fixed bug #12957 : PHP 5.3 magic method __callStatic
+      -- Thanks to Manuel Pichler for the patch
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.0.0</release>
