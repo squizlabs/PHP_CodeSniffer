@@ -1154,7 +1154,9 @@ class PHP_CodeSniffer_File
                     $tokens[$i]['nested_parenthesis'] = $map;
                 }
 
-                $map[$tokens[$i]['parenthesis_opener']] = $tokens[$i]['parenthesis_closer'];
+                if (isset($tokens[$i]['parenthesis_closer']) === true) {
+                    $map[$tokens[$i]['parenthesis_opener']] = $tokens[$i]['parenthesis_closer'];
+                }
             } else if (isset($tokens[$i]['parenthesis_closer']) === true && $i === $tokens[$i]['parenthesis_closer']) {
                 array_pop($map);
                 if (empty($map) === false) {
