@@ -1373,7 +1373,7 @@ class PHP_CodeSniffer_File
                 if (isset($tokens[$i]['parenthesis_owner']) === true) {
 
                     $owner = $tokens[$i]['parenthesis_owner'];
-                    if (in_array($tokens[$owner]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+                    if (in_array($tokens[$owner]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true && isset($tokens[$i]['parenthesis_closer']) === true) {
                         // If we get into here, then we opened a parenthesis for
                         // a scope (eg. an if or else if). We can just skip to
                         // the closing parenthesis.
