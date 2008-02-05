@@ -47,6 +47,7 @@ if (self::systemExists($systemName) === FALSE) {
 } else {
     // Shouldnt throw an error because we dont know the system name.
     self::includeSystem($systemName);
+    self::includeSystem($systemNames['log']);
 }
 
 Channels::includeSystem('Widget');
