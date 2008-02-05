@@ -220,7 +220,14 @@ for ($i = 1; $i < $_SERVER['argc']; $i++) {
         }//end else
     } else {
         // Assume everything that is not a switch is a file or directory.
-        $files[] = realpath($arg);
+        $file = realpath($arg);
+        if (file_exists($file) === false) {
+            echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
+            PHP_CodeSniffer_printUsage();
+            exit(2);
+        } else {
+            $files[] = $file;
+        }
     }
 }//end for
 
@@ -234,14 +241,6 @@ if (empty($files) === true) {
     echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
     PHP_CodeSniffer_printUsage();
     exit(2);
-}
-
-foreach ($files as $file) {
-    if (file_exists($file) === false) {
-        echo 'ERROR: The file "'.$file.'" does not exist.'.PHP_EOL.PHP_EOL;
-        PHP_CodeSniffer_printUsage();
-        exit(2);
-    }
 }
 
 if ($standard === null) {
