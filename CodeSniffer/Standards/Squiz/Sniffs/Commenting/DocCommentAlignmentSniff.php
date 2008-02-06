@@ -63,9 +63,18 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                       T_CLASS,
                       T_INTERFACE,
                       T_FUNCTION,
+                      T_PUBLIC,
+                      T_PRIVATE,
+                      T_PROTECTED,
+                      T_STATIC,
+                      T_ABSTRACT,
                      );
         if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
-            return;
+            // Could be a file comment.
+            $prevToken = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            if ($tokens[$prevToken]['code'] !== T_OPEN_TAG) {
+                return;
+            }
         }
 
         // We only want to get the first comment in a block. If there is

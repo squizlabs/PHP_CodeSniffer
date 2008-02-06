@@ -73,11 +73,21 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                           T_CLASS,
                           T_INTERFACE,
                           T_FUNCTION,
+                          T_PUBLIC,
+                          T_PRIVATE,
+                          T_PROTECTED,
+                          T_STATIC,
+                          T_ABSTRACT,
                          );
             if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
                 return;
             }
-        }
+
+            $prevToken = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            if ($tokens[$prevToken]['code'] === T_OPEN_TAG) {
+                return;
+            }
+        }//end if
 
         $commentLines = array($stackPtr);
         $nextComment  = $stackPtr;
