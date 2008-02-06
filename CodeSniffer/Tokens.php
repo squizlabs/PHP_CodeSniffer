@@ -236,6 +236,7 @@ final class PHP_CodeSniffer_Tokens
      */
     public static $scopeOpeners = array(
                                    T_CLASS,
+                                   T_INTERFACE,
                                    T_FUNCTION,
                                    T_IF,
                                    T_SWITCH,
