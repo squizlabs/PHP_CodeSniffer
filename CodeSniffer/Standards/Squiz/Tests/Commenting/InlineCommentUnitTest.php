@@ -54,6 +54,7 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
                 58 => 1,
                 61 => 1,
                 64 => 2,
+                67 => 1,
                );
 
     }//end getErrorList()

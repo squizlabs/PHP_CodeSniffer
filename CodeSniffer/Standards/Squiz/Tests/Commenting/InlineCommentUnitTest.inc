@@ -63,4 +63,7 @@ $code = 'hello';
 
 //
 $code = 'hello';
+
+/** Neither is this! **/
+$code = 'hello';
 ?>

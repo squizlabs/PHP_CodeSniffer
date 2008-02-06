@@ -39,7 +39,10 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_COMMENT);
+        return array(
+                T_COMMENT,
+                T_DOC_COMMENT,
+               );
 
     }//end register()
 
@@ -62,11 +65,26 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // If this is a function/class/interface doc block comment, skip it.
+        // We are only interested in inline doc block comments.
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT) {
+            $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            $ignore    = array(
+                          T_CLASS,
+                          T_INTERFACE,
+                          T_FUNCTION,
+                         );
+            if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+                return;
+            }
+        }
+
         $commentLines = array($stackPtr);
         $nextComment  = $stackPtr;
         $lastLine     = $tokens[$stackPtr]['line'];
+
         // Construct the comment into an array.
-        while (($nextComment = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1), null, false)) !== false) {
+        while (($nextComment = $phpcsFile->findNext($tokens[$stackPtr]['code'], ($nextComment + 1), null, false)) !== false) {
             if (($tokens[$nextComment]['line'] - 1) !== $lastLine) {
                 // Not part of the block.
                 break;
@@ -93,7 +111,8 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        if (trim($tokens[$stackPtr]['content']) !== '/*') {
+        $content = trim($tokens[$stackPtr]['content']);
+        if ($content !== '/*' && $content !== '/**') {
             $error = 'Block comment text must start on a new line';
             $phpcsFile->addError($error, $stackPtr);
             return;
@@ -151,7 +170,8 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Finally, test the last line is correct.
         $lastIndex = (count($commentLines) - 1);
-        if (trim($tokens[$commentLines[$lastIndex]]['content']) !== '*/') {
+        $content   = trim($tokens[$commentLines[$lastIndex]]['content']);
+        if ($content !== '*/' && $content !== '**/') {
             $error = 'Comment closer must be on a new line';
             $phpcsFile->addError($error, $commentLines[$lastIndex]);
         } else {

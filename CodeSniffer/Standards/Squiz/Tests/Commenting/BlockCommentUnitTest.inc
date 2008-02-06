@@ -65,4 +65,32 @@ $code = 'should not be here';
 /*
 */
 
+/** Not allowed */
+
+/**  Not allowed
+    either.
+**/
+
+/**
+    no capital
+    letter.
+*/
+
+echo 'hi';
+
+function func()
+{
+    echo 1;
+    /**
+       test
+       here
+    **/
+    echo 'test';
+    /**
+        Test
+        here
+       **/
+
+}//end func()
+
 ?>

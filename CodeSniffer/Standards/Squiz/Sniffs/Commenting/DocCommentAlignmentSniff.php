@@ -39,9 +39,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(
-                T_DOC_COMMENT,
-               );
+        return array(T_DOC_COMMENT);
 
     }//end register()
 
@@ -50,14 +48,25 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens.
      *
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // We are only interested in function/class/interface doc block comments.
+        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        $ignore    = array(
+                      T_CLASS,
+                      T_INTERFACE,
+                      T_FUNCTION,
+                     );
+        if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
+            return;
+        }
 
         // We only want to get the first comment in a block. If there is
         // a comment on the line before this one, return.

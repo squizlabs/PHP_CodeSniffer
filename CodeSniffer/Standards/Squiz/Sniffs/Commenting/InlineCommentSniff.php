@@ -39,7 +39,10 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
-        return array(T_COMMENT);
+        return array(
+                T_COMMENT,
+                T_DOC_COMMENT,
+               );
 
     }//end register()
 
@@ -57,9 +60,29 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
     {
         $tokens = $phpcsFile->getTokens();
 
+        // If this is a function/class/interface doc block comment, skip it.
+        // We are only interested in inline doc block comments, which are
+        // not allowed.
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT) {
+            $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            $ignore    = array(
+                          T_CLASS,
+                          T_INTERFACE,
+                          T_FUNCTION,
+                         );
+            if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+                return;
+            } else {
+                // Only error once per comment.
+                if (substr($tokens[$stackPtr]['content'], 0, 3) === '/**') {
+                    $error  = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                    $phpcsFile->addError($error, $stackPtr);
+                }
+            }
+        }
+
         if ($tokens[$stackPtr]['content']{0} === '#') {
             $error  = 'Perl-style comments are not allowed; use "// Comment" instead';
-            $error .= ' instead.';
             $phpcsFile->addError($error, $stackPtr);
         }
 

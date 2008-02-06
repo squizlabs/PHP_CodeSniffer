@@ -41,4 +41,12 @@ class MyClass
     function myFunction() {}
 }
 
+function myFunction()
+{
+    echo 'hi';
+    /**
+        Comment here.
+        */
+}
+
 ?>
