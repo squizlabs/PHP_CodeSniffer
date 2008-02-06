@@ -93,4 +93,28 @@ function func()
 
 }//end func()
 
+public static function test()
+{
+    /*
+        Block comments do not require a blank line before them
+        if they are after T_OPEN_CURLY_BRACKET.
+    */
+
+    $code = '';
+
+}//end test()
+
+
+public static function test()
+{
+
+    /*
+        Block comments do not require a blank line before them
+        if they are after T_OPEN_CURLY_BRACKET.
+    */
+
+    $code = '';
+
+}//end test()
+
 ?>

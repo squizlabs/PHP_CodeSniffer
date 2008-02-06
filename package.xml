@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz FunctionCommentThrowTagSniff no longer throws errors for function that only throw variables
   - Squiz BlockCommentSniff now checks inline doc block comments
   - Squiz InlineCommentSniff now checks inline doc block comments
+  - Squiz BlockCommentSniff now checks for no blank line before first comment in a function
   - Squiz DocCommentAlignmentSniff now ignores inline doc block comments
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
