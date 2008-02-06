@@ -97,4 +97,14 @@ class Empty_Class_Doc
 {
 
 }//end class
+
+
+/**
+ *
+ *
+ */
+interface Empty_Interface_Doc
+{
+
+}//end interface
 ?>

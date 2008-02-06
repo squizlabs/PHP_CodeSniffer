@@ -15,11 +15,13 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 if (class_exists('PEAR_Sniffs_Commenting_FileCommentSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PEAR_Sniffs_Commenting_FileCommentSniff not found');
+    $error = 'Class PEAR_Sniffs_Commenting_FileCommentSniff not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -56,7 +58,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      */
     public function register()
     {
-        return array(T_CLASS);
+        return array(
+                T_CLASS,
+                T_INTERFACE,
+               );
 
     }//end register()
 
@@ -75,6 +80,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $this->currentFile = $phpcsFile;
 
         $tokens = $phpcsFile->getTokens();
+        $type   = strtolower($tokens[$stackPtr]['content']);
         $find   = array(
                    T_ABSTRACT,
                    T_WHITESPACE,
@@ -85,10 +91,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
+            $phpcsFile->addError("You must use \"/**\" style comments for a $type comment", $stackPtr);
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            $phpcsFile->addError('Missing class doc comment', $stackPtr);
+            $phpcsFile->addError("Missing $type doc comment", $stackPtr);
             return;
         }
 
@@ -110,7 +116,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                         if ($newlineToken !== false) {
                             // Blank line between the class and the doc block.
                             // The doc block is most likely a file comment.
-                            $phpcsFile->addError('Missing class doc comment', ($stackPtr + 1));
+                            $phpcsFile->addError("Missing $type doc comment", ($stackPtr + 1));
                             return;
                         }
                     }//end if
@@ -132,7 +138,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
 
         $comment = $this->commentParser->getComment();
         if (is_null($comment) === true) {
-            $error = 'Class doc comment is empty';
+            $error = ucfirst($type).' doc comment is empty';
             $phpcsFile->addError($error, $commentStart);
             return;
         }
@@ -143,7 +149,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
             $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-            $error = "Extra $line found before class comment short description";
+            $error = "Extra $line found before $type comment short description";
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 
@@ -155,7 +161,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             $between        = $comment->getWhiteSpaceBetween();
             $newlineBetween = substr_count($between, $phpcsFile->eolChar);
             if ($newlineBetween !== 2) {
-                $error = 'There must be exactly one blank line between descriptions in class comment';
+                $error = "There must be exactly one blank line between descriptions in $type comments";
                 $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
             }
 
@@ -167,7 +173,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         if (count($tags) > 1) {
             $newlineSpan = $comment->getNewlineAfter();
             if ($newlineSpan !== 2) {
-                $error = 'There must be exactly one blank line before the tags in class comment';
+                $error = "There must be exactly one blank line before the tags in $type comments";
                 if ($long !== '') {
                     $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
@@ -197,10 +203,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             $content = $version->getContent();
             $matches = array();
             if (empty($content) === true) {
-                $error = 'Content missing for @version tag in class comment';
+                $error = 'Content missing for @version tag in doc comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if ((strstr($content, 'Release:') === false)) {
-                $error = "Invalid version \"$content\" in class comment; consider \"Release: <package_version>\" instead";
+                $error = "Invalid version \"$content\" in doc comment; consider \"Release: <package_version>\" instead";
                 $this->currentFile->addWarning($error, $errorPos);
             }
         }
