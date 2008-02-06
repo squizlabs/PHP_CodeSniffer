@@ -153,5 +153,17 @@ class FunctionCommentThrowTagUnitTest
     }//end okVariable()
 
 
+    /**
+     * Needs 1 @throws tag.
+     *
+     * @throws Exception Unknown exception type.
+     */
+    function okVariable()
+    {
+        throw $e;
+
+    }//end okVariable()
+
+
 }//end class
 ?>

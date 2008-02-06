@@ -17,7 +17,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -117,6 +118,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         if (empty($throws) === true) {
             $error = 'Missing @throws tag in function comment';
             $phpcsFile->addError($error, $commentEnd);
+        } else if (empty($throwTokens) === true) {
+            // If token count is zero, it means that only variables are being
+            // thrown, so we need at least one @throws tag (checked above).
+            // Nothing more to do.
+            return;
         } else {
             $throwTags  = array();
             $lineNumber = array();
@@ -128,7 +134,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             $throwTags = array_unique($throwTags);
             sort($throwTags);
 
-            // @throw tag count matches throw token count.
+            // Make sure @throws tag count matches throw token count.
             $tokenCount = count($throwTokens);
             $tagCount   = count($throwTags);
             if ($tokenCount !== $tagCount) {
@@ -137,7 +143,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                 $phpcsFile->addError($error, $commentEnd);
                 return;
             } else {
-                // Exception type in @throws tag must be thrown in the function..
+                // Exception type in @throws tag must be thrown in the function.
                 foreach ($throwTags as $i => $throwTag) {
                     $errorPos = ($commentStart + $lineNumber[$throwTag]);
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
