@@ -11,8 +11,8 @@ while (true) {
 
     foreach ($this as $that) {
         do {
-        } while (true) {
-        }
+        } while (true);
+
     }
 }
 
@@ -74,4 +74,27 @@ foreach ($blah as $var) {
     }
     break;
 }
+
+while (true) {
+    for ($i = 0; $i < 10; $i++) {
+
+        if ($something) {
+        }
+
+    }
+
+    foreach ($this as $that) {
+        do {
+
+            echo $i;
+        } while (true);
+    }
+}
+
+function myFunction()
+{
+    if ($blah) {
+    }
+
+}//end myFunction()
 ?>

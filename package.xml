@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz InlineCommentSniff now checks inline doc block comments
   - Squiz BlockCommentSniff now checks for no blank line before first comment in a function
   - Squiz DocCommentAlignmentSniff now ignores inline doc block comments
+  - Squiz ControlStructureSpacingSniff now ensures no blank lines at the start of control structures
+  - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
  </notes>

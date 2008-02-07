@@ -71,6 +71,13 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         }
 
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
+        $scopeOpener = $tokens[$stackPtr]['scope_opener'];
+
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeOpener + 1), null, true);
+        if ($tokens[$firstContent]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+            $error = 'Blank line found at start of control structure';
+            $phpcsFile->addError($error, $scopeOpener);
+        }
 
         $trailingContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeCloser + 1), null, true);
         if ($tokens[$trailingContent]['code'] === T_ELSE) {
@@ -90,11 +97,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             }
         }
 
-        if ($tokens[$trailingContent]['code'] === T_CLOSE_CURLY_BRACKET) {
-            // Another control structure's closing brace.
-            return;
-        }
-
         if ($tokens[$trailingContent]['code'] === T_BREAK) {
             // If this BREAK is closing a CASE, we don't need the
             // blank line after this control structure.
@@ -111,9 +113,22 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             return;
         }
 
-        if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-            $error = 'No blank line found after control structure';
-            $phpcsFile->addError($error, $scopeCloser);
+        if ($tokens[$trailingContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+            // Another control structure's closing brace.
+            $owner = $tokens[$trailingContent]['scope_condition'];
+            if ($tokens[$owner]['code'] === T_FUNCTION) {
+                // The next content is the closing brace of a function
+                // so normal function rules apply and we can ignore it.
+                return;
+            } else if ($tokens[$trailingContent]['line'] !== ($tokens[$scopeCloser]['line'] + 1)) {
+                $error = 'Blank line found after control structure';
+                $phpcsFile->addError($error, $scopeCloser);
+            }
+        } else {
+            if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
+                $error = 'No blank line found after control structure';
+                $phpcsFile->addError($error, $scopeCloser);
+            }
         }
 
     }//end process()
