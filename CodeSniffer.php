@@ -101,10 +101,11 @@ class PHP_CodeSniffer
      *
      * @var array
      */
-    protected $allowedFileExtensions = array(
-                                        'php',
-                                        'inc',
-                                       );
+    public $allowedFileExtensions = array(
+                                     'php' => 'PHP',
+                                     'inc' => 'PHP',
+                                     'js'  => 'JS',
+                                    );
 
     /**
      * An array of variable types for param/var we will check.
@@ -507,7 +508,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            if (in_array($extension, $this->allowedFileExtensions) === false) {
+            if (isset($this->allowedFileExtensions[$extension]) === false) {
                 continue;
             }
 
@@ -555,7 +556,7 @@ class PHP_CodeSniffer
             }
         }
 
-        $phpcsFile     = new PHP_CodeSniffer_File($file, $this->listeners);
+        $phpcsFile     = new PHP_CodeSniffer_File($file, $this->listeners, $this->allowedFileExtensions);
         $this->files[] = $phpcsFile;
         $phpcsFile->start();
 

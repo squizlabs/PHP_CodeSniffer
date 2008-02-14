@@ -65,7 +65,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Process whole comment blocks at once, so skip all but the first token.
-        if ($tokens[$stackPtr]['code'] === $tokens[($stackPtr - 1)]['code']) {
+        if ($stackPtr > 0 && $tokens[$stackPtr]['code'] === $tokens[($stackPtr - 1)]['code']) {
             return;
         }
 
@@ -111,7 +111,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         $content = trim($content).' ?>';
 
-        $stringTokens = PHP_CodeSniffer_File::tokenizeString($content);
+        $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
 
         $emptyTokens = array(
                         T_WHITESPACE,

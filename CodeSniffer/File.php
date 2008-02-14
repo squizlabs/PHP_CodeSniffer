@@ -133,6 +133,20 @@ class PHP_CodeSniffer_File
     public $eolChar = '';
 
     /**
+     * The tokenizer being used for this file.
+     *
+     * @var object
+     */
+    public $tokenizer = null;
+
+    /**
+     * The tokenizer being used for this file.
+     *
+     * @var string
+     */
+    public $tokenizerType = 'PHP';
+
+    /**
      * The number of tokens in this file.
      *
      * Stored here to save calling count() everywhere.
@@ -205,147 +219,13 @@ class PHP_CodeSniffer_File
     const WARNING = 1;
 
     /**
-     * A list of tokens that are allowed to open a scope.
+     * An array of extensions mapping to the tokenizer to use.
      *
-     * This array also contains information about what kind of token the scope
-     * opener uses to open and close the scope, if the token strictly requires
-     * an opener, if the token can share a scope closer, and who it can be shared
-     * with. An example of a token that shares a scope closer is a CASE scope.
+     * This value gets set by PHP_CodeSniffer when the object is created.
      *
      * @var array
      */
-    private static $_scopeOpeners = array(
-                                     T_IF            => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_TRY           => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_CATCH         => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_ELSE          => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_ELSEIF        => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_FOR           => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_FOREACH       => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_INTERFACE     => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_FUNCTION      => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_CLASS         => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_WHILE         => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => false,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_DO            => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_SWITCH        => array(
-                                                         'start'  => T_OPEN_CURLY_BRACKET,
-                                                         'end'    => T_CLOSE_CURLY_BRACKET,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                     T_CASE          => array(
-                                                         'start'  => T_COLON,
-                                                         'end'    => T_BREAK,
-                                                         'strict' => true,
-                                                         'shared' => true,
-                                                         'with'   => array(
-                                                                      T_DEFAULT,
-                                                                      T_CASE,
-                                                                     ),
-                                                        ),
-                                     T_DEFAULT       => array(
-                                                         'start'  => T_COLON,
-                                                         'end'    => T_BREAK,
-                                                         'strict' => true,
-                                                         'shared' => true,
-                                                         'with'   => array(T_CASE),
-                                                        ),
-                                     T_START_HEREDOC => array(
-                                                         'start'  => T_START_HEREDOC,
-                                                         'end'    => T_END_HEREDOC,
-                                                         'strict' => true,
-                                                         'shared' => false,
-                                                         'with'   => array(),
-                                                        ),
-                                    );
-
-    /**
-     * A list of tokens that end the scope.
-     *
-     * This array is just a unique collection of the end tokens
-     * from the _scopeOpeners array. The data is duplicated here to
-     * save time during parsing of the file.
-     *
-     * @var array
-     */
-    private static $_endScopeTokens = array(
-                                       T_CLOSE_CURLY_BRACKET,
-                                       T_BREAK,
-                                       T_END_HEREDOC,
-                                      );
+    protected $tokenizers = array();
 
 
     /**
@@ -359,7 +239,7 @@ class PHP_CodeSniffer_File
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
      */
-    public function __construct($file, array $listeners)
+    public function __construct($file, array $listeners, array $tokenizers)
     {
         foreach ($listeners as $listenerClass) {
             $listener = new $listenerClass();
@@ -373,7 +253,8 @@ class PHP_CodeSniffer_File
             $this->addTokenListener($listener, $tokens);
         }
 
-        $this->_file = $file;
+        $this->_file      = $file;
+        $this->tokenizers = $tokenizers;
         $this->_parse();
 
     }//end __construct()
@@ -471,6 +352,20 @@ class PHP_CodeSniffer_File
             $tokenType = $token['code'];
             if (isset($this->_listeners[$tokenType]) === true) {
                 foreach ($this->_listeners[$tokenType] as $listener) {
+                    // Make sure this sniff supports the tokenizer
+                    // we are currently using.
+                    $vars = get_class_vars(get_class($listener));
+                    if (isset($vars['supportedTokenizers']) === true) {
+                        if (in_array($this->tokenizerType, $vars['supportedTokenizers']) === false) {
+                            continue;
+                        }
+                    } else {
+                        // The default supported tokenizer is PHP.
+                        if ($this->tokenizerType !== 'PHP') {
+                            continue;
+                        }
+                    }
+
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
                         echo "\t\t\tProcessing ".get_class($listener).'... ';
@@ -508,8 +403,17 @@ class PHP_CodeSniffer_File
     {
         $this->eolChar = self::detectLineEndings($this->_file);
 
+        // Determine the tokenizer from the file extension.
+        $fileParts      = explode('.', $this->_file);
+        $extension      = array_pop($fileParts);
+        $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
+
+        $tokenizer           = new $tokenizerClass();
+        $this->tokenizer     = $tokenizer;
+        $this->tokenizerType = $this->tokenizers[$extension];
+
         $contents        = file_get_contents($this->_file);
-        $this->_tokens   = self::tokenizeString($contents, $this->eolChar);
+        $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
         $this->numTokens = count($this->_tokens);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -692,229 +596,33 @@ class PHP_CodeSniffer_File
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string  The string to tokenize.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param string $string    The string to tokenize.
+     * @param object $tokenizer A tokenizer class to use to tokenize the string.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return array
      */
-    public static function tokenizeString($string, $eolChar='\n')
+    public static function tokenizeString($string, $tokenizer, $eolChar='\n')
     {
-        $tokens      = @token_get_all($string);
-        $finalTokens = array();
+        $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
-        $newStackPtr = 0;
-        $numTokens   = count($tokens);
-        for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
-            $token        = $tokens[$stackPtr];
-            $tokenIsArray = is_array($token);
-
-            /*
-                If we are using \r\n newline characters, the \r and \n are sometimes
-                split over two tokens. This normally occurs after comments. We need
-                to merge these two characters together so that our line endings are
-                consistent for all lines.
-            */
-
-            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
-                if (isset($tokens[($stackPtr + 1)]) === true && is_array($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)][1][0] === "\n") {
-                    $token[1] .= "\n";
-
-                    if ($tokens[($stackPtr + 1)][1] === "\n") {
-                        // The next token's content has been merged into this token,
-                        // so we can skip it.
-                        $stackPtr++;
-                    } else {
-                        $tokens[($stackPtr + 1)][1] = substr($tokens[($stackPtr + 1)][1], 1);
-                    }
-                }
-            }//end if
-
-            /*
-                If this is a double quoted string, PHP will tokenise the whole
-                thing which causes problems with the scope map when braces are
-                within the string. So we need to merge the tokens together to
-                provide a single string.
-            */
-
-            if ($tokenIsArray === false && $token === '"') {
-
-                $tokenContent = '"';
-                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    $subTokenIsArray = is_array($tokens[$i]);
-
-                    if ($subTokenIsArray === true) {
-                        $tokenContent .= $tokens[$i][1];
-                    } else {
-                        $tokenContent .= $tokens[$i];
-                    }
-
-                    if ($subTokenIsArray === false && $tokens[$i] === '"') {
-                        // We found the other end of the double quoted string.
-                        break;
-                    }
-                }
-
-                $stackPtr = $i;
-
-                // Convert each line within the double quoted string to a
-                // new token, so it conforms with other multiple line tokens.
-                $tokenLines = explode($eolChar, $tokenContent);
-                $numLines   = count($tokenLines);
-                $newToken   = array();
-
-                for ($j = 0; $j < $numLines; $j++) {
-                    $newToken['content'] = $tokenLines[$j];
-                    if ($j === ($numLines - 1)) {
-                        if ($tokenLines[$j] === '') {
-                            break;
-                        }
-                    } else {
-                        $newToken['content'] .= $eolChar;
-                    }
-
-                    $newToken['code']          = T_DOUBLE_QUOTED_STRING;
-                    $newToken['type']          = 'T_DOUBLE_QUOTED_STRING';
-                    $finalTokens[$newStackPtr] = $newToken;
-                    $newStackPtr++;
-                }
-
-                // Continue, as we're done with this token.
-                continue;
-            }//end if
-
-            /*
-                If this is a heredoc, PHP will tokenise the whole
-                thing which causes problems when heredocs don't
-                contain real PHP code, which is almost never.
-                We want to leave the start and end heredoc tokens
-                alone though.
-            */
-
-            if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
-
-                // Add the start heredoc token to the final array.
-                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($token);
-                $newStackPtr++;
-
-                $tokenContent = '';
-                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    $subTokenIsArray = is_array($tokens[$i]);
-                    if ($subTokenIsArray === true && $tokens[$i][0] === T_END_HEREDOC) {
-                        // We found the other end of the heredoc.
-                        break;
-                    }
-
-                    if ($subTokenIsArray === true) {
-                        $tokenContent .= $tokens[$i][1];
-                    } else {
-                        $tokenContent .= $tokens[$i];
-                    }
-                }
-
-                $stackPtr = $i;
-
-                // Convert each line within the heredoc to a
-                // new token, so it conforms with other multiple line tokens.
-                $tokenLines = explode($eolChar, $tokenContent);
-                $numLines   = count($tokenLines);
-                $newToken   = array();
-
-                for ($j = 0; $j < $numLines; $j++) {
-                    $newToken['content'] = $tokenLines[$j];
-                    if ($j === ($numLines - 1)) {
-                        if ($tokenLines[$j] === '') {
-                            break;
-                        }
-                    } else {
-                        $newToken['content'] .= $eolChar;
-                    }
-
-                    $newToken['code']          = T_HEREDOC;
-                    $newToken['type']          = 'T_HEREDOC';
-                    $finalTokens[$newStackPtr] = $newToken;
-                    $newStackPtr++;
-                }
-
-                // Add the end heredoc token to the final array.
-                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
-                $newStackPtr++;
-
-                // Continue, as we're done with this token.
-                continue;
-            }//end if
-
-            /*
-                If this token has newlines in its content, split each line up
-                and create a new token for each line. We do this so it's easier
-                to asertain where errors occur on a line.
-                Note that $token[1] is the token's content.
-            */
-
-            if ($tokenIsArray === true && strpos($token[1], $eolChar) !== false) {
-                $tokenLines = explode($eolChar, $token[1]);
-                $numLines   = count($tokenLines);
-                $tokenName  = token_name($token[0]);
-
-                for ($i = 0; $i < $numLines; $i++) {
-                    $newToken['content'] = $tokenLines[$i];
-                    if ($i === ($numLines - 1)) {
-                        if ($tokenLines[$i] === '') {
-                            break;
-                        }
-                    } else {
-                        $newToken['content'] .= $eolChar;
-                    }
-
-                    $newToken['type']          = $tokenName;
-                    $newToken['code']          = $token[0];
-                    $finalTokens[$newStackPtr] = $newToken;
-                    $newStackPtr++;
-                }
-            } else {
-                $newToken = PHP_CodeSniffer::standardiseToken($token);
-
-                // This is a special condition for T_ARRAY tokens use to
-                // type hint function arguments as being arrays. We want to keep
-                // the parenthsis map clean, so let's tag these tokens as
-                // T_ARRAY_HINT.
-                if ($newToken['code'] === T_ARRAY) {
-                    // Recalculate number of tokens.
-                    $numTokens = count($tokens);
-                    for ($i = $stackPtr; $i < $numTokens; $i++) {
-                        if (is_array($tokens[$i]) === false) {
-                            if ($tokens[$i] === '(') {
-                                break;
-                            }
-                        } else if ($tokens[$i][0] === T_VARIABLE) {
-                            $newToken['code'] = T_ARRAY_HINT;
-                            $newToken['type'] = 'T_ARRAY_HINT';
-                            break;
-                        }
-                    }
-                }
-
-                $finalTokens[$newStackPtr] = $newToken;
-                $newStackPtr++;
-            }//end if
-        }//end for
-
-        self::_createLineMap($finalTokens, $eolChar);
-        self::_createBracketMap($finalTokens, $eolChar);
-        self::_createParenthesisMap($finalTokens, $eolChar);
-        self::_createParenthesisNestingMap($finalTokens, $eolChar);
-        self::_createScopeMap($finalTokens, $eolChar);
+        self::_createLineMap($tokens, $tokenizer, $eolChar);
+        self::_createBracketMap($tokens, $tokenizer, $eolChar);
+        self::_createParenthesisMap($tokens, $tokenizer, $eolChar);
+        self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
+        self::_createScopeMap($tokens, $tokenizer, $eolChar);
 
         // If we know the width of each tab, convert tabs
         // into spaces so sniffs can use one method of checking.
         if (PHP_CODESNIFFER_TAB_WIDTH > 0) {
-            self::_convertTabs($finalTokens, $eolChar);
+            self::_convertTabs($tokens, $tokenizer, $eolChar);
         }
 
         // Column map requires the line map to be complete.
-        self::_createColumnMap($finalTokens, $eolChar);
-        self::_createLevelMap($finalTokens, $eolChar);
+        self::_createColumnMap($tokens, $tokenizer, $eolChar);
+        self::_createLevelMap($tokens, $tokenizer, $eolChar);
 
-        return $finalTokens;
+        return $tokens;
 
     }//end tokenizeString()
 
@@ -927,7 +635,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createLineMap(&$tokens, $eolChar)
+    private static function _createLineMap(&$tokens, $tokenizer, $eolChar)
     {
         $lineNumber = 1;
         $count      = count($tokens);
@@ -951,7 +659,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _convertTabs(&$tokens, $eolChar)
+    private static function _convertTabs(&$tokens, $tokenizer, $eolChar)
     {
         $currColumn = 1;
         $count      = count($tokens);
@@ -1030,7 +738,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createColumnMap(&$tokens, $eolChar)
+    private static function _createColumnMap(&$tokens, $tokenizer, $eolChar)
     {
         $currColumn = 1;
         $count      = count($tokens);
@@ -1059,7 +767,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createBracketMap(&$tokens, $eolChar)
+    private static function _createBracketMap(&$tokens, $tokenizer, $eolChar)
     {
         $openers   = array();
         $numTokens = count($tokens);
@@ -1094,7 +802,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createParenthesisMap(&$tokens, $eolChar)
+    private static function _createParenthesisMap(&$tokens, $tokenizer, $eolChar)
     {
         $openers   = array();
         $numTokens = count($tokens);
@@ -1144,7 +852,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createParenthesisNestingMap(&$tokens, $eolChar)
+    private static function _createParenthesisNestingMap(&$tokens, $tokenizer, $eolChar)
     {
         $numTokens = count($tokens);
         $map       = array();
@@ -1181,7 +889,7 @@ class PHP_CodeSniffer_File
      * @return void
      * @see _recurseScopeMap()
      */
-    private static function _createScopeMap(&$tokens, $eolChar)
+    private static function _createScopeMap(&$tokens, $tokenizer, $eolChar)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
@@ -1190,14 +898,14 @@ class PHP_CodeSniffer_File
         $numTokens = count($tokens);
         for ($i = 0; $i < $numTokens; $i++) {
             // Check to see if the current token starts a new scope.
-            if (isset(self::$_scopeOpeners[$tokens[$i]['code']]) === true) {
+            if (isset($tokenizer->scopeOpeners[$tokens[$i]['code']]) === true) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type    = $tokens[$i]['type'];
                     $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
                     echo "\tStart scope map at $i: $type => $content".PHP_EOL;
                 }
 
-                $i = self::_recurseScopeMap($tokens, $numTokens, $eolChar, $i);
+                $i = self::_recurseScopeMap($tokens, $numTokens, $tokenizer, $eolChar, $i);
             }
         }
 
@@ -1220,7 +928,7 @@ class PHP_CodeSniffer_File
      *
      * @return int The position in the stack that closed the scope.
      */
-    private static function _recurseScopeMap(&$tokens, $numTokens, $eolChar, $stackPtr, $depth=1)
+    private static function _recurseScopeMap(&$tokens, $numTokens, $tokenizer, $eolChar, $stackPtr, $depth=1)
     {
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
@@ -1229,7 +937,7 @@ class PHP_CodeSniffer_File
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
-        if ($currType === self::$_scopeOpeners[$currType]['start']) {
+        if ($currType === $tokenizer->scopeOpeners[$currType]['start']) {
             $opener = $stackPtr;
         }
 
@@ -1253,7 +961,7 @@ class PHP_CodeSniffer_File
             }
 
             // Is this an opening condition ?
-            if (isset(self::$_scopeOpeners[$tokenType]) === true) {
+            if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
                 if ($opener === null) {
                     // Found another opening condition but still haven't
                     // found our opener, so we are never going to find one.
@@ -1271,7 +979,7 @@ class PHP_CodeSniffer_File
                     echo '* token is an opening condition *'.PHP_EOL;
                 }
 
-                $isShared = (self::$_scopeOpeners[$tokenType]['shared'] === true);
+                $isShared = ($tokenizer->scopeOpeners[$tokenType]['shared'] === true);
 
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     // We've been here before.
@@ -1301,11 +1009,11 @@ class PHP_CodeSniffer_File
                         echo '* searching for opener *'.PHP_EOL;
                     }
 
-                    $i = self::_recurseScopeMap($tokens, $numTokens, $eolChar, $i, ($depth + 1));
+                    $i = self::_recurseScopeMap($tokens, $numTokens, $tokenizer, $eolChar, $i, ($depth + 1));
                 }//end if
             }//end if start scope
 
-            if ($tokenType === self::$_scopeOpeners[$currType]['start'] && $opener === null) {
+            if ($tokenType === $tokenizer->scopeOpeners[$currType]['start'] && $opener === null) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
                     // Make sure this is actually an opener and not a
                     // string offset (e.g., $var{0}).
@@ -1340,7 +1048,7 @@ class PHP_CodeSniffer_File
 
                     $opener = $i;
                 }
-            } else if ($tokenType === self::$_scopeOpeners[$currType]['end'] && $opener !== null) {
+            } else if ($tokenType === $tokenizer->scopeOpeners[$currType]['end'] && $opener !== null) {
                 if ($ignore === true) {
                     // The last opening bracket must have been for a string
                     // offset or alike, so let's ignore it.
@@ -1363,7 +1071,7 @@ class PHP_CodeSniffer_File
                         $tokens[$token]['scope_closer']    = $i;
                     }
 
-                    if (self::$_scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
+                    if ($tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
                         return $opener;
                     } else {
                         return $i;
@@ -1401,12 +1109,12 @@ class PHP_CodeSniffer_File
                 }
 
                 $ignore = true;
-            } else if ($opener === null && isset(self::$_scopeOpeners[$currType]) === true) {
+            } else if ($opener === null && isset($tokenizer->scopeOpeners[$currType]) === true) {
                 // If we still haven't found the opener after 3 lines,
                 // we're not going to find it, unless we know it requires
                 // an opener, in which case we better keep looking.
                 if ($tokens[$i]['line'] >= ($startLine + 3)) {
-                    if (self::$_scopeOpeners[$currType]['strict'] === true) {
+                    if ($tokenizer->scopeOpeners[$currType]['strict'] === true) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type  = $tokens[$stackPtr]['type'];
                             $lines = ($tokens[$i]['line'] - $startLine);
@@ -1423,7 +1131,7 @@ class PHP_CodeSniffer_File
                         return $stackPtr;
                     }
                 }
-            } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, self::$_endScopeTokens) === true) {
+            } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $tokenizer->endScopeTokens) === true) {
                 if (isset($tokens[$i]['scope_condition']) === false) {
                     if ($ignore === true) {
                         // We found the end token for the opener we were ignoring.
@@ -1474,7 +1182,7 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createLevelMap(&$tokens, $eolChar)
+    private static function _createLevelMap(&$tokens, $tokenizer, $eolChar)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START LEVEL MAP ***".PHP_EOL;
@@ -1535,7 +1243,7 @@ class PHP_CodeSniffer_File
                         // closer (like CASE with no BREAK using a SWITCHes closer).
                         $thisType = $tokens[$tokens[$i]['scope_condition']]['code'];
                         $opener   = $tokens[$lastOpener]['scope_condition'];
-                        if (in_array($tokens[$opener]['code'], self::$_scopeOpeners[$thisType]['with']) === true) {
+                        if (in_array($tokens[$opener]['code'], $tokenizer->scopeOpeners[$thisType]['with']) === true) {
                             $badToken = $tokens[$lastOpener]['scope_condition'];
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $type = $tokens[$badToken]['type'];
@@ -1654,18 +1362,6 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createLevelMap()
-
-
-    /**
-     * Returns the token types that are allowed to open scopes.
-     *
-     * @return array(int)
-     */
-    public static function getValidScopeOpeners()
-    {
-        return array_keys(self::$_scopeOpeners);
-
-    }//end getValidScopeOpeners()
 
 
     /**

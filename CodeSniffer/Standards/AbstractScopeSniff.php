@@ -104,13 +104,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
             throw new PHP_CodeSniffer_Test_Exception($error);
         }
 
-        $invalidScopeTokens = array_diff($scopeTokens, PHP_CodeSniffer_File::getValidScopeOpeners());
-        if (empty($invalidScopeTokens) === false) {
-            $invalid = implode(', ', $invalidScopeTokens);
-            $error   = "Scope tokens [$invalid] are not valid scope opener";
-            throw new PHP_CodeSniffer_Test_Exception($error);
-        }
-
         $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);

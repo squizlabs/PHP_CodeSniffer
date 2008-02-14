@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added support for multiple tokenizers so PHP_CodeSniffer can check more than just PHP files
+    -- PHP_CodeSniffer now has a JS tokenizer for checking JavaScript files
+    -- Sniffs need to be updated to work with additional tokenizers, or new sniffs written for them
   - Fixed error in phpcs error message when a supplied file does not exist
   - Added sniffs that implement part of the PMD rule catalog to the Generic standard
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
@@ -1234,6 +1237,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="IncorrectPatternException.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+    </dir>
+    <dir name="Tokenizers">
+     <file baseinstalldir="PHP" name="JS.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="PHP.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
