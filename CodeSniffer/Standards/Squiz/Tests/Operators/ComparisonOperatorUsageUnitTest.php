@@ -41,27 +41,46 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
      *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($tokenizer='PHP')
     {
-        return array(
-                6  => 1,
-                7  => 1,
-                10 => 1,
-                11 => 1,
-                18 => 1,
-                19 => 1,
-                22 => 1,
-                23 => 1,
-                29 => 2,
-                32 => 2,
-                38 => 4,
-                47 => 2,
-                69 => 1,
-                72 => 1,
-                75 => 1,
-                78 => 1,
-                80 => 1,
-               );
+        switch ($tokenizer) {
+        case 'PHP':
+            return array(
+                    6  => 1,
+                    7  => 1,
+                    10 => 1,
+                    11 => 1,
+                    18 => 1,
+                    19 => 1,
+                    22 => 1,
+                    23 => 1,
+                    29 => 2,
+                    32 => 2,
+                    38 => 4,
+                    47 => 2,
+                    69 => 1,
+                    72 => 1,
+                    75 => 1,
+                    78 => 1,
+                    80 => 1,
+                   );
+            break;
+        case 'JS':
+            return array(
+                    5  => 1,
+                    6  => 1,
+                    9  => 1,
+                    10 => 1,
+                    17 => 1,
+                    18 => 1,
+                    21 => 1,
+                    22 => 1,
+                    28 => 2,
+                    31 => 1,
+                    37 => 1,
+                   );
+            break;
+        }
 
     }//end getErrorList()
 

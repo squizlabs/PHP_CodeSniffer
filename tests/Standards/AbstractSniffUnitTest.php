@@ -85,182 +85,206 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // The basis for determining file locations.
         $basename = substr(get_class($this), 0, -8);
 
-        if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
-            // We have not been installed.
-            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
-            $testFile = $standardsDir.'/'.str_replace('_', '/', $basename).'UnitTest.inc';
-        } else {
-            // The name of the dummy file we are testing.
-            $testFile = dirname(__FILE__).'/'.str_replace('_', '/', $basename).'UnitTest.inc';
-        }
-
         // The name of the coding standard we are testing.
         $standardName = substr($basename, 0, strpos($basename, '_'));
 
         // The class name of the sniff we are testing.
         $sniffClass = str_replace('_Tests_', '_Sniffs_', $basename).'Sniff';
 
-        try {
-            self::$phpcs->process($testFile, $standardName, array($sniffClass));
-        } catch (Exception $e) {
-            $this->fail('An unexpected exception has been caught: '.$e->getMessage());
+        if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
+            // We have not been installed.
+            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
+            $testFileBase = $standardsDir.'/'.str_replace('_', '/', $basename).'UnitTest.';
+        } else {
+            // The name of the dummy file we are testing.
+            $testFileBase = dirname(__FILE__).'/'.str_replace('_', '/', $basename).'UnitTest.';
         }
 
-        $files = self::$phpcs->getFiles();
-        $file  = array_pop($files);
+        // Get a list of all test files to check. These will have the same base
+        // name but different extensions. We ignore the .php file as it is the
+        // class.
+        $testFiles = array();
 
-        $foundErrors      = $file->getErrors();
-        $foundWarnings    = $file->getWarnings();
-        $expectedErrors   = $this->getErrorList();
-        $expectedWarnings = $this->getWarningList();
+        $dir = substr($testFileBase, 0, strrpos($testFileBase, '/'));
+        $di  = new DirectoryIterator($dir);
 
-        if (is_array($expectedErrors) === false) {
-            throw new PHP_CodeSniffer_Exception('getErrorList() must return an array');
-        }
-
-        if (is_array($expectedWarnings) === false) {
-            throw new PHP_CodeSniffer_Exception('getWarningList() must return an array');
-        }
-
-        /*
-         We merge errors and warnings together to make it easier
-         to iterate over them and produce the errors string. In this way,
-         we can report on errors and warnings in the same line even though
-         it's not really structured to allow that.
-        */
-
-        $allProblems = array();
-
-        foreach ($foundErrors as $line => $lineErrors) {
-            foreach ($lineErrors as $column => $errors) {
-                if (isset($allProblems[$line]) === false) {
-                    $allProblems[$line] = array(
-                                           'expected_errors'   => 0,
-                                           'expected_warnings' => 0,
-                                           'found_errors'      => array(),
-                                           'found_warnings'    => array(),
-                                          );
+        foreach ($di as $file) {
+            $path = $file->getPathname();
+            if (substr($path, 0, strlen($testFileBase)) === $testFileBase) {
+                if ($path !== $testFileBase.'php') {
+                    $testFiles[] = $path;
                 }
-
-                $allProblems[$line]['found_errors'] = array_merge($allProblems[$line]['found_errors'], $errors);
             }
-
-            if (isset($expectedErrors[$line]) === true) {
-                $allProblems[$line]['expected_errors'] = $expectedErrors[$line];
-            } else {
-                $allProblems[$line]['expected_errors'] = 0;
-            }
-
-            unset($expectedErrors[$line]);
         }//end foreach
 
-        foreach ($expectedErrors as $line => $numErrors) {
-            if (isset($allProblems[$line]) === false) {
-                $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
+        foreach ($testFiles as $testFile) {
+            try {
+                self::$phpcs->process($testFile, $standardName, array($sniffClass));
+            } catch (Exception $e) {
+                $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
-            $allProblems[$line]['expected_errors'] = $numErrors;
-        }
+            // Work out which tokenizer was used.
+            $fileParts = explode('.', $testFile);
+            $extension = array_pop($fileParts);
+            $tokenizer = self::$phpcs->allowedFileExtensions[$extension];
 
-        foreach ($foundWarnings as $line => $lineWarnings) {
-            foreach ($lineWarnings as $column => $warnings) {
-                if (isset($allProblems[$line]) === false) {
-                    $allProblems[$line] = array(
-                                           'expected_errors'   => 0,
-                                           'expected_warnings' => 0,
-                                           'found_errors'      => array(),
-                                           'found_warnings'    => array(),
-                                          );
-                }
+            $files = self::$phpcs->getFiles();
+            $file  = array_pop($files);
 
-                $allProblems[$line]['found_warnings'] = $warnings;
+            $foundErrors      = $file->getErrors();
+            $foundWarnings    = $file->getWarnings();
+            $expectedErrors   = $this->getErrorList($tokenizer);
+            $expectedWarnings = $this->getWarningList($tokenizer);
+
+            if (is_array($expectedErrors) === false) {
+                throw new PHP_CodeSniffer_Exception('getErrorList() must return an array');
             }
 
-            if (isset($expectedWarnings[$line]) === true) {
-                $allProblems[$line]['expected_warnings'] = $expectedWarnings[$line];
-            } else {
-                $allProblems[$line]['expected_warnings'] = 0;
+            if (is_array($expectedWarnings) === false) {
+                throw new PHP_CodeSniffer_Exception('getWarningList() must return an array');
             }
 
-            unset($expectedWarnings[$line]);
-        }//end foreach
+            /*
+             We merge errors and warnings together to make it easier
+             to iterate over them and produce the errors string. In this way,
+             we can report on errors and warnings in the same line even though
+             it's not really structured to allow that.
+            */
 
-        foreach ($expectedWarnings as $line => $numWarnings) {
-            if (isset($allProblems[$line]) === false) {
-                $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
-            }
+            $allProblems = array();
 
-            $allProblems[$line]['expected_warnings'] = $numWarnings;
-        }
-
-        // Order the messages by line number.
-        ksort($allProblems);
-
-        $failureMessages = array();
-        foreach ($allProblems as $line => $problems) {
-            $numErrors        = count($problems['found_errors']);
-            $numWarnings      = count($problems['found_warnings']);
-            $expectedErrors   = $problems['expected_errors'];
-            $expectedWarnings = $problems['expected_warnings'];
-
-            $errors      = '';
-            $foundString = '';
-
-            if ($expectedErrors !== $numErrors || $expectedWarnings !== $numWarnings) {
-                $lineMessage     = "[LINE $line]";
-                $expectedMessage = 'Expected ';
-                $foundMessage    = 'but found ';
-
-                if ($expectedErrors !== $numErrors) {
-                    $expectedMessage .= "$expectedErrors error(s)";
-                    $foundMessage    .= "$numErrors error(s)";
-                    if ($numErrors !== 0) {
-                        $foundString .= 'error(s)';
-                        $errors      .= implode(PHP_EOL.' -> ', $problems['found_errors']);
+            foreach ($foundErrors as $line => $lineErrors) {
+                foreach ($lineErrors as $column => $errors) {
+                    if (isset($allProblems[$line]) === false) {
+                        $allProblems[$line] = array(
+                                               'expected_errors'   => 0,
+                                               'expected_warnings' => 0,
+                                               'found_errors'      => array(),
+                                               'found_warnings'    => array(),
+                                              );
                     }
 
-                    if ($expectedWarnings !== $numWarnings) {
-                        $expectedMessage .= ' and ';
-                        $foundMessage    .= ' and ';
-                        if ($numWarnings !== 0) {
-                            if ($foundString !== '') {
-                                $foundString .= ' and ';
+                    $allProblems[$line]['found_errors'] = array_merge($allProblems[$line]['found_errors'], $errors);
+                }
+
+                if (isset($expectedErrors[$line]) === true) {
+                    $allProblems[$line]['expected_errors'] = $expectedErrors[$line];
+                } else {
+                    $allProblems[$line]['expected_errors'] = 0;
+                }
+
+                unset($expectedErrors[$line]);
+            }//end foreach
+
+            foreach ($expectedErrors as $line => $numErrors) {
+                if (isset($allProblems[$line]) === false) {
+                    $allProblems[$line] = array(
+                                           'expected_errors'   => 0,
+                                           'expected_warnings' => 0,
+                                           'found_errors'      => array(),
+                                           'found_warnings'    => array(),
+                                          );
+                }
+
+                $allProblems[$line]['expected_errors'] = $numErrors;
+            }
+
+            foreach ($foundWarnings as $line => $lineWarnings) {
+                foreach ($lineWarnings as $column => $warnings) {
+                    if (isset($allProblems[$line]) === false) {
+                        $allProblems[$line] = array(
+                                               'expected_errors'   => 0,
+                                               'expected_warnings' => 0,
+                                               'found_errors'      => array(),
+                                               'found_warnings'    => array(),
+                                              );
+                    }
+
+                    $allProblems[$line]['found_warnings'] = $warnings;
+                }
+
+                if (isset($expectedWarnings[$line]) === true) {
+                    $allProblems[$line]['expected_warnings'] = $expectedWarnings[$line];
+                } else {
+                    $allProblems[$line]['expected_warnings'] = 0;
+                }
+
+                unset($expectedWarnings[$line]);
+            }//end foreach
+
+            foreach ($expectedWarnings as $line => $numWarnings) {
+                if (isset($allProblems[$line]) === false) {
+                    $allProblems[$line] = array(
+                                           'expected_errors'   => 0,
+                                           'expected_warnings' => 0,
+                                           'found_errors'      => array(),
+                                           'found_warnings'    => array(),
+                                          );
+                }
+
+                $allProblems[$line]['expected_warnings'] = $numWarnings;
+            }
+
+            // Order the messages by line number.
+            ksort($allProblems);
+
+            $failureMessages = array();
+            foreach ($allProblems as $line => $problems) {
+                $numErrors        = count($problems['found_errors']);
+                $numWarnings      = count($problems['found_warnings']);
+                $expectedErrors   = $problems['expected_errors'];
+                $expectedWarnings = $problems['expected_warnings'];
+
+                $errors      = '';
+                $foundString = '';
+
+                if ($expectedErrors !== $numErrors || $expectedWarnings !== $numWarnings) {
+                    $lineMessage     = "[LINE $line]";
+                    $expectedMessage = 'Expected ';
+                    $foundMessage    = 'in '.basename($testFile).' but found ';
+
+                    if ($expectedErrors !== $numErrors) {
+                        $expectedMessage .= "$expectedErrors error(s)";
+                        $foundMessage    .= "$numErrors error(s)";
+                        if ($numErrors !== 0) {
+                            $foundString .= 'error(s)';
+                            $errors      .= implode(PHP_EOL.' -> ', $problems['found_errors']);
+                        }
+
+                        if ($expectedWarnings !== $numWarnings) {
+                            $expectedMessage .= ' and ';
+                            $foundMessage    .= ' and ';
+                            if ($numWarnings !== 0) {
+                                if ($foundString !== '') {
+                                    $foundString .= ' and ';
+                                }
                             }
                         }
                     }
-                }
 
-                if ($expectedWarnings !== $numWarnings) {
-                    $expectedMessage .= "$expectedWarnings warning(s)";
-                    $foundMessage    .= "$numWarnings warning(s)";
-                    if ($numWarnings !== 0) {
-                        $foundString .= 'warning(s)';
-                        if (empty($errors) === false) {
-                            $errors .= PHP_EOL.' -> ';
+                    if ($expectedWarnings !== $numWarnings) {
+                        $expectedMessage .= "$expectedWarnings warning(s)";
+                        $foundMessage    .= "$numWarnings warning(s)";
+                        if ($numWarnings !== 0) {
+                            $foundString .= 'warning(s)';
+                            if (empty($errors) === false) {
+                                $errors .= PHP_EOL.' -> ';
+                            }
+
+                            $errors .= implode(PHP_EOL.' -> ', $problems['found_warnings']);
                         }
-
-                        $errors .= implode(PHP_EOL.' -> ', $problems['found_warnings']);
                     }
-                }
 
-                $fullMessage = "$lineMessage $expectedMessage $foundMessage.";
-                if ($errors !== '') {
-                    $fullMessage .= " The $foundString found were:".PHP_EOL." -> $errors";
-                }
+                    $fullMessage = "$lineMessage $expectedMessage $foundMessage.";
+                    if ($errors !== '') {
+                        $fullMessage .= " The $foundString found were:".PHP_EOL." -> $errors";
+                    }
 
-                $failureMessages[] = $fullMessage;
-            }
-        }//end foreach
+                    $failureMessages[] = $fullMessage;
+                }
+            }//end foreach
+        }
 
         if (empty($failureMessages) === false) {
             $this->fail(implode(PHP_EOL, $failureMessages));
