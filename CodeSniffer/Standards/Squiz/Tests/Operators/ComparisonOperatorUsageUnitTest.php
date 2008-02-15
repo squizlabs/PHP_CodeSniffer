@@ -39,6 +39,8 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $tokenizer The tokenizer used to parse our test file.
+     *
      * @return array(int => int)
      */
     public function getErrorList($tokenizer='PHP')
