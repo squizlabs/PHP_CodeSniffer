@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DocCommentAlignmentSniff now ignores inline doc block comments
   - Squiz ControlStructureSpacingSniff now ensures no blank lines at the start of control structures
   - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
+  - Squiz ComparisonOperatorUsageSniff now supports JS files
+  - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix
@@ -730,6 +732,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ObjectInstantiationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ObjectMemberCommaSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Operators">
         <file baseinstalldir="PHP" name="ComparisonOperatorUsageSniff.php" role="php">
@@ -1020,9 +1025,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ObjectInstantiationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ObjectMemberCommaUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ObjectMemberCommaUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Operators">
         <file baseinstalldir="PHP" name="ComparisonOperatorUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ComparisonOperatorUsageUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="ComparisonOperatorUsageUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
