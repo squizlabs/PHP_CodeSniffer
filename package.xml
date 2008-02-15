@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
+  - Fixed bug #13119 : php minimum requirement need to be fix
  </notes>
  <contents>
   <dir name="/">
@@ -1266,7 +1267,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <dependencies>
   <required>
    <php>
-    <min>5.1.0</min>
+    <min>5.1.2</min>
    </php>
    <pearinstaller>
     <min>1.4.0b1</min>
