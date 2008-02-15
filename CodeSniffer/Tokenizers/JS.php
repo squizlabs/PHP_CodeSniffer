@@ -172,6 +172,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '<='        => 'T_IS_SMALLER_OR_EQUAL',
                               '>='        => 'T_IS_GREATER_OR_EQUAL',
                               '!'         => 'T_BOOLEAN_NOT',
+                              '!='        => 'T_IS_NOT_EQUAL',
+                              '!=='       => 'T_IS_NOT_IDENTICAL',
                               '='         => 'T_EQUAL',
                               '=='        => 'T_IS_EQUAL',
                               '==='       => 'T_IS_IDENTICAL',
