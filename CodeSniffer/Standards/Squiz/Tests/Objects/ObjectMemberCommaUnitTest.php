@@ -37,13 +37,13 @@ class Squiz_Tests_Objects_ObjectMemberCommaUnitTest extends AbstractSniffUnitTes
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $tokenizer The tokenizer used to parse our test file.
+     * @param string $testFile The name of the file being tested.
      *
      * @return array(int => int)
      */
-    public function getErrorList($tokenizer='JS')
+    public function getErrorList($testFile='ObjectMemberCommaUnitTest.js')
     {
-        if ($tokenizer !== 'JS') {
+        if ($testFile !== 'ObjectMemberCommaUnitTest.js') {
             return array();
         }
 

@@ -124,18 +124,13 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
-            // Work out which tokenizer was used.
-            $fileParts = explode('.', $testFile);
-            $extension = array_pop($fileParts);
-            $tokenizer = self::$phpcs->allowedFileExtensions[$extension];
-
             $files = self::$phpcs->getFiles();
             $file  = array_pop($files);
 
             $foundErrors      = $file->getErrors();
             $foundWarnings    = $file->getWarnings();
-            $expectedErrors   = $this->getErrorList($tokenizer);
-            $expectedWarnings = $this->getWarningList($tokenizer);
+            $expectedErrors   = $this->getErrorList(basename($testFile));
+            $expectedWarnings = $this->getWarningList(basename($testFile));
 
             if (is_array($expectedErrors) === false) {
                 throw new PHP_CodeSniffer_Exception('getErrorList() must return an array');

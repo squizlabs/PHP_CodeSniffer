@@ -39,14 +39,14 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $tokenizer The tokenizer used to parse our test file.
+     * @param string $testFile The name of the file being tested.
      *
      * @return array(int => int)
      */
-    public function getErrorList($tokenizer='PHP')
+    public function getErrorList($testFile='ComparisonOperatorUsageUnitTest.inc')
     {
-        switch ($tokenizer) {
-        case 'PHP':
+        switch ($testFile) {
+        case 'ComparisonOperatorUsageUnitTest.inc':
             return array(
                     6  => 1,
                     7  => 1,
@@ -67,7 +67,7 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
                     80 => 1,
                    );
             break;
-        case 'JS':
+        case 'ComparisonOperatorUsageUnitTest.js':
             return array(
                     5  => 1,
                     6  => 1,
@@ -81,6 +81,9 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
                     31 => 1,
                     37 => 1,
                    );
+            break;
+        default:
+            return array();
             break;
         }
 
