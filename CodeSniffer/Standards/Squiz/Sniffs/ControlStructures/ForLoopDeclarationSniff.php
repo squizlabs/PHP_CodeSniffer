@@ -31,6 +31,16 @@
 class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -39,9 +49,7 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
      */
     public function register()
     {
-        return array(
-                T_FOR,
-               );
+        return array(T_FOR);
 
     }//end register()
 

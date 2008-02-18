@@ -41,15 +41,31 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
      *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='ForLoopDeclarationUnitTest.inc')
     {
-        return array(
+        switch ($testFile) {
+        case 'ForLoopDeclarationUnitTest.inc':
+            return array(
                 8  => 2,
                 11 => 2,
                 14 => 2,
                 17 => 2,
                 21 => 6,
                );
+             break;
+        case 'ForLoopDeclarationUnitTest.js':
+            return array(
+                6  => 2,
+                9  => 2,
+                12 => 2,
+                15 => 2,
+                19 => 6,
+               );
+             break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 

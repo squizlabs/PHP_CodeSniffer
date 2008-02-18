@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
   - Squiz ComparisonOperatorUsageSniff now supports JS files
   - Squiz ControlSignatureSniff now supports JS files
+  - Squiz ForLoopDeclaration now supports JS files
   - Generic LowerCaseConstant now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
@@ -947,6 +948,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="ControlSignatureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ControlSignatureUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="ControlSignatureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -959,6 +961,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
