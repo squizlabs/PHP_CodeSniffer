@@ -77,7 +77,7 @@ class Squiz_Tests_NamingConventions_ConstantCaseUnitTest extends AbstractSniffUn
         default:
             return array();
             break;
-        }
+        }//end switch
 
     }//end getErrorList()
 
