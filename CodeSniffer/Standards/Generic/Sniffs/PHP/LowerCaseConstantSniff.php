@@ -31,6 +31,15 @@
 class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -63,7 +72,7 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
 
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
-            $error = 'PHP keywords must be lowercase; expected "'.strtolower($keyword).'" but found "'.$keyword.'"';
+            $error = 'TRUE, FALSE and NULL must be lowercase; expected "'.strtolower($keyword).'" but found "'.$keyword.'"';
             $phpcsFile->addError($error, $stackPtr);
         }
 
