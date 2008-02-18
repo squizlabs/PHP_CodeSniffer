@@ -85,7 +85,7 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
         default:
             return array();
             break;
-        }
+        }//end switch
 
     }//end getErrorList()
 
