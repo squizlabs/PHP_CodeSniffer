@@ -117,6 +117,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             }
         }//end foreach
 
+        $failureMessages = array();
         foreach ($testFiles as $testFile) {
             try {
                 self::$phpcs->process($testFile, $standardName, array($sniffClass));
@@ -224,7 +225,6 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             // Order the messages by line number.
             ksort($allProblems);
 
-            $failureMessages = array();
             foreach ($allProblems as $line => $problems) {
                 $numErrors        = count($problems['found_errors']);
                 $numWarnings      = count($problems['found_warnings']);
