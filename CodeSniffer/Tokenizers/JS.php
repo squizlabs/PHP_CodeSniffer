@@ -143,7 +143,10 @@ class PHP_CodeSniffer_Tokenizers_JS
     protected $tokenValues = array(
                               'function'  => 'T_FUNCTION',
                               'prototype' => 'T_PROTOTYPE',
+                              'try'       => 'T_TRY',
+                              'catch'     => 'T_CATCH',
                               'if'        => 'T_IF',
+                              'else'      => 'T_ELSE',
                               'do'        => 'T_DO',
                               'while'     => 'T_WHILE',
                               'for'       => 'T_FOR',
@@ -255,7 +258,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 echo "Process char $i => $content".PHP_EOL;
             }
 
-            if ($buffer !== '') {
+            if ($inString === '' && $inComment === '' && $buffer !== '') {
                 // If the buffer only has whitespace and we are about to
                 // add a character, store the whitespace first.
                 if (trim($char) !== '' && trim($buffer) === '') {
@@ -531,7 +534,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $tokens[$stackPtr]['content'] = substr($tokenContent, (strpos($tokenContent, $eolChar) + strlen($eolChar)));
 
                         $tokenContent = substr($tokenContent, 0, (strpos($tokenContent, $eolChar) + strlen($eolChar)));
-                        $stackPtr--;
+
+                        // If the substr failed, skip the token as the content
+                        // will now be blank.
+                        if ($tokens[$stackPtr]['content'] !== false) {
+                            $stackPtr--;
+                        }
+
                         break;
                     }
 
