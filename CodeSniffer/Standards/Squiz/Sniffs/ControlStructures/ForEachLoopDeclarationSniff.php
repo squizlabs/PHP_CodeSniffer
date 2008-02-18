@@ -39,9 +39,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
      */
     public function register()
     {
-        return array(
-                T_FOREACH,
-               );
+        return array(T_FOREACH);
 
     }//end register()
 
