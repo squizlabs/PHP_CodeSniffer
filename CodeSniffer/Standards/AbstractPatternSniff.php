@@ -57,7 +57,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *
      * @var boolean
      */
-    private $_ignoreComments = true;
+    private $_ignoreComments = false;
 
     /**
      * Positions in the stack where errors have occured.
@@ -244,7 +244,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
 
     /**
-     * Processes the pattern and varifies the code at $stackPtr.
+     * Processes the pattern and verifies the code at $stackPtr.
      *
      * @param array                $patternInfo Information about the pattern used
      *                                          for checking, which includes are
@@ -390,7 +390,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $tokenContent = $tokens[$stackPtr]['content'];
                         } else {
                             // Get all the whitespace to the next token.
-                            $next              = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                            $next              = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr, null, true);
                             $tokenContent      = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
                             $lastAddedStackPtr = $stackPtr;
                             $stackPtr          = $next;
@@ -434,7 +434,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $hasComment = false;
                         for ($j = $stackPtr; $j < $next; $j++) {
                             $found .= $tokens[$j]['content'];
-                            if ($tokens[$j]['code'] === T_COMMENT) {
+                            if (in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                                 $hasComment = true;
                             }
                         }
