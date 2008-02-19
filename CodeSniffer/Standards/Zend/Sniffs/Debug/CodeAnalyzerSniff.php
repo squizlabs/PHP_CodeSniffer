@@ -66,9 +66,6 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
 
         $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {
-            echo "\n--- WARNING ---\n";
-            echo "The Zend Code Analyzer path is not set.\n";
-            echo "Run \"phpcs --config-set zend_ca_path /path/to/ZendCodeAnalyzer\".\n\n";
             return;
         }
 
@@ -77,16 +74,15 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         // will pipe even stderr to stdout.
         $cmd = $analyzerPath.' '.$fileName.' 2>&1';
 
-        // There is the possibility to pass "--ide" as an option to the analyzer. This
-        // would result in an output format which would be easier to parse. The problem
-        // here is that no cleartext error messages are returnd; only error-code-labels.
-        // So for a start we go for cleartext output.
-
+        // There is the possibility to pass "--ide" as an option to the analyzer.
+        // This would result in an output format which would be easier to parse.
+        // The problem here is that no cleartext error messages are returnwd; only
+        // error-code-labels. So for a start we go for cleartext output.
         $exitCode = exec($cmd, $output, $retval);
 
-        // $exitCode is the last line of $output if no error occures, on error it is numeric.
-        // try to handle various errorcondition an provide useful error reporting
-        //  || (is_numeric($retval) && $retval > 0)
+        // $exitCode is the last line of $output if no error occures, on error it
+        // is numeric. Try to handle various error conditions and provide useful
+        // error reporting.
         if (is_numeric($exitCode) === true && $exitCode > 0) {
             if (is_array($output) === true) {
                 $msg = join('\n', $output);
@@ -99,7 +95,8 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
             $tokens = $phpcsFile->getTokens();
 
             foreach ($output as $finding) {
-                // The first two lines of analyzer output contain something like this:
+                // The first two lines of analyzer output contain
+                // something like this:
                 // > Zend Code Analyzer 1.2.2
                 // > Analyzing <filename>...
                 // So skip these...

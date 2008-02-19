@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LowerCaseConstant now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
+  - Removed warning shown in Zend CodeAnalyzerSniff when the ZCA path is not set
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix
