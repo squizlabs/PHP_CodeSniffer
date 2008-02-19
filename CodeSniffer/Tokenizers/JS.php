@@ -345,8 +345,9 @@ class PHP_CodeSniffer_Tokenizers_JS
                 continue;
             }
 
-            // Check for known tokens.
-            if (in_array(strtolower($buffer), $tokenTypes) === true) {
+            // Check for known tokens, but ignore tokens found that are not at
+            // the end of a string, like FOR and this.FORmat.
+            if (in_array(strtolower($buffer), $tokenTypes) === true && (preg_match('|[a-zA-z0-9_]|', $char) === 0 || preg_match('|[a-zA-z0-9_]|', $chars[($i + 1)]) === 0)) {
                 $matchedToken    = false;
                 $lookAheadLength = ($maxTokenLength - strlen($buffer));
 
