@@ -39,6 +39,8 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
     public function getErrorList($testFile='ForLoopDeclarationUnitTest.inc')
