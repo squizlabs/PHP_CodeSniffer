@@ -209,6 +209,22 @@ class PHP_CodeSniffer
 
 
     /**
+     * Adds a file to the list of checked files.
+     *
+     * Checked files are used to generate error reports after the run.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file to add.
+     *
+     * @return void
+     */
+    public function addFile(PHP_CodeSniffer_File $phpcsFile)
+    {
+        $this->files[] = $phpcsFile;
+
+    }//end addFile()
+
+
+    /**
      * Processes the files/directories that PHP_CodeSniffer was constructed with.
      *
      * @param string|array $files    The files and directories to process. For
@@ -256,7 +272,7 @@ class PHP_CodeSniffer
             }
         }
 
-        $this->registerTokenListeners($standard, $sniffs);
+        $this->listeners = $this->getTokenListeners($standard, $sniffs);
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numSniffs = count($this->listeners);
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
@@ -275,21 +291,23 @@ class PHP_CodeSniffer
 
 
     /**
-     * Registers installed sniffs in the coding standard being used.
+     * Gets installed sniffs in the coding standard being used.
      *
      * Traverses the standard directory for classes that implement the
      * PHP_CodeSniffer_Sniff interface asks them to register. Each of the
      * sniff's class names must be exact as the basename of the sniff file.
      *
+     * Returns an array of sniff class names.
+     *
      * @param string $standard The name of the coding standard we are checking.
      * @param array  $sniffs   The sniff names to restrict the allowed
      *                         listeners to.
      *
-     * @return void
+     * @return array
      * @throws PHP_CodeSniffer_Exception If any of the tests failed in the
      *                                   registration process.
      */
-    protected function registerTokenListeners($standard, array $sniffs=array())
+    protected function getTokenListeners($standard, array $sniffs=array())
     {
         $files = self::getSniffFiles($this->standardDir, $standard);
 
@@ -300,6 +318,8 @@ class PHP_CodeSniffer
                 $sniff = strtolower($sniff);
             }
         }
+
+        $listeners = array();
 
         foreach ($files as $file) {
 
@@ -328,14 +348,16 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $this->listeners[] = $className;
+            $listeners[] = $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
             }
         }//end foreach
 
-    }//end registerTokenListeners()
+        return $listeners;
+
+    }//end getTokenListeners()
 
 
     /**
@@ -556,8 +578,8 @@ class PHP_CodeSniffer
             }
         }
 
-        $phpcsFile     = new PHP_CodeSniffer_File($file, $this->listeners, $this->allowedFileExtensions);
-        $this->files[] = $phpcsFile;
+        $phpcsFile = new PHP_CodeSniffer_File($file, $this->listeners, $this->allowedFileExtensions);
+        $this->addFile($phpcsFile);
         $phpcsFile->start();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {

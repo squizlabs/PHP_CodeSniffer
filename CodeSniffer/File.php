@@ -255,7 +255,6 @@ class PHP_CodeSniffer_File
 
         $this->_file      = $file;
         $this->tokenizers = $tokenizers;
-        $this->_parse();
 
     }//end __construct()
 
@@ -332,10 +331,15 @@ class PHP_CodeSniffer_File
     /**
      * Starts the stack traversal and tells listeners when tokens are found.
      *
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
+     *
      * @return void
      */
-    public function start()
+    public function start($contents=null)
     {
+        $this->_parse($contents);
+
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
@@ -394,14 +398,16 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Processes the file and runs the PHP_CodeSniffer sniffs to verify that it
-     * conforms with the tests.
+     * Tokenizes the file and preapres it for the test run.
+     *
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return void
      */
-    private function _parse()
+    private function _parse($contents=null)
     {
-        $this->eolChar = self::detectLineEndings($this->_file);
+        $this->eolChar = self::detectLineEndings($this->_file, $contents);
 
         // Determine the tokenizer from the file extension.
         $fileParts      = explode('.', $this->_file);
@@ -412,7 +418,10 @@ class PHP_CodeSniffer_File
         $this->tokenizer     = $tokenizer;
         $this->tokenizerType = $this->tokenizers[$extension];
 
-        $contents        = file_get_contents($this->_file);
+        if ($contents === null) {
+            $contents = file_get_contents($this->_file);
+        }
+
         $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
         $this->numTokens = count($this->_tokens);
 
@@ -435,31 +444,42 @@ class PHP_CodeSniffer_File
     /**
      * Opens a file and detects the EOL character being used.
      *
-     * @param string $file The full path to the file.
+     * @param string $file     The full path to the file.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return string
      * @throws PHP_CodeSniffer_Exception If $file could not be opened.
      */
-    public static function detectLineEndings($file)
+    public static function detectLineEndings($file, $contents=null)
     {
-        // Determine the newline character being used in this file.
-        // Will be either \r, \r\n or \n.
-        $handle = fopen($file, 'r');
-        if ($handle === false) {
-            $error = 'File could not be opened; could not auto-detect line endings';
-            throw new PHP_CodeSniffer_Exception($error);
-        }
-
-        $firstLine = fgets($handle);
-        fclose($handle);
-
-        $eolChar = substr($firstLine, -1);
-        if ($eolChar === "\n") {
-            $secondLastChar = substr($firstLine, -2, 1);
-            if ($secondLastChar === "\r") {
-                $eolChar = "\r\n";
+        if ($contents === null) {
+            // Determine the newline character being used in this file.
+            // Will be either \r, \r\n or \n.
+            $handle = fopen($file, 'r');
+            if ($handle === false) {
+                $error = 'File could not be opened; could not auto-detect line endings';
+                throw new PHP_CodeSniffer_Exception($error);
             }
-        }
+
+            $firstLine = fgets($handle);
+            fclose($handle);
+
+            $eolChar = substr($firstLine, -1);
+            if ($eolChar === "\n") {
+                $secondLastChar = substr($firstLine, -2, 1);
+                if ($secondLastChar === "\r") {
+                    $eolChar = "\r\n";
+                }
+            }
+        } else {
+            if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
+                $error = 'Could not auto-detect line endings from content';
+                throw new PHP_CodeSniffer_Exception($error);
+            }
+
+            $this->eolChar = $matches[0];
+        }//end if
 
         return $eolChar;
 
