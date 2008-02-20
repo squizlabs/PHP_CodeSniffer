@@ -350,7 +350,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="PHP">
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -370,6 +369,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
