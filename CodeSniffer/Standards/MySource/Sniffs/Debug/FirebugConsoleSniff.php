@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensures that systems, asset types and libs are included before they are used.
+ * Ensures that console is not used for function or var names.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Ensures that systems, asset types and libs are included before they are used.
+ * Ensures that console is not used for function or var names.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer_MySource
