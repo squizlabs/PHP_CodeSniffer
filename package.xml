@@ -52,7 +52,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LowerCaseConstantSniff now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
-  - Added MySource FirebugConsoleSniff to ban the use of "console" for variable and function names
+  - Added MySource FirebugConsoleSniff to ban the use of "console" for JS variable and function names
+  - Added MySource JoinStringsSniff to enforce the use of join() to concatenate JS strings
   - Removed warning shown in Zend CodeAnalyzerSniff when the ZCA path is not set
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
@@ -403,6 +404,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="JoinStringsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Channels">
@@ -428,6 +434,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ReturnFunctionValueUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ReturnFunctionValueUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="JoinStringsUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="JoinStringsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
