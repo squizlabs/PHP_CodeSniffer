@@ -87,7 +87,7 @@ class Squiz_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_
 
             // This is a control structure without an opening brace,
             // so it is an inline statement.
-            $error = 'Inline control structures are not allowed.';
+            $error = 'Inline control structures are not allowed';
             $phpcsFile->addError($error, $stackPtr);
             return;
         }//end if
