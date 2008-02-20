@@ -1069,7 +1069,7 @@ class PHP_CodeSniffer_File
                     $opener = $i;
                 }
             } else if ($tokenType === $tokenizer->scopeOpeners[$currType]['end'] && $opener !== null) {
-                if ($ignore === true) {
+                if ($ignore === true && $tokenType === T_CLOSE_CURLY_BRACKET) {
                     // The last opening bracket must have been for a string
                     // offset or alike, so let's ignore it.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {

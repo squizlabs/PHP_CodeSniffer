@@ -60,6 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix
+  - Fixed bug #13156 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
  </notes>
  <contents>
   <dir name="/">
