@@ -39,11 +39,15 @@ class Squiz_Tests_Formatting_OperatorBracketUnitTest extends AbstractSniffUnitTe
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='OperatorBracketUnitTest.inc')
     {
-        return array(
+        switch ($testFile) {
+        case 'OperatorBracketUnitTest.inc':
+            return array(
                 3  => 1,
                 6  => 1,
                 9  => 1,
@@ -70,6 +74,35 @@ class Squiz_Tests_Formatting_OperatorBracketUnitTest extends AbstractSniffUnitTe
                 86 => 1,
                 90 => 1,
                );
+            break;
+        case 'OperatorBracketUnitTest.js':
+            return array(
+                2  => 1,
+                5  => 1,
+                8  => 1,
+                11 => 1,
+                14 => 1,
+                17 => 2,
+                19 => 1,
+                24 => 1,
+                27 => 1,
+                30 => 1,
+                33 => 1,
+                36 => 1,
+                39 => 1,
+                42 => 2,
+                44 => 1,
+                46 => 5,
+                47 => 1,
+                49 => 2,
+                54 => 2,
+                55 => 1,
+               );
+             break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 

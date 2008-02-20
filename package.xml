@@ -47,8 +47,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
   - Squiz ComparisonOperatorUsageSniff now supports JS files
   - Squiz ControlSignatureSniff now supports JS files
-  - Squiz ForLoopDeclaration now supports JS files
-  - Generic LowerCaseConstant now supports JS files
+  - Squiz ForLoopDeclarationSniff now supports JS files
+  - Squiz OperatorBracketSniff now supports JS files
+  - Generic LowerCaseConstantSniff now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
   - Added MySource FirebugConsoleSniff to ban the use of "console" for variable and function names
@@ -1003,6 +1004,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="OperatorBracketUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OperatorBracketUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="OperatorBracketUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
