@@ -145,6 +145,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               'prototype' => 'T_PROTOTYPE',
                               'try'       => 'T_TRY',
                               'catch'     => 'T_CATCH',
+                              'return'    => 'T_RETURN',
                               'if'        => 'T_IF',
                               'else'      => 'T_ELSE',
                               'do'        => 'T_DO',
@@ -166,6 +167,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '+'         => 'T_PLUS',
                               '-'         => 'T_MINUS',
                               '*'         => 'T_MULTIPLY',
+                              '%'         => 'T_MODULUS',
                               '/'         => 'T_DIVIDE',
                               ','         => 'T_COMMA',
                               ';'         => 'T_SEMICOLON',
@@ -182,6 +184,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '==='       => 'T_IS_IDENTICAL',
                               '-='        => 'T_MINUS_EQUAL',
                               '+='        => 'T_PLUS_EQUAL',
+                              '++'        => 'T_INC',
                               '--'        => 'T_DEC',
                               '//'        => 'T_COMMENT',
                               '/*'        => 'T_COMMENT',
@@ -584,6 +587,31 @@ class PHP_CodeSniffer_Tokenizers_JS
             } else {
                 $finalTokens[$newStackPtr] = $token;
                 $newStackPtr++;
+            }//end if
+
+            // Convert numbers, including decimals.
+            if ($token['code'] === T_STRING || $token['code'] === T_OBJECT_OPERATOR) {
+                $newContent  = '';
+                $oldStackPtr = $stackPtr;
+                while (preg_match('|^[0-9\.]+$|', $tokens[$stackPtr]['content']) !== 0) {
+                    $newContent .= $tokens[$stackPtr]['content'];
+                    $stackPtr++;
+                }
+
+                if ($newContent !== '' && $newContent !== '.') {
+                    $finalTokens[($newStackPtr - 1)]['content'] = $newContent;
+                    if (ctype_digit($newContent) === true) {
+                        $finalTokens[($newStackPtr - 1)]['code'] = constant('T_LNUMBER');
+                        $finalTokens[($newStackPtr - 1)]['type'] = 'T_LNUMBER';
+                    } else {
+                        $finalTokens[($newStackPtr - 1)]['code'] = constant('T_DNUMBER');
+                        $finalTokens[($newStackPtr - 1)]['type'] = 'T_DNUMBER';
+                    }
+
+                    $stackPtr--;
+                } else {
+                    $stackPtr = $oldStackPtr;
+                }
             }//end if
         }//end for
 
