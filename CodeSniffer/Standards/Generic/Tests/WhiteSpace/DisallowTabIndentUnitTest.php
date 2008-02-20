@@ -39,15 +39,30 @@ class Generic_Tests_WhiteSpace_DisallowTabIndentUnitTest extends AbstractSniffUn
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='DisallowTabIndentUnitTest.inc')
     {
-        return array(
-                5  => 1,
-                9  => 1,
-                15 => 1,
-               );
+        switch ($testFile) {
+        case 'DisallowTabIndentUnitTest.inc':
+            return array(
+                    5  => 1,
+                    9  => 1,
+                    15 => 1,
+                   );
+            break;
+        case 'DisallowTabIndentUnitTest.js':
+            return array(
+                    5  => 1,
+                    10 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 

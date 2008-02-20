@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ForLoopDeclarationSniff now supports JS files
   - Squiz OperatorBracketSniff now supports JS files
   - Generic LowerCaseConstantSniff now supports JS files
+  - Generic DisallowTabIndentSniff now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
   - Added MySource FirebugConsoleSniff to ban the use of "console" for JS variable and function names
@@ -349,6 +350,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="PHP">
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
