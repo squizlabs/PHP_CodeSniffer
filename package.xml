@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlSignatureSniff now supports JS files
   - Squiz ForLoopDeclarationSniff now supports JS files
   - Squiz OperatorBracketSniff now supports JS files
+  - Squiz InlineControlStructureSniff now supports JS files
   - Generic LowerCaseConstantSniff now supports JS files
   - Generic DisallowTabIndentSniff now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
@@ -994,6 +995,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

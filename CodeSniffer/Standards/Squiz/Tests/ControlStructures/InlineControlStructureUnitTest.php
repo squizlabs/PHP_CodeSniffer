@@ -39,18 +39,36 @@ class Squiz_Tests_ControlStructures_InlineControlStructureUnitTest extends Abstr
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='InlineControlStructureUnitTest.inc')
     {
-        return array(
-                3  => 1,
-                7  => 1,
-                11 => 1,
-                13 => 1,
-                15 => 1,
-                17 => 1,
-               );
+        switch ($testFile) {
+        case 'InlineControlStructureUnitTest.inc':
+            return array(
+                    3  => 1,
+                    7  => 1,
+                    11 => 1,
+                    13 => 1,
+                    15 => 1,
+                    17 => 1,
+                   );
+            break;
+        case 'InlineControlStructureUnitTest.js':
+            return array(
+                    3  => 1,
+                    7  => 1,
+                    11 => 1,
+                    13 => 1,
+                    15 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
