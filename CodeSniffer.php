@@ -69,7 +69,7 @@ class PHP_CodeSniffer
     protected $file = array();
 
     /**
-     * The directory where to search for tests.
+     * The directory to search for sniffs in.
      *
      * @var string
      */
@@ -253,14 +253,6 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception('$standard must be a string');
         }
 
-        if (is_dir($standard) === true) {
-            // This is a custom standard.
-            $this->standardDir = $standard;
-            $standard          = basename($standard);
-        } else {
-            $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
-        }
-
         // Reset the members.
         $this->listeners = array();
         $this->files     = array();
@@ -307,8 +299,16 @@ class PHP_CodeSniffer
      * @throws PHP_CodeSniffer_Exception If any of the tests failed in the
      *                                   registration process.
      */
-    protected function getTokenListeners($standard, array $sniffs=array())
+    public function getTokenListeners($standard, array $sniffs=array())
     {
+        if (is_dir($standard) === true) {
+            // This is a custom standard.
+            $this->standardDir = $standard;
+            $standard          = basename($standard);
+        } else {
+            $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+        }
+
         $files = self::getSniffFiles($this->standardDir, $standard);
 
         if (empty($sniffs) === false) {

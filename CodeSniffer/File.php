@@ -478,7 +478,7 @@ class PHP_CodeSniffer_File
                 throw new PHP_CodeSniffer_Exception($error);
             }
 
-            $this->eolChar = $matches[0];
+            $eolChar = $matches[0];
         }//end if
 
         return $eolChar;
