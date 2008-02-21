@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix
   - Fixed bug #13156 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
+  - Fixed bug #13158 : Strange behaviour in AbstractPatternSniff
  </notes>
  <contents>
   <dir name="/">

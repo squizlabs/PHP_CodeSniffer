@@ -536,7 +536,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 if ($stackPtr !== $lastAddedStackPtr) {
                     $found            .= $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
                     $diff              = ($next - $stackPtr);
-                    $lastAddedStackPtr = $next;
+                    $lastAddedStackPtr = ($next - 1);
                 }
 
                 $stackPtr = $next;
