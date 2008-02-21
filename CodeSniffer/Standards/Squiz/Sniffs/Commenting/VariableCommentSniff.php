@@ -112,9 +112,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
         // Check for a comment description.
         $short = $comment->getShortComment();
+        $long  = '';
         if (trim($short) === '') {
             $error = 'Missing short description in variable doc comment';
             $phpcsFile->addError($error, $commentStart);
+            $newlineCount = 1;
         } else {
             // No extra newline before short description.
             $newlineCount = 0;
