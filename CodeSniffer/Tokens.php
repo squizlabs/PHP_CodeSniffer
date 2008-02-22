@@ -49,6 +49,7 @@ define('T_COMMA', 1030);
 define('T_HEREDOC', 1031);
 define('T_PROTOTYPE', 1032);
 define('T_THIS', 1033);
+define('T_REGULAR_EXPRESSION', 1034);
 
 /**
  * The Tokens class contains weightings for tokens based on their

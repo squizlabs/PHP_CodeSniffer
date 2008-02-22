@@ -524,6 +524,71 @@ class PHP_CodeSniffer_Tokenizers_JS
             $token = $tokens[$stackPtr];
 
             /*
+                Look for regular expressions and join the tokens together.
+            */
+
+            if ($token['code'] === T_DIVIDE) {
+                $beforeTokens = array(
+                                 T_EQUAL,
+                                 T_OPEN_PARENTHESIS,
+                                );
+
+                $afterTokens = array(
+                                 T_COMMA,
+                                 T_CLOSE_PARENTHESIS,
+                                 T_SEMICOLON,
+                                 T_WHITESPACE,
+                                );
+
+                for ($prev = ($stackPtr - 1); $prev >= 0; $prev--) {
+                    if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                if (in_array($tokens[$prev]['code'], $beforeTokens) === true) {
+                    // This might be a regular expression.
+                    for ($next = ($stackPtr + 1); $next < $numTokens; $next++) {
+                        if (in_array($tokens[$next]['code'], array(T_STRING, T_WHITESPACE)) === false) {
+                            break;
+                        }
+                    }
+
+                    if ($tokens[$next]['code'] === T_DIVIDE) {
+                        if ($tokens[($next + 1)]['code'] === T_STRING) {
+                            // The token directly after the end of the regex can
+                            // be modifiers like global and case insensitive
+                            // (.e.g, /pattern/gi).
+                            $next++;
+                        }
+
+                        $regexEnd = $next;
+
+                        for ($next = ($next + 1); $next < $numTokens; $next++) {
+                            if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                                break;
+                            } else if (strpos($tokens[$next]['content'], $eolChar) !== false) {
+                                // If this is the last token on the line.
+                                break;
+                            }
+                        }
+
+                        if (in_array($tokens[$next]['code'], $afterTokens) === true) {
+                            // This is a regular expression, so join all the
+                            // tokens together.
+                            for ($i = ($stackPtr + 1); $i <= $regexEnd; $i++) {
+                                $token['content'] .= $tokens[$i]['content'];
+                            }
+
+                            $token['code'] = T_REGULAR_EXPRESSION;
+                            $token['type'] ='T_REGULAR_EXPRESSION';
+                            $stackPtr      = $regexEnd;
+                        }
+                    }
+                }//end if
+            }//end if
+
+            /*
                 Look for comments and join the tokens together.
             */
 
@@ -546,7 +611,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         }
 
                         break;
-                    }
+                    }//end if
 
                     $stackPtr++;
                     $newContent  .= $tokenContent;
