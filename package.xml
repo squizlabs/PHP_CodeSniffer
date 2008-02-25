@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added MySource FirebugConsoleSniff to ban the use of "console" for JS variable and function names
   - Added MySource JoinStringsSniff to enforce the use of join() to concatenate JS strings
   - Added MySource AssignThisSniff to ensure this is only assigned to a var called self
+  - Added MySource DisallowNewWidgetSniff to ban manual creation of widget objects
   - Removed warning shown in Zend CodeAnalyzerSniff when the ZCA path is not set
   - Fixed error in Squiz ValidVariableNameSniff when checking vars in the form $obj->$var
   - Fixed error in Squiz DisallowMultipleAssignmentsSniff when checking vars in the form $obj->$var
@@ -411,6 +412,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="AssignThisSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowNewWidgetSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="PHP">
         <file baseinstalldir="PHP" name="EvalObjectFactorySniff.php" role="php">
@@ -446,6 +450,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Objects">
         <file baseinstalldir="PHP" name="AssignThisUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="AssignThisUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowNewWidgetUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowNewWidgetUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
