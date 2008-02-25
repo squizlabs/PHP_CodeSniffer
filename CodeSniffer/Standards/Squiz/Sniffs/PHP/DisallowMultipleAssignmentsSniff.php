@@ -111,6 +111,12 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
             $varToken = ($varToken - 2);
         }
 
+        // Deal with this type of variable: $obj->$var by setting the var
+        // token to be "$obj" rather than "$var".
+        if ($tokens[($varToken - 1)]['code'] === T_OBJECT_OPERATOR) {
+            $varToken = ($varToken - 2);
+        }
+
         // Deal with this type of variable: $$var by setting the var
         // token to be "$" rather than "$var".
         if ($tokens[($varToken - 1)]['content'] === '$') {
