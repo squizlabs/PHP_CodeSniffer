@@ -56,3 +56,5 @@ function myFunction()
     value = (myFunction(mvar) + myFunction2(mvar));
     return -1;
 }
+
+params['mode'] = id.replace(/WidgetType/, '');
