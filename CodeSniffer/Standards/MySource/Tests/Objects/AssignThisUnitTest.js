@@ -8,5 +8,11 @@ var y = this;
 
 var test = '';
 if (true) {
-    test = this;
+    test = this
+}
+
+var itemid = this.items[i].getAttribute('itemid');
+
+for (var x = this; y < 10; y++) {
+    var x = this + 1;
 }

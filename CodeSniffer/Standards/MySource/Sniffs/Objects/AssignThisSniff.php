@@ -60,11 +60,22 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore this.something and other uses of "this" that are not
+        // direct assignments.
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] !== T_SEMICOLON) {
+            if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
+                return;
+            }
+        }
+
+        // Something must be assigned to "this".
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] !== T_EQUAL) {
             return;
         }
 
+        // A variable needs to be assigned to "this".
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($prev - 1), null, true);
         if ($tokens[$prev]['code'] !== T_STRING) {
             return;

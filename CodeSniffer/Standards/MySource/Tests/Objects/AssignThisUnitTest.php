@@ -50,6 +50,7 @@ class MySource_Tests_Objects_AssignThisUnitTest extends AbstractSniffUnitTest
         return array(
                 7  => 1,
                 11 => 1,
+                16 => 1,
                );
 
     }//end getErrorList()
