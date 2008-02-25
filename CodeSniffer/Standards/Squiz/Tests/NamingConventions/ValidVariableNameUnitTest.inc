@@ -78,4 +78,7 @@ $XMLParser = 'hello';
 $xmlParser = 'hello';
 
 echo "{$_SERVER['HOSTNAME']} $var_name";
+
+// Need to be the last thing in this test file.
+$obj->$classVar = $prefix.'-'.$type;
 ?>

@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added MySource FirebugConsoleSniff to ban the use of "console" for JS variable and function names
   - Added MySource JoinStringsSniff to enforce the use of join() to concatenate JS strings
   - Removed warning shown in Zend CodeAnalyzerSniff when the ZCA path is not set
+  - Fixed error in Squiz ValidVariableNameSniff when checking vars in the form $obj->$var
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix
