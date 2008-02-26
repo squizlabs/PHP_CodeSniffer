@@ -63,6 +63,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error in Squiz ValidVariableNameSniff when checking vars in the form $obj->$var
   - Fixed error in Squiz DisallowMultipleAssignmentsSniff when checking vars in the form $obj->$var
   - Fixed error in Squiz InlineCommentSniff where comments for class constants were seen as inline
+  - Fixed error in Squiz BlockCommentSniff where comments for class constants were not ignored
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix

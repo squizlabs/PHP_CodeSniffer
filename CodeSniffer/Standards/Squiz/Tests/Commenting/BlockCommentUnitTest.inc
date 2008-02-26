@@ -117,4 +117,16 @@ public static function test()
 
 }//end test()
 
+class MyClass
+{
+
+    /**
+     * Comment should be ignored.
+     *
+     * @var   integer
+     * @since 4.0.0
+     */
+    const LEFT = 1;
+
+}
 ?>
