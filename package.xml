@@ -70,6 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #13156 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
   - Fixed bug #13158 : Strange behaviour in AbstractPatternSniff
   - Fixed bug #13169 : Undefined variables
+  - Fixed bug #13178 : Catch exception in File.php
  </notes>
  <contents>
   <dir name="/">

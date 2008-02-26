@@ -21,4 +21,16 @@ class MyClass
     private $_varname  = 'hello';
     private $varName   = 'hello';
 }
+
+class MyClass
+{
+  function func1()
+  {
+    function func2()
+    {
+     return $a;
+    }
+    return $data;
+  }
+}
 ?>
