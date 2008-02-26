@@ -74,6 +74,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                           T_PROTECTED,
                           T_STATIC,
                           T_ABSTRACT,
+                          T_CONST,
                          );
             if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
                 return;

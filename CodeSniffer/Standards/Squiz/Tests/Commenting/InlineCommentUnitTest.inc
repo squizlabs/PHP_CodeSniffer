@@ -66,4 +66,15 @@ $code = 'hello';
 
 /** Neither is this! **/
 $code = 'hello';
+
+class MyClass
+{
+    /**
+     * Represents a left orientation for the widget.
+     *
+     * @var   integer
+     * @since 4.0.0
+     */
+    const LEFT = 1;
+}
 ?>
