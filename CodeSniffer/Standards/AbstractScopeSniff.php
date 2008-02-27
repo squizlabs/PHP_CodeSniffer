@@ -70,8 +70,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     protected $currScope = null;
 
     /**
-     * true if this test should alert the extending class of tokens outside of
-     * the scope.
+     * True if this test should fire on tokens outside of the scope.
      *
      * @var boolean
      */
