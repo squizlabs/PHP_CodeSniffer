@@ -33,4 +33,10 @@ class MyClass
     return $data;
   }
 }
+
+class MyClass
+{
+    public function prepare() {}
+    public function paint() {}
+}
 ?>

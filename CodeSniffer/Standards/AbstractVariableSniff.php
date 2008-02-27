@@ -103,6 +103,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
         $tokens = $phpcsFile->getTokens();
 
+        if ($stackPtr > $this->_endFunction) {
+            $this->_functionOpen = false;
+        }
+
         if ($tokens[$stackPtr]['code'] === T_FUNCTION && $this->_functionOpen === false) {
 
             $this->_functionOpen = true;
@@ -117,8 +121,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
             }
 
-        } else if ($stackPtr > $this->_endFunction) {
-            $this->_functionOpen = false;
         }
 
         if ($this->_functionOpen === true) {
