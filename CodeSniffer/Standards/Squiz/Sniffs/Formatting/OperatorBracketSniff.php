@@ -76,8 +76,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         // the minus sign being used to assign a negative number to a variable.
         if ($tokens[$stackPtr]['code'] === T_MINUS) {
             // Check to see if we are trying to return -n.
-            $prev = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMENT), ($stackPtr - 1), null, true);
-
+            $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prev]['code'] === T_RETURN) {
                 return;
             }
@@ -88,7 +87,8 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 if ($previous !== false) {
                     $isAssignment = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens);
                     $isEquality   = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$equalityTokens);
-                    if ($isAssignment === true || $isEquality === true) {
+                    $isComparison = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens);
+                    if ($isAssignment === true || $isEquality === true || $isComparison === true) {
                         // This is a negative assignment or comparion.
                         // We need to check that the minus and the number are
                         // adjacent.

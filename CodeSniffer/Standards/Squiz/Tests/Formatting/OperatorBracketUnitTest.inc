@@ -104,4 +104,7 @@ class MyClass
 
 
 }//end class
+
+if ($index < -1) $index = 0;
+if ($index < - 1) $index = 0;
 ?>

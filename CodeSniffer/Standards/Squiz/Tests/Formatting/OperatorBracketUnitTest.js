@@ -58,3 +58,6 @@ function myFunction()
 }
 
 params['mode'] = id.replace(/WidgetType/, '');
+
+if (index < -1) index = 0;
+if (index < - 1) index = 0;
