@@ -65,6 +65,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error in Squiz InlineCommentSniff where comments for class constants were seen as inline
   - Fixed error in Squiz BlockCommentSniff where comments for class constants were not ignored
   - Fixed error in Squiz OperatorBracketSniff where negative numbers were ignored during comparisons
+  - Fixed error in Squiz FunctionSpacingSniff where functions after member vars reported incorrect spacing
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
     -- Thanks to Manuel Pichler for the path.
   - Fixed bug #13119 : php minimum requirement need to be fix

@@ -164,4 +164,24 @@ interface MyInterface
     function func3();
 
 }//end interface
+
+class MyClass
+{
+
+    protected $tag = '';
+
+    protected $tag = '';
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {
+
+    }//end func1()
+
+
+}//end class
 ?>

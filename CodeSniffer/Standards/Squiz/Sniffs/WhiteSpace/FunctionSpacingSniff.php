@@ -39,9 +39,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
      */
     public function register()
     {
-        return array(
-                T_FUNCTION,
-               );
+        return array(T_FUNCTION);
 
     }//end register()
 
@@ -50,8 +48,8 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
      * Processes this sniff, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
@@ -142,6 +140,10 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 }
 
                 $currentLine = $tokens[$i]['line'];
+                if ($currentLine === $prevLine) {
+                    break;
+                }
+
                 if ($tokens[($i - 1)]['line'] < $currentLine && $tokens[($i + 1)]['line'] > $currentLine) {
                     // This token is on a line by itself. If it is whitespace, the line is empty.
                     if ($tokens[$i]['code'] === T_WHITESPACE) {
