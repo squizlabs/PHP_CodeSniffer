@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DocCommentAlignmentSniff now ignores inline doc block comments
   - Squiz ControlStructureSpacingSniff now ensures no blank lines at the start of control structures
   - Squiz ControlStructureSpacingSniff now ensures no blank lines between control structure closing braces
+  - Squiz IncrementDecrementUsageSniff now ensures inc/dec ops are bracketed in string concats
+  - Squiz IncrementDecrementUsageSniff now ensures inc/dec ops are not used in arithmetic operations
   - Squiz ComparisonOperatorUsageSniff now supports JS files
   - Squiz ControlSignatureSniff now supports JS files
   - Squiz ForLoopDeclarationSniff now supports JS files

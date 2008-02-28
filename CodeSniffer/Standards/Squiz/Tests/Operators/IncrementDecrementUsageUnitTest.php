@@ -48,6 +48,11 @@ class Squiz_Tests_Operators_IncrementDecrementUsageUnitTest extends AbstractSnif
                 6  => 1,
                 12 => 1,
                 16 => 1,
+                25 => 1,
+                26 => 1,
+                27 => 1,
+                29 => 1,
+                31 => 1,
                );
 
     }//end getErrorList()
