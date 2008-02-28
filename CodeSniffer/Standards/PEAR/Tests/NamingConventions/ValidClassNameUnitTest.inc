@@ -37,4 +37,8 @@ interface ValidName {}
 
 interface _Invalid_Name {}
 
+class ___ {}
+
+interface ___ {}
+
 ?>

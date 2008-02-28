@@ -73,6 +73,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #13158 : Strange behaviour in AbstractPatternSniff
   - Fixed bug #13169 : Undefined variables
   - Fixed bug #13178 : Catch exception in File.php
+  - Fixed bug #13254 : Notices output in checkstyle report causes XML issues
  </notes>
  <contents>
   <dir name="/">
