@@ -465,4 +465,22 @@ class MyClass() {
      */
     abstract final protected function myFunction();
 }
+
+/**
+ * Comment.
+ *
+ * @param mixed $test An argument.
+ *
+ * @since  4.0.0
+ * @return mixed
+ */
+function test($test)
+{
+   if ($test === TRUE) {
+       return;
+   }
+
+   return $test;
+
+}//end test()
 ?>

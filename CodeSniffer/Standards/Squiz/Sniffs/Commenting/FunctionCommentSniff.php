@@ -15,7 +15,8 @@
  */
 
 if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_FunctionCommentParser not found');
+    $error = 'Class PHP_CodeSniffer_CommentParser_FunctionCommentParser not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -466,9 +467,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 }
                             }
                         }
-                    } else {
+                    } else if ($content !== 'mixed') {
                         // If return type is not void, there needs to be a
-                        // returns tatement somewhere in the function that
+                        // returns statement somewhere in the function that
                         // returns something.
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
                             $endToken = $tokens[$this->_functionToken]['scope_closer'];
