@@ -22,6 +22,11 @@ if (version_compare(PHP_VERSION, '5.1.2') === -1) {
     exit(2);
 }
 
+if (extension_loaded('tokenizer') === false) {
+    echo 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
+    exit(2);
+}
+
 error_reporting(E_ALL | E_STRICT);
 
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {

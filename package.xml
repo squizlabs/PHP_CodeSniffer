@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for multiple tokenizers so PHP_CodeSniffer can check more than just PHP files
     -- PHP_CodeSniffer now has a JS tokenizer for checking JavaScript files
     -- Sniffs need to be updated to work with additional tokenizers, or new sniffs written for them
+  - phpcs now exits with status 2 if the tokenier extension has been disabled (feature request #13269)
   - Fixed error in phpcs error message when a supplied file does not exist
   - Added sniffs that implement part of the PMD rule catalog to the Generic standard
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
