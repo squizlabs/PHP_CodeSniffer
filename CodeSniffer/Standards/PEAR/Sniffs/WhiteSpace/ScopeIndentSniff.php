@@ -15,7 +15,8 @@
  */
 
 if (class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_WhiteSpace_ScopeIndentSniff not found');
+    $error = 'Class Generic_Sniffs_WhiteSpace_ScopeIndentSniff not found';
+    throw new PHP_CodeSniffer_Exception($error);
 }
 
 /**
@@ -41,9 +42,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace_
      *
      * @var array(int)
      */
-    protected $nonIndentingScopes = array(
-                                     T_SWITCH,
-                                    );
+    protected $nonIndentingScopes = array(T_SWITCH);
 
 }//end class
 
