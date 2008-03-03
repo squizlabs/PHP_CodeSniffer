@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added sniffs that implement part of the PMD rule catalog to the Generic standard
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
   - Squiz FunctionCommentThrowTagSniff no longer throws errors for function that only throw variables
+  - Generic ScopeIndentSniff now has private member to enforce exact indent matching
   - Squiz BlockCommentSniff now checks inline doc block comments
   - Squiz InlineCommentSniff now checks inline doc block comments
   - Squiz BlockCommentSniff now checks for no blank line before first comment in a function

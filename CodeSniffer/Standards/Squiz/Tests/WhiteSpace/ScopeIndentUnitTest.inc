@@ -54,4 +54,10 @@ function myFunction()
     ob_end_clean();
 
 }//end myFunction()
+
+foreach ($request->validators as $validator) {
+    if ($result === FALSE) {
+          $valid = FALSE;
+    }
+}
 ?>

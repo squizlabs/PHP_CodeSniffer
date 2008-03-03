@@ -41,6 +41,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     protected $indent = 4;
 
     /**
+     * Does the indent need to be exactly right.
+     *
+     * If TRUE, indent needs to be exactly $ident spaces. If FALSE,
+     * indent needs to be at least $ident spaces (but can be more).
+     *
+     * @var bool
+     */
+    protected $exact = false;
+
+    /**
      * Any scope openers that should not cause an indent.
      *
      * @var array(int)
@@ -64,8 +74,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
@@ -231,11 +241,17 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // The token at the start of the line, needs to have its' column
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
-                if ($column < $indent) {
-                    $error  = 'Line indented incorrectly; expected at least ';
-                    $error .= ($indent - 1).' spaces, found ';
-                    $error .= ($column - 1);
-                    $phpcsFile->addError($error, $firstToken);
+                if ($column !== $indent) {
+                    if ($this->exact === true || $column < $indent) {
+                        $error  = 'Line indented incorrectly; expected ';
+                        if ($this->exact === false) {
+                            $error .= 'at least ';
+                        }
+
+                        $error .= ($indent - 1).' spaces, found ';
+                        $error .= ($column - 1);
+                        $phpcsFile->addError($error, $firstToken);
+                    }
                 }
             }//end if
         }//end for

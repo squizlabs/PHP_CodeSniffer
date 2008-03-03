@@ -54,6 +54,7 @@ class Squiz_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 41 => 1,
                 49 => 1,
                 50 => 1,
+                60 => 1,
                );
 
     }//end getErrorList()
