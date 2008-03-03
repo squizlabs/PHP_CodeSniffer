@@ -36,13 +36,6 @@ if (class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true) === false) 
 class Squiz_Sniffs_WhiteSpace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace_ScopeIndentSniff
 {
 
-    /**
-     * Does the indent need to be exactly right.
-     *
-     * @var bool
-     */
-    protected $exact = true;
-
 
     /**
      * Calculates the expected indent of a token.

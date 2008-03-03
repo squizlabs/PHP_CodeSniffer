@@ -208,7 +208,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
                 }
 
-                // This is a special condition for T_DOC_COMMENT and c style
+                // This is a special condition for T_DOC_COMMENT and C-style
                 // comments, which contain whitespace between each line.
                 if (in_array($tokens[$firstToken]['code'], array(T_COMMENT, T_DOC_COMMENT)) === true) {
 
