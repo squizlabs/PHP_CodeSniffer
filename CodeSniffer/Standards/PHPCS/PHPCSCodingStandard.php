@@ -66,7 +66,6 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
     {
         return array(
                 'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
-                'Generic/Sniffs/PHP/UpperCaseConstantSniff.php',
                 'Squiz/Sniffs/Classes/ClassFileNameSniff.php',
                 'Squiz/Sniffs/Classes/ValidClassNameSniff.php',
                 'Squiz/Sniffs/Commenting/ClassCommentSniff.php',
@@ -76,6 +75,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
                 'Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff.php',
                 'Squiz/Sniffs/Files/FileExtensionSniff.php',
                 'Squiz/Sniffs/Files/LineLengthSniff.php',
+                'Squiz/Sniffs/NamingConventions/ConstantCaseSniff.php',
                 'Squiz/Sniffs/WhiteSpace/ScopeIndentSniff.php',
                );
 
