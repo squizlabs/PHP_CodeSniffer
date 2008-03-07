@@ -253,7 +253,7 @@ class PHP_CodeSniffer_File
             $this->addTokenListener($listener, $tokens);
         }
 
-        $this->_file      = $file;
+        $this->_file      = trim($file);
         $this->tokenizers = $tokenizers;
 
     }//end __construct()
@@ -412,11 +412,16 @@ class PHP_CodeSniffer_File
         // Determine the tokenizer from the file extension.
         $fileParts      = explode('.', $this->_file);
         $extension      = array_pop($fileParts);
-        $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
+        if (isset($this->tokenizers[$extension]) === true) {
+            $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
+            $this->tokenizerType = $this->tokenizers[$extension];
+        } else {
+            // Revert to default.
+            $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizerType;
+        }
 
         $tokenizer           = new $tokenizerClass();
         $this->tokenizer     = $tokenizer;
-        $this->tokenizerType = $this->tokenizers[$extension];
 
         if ($contents === null) {
             $contents = file_get_contents($this->_file);
