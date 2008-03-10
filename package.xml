@@ -36,6 +36,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- PHP_CodeSniffer now has a JS tokenizer for checking JavaScript files
     -- Sniffs need to be updated to work with additional tokenizers, or new sniffs written for them
   - phpcs now exits with status 2 if the tokenier extension has been disabled (feature request #13269)
+  - Added scripts/phpcs-svn-pre-commit that can be used as an SVN pre-commit hook
+    - Also reworked the way the phpcs script works to make it easier to wrap it with other functionality
+    - Thanks to Jack Bates for the contribution
   - Fixed error in phpcs error message when a supplied file does not exist
   - Added sniffs that implement part of the PMD rule catalog to the Generic standard
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
@@ -72,7 +75,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed error in Squiz OperatorBracketSniff where negative numbers were ignored during comparisons
   - Fixed error in Squiz FunctionSpacingSniff where functions after member vars reported incorrect spacing
   - Fixed bug #13062 : Interface comments aren't handled in PEAR standard
-    -- Thanks to Manuel Pichler for the path.
+    -- Thanks to Manuel Pichler for the path
   - Fixed bug #13119 : php minimum requirement need to be fix
   - Fixed bug #13156 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
   - Fixed bug #13158 : Strange behaviour in AbstractPatternSniff
@@ -91,7 +94,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     <tasks:replace from="@package_state@" to="state" type="package-info" />
+    </file>
+    <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="" name="phpcs.bat" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
@@ -1343,6 +1349,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
+    <file baseinstalldir="PHP" name="CLI.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+     <tasks:replace from="@package_state@" to="state" type="package-info" />
+    </file>
     <file baseinstalldir="PHP" name="Exception.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
