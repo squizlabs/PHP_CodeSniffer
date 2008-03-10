@@ -322,7 +322,6 @@ class PHP_CodeSniffer
         $listeners = array();
 
         foreach ($files as $file) {
-
             // Work out where the position of /StandardName/Sniffs/... is
             // so we can determine what the class will be called.
             $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
@@ -723,7 +722,6 @@ class PHP_CodeSniffer
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
-
             if (empty($file['messages']) === true) {
                 continue;
             }
@@ -770,7 +768,6 @@ class PHP_CodeSniffer
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
-
             echo ' <file name="'.$filename.'">'.PHP_EOL;
 
             foreach ($file['messages'] as $line => $lineErrors) {
@@ -814,7 +811,6 @@ class PHP_CodeSniffer
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
-
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
@@ -826,7 +822,6 @@ class PHP_CodeSniffer
                     }
                 }
             }//end foreach
-
         }//end foreach
 
         return $errorsShown;
@@ -849,7 +844,6 @@ class PHP_CodeSniffer
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
-
             if (empty($file['messages']) === true) {
                 continue;
             }
@@ -1415,7 +1409,6 @@ class PHP_CodeSniffer
                 // Must be a custom type name.
                 return $varType;
             }//end if
-
         }//end if
 
     }//end suggestType()
