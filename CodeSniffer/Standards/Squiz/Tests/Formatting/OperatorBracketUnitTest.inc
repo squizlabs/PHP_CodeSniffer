@@ -107,4 +107,10 @@ class MyClass
 
 if ($index < -1) $index = 0;
 if ($index < - 1) $index = 0;
+
+$three = ceil($one / $two);
+$three = ceil(($one / $two) / $four);
+$three = ceil($one / ($two / $four));
+
+$four = -0.25;
 ?>

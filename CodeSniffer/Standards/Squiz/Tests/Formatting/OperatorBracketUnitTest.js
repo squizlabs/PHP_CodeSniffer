@@ -61,3 +61,9 @@ params['mode'] = id.replace(/WidgetType/, '');
 
 if (index < -1) index = 0;
 if (index < - 1) index = 0;
+
+three = myFunction(one / two);
+three = myFunction((one / two) / four);
+three = myFunction(one / (two / four));
+
+four = -0.25;

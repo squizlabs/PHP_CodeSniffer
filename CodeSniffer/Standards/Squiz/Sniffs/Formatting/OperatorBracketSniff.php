@@ -82,7 +82,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             }
 
             $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            if ($tokens[$number]['code'] === T_LNUMBER) {
+            if ($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER) {
                 $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($previous !== false) {
                     $isAssignment = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens);
@@ -105,8 +105,8 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
         $lastBracket = false;
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $parenthesis = array_reverse(array_keys($tokens[$stackPtr]['nested_parenthesis']));
-            foreach ($parenthesis as $bracket) {
+            $parenthesis = array_reverse($tokens[$stackPtr]['nested_parenthesis'], true);
+            foreach ($parenthesis as $bracket => $endBracket) {
                 $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($bracket - 1), null, true);
                 $prevCode  = $tokens[$prevToken]['code'];
 
@@ -117,13 +117,51 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 }
 
                 if ($prevCode === T_STRING) {
-                    // This operation is inside a function call, but has
-                    // no bracket of it's own.
-                    break;
-                }
+                    // We allow very simple operations to not be bracketed:
+                    // ceil($one / $two);
+                    $allowed = array(
+                                T_VARIABLE,
+                                T_LNUMBER,
+                                T_DNUMBER,
+                                T_STRING,
+                                T_WHITESPACE,
+                               );
+
+                    for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
+                        if (in_array($tokens[$prev]['code'], $allowed) === true) {
+                            continue;
+                        }
+
+                        if ($tokens[$prev]['code'] === T_CLOSE_PARENTHESIS) {
+                            $prev = $tokens[$prev]['parenthesis_opener'];
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if ($prev !== $bracket) {
+                        break;
+                    }
+
+                    for ($next = ($stackPtr + 1); $next < $endBracket; $next++) {
+                        if (in_array($tokens[$next]['code'], $allowed) === true) {
+                            continue;
+                        }
+
+                        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+                            $next = $tokens[$next]['parenthesis_closer'];
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if ($next !== $endBracket) {
+                        break;
+                    }
+                }//end if
 
                 if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
-                    // This operation is inside an a control strucutre like FOREACH
+                    // This operation is inside an a control structure like FOREACH
                     // or IF, but has no bracket of it's own.
                     break;
                 }
@@ -131,7 +169,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 if ($prevCode === T_OPEN_PARENTHESIS) {
                     // These are two open parenthesis in a row. If the current
                     // one doesn't enclose the operator, go to the previous one.
-                    if ($tokens[$bracket]['parenthesis_closer'] < $stackPtr) {
+                    if ($endBracket < $stackPtr) {
                         continue;
                     }
                 }
