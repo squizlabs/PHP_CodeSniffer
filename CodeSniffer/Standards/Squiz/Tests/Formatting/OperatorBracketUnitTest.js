@@ -62,6 +62,8 @@ params['mode'] = id.replace(/WidgetType/, '');
 if (index < -1) index = 0;
 if (index < - 1) index = 0;
 
+var classN = prvId.replace(/\./g, '-');
+
 three = myFunction(one / two);
 three = myFunction((one / two) / four);
 three = myFunction(one / (two / four));

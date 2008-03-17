@@ -546,10 +546,18 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
                 }
 
-                if (in_array($tokens[$prev]['code'], $beforeTokens) === true) {
+                // Token needs to be one of the standard allowed or the replace()
+                // method that can be called on string: string.replace(/abc/...).
+                if (in_array($tokens[$prev]['code'], $beforeTokens) === true || $tokens[$prev]['content'] === 'replace') {
                     // This might be a regular expression.
+                    $regexTokens = array(
+                                    T_STRING,
+                                    T_WHITESPACE,
+                                    T_OBJECT_OPERATOR,
+                                   );
+
                     for ($next = ($stackPtr + 1); $next < $numTokens; $next++) {
-                        if (in_array($tokens[$next]['code'], array(T_STRING, T_WHITESPACE)) === false) {
+                        if (in_array($tokens[$next]['code'], $regexTokens) === false) {
                             break;
                         }
                     }
