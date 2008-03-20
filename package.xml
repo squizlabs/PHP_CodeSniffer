@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz IncrementDecrementUsageSniff now ensures inc/dec ops are not used in arithmetic operations
   - Squiz FunctionCommentSniff no longer throws errors if return value is mixed but function returns void somewhere
   - Squiz OperatorBracketSniff no allows function call brackets to count as operator brackets
+  - Squiz DoubleQuoteUsageSniff now supports \x \f and \v (feature request #13365)
   - Squiz ComparisonOperatorUsageSniff now supports JS files
   - Squiz ControlSignatureSniff now supports JS files
   - Squiz ForLoopDeclarationSniff now supports JS files
