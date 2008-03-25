@@ -39,4 +39,12 @@ class MyClass
     public function prepare() {}
     public function paint() {}
 }
+
+if (true) {
+    class MyClass
+    {
+        $varName  = 'hello';
+        $var_name = 'hello';
+    }
+}
 ?>

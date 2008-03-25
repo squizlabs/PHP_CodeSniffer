@@ -1637,7 +1637,9 @@ class PHP_CodeSniffer_File
             throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_VARIABLE');
         }
 
-        if (count($this->_tokens[$stackPtr]['conditions']) > 1) {
+        end($this->_tokens[$stackPtr]['conditions']);
+        $ptr = key($this->_tokens[$stackPtr]['conditions']);
+        if (!isset($this->_tokens[$ptr]) || $this->_tokens[$ptr]['code'] !== T_CLASS) {
             throw new PHP_CodeSniffer_Exception('$stackPtr is not a class member var');
         }
 
