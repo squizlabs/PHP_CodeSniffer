@@ -264,7 +264,7 @@ class PHP_CodeSniffer
             }
         }
 
-        $this->listeners = $this->getTokenListeners($standard, $sniffs);
+        $this->setTokenListeners($standard, $sniffs);
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $numSniffs = count($this->listeners);
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
@@ -357,6 +357,22 @@ class PHP_CodeSniffer
         return $listeners;
 
     }//end getTokenListeners()
+
+
+    /**
+     * Sets installed sniffs in the coding standard being used.
+     *
+     * @param string $standard The name of the coding standard we are checking.
+     * @param array  $sniffs   The sniff names to restrict the allowed
+     *                         listeners to.
+     *
+     * @return null
+     */
+    public function setTokenListeners($standard, array $sniffs=array())
+    {
+        $this->listeners = $this->getTokenListeners($standard, $sniffs);
+
+    }//end setTokenListeners
 
 
     /**
@@ -504,7 +520,7 @@ class PHP_CodeSniffer
      * @return void
      * @throws Exception If there was an error opening the directory.
      */
-    protected function processFiles($dir, $local=false)
+    public function processFiles($dir, $local=false)
     {
         if ($local === true) {
             $di = new DirectoryIterator($dir);
@@ -545,14 +561,16 @@ class PHP_CodeSniffer
      * Processes the file and runs the PHP_CodeSniffer sniffs to verify that it
      * conforms with the standard.
      *
-     * @param string $file The file to process.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return void
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
      */
-    protected function processFile($file)
+    public function processFile($file, $contents=null)
     {
-        if (file_exists($file) === false) {
+        if (is_null($contents) === true && file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
@@ -579,7 +597,7 @@ class PHP_CodeSniffer
 
         $phpcsFile = new PHP_CodeSniffer_File($file, $this->listeners, $this->allowedFileExtensions);
         $this->addFile($phpcsFile);
-        $phpcsFile->start();
+        $phpcsFile->start($contents);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = (time() - $startTime);
