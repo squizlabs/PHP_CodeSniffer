@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Also reworked the way the phpcs script works to make it easier to wrap it with other functionality
     - Thanks to Jack Bates for the contribution
   - Fixed error in phpcs error message when a supplied file does not exist
+  - Fixed a cosmetic error in AbstractPatternSniff where the "found" string was missing some content
   - Added sniffs that implement part of the PMD rule catalog to the Generic standard
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
   - Squiz FunctionCommentThrowTagSniff no longer throws errors for function that only throw variables

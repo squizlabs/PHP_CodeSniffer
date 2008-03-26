@@ -476,7 +476,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     return false;
                 }
 
-                $found = '...';
+                $found .= '...';
                 if ($pattern[$i]['to'] === 'parenthesis_closer') {
                     $found .= ')';
                 } else {
