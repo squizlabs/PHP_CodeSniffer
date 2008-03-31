@@ -242,6 +242,12 @@ class PHP_CodeSniffer_Tokenizers_JS
         $buffer      = '';
         $cleanBuffer = false;
 
+        $tokens[] = array(
+                     'code'    => T_OPEN_TAG,
+                     'type'    => 'T_OPEN_TAG',
+                     'content' => '',
+                    );
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START TOKENIZING ***".PHP_EOL;
         }
@@ -510,6 +516,12 @@ class PHP_CodeSniffer_Tokenizers_JS
                 $cleanBuffer = false;
             }
         }//end foreach
+
+        $tokens[] = array(
+                     'code'    => T_CLOSE_TAG,
+                     'type'    => 'T_CLOSE_TAG',
+                     'content' => '',
+                    );
 
         /*
             Now that we have done some basic tokenizing, we need to
