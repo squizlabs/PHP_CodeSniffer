@@ -61,12 +61,13 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
      * All unkown args are sent to SVN commands.
      *
      * @param string $arg    The command line argument.
+     * @param int    $pos    The position of the argument on the command line.
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
      * @see getCommandLineValues()
      */
-    public function processUnknownArgument($arg, $values)
+    public function processUnknownArgument($arg, $pos, $values)
     {
         $values['svnArgs'][] = $arg;
         return $values;

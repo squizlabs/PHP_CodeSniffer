@@ -108,7 +108,7 @@ class PHP_CodeSniffer_CLI
             $arg = $_SERVER['argv'][$i];
             if ($arg{0} === '-') {
                 if ($arg{1} === '-') {
-                    $values = $this->processLongArgument(substr($arg, 2), $values);
+                    $values = $this->processLongArgument(substr($arg, 2), $i, $values);
                 } else {
                     $switches = str_split($arg);
                     foreach ($switches as $switch) {
@@ -120,7 +120,7 @@ class PHP_CodeSniffer_CLI
                     }
                 }
             } else {
-                $values = $this->processUnknownArgument($arg, $values);
+                $values = $this->processUnknownArgument($arg, $i, $values);
             }
         }//end for
 
@@ -175,12 +175,13 @@ class PHP_CodeSniffer_CLI
      * Processes a long (--example) command line argument.
      *
      * @param string $arg    The command line argument.
+     * @param int    $pos    The position of the argument on the command line.
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
      * @see getCommandLineValues()
      */
-    public function processLongArgument($arg, $values)
+    public function processLongArgument($arg, $pos, $values)
     {
         switch ($arg) {
         case 'help':
@@ -193,13 +194,13 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'config-set':
-            $key   = $_SERVER['argv'][($i + 1)];
-            $value = $_SERVER['argv'][($i + 2)];
+            $key   = $_SERVER['argv'][($pos + 1)];
+            $value = $_SERVER['argv'][($pos + 2)];
             PHP_CodeSniffer::setConfigData($key, $value);
             exit(0);
             break;
         case 'config-delete':
-            $key = $_SERVER['argv'][($i + 1)];
+            $key = $_SERVER['argv'][($pos + 1)];
             PHP_CodeSniffer::setConfigData($key, null);
             exit(0);
             break;
@@ -253,12 +254,13 @@ class PHP_CodeSniffer_CLI
      * Assumes all unknown arguments are files and folders to check.
      *
      * @param string $arg    The command line argument.
+     * @param int    $pos    The position of the argument on the command line.
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
      * @see getCommandLineValues()
      */
-    public function processUnknownArgument($arg, $values)
+    public function processUnknownArgument($arg, $pos, $values)
     {
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
