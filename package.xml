@@ -66,6 +66,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic MultipleStatementAlignmentSniff now supports JS files
   - Added Squiz ObjectMemberCommaSniff to ensure the last member of a JS object is not followed by a comma
   - Added Squiz ConstantCaseSniff to ensure the PHP constants are uppercase and JS lowercase
+  - Added Squiz JavaScriptLintSniff to check JS files with JSL
+    -- Set path using phpcs --config-set jsl_path /path/to/jsl
   - Added MySource FirebugConsoleSniff to ban the use of "console" for JS variable and function names
   - Added MySource JoinStringsSniff to enforce the use of join() to concatenate JS strings
   - Added MySource AssignThisSniff to ensure this is only assigned to a var called self
@@ -764,6 +766,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="JavaScriptLintSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1058,6 +1065,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="JavaScriptLintUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="JavaScriptLintUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
