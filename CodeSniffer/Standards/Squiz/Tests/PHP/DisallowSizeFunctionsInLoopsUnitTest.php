@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the DisallowCountInLoops sniff.
+ * Unit test class for the DisallowSizeFunctionsInLoops sniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Unit test class for the DisallowCountInLoops sniff.
+ * Unit test class for the DisallowSizeFunctionsInLoops sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -29,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_PHP_DisallowCountInLoopsUnitTest extends AbstractSniffUnitTest
+class Squiz_Tests_PHP_DisallowSizeFunctionsInLoopsUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -48,6 +48,14 @@ class Squiz_Tests_PHP_DisallowCountInLoopsUnitTest extends AbstractSniffUnitTest
                 7  => 1,
                 11 => 1,
                 13 => 1,
+                18 => 1,
+                23 => 1,
+                27 => 1,
+                29 => 1,
+                35 => 1,
+                40 => 1,
+                44 => 1,
+                46 => 1,
                );
 
     }//end getErrorList()

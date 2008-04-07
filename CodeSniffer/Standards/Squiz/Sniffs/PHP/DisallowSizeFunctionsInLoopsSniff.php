@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Formatting_DisallowObEndFlushSniff.
+ * Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff.
  *
  * PHP version 5
  *
@@ -14,9 +14,9 @@
  */
 
 /**
- * Squiz_Sniffs_PHP_DisallowCountInLoopsSniff.
+ * Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff.
  *
- * Bans the use of count in loop conditions.
+ * Bans the use of size-based functions in loop conditions.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -26,8 +26,19 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_DisallowCountInLoopsSniff implements PHP_CodeSniffer_Sniff
+class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSniffer_Sniff
 {
+
+    /**
+     * An array of functions we don't want in the condition of loops.
+     *
+     * @return array
+     */
+    protected $forbiddenFunctions = array(
+                                     'sizeof',
+                                     'strlen',
+                                     'count',
+                                    );
 
 
     /**
@@ -58,8 +69,8 @@ class Squiz_Sniffs_PHP_DisallowCountInLoopsSniff implements PHP_CodeSniffer_Snif
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['code'] === T_STRING && $tokens[$i]['content'] === 'count') {
-                $error = 'The use of count() inside a loop condition is not allowed. Assign the return value of count() to a variable and use the variable in the loop condition instead.';
+            if ($tokens[$i]['code'] === T_STRING && in_array($tokens[$i]['content'], $this->forbiddenFunctions)) {
+                $error = 'The use of '.$tokens[$i]['content'].'() inside a loop condition is not allowed. Assign the return value of '.$tokens[$i]['content'].'() to a variable and use the variable in the loop condition instead.';
                 $phpcsFile->addError($error, $i);
             }
         }

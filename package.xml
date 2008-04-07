@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Manuel Pichler for the contribution of all these sniffs.
   - Squiz FunctionCommentThrowTagSniff no longer throws errors for function that only throw variables
   - Generic ScopeIndentSniff now has private member to enforce exact indent matching
+  - Replaced Squiz DisallowCountInLoopsSniff with Squiz DisallowSizeFunctionsInLoopsSniff
+    -- Thanks to Jan Miczaika for the sniff
   - Squiz BlockCommentSniff now checks inline doc block comments
   - Squiz InlineCommentSniff now checks inline doc block comments
   - Squiz BlockCommentSniff now checks for no blank line before first comment in a function
@@ -844,9 +846,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="DisallowCountInLoopsSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -854,6 +853,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowObEndFlushSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EmbeddedPhpSniff.php" role="php">
@@ -1158,10 +1160,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="DisallowCountInLoopsUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="DisallowCountInLoopsUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowInlineIfUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1172,6 +1170,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowObEndFlushUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.inc" role="test" />
