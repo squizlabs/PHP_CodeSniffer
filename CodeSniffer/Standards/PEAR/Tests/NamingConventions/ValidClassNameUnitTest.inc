@@ -41,4 +41,8 @@ class ___ {}
 
 interface ___ {}
 
+class Invalid__Name {}
+
+interface Invalid__Name {}
+
 ?>

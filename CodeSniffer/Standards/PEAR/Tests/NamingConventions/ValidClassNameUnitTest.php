@@ -54,6 +54,8 @@ class PEAR_Tests_NamingConventions_ValidClassNameUnitTest extends AbstractSniffU
                 38 => 1,
                 40 => 2,
                 42 => 2,
+                44 => 1,
+                46 => 1,
                );
 
     }//end getErrorList()

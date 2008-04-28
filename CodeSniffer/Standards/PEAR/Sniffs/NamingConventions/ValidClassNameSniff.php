@@ -92,7 +92,9 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
             } else {
                 $newName = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
                 foreach ($nameBits as $bit) {
-                    $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                    if ($bit !== '') {
+                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                    }
                 }
 
                 $newName = rtrim($newName, '_');
