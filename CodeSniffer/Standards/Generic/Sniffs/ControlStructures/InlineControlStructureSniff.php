@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_ControlStructures_InlineControlStructureSniff.
+ * Generic_Sniffs_ControlStructures_InlineControlStructureSniff.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
  */
 
 /**
- * Squiz_Sniffs_ControlStructures_InlineControlStructureSniff.
+ * Generic_Sniffs_ControlStructures_InlineControlStructureSniff.
  *
  * Verifies that inline control statements are not present.
  *
@@ -28,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -41,6 +41,12 @@ class Squiz_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_
                                    'JS',
                                   );
 
+    /**
+     * If true, an error will be thrown; otherwise a warning.
+     *
+     * @var bool
+     */
+    protected $error = true;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -97,8 +103,12 @@ class Squiz_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_
 
             // This is a control structure without an opening brace,
             // so it is an inline statement.
-            $error = 'Inline control structures are not allowed';
-            $phpcsFile->addError($error, $stackPtr);
+            if ($this->error === true) {
+                $phpcsFile->addError('Inline control structures are not allowed', $stackPtr);
+            } else {
+                $phpcsFile->addWarning('Inline control structures are discouraged', $stackPtr);
+            }
+
             return;
         }//end if
 

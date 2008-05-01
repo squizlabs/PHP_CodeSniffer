@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Fixed error in PEAR ValidClassNameSniff when checking class names with double underscores
+  - Moved Squiz InlineControlStructureSniff into Generic standard
+  - PEAR standard now throws warnings for inline control structures
  </notes>
  <contents>
   <dir name="/">
@@ -177,6 +179,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -272,6 +279,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UselessOverridingMethodUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UselessOverridingMethodUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
@@ -486,6 +500,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ControlSignatureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
@@ -695,9 +712,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ForLoopDeclarationSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="InlineIfDeclarationSniff.php" role="php">
@@ -992,11 +1006,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="ForLoopDeclarationUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.js" role="test" />
-        <file baseinstalldir="PHP" name="InlineControlStructureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="InlineIfDeclarationUnitTest.inc" role="test" />

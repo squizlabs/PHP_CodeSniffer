@@ -45,6 +45,7 @@ class PHP_CodeSniffer_Standards_Squiz_SquizCodingStandard extends PHP_CodeSniffe
     public function getIncludedSniffs()
     {
         return array(
+                'Generic/Sniffs/ControlStructures/InlineControlStructureSniff.php',
                 'Generic/Sniffs/Formatting/SpaceAfterCastSniff.php',
                 'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php',
                 'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
