@@ -100,8 +100,16 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
                 continue;
             }
 
-            // The line has content, now if it is less than the required indent, throw error.
+            // The spaces at the start of inline HTML are not considered indent by
+            // PHP_CodeSniffer, so we need to ignore them because their indentation
+            // if not a coding standard issue, it is a HTML output issue.
+            if ($tokens[$nextContent]['code'] === T_INLINE_HTML) {
+                continue;
+            }
+
             $foundIndent = ($tokens[$nextContent]['column'] - 1);
+
+            // The line has content, now if it is less than the required indent, throw error.
             if ($foundIndent < $requiredIndent) {
                 $error = "Buffered line not indented correctly. Expected at least $requiredIndent spaces; found $foundIndent.";
                 $phpcsFile->addError($error, $nextContent);

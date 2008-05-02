@@ -47,5 +47,17 @@ function myFunc2()
 }
 
 ob_start();
+    ?><h2>Sign up for a new account</h2>
+    <form action="<?php echo $submitTo; ?>" method="post">
+    <?php
+ob_end_clean();
+
+ob_start();
+    ?><h2>Sign up for a new account</h2>
+<form action="<?php echo $submitTo; ?>" method="post">
+   <?php
+ob_end_clean();
+
+ob_start();
     echo $hello;
 ?>
