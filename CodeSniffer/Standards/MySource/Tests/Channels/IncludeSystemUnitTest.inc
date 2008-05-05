@@ -67,4 +67,7 @@ Channels::includeSystem('Widget');
 Widget::includeWidget('AbstractContainer');
 class MyWidget extends AbstractContainerWidgetType {}
 class MyOtherWidget extends BookWidgetType {}
+
+$zip = new ZipArchive();
+$res = $zip->open($path, ZipArchive::CREATE); 
 ?>
