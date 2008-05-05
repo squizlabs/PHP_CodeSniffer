@@ -73,7 +73,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference === 0) {
-            $error = 'Opening function brace should be on a new line';
+            $error = 'Opening brace should be on a new line';
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
@@ -84,7 +84,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                 $ender .= 's';
             }
 
-            $error = 'Opening function brace should be on the line after the declaration; found '.($lineDifference - 1).' blank '.$ender;
+            $error = 'Opening brace should be on the line after the declaration; found '.($lineDifference - 1).' blank '.$ender;
             $phpcsFile->addError($error, $openingBrace);
             return;
         }

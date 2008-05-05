@@ -73,7 +73,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference > 0) {
-            $error = 'Opening function brace should be on the same line as the declaration';
+            $error = 'Opening brace should be on the same line as the declaration';
             $phpcsFile->addError($error, $openingBrace);
             return;
         }
