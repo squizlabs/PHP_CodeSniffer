@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz OutputBufferingIndentSniff now ignores the indentation of inline HTML
   - MySource IncludeSystemSniff now ignores usage of ZipArchive
   - Removed "function" from error messages for Generic function brace sniffs (feature request #13820)
+  - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
+    - Thanks to Josh Snyder for the patch
  </notes>
  <contents>
   <dir name="/">

@@ -112,6 +112,12 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 return;
             }
 
+            // Is this an instance of declare()
+            $prevPtr = $phpcsFile->findPrevious(array(T_WHITESPACE, T_OPEN_PARENTHESIS), ($stackPtr - 1), null, true);
+            if ($tokens[$prevPtr]['code'] === T_DECLARE) {
+                return;
+            }
+
             // This is a real constant.
             if (strtoupper($constName) !== $constName) {
                 $error = 'Constants must be uppercase; expected '.strtoupper($constName)." but found $constName";

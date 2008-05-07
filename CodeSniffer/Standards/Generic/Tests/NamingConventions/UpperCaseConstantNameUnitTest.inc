@@ -73,4 +73,9 @@ EOF;
 
 throw new InvalidSomethingException;
 
+declare(ticks = 1) {
+    foreach ($var as $bit) {
+        echo $bit;
+    }
+}
 ?>
