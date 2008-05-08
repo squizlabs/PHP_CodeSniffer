@@ -58,6 +58,13 @@ switch ($lowerVarType) {
         echo 'hi';
 }
 
+while ($line=fgets($fp,2*1024*1024))
+{
+    if (!preg_match("/^<([a-z0-9_]+)/",$line,$matches))
+    continue;
+    print $line;
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.
