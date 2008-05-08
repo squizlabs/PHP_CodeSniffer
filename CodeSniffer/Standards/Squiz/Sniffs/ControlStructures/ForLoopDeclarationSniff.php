@@ -69,6 +69,12 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
         $errors = array();
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
+        if ($openingBracket === false) {
+            $error = 'Possible parse error: no opening parenthesis for FOR keyword';
+            $phpcsFile->addWarning($error, $stackPtr);
+            return;
+        }
+
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
         if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
