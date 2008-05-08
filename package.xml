@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Removed "function" from error messages for Generic function brace sniffs (feature request #13820)
   - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
     - Thanks to Josh Snyder for the patch
+  - Fixed bug #13846 : Bug in Squiz.NonExecutableCodeSniff
  </notes>
  <contents>
   <dir name="/">

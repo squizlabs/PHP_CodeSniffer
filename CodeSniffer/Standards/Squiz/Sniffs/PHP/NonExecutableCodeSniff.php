@@ -69,6 +69,22 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // This token may be part of an inline condition.
+        // If we find a closing parenthesis that belongs to a condition
+        // we should ignore this token.
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if (isset($tokens[$prev]['parenthesis_owner']) === true) {
+            $owner = $tokens[$prev]['parenthesis_owner'];
+            $ignore = array(
+                            T_IF,
+                            T_ELSE,
+                            T_ELSEIF,
+                           );
+           if (in_array($tokens[$owner]['code'], $ignore) === true) {
+               return;
+           }
+        }
+
         $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
         $ourTokens     = $this->register();
         $hasConditions = empty($ourConditions);
@@ -121,54 +137,39 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         if ($hasConditions === false) {
             $condition = array_pop($ourConditions);
 
-            if (isset($tokens[$condition]['scope_closer']) === true) {
-                $closer = $tokens[$condition]['scope_closer'];
-                if ($tokens[$closer]['scope_condition'] !== $condition) {
-                    // The closer for our condition is shared with other openers,
-                    // so we need to throw errors from this token to the next
-                    // shared opener (if there is one), not to the scope closer.
-                    $nextOpener = null;
-                    for ($i = ($stackPtr + 1); $i < $closer; $i++) {
-                        if (isset($tokens[$i]['scope_closer']) === true) {
-                            if ($tokens[$i]['scope_closer'] === $closer) {
-                                // We found an opener that shares the same
-                                // closing token as us.
-                                $nextOpener = $i;
-                                break;
-                            }
+            if (isset($tokens[$condition]['scope_closer']) === false) {
+                return;
+            }
+
+            $closer = $tokens[$condition]['scope_closer'];
+            if ($tokens[$closer]['scope_condition'] !== $condition) {
+                // The closer for our condition is shared with other openers,
+                // so we need to throw errors from this token to the next
+                // shared opener (if there is one), not to the scope closer.
+                $nextOpener = null;
+                for ($i = ($stackPtr + 1); $i < $closer; $i++) {
+                    if (isset($tokens[$i]['scope_closer']) === true) {
+                        if ($tokens[$i]['scope_closer'] === $closer) {
+                            // We found an opener that shares the same
+                            // closing token as us.
+                            $nextOpener = $i;
+                            break;
                         }
-                    }//end for
-
-                    $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-
-                    if ($nextOpener === null) {
-                        $end = $closer;
-                    } else {
-                        $end = $nextOpener;
                     }
+                }//end for
+
+                $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+
+                if ($nextOpener === null) {
+                    $end = $closer;
                 } else {
-                    // Any tokens between the return and the closer
-                    // cannot be executed.
-                    $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-                    $end   = $tokens[$condition]['scope_closer'];
-                }//end if
-
-                $lastLine = $tokens[$start]['line'];
-                $endLine  = $tokens[$end]['line'];
-
-                for ($i = ($start + 1); $i < $end; $i++) {
-                    if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
-                        continue;
-                    }
-
-                    $line = $tokens[$i]['line'];
-                    if ($line > $lastLine) {
-                        $type    = substr($tokens[$stackPtr]['type'], 2);
-                        $warning = "Code after $type statement cannot be executed";
-                        $phpcsFile->addWarning($warning, $i);
-                        $lastLine = $line;
-                    }
+                    $end = $nextOpener;
                 }
+            } else {
+                // Any tokens between the return and the closer
+                // cannot be executed.
+                $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+                $end   = $tokens[$condition]['scope_closer'];
             }//end if
         } else {
             // This token is in the global scope.
@@ -179,24 +180,24 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             // Throw an error for all lines until the end of the file.
             $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
             $end   = ($phpcsFile->numTokens - 1);
-
-            $lastLine = $tokens[$start]['line'];
-            $endLine  = $tokens[$end]['line'];
-
-            for ($i = ($start + 1); $i < $end; $i++) {
-                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
-                    continue;
-                }
-
-                $line = $tokens[$i]['line'];
-                if ($line > $lastLine) {
-                    $type    = substr($tokens[$stackPtr]['type'], 2);
-                    $warning = "Code after $type statement cannot be executed";
-                    $phpcsFile->addWarning($warning, $i);
-                    $lastLine = $line;
-                }
-            }
         }//end if
+
+        $lastLine = $tokens[$start]['line'];
+        $endLine  = $tokens[$end]['line'];
+
+        for ($i = ($start + 1); $i < $end; $i++) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                continue;
+            }
+
+            $line = $tokens[$i]['line'];
+            if ($line > $lastLine) {
+                $type    = substr($tokens[$stackPtr]['type'], 2);
+                $warning = "Code after $type statement cannot be executed";
+                $phpcsFile->addWarning($warning, $i);
+                $lastLine = $line;
+            }
+        }
 
     }//end process()
 
