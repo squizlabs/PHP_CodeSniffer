@@ -74,15 +74,15 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         // we should ignore this token.
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (isset($tokens[$prev]['parenthesis_owner']) === true) {
-            $owner = $tokens[$prev]['parenthesis_owner'];
+            $owner  = $tokens[$prev]['parenthesis_owner'];
             $ignore = array(
-                            T_IF,
-                            T_ELSE,
-                            T_ELSEIF,
-                           );
-           if (in_array($tokens[$owner]['code'], $ignore) === true) {
-               return;
-           }
+                       T_IF,
+                       T_ELSE,
+                       T_ELSEIF,
+                      );
+            if (in_array($tokens[$owner]['code'], $ignore) === true) {
+                return;
+            }
         }
 
         $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
