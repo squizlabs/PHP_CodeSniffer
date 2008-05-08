@@ -66,4 +66,9 @@ interface TestClass
 {
 }
 
+class MyClass
+{
+    public function myFunction();
+}//end class
+
 ?>

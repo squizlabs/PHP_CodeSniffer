@@ -66,7 +66,9 @@ class Squiz_Tests_Commenting_ClosingDeclarationCommentUnitTest extends AbstractS
      */
     public function getWarningList()
     {
-        return array();
+        return array(
+                71 => 1,
+               );
 
     }//end getWarningList()
 

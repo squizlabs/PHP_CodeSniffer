@@ -76,6 +76,12 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
                 return;
             }
 
+            if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+                $error = 'Possible parse error: non-abstract method defined as abstract';
+                $phpcsFile->addWarning($error, $stackPtr);
+                return;
+            }
+
             $decName = $phpcsFile->getDeclarationName($stackPtr);
             $comment = '//end '.$decName.'()';
         } else if ($tokens[$stackPtr]['code'] === T_CLASS) {
@@ -92,7 +98,7 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
         }
 
         $error = 'Expected '.$comment;
-        if ($tokens[($closingBracket + 1)]['code'] !== T_COMMENT) {
+        if (isset($tokens[($closingBracket + 1)]) === false || $tokens[($closingBracket + 1)]['code'] !== T_COMMENT) {
             $phpcsFile->addError($error, $closingBracket);
             return;
         }
