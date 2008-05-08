@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
     - Thanks to Josh Snyder for the patch
   - Squiz ClosingDeclarationCommentSniff and AbstractVariableSniff now throw warnings for possible parse errors
+  - Fixed bug #13827 : AbstractVariableSniff throws "undefined index"
   - Fixed bug #13846 : Bug in Squiz.NonExecutableCodeSniff
   - Fixed bug #13849 : infinite loop in PHP_CodeSniffer_File::findNext()
  </notes>
