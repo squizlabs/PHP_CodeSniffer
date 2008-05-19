@@ -156,4 +156,16 @@ $func = array(
          $x,
          'get'.$x.'Replacement'
         );
+
+$array = array(
+          'input_one' => 'one',
+          'inputTwo'  => 'two',
+          'input_3'   => 3,
+         );
+
+$array = array(
+          'input_one',
+          'inputTwo',
+          'input_3',
+         );
 ?>
