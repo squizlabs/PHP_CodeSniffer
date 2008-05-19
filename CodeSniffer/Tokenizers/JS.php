@@ -635,6 +635,10 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     $stackPtr++;
                     $newContent  .= $tokenContent;
+                    if (isset($tokens[$stackPtr]) === false) {
+                        break;
+                    }
+
                     $tokenContent = $tokens[$stackPtr]['content'];
                 }//end while
 
