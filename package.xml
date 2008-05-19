@@ -34,6 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
   - Squiz ArrayDeclarationSniff now ensures arrays are not declared with camel case index values
+  - Fixed bug #13922 : crash in case of malformed (but tokenized) php file
+    -- PEAR and Squiz ClassDeclarationSniff now throw warnings for possible parse errors
+    -- Squiz ValidClassNameSniff now throws warning for possible parse errors
+    -- Squiz ClosingDeclarationCommentSniff now throws additonal warnings for parse errors
  </notes>
  <contents>
   <dir name="/">

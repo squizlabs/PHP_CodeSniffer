@@ -60,6 +60,14 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            $error  = 'Possible parse error: ';
+            $error .= $tokens[$stackPtr]['content'];
+            $error .= ' missing opening or closing brace';
+            $phpcsFile->addWarning($error, $stackPtr);
+            return;
+        }
+
         // Determine the name of the class or interface. Note that we cannot
         // simply look for the first T_STRING because a class name
         // starting with the number will be multiple tokens.

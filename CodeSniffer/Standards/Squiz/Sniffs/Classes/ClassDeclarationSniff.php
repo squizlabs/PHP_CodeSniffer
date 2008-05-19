@@ -107,6 +107,14 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
             }
         }//end if
 
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            $error  = 'Possible parse error: ';
+            $error .= $tokens[$stackPtr]['content'];
+            $error .= ' missing opening or closing brace';
+            $phpcsFile->addWarning($error, $stackPtr);
+            return;
+        }
+
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
         if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
             $prevContent = $tokens[($closeBrace - 1)]['content'];

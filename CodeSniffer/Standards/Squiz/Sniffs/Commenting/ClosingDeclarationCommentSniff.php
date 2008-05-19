@@ -90,6 +90,14 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
             $comment = '//end interface';
         }//end if
 
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            $error  = 'Possible parse error: ';
+            $error .= $tokens[$stackPtr]['content'];
+            $error .= ' missing opening or closing brace';
+            $phpcsFile->addWarning($error, $stackPtr);
+            return;
+        }
+
         $closingBracket = $tokens[$stackPtr]['scope_closer'];
 
         if ($closingBracket === null) {

@@ -60,6 +60,14 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            $error  = 'Possible parse error: ';
+            $error .= $tokens[$stackPtr]['content'];
+            $error .= ' missing opening or closing brace';
+            $phpcsFile->addWarning($error, $stackPtr);
+            return;
+        }
+
         $curlyBrace  = $tokens[$stackPtr]['scope_opener'];
         $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBrace - 1), $stackPtr, true);
         $classLine   = $tokens[$lastContent]['line'];
