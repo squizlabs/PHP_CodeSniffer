@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2008-05-13</date>
- <time>11:07:00</time>
+ <date>2008-06-13</date>
+ <time>13:53:00</time>
  <version>
   <release>1.1.0RC2</release>
   <api>1.1.0RC2</api>
@@ -1386,28 +1386,24 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
-    <release>1.1.0a1</release>
-    <api>1.1.0a1</api>
+    <release>1.1.0RC2</release>
+    <api>1.1.0RC2</api>
    </version>
    <stability>
-    <release>alpha</release>
-    <api>alpha</api>
+    <release>beta</release>
+    <api>beta</api>
    </stability>
-   <date>2008-04-21</date>
+   <date>2008-06-13</date>
    <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
-    - Fixed error in PEAR ValidClassNameSniff when checking class names with double underscores
-    - Moved Squiz InlineControlStructureSniff into Generic standard
-    - PEAR standard now throws warnings for inline control structures
-    - Squiz OutputBufferingIndentSniff now ignores the indentation of inline HTML
-    - MySource IncludeSystemSniff now ignores usage of ZipArchive
-    - Removed "function" from error messages for Generic function brace sniffs (feature request #13820)
-    - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
-      -- Thanks to Josh Snyder for the patch
-    - Squiz ClosingDeclarationCommentSniff and AbstractVariableSniff now throw warnings for possible parse errors
-    - Fixed bug #13827 : AbstractVariableSniff throws "undefined index"
-    - Fixed bug #13846 : Bug in Squiz.NonExecutableCodeSniff
-    - Fixed bug #13849 : infinite loop in PHP_CodeSniffer_File::findNext()
+    - Permission denied errors now stop script execution but still display current errors (feature request #14076)
+    - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
+    - Squiz ArrayDeclarationSniff now ensures arrays are not declared with camel case index values
+    - Fixed bug #13921 : js parsing fails for comments on last line of file
+    - Fixed bug #13922 : crash in case of malformed (but tokenized) php file
+      -- PEAR and Squiz ClassDeclarationSniff now throw warnings for possible parse errors
+      -- Squiz ValidClassNameSniff now throws warning for possible parse errors
+      -- Squiz ClosingDeclarationCommentSniff now throws additonal warnings for parse errors
    </notes>
   </release>
   <release>
@@ -1481,6 +1477,32 @@ http://pear.php.net/dtd/package-2.0.xsd">
    - Fixed bug #13254 : Notices output in checkstyle report causes XML issues
    - Fixed bug #13446 : crash with src of phpMyAdmin
      -- Thanks to Manuel Pichler for the path
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.0a1</release>
+    <api>1.1.0a1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-04-21</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Fixed error in PEAR ValidClassNameSniff when checking class names with double underscores
+    - Moved Squiz InlineControlStructureSniff into Generic standard
+    - PEAR standard now throws warnings for inline control structures
+    - Squiz OutputBufferingIndentSniff now ignores the indentation of inline HTML
+    - MySource IncludeSystemSniff now ignores usage of ZipArchive
+    - Removed "function" from error messages for Generic function brace sniffs (feature request #13820)
+    - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
+      -- Thanks to Josh Snyder for the patch
+    - Squiz ClosingDeclarationCommentSniff and AbstractVariableSniff now throw warnings for possible parse errors
+    - Fixed bug #13827 : AbstractVariableSniff throws "undefined index"
+    - Fixed bug #13846 : Bug in Squiz.NonExecutableCodeSniff
+    - Fixed bug #13849 : infinite loop in PHP_CodeSniffer_File::findNext()
    </notes>
   </release>
   <release>
