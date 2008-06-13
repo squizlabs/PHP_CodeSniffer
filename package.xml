@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Permission denied errors now stop script execution but still display current errors (feature request #14076)
   - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
   - Squiz ArrayDeclarationSniff now ensures arrays are not declared with camel case index values
   - Fixed bug #13921 : js parsing fails for comments on last line of file

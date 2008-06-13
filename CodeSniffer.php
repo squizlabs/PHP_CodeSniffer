@@ -522,35 +522,46 @@ class PHP_CodeSniffer
      */
     public function processFiles($dir, $local=false)
     {
-        if ($local === true) {
-            $di = new DirectoryIterator($dir);
-        } else {
-            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+        try {
+            if ($local === true) {
+                $di = new DirectoryIterator($dir);
+            } else {
+                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+            }
+
+            foreach ($di as $file) {
+                $filePath = realpath($file->getPathname());
+
+                if (is_dir($filePath) === true) {
+                    continue;
+                }
+
+                // Check that the file's extension is one we are checking.
+                // Note that because we are doing a whole directory, we
+                // are strick about checking the extension and we don't
+                // let files with no extension through.
+                $fileParts = explode('.', $file);
+                $extension = array_pop($fileParts);
+                if ($extension === $file) {
+                    continue;
+                }
+
+                if (isset($this->allowedFileExtensions[$extension]) === false) {
+                    continue;
+                }
+
+                $this->processFile($filePath);
+            }//end foreach
+        } catch (Exception $e) {
+            $trace    = $e->getTrace();
+            $filename = $trace[0]['args'][0];
+            $error    = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+
+            $phpcsFile = new PHP_CodeSniffer_File($filename, $this->listeners, $this->allowedFileExtensions);
+            $this->addFile($phpcsFile);
+            $phpcsFile->addError($error, null);
+            return;
         }
-
-        foreach ($di as $file) {
-            $filePath = realpath($file->getPathname());
-
-            if (is_dir($filePath) === true) {
-                continue;
-            }
-
-            // Check that the file's extension is one we are checking.
-            // Note that because we are doing a whole directory, we
-            // are strick about checking the extension and we don't
-            // let files with no extension through.
-            $fileParts = explode('.', $file);
-            $extension = array_pop($fileParts);
-            if ($extension === $file) {
-                continue;
-            }
-
-            if (isset($this->allowedFileExtensions[$extension]) === false) {
-                continue;
-            }
-
-            $this->processFile($filePath);
-        }//end foreach
 
     }//end processFiles()
 

@@ -231,10 +231,12 @@ class PHP_CodeSniffer_File
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
-     * @param string        $file      The absolute path to the file
-     *                                 to process.
-     * @param array(string) $listeners The initial listeners listening
-     *                                 to processing of this file.
+     * @param string        $file       The absolute path to the file
+     *                                  to process.
+     * @param array(string) $listeners  The initial listeners listening
+     *                                  to processing of this file.
+     * @param array         $tokenizers An array of extensions mapping
+     *                                  to the tokenizer to use.
      *
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
@@ -410,18 +412,18 @@ class PHP_CodeSniffer_File
         $this->eolChar = self::detectLineEndings($this->_file, $contents);
 
         // Determine the tokenizer from the file extension.
-        $fileParts      = explode('.', $this->_file);
-        $extension      = array_pop($fileParts);
+        $fileParts = explode('.', $this->_file);
+        $extension = array_pop($fileParts);
         if (isset($this->tokenizers[$extension]) === true) {
-            $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
+            $tokenizerClass      = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
             $this->tokenizerType = $this->tokenizers[$extension];
         } else {
             // Revert to default.
             $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizerType;
         }
 
-        $tokenizer           = new $tokenizerClass();
-        $this->tokenizer     = $tokenizer;
+        $tokenizer       = new $tokenizerClass();
+        $this->tokenizer = $tokenizer;
 
         if ($contents === null) {
             $contents = file_get_contents($this->_file);
@@ -498,16 +500,16 @@ class PHP_CodeSniffer_File
      * @param int    $stackPtr The stack position where the error occured.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If $stackPtr is null.
      */
     public function addError($error, $stackPtr)
     {
         if ($stackPtr === null) {
-            throw new PHP_CodeSniffer_Exception('$stackPtr cannot be null');
+            $lineNum = 1;
+            $column  = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column  = $this->_tokens[$stackPtr]['column'];
         }
-
-        $lineNum = $this->_tokens[$stackPtr]['line'];
-        $column  = $this->_tokens[$stackPtr]['column'];
 
         if (isset($this->_errors[$lineNum]) === false) {
             $this->errors[$lineNum] = array();
@@ -530,16 +532,16 @@ class PHP_CodeSniffer_File
      * @param int    $stackPtr The stack position where the error occured.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If $stackPtr is null.
      */
     public function addWarning($warning, $stackPtr)
     {
         if ($stackPtr === null) {
-            throw new PHP_CodeSniffer_Exception('$stackPtr cannot be null');
+            $lineNum = 1;
+            $column  = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column  = $this->_tokens[$stackPtr]['column'];
         }
-
-        $lineNum = $this->_tokens[$stackPtr]['line'];
-        $column  = $this->_tokens[$stackPtr]['column'];
 
         if (isset($this->_warnings[$lineNum]) === false) {
             $this->_warnings[$lineNum] = array();
@@ -655,8 +657,9 @@ class PHP_CodeSniffer_File
     /**
      * Creates a map of tokens => line numbers for each token.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -679,8 +682,9 @@ class PHP_CodeSniffer_File
      * Each tab can represent between 1 and $width spaces, so
      * this cannot be a straight string replace.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -758,8 +762,9 @@ class PHP_CodeSniffer_File
      * The column map indicates where the token started on the line where it
      * exists.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -787,8 +792,9 @@ class PHP_CodeSniffer_File
      * has a reference to their opening and closing bracket
      * (bracket_opener and bracket_closer).
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -822,8 +828,9 @@ class PHP_CodeSniffer_File
      * reference to their opening and closing parenthesis (parenthesis_opener
      * and parenthesis_closer).
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -872,8 +879,9 @@ class PHP_CodeSniffer_File
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -908,8 +916,9 @@ class PHP_CodeSniffer_File
     /**
      * Creates a scope map of tokens that open scopes.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      * @see _recurseScopeMap()
@@ -946,6 +955,7 @@ class PHP_CodeSniffer_File
      *
      * @param array  &$tokens   The array of tokens to process.
      * @param int    $numTokens The size of the tokens array.
+     * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      * @param int    $stackPtr  The position in the stack of the token that
      *                          opened the scope (eg. an IF token or FOR token).
@@ -1202,8 +1212,9 @@ class PHP_CodeSniffer_File
      * 'condition' indice which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param array  &$tokens   The array of tokens to process.
+     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
      */
