@@ -1651,7 +1651,13 @@ class PHP_CodeSniffer_File
         end($this->_tokens[$stackPtr]['conditions']);
         $ptr = key($this->_tokens[$stackPtr]['conditions']);
         if (!isset($this->_tokens[$ptr]) || $this->_tokens[$ptr]['code'] !== T_CLASS) {
-            throw new PHP_CodeSniffer_Exception('$stackPtr is not a class member var');
+            if (isset($this->_tokens[$ptr]) && $this->_tokens[$ptr]['code'] === T_INTERFACE) {
+                $error = 'Possible parse error: interfaces may not include member vars';
+                $this->addWarning($error, $stackPtr);
+                return array();
+            } else {
+                throw new PHP_CodeSniffer_Exception('$stackPtr is not a class member var');
+            }
         }
 
         $valid = array(

@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Permission denied errors now stop script execution but still display current errors (feature request #14076)
   - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
   - Squiz ArrayDeclarationSniff now ensures arrays are not declared with camel case index values
+  - PEAR ValidVariableNameSniff now alerts about a possible parse error for member vars inside an interface
   - Fixed bug #13921 : js parsing fails for comments on last line of file
   - Fixed bug #13922 : crash in case of malformed (but tokenized) php file
     -- PEAR and Squiz ClassDeclarationSniff now throw warnings for possible parse errors
@@ -1399,6 +1400,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Permission denied errors now stop script execution but still display current errors (feature request #14076)
     - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
     - Squiz ArrayDeclarationSniff now ensures arrays are not declared with camel case index values
+    - PEAR ValidVariableNameSniff now alerts about a possible parse error for member vars inside an interface
     - Fixed bug #13921 : js parsing fails for comments on last line of file
     - Fixed bug #13922 : crash in case of malformed (but tokenized) php file
       -- PEAR and Squiz ClassDeclarationSniff now throw warnings for possible parse errors

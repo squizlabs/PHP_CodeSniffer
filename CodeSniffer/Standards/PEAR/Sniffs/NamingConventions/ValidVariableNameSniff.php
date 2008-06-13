@@ -48,8 +48,12 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        $memberProps = $phpcsFile->getMemberProperties($stackPtr);
+        if (empty($memberProps) === true) {
+            return;
+        }
+
         $memberName     = ltrim($tokens[$stackPtr]['content'], '$');
-        $memberProps    = $phpcsFile->getMemberProperties($stackPtr);
         $isPublic       = ($memberProps['scope'] === 'private') ? false : true;
         $scope          = $memberProps['scope'];
         $scopeSpecified = $memberProps['scope_specified'];
