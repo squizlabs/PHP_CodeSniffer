@@ -10,4 +10,6 @@ interface MyInterface
 {
     function func1() {}
 }
+
+function __autoload($class) {}
 ?>
