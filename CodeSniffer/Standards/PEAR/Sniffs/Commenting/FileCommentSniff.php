@@ -60,6 +60,69 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected $currentFile = null;
 
+    /**
+     * Tags in correct order and related info.
+     *
+     * @var array
+     */
+    protected $tags = array(
+                       'category'   => array(
+                                        'required'       => true,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'precedes @package',
+                                       ),
+                       'package'    => array(
+                                        'required'       => true,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @category',
+                                       ),
+                       'subpackage' => array(
+                                        'required'       => false,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @package',
+                                       ),
+                       'author'     => array(
+                                        'required'       => true,
+                                        'allow_multiple' => true,
+                                        'order_text'     => 'follows @subpackage (if used) or @package',
+                                       ),
+                       'copyright'  => array(
+                                        'required'       => false,
+                                        'allow_multiple' => true,
+                                        'order_text'     => 'follows @author',
+                                       ),
+                       'license'    => array(
+                                        'required'       => true,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @copyright (if used) or @author',
+                                       ),
+                       'version'    => array(
+                                        'required'       => false,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @licence',
+                                       ),
+                       'link'       => array(
+                                        'required'       => true,
+                                        'allow_multiple' => true,
+                                        'order_text'     => 'follows @version',
+                                       ),
+                       'see'        => array(
+                                        'required'       => false,
+                                        'allow_multiple' => true,
+                                        'order_text'     => 'follows @link',
+                                       ),
+                       'since'      => array(
+                                        'required'       => false,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @see (if used) or @link',
+                                       ),
+                       'deprecated' => array(
+                                        'required'       => false,
+                                        'allow_multiple' => false,
+                                        'order_text'     => 'follows @since (if used) or @see (if used) or @link',
+                                       ),
+                );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -222,65 +285,6 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processTags($commentStart, $commentEnd)
     {
-        // Tags in correct order and related info.
-        $tags = array(
-                 'category'   => array(
-                                  'required'       => true,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'precedes @package',
-                                 ),
-                 'package'    => array(
-                                  'required'       => true,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @category',
-                                 ),
-                 'subpackage' => array(
-                                  'required'       => false,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @package',
-                                 ),
-                 'author'     => array(
-                                  'required'       => true,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @subpackage (if used) or @package',
-                                 ),
-                 'copyright'  => array(
-                                  'required'       => false,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @author',
-                                 ),
-                 'license'    => array(
-                                  'required'       => true,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @copyright (if used) or @author',
-                                 ),
-                 'version'    => array(
-                                  'required'       => false,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @licence',
-                                 ),
-                 'link'       => array(
-                                  'required'       => true,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @version',
-                                 ),
-                 'see'        => array(
-                                  'required'       => false,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @link',
-                                 ),
-                 'since'      => array(
-                                  'required'       => false,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @see (if used) or @link',
-                                 ),
-                 'deprecated' => array(
-                                  'required'       => false,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @since (if used) or @see (if used) or @link',
-                                 ),
-                );
-
         $docBlock    = (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') ? 'file' : 'class';
         $foundTags   = $this->commentParser->getTagOrders();
         $orderIndex  = 0;
@@ -288,7 +292,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $longestTag  = 0;
         $errorPos    = 0;
 
-        foreach ($tags as $tag => $info) {
+        foreach ($this->tags as $tag => $info) {
 
             // Required tag missing.
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
@@ -395,7 +399,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error        = "@$indentInfo[tag] tag comment indented incorrectly. ";
                 $error       .= "Expected $expected spaces but found $space.";
                 $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
-                if ($tags[$indentInfo['tag']]['allow_multiple'] === true) {
+                if ($this->tags[$indentInfo['tag']]['allow_multiple'] === true) {
                     $line = $indentInfo['line'];
                 } else {
                     $tagElem = $this->commentParser->$getTagMethod();

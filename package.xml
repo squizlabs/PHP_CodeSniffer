@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
+    -- Thanks to Jeff Hodsdon for the patch
   - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
   - Fixed bug #14168 : Global Function -> Static Method and __autoload()
  </notes>
