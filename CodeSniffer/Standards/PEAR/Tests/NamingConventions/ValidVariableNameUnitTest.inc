@@ -47,4 +47,14 @@ if (true) {
         $var_name = 'hello';
     }
 }
+
+class MyClass {
+    function myFunction($cc, $cv) {
+        $req = "delete from blah
+                where not (POP_{$cc}_A =
+'{$this->def["POP_{$cc}_A"]}'
+                         and POP_{$cc}_B =
+'{$this->def["POP_{$cc}_B"]}')";
+    }
+}
 ?>

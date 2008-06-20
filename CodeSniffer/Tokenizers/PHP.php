@@ -223,16 +223,23 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if ($tokenIsArray === false && $token === '"') {
                 $tokenContent = '"';
+                $nestedVars   = array();
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
                     $subTokenIsArray = is_array($tokens[$i]);
 
                     if ($subTokenIsArray === true) {
                         $tokenContent .= $tokens[$i][1];
+                        if ($tokens[$i][1] === '{') {
+                            $nestedVars[] = $i;
+                        }
                     } else {
                         $tokenContent .= $tokens[$i];
+                        if ($tokens[$i] === '}') {
+                            array_pop($nestedVars);
+                        }
                     }
 
-                    if ($subTokenIsArray === false && $tokens[$i] === '"') {
+                    if ($subTokenIsArray === false && $tokens[$i] === '"' && empty($nestedVars) === true) {
                         // We found the other end of the double quoted string.
                         break;
                     }
