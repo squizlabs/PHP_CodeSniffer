@@ -383,8 +383,8 @@ class PHP_CodeSniffer_File
                         $timeTaken = round((microtime(true) - $startTime), 4);
                         echo "DONE in $timeTaken seconds".PHP_EOL;
                     }
-                }
-            }
+                }//end foreach
+            }//end if
         }//end foreach
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
@@ -1114,7 +1114,6 @@ class PHP_CodeSniffer_File
                 }//end if
             } else if ($tokenType === T_OPEN_PARENTHESIS) {
                 if (isset($tokens[$i]['parenthesis_owner']) === true) {
-
                     $owner = $tokens[$i]['parenthesis_owner'];
                     if (in_array($tokens[$owner]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true && isset($tokens[$i]['parenthesis_closer']) === true) {
                         // If we get into here, then we opened a parenthesis for
@@ -1231,7 +1230,6 @@ class PHP_CodeSniffer_File
         $openers    = array();
 
         for ($i = 0; $i < $numTokens; $i++) {
-
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
                 $line    = $tokens[$i]['line'];
@@ -1254,7 +1252,6 @@ class PHP_CodeSniffer_File
             $tokens[$i]['conditions'] = $conditions;
 
             if (isset($tokens[$i]['scope_condition']) === true) {
-
                 // Check to see if this token opened the scope.
                 if ($tokens[$i]['scope_opener'] === $i) {
                     $stackPtr = $tokens[$i]['scope_condition'];
@@ -1352,7 +1349,6 @@ class PHP_CodeSniffer_File
                     if ($lastOpener !== null) {
                         $openers[$lastOpener] = $lastOpener;
                     }
-
                 } else if ($tokens[$i]['scope_closer'] === $i) {
                     $removedCondition = false;
                     foreach (array_reverse($openers) as $opener) {
@@ -1463,7 +1459,6 @@ class PHP_CodeSniffer_File
         $typeHint        = '';
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
-
             // Check to see if this token has a parenthesis opener. If it does
             // its likely to be an array, which might have arguments in it, which
             // we cause problems in our parsing below, so lets just skip to the
@@ -1580,7 +1575,6 @@ class PHP_CodeSniffer_File
         $isStatic       = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
-
             if (in_array($this->_tokens[$i]['code'], $valid) === false) {
                 break;
             }
@@ -1650,8 +1644,8 @@ class PHP_CodeSniffer_File
 
         end($this->_tokens[$stackPtr]['conditions']);
         $ptr = key($this->_tokens[$stackPtr]['conditions']);
-        if (!isset($this->_tokens[$ptr]) || $this->_tokens[$ptr]['code'] !== T_CLASS) {
-            if (isset($this->_tokens[$ptr]) && $this->_tokens[$ptr]['code'] === T_INTERFACE) {
+        if (isset($this->_tokens[$ptr]) === false || $this->_tokens[$ptr]['code'] !== T_CLASS) {
+            if (isset($this->_tokens[$ptr]) === true && $this->_tokens[$ptr]['code'] === T_INTERFACE) {
                 $error = 'Possible parse error: interfaces may not include member vars';
                 $this->addWarning($error, $stackPtr);
                 return array();
@@ -1675,7 +1669,6 @@ class PHP_CodeSniffer_File
         $isStatic       = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
-
             if (in_array($this->_tokens[$i]['code'], $valid) === false) {
                 break;
             }
@@ -1960,7 +1953,6 @@ class PHP_CodeSniffer_File
                     $foundToken = $i;
                 }
             }
-
         }//end for
 
         return $foundToken;

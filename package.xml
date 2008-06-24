@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
     -- Thanks to Jeff Hodsdon for the patch
+  - Added Generic DisallowMultipleStatementsSniff to ensure there is only one statement per line
+  - Squiz standard now uses DisallowMultipleStatementsSniff
   - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
   - Fixed bug #14168 : Global Function -> Static Method and __autoload()
  </notes>
@@ -194,6 +196,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Formatting">
+        <file baseinstalldir="PHP" name="DisallowMultipleStatementsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -301,6 +306,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Formatting">
+        <file baseinstalldir="PHP" name="DisallowMultipleStatementsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowMultipleStatementsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentUnitTest.php" role="test">
