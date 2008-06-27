@@ -46,6 +46,7 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
         return array(
                 31 => 1,
                 34 => 1,
+                55 => 1,
                );
 
     }//end getErrorList()

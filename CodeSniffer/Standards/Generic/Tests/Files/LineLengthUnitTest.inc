@@ -50,3 +50,6 @@ echo 'hi';
  * @license http://www.freebsd.org/copyright/freebsd-license.html BSD License (2 Clause)
  */
  ?>
+
+<?php
+// This is another really long comment that is going to go well over 100 characters, with no closing php tag after it.
