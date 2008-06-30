@@ -181,13 +181,26 @@ class PHP_CodeSniffer
     /**
      * Sets an array of file extensions that we will allow checking of.
      *
+     * If the extension is one of the defaults, a specific tokenizer
+     * will be used. Otherwise, the PHP tokenizer will be used for
+     * all extensions passed.
+     *
      * @param array $extensions An array of file extensions.
      *
      * @return void
      */
     public function setAllowedFileExtensions(array $extensions)
     {
-        $this->allowedFileExtensions = $extensions;
+        $newExtensions = array();
+        foreach ($extensions as $ext) {
+            if (isset($this->allowedFileExtensions[$ext]) === true) {
+                $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
+            } else {
+                $newExtensions[$ext] = 'PHP';
+            }
+        }
+
+        $this->allowedFileExtensions = $newExtensions;
 
     }//end setAllowedFileExtensions()
 
