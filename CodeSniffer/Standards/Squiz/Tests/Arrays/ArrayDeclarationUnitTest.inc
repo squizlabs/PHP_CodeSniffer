@@ -168,4 +168,8 @@ $array = array(
           'inputTwo',
           'input_3',
          );
+
+// Malformed
+$foo = array(1
+, 2);
 ?>

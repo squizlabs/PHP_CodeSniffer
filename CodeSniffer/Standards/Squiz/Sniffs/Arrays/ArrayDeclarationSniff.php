@@ -37,9 +37,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(
-                T_ARRAY,
-               );
+        return array(T_ARRAY);
 
     }//end register()
 
@@ -229,7 +227,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                     // Find the value, which will be the first token on the line,
                     // excluding the leading whitespace.
-                    $valueContent = ($nextToken - 1);
+                    $valueContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextToken - 1), null, true);
                     while ($tokens[$valueContent]['line'] === $tokens[$nextToken]['line']) {
                         if ($valueContent === $arrayStart) {
                             // Value must have been on the same line as the array
@@ -241,9 +239,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     }
 
                     $valueContent = $phpcsFile->findNext(T_WHITESPACE, ($valueContent + 1), $nextToken, true);
-                    $indices[]    = array(
-                                     'value' => $valueContent,
-                                    );
+                    $indices[]    = array('value' => $valueContent);
                     $singleUsed   = true;
                 }//end if
 
@@ -341,6 +337,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             foreach ($indices as $value) {
+                if (empty($value['value']) === true) {
+                    // Array was malformed and we couldn't figure out
+                    // the array value correctly, so we have to ignore it.
+                    // Other parts of this sniff will correct the error.
+                    continue;
+                }
+
                 if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
                     // A whitespace token before this value means that the value
                     // was indented and not flush with the opening parenthesis.
