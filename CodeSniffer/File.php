@@ -1057,9 +1057,9 @@ class PHP_CodeSniffer_File
                             continue;
                         } else {
                             // If the first non-whitespace/comment token is a
-                            // variable then this is an opener for a string offset
-                            // and not a scope.
-                            if ($tokens[$x]['code'] === T_VARIABLE) {
+                            // variable or object operator then this is an opener
+                            // for a string offset and not a scope.
+                            if ($tokens[$x]['code'] === T_VARIABLE || $tokens[$x]['code'] === T_OBJECT_OPERATOR) {
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                     echo str_repeat("\t", $depth);
                                     echo '* ignoring curly brace *'.PHP_EOL;

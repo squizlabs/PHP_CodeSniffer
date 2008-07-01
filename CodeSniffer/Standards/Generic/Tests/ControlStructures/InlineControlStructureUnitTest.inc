@@ -20,4 +20,7 @@ do {
     $i--;
 } while ($something);
 
+if(true)
+  $someObject->{$name};
+
 ?>

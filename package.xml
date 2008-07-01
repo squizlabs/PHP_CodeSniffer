@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
   - Fixed bug #14168 : Global Function -> Static Method and __autoload()
   - Fixed bug #14238 :Line length not checket at last line of a file
+  - Fixed bug #14249 : wrong detection of scope_opener
   - Fixed bug #14250 : ArrayDeclarationSniff emit warnings at malformed array
   - Fixed bug #14251 : --extensions option doesn't work
  </notes>
