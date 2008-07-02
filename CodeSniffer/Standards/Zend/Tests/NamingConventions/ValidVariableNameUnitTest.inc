@@ -94,4 +94,7 @@ $xmlParser  = 'hello';
 $xmlParser2 = 'hello';
 
 echo "{$_SERVER['HOSTNAME']} $var_name";
+
+$someObject->{$name};
+$someObject->my_function($var_name);
 ?>

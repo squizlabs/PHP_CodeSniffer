@@ -80,28 +80,31 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
         $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
         if ($tokens[$objOperator]['code'] === T_OBJECT_OPERATOR) {
             // Check to see if we are using a variable from an object.
-            $var     = $phpcsFile->findNext(array(T_STRING), ($objOperator + 1));
-            $bracket = $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
+            $var = $phpcsFile->findNext(array(T_WHITESPACE), ($objOperator + 1), null, true);
+            if ($tokens[$var]['code'] === T_STRING) {
+                // Either a var name or a function call, so check for bracket.
+                $bracket = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
 
-            if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
-                $objVarName = $tokens[$var]['content'];
+                if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
+                    $objVarName = $tokens[$var]['content'];
 
-                // There is no way for us to know if the var is public or private,
-                // so we have to ignore a leading underscore if there is one and just
-                // check the main part of the variable name.
-                $originalVarName = $objVarName;
-                if (substr($objVarName, 0, 1) === '_') {
-                    $objVarName = substr($objVarName, 1);
-                }
+                    // There is no way for us to know if the var is public or private,
+                    // so we have to ignore a leading underscore if there is one and just
+                    // check the main part of the variable name.
+                    $originalVarName = $objVarName;
+                    if (substr($objVarName, 0, 1) === '_') {
+                        $objVarName = substr($objVarName, 1);
+                    }
 
-                if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true, false) === false) {
-                    $error = "Variable \"$originalVarName\" is not in valid camel caps format";
-                    $phpcsFile->addError($error, $var);
-                } else if (preg_match('|\d|', $objVarName)) {
-                    $warning = "Variable \"$originalVarName\" contains numbers but this is discouraged";
-                    $phpcsFile->addWarning($warning, $stackPtr);
-                }
-            }
+                    if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true, false) === false) {
+                        $error = "Variable \"$originalVarName\" is not in valid camel caps format";
+                        $phpcsFile->addError($error, $var);
+                    } else if (preg_match('|\d|', $objVarName)) {
+                        $warning = "Variable \"$originalVarName\" contains numbers but this is discouraged";
+                        $phpcsFile->addWarning($warning, $stackPtr);
+                    }
+                }//end if
+            }//end if
         }//end if
 
         // There is no way for us to know if the var is public or private,

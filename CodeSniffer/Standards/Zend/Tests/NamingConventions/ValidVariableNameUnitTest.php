@@ -70,6 +70,7 @@ class Zend_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSni
                 90 => 1,
                 92 => 1,
                 96 => 1,
+                99 => 1,
                );
 
     }//end getErrorList()

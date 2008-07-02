@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Jeff Hodsdon for the patch
   - Added Generic DisallowMultipleStatementsSniff to ensure there is only one statement per line
   - Squiz standard now uses DisallowMultipleStatementsSniff
+  - Fixed error in Zend ValidVariableNameSniff when checking vars in form: $class->{$var}
   - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
   - Fixed bug #14168 : Global Function -> Static Method and __autoload()
   - Fixed bug #14238 :Line length not checket at last line of a file
