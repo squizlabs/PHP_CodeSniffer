@@ -6,7 +6,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <name>PHP_CodeSniffer</name>
  <channel>pear.php.net</channel>
  <summary>PHP_CodeSniffer tokenises PHP and JavaScript code and detects violations of a defined set of coding standards.</summary>
- <description>PHP_CodeSniffer is a PHP5 script that tokenises and &quot;sniffs&quot; PHP and JavaScript code to detect violations of a defined set of coding standards. It is an essential development tool that ensures that your code remains clean and consistent. It can even help prevent some common semantic errors made by developers.
+ <description>PHP_CodeSniffer is a PHP5 script that tokenises and &quot;sniffs&quot; PHP and JavaScript code to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers.
  </description>
  <lead>
   <name>Greg Sherwood</name>
