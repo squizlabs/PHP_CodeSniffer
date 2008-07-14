@@ -18,17 +18,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <name>Marc McIntyre</name>
   <user>marchaos</user>
   <email>mmcintyre@squiz.net</email>
-  <active>yes</active>
+  <active>no</active>
  </lead>
- <date>2008-07-03</date>
- <time>15:23:00</time>
+ <date>2008-07-14</date>
+ <time>13:45:00</time>
  <version>
-  <release>1.1.0RC3</release>
-  <api>1.1.0RC3</api>
+  <release>1.1.0</release>
+  <api>1.1.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
@@ -1394,6 +1394,31 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.1.0</release>
+    <api>1.1.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-07-14</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
+      -- Thanks to Jeff Hodsdon for the patch
+    - Added Generic DisallowMultipleStatementsSniff to ensure there is only one statement per line
+    - Squiz standard now uses DisallowMultipleStatementsSniff
+    - Fixed error in Zend ValidVariableNameSniff when checking vars in form: $class->{$var}
+    - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
+    - Fixed bug #14168 : Global Function -> Static Method and __autoload()
+    - Fixed bug #14238 :Line length not checket at last line of a file
+    - Fixed bug #14249 : wrong detection of scope_opener
+    - Fixed bug #14250 : ArrayDeclarationSniff emit warnings at malformed array
+    - Fixed bug #14251 : --extensions option doesn't work
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.1.0RC3</release>
