@@ -205,7 +205,15 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($assignment - 1), null, true);
 
                 $expected = ($actualColumn - $tokens[($prev + 1)]['column']);
-                $found    = ($tokens[$assignment]['column'] - $tokens[($prev + 1)]['column']);
+
+                if ($tokens[$assignment]['line'] !== $tokens[$prev]) {
+                    // Instead of working out how many spaces there are
+                    // across new lines, the error message becomes more
+                    // generic below.
+                    $found = null;
+                } else {
+                    $found = ($tokens[$assignment]['column'] - $tokens[($prev + 1)]['column']);
+                }
 
                 // If the expected number of spaces for alignment exceeds the
                 // maxPadding rule, we can ignore this assignment.
@@ -214,7 +222,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
 
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
-                $found    .= ($found === 1) ? ' space' : ' spaces';
+                if ($found === null) {
+                    $found = 'a new line';
+                } else {
+                    $found .= ($found === 1) ? ' space' : ' spaces';
+                }
 
                 if (count($assignments) === 1) {
                     $error = "Equals sign not aligned correctly; expected $expected but found $found";

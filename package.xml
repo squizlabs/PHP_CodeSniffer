@@ -23,26 +23,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2008-07-14</date>
  <time>13:45:00</time>
  <version>
-  <release>1.1.0</release>
-  <api>1.1.0</api>
+  <release>1.2.0a1</release>
+  <api>1.2.0a1</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
-    -- Thanks to Jeff Hodsdon for the patch
-  - Added Generic DisallowMultipleStatementsSniff to ensure there is only one statement per line
-  - Squiz standard now uses DisallowMultipleStatementsSniff
-  - Fixed error in Zend ValidVariableNameSniff when checking vars in form: $class->{$var}
-  - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
-  - Fixed bug #14168 : Global Function -> Static Method and __autoload()
-  - Fixed bug #14238 :Line length not checket at last line of a file
-  - Fixed bug #14249 : wrong detection of scope_opener
-  - Fixed bug #14250 : ArrayDeclarationSniff emit warnings at malformed array
-  - Fixed bug #14251 : --extensions option doesn't work
+  - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
  </notes>
  <contents>
   <dir name="/">
