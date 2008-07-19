@@ -206,7 +206,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
                 $expected = ($actualColumn - $tokens[($prev + 1)]['column']);
 
-                if ($tokens[$assignment]['line'] !== $tokens[$prev]) {
+                if ($tokens[$assignment]['line'] !== $tokens[$prev]['line']) {
                     // Instead of working out how many spaces there are
                     // across new lines, the error message becomes more
                     // generic below.
