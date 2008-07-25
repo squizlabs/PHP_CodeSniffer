@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added support for a new multi-file sniff that sniffs all processed files at once
+  - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
  </notes>
  <contents>
@@ -151,6 +153,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Sniffs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="DuplicateClassNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="CodeAnalysis">
         <file baseinstalldir="PHP" name="EmptyStatementSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -249,6 +256,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Tests">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="CodeAnalysis">
         <file baseinstalldir="PHP" name="EmptyStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="EmptyStatementUnitTest.php" role="test">
@@ -1333,6 +1347,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="File.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="MultiFileSniff.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="Sniff.php" role="php">

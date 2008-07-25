@@ -243,19 +243,8 @@ class PHP_CodeSniffer_File
      */
     public function __construct($file, array $listeners, array $tokenizers)
     {
-        foreach ($listeners as $listenerClass) {
-            $listener = new $listenerClass();
-            $tokens   = $listener->register();
-
-            if (is_array($tokens) === false) {
-                $msg = "Sniff $listenerClass register() method must return an array";
-                throw new PHP_CodeSniffer_Exception($msg);
-            }
-
-            $this->addTokenListener($listener, $tokens);
-        }
-
         $this->_file      = trim($file);
+        $this->_listeners = $listeners;
         $this->tokenizers = $tokenizers;
 
     }//end __construct()
@@ -391,12 +380,20 @@ class PHP_CodeSniffer_File
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
         }
 
-        // We don't need the tokens any more, so get rid of them
-        // to save some memory.
+    }//end start()
+
+
+    /**
+     * Remove vars stored in this sniff that are no longer required.
+     *
+     * @return void
+     */
+    public function cleanUp()
+    {
         $this->_tokens    = null;
         $this->_listeners = null;
 
-    }//end start()
+    }//end cleanUp()
 
 
     /**
