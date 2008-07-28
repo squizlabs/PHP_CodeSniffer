@@ -991,7 +991,7 @@ class PHP_CodeSniffer
             $paddingLine2 .= ' | ';
 
             // The maxium amount of space an error message can use.
-            $maxErrorSpace = (80 - strlen($paddingLine2));
+            $maxErrorSpace = (79 - strlen($paddingLine2));
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {

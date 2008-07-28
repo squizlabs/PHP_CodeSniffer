@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for a new multi-file sniff that sniffs all processed files at once
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
+  - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Fixed bug #14409 : Output of warnings to log file
  </notes>
  <contents>
