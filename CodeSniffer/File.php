@@ -667,7 +667,11 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $count; $i++) {
             $tokens[$i]['line'] = $lineNumber;
-            $lineNumber        += substr_count($tokens[$i]['content'], $eolChar);
+            if ($tokens[$i]['content'] === '') {
+                continue;
+            }
+
+            $lineNumber += substr_count($tokens[$i]['content'], $eolChar);
         }
 
     }//end _createLineMap()
