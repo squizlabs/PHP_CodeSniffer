@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added support for a new multi-file sniff that sniffs all processed files at once
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
+  - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
+    -- Thanks to Sertan Danis for the contribution
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Fixed bug #14409 : Output of warnings to log file
@@ -801,6 +803,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Objects">
+        <file baseinstalldir="PHP" name="DisallowObjectStringIndexSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ObjectInstantiationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1103,6 +1108,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Objects">
+        <file baseinstalldir="PHP" name="DisallowObjectStringIndexUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DisallowObjectStringIndexUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ObjectInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ObjectInstantiationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
