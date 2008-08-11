@@ -70,6 +70,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     protected $currScope = null;
 
     /**
+     * The current file being checked.
+     *
+     * @var string
+     */
+    protected $currFile = '';
+
+    /**
      * True if this test should fire on tokens outside of the scope.
      *
      * @var boolean
@@ -150,6 +157,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $file = $phpcsFile->getFilename();
+        if ($this->currFile !== $file) {
+            // We have changed files, so clean up.
+            $this->currScope = null;
+            $this->currFile  = $file;
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         if (in_array($tokens[$stackPtr]['code'], $this->_scopeTokens) === true) {
