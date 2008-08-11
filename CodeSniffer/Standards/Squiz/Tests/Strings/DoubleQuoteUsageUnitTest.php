@@ -44,8 +44,12 @@ class Squiz_Tests_Strings_DoubleQuoteUsageUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                4 => 1,
-                8 => 2,
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                8  => 2,
+                13 => 1,
+                14 => 1,
                );
 
     }//end getErrorList()
