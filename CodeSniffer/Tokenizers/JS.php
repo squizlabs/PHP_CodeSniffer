@@ -517,6 +517,26 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }//end foreach
 
+        // Trim the last newline off the end of the buffer before
+        // adding it's contents to the token stack.
+        // This is so we don't count the very final newline of a file.
+        $buffer = substr($buffer, 0, (strlen($eolChar) * -1));
+
+        if (empty($buffer) === false) {
+            // Buffer contians whitespace from the end of the file, and not
+            // just the final newline.
+            $tokens[] = array(
+                         'code'    => T_WHITESPACE,
+                         'type'    => 'T_WHITESPACE',
+                         'content' => $buffer,
+                        );
+                        
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $content = str_replace($eolChar, '\n', $buffer);
+                echo "=> Added token T_WHITESPACE ($content)".PHP_EOL;
+            }
+        }
+
         $tokens[] = array(
                      'code'    => T_CLOSE_TAG,
                      'type'    => 'T_CLOSE_TAG',
