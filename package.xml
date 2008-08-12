@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sertan Danis for the contribution
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
+  - Generic LineEndingsSniff now supports checking of JS files
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
