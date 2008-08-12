@@ -33,6 +33,15 @@
 class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -70,23 +79,33 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for start of file whitespace.
             */
 
-            // If its the first token, then there is no space.
-            if ($stackPtr === 0) {
-                return;
-            }
-
-            for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-                // If we find something that isn't inline html then there is something previous in the file.
-                if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+            if ($phpcsFile->tokenizerType === 'JS') {
+                // The first token is always the open tag inserted when tokenizsed
+                // and the second token is always the first piece of content in
+                // the file. If the second token is whitespace, there was
+                // whitespace at the start of the file.
+                if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+                    return;
+                }
+            } else {
+                // If its the first token, then there is no space.
+                if ($stackPtr === 0) {
                     return;
                 }
 
-                // If we have ended up with inline html make sure it isn't just whitespace.
-                $tokenContent = trim($tokens[$i]['content']);
-                if ($tokenContent !== '') {
-                    return;
+                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                    // If we find something that isn't inline html then there is something previous in the file.
+                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+                        return;
+                    }
+
+                    // If we have ended up with inline html make sure it isn't just whitespace.
+                    $tokenContent = trim($tokens[$i]['content']);
+                    if ($tokenContent !== '') {
+                        return;
+                    }
                 }
-            }
+            }//end if
 
             $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr);
 
@@ -96,23 +115,33 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for end of file whitespace.
             */
 
-            if (isset($tokens[($stackPtr + 1)]) === false) {
-                // The close PHP token is the last in the file.
-                return;
-            }
-
-            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-                // If we find something that isn't inline html then there
-                // is more to the file.
-                if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+            if ($phpcsFile->tokenizerType === 'JS') {
+                // The last token is always the close tag inserted when tokenizsed
+                // and the second last token is always the last piece of content in
+                // the file. If the second last token is whitespace, there was
+                // whitespace at the end of the file.
+                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+                    return;
+                }
+            } else {
+                if (isset($tokens[($stackPtr + 1)]) === false) {
+                    // The close PHP token is the last in the file.
                     return;
                 }
 
-                // If we have ended up with inline html make sure it
-                // isn't just whitespace.
-                $tokenContent = trim($tokens[$i]['content']);
-                if (empty($tokenContent) === false) {
-                    return;
+                for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                    // If we find something that isn't inline html then there
+                    // is more to the file.
+                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+                        return;
+                    }
+
+                    // If we have ended up with inline html make sure it
+                    // isn't just whitespace.
+                    $tokenContent = trim($tokens[$i]['content']);
+                    if (empty($tokenContent) === false) {
+                        return;
+                    }
                 }
             }
 

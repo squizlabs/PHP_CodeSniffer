@@ -39,21 +39,43 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='SuperfluousWhitespaceUnitTest.inc')
     {
-        return array(
-                2  => 1,
-                4  => 1,
-                5  => 1,
-                6  => 1,
-                7  => 1,
-                16 => 1,
-                23 => 1,
-                30 => 1,
-                36 => 1,
-               );
+        switch ($testFile) {
+        case 'SuperfluousWhitespaceUnitTest.inc':
+            return array(
+                    2  => 1,
+                    4  => 1,
+                    5  => 1,
+                    6  => 1,
+                    7  => 1,
+                    16 => 1,
+                    23 => 1,
+                    30 => 1,
+                    36 => 1,
+                   );
+            break;
+        case 'SuperfluousWhitespaceUnitTest.js':
+            return array(
+                    1  => 1,
+                    3  => 1,
+                    4  => 1,
+                    5  => 1,
+                    6  => 1,
+                    15 => 1,
+                    22 => 1,
+                    29 => 1,
+                    35 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
