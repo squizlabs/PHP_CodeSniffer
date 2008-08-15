@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
+  - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
   - Fixed bug #14409 : Output of warnings to log file
@@ -408,6 +409,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="MySource">
       <dir name="Sniffs">
        <dir name="Channels">
+        <file baseinstalldir="PHP" name="DisallowSelfActionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="IncludeSystemSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -444,6 +448,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Channels">
+        <file baseinstalldir="PHP" name="DisallowSelfActionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSelfActionsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="IncludeSystemUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="IncludeSystemUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />

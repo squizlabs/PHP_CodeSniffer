@@ -1,0 +1,113 @@
+<?php
+/**
+ * Ensures that self is not used to call public method in action classes.
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer_MySource
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   CVS: $Id$
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+/**
+ * Ensures that self is not used to call public method in action classes.
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer_MySource
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniffer_Sniff
+{
+
+
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     */
+    public function register()
+    {
+        return array(T_CLASS);
+
+    }//end register()
+
+
+    /**
+     * Processes this sniff, when one of its tokens is encountered.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // We are only interested in Action classes.
+        $classNameToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        $className      = $tokens[$classNameToken]['content'];
+        if (substr($className, -7) !== 'Actions') {
+            return;
+        }
+
+        $foundFunctions = array();
+        $foundCalls     = array();
+
+        // Find all static method calls in the form self::method() in the class.
+        $classEnd = $tokens[$stackPtr]['scope_closer'];
+        for ($i = ($classNameToken + 1); $i < $classEnd; $i++) {
+            if ($tokens[$i]['code'] !== T_DOUBLE_COLON) {
+                if ($tokens[$i]['code'] === T_FUNCTION) {
+                    // Cache the function information.
+                    $funcName  = $phpcsFile->findNext(T_STRING, ($i + 1));
+                    $funcScope = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, ($i - 1));
+                    $foundFunctions[$tokens[$funcName]['content']] = strtolower($tokens[$funcScope]['content']);
+                }
+                continue;
+            }
+
+            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
+            if ($tokens[$prevToken]['content'] !== 'self') {
+                continue;
+            }
+
+            $funcNameToken = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
+            $funcName      = $tokens[$funcNameToken]['content'];
+
+            // We've found the function, now we need to find it and see if it is
+            // public, private or protected. If it starts with an underscore we
+            // can assume it is private.
+            if ($funcName{0} === '_') {
+                continue;
+            }
+
+            $foundCalls[$i] = $funcName;
+        }//end for
+
+        foreach ($foundCalls as $token => $funcName) {
+            if (isset($foundFunctions[$funcName]) === false) {
+                // Function was not in this class.
+                $error = "Static call to self::$funcName() appears to be invalid; method $funcName() does not exist in the class";
+                $phpcsFile->addError($error, $token);
+            } else if ($foundFunctions[$funcName] === 'public') {
+                $error = "Static calls to public methods in Action classes must not use the self keyword; use $className::$funcName() instead";
+                $phpcsFile->addError($error, $token);
+            }
+        }
+
+    }//end processTokenWithinScope()
+
+
+}//end class
+
+?>
