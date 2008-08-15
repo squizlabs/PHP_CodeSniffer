@@ -30,14 +30,29 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * An array of functions we don't want in the condition of loops.
      *
      * @return array
      */
     protected $forbiddenFunctions = array(
-                                     'sizeof',
-                                     'strlen',
-                                     'count',
+                                     'PHP' => array(
+                                               'sizeof',
+                                               'strlen',
+                                               'count',
+                                              ),
+                                     'JS'  => array(
+                                               'length',
+                                              ),
                                     );
 
 
@@ -65,15 +80,29 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
+        $tokenizer    = $phpcsFile->tokenizerType;
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['code'] === T_STRING && in_array($tokens[$i]['content'], $this->forbiddenFunctions)) {
-                $error = 'The use of '.$tokens[$i]['content'].'() inside a loop condition is not allowed. Assign the return value of '.$tokens[$i]['content'].'() to a variable and use the variable in the loop condition instead.';
+            if ($tokens[$i]['code'] === T_STRING && in_array($tokens[$i]['content'], $this->forbiddenFunctions[$tokenizer])) {
+                $functionName = $tokens[$i]['content'];
+                if ($tokenizer === 'JS') {
+                    // Needs to be in the form object.function to be valid.
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
+                    if ($prev === false || $tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
+                       continue;
+                    }
+
+                    $functionName = 'object.'.$functionName;
+                } else {
+                    $functionName .= '()';
+                }
+
+                $error = 'The use of '.$functionName.' inside a loop condition is not allowed. Assign the return value of '.$functionName.' to a variable and use the variable in the loop condition instead.';
                 $phpcsFile->addError($error, $i);
-            }
-        }
+            }//end if
+        }//end for
 
     }//end process()
 

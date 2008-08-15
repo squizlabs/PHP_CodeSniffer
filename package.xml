@@ -33,14 +33,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added support for a new multi-file sniff that sniffs all processed files at once
+  - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
-  - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Generic LineEndingsSniff now supports checking of JS files
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
+  - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
   - Fixed bug #14409 : Output of warnings to log file
@@ -315,6 +316,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineEndingsUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1159,6 +1161,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1277,6 +1280,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
