@@ -97,4 +97,9 @@ function myFunction()
     }
 
 }//end myFunction()
+
+foreach ($this->children as $child) {
+    echo $child;
+
+}
 ?>
