@@ -95,6 +95,11 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         $tokens = $phpcsFile->getTokens();
 
+        $errorToken = ($stackPtr + 1);
+        if (isset($tokens[$errorToken]) === false) {
+            $errorToken--;
+        }
+
         // Find the next non whitespace token.
         $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 
@@ -102,10 +107,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // We are only interested if this is the first open tag.
             return;
         } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a file comment', ($stackPtr + 1));
+            $phpcsFile->addError('You must use "/**" style comments for a file comment', $errorToken);
             return;
         } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT) {
-            $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+            $phpcsFile->addError('Missing file doc comment', $errorToken);
             return;
         } else {
 
@@ -118,6 +123,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                             T_CLASS,
                             T_DOC_COMMENT,
                            );
+
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
             if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
                 // Found a class token right after comment doc block.
@@ -127,7 +133,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     if ($newlineToken === false) {
                         // No blank line between the class token and the doc block.
                         // The doc block is most likely a class comment.
-                        $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+                        $phpcsFile->addError('Missing file doc comment', $errorToken);
                         return;
                     }
                 }
