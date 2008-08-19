@@ -82,7 +82,12 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             }
 
             $funcNameToken = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
-            $funcName      = $tokens[$funcNameToken]['content'];
+            if ($tokens[$funcNameToken]['code'] === T_VARIABLE) {
+                // We are only interested in function calls.
+                continue;
+            }
+
+            $funcName = $tokens[$funcNameToken]['content'];
 
             // We've found the function, now we need to find it and see if it is
             // public, private or protected. If it starts with an underscore we

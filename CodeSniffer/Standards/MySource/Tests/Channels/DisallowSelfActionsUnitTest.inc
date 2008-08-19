@@ -26,6 +26,8 @@ class SomethingActions
         self::z();
         self::y();
         self::b();
+        echo self::$_myVar;
+        echo self::$yourVar;
     }
 }
 ?>
