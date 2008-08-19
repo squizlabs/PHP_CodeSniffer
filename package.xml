@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
+  - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
   - Generic LineEndingsSniff now supports checking of JS files
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
@@ -44,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
+  - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Squiz standard now uses TodoSniff
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
@@ -871,6 +873,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DiscouragedFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EmbeddedPhpSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1187,6 +1192,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowSizeFunctionsInLoopsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DiscouragedFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DiscouragedFunctionsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EmbeddedPhpUnitTest.inc" role="test" />
