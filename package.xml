@@ -44,6 +44,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
+  - Added Generic TodoSniff that warns about comments that contain the word TODO
+  - Squiz standard now uses TodoSniff
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
   - Fixed bug #14409 : Output of warnings to log file
@@ -197,6 +199,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="TodoSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -307,6 +314,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UselessOverridingMethodUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UselessOverridingMethodUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="TodoUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="TodoUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
