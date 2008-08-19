@@ -45,6 +45,13 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                                      'delete' => 'unset',
                                     );
 
+    /**
+     * If true, an error will be thrown; otherwise a warning.
+     *
+     * @var bool
+     */
+    protected $error = true;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -83,12 +90,22 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $error = "The use of function $function() is forbidden";
+        $error = "The use of function $function() is ";
+        if ($this->error === true) {
+            $error .= 'forbidden';
+        } else {
+            $error .= 'discouraged';
+        }
+
         if ($this->forbiddenFunctions[$function] !== null) {
             $error .= '; use '.$this->forbiddenFunctions[$function].'() instead';
         }
 
-        $phpcsFile->addError($error, $stackPtr);
+        if ($this->error === true) {
+            $phpcsFile->addError($error, $stackPtr);
+        } else {
+            $phpcsFile->addWarning($error, $stackPtr);
+        }
 
     }//end process()
 
