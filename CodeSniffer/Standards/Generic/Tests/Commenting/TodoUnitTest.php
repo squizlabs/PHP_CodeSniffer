@@ -74,6 +74,17 @@ class Generic_Tests_Commenting_TodoUnitTest extends AbstractSniffUnitTest
                     21 => 1,
                    );
             break;
+        case 'TodoUnitTest.js':
+            return array(
+                    3  => 1,
+                    7  => 1,
+                    10 => 1,
+                    13 => 1,
+                    16 => 1,
+                    18 => 1,
+                    21 => 1,
+                   );
+            break;
         default:
             return array();
             break;
