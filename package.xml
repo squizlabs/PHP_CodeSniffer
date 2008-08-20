@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
+  - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Squiz standard now uses TodoSniff
@@ -438,6 +439,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Debug">
+        <file baseinstalldir="PHP" name="DebugCodeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="FirebugConsoleSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -480,6 +484,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Debug">
+        <file baseinstalldir="PHP" name="DebugCodeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DebugCodeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="FirebugConsoleUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="FirebugConsoleUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
