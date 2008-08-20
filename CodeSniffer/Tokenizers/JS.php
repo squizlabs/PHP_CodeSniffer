@@ -578,18 +578,17 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
                 }
 
-                // Token needs to be one of the standard allowed or the replace()
-                // method that can be called on string: string.replace(/abc/...).
-                if (in_array($tokens[$prev]['code'], $beforeTokens) === true || $tokens[$prev]['content'] === 'replace') {
-                    // This might be a regular expression.
-                    $regexTokens = array(
-                                    T_STRING,
-                                    T_WHITESPACE,
-                                    T_OBJECT_OPERATOR,
-                                   );
-
+                if (in_array($tokens[$prev]['code'], $beforeTokens) === true) {
+                    // This is probably a regular expression, so look for the end of it.
                     for ($next = ($stackPtr + 1); $next < $numTokens; $next++) {
-                        if (in_array($tokens[$next]['code'], $regexTokens) === false) {
+                        if ($tokens[$next]['code'] === T_DIVIDE) {
+                            // Just make sure this is not escaped first.
+                            if (substr($tokens[($next - 1)]['content'], -1) !== '\\') {
+                                break;
+                            }
+                        } else if (strpos($tokens[$next]['content'], $eolChar) !== false) {
+                            // If this is the last token on the line and regular expressions
+                            // need to be defined on a single line.
                             break;
                         }
                     }
@@ -621,7 +620,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             }
 
                             $token['code'] = T_REGULAR_EXPRESSION;
-                            $token['type'] ='T_REGULAR_EXPRESSION';
+                            $token['type'] = 'T_REGULAR_EXPRESSION';
                             $stackPtr      = $regexEnd;
                         }
                     }

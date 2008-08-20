@@ -69,3 +69,5 @@ three = myFunction((one / two) / four);
 three = myFunction(one / (two / four));
 
 four = -0.25;
+
+id = id.replace(/row\/:/gi, '');
