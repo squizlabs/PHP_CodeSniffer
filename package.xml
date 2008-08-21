@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
+  - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Squiz standard now uses TodoSniff
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
@@ -961,6 +962,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OperatorSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="PropertyLabelSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ScopeClosingBraceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1304,6 +1308,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="PropertyLabelSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="PropertyLabelSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc" role="test" />
