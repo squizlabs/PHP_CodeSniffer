@@ -39,15 +39,31 @@ class Squiz_Tests_Commenting_PostStatementCommentUnitTest extends AbstractSniffU
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='PostStatementCommentUnitTest.inc')
     {
-        return array(
-                6  => 1,
-                10 => 1,
-                18 => 1,
-               );
+        switch ($testFile) {
+        case 'PostStatementCommentUnitTest.inc':
+            return array(
+                    6  => 1,
+                    10 => 1,
+                    18 => 1,
+                   );
+            break;
+        case 'PostStatementCommentUnitTest.js':
+            return array(
+                    1 => 1,
+                    4 => 1,
+                    9 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
