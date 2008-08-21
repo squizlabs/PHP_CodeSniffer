@@ -41,11 +41,23 @@ class Squiz_Tests_PHP_DisallowInlineIfUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='DisallowInlineIfUnitTest.inc')
     {
-        return array(
-                8 => 1,
-               );
+        switch ($testFile) {
+        case 'DisallowInlineIfUnitTest.inc':
+            return array(
+                    8 => 1,
+                   );
+            break;
+        case 'DisallowInlineIfUnitTest.js':
+            return array(
+                    1 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
