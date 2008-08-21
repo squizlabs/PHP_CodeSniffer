@@ -39,14 +39,30 @@ class Squiz_Tests_WhiteSpace_FunctionOpeningBraceSpaceUnitTest extends AbstractS
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='FunctionOpeningBraceSpaceUnitTest.inc')
     {
-        return array(
-                10 => 1,
-                25 => 1,
-               );
+        switch ($testFile) {
+        case 'FunctionOpeningBraceSpaceUnitTest.inc':
+            return array(
+                    10 => 1,
+                    25 => 1,
+                   );
+            break;
+        case 'FunctionOpeningBraceSpaceUnitTest.js':
+            return array(
+                    11 => 1,
+                    25 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
+        
 
     }//end getErrorList()
 
