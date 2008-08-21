@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
   - Squiz DisallowInlineIfSniff now supports checking of JS files
+  - Squiz SemicolonSpacingSniff now supports checking of JS files
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
@@ -1327,6 +1328,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
