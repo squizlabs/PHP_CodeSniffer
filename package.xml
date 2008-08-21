@@ -35,8 +35,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for a new multi-file sniff that sniffs all processed files at once
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
+    -- Not currently used by any standard; more of a multi-file sniff sample than anything useful
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
+  - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
+  - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
+  - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
+  - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
+  - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
   - Generic LineEndingsSniff now supports checking of JS files
@@ -46,11 +52,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SemicolonSpacingSniff now supports checking of JS files
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
-  - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
-  - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
-  - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
-  - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
-  - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Squiz standard now uses TodoSniff
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
