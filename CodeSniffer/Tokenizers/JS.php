@@ -753,30 +753,46 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         // Locate properties/labels and change their token type.
-        $numTokens     = count($tokens);
-        $propertyStack = array();
+        $numTokens  = count($tokens);
+        $classStack = array();
+        $propStack  = array();
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
                 $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
-                echo str_repeat("\t", count($propertyStack));
+                echo str_repeat("\t", count($classStack));
 
                 echo "\tProcess token $i: $type => $content".PHP_EOL;
             }
 
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET && isset($tokens[$i]['scope_condition']) === false) {
-                $propertyStack[] = $i;
+                $classStack[] = $i;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo str_repeat("\t", count($propertyStack));
+                    echo str_repeat("\t", count($classStack));
                     echo "\t=> Found property opener".PHP_EOL;
                 }
             } else if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET && isset($tokens[$i]['scope_condition']) === false) {
-                $opener = array_pop($propertyStack);
+                $opener = array_pop($classStack);
+
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo str_repeat("\t", count($propertyStack));
+                    echo str_repeat("\t", count($classStack));
                     echo "\t\t=> Found property closer for $opener".PHP_EOL;
                 }
+
+                // Add opener and closers for each property between the braces.
+                if (isset($propStack[$opener]) === true) {
+                    foreach ($propStack[$opener] as $stackPtr) {
+                        $tokens[$stackPtr]['scope_opener'] = $opener;
+                        $tokens[$stackPtr]['scope_closer'] = $i;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", count($classStack));
+                            echo "\t\t* set scope opener ($opener) and closer ($i) for token $stackPtr *".PHP_EOL;
+                        }
+                    }
+                }
+
+                unset($propStack[$opener]);
             } else if ($tokens[$i]['code'] === T_COLON) {
                 // If it is a scope opener, it belongs to a DEFAULT or CASE statement.
                 if (isset($tokens[$i]['scope_condition']) === true) {
@@ -803,12 +819,17 @@ class PHP_CodeSniffer_Tokenizers_JS
                     continue;
                 }
 
-                if (empty($propertyStack) === false) {
+                if (empty($classStack) === false) {
                     $tokens[$label]['code'] = T_PROPERTY;
                     $tokens[$label]['type'] = 'T_PROPERTY';
 
+                    // Add the label/property to the stack so we can add
+                    // scope openers and closers later.
+                    $opener               = $classStack[(count($classStack) - 1)];
+                    $propStack[$opener][] = $label;
+
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", count($propertyStack));
+                        echo str_repeat("\t", count($classStack));
                         echo "\t* token $label converted from T_STRING to T_PROPERTY *".PHP_EOL;
                     }
                 } else {
@@ -816,7 +837,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $tokens[$label]['type'] = 'T_LABEL';
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", count($propertyStack));
+                        echo str_repeat("\t", count($classStack));
                         echo "\t* token $label converted from T_STRING to T_LABEL *".PHP_EOL;
                     }
                 }
