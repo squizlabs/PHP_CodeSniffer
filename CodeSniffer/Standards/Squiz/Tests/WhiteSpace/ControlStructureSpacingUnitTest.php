@@ -39,23 +39,45 @@ class Squiz_Tests_WhiteSpace_ControlStructureSpacingUnitTest extends AbstractSni
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='ControlStructureSpacingUnitTest.inc')
     {
-        return array(
-                3   => 1,
-                5   => 1,
-                8   => 1,
-                15  => 1,
-                23  => 1,
-                74  => 1,
-                79  => 1,
-                82  => 1,
-                83  => 1,
-                87  => 1,
-                103 => 1,
-               );
+        switch ($testFile) {
+        case 'ControlStructureSpacingUnitTest.inc':
+            return array(
+                    3   => 1,
+                    5   => 1,
+                    8   => 1,
+                    15  => 1,
+                    23  => 1,
+                    74  => 1,
+                    79  => 1,
+                    82  => 1,
+                    83  => 1,
+                    87  => 1,
+                    103 => 1,
+                   );
+            break;
+        case 'ControlStructureSpacingUnitTest.js':
+            return array(
+                    3  => 1,
+                    9  => 1,
+                    15 => 1,
+                    21 => 1,
+                    56 => 1,
+                    61 => 1,
+                    64 => 1,
+                    65 => 1,
+                    68 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
