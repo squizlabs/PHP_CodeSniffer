@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
+  - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
@@ -727,6 +728,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ClassFileNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DuplicatePropertySniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LowercaseClassKeywordsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1007,6 +1011,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ClassFileNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClassFileNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DuplicatePropertyUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DuplicatePropertyUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LowercaseClassKeywordsUnitTest.inc" role="test" />
