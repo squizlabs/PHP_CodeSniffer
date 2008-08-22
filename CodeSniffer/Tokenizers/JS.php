@@ -736,6 +736,93 @@ class PHP_CodeSniffer_Tokenizers_JS
     }//end tokenizeString()
 
 
+    /**
+     * Performs additional processing after main tokenizing.
+     *
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return void
+     */
+    public function processAdditional(&$tokens, $eolChar)
+    {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START ADDITIONAL PROCESSING ***".PHP_EOL;
+        }
+
+        // Locate properties/labels and change their token type.
+        $numTokens     = count($tokens);
+        $propertyStack = array();
+
+        for ($i = 0; $i < $numTokens; $i++) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $type    = $tokens[$i]['type'];
+                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                echo str_repeat("\t", count($propertyStack));
+
+                echo "\tProcess token $i: $type => $content".PHP_EOL;
+            }
+
+            if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET && isset($tokens[$i]['scope_condition']) === false) {
+                $propertyStack[] = $i;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", count($propertyStack));
+                    echo "\t=> Found property opener".PHP_EOL;
+                }
+            } else if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET && isset($tokens[$i]['scope_condition']) === false) {
+                $opener = array_pop($propertyStack);
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", count($propertyStack));
+                    echo "\t\t=> Found property closer for $opener".PHP_EOL;
+                }
+            } else if ($tokens[$i]['code'] === T_COLON) {
+                // Make sure this is not part of an inline IF statement.
+                for ($x = ($i - 1); $x >= 0; $x--) {
+                    if ($tokens[$x]['code'] === T_INLINE_THEN) {
+                        continue(2);
+                    } else if ($tokens[$x]['line'] < $tokens[$i]['line']) {
+                        break;
+                    }
+                }
+
+                // The string to the left of the colon is either a property or label.
+                for ($label = ($i - 1); $label >= 0; $label--) {
+                    if (in_array($tokens[$label]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$label]['code'] !== T_STRING) {
+                    continue;
+                }
+
+                if (empty($propertyStack) === false) {
+                    $tokens[$label]['code'] = T_PROPERTY;
+                    $tokens[$label]['type'] = 'T_PROPERTY';
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($propertyStack));
+                        echo "\t* token $label converted from T_STRING to T_PROPERTY *".PHP_EOL;
+                    }
+                } else {
+                    $tokens[$label]['code'] = T_LABEL;
+                    $tokens[$label]['type'] = 'T_LABEL';
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($propertyStack));
+                        echo "\t* token $label converted from T_STRING to T_LABEL *".PHP_EOL;
+                    }
+                }
+            }//end if
+        }//end for
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END ADDITIONAL PROCESSING ***".PHP_EOL;
+        }
+
+    }//end processAdditional()
+
+
 }//end class
 
 ?>

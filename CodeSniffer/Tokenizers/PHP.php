@@ -393,6 +393,20 @@ class PHP_CodeSniffer_Tokenizers_PHP
     }//end tokenizeString()
 
 
+    /**
+     * Performs additional processing after main tokenizing.
+     *
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return array
+     */
+    public function processAdditional(&$tokens, $eolChar)
+    {
+
+    }//end processAdditional()
+
+
 }//end class
 
 ?>

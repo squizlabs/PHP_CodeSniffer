@@ -45,7 +45,10 @@ class Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff implements PHP_CodeSniff
      */
     public function register()
     {
-        return array(T_COLON);
+        return array(
+                T_PROPERTY,
+                T_LABEL,
+               );
 
     }//end register()
 
@@ -63,24 +66,14 @@ class Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff implements PHP_CodeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Make sure it is not an inline IF.
-        $prev = $phpcsFile->findPrevious(T_INLINE_THEN, ($stackPtr - 1));
-        if ($prev !== false && $tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
-            return;
-        }
+        $colon = $phpcsFile->findNext(T_COLON, ($stackPtr + 1));
 
-        // We only know about strings in the form name: so ignore everything else.
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] !== T_STRING) {
-            return;
-        }
-
-        if ($prev !== ($stackPtr - 1)) {
+        if ($colon !== ($stackPtr + 1)) {
             $error = 'There must be no space before the colon in a property/label declaration';
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE || $tokens[($stackPtr + 1)]['content'] !== ' ') {
+        if ($tokens[($colon + 1)]['code'] !== T_WHITESPACE || $tokens[($colon + 1)]['content'] !== ' ') {
             $error = 'There must be a single space after the colon in a property/label declaration';
             $phpcsFile->addError($error, $stackPtr);
         }

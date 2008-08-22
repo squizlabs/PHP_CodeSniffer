@@ -59,6 +59,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz standard now uses TodoSniff
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
+  - JavaScript tokenizer now identifies properties and labels as new token types
   - Improved regular expression detection in the JavaScript tokenizer
   - Fixed bug #14409 : Output of warnings to log file
   - Fixed bug #14520 : Notice: Undefined offset: 1 in /usr/share/php/PHP/CodeSniffer/File.php on line

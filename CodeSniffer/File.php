@@ -646,6 +646,9 @@ class PHP_CodeSniffer_File
         self::_createColumnMap($tokens, $tokenizer, $eolChar);
         self::_createLevelMap($tokens, $tokenizer, $eolChar);
 
+        // Allow the tokenizer to do additional processing if required.
+        $tokenizer->processAdditional($tokens, $eolChar);
+
         return $tokens;
 
     }//end tokenizeString()
