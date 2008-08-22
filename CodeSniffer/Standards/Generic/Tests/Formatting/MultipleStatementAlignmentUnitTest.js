@@ -1,4 +1,4 @@
-<?php
+
 
 // Valid
 var1    = 'var1';
@@ -84,4 +84,4 @@ var spinButtonid = [this.id, '-positionFormats-spinButton'].join('');
 var spinButtonWidget = WidgetStore.get(spinButtonid);
 var position = spinButtonWidget.getValue();
 var posForamatsList = WidgetStore.get([self.id, '-positionFormats-list'].join(''));
-?>
+

@@ -1,12 +1,9 @@
-<?php
-
-class ExampleClass
-{
-	function exampleFunction() {}
-
+var x = {
+  abc: 1,
+	zyz: 2,
+  abc: 5,
+  mno: {
+  	abc: 4
+  },
+  abc: 5
 }
-
-    $correctVar = true;
-	$correctVar = false;
-
-?>
