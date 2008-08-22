@@ -30,3 +30,13 @@ function FuncFive()
 
 
 }
+
+function valid()
+{
+   if (true) {
+       test = {
+           namespaces: {}
+       };
+   }
+
+}

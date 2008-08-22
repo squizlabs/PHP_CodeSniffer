@@ -972,7 +972,7 @@ class PHP_CodeSniffer_File
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
-        $ignore    = false;
+        $ignore    = 0;
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
@@ -992,7 +992,7 @@ class PHP_CodeSniffer_File
                     echo "opener:$opener;";
                 }
 
-                if ($ignore === true) {
+                if ($ignore > 0) {
                     echo 'ignore;';
                 }
 
@@ -1069,7 +1069,7 @@ class PHP_CodeSniffer_File
                                     echo '* ignoring curly brace *'.PHP_EOL;
                                 }
 
-                                $ignore = true;
+                                $ignore++;
                             }//end if
 
                             break;
@@ -1077,7 +1077,7 @@ class PHP_CodeSniffer_File
                     }//end for
                 }//end if
 
-                if ($ignore === false) {
+                if ($ignore === 0) {
                     // We found the opening scope token for $currType.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
@@ -1088,7 +1088,7 @@ class PHP_CodeSniffer_File
                     $opener = $i;
                 }
             } else if ($tokenType === $tokenizer->scopeOpeners[$currType]['end'] && $opener !== null) {
-                if ($ignore === true && $tokenType === T_CLOSE_CURLY_BRACKET) {
+                if ($ignore > 0 && $tokenType === T_CLOSE_CURLY_BRACKET) {
                     // The last opening bracket must have been for a string
                     // offset or alike, so let's ignore it.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1096,7 +1096,7 @@ class PHP_CodeSniffer_File
                         echo '* finished ignoring curly brace *'.PHP_EOL;
                     }
 
-                    $ignore = false;
+                    $ignore--;
                 } else {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
@@ -1146,7 +1146,7 @@ class PHP_CodeSniffer_File
                     echo '* ignoring curly brace *'.PHP_EOL;
                 }
 
-                $ignore = true;
+                $ignore++;
             } else if ($opener === null && isset($tokenizer->scopeOpeners[$currType]) === true) {
                 // If we still haven't found the opener after 3 lines,
                 // we're not going to find it, unless we know it requires
@@ -1171,14 +1171,14 @@ class PHP_CodeSniffer_File
                 }
             } else if ($opener !== null && $tokenType !== T_BREAK && in_array($tokenType, $tokenizer->endScopeTokens) === true) {
                 if (isset($tokens[$i]['scope_condition']) === false) {
-                    if ($ignore === true) {
+                    if ($ignore > 0) {
                         // We found the end token for the opener we were ignoring.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
                             echo '* finished ignoring curly brace *'.PHP_EOL;
                         }
 
-                        $ignore = false;
+                        $ignore--;
                     } else {
                         // We found a token that closes the scope but it doesn't
                         // have a condition, so it belongs to another token and
