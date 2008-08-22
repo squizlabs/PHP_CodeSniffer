@@ -27,3 +27,13 @@ even_number: if ((i % 2) == 0) {
     if (i == 12)
         break even_number;
 }
+
+switch (blah) {
+    case dfx.DOM_VK_LEFT:
+        this.caretLeft(shiftKey);
+    break;
+    default:
+        if (blah) {
+        }
+    break;
+}

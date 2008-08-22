@@ -778,6 +778,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                     echo "\t\t=> Found property closer for $opener".PHP_EOL;
                 }
             } else if ($tokens[$i]['code'] === T_COLON) {
+                // If it is a scope opener, it belongs to a DEFAULT or CASE statement.
+                if (isset($tokens[$i]['scope_condition']) === true) {
+                    continue;
+                }
+
                 // Make sure this is not part of an inline IF statement.
                 for ($x = ($i - 1); $x >= 0; $x--) {
                     if ($tokens[$x]['code'] === T_INLINE_THEN) {
