@@ -567,6 +567,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 $beforeTokens = array(
                                  T_EQUAL,
                                  T_OPEN_PARENTHESIS,
+                                 T_RETURN,
                                 );
 
                 $afterTokens = array(
@@ -574,6 +575,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                  T_CLOSE_PARENTHESIS,
                                  T_SEMICOLON,
                                  T_WHITESPACE,
+                                 T_OBJECT_OPERATOR,
                                 );
 
                 for ($prev = ($stackPtr - 1); $prev >= 0; $prev--) {

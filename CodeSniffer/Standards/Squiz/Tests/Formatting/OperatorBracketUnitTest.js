@@ -71,3 +71,4 @@ three = myFunction(one / (two / four));
 four = -0.25;
 
 id = id.replace(/row\/:/gi, '');
+return /MSIE/.test(navigator.userAgent);
