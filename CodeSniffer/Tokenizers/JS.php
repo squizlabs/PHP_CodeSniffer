@@ -240,11 +240,13 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }
 
-        $tokens      = array();
-        $inString    = '';
-        $inComment   = '';
-        $buffer      = '';
-        $cleanBuffer = false;
+        $tokens          = array();
+        $inString        = '';
+        $stringChar      = null;
+        $inComment       = '';
+        $buffer          = '';
+        $preStringBuffer = '';
+        $cleanBuffer     = false;
 
         $tokens[] = array(
                      'code'    => T_OPEN_TAG,
@@ -256,10 +258,18 @@ class PHP_CodeSniffer_Tokenizers_JS
             echo "\t*** START TOKENIZING ***".PHP_EOL;
         }
 
-        $chars = str_split($string);
-        foreach ($chars as $i => $char) {
+        // Convert newlines to single characters for ease of
+        // processing. We will change them back later.
+        $string = str_replace($eolChar, "\n", $string);
+
+        $chars    = str_split($string);
+        $numChars = count($chars);
+        for ($i = 0; $i < $numChars; $i++) {
+            $char = $chars[$i];
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = str_replace($eolChar, '\n', $char);
+                $content = str_replace("\n", '\n', $char);
+                $bufferContent = str_replace("\n", '\n', $buffer);
                 if ($inString !== '') {
                     echo "\t";
                 }
@@ -268,7 +278,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     echo "\t";
                 }
 
-                echo "Process char $i => $content".PHP_EOL;
+                echo "Process char $i => $content (buffer: $bufferContent)".PHP_EOL;
             }
 
             if ($inString === '' && $inComment === '' && $buffer !== '') {
@@ -278,11 +288,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $tokens[] = array(
                                  'code'    => T_WHITESPACE,
                                  'type'    => 'T_WHITESPACE',
-                                 'content' => $buffer,
+                                 'content' => str_replace("\n", $eolChar, $buffer),
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace($eolChar, '\n', $buffer);
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "=> Added token T_WHITESPACE ($content)".PHP_EOL;
                     }
 
@@ -295,11 +305,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $tokens[] = array(
                                  'code'    => T_STRING,
                                  'type'    => 'T_STRING',
-                                 'content' => $buffer,
+                                 'content' => str_replace("\n", $eolChar, $buffer),
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace($eolChar, '\n', $buffer);
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "=> Added token T_STRING ($content)".PHP_EOL;
                     }
 
@@ -327,27 +337,49 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $tokens[] = array(
                                      'code'    => T_CONSTANT_ENCAPSED_STRING,
                                      'type'    => 'T_CONSTANT_ENCAPSED_STRING',
-                                     'content' => $buffer.$char,
+                                     'content' => str_replace("\n", $eolChar, $buffer).$char,
                                     );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t* found end of string *".PHP_EOL;
-                            $content = str_replace($eolChar, '\n', $buffer.$char);
+                            $content = str_replace("\n", '\n', $buffer.$char);
                             echo "=> Added token T_CONSTANT_ENCAPSED_STRING $content)".PHP_EOL;
                         }
 
-                        $buffer   = '';
-                        $inString = '';
+                        $buffer          = '';
+                        $preStringBuffer = '';
+                        $inString        = '';
+                        $stringChar      = null;
                         continue;
                     }
                 } else if ($inString === '') {
-                    $inString = $char;
+                    $inString        = $char;
+                    $stringChar      = $i;
+                    $preStringBuffer = $buffer;
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t* looking for string closer *".PHP_EOL;
                     }
                 }//end if
             }//end if
+
+            if ($inString !== '' && $char === "\n") {
+                // Unless this newline character is escaped, the string did not
+                // end before the end of the line, which means it probably
+                // wasn't a string at all (maybe a regex).
+                if ($chars[($i - 1)] !== '\\') {
+                    $i               = $stringChar;
+                    $buffer          = $preStringBuffer;
+                    $preStringBuffer = '';
+                    $inString        = '';
+                    $stringChar      = null;
+                    $char            = $chars[$i];
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t* found newline before end of string, bailing *".PHP_EOL;
+                    }
+                }
+            }
 
             $buffer .= $char;
 
@@ -382,7 +414,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $charBuffer .= $chars[($i + $x)];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace($eolChar, '\n', $charBuffer);
+                            $content = str_replace("\n", '\n', $charBuffer);
                             echo "\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
 
@@ -413,7 +445,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             echo "\t* look ahead found nothing *".PHP_EOL;
                         }
 
-                        $content = str_replace($eolChar, '\n', $buffer);
+                        $content = str_replace("\n", '\n', $buffer);
                         echo "=> Added token $value ($content)".PHP_EOL;
                     }
 
@@ -426,11 +458,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                 $tokens[] = array(
                              'code'    => T_STRING,
                              'type'    => 'T_STRING',
-                             'content' => substr($buffer, 0, -1),
+                             'content' => substr(str_replace("\n", $eolChar, $buffer), 0, -1),
                             );
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = str_replace($eolChar, '\n', substr($buffer, 0, -1));
+                    $content = str_replace("\n", '\n', substr($buffer, 0, -1));
                     echo "=> Added token T_STRING ($content)".PHP_EOL;
                 }
 
@@ -451,7 +483,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $charBuffer .= $chars[($i + $x)];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace($eolChar, '\n', $charBuffer);
+                        $content = str_replace("\n", '\n', $charBuffer);
                         echo "\t=> Looking ahead $x chars => $content".PHP_EOL;
                     }
 
@@ -478,7 +510,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t* look ahead found nothing *".PHP_EOL;
-                        $content = str_replace($eolChar, '\n', $char);
+                        $content = str_replace("\n", '\n', $char);
                         echo "=> Added token $value ($content)".PHP_EOL;
                     }
 
@@ -499,7 +531,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             } else if ($inComment !== '') {
                 if ($this->commentTokens[$inComment] === null) {
                     // Comment ends at the next newline.
-                    if (strpos($buffer, $eolChar) !== false) {
+                    if (strpos($buffer, "\n") !== false) {
                         $inComment = '';
                     }
                 } else {
@@ -524,7 +556,7 @@ class PHP_CodeSniffer_Tokenizers_JS
         // Trim the last newline off the end of the buffer before
         // adding it's contents to the token stack.
         // This is so we don't count the very final newline of a file.
-        $buffer = substr($buffer, 0, (strlen($eolChar) * -1));
+        $buffer = substr($buffer, 0, -1);
 
         if (empty($buffer) === false) {
             // Buffer contians whitespace from the end of the file, and not
@@ -532,9 +564,9 @@ class PHP_CodeSniffer_Tokenizers_JS
             $tokens[] = array(
                          'code'    => T_WHITESPACE,
                          'type'    => 'T_WHITESPACE',
-                         'content' => $buffer,
+                         'content' => str_replace("\n", $eolChar, $buffer),
                         );
-                        
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $content = str_replace($eolChar, '\n', $buffer);
                 echo "=> Added token T_WHITESPACE ($content)".PHP_EOL;
