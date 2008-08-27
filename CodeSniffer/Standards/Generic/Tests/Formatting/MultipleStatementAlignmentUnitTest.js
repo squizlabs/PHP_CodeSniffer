@@ -85,3 +85,9 @@ var spinButtonWidget = WidgetStore.get(spinButtonid);
 var position = spinButtonWidget.getValue();
 var posForamatsList = WidgetStore.get([self.id, '-positionFormats-list'].join(''));
 
+dfx.stripTags = function(content, allowedTags)
+{
+    var match;
+    var re = 'blah';
+};
+

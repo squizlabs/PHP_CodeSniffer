@@ -140,6 +140,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             // above the current one to be in the same assignment block.
             $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($prevAssignment + 1));
 
+            // And the end token must actually belong to this assignment.
+            $nextOpener = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$scopeOpeners, ($prevAssignment + 1));
+            if ($nextOpener !== false && $nextOpener < $lineEnd) {
+                break;
+            }
+
             if ($tokens[$lineEnd]['line'] !== ($lastLine - 1)) {
                 break;
             }
