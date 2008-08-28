@@ -30,6 +30,16 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The openers that we are interested in.
      *
      * @var array(int)
