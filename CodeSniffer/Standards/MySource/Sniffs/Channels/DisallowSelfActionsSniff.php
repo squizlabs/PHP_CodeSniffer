@@ -99,13 +99,15 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             $foundCalls[$i] = $funcName;
         }//end for
 
+        $errorClassName = substr($className, 0, -7);
+
         foreach ($foundCalls as $token => $funcName) {
             if (isset($foundFunctions[$funcName]) === false) {
-                // Function was not in this class.
-                $error = "Static call to self::$funcName() appears to be invalid; method $funcName() does not exist in the class";
-                $phpcsFile->addError($error, $token);
+                // Function was not in this class, might have come from the parent.
+                // Either way, we can't really check this.
+                continue;
             } else if ($foundFunctions[$funcName] === 'public') {
-                $error = "Static calls to public methods in Action classes must not use the self keyword; use $className::$funcName() instead";
+                $error = "Static calls to public methods in Action classes must not use the self keyword; use $errorClassName::$funcName() instead";
                 $phpcsFile->addError($error, $token);
             }
         }

@@ -45,7 +45,6 @@ class MySource_Tests_Channels_DisallowSelfActionsUnitTest extends AbstractSniffU
                 12 => 1,
                 26 => 1,
                 27 => 1,
-                28 => 1,
                );
 
     }//end getErrorList()
