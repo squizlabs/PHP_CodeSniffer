@@ -44,7 +44,7 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
      */
     public function register()
     {
-        return array(T_PROPERTY);
+        return array(T_OBJECT);
 
     }//end register()
 
@@ -61,27 +61,28 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        $end    = $tokens[$stackPtr]['scope_closer'];
 
-        $name = $tokens[$stackPtr]['content'];
-        $end  = $tokens[$stackPtr]['scope_closer'];
-        $next = $stackPtr;
+        $properties = array();
 
-        while ($next < $end) {
-            $next = $phpcsFile->findNext(T_PROPERTY, ($next + 1), $end);
-            if ($next === false) {
-                break;
-            }
-
-            if ($tokens[$next]['scope_opener'] !== $tokens[$stackPtr]['scope_opener']) {
-                continue;
-            }
-
+        $next = $phpcsFile->findNext(T_PROPERTY, ($stackPtr + 1), $end);
+        while ($next !== false && $next < $end) {
             $propName = $tokens[$next]['content'];
-            if ($propName === $name) {
-                $line  = $tokens[$stackPtr]['line'];
-                $error = "Duplicate property definition found for \"$name\"; previously defined on line $line";
+            if (isset($properties[$propName]) === true) {
+                $line  = $tokens[$properties[$propName]]['line'];
+                $error = "Duplicate property definition found for \"$propName\"; previously defined on line $line";
                 $phpcsFile->addError($error, $next);
             }
+
+            // Store the property info for later comparisons.
+            $properties[$propName] = $next;
+
+            // Skeip nested objects.
+            if (isset($tokens[$next]['scope_opener']) === true) {
+                $next = $tokens[$next]['scope_closer'];
+            }
+
+            $next = $phpcsFile->findNext(T_PROPERTY, ($next + 1), $end);
         }//end while
 
     }//end process()

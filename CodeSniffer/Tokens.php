@@ -52,6 +52,7 @@ define('T_THIS', 1033);
 define('T_REGULAR_EXPRESSION', 1034);
 define('T_PROPERTY', 1035);
 define('T_LABEL', 1036);
+define('T_OBJECT', 1037);
 
 /**
  * The Tokens class contains weightings for tokens based on their

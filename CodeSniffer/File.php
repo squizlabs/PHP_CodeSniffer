@@ -804,22 +804,74 @@ class PHP_CodeSniffer_File
      */
     private static function _createBracketMap(&$tokens, $tokenizer, $eolChar)
     {
-        $openers   = array();
-        $numTokens = count($tokens);
-        $owners    = array();
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START BRACKET MAP ***".PHP_EOL;
+        }
+
+        $squareOpeners = array();
+        $curlyOpeners  = array();
+        $numTokens     = count($tokens);
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
-                $openers[] = $i;
-            } else if ($tokens[$i]['code'] === T_CLOSE_SQUARE_BRACKET) {
-                if (empty($openers) === false) {
-                    $opener                            = array_pop($openers);
+            switch ($tokens[$i]['code']) {
+            case T_OPEN_SQUARE_BRACKET:
+                $squareOpeners[] = $i;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", count($squareOpeners));
+                    echo str_repeat("\t", count($curlyOpeners));
+                    echo "=> Found square bracket opener at $i".PHP_EOL;
+                }
+
+                break;
+            case T_OPEN_CURLY_BRACKET:
+                if (isset($tokens[$i]['scope_closer']) === false) {
+                    $curlyOpeners[] = $i;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($squareOpeners));
+                        echo str_repeat("\t", count($curlyOpeners));
+                        echo "=> Found curly bracket opener at $i".PHP_EOL;
+                    }
+                }
+                break;
+            case T_CLOSE_SQUARE_BRACKET:
+                if (empty($squareOpeners) === false) {
+                    $opener                            = array_pop($squareOpeners);
                     $tokens[$i]['bracket_opener']      = $opener;
                     $tokens[$i]['bracket_closer']      = $i;
                     $tokens[$opener]['bracket_opener'] = $opener;
                     $tokens[$opener]['bracket_closer'] = $i;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($squareOpeners));
+                        echo str_repeat("\t", count($curlyOpeners));
+                        echo "\t=> Found square bracket closer at $i for $opener".PHP_EOL;
+                    }
                 }
-            }
+                break;
+            case T_CLOSE_CURLY_BRACKET:
+                if (empty($curlyOpeners) === false && isset($tokens[$i]['scope_opener']) === false) {
+                    $opener                            = array_pop($curlyOpeners);
+                    $tokens[$i]['bracket_opener']      = $opener;
+                    $tokens[$i]['bracket_closer']      = $i;
+                    $tokens[$opener]['bracket_opener'] = $opener;
+                    $tokens[$opener]['bracket_closer'] = $i;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($squareOpeners));
+                        echo str_repeat("\t", count($curlyOpeners));
+                        echo "\t=> Found curly bracket closer at $i for $opener".PHP_EOL;
+                    }
+                }
+                break;
+            default:
+                continue;
+            }//end switch
+        }//end for
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END BRACKET MAP ***".PHP_EOL;
         }
 
     }//end _createBracketMap()

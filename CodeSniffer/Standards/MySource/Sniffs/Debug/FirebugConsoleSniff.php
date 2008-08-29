@@ -46,6 +46,7 @@ class MySource_Sniffs_Debug_FirebugConsoleSniff implements PHP_CodeSniffer_Sniff
                 T_STRING,
                 T_PROPERTY,
                 T_LABEL,
+                T_OBJECT,
                );
 
     }//end register()
