@@ -61,28 +61,32 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        $start  = $tokens[$stackPtr]['scope_opener'];
         $end    = $tokens[$stackPtr]['scope_closer'];
 
-        $properties = array();
+        $properties   = array();
+        $wantedTokens = array(
+                         T_PROPERTY,
+                         T_OPEN_CURLY_BRACKET,
+                        );
 
-        $next = $phpcsFile->findNext(T_PROPERTY, ($stackPtr + 1), $end);
+        $next = $phpcsFile->findNext($wantedTokens, ($start + 1), $end);
         while ($next !== false && $next < $end) {
-            $propName = $tokens[$next]['content'];
-            if (isset($properties[$propName]) === true) {
-                $line  = $tokens[$properties[$propName]]['line'];
-                $error = "Duplicate property definition found for \"$propName\"; previously defined on line $line";
-                $phpcsFile->addError($error, $next);
-            }
+            // Skip nested objects.
+            if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET) {
+                $next = $tokens[$next]['bracket_closer'];
+            } else {
+                $propName = $tokens[$next]['content'];
+                if (isset($properties[$propName]) === true) {
+                    $line  = $tokens[$properties[$propName]]['line'];
+                    $error = "Duplicate property definition found for \"$propName\"; previously defined on line $line";
+                    $phpcsFile->addError($error, $next);
+                }
 
-            // Store the property info for later comparisons.
-            $properties[$propName] = $next;
+                $properties[$propName] = $next;
+            }//end if
 
-            // Skeip nested objects.
-            if (isset($tokens[$next]['scope_opener']) === true) {
-                $next = $tokens[$next]['scope_closer'];
-            }
-
-            $next = $phpcsFile->findNext(T_PROPERTY, ($next + 1), $end);
+            $next = $phpcsFile->findNext($wantedTokens, ($next + 1), $end);
         }//end while
 
     }//end process()

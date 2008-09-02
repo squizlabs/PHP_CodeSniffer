@@ -42,8 +42,9 @@ class Squiz_Tests_Classes_DuplicatePropertyUnitTest extends AbstractSniffUnitTes
     public function getErrorList()
     {
         return array(
-                4 => 1,
-                8 => 1,
+                4  => 1,
+                8  => 1,
+                28 => 1,
                );
 
     }//end getErrorList()
