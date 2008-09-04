@@ -40,3 +40,9 @@ function valid()
    }
 
 }
+
+dfx.addEvent(this.rightScroll, 'mousedown', function() {
+    t = setInterval(function() {
+        pos -= 10;
+    }, 30);
+});
