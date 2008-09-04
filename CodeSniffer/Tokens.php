@@ -139,8 +139,6 @@ final class PHP_CodeSniffer_Tokens
                                  T_IS_NOT_IDENTICAL    => 5,
                                  T_IS_SMALLER_OR_EQUAL => 5,
                                  T_IS_GREATER_OR_EQUAL => 5,
-
-                                 T_WHITESPACE          => 0,
                                 );
 
     /**
@@ -376,8 +374,14 @@ final class PHP_CodeSniffer_Tokens
         $weights = self::$weightings;
 
         foreach ($tokens as $token) {
-            if (isset($weights[$token]) === true && $weights[$token] > $highest) {
-                $highest     = $weights[$token];
+            if (isset($weights[$token]) === true) {
+                $weight = $weights[$token];
+            } else {
+                $weight = 0;
+            }
+
+            if ($weight > $highest) {
+                $highest     = $weight;
                 $highestType = $token;
             }
         }
