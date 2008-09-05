@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sertan Danis for the contribution
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
+  - Added MySource CreateWidgetTypeCallback sniff to check callback usage in widget type create methods
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
   - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
@@ -465,6 +466,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="AssignThisSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="CreateWidgetTypeCallbackSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowNewWidgetSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -511,6 +515,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Objects">
         <file baseinstalldir="PHP" name="AssignThisUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="AssignThisUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="CreateWidgetTypeCallbackUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="CreateWidgetTypeCallbackUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowNewWidgetUnitTest.inc" role="test" />

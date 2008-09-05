@@ -1,0 +1,164 @@
+<?php
+/**
+ * Ensures the create() method of widget types properly uses callbacks.
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer_MySource
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   CVS: $Id$
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+/**
+ * Ensures the create() method of widget types properly uses callbacks.
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer_MySource
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeSniffer_Sniff
+{
+
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array('JS');
+
+
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     */
+    public function register()
+    {
+        return array(T_OBJECT);
+
+    }//end register()
+
+
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $className = $tokens[$stackPtr]['content'];
+        if (substr(strtolower($className), -10) !== 'widgettype') {
+            return;
+        }
+
+        // Search for a create method.
+        $start  = ($tokens[$stackPtr]['scope_opener'] + 1);
+        $end    = ($tokens[$stackPtr]['scope_closer'] - 1);
+        $create = $phpcsFile->findNext(T_PROPERTY, $start, $end, null, 'create');
+        if ($create === false) {
+            return;
+        }
+
+        $function = $phpcsFile->findNext(array(T_WHITESPACE, T_COLON), ($create + 1), null, true);
+        if ($tokens[$function]['code'] !== T_FUNCTION) {
+            continue;
+        }
+
+        // Check that the first argument is called "callback".
+        $arg = $phpcsFile->findNext(T_WHITESPACE, ($tokens[$function]['parenthesis_opener'] + 1), null, true);
+        if ($tokens[$arg]['content'] !== 'callback') {
+            $error = 'The first argument of the create() method of a widget type must be called "callback"';
+            $phpcsFile->addError($error, $arg);
+        }
+
+        /*
+            Look for return statements within the function. They cannot return
+            anything and must be preceeded by the callback.call() line. The
+            callback itself must contain "self" or "this" as the first argument
+            and there needs to be a call to the callback function somewhere
+            in the create method. All calls to the callback function must be
+            followed by a return statement or the end of the method.
+        */
+
+        $foundCallback = false;
+        for ($i = $start; $i <= $end; $i++) {
+            if ($tokens[$i]['code'] === T_RETURN) {
+                // Make sure return statements are not returning anything.
+                if ($tokens[($i + 1)]['code'] !== T_SEMICOLON) {
+                    $error = 'The create() method of a widget type must not return a value';
+                    $phpcsFile->addError($error, $i);
+                }
+
+                continue;
+            } else if ($tokens[$i]['code'] !== T_STRING || $tokens[$i]['content'] !== 'callback') {
+                continue;
+            }
+
+            // If this is the form "callback.call(" then it is a call
+            // to the callback function.
+            if ($tokens[($i + 1)]['code'] !== T_OBJECT_OPERATOR) {
+                continue;
+            }
+
+            if ($tokens[($i + 2)]['content'] !== 'call') {
+                continue;
+            }
+
+            if ($tokens[($i + 3)]['code'] !== T_OPEN_PARENTHESIS) {
+                continue;
+            }
+
+            $foundCallback = true;
+
+            // The first argument must be "this" or "self".
+            $arg = $phpcsFile->findNext(T_WHITESPACE, ($i + 4), null, true);
+            if ($tokens[$arg]['content'] !== 'this' && $tokens[$arg]['content'] !== 'self') {
+                $error = 'The first argument passed to the callback function must be "this" or "self"';
+                $phpcsFile->addError($error, $arg);
+            }
+
+            // Now it must be followed by a return statement or the end of the line.
+            $endBracket = $tokens[($i + 3)]['parenthesis_closer'];
+            for ($next = $endBracket; $next < $end; $next++) {
+                if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                    continue;
+                }
+
+                if ($tokens[$next]['line'] === $tokens[$endBracket]['line']) {
+                    continue;
+                }
+
+                break;
+            }
+
+            if ($next !== $tokens[$function]['scope_closer'] && $tokens[$next]['code'] !== T_RETURN) {
+                $error = 'The call to the callback function must be followed by a return statement if it is not the last statement in the create() method';
+                $phpcsFile->addError($error, $i);
+            }
+        }//end for
+
+        if ($foundCallback === false) {
+            $error = 'The create() method of a widget type must call the callback function';
+            $phpcsFile->addError($error, $create);
+        }
+
+    }//end process()
+
+
+}//end class
+
+?>
