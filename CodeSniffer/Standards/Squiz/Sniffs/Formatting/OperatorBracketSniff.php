@@ -187,6 +187,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 // part of an arithmetic operation.
                 $invalidTokens = array(
                                   T_COMMA,
+                                  T_COLON,
                                   T_OPEN_PARENTHESIS,
                                   T_OPEN_SQUARE_BRACKET,
                                  );
