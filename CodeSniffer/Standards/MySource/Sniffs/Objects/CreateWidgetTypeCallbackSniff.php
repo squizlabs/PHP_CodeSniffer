@@ -78,6 +78,9 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
             continue;
         }
 
+        $start  = ($tokens[$function]['scope_opener'] + 1);
+        $end    = ($tokens[$function]['scope_closer'] - 1);
+
         // Check that the first argument is called "callback".
         $arg = $phpcsFile->findNext(T_WHITESPACE, ($tokens[$function]['parenthesis_opener'] + 1), null, true);
         if ($tokens[$arg]['content'] !== 'callback') {
@@ -133,7 +136,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
             // Now it must be followed by a return statement or the end of the line.
             $endBracket = $tokens[($i + 3)]['parenthesis_closer'];
-            for ($next = $endBracket; $next < $end; $next++) {
+            for ($next = $endBracket; $next <= $end; $next++) {
                 if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                     continue;
                 }

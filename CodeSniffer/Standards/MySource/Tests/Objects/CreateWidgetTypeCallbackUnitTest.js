@@ -45,6 +45,11 @@ AnotherSampleWidgetType.prototype = {
         return;
     }
 
+    getSomething: function(input)
+    {
+        return 1;
+    }
+
 };
 
 
