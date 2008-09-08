@@ -55,7 +55,7 @@ class Squiz_Tests_WhiteSpace_FunctionOpeningBraceSpaceUnitTest extends AbstractS
         case 'FunctionOpeningBraceSpaceUnitTest.js':
             return array(
                     11 => 1,
-                    25 => 1,
+                    31 => 1,
                    );
             break;
         default:

@@ -86,7 +86,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
         $nextLine  = $tokens[$nextContent]['line'];
 
         $found = ($nextLine - $braceLine - 1);
-        if ($found !== 0) {
+        if ($found > 0) {
             $error = "Expected 0 blank lines after opening function brace; $found found";
             $phpcsFile->addError($error, $openBrace);
         }

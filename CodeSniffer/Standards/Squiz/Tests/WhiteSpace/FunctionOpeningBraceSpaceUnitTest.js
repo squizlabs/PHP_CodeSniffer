@@ -19,6 +19,12 @@ Testing.prototype = {
         // Code here.
 
     },
+
+    start: function()
+    {
+        this.toolbarPlugin.addButton('Image', 'imageEditor', 'Insert/Edit Image', function () { self.editImage() });
+
+    },
 };
 
 function FuncFour()
