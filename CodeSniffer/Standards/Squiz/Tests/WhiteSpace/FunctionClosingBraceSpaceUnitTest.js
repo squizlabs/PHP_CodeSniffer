@@ -46,3 +46,9 @@ dfx.addEvent(this.rightScroll, 'mousedown', function() {
         pos -= 10;
     }, 30);
 });
+
+// Valid because function is empty.
+if (dfx.isFn(callback) === false) {
+    callback = function() {};
+    callback = function() { };
+}

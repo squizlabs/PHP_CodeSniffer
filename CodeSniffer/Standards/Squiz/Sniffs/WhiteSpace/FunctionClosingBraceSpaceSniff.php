@@ -80,6 +80,18 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];
         $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
 
+        // Special case for empty JS functions
+        if ($phpcsFile->tokenizerType === 'JS' && $prevContent === $tokens[$stackPtr]['scope_opener']) {
+            // In this case, the opening and closing brace must be
+            // right next to each other.
+            if ($tokens[$stackPtr]['scope_closer'] !== ($tokens[$stackPtr]['scope_opener'] + 1)) {
+                $error = 'The opening and closing braces of empty functions must be directly next to each other; e.g., function () {}';
+                $phpcsFile->addError($error, $closeBrace);
+            }
+
+            return;
+        }
+
         $braceLine = $tokens[$closeBrace]['line'];
         $prevLine  = $tokens[$prevContent]['line'];
 

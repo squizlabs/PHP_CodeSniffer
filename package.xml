@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz PostStatementCommentSniff now supports checking of JS files
   - Squiz FunctionOpeningBraceSpacingSniff now supports checking of JS files
   - Squiz FunctionClosingBraceSpacingSniff now supports checking of JS files
+    -- Empty JS functions must have their opening and closing braces next to each other
   - Squiz ControlStructureSpacingSniff now supports checking of JS files
   - Squiz LongConditionClosingCommentSniff now supports checking of JS files
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
