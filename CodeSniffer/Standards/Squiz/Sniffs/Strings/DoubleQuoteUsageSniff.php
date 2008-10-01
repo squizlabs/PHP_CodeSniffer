@@ -62,7 +62,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
 
         // The use of variables in double quoted strings is not allowed.
         if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
-            $stringTokens = token_get_all('<?php'.$tokens[$stackPtr]['content']);
+            $stringTokens = token_get_all('<?php '.$tokens[$stackPtr]['content']);
             foreach ($stringTokens as $token) {
                 if (is_array($token) === true && $token[0] === T_VARIABLE) {
                     $error = 'Variable "'.$token[1].'" not allowed in double quoted string; use concatenation instead';
