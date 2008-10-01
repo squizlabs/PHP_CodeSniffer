@@ -70,6 +70,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improve AbstractPatternSniff support so it can listen for any token type, not just weighted tokens
   - Fixed bug #14409 : Output of warnings to log file
   - Fixed bug #14520 : Notice: Undefined offset: 1 in /usr/share/php/PHP/CodeSniffer/File.php on line
+  - Fixed bug #14637 : Call to processUnknownArguments() misses second parameter $pos
+    -- Thanks to Peter Buri for the patch
  </notes>
  <contents>
   <dir name="/">

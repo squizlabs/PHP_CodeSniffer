@@ -116,7 +116,7 @@ class PHP_CodeSniffer_CLI
                             continue;
                         }
 
-                        $values = $this->processShortArgument($switch, $values);
+                        $values = $this->processShortArgument($switch, $i, $values);
                     }
                 }
             } else {
@@ -133,12 +133,13 @@ class PHP_CodeSniffer_CLI
      * Processes a sort (-e) command line argument.
      *
      * @param string $arg    The command line argument.
+     * @param int    $pos    The position of the argument on the command line.
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
      * @see getCommandLineValues()
      */
-    public function processShortArgument($arg, $values)
+    public function processShortArgument($arg, $pos, $values)
     {
         switch ($arg) {
         case 'h':
@@ -163,7 +164,7 @@ class PHP_CodeSniffer_CLI
             $values['showWarnings'] = true;
             break;
         default:
-            $values = $this->processUnknownArgument('-'.$arg, $values);
+            $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
         }//end switch
 
         return $values;
@@ -237,7 +238,7 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $values['tabWidth'] = (int) substr($arg, 10);
             } else {
-                $values = $this->processUnknownArgument('--'.$arg, $values);
+                $values = $this->processUnknownArgument('--'.$arg, $pos, $values);
             }//end if
 
             break;
