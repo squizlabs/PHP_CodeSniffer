@@ -15,18 +15,17 @@
  */
 
 /**
- * Detects unnecessary final modifiers inside of final classes.
+ * Detects unnecessary overriden methods that simply call their parent.
  *
- * This rule is based on the PMD rule catalog. The Unnecessary Final Modifier
- * sniff detects the use of the final modifier inside of a final class which
- * is unnecessary.
+ * This rule is based on the PMD rule catalog. The Useless Overriding Method
+ * sniff detects the use of methods that only call their parent classes's method
+ * with the same name and arguments. These methods are not required.
  *
  * <code>
- * final class Foo
- * {
- *     public final function bar()
- *     {
- *     }
+ * class FooBar {
+ *   public function __construct($a, $b) {
+ *     parent::__construct($a, $b);
+ *   }
  * }
  * </code>
  *
