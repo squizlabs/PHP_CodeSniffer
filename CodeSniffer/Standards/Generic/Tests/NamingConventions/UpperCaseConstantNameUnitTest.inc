@@ -78,4 +78,6 @@ declare(ticks = 1) {
         echo $bit;
     }
 }
+
+$binary = (binary) $string;
 ?>
