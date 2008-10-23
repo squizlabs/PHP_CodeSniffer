@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz DisallowSizeFunctionsInLoopsSniff no longer complains about size functions outside of the FOR condition
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
+  - Squiz ForLoopDeclarationSniff no longer throws errors for JS FOR loops without semicolons
   - Squiz standard now uses TodoSniff
   - MySource JoinStringsSniff now bans the use of inline array joins and suggests the + operator
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file

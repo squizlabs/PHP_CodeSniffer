@@ -85,7 +85,7 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
             $errors[] = 'Space found before closing bracket of FOR loop';
         }
 
-        $firstSemicolon  = $phpcsFile->findNext(T_SEMICOLON, $openingBracket);
+        $firstSemicolon  = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
 
         // Check whitespace around each of the tokens.
         if ($firstSemicolon !== false) {
