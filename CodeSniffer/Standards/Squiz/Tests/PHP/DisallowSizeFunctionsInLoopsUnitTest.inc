@@ -46,4 +46,7 @@ do {
 for ($i = 0; $i < strlen($this->string); $i++) {
 }
 
+for ($i = sizeof($array); $i > 0; $i--) {
+}
+
 ?>

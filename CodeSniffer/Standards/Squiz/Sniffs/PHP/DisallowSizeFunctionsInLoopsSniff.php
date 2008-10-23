@@ -84,7 +84,16 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
-        for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
+        if ($tokens[$stackPtr]['code'] === T_FOR) {
+            // We only want to check the condition in FOR loops.
+            $start = $phpcsFile->findNext(T_SEMICOLON, ($openBracket + 1));
+            $end   = $phpcsFile->findPrevious(T_SEMICOLON, ($closeBracket - 1));
+        } else {
+            $start = $openBracket;
+            $end   = $closeBracket;
+        }
+
+        for ($i = ($start + 1); $i < $end; $i++) {
             if ($tokens[$i]['code'] === T_STRING && in_array($tokens[$i]['content'], $this->forbiddenFunctions[$tokenizer])) {
                 $functionName = $tokens[$i]['content'];
                 if ($tokenizer === 'JS') {
