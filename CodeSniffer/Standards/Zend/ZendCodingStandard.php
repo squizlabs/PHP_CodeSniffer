@@ -44,6 +44,7 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
     public function getIncludedSniffs()
     {
         return array(
+                'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php',
                 'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
                 'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
                 'PEAR/Sniffs/Classes/ClassDeclarationSniff.php',
