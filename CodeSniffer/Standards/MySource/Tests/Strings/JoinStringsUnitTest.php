@@ -48,11 +48,13 @@ class MySource_Tests_Strings_JoinStringsUnitTest extends AbstractSniffUnitTest
         }
 
         return array(
-                4  => 1,
                 6  => 1,
-                9  => 1,
+                7  => 1,
+                8  => 2,
+                9  => 2,
                 10 => 2,
-                12 => 4,
+                12 => 2,
+                15 => 1,
                );
 
     }//end getErrorList()

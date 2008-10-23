@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Squiz standard now uses TodoSniff
+  - MySource JoinStringsSniff now bans the use of inline array joins and suggests the + operator
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
   - Whitespace tokens at the end of JS files are now added to the token stack
   - JavaScript tokenizer now identifies properties and labels as new token types
