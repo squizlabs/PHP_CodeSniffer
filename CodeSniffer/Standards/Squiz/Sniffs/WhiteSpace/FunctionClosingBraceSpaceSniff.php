@@ -72,11 +72,6 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             return;
         }
 
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            // Function defined inline.
-            return;
-        }
-
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];
         $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
 
@@ -96,9 +91,17 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         $prevLine  = $tokens[$prevContent]['line'];
 
         $found = ($braceLine - $prevLine - 1);
-        if ($found !== 1) {
-            $error = "Expected 1 blank line before closing function brace; $found found";
-            $phpcsFile->addError($error, $closeBrace);
+        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true || isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            // Nested function.
+            if ($found !== 0) {
+                $error = "Expected no blank lines before closing brace of nested function; $found found";
+                $phpcsFile->addError($error, $closeBrace);
+            }
+        } else {
+            if ($found !== 1) {
+                $error = "Expected 1 blank line before closing function brace; $found found";
+                $phpcsFile->addError($error, $closeBrace);
+            }
         }
 
     }//end process()

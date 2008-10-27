@@ -52,3 +52,37 @@ if (dfx.isFn(callback) === false) {
     callback = function() {};
     callback = function() { };
 }
+
+AbstractAttributeEditorWidgetType.prototype = {
+    isActive: function() {
+        return this.active;
+    },
+
+    activate: function(data)
+    {
+        var x = {
+            test: function () {
+                alert('This is ok');
+
+            }
+        };
+
+        this.active = true;
+
+    }
+
+};
+
+var myFunc = function()
+{
+    var x = 1;
+
+    blah(function() {
+        alert(2);
+    });
+
+    blah(function() { alert(2); });
+
+    return x;
+
+}
