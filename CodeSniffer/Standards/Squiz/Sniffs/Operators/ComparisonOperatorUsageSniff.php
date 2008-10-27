@@ -81,9 +81,15 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
      * @var array(int => string)
      */
     private static $_invalidOps = array(
-                                   T_IS_EQUAL     => '===',
-                                   T_IS_NOT_EQUAL => '!==',
-                                   T_BOOLEAN_NOT  => '=== FALSE',
+                                   'PHP' => array(
+                                             T_IS_EQUAL     => '===',
+                                             T_IS_NOT_EQUAL => '!==',
+                                             T_BOOLEAN_NOT  => '=== FALSE',
+                                            ),
+                                   'JS'  => array(
+                                             T_IS_EQUAL     => '===',
+                                             T_IS_NOT_EQUAL => '!==',
+                                            ),
                                   );
 
 
@@ -113,7 +119,8 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
+        $tokens    = $phpcsFile->getTokens();
+        $tokenizer = $phpcsFile->tokenizerType;
 
         if ($tokens[$stackPtr]['code'] === T_INLINE_THEN) {
             $end = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
@@ -157,9 +164,9 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
-            if (in_array($type, array_keys(self::$_invalidOps)) === true) {
+            if (in_array($type, array_keys(self::$_invalidOps[$tokenizer])) === true) {
                 $error  = 'Operator '.$tokens[$i]['content'].' prohibited;';
-                $error .= ' use '.self::$_invalidOps[$type].' instead';
+                $error .= ' use '.self::$_invalidOps[$tokenizer][$type].' instead';
                 $phpcsFile->addError($error, $i);
                 $foundOps++;
             } else if (in_array($type, self::$_validOps) === true) {
