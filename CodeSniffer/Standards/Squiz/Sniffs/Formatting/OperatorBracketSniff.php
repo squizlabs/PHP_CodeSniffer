@@ -67,6 +67,13 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
     {
         $tokens = $phpcsFile->getTokens();
 
+        if ($phpcsFile->tokenizerType === 'JS' && $tokens[$stackPtr]['code'] === T_PLUS) {
+            // JavaScript uses the plus operator for string concatenation as well
+            // so we cannot accurately determine if it is a string concat or addition.
+            // So just ignore it.
+            return;
+        }
+
         // If the & is a reference, then we don't want to check for brackets.
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND && $phpcsFile->isReference($stackPtr) === true) {
             return;
