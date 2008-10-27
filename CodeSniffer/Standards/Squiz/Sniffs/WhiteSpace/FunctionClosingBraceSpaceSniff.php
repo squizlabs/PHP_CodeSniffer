@@ -93,8 +93,11 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         $found = ($braceLine - $prevLine - 1);
         if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true || isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
             // Nested function.
-            if ($found !== 0) {
-                $error = "Expected no blank lines before closing brace of nested function; $found found";
+            if ($found < 0) {
+                $error = "Closing brace of nested function must be on a new line";
+                $phpcsFile->addError($error, $closeBrace);
+            } else if ($found > 0) {
+                $error = "Expected 0 blank lines before closing brace of nested function; $found found";
                 $phpcsFile->addError($error, $closeBrace);
             }
         } else {
