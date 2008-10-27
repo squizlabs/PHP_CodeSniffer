@@ -188,6 +188,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '==='       => 'T_IS_IDENTICAL',
                               '-='        => 'T_MINUS_EQUAL',
                               '+='        => 'T_PLUS_EQUAL',
+                              '*='        => 'T_MUL_EQUAL',
+                              '/='        => 'T_DIV_EQUAL',
                               '++'        => 'T_INC',
                               '--'        => 'T_DEC',
                               '//'        => 'T_COMMENT',
