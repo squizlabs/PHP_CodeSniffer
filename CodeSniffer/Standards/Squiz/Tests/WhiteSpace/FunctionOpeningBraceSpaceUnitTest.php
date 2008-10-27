@@ -56,6 +56,11 @@ class Squiz_Tests_WhiteSpace_FunctionOpeningBraceSpaceUnitTest extends AbstractS
             return array(
                     11 => 1,
                     31 => 1,
+                    38 => 1,
+                    57 => 1,
+                    60 => 1,
+                    73 => 1,
+                    84 => 1,
                    );
             break;
         default:
