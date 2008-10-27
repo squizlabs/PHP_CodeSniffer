@@ -99,7 +99,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                        'version'    => array(
                                         'required'       => false,
                                         'allow_multiple' => false,
-                                        'order_text'     => 'follows @licence',
+                                        'order_text'     => 'follows @license',
                                        ),
                        'link'       => array(
                                         'required'       => true,
