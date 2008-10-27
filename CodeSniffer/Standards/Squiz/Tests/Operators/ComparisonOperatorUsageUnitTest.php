@@ -71,11 +71,9 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
             return array(
                     5  => 1,
                     6  => 1,
-                    9  => 1,
                     10 => 1,
                     17 => 1,
                     18 => 1,
-                    21 => 1,
                     22 => 1,
                     28 => 2,
                     31 => 1,

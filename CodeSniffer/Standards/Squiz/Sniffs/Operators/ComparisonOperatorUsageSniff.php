@@ -166,26 +166,30 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 $foundOps++;
             }
 
-            if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
-                $requiredOps++;
+            if ($phpcsFile->tokenizerType !== 'JS') {
+                if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
+                    $requiredOps++;
 
-                // If we get to here and we have not found the right number of
-                // comparison operators, then we must have had an implicit
-                // true operation ie. if ($a) instead of the required
-                // if ($a === true), so let's add an error.
-                if ($requiredOps !== $foundOps) {
-                    $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-                    $phpcsFile->addError($error, $stackPtr);
-                    $foundOps++;
+                    // If we get to here and we have not found the right number of
+                    // comparison operators, then we must have had an implicit
+                    // true operation ie. if ($a) instead of the required
+                    // if ($a === true), so let's add an error.
+                    if ($requiredOps !== $foundOps) {
+                        $error = 'Implicit true comparisons prohibited; use === TRUE instead';
+                        $phpcsFile->addError($error, $stackPtr);
+                        $foundOps++;
+                    }
                 }
-            }
+            }//end if
         }//end for
 
         $requiredOps++;
 
-        if ($foundOps < $requiredOps) {
-            $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-            $phpcsFile->addError($error, $stackPtr);
+        if ($phpcsFile->tokenizerType !== 'JS') {
+            if ($foundOps < $requiredOps) {
+                $error = 'Implicit true comparisons prohibited; use === TRUE instead';
+                $phpcsFile->addError($error, $stackPtr);
+            }
         }
 
     }//end process()
