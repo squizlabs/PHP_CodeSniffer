@@ -39,56 +39,100 @@ class Squiz_Tests_WhiteSpace_OperatorSpacingUnitTest extends AbstractSniffUnitTe
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='OperatorSpacingUnitTest.inc')
     {
-        return array(
-                4  => 1,
-                5  => 1,
-                6  => 1,
-                7  => 1,
-                8  => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                14 => 1,
-                15 => 1,
-                18 => 1,
-                19 => 1,
-                20 => 1,
-                21 => 1,
-                22 => 1,
-                25 => 1,
-                26 => 1,
-                27 => 1,
-                28 => 1,
-                29 => 1,
-                32 => 1,
-                33 => 1,
-                34 => 1,
-                35 => 1,
-                36 => 1,
-                40 => 1,
-                42 => 1,
-                44 => 1,
-                46 => 1,
-                53 => 2,
-                54 => 1,
-                59 => 5,
-                64 => 1,
-                77 => 2,
-                78 => 1,
-                79 => 1,
-                80 => 1,
-                81 => 1,
-                84 => 6,
-                85 => 6,
-                87 => 4,
-                88 => 5,
-                90 => 4,
-                91 => 5,
-               );
+        switch ($testFile) {
+        case 'OperatorSpacingUnitTest.inc':
+            return array(
+                    4  => 1,
+                    5  => 2,
+                    6  => 1,
+                    7  => 1,
+                    8  => 2,
+                    11 => 1,
+                    12 => 2,
+                    13 => 1,
+                    14 => 1,
+                    15 => 2,
+                    18 => 1,
+                    19 => 2,
+                    20 => 1,
+                    21 => 1,
+                    22 => 2,
+                    25 => 1,
+                    26 => 2,
+                    27 => 1,
+                    28 => 1,
+                    29 => 2,
+                    32 => 1,
+                    33 => 2,
+                    34 => 1,
+                    35 => 1,
+                    36 => 2,
+                    40 => 2,
+                    42 => 2,
+                    44 => 2,
+                    45 => 1,
+                    46 => 2,
+                    53 => 2,
+                    54 => 1,
+                    59 => 10,
+                    64 => 1,
+                    77 => 4,
+                    78 => 1,
+                    79 => 1,
+                    80 => 2,
+                    81 => 1,
+                    84 => 6,
+                    85 => 6,
+                    87 => 4,
+                    88 => 5,
+                    90 => 4,
+                    91 => 5,
+                   );
+            break;
+        case 'OperatorSpacingUnitTest.js':
+            return array(
+                    4  => 1,
+                    5  => 2,
+                    6  => 1,
+                    7  => 1,
+                    8  => 2,
+                    11 => 1,
+                    12 => 2,
+                    13 => 1,
+                    14 => 1,
+                    15 => 2,
+                    18 => 1,
+                    19 => 2,
+                    20 => 1,
+                    21 => 1,
+                    22 => 2,
+                    25 => 1,
+                    26 => 2,
+                    27 => 1,
+                    28 => 1,
+                    29 => 2,
+                    32 => 1,
+                    33 => 2,
+                    34 => 1,
+                    35 => 1,
+                    36 => 2,
+                    40 => 2,
+                    42 => 2,
+                    44 => 2,
+                    45 => 1,
+                    46 => 2,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 

@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Empty JS functions must have their opening and closing braces next to each other
   - Squiz ControlStructureSpacingSniff now supports checking of JS files
   - Squiz LongConditionClosingCommentSniff now supports checking of JS files
+  - Squiz OperatorSpacingSniff now supports checking of JS files
   - Squiz DisallowSizeFunctionsInLoopsSniff now supports checking of JS files for the use of object.length
   - Squiz DisallowSizeFunctionsInLoopsSniff no longer complains about size functions outside of the FOR condition
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
@@ -69,6 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Whitespace tokens at the end of JS files are now added to the token stack
   - JavaScript tokenizer now identifies properties and labels as new token types
   - JavaScript tokenizer now identifies object definitions as a new token type and matches curly braces for them
+  - JavaScript tokenizer now identifies DIV_EQUAL and MUL_EQUAL tokens
   - Core tokenizer now matches orphaned curly braces in the same was a square brackets
   - Improved regular expression detection in the JavaScript tokenizer
   - Improve AbstractPatternSniff support so it can listen for any token type, not just weighted tokens
@@ -1348,6 +1350,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

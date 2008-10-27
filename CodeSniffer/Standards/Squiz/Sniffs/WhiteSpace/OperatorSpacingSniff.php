@@ -31,6 +31,16 @@
 class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -157,13 +167,6 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                 $error = "Expected 1 space before \"$operator\"; 0 found";
                 $phpcsFile->addError($error, $stackPtr);
-            } else if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-                $error = "Expected 1 space after \"$operator\"; 0 found";
-                $phpcsFile->addError($error, $stackPtr);
-            } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
-                $found = strlen($tokens[($stackPtr + 1)]['content']);
-                $error = "Expected 1 space after \"$operator\"; $found found";
-                $phpcsFile->addError($error, $stackPtr);
             } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
                 // Don't throw an error for assignments, because other standards allow
                 // multiple spaces there to align multiple assignments.
@@ -172,6 +175,15 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     $error = "Expected 1 space before \"$operator\"; $found found";
                     $phpcsFile->addError($error, $stackPtr);
                 }
+            }
+
+            if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+                $error = "Expected 1 space after \"$operator\"; 0 found";
+                $phpcsFile->addError($error, $stackPtr);
+            } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+                $found = strlen($tokens[($stackPtr + 1)]['content']);
+                $error = "Expected 1 space after \"$operator\"; $found found";
+                $phpcsFile->addError($error, $stackPtr);
             }
 
         }//end if

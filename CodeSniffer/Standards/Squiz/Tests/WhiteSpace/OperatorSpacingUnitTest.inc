@@ -42,7 +42,7 @@ $result -= 4;
 $result-=4;
 $result /= 4;
 $result/=4;
-$result *= 4;
+$result *=4;
 $result*=4;
 
 $result =& $thing;
