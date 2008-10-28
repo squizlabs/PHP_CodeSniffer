@@ -56,14 +56,27 @@ class Squiz_Tests_PHP_CommentedOutCodeUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    public function getWarningList()
+    public function getWarningList($testFile='CommentedOutCodeUnitTest.inc')
     {
-        return array(
-                6  => 1,
-                8  => 1,
-                15 => 1,
-                19 => 1,
-               );
+        switch ($testFile) {
+        case 'CommentedOutCodeUnitTest.inc':
+            return array(
+                    6  => 1,
+                    8  => 1,
+                    15 => 1,
+                    19 => 1,
+                   );
+            break;
+        case 'CommentedOutCodeUnitTest.css':
+            return array(
+                    7  => 1,
+                    16 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getWarningList()
 
