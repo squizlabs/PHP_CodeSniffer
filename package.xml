@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
   - Generic LineEndingsSniff now supports checking of JS files
   - Generic LineEndingsSniff now supports checking of CSS files
+  - Generic DisallowTabIndentSniff now supports checking of CSS files
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
   - Squiz DisallowInlineIfSniff now supports checking of JS files
@@ -440,6 +441,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.php" role="test">

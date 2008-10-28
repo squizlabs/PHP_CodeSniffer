@@ -59,6 +59,11 @@ class Generic_Tests_WhiteSpace_DisallowTabIndentUnitTest extends AbstractSniffUn
                     6 => 1,
                    );
             break;
+        case 'DisallowTabIndentUnitTest.css':
+            return array(
+                    2 => 1,
+                   );
+            break;
         default:
             return array();
             break;
