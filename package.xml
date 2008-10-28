@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
   - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
+  - Added Squiz ColonSpacingSniff to check for spacing around colons in CSS style definitions
+  - Added Squiz IdentationSniff to check for correct indentation of CSS files
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
@@ -831,6 +833,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="CSS">
+        <file baseinstalldir="PHP" name="ColonSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="IndentationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="JavaScriptLintSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1140,6 +1150,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="CSS">
+        <file baseinstalldir="PHP" name="ColonSpacingUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="ColonSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="IndentationUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="IndentationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
