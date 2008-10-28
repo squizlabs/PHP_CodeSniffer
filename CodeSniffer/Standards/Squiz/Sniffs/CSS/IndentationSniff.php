@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_CSS_ColonSpacingSniff.
+ * Squiz_Sniffs_CSS_IndentationSniff.
  *
  * PHP version 5
  *
@@ -14,9 +14,9 @@
  */
 
 /**
- * Squiz_Sniffs_CSS_ColonSpacingSniff.
+ * Squiz_Sniffs_CSS_IndentationSniff.
  *
- * Ensure there is no space before a colon and one space after it.
+ * Ensures styles are indented 4 spaces.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
