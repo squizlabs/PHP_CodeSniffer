@@ -39,6 +39,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
     public $supportedTokenizers = array(
                                    'PHP',
                                    'JS',
+                                   'CSS',
                                   );
 
     /**
