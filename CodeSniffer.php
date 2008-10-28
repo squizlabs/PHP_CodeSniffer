@@ -119,6 +119,7 @@ class PHP_CodeSniffer
                                      'php' => 'PHP',
                                      'inc' => 'PHP',
                                      'js'  => 'JS',
+                                     'css' => 'CSS',
                                     );
 
     /**

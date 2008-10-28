@@ -5,8 +5,8 @@ http://pear.php.net/dtd/package-2.0
 http://pear.php.net/dtd/package-2.0.xsd">
  <name>PHP_CodeSniffer</name>
  <channel>pear.php.net</channel>
- <summary>PHP_CodeSniffer tokenises PHP and JavaScript code and detects violations of a defined set of coding standards.</summary>
- <description>PHP_CodeSniffer is a PHP5 script that tokenises and &quot;sniffs&quot; PHP and JavaScript code to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers.
+ <summary>PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.</summary>
+ <description>PHP_CodeSniffer is a PHP5 script that tokenises and &quot;sniffs&quot; PHP, JavaScript and CSS files to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers.
  </description>
  <lead>
   <name>Greg Sherwood</name>
@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - PHP_CodeSniffer now has a CSS tokenizer for checking CSS files
   - Added support for a new multi-file sniff that sniffs all processed files at once
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
