@@ -31,7 +31,6 @@
 class Squiz_Sniffs_PHP_DisallowInlineIfSniff implements PHP_CodeSniffer_Sniff
 {
 
-    
     /**
      * A list of tokenizers this sniff supports.
      *
