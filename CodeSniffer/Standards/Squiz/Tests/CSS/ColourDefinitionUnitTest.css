@@ -1,0 +1,7 @@
+#title-bar-bottom-right {
+    background-color: #333333;
+    padding: 10px;
+    border-bottom: 1px dotted #F0F0F0;
+    border-top: 1px dotted #FF00FF;
+    background: #8fb7db url(diag_lines_bg.gif) top left;
+}
