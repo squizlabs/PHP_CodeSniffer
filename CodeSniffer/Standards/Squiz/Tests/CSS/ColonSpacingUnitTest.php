@@ -44,6 +44,8 @@ class Squiz_Tests_CSS_ColonSpacingUnitTest extends AbstractSniffUnitTest
                 3 => 1,
                 4 => 2,
                 5 => 1,
+                6 => 1,
+                8 => 1,
                );
 
     }//end getErrorList()
