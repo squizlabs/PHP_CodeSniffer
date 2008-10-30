@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
   - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
   - Added Squiz ColonSpacingSniff to check for spacing around colons in CSS style definitions
+  - Added Squiz SemicolonSpacingSniff to check for spacing around semicolons in CSS style definitions
   - Added Squiz IdentationSniff to check for correct indentation of CSS files
   - Added Squiz ColourDefinitionSniff to check that CSS colours are defined in uppercase and using shorthand
   - Added Squiz EmptyStyleDefinitionSniff to check for CSS style definitions without content
@@ -848,6 +849,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="IndentationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SemicolonSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="JavaScriptLintSniff.php" role="php">
@@ -1176,6 +1180,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="IndentationUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="IndentationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
