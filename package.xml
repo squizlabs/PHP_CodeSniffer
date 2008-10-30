@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz ColourDefinitionSniff to check that CSS colours are defined in uppercase and using shorthand
   - Added Squiz EmptyStyleDefinitionSniff to check for CSS style definitions without content
   - Added Squiz EmptyClassDefinitionSniff to check for CSS class definitions without content
+  - Added Squiz ClassDefinitionOpeningBraceSpaceSniff to check for spacing around opening braces in class definitions
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
@@ -838,6 +839,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="CSS">
+        <file baseinstalldir="PHP" name="ClassDefinitionOpeningBraceSpaceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ColonSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1170,6 +1174,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="CSS">
+        <file baseinstalldir="PHP" name="ClassDefinitionOpeningBraceSpaceUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="ClassDefinitionOpeningBraceSpaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ColonSpacingUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="ColonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
