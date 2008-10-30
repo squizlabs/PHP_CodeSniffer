@@ -41,6 +41,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
     public $supportedTokenizers = array(
                                    'PHP',
                                    'JS',
+                                   'CSS',
                                   );
 
     /**
@@ -79,7 +80,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for start of file whitespace.
             */
 
-            if ($phpcsFile->tokenizerType === 'JS') {
+            if ($phpcsFile->tokenizerType !== 'PHP') {
                 // The first token is always the open tag inserted when tokenizsed
                 // and the second token is always the first piece of content in
                 // the file. If the second token is whitespace, there was
@@ -123,6 +124,17 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                     return;
                 }
+            } else if ($phpcsFile->tokenizerType === 'CSS') {
+                // The last two tokens are always the close tag and whitespace
+                // inserted when tokenizsed and the third last token is always the
+                // last piece of content in the file. If the third last token is
+                // whitespace, there was whitespace at the end of the file.
+                if ($tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
+                    return;
+                }
+
+                // Adjust the pointer to give the correct line number for the error.
+                $stackPtr -= 2;
             } else {
                 if (isset($tokens[($stackPtr + 1)]) === false) {
                     // The close PHP token is the last in the file.

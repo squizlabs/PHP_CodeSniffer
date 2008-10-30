@@ -60,6 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic DisallowTabIndentSniff now supports checking of CSS files
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
+  - Squiz SuperfluousWhitespaceSniff now supports checking of CSS files
   - Squiz DisallowInlineIfSniff now supports checking of JS files
   - Squiz SemicolonSpacingSniff now supports checking of JS files
   - Squiz PostStatementCommentSniff now supports checking of JS files
@@ -1442,6 +1443,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.php" role="test">

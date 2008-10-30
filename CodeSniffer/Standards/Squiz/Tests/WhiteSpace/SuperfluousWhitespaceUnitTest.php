@@ -72,6 +72,14 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
                     35 => 1,
                    );
             break;
+        case 'SuperfluousWhitespaceUnitTest.css':
+            return array(
+                    1  => 1,
+                    8  => 1,
+                    9  => 1,
+                    14 => 1,
+                   );
+            break;
         default:
             return array();
             break;
