@@ -55,6 +55,7 @@ define('T_LABEL', 1036);
 define('T_OBJECT', 1037);
 define('T_COLOUR', 1038);
 define('T_HASH', 1039);
+define('T_URL', 1040);
 
 /**
  * The Tokens class contains weightings for tokens based on their

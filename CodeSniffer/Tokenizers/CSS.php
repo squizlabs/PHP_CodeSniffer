@@ -44,47 +44,56 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      */
     public function tokenizeString($string, $eolChar='\n')
     {
-        $tokens = parent::tokenizeString('<?php '.$string.' ?>', $eolChar);
+        $tokens      = parent::tokenizeString('<?php '.$string.' ?>', $eolChar);
         $finalTokens = array();
 
         $newStackPtr = 0;
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
-            if ($token['code'] === T_COMMENT && $token['content']{0} === '#') {
-                // The # character is not a comment in CSS files, so determine
-                // what it means in this context.
-                $content = substr($token['content'], 1);
+            if ($token['code'] === T_COMMENT && substr($token['content'], 0, 2) !== '/*') {
+                $content       = ltrim($token['content'], '#/');
                 $commentTokens = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
                 array_pop($commentTokens);
-                $firstContent = $commentTokens[0]['content'];
 
-                // If the first content is just a number, it is probably a
-                // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
-                if ($commentTokens[0]['code'] === T_LNUMBER && $commentTokens[1]['code'] === T_STRING) {
-                    $firstContent .= $commentTokens[1]['content'];
-                    array_shift($commentTokens);
-                }
+                if ($token['content']{0} === '#') {
+                    // The # character is not a comment in CSS files, so determine
+                    // what it means in this context.
+                    $firstContent = $commentTokens[0]['content'];
 
-                // If the first content looks like a colour and not a class
-                // definition, join the tokens together.
-                if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1) {
-                    array_shift($commentTokens);
-                    $finalTokens[$newStackPtr] = array(
-                                                  'type'    => 'T_COLOUR',
-                                                  'code'    => T_COLOUR,
-                                                  'content' => '#'.$firstContent,
-                                                 );
+                    // If the first content is just a number, it is probably a
+                    // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
+                    if ($commentTokens[0]['code'] === T_LNUMBER && $commentTokens[1]['code'] === T_STRING) {
+                        $firstContent .= $commentTokens[1]['content'];
+                        array_shift($commentTokens);
+                    }
+
+                    // If the first content looks like a colour and not a class
+                    // definition, join the tokens together.
+                    if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1) {
+                        array_shift($commentTokens);
+                        $finalTokens[$newStackPtr] = array(
+                                                      'type'    => 'T_COLOUR',
+                                                      'code'    => T_COLOUR,
+                                                      'content' => '#'.$firstContent,
+                                                     );
+                    } else {
+                        $finalTokens[$newStackPtr] = array(
+                                                      'type'    => 'T_HASH',
+                                                      'code'    => T_HASH,
+                                                      'content' => '#',
+                                                     );
+                    }
                 } else {
                     $finalTokens[$newStackPtr] = array(
-                                                  'type'    => 'T_HASH',
-                                                  'code'    => T_HASH,
-                                                  'content' => '#',
+                                                  'type'    => 'T_STRING',
+                                                  'code'    => T_STRING,
+                                                  'content' => '//',
                                                  );
-                }
+                }//end if
 
                 $newStackPtr++;
 
@@ -100,7 +109,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $newStackPtr++;
         }//end for
 
-
         $numTokens = count($finalTokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $finalTokens[$stackPtr];
@@ -110,19 +118,51 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 // class names, IDs and styles.
                 if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING && $finalTokens[($stackPtr + 1)]['code'] === T_STRING) {
                     $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
+
                     $finalTokens[($stackPtr - 1)]['content'] = $newContent;
                     unset($finalTokens[$stackPtr]);
                     unset($finalTokens[($stackPtr + 1)]);
+
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
-                    $stackPtr--;
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
                     $finalTokens[($stackPtr + 1)]['content'] = '-'.$finalTokens[($stackPtr + 1)]['content'];
                     unset($finalTokens[$stackPtr]);
+
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
                 }
+            } else if (strtolower($token['content']) === 'url') {
+                // Find the next content.
+                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                    if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                // Needs to be in the format url( for it to be a URL.
+                if ($finalTokens[$x]['code'] !== T_OPEN_PARENTHESIS) {
+                    continue;
+                }
+
+                // Join all the content together inside the url() statement.
+                $newContent = '';
+                for ($i = ($x + 2); $i < $numTokens; $i++) {
+                    if ($finalTokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
+                        break;
+                    }
+
+                    $newContent .= $finalTokens[$i]['content'];
+                    unset($finalTokens[$i]);
+                }
+
+                $finalTokens[($x + 1)]['type']     = 'T_URL';
+                $finalTokens[($x + 1)]['code']     = T_URL;
+                $finalTokens[($x + 1)]['content'] .= $newContent;
+
+                $finalTokens = array_values($finalTokens);
+                $numTokens   = count($finalTokens);
             }//end if
         }//end for
 
