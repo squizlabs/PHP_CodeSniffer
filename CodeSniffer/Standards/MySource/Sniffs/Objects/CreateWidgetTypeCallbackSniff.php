@@ -134,13 +134,22 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
                 $phpcsFile->addError($error, $arg);
             }
 
-            // Now it must be followed by a return statement or the end of the line.
+            // Now it must be followed by a return statement or the end of the function.
             $endBracket = $tokens[($i + 3)]['parenthesis_closer'];
             for ($next = $endBracket; $next <= $end; $next++) {
+                // Skip whitespace so we find the next content after the call.
                 if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                     continue;
                 }
 
+                // Skip closing braces like END IF because it is not executable code.
+                if ($tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET) {
+                    continue;
+                }
+
+                // We don't care about anything on the current line, like a semicolon. It
+                // doesn't matter if there are other statements on the line because another
+                // sniff will check for those.
                 if ($tokens[$next]['line'] === $tokens[$endBracket]['line']) {
                     continue;
                 }

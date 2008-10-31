@@ -71,3 +71,17 @@ SomeRandom.prototype = {
     }
 
 };
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        if (a === 1) {
+            // This is ok because it is the last statement,
+            // even though it is conditional.
+            callback.call(self);
+        }
+
+    }
+
+};
