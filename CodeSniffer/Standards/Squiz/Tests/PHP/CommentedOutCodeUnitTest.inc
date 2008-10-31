@@ -43,4 +43,7 @@ if ($blah) {
 /*
 */
 
+function myFunction()
+{
+}//end myFunction()
 ?>

@@ -79,6 +79,11 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // Ignore comments at the end of code blocks.
+        if (substr($tokens[$stackPtr]['content'], 0, 6) === '//end ') {
+            return;
+        }
+
         $content = '';
         if ($phpcsFile->tokenizerType === 'PHP') {
             $content = '<?php ';
