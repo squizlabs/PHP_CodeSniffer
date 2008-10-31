@@ -16,7 +16,8 @@
 /**
  * Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff.
  *
- * Ensure there is a single space before the opening brace in a class definition.
+ * Ensure there is a single space before the opening brace in a class definition
+ * and the content starts on the next line.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -78,7 +79,16 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
             }
         }//end if
 
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($next !== false && $tokens[$next]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+            $num   = ($tokens[$next]['line'] - $tokens[$stackPtr]['line'] - 1);
+            $error = "Expected 0 blank lines after opening brace of class definition; $num found";
+            $phpcsFile->addError($error, $stackPtr);
+        }
+
     }//end process()
 
+
 }//end class
+
 ?>

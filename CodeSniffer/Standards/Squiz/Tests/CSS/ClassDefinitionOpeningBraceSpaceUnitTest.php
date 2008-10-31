@@ -30,6 +30,7 @@
 class Squiz_Tests_CSS_ClassDefinitionOpeningBraceSpaceUnitTest extends AbstractSniffUnitTest
 {
 
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -44,6 +45,7 @@ class Squiz_Tests_CSS_ClassDefinitionOpeningBraceSpaceUnitTest extends AbstractS
                 4  => 1,
                 7  => 1,
                 10 => 1,
+                13 => 1,
                );
 
     }//end getErrorList()

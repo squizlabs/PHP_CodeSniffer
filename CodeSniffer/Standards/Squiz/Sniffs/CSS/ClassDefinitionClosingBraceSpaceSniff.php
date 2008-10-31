@@ -63,17 +63,28 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
         $tokens = $phpcsFile->getTokens();
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($next === false || $tokens[$next]['code'] === T_CLOSE_TAG) {
+        if ($next === false) {
             return;
         }
 
-        $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
-        if ($found !== 1) {
-            $error = "Expected one blank line after closing brace of class definition; $found found";
+        if ($tokens[$next]['code'] !== T_CLOSE_TAG) {
+            $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
+            if ($found !== 1) {
+                $error = "Expected one blank line after closing brace of class definition; $found found";
+                $phpcsFile->addError($error, $stackPtr);
+            }
+        }
+
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if ($prev !== false && $tokens[$prev]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {
+            $num   = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
+            $error = "Expected 0 blank lines before closing brace of class definition; $num found";
             $phpcsFile->addError($error, $stackPtr);
         }
 
     }//end process()
 
+
 }//end class
+
 ?>
