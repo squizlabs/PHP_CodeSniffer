@@ -44,7 +44,7 @@ class Squiz_Sniffs_CSS_SemicolonSpacingSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_COLON);
+        return array(T_STYLE);
 
     }//end register()
 
