@@ -113,15 +113,25 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $finalTokens[$stackPtr];
 
-            if ($token['code'] === T_MINUS) {
+            switch ($token['code']) {
+            case T_MINUS:
                 // Minus signs are often used instead of spaces inside
                 // class names, IDs and styles.
-                if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING && $finalTokens[($stackPtr + 1)]['code'] === T_STRING) {
-                    $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
+                if ($finalTokens[($stackPtr + 1)]['code'] === T_STRING) {
+                    if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
+                        $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
 
-                    $finalTokens[($stackPtr - 1)]['content'] = $newContent;
-                    unset($finalTokens[$stackPtr]);
-                    unset($finalTokens[($stackPtr + 1)]);
+                        $finalTokens[($stackPtr - 1)]['content'] = $newContent;
+                        unset($finalTokens[$stackPtr]);
+                        unset($finalTokens[($stackPtr + 1)]);
+                        $stackPtr -= 2;
+                    } else {
+                        $newContent = '-'.$finalTokens[($stackPtr + 1)]['content'];
+
+                        $finalTokens[($stackPtr + 1)]['content'] = $newContent;
+                        unset($finalTokens[$stackPtr]);
+                        $stackPtr--;
+                    }
 
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
@@ -133,37 +143,59 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
                 }
-            } else if (strtolower($token['content']) === 'url') {
-                // Find the next content.
-                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+
+                break;
+            case T_COLON:
+                // Find the previous content.
+                for ($x = ($stackPtr - 1); $x >= 0; $x--) {
                     if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         break;
                     }
                 }
 
-                // Needs to be in the format url( for it to be a URL.
-                if ($finalTokens[$x]['code'] !== T_OPEN_PARENTHESIS) {
-                    continue;
-                }
-
-                // Join all the content together inside the url() statement.
-                $newContent = '';
-                for ($i = ($x + 2); $i < $numTokens; $i++) {
-                    if ($finalTokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
-                        break;
+                // If the previous non-whitspace token is a string, it is a
+                // style definition.
+                $finalTokens[$x]['type'] = 'T_STYLE';
+                $finalTokens[$x]['code'] = T_STYLE;
+                break;
+            case T_STRING:
+                if (strtolower($token['content']) === 'url') {
+                    // Find the next content.
+                    for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                        if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                            break;
+                        }
                     }
 
-                    $newContent .= $finalTokens[$i]['content'];
-                    unset($finalTokens[$i]);
-                }
+                    // Needs to be in the format url( for it to be a URL.
+                    if ($finalTokens[$x]['code'] !== T_OPEN_PARENTHESIS) {
+                        continue;
+                    }
 
-                $finalTokens[($x + 1)]['type']     = 'T_URL';
-                $finalTokens[($x + 1)]['code']     = T_URL;
-                $finalTokens[($x + 1)]['content'] .= $newContent;
+                    // Join all the content together inside the url() statement.
+                    $newContent = '';
+                    for ($i = ($x + 2); $i < $numTokens; $i++) {
+                        if ($finalTokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
+                            break;
+                        }
 
-                $finalTokens = array_values($finalTokens);
-                $numTokens   = count($finalTokens);
-            }//end if
+                        $newContent .= $finalTokens[$i]['content'];
+                        unset($finalTokens[$i]);
+                    }
+
+                    $finalTokens[($x + 1)]['type']     = 'T_URL';
+                    $finalTokens[($x + 1)]['code']     = T_URL;
+                    $finalTokens[($x + 1)]['content'] .= $newContent;
+
+                    $finalTokens = array_values($finalTokens);
+                    $numTokens   = count($finalTokens);
+                }//end if
+
+                break;
+            default:
+                // Nothing special to be done with this token.
+                break;
+            }//end switch
         }//end for
 
         return $finalTokens;
