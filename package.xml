@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz EmptyClassDefinitionSniff to check for CSS class definitions without content
   - Added Squiz ClassDefinitionOpeningBraceSpaceSniff to check for spaces around opening brace of CSS class definitions
   - Added Squiz ClassDefinitionClosingBraceSpaceSniff to check for a single blank line after CSS class definitions
+  - Added Squiz DisallowMultipleStyleDefinitionsSniff to check for multiple style definitions on a single line
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
@@ -853,6 +854,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ColourDefinitionSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowMultipleStyleDefinitionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EmptyClassDefinitionSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1193,6 +1197,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ColourDefinitionUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="ColourDefinitionUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowMultipleStyleDefinitionsUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="DisallowMultipleStyleDefinitionsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EmptyClassDefinitionUnitTest.css" role="test" />
