@@ -16,7 +16,7 @@
 /**
  * Squiz_Sniffs_CSS_DisallowMultipleStyleDefinitionsSniff.
  *
- * Ensure that style definitions are not empty.
+ * Ensure that each style definition is on a line by itself.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
