@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz ForbiddenStylesSniff to check for usage of browser specific styles
   - Added Squiz OpacitySniff to check for incorrect opacity values in CSS
   - Added Squiz LowercaseStyleDefinitionSniff to check for styles that are not defined in lowercase
+  - Added Squiz MissingColonSniff to check for style definitions where the colon has been forgotten
   - Added Generic TodoSniff that warns about comments that contain the word TODO
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
@@ -875,6 +876,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowercaseStyleDefinitionSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="MissingColonSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OpacitySniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1233,6 +1237,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="LowercaseStyleDefinitionUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="LowercaseStyleDefinitionUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MissingColonUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="MissingColonUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OpacityUnitTest.css" role="test" />
