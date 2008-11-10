@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz EmptyClassDefinitionSniff to check for CSS class definitions without content
   - Added Squiz ClassDefinitionOpeningBraceSpaceSniff to check for spaces around opening brace of CSS class definitions
   - Added Squiz ClassDefinitionClosingBraceSpaceSniff to check for a single blank line after CSS class definitions
+  - Added Squiz ClassDefinitionNameSpacingSniff to check for a blank lines inside CSS class definition names
   - Added Squiz DisallowMultipleStyleDefinitionsSniff to check for multiple style definitions on a single line
   - Added Squiz ForbiddenStylesSniff to check for usage of browser specific styles
   - Added Squiz OpacitySniff to check for incorrect opacity values in CSS
@@ -849,6 +850,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ClassDefinitionClosingBraceSpaceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ClassDefinitionNameSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ClassDefinitionOpeningBraceSpaceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1201,6 +1205,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="CSS">
         <file baseinstalldir="PHP" name="ClassDefinitionClosingBraceSpaceUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="ClassDefinitionClosingBraceSpaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClassDefinitionNameSpacingUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="ClassDefinitionNameSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ClassDefinitionOpeningBraceSpaceUnitTest.css" role="test" />
