@@ -218,6 +218,7 @@ class PHP_CodeSniffer_CLI
                                      'xml',
                                      'checkstyle',
                                      'csv',
+                                     'emacs',
                                      'summary',
                                     );
 
@@ -360,6 +361,9 @@ class PHP_CodeSniffer_CLI
         case 'csv':
             $numErrors = $phpcs->printCSVErrorReport($showWarnings);
             break;
+        case 'emacs':
+            $numErrors = $phpcs->printEmacsErrorReport($showWarnings);
+            break;
         case 'summary':
             $numErrors = $phpcs->printErrorReportSummary($showWarnings);
             break;
@@ -438,7 +442,7 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
         echo '                     (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
-        echo '                     "csv" or "summary" report'.PHP_EOL;
+        echo '                     "csv", "emacs" or "summary" report'.PHP_EOL;
         echo '                     (the "full" report is printed by default)'.PHP_EOL;
 
     }//end printUsage()

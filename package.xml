@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHP_CodeSniffer now has a CSS tokenizer for checking CSS files
   - Added support for a new multi-file sniff that sniffs all processed files at once
+  - Added new output format --report=emacs to output errors using the emacs standard compile output format
+    -- Thanks to Len Trigg for the contribution
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
     -- Not currently used by any standard; more of a multi-file sniff sample than anything useful

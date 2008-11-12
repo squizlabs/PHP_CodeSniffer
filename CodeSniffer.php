@@ -101,7 +101,7 @@ class PHP_CodeSniffer
     private $_tokenListeners = array(
                                 'file'      => array(),
                                 'multifile' => array(),
-                                );
+                               );
 
     /**
      * An array of patterns to use for skipping files.
@@ -437,7 +437,7 @@ class PHP_CodeSniffer
     {
         $this->listeners = $this->getTokenListeners($standard, $sniffs);
 
-    }//end setTokenListeners
+    }//end setTokenListeners()
 
 
     /**
@@ -646,7 +646,7 @@ class PHP_CodeSniffer
      */
     public function processFile($file, $contents=null)
     {
-        if (is_null($contents) === true && file_exists($file) === false) {
+        if ($contents === null && file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
@@ -796,7 +796,6 @@ class PHP_CodeSniffer
             ksort($errors);
 
             $report['files'][$filename]['messages'] = $errors;
-
         }//end foreach
 
         return $report;
@@ -840,7 +839,6 @@ class PHP_CodeSniffer
             }//end foreach
 
             echo ' </file>'.PHP_EOL;
-
         }//end foreach
 
         echo '</phpcs>'.PHP_EOL;
@@ -886,7 +884,6 @@ class PHP_CodeSniffer
             }//end foreach
 
             echo ' </file>'.PHP_EOL;
-
         }//end foreach
 
         echo '</checkstyle>'.PHP_EOL;
@@ -927,6 +924,36 @@ class PHP_CodeSniffer
         return $errorsShown;
 
     }//end printCSVErrorReport()
+
+
+    /**
+     * Prints all errors and warnings for each file processed, in a format for emacs.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printEmacsErrorReport($showWarnings=true)
+    {
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+            foreach ($file['messages'] as $line => $lineErrors) {
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $message = $error['message'];
+                        $type    = strtolower($error['type']);
+                        echo "$filename:$line:$column: $type - $message".PHP_EOL;
+                        $errorsShown++;
+                    }
+                }
+            }//end foreach
+        }//end foreach
+
+        return $errorsShown;
+
+    }//end printEmacsErrorReport()
 
 
     /**
@@ -1015,7 +1042,6 @@ class PHP_CodeSniffer
             }//end foreach
 
             echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
-
         }//end foreach
 
         return $errorsShown;
@@ -1332,7 +1358,6 @@ class PHP_CodeSniffer
         default:
             $newToken['type'] = 'T_NONE';
             break;
-
         }//end switch
 
         $newToken['code']    = constant($newToken['type']);
