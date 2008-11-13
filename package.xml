@@ -104,6 +104,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #14637 : Call to processUnknownArguments() misses second parameter $pos
     -- Thanks to Peter Buri for the patch
   - Fixed bug #14889 : Lack of clarity: licence or license
+  - Fixed bug #15008 : Nested Parentheses in Control Structure Sniffs
  </notes>
  <contents>
   <dir name="/">

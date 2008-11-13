@@ -468,23 +468,35 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 }//end if
 
             } else if ($pattern[$i]['type'] === 'skip') {
-                // Find the previous opener.
-                $next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$blockOpeners, $stackPtr, null);
-                if ($next === false || isset($tokens[$next][$pattern[$i]['to']]) === false) {
-                    // If there was not opener, then we must
-                    // be using the wrong pattern.
-                    return false;
-                }
+                if ($pattern[$i]['to'] === 'unknown') {
+                    $next = $phpcsFile->findNext($pattern[($i + 1)]['token'], $stackPtr);
+                    if ($next === false) {
+                        // Couldn't find the next token, sowe we must
+                        // be using the wrong pattern.
+                        return false;
+                    }
 
-                $found .= '...';
-                if ($pattern[$i]['to'] === 'parenthesis_closer') {
-                    $found .= ')';
+                    $found   .= '...';
+                    $stackPtr = $next;
                 } else {
-                    $found .= '}';
-                }
+                    // Find the previous opener.
+                    $next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$blockOpeners, $stackPtr);
+                    if ($next === false || isset($tokens[$next][$pattern[$i]['to']]) === false) {
+                        // If there was not opener, then we must
+                        // be using the wrong pattern.
+                        return false;
+                    }
 
-                // Skip to the closing token.
-                $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
+                    $found .= '...';
+                    if ($pattern[$i]['to'] === 'parenthesis_closer') {
+                        $found .= ')';
+                    } else {
+                        $found .= '}';
+                    }
+
+                    // Skip to the closing token.
+                    $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
+                }
             } else if ($pattern[$i]['type'] === 'string') {
                 if ($tokens[$stackPtr]['code'] !== T_STRING) {
                     $hasError = true;
@@ -647,8 +659,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 // to skip to.
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
-                $firstToken     = ($i + 4);
+                $firstToken     = ($i + 3);
                 $i              = ($i + 3);
+
+                if ($specialPattern['to'] !== 'unknown') {
+                    $firstToken++;
+                }
             } else if (substr($pattern, $i, 3) === 'abc') {
                 $specialPattern = array('type' => 'string');
                 $lastToken      = ($i - $firstToken);
@@ -714,13 +730,21 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     {
         $skip = array('type' => 'skip');
 
-        for ($from; $from >= 0; $from--) {
-            switch ($pattern[$from]) {
+        $nestedParenthesis = 0;
+        for ($start = $from; $start >= 0; $start--) {
+            switch ($pattern[$start]) {
             case '(':
-                $skip['to'] = 'parenthesis_closer';
+                if ($nestedParenthesis === 0) {
+                    $skip['to'] = 'parenthesis_closer';
+                }
+
+                $nestedParenthesis--;
                 break;
             case '{':
                 $skip['to'] = 'scope_closer';
+                break;
+            case ')':
+                $nestedParenthesis++;
                 break;
             }
 
