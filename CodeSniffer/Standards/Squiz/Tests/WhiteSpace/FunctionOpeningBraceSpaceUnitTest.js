@@ -92,3 +92,21 @@ HelpWidgetType.prototype = {
 
     }
 }
+
+CustomFormEditWidgetType.prototype = {
+
+    addQuestion: function()
+    {
+        var settings = {
+            default: ''
+        };
+
+    },
+
+    addQuestionRulesEvent: function()
+    {
+        var self = this;
+
+    }
+
+};

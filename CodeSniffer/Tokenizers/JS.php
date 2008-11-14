@@ -110,6 +110,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                            'with'   => array(
                                                         T_DEFAULT,
                                                         T_CASE,
+                                                        T_SWITCH,
                                                        ),
                                           ),
                             T_DEFAULT  => array(
@@ -117,7 +118,10 @@ class PHP_CodeSniffer_Tokenizers_JS
                                            'end'    => T_BREAK,
                                            'strict' => true,
                                            'shared' => true,
-                                           'with'   => array(T_CASE),
+                                           'with'   => array(
+                                                        T_CASE,
+                                                        T_SWTICH,
+                                                       ),
                                           ),
                            );
 

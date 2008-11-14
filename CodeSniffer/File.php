@@ -1016,15 +1016,15 @@ class PHP_CodeSniffer_File
      * @param int    $stackPtr  The position in the stack of the token that
      *                          opened the scope (eg. an IF token or FOR token).
      * @param int    $depth     How many scope levels down we are.
+     * @param int    &$ignore   How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
      */
-    private static function _recurseScopeMap(&$tokens, $numTokens, $tokenizer, $eolChar, $stackPtr, $depth=1)
+    private static function _recurseScopeMap(&$tokens, $numTokens, $tokenizer, $eolChar, $stackPtr, $depth=1, &$ignore=0)
     {
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
-        $ignore    = 0;
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
@@ -1045,7 +1045,7 @@ class PHP_CodeSniffer_File
                 }
 
                 if ($ignore > 0) {
-                    echo 'ignore;';
+                    echo "ignore=$ignore;";
                 }
 
                 echo "]: $type => $content".PHP_EOL;
@@ -1099,8 +1099,14 @@ class PHP_CodeSniffer_File
                         echo str_repeat("\t", $depth);
                         echo '* searching for opener *'.PHP_EOL;
                     }
-
-                    $i = self::_recurseScopeMap($tokens, $numTokens, $tokenizer, $eolChar, $i, ($depth + 1));
+                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                        $oldIgnore = $ignore;
+                        $ignore = 0;
+                    }
+                    $i = self::_recurseScopeMap($tokens, $numTokens, $tokenizer, $eolChar, $i, ($depth + 1), $ignore);
+                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                        $ignore = $oldIgnore;
+                    }
                 }//end if
             }//end if start scope
 
@@ -1129,7 +1135,7 @@ class PHP_CodeSniffer_File
                     }//end for
                 }//end if
 
-                if ($ignore === 0) {
+                if ($ignore === 0 || $tokens[$stackPtr]['type'] !== T_OPEN_CURLY_BRACKET) {
                     // We found the opening scope token for $currType.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
@@ -1332,8 +1338,11 @@ class PHP_CodeSniffer_File
                         // closer (like CASE with no BREAK using a SWITCHes closer).
                         $thisType = $tokens[$tokens[$i]['scope_condition']]['code'];
                         $opener   = $tokens[$lastOpener]['scope_condition'];
-                        if (in_array($tokens[$opener]['code'], $tokenizer->scopeOpeners[$thisType]['with']) === true) {
-                            $badToken = $tokens[$lastOpener]['scope_condition'];
+
+                        $isShared = in_array($tokens[$opener]['code'], $tokenizer->scopeOpeners[$thisType]['with']);
+                        $sameEnd  = ($tokenizer->scopeOpeners[$thisType]['end'] === $tokenizer->scopeOpeners[$tokens[$opener]['code']]['end']);
+                        if ($isShared === true && $sameEnd === true) {
+                            $badToken = $opener;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $type = $tokens[$badToken]['type'];
                                 echo str_repeat("\t", ($level + 1));
@@ -1406,7 +1415,6 @@ class PHP_CodeSniffer_File
                         $openers[$lastOpener] = $lastOpener;
                     }
                 } else if ($tokens[$i]['scope_closer'] === $i) {
-                    $removedCondition = false;
                     foreach (array_reverse($openers) as $opener) {
                         if ($tokens[$opener]['scope_closer'] === $i) {
                             $oldOpener = array_pop($openers);
@@ -1423,18 +1431,63 @@ class PHP_CodeSniffer_File
                                 echo "=> Found scope closer for $oldOpener ($type)".PHP_EOL;
                             }
 
-                            if ($removedCondition === false) {
-                                $oldCondition = array_pop($conditions);
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo str_repeat("\t", ($level + 1));
-                                    echo '* token '.token_name($oldCondition).' removed from conditions array *'.PHP_EOL;
-                                }
+                            $oldCondition = array_pop($conditions);
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", ($level + 1));
+                                echo '* token '.token_name($oldCondition).' removed from conditions array *'.PHP_EOL;
+                            }
 
-                                $level--;
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo str_repeat("\t", ($level + 2));
-                                    echo '* level decreased *'.PHP_EOL;
-                                }
+                            // Make sure this closer actually belongs to us.
+                            // Either the condition also has to think this is the
+                            // closer, or it has to allow sharing with us.
+                            $condition = $tokens[$tokens[$i]['scope_condition']]['code'];
+                            if ($condition !== $oldCondition) {
+                                if (in_array($condition, $tokenizer->scopeOpeners[$oldCondition]['with']) === false) {
+                                    $badToken = $tokens[$oldOpener]['scope_condition'];
+
+                                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                        $type = token_name($oldCondition);
+                                        echo str_repeat("\t", ($level + 1));
+                                        echo "* scope closer was bad, cleaning up $badToken ($type) *".PHP_EOL;
+                                    }
+
+                                    for ($x = ($oldOpener + 1); $x <= $i; $x++) {
+                                        $oldConditions = $tokens[$x]['conditions'];
+                                        $oldLevel      = $tokens[$x]['level'];
+                                        $tokens[$x]['level']--;
+                                        unset($tokens[$x]['conditions'][$badToken]);
+                                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                            $type     = $tokens[$x]['type'];
+                                            $oldConds = '';
+                                            foreach ($oldConditions as $condition) {
+                                                $oldConds .= token_name($condition).',';
+                                            }
+
+                                            $oldConds = rtrim($oldConds, ',');
+
+                                            $newConds = '';
+                                            foreach ($tokens[$x]['conditions'] as $condition) {
+                                                $newConds .= token_name($condition).',';
+                                            }
+
+                                            $newConds = rtrim($newConds, ',');
+
+                                            $newLevel = $tokens[$x]['level'];
+                                            echo str_repeat("\t", ($level + 1));
+                                            echo "* cleaned $x ($type) *".PHP_EOL;
+                                            echo str_repeat("\t", ($level + 2));
+                                            echo "=> level changed from $oldLevel to $newLevel".PHP_EOL;
+                                            echo str_repeat("\t", ($level + 2));
+                                            echo "=> conditions changed from $oldConds to $newConds".PHP_EOL;
+                                        }//end if
+                                    }//end for
+                                }//end if
+                            }//end if
+
+                            $level--;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", ($level + 2));
+                                echo '* level decreased *'.PHP_EOL;
                             }
 
                             $tokens[$i]['level']      = $level;

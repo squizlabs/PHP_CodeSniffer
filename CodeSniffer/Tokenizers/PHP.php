@@ -137,6 +137,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'with'   => array(
                                                              T_DEFAULT,
                                                              T_CASE,
+                                                             T_SWITCH,
                                                             ),
                                                ),
                             T_DEFAULT       => array(
@@ -144,7 +145,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'end'    => T_BREAK,
                                                 'strict' => true,
                                                 'shared' => true,
-                                                'with'   => array(T_CASE),
+                                                'with'   => array(
+                                                             T_CASE,
+                                                             T_SWITCH,
+                                                            ),
                                                ),
                             T_START_HEREDOC => array(
                                                 'start'  => T_START_HEREDOC,

@@ -86,3 +86,21 @@ var myFunc = function()
     return x;
 
 }
+
+CustomFormEditWidgetType.prototype = {
+
+    addQuestion: function()
+    {
+        var settings = {
+            default: ''
+        };
+
+    },
+
+    addQuestionRulesEvent: function()
+    {
+        var self = this;
+
+    }
+
+};
