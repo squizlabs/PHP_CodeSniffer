@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Not currently used by any standard; more of a multi-file sniff sample than anything useful
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
+  - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added MySource CreateWidgetTypeCallback sniff to check callback usage in widget type create methods
@@ -647,6 +648,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionCallSignatureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="FunctionDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ValidDefaultValueSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -715,6 +719,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ValidDefaultValueUnitTest.inc" role="test" />
