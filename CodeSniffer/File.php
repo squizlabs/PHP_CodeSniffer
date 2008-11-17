@@ -288,8 +288,9 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    public function removeTokenListener(PHP_CodeSniffer_Sniff $listener, array $tokens)
-    {
+    public function removeTokenListener(PHP_CodeSniffer_Sniff $listener,
+        array $tokens
+    ) {
         foreach ($tokens as $token) {
             if (isset($this->_listeners[$token]) === false) {
                 continue;
@@ -941,8 +942,9 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createParenthesisNestingMap(&$tokens, $tokenizer, $eolChar)
-    {
+    private static function _createParenthesisNestingMap(&$tokens, $tokenizer,
+        $eolChar
+    ) {
         $numTokens = count($tokens);
         $map       = array();
         for ($i = 0; $i < $numTokens; $i++) {
@@ -1020,8 +1022,9 @@ class PHP_CodeSniffer_File
      *
      * @return int The position in the stack that closed the scope.
      */
-    private static function _recurseScopeMap(&$tokens, $numTokens, $tokenizer, $eolChar, $stackPtr, $depth=1, &$ignore=0)
-    {
+    private static function _recurseScopeMap(&$tokens, $numTokens, $tokenizer,
+        $eolChar, $stackPtr, $depth=1, &$ignore=0
+    ) {
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
@@ -1914,8 +1917,9 @@ class PHP_CodeSniffer_File
      * @return int | bool
      * @see findNext()
      */
-    public function findPrevious($types, $start, $end=null, $exclude=false, $value=null, $local=false)
-    {
+    public function findPrevious($types, $start, $end=null, $exclude=false,
+        $value=null, $local=false
+    ) {
         $types = (array) $types;
 
         if ($end === null) {
@@ -1975,8 +1979,9 @@ class PHP_CodeSniffer_File
      * @return int | bool
      * @see findPrevious()
      */
-    public function findNext($types, $start, $end=null, $exclude=false, $value=null, $local=false)
-    {
+    public function findNext($types, $start, $end=null, $exclude=false,
+        $value=null, $local=false
+    ) {
         $types = (array) $types;
 
         if ($end === null || $end > $this->numTokens) {

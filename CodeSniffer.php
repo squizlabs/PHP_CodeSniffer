@@ -1388,8 +1388,9 @@ class PHP_CodeSniffer
      *
      * @return boolean
      */
-    public static function isCamelCaps($string, $classFormat=false, $public=true, $strict=true)
-    {
+    public static function isCamelCaps($string, $classFormat=false,
+        $public=true, $strict=true
+    ) {
         // Check the first character first.
         if ($classFormat === false) {
             if ($public === false) {
@@ -1568,8 +1569,9 @@ class PHP_CodeSniffer
      * @return array
      * @see isInstalledStandard()
      */
-    public static function getInstalledStandards($includeGeneric=false, $standardsDir='')
-    {
+    public static function getInstalledStandards($includeGeneric=false,
+        $standardsDir=''
+    ) {
         $installedStandards = array();
 
         if ($standardsDir === '') {
