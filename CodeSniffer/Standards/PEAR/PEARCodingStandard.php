@@ -44,7 +44,6 @@ class PHP_CodeSniffer_Standards_PEAR_PEARCodingStandard extends PHP_CodeSniffer_
     public function getIncludedSniffs()
     {
         return array(
-                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
                 'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
                 'Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
                 'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',

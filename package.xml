@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
   - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
+  - Added PEAR MultipleStatementAlignmentSniff to stop alignment warnings if more than 8 spaces are required
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added MySource CreateWidgetTypeCallback sniff to check callback usage in widget type create methods
@@ -88,6 +89,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowSizeFunctionsInLoopsSniff no longer complains about size functions outside of the FOR condition
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Squiz ForLoopDeclarationSniff no longer throws errors for JS FOR loops without semicolons
+  - Squiz MultipleStatementAlignmentSniff no longer throws errors if a statement would take more than 8 spaces to align
   - Squiz standard now uses TodoSniff
   - Zend standard now uses OpeningFunctionBraceBsdAllmanSniff (feature request #14647)
   - MySource JoinStringsSniff now bans the use of inline array joins and suggests the + operator
@@ -638,6 +640,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Formatting">
+        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
