@@ -46,6 +46,13 @@ class PEAR_Sniffs_Formatting_MultipleStatementAlignmentSniff extends Generic_Sni
      */
     protected $maxPadding = 8;
 
+    /**
+     * If true, multi-line assignments are not checked.
+     *
+     * @var int
+     */
+    protected $ignoreMultiLine = true;
+
 }//end class
 
 ?>

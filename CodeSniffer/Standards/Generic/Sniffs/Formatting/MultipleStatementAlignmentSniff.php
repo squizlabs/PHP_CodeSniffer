@@ -61,6 +61,13 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     protected $maxPadding = 1000;
 
+    /**
+     * If true, multi-line assignments are not checked.
+     *
+     * @var int
+     */
+    protected $ignoreMultiLine = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -224,6 +231,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 // If the expected number of spaces for alignment exceeds the
                 // maxPadding rule, we can ignore this assignment.
                 if ($expected > $this->maxPadding) {
+                    continue;
+                }
+
+                // Skip multi-line assignments if required.
+                if ($found === null && $this->ignoreMultiLine === true) {
                     continue;
                 }
 

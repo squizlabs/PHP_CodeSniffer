@@ -65,7 +65,7 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
     public function getExcludedSniffs()
     {
         return array(
-                'Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
+                'PEAR/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
                 'Squiz/Sniffs/Classes/ClassFileNameSniff.php',
                 'Squiz/Sniffs/Classes/ValidClassNameSniff.php',
                 'Squiz/Sniffs/Commenting/ClassCommentSniff.php',
