@@ -120,7 +120,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                            'shared' => true,
                                            'with'   => array(
                                                         T_CASE,
-                                                        T_SWTICH,
+                                                        T_SWITCH,
                                                        ),
                                           ),
                            );
