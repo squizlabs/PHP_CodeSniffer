@@ -79,3 +79,5 @@ var options = {
     minVal: -1,
     maxVal: -1
 };
+
+stepWidth = Math.round(this.width / 5);
