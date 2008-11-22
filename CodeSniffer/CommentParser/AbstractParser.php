@@ -215,7 +215,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     private function _parse($comment)
     {
         // Firstly, remove the comment tags and any stars from the left side.
-        $lines = split($this->phpcsFile->eolChar, $comment);
+        $lines = explode($this->phpcsFile->eolChar, $comment);
         foreach ($lines as &$line) {
             $line = trim($line);
 
