@@ -132,6 +132,11 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         $phpcs->setTokenListeners($values['standard']);
 
         foreach (preg_split('/\v/', $contents, -1, PREG_SPLIT_NO_EMPTY) as $path) {
+            // No need to process folders as each changed file is checked.
+            if (substr($path, -1) === '/') {
+                continue;
+            }
+
             // Get the contents of each file, as it would be after this transaction.
             $command = PHP_CODESNIFFER_SVNLOOK.' cat '.implode(' ', $values['svnArgs']).' '.$path;
             $handle  = popen($command, 'r');

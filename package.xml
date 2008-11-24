@@ -111,6 +111,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Peter Buri for the patch
   - Fixed bug #14889 : Lack of clarity: licence or license
   - Fixed bug #15008 : Nested Parentheses in Control Structure Sniffs
+  - Fixed bug #15091 : pre-commit hook attempts to sniff folders
+    -- Thanks to Bruce Weirdan for the patch
  </notes>
  <contents>
   <dir name="/">
