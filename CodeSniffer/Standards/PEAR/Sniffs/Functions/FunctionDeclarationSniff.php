@@ -128,7 +128,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             if ($tokens[$i]['line'] !== $lastLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     // Closing brace needs to be indented to the same level
-                    // as the funciton.
+                    // as the function.
                     $expectedIndent = $functionIndent;
                 } else {
                     $expectedIndent = ($functionIndent + 4);
