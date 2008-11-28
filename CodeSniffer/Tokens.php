@@ -288,6 +288,18 @@ final class PHP_CodeSniffer_Tokens
                                );
 
     /**
+     * Tokens that perform boolean operations.
+     *
+     * @var array(int)
+     */
+    public static $booleanOperators = array(
+                                       T_BOOLEAN_AND,
+                                       T_BOOLEAN_OR,
+                                       T_LOGICAL_AND,
+                                       T_LOGICAL_OR,
+                                      );
+
+    /**
      * Tokens that perform operations.
      *
      * @var array(int)
