@@ -64,6 +64,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz OpacitySniff to check for incorrect opacity values in CSS
   - Added Squiz LowercaseStyleDefinitionSniff to check for styles that are not defined in lowercase
   - Added Squiz MissingColonSniff to check for style definitions where the colon has been forgotten
+  - Added Squiz MultiLineFunctionDeclarationSniff to check that multi-line declarations contain one param per line
   - Added Squiz JSLintSniff to check for JS errors using the jslint.js script through Rhino
     -- Set jslint path using phpcs --config-set jslint_path /path/to/jslint.js
     -- Set rhino path using phpcs --config-set rhino_path /path/to/rhino
@@ -973,6 +974,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowercaseFunctionKeywordsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="NamingConventions">
         <file baseinstalldir="PHP" name="ConstantCaseSniff.php" role="php">
@@ -1346,6 +1350,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="LowercaseFunctionKeywordsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LowercaseFunctionKeywordsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
