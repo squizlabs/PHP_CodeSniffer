@@ -142,7 +142,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 }
 
                 if ($expectedIndent !== $foundIndent) {
-                    $error = "Multi-line function delcaration not indented correctly; expected $expectedIndent spaces but found $foundIndent";
+                    $error = "Multi-line function declaration not indented correctly; expected $expectedIndent spaces but found $foundIndent";
                     $phpcsFile->addError($error, $i);
                 }
 
@@ -159,14 +159,14 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         }
 
         if ($length !== 1) {
-            $error = "There must be a single space between the closing parenthesis and the openning brace of a multi-line function declaration; found $length spaces";
+            $error = "There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration; found $length spaces";
             $phpcsFile->addError($error, ($closeBracket + 1));
         }
 
         // And just in case they do something funny before the brace...
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
-            $error = 'There must be a single space between the closing parenthesis and the openning brace of a multi-line function declaration';
+            $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration';
             $phpcsFile->addError($error, $next);
         }
 
