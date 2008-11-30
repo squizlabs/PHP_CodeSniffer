@@ -116,6 +116,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Bruce Weirdan for the patch
   - Fixed bug #15124 : AbstractParser.php uses deprecated split() function
     -- Thanks to Sebastian Bergmann for the patch
+  - Fixed bug #15188 : PHPCS vs HEREDOC strings
  </notes>
  <contents>
   <dir name="/">

@@ -355,6 +355,17 @@ final class PHP_CodeSniffer_Tokens
                                     T_INCLUDE,
                                    );
 
+    /**
+     * Tokens that make up a heredoc string.
+     *
+     * @var array(int)
+     */
+    public static $heredocTokens = array(
+                                    T_START_HEREDOC,
+                                    T_END_HEREDOC,
+                                    T_HEREDOC,
+                                   );
+
 
     /**
      * A PHP_CodeSniffer_Tokens class cannot be constructed.
