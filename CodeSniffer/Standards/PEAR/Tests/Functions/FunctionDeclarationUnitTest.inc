@@ -32,5 +32,19 @@ class MyClass
     ) {
     }
 
+    protected abstract function processTokenWithinScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr,
+        $currScope
+    );
+
 }
+
+function getInstalledStandards(
+    $includeGeneric=false,
+    $standardsDir=''
+)
+{
+}
+
 ?>

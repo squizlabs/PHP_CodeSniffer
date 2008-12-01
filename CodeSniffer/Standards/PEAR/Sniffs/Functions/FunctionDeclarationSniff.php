@@ -150,24 +150,42 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             }
         }
 
-        // The openning brace needs to be one space away
-        // from the closing parenthesis.
-        if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
-            $length = 0;
-        } else {
-            $length = strlen($tokens[($closeBracket + 1)]['content']);
-        }
+        if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+            // The openning brace needs to be one space away
+            // from the closing parenthesis.
+            $next = $tokens[($closeBracket + 1)];
+            if ($next['code'] !== T_WHITESPACE) {
+                $length = 0;
+            } else if ($next['content'] === $phpcsFile->eolChar) {
+                $length = -1;
+            } else {
+                $length = strlen($next['content']);
+            }
 
-        if ($length !== 1) {
-            $error = "There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration; found $length spaces";
-            $phpcsFile->addError($error, ($closeBracket + 1));
-        }
+            if ($length !== 1) {
+                $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration; found ';
+                if ($length === -1) {
+                    $error .= 'newline';
+                } else {
+                    $error .= "$length spaces";
+                }
 
-        // And just in case they do something funny before the brace...
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
-        if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
-            $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration';
-            $phpcsFile->addError($error, $next);
+                $phpcsFile->addError($error, ($closeBracket + 1));
+                return;
+            }
+
+            // And just in case they do something funny before the brace...
+            $next = $phpcsFile->findNext(
+                T_WHITESPACE,
+                ($closeBracket + 1),
+                null,
+                true
+            );
+
+            if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
+                $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration';
+                $phpcsFile->addError($error, $next);
+            }
         }
 
     }//end processMultiLineDeclaration()
