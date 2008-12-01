@@ -73,7 +73,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
         $foundContent = false;
         $currentLine  = $tokens[$stackPtr]['line'];
         for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-            if (in_array($tokens[$i]['code'], $endTokens) == true) {
+            if (in_array($tokens[$i]['code'], $endTokens) === true) {
                 break;
             }
 
@@ -87,8 +87,15 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
 
             // We changed lines.
             if ($foundContent === false) {
-                $error = 'error here';
-                $phpcsFile->addError($error, ($i + 1));
+                // Before we throw an error, make sure we are not looking
+                // at a gap before the style definition.
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, $i, null, true);
+                if ($prev !== false
+                    && in_array($tokens[$prev]['code'], $endTokens) === false
+                ) {
+                    $error = 'Blank lines are not allowed between class names';
+                    $phpcsFile->addError($error, ($i + 1));
+                }
                 break;
             }
 
