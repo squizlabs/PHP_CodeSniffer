@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sertan Danis for the contribution
   - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
   - Added PEAR MultiLineAssignmentSniff to enforce the correct indentation of multi-line assignments
+  - Added PEAR MultiLineConditionSniff to enforce the new multi-line condition PEAR standard
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added MySource CreateWidgetTypeCallback sniff to check callback usage in widget type create methods
@@ -640,6 +641,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="MultiLineConditionSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
@@ -719,6 +723,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="ControlSignatureUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ControlSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="MultiLineConditionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MultiLineConditionUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
