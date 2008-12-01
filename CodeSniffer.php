@@ -484,7 +484,9 @@ class PHP_CodeSniffer
 
         // Load the standard class and ask it for a list of external
         // sniffs to include in the standard.
-        if ($standard !== null && is_file("$dir/{$standard}CodingStandard.php") === true) {
+        if ($standard !== null
+            && is_file("$dir/{$standard}CodingStandard.php") === true
+        ) {
             include_once "$dir/{$standard}CodingStandard.php";
             $standardClassName = "PHP_CodeSniffer_Standards_{$standard}_{$standard}CodingStandard";
             $standardClass     = new $standardClassName;
@@ -541,10 +543,16 @@ class PHP_CodeSniffer
                 if (is_dir($sniffDir) === true) {
                     if (self::isInstalledStandard($sniff) === true) {
                         // We are excluding a whole coding standard.
-                        $excludedSniffs = array_merge($excludedSniffs, self::getSniffFiles($sniffDir, $sniff));
+                        $excludedSniffs = array_merge(
+                            $excludedSniffs,
+                            self::getSniffFiles($sniffDir, $sniff)
+                        );
                     } else {
                         // We are excluding a whole directory of sniffs.
-                        $excludedSniffs = array_merge($excludedSniffs, self::getSniffFiles($sniffDir));
+                        $excludedSniffs = array_merge(
+                            $excludedSniffs,
+                            self::getSniffFiles($sniffDir)
+                        );
                     }
                 } else {
                     if (substr($sniffDir, -9) !== 'Sniff.php') {
@@ -671,7 +679,11 @@ class PHP_CodeSniffer
             }
         }
 
-        $phpcsFile = new PHP_CodeSniffer_File($file, $this->_tokenListeners['file'], $this->allowedFileExtensions);
+        $phpcsFile = new PHP_CodeSniffer_File(
+            $file,
+            $this->_tokenListeners['file'],
+            $this->allowedFileExtensions
+        );
         $this->addFile($phpcsFile);
         $phpcsFile->start($contents);
 
@@ -785,7 +797,10 @@ class PHP_CodeSniffer
                         }
 
                         if (isset($errors[$line][$column]) === true) {
-                            $errors[$line][$column] = array_merge($newWarnings, $errors[$line][$column]);
+                            $errors[$line][$column] = array_merge(
+                                $newWarnings,
+                                $errors[$line][$column]
+                            );
                         } else {
                             $errors[$line][$column] = $newWarnings;
                         }
@@ -849,7 +864,7 @@ class PHP_CodeSniffer
 
 
     /**
-     * Prints all errors and warnings for each file processed, in a Checkstyle XML format.
+     * Prints all errors and warnings for processed files, in a Checkstyle format.
      *
      * Errors and warnings are displayed together, grouped by file.
      *
@@ -1026,7 +1041,11 @@ class PHP_CodeSniffer
                     foreach ($colErrors as $error) {
                         // The padding that goes on the front of the line.
                         $padding  = ($maxLineLength - strlen($line));
-                        $errorMsg = wordwrap($error['message'], $maxErrorSpace, PHP_EOL."$paddingLine2");
+                        $errorMsg = wordwrap(
+                            $error['message'],
+                            $maxErrorSpace,
+                            PHP_EOL."$paddingLine2"
+                        );
 
                         echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
                         if ($error['type'] === 'ERROR') {
@@ -1071,13 +1090,17 @@ class PHP_CodeSniffer
 
             // If verbose output is enabled, we show the results for all files,
             // but if not, we only show files that had errors or warnings.
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || $numErrors > 0 || ($numWarnings > 0 && $showWarnings === true)) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0
+                || $numErrors > 0
+                || ($numWarnings > 0
+                && $showWarnings === true)
+            ) {
                 $errorFiles[$filename] = array(
                                           'warnings' => $numWarnings,
                                           'errors'   => $numErrors,
                                          );
-            }
-        }
+            }//end if
+        }//end foreach
 
         if (empty($errorFiles) === true) {
             // Nothing to print.
@@ -1388,8 +1411,11 @@ class PHP_CodeSniffer
      *
      * @return boolean
      */
-    public static function isCamelCaps($string, $classFormat=false,
-        $public=true, $strict=true
+    public static function isCamelCaps(
+        $string,
+        $classFormat=false,
+        $public=true,
+        $strict=true
     ) {
         // Check the first character first.
         if ($classFormat === false) {
@@ -1569,7 +1595,8 @@ class PHP_CodeSniffer
      * @return array
      * @see isInstalledStandard()
      */
-    public static function getInstalledStandards($includeGeneric=false,
+    public static function getInstalledStandards(
+        $includeGeneric=false,
         $standardsDir=''
     ) {
         $installedStandards = array();
@@ -1685,7 +1712,9 @@ class PHP_CodeSniffer
                 $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
             }
 
-            if (is_file($configFile) === true && is_writable($configFile) === false) {
+            if (is_file($configFile) === true
+                && is_writable($configFile) === false
+            ) {
                 $error = "Config file $configFile is not writable";
                 throw new PHP_CodeSniffer_Exception($error);
             }
