@@ -94,8 +94,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
   - Squiz ForLoopDeclarationSniff no longer throws errors for JS FOR loops without semicolons
   - Squiz MultipleStatementAlignmentSniff no longer throws errors if a statement would take more than 8 spaces to align
-  - Squiz standard now uses TodoSniff
-  - Squiz standard now uses MultiLineAssignmentSniff
+  - Squiz standard now uses Genric TodoSniff
+  - Squiz standard now uses PEAR MultiLineAssignmentSniff
+  - Squiz standard now uses PEAR MultiLineConditionSniff
   - Zend standard now uses OpeningFunctionBraceBsdAllmanSniff (feature request #14647)
   - MySource JoinStringsSniff now bans the use of inline array joins and suggests the + operator
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file

@@ -55,6 +55,7 @@ class PHP_CodeSniffer_Standards_Squiz_SquizCodingStandard extends PHP_CodeSniffe
                 'Generic/Sniffs/Metrics/NestingLevelSniff.php',
                 'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
                 'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
+                'PEAR/Sniffs/ControlStructures/MultiLineConditionSniff.php',
                 'PEAR/Sniffs/Files/IncludingFileSniff.php',
                 'PEAR/Sniffs/Formatting/MultiLineAssignmentSniff.php',
                 'PEAR/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php',
