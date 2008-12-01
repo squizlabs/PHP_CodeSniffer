@@ -42,7 +42,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
     -- Thanks to Sertan Danis for the contribution
   - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
-  - Added PEAR MultipleStatementAlignmentSniff to stop alignment warnings if more than 8 spaces are required
   - Added PEAR MultiLineAssignmentSniff to enforce the correct indentation of multi-line assignments
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
@@ -69,12 +68,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set jslint path using phpcs --config-set jslint_path /path/to/jslint.js
     -- Set rhino path using phpcs --config-set rhino_path /path/to/rhino
   - Added Generic TodoSniff that warns about comments that contain the word TODO
+  - Removed MultipleStatementAlignmentSniff from the PEAR standard as alignment is now optional
   - Generic ForbiddenFunctionsSniff now has protected member var to specify if it should use errors or warnings
   - Generic MultipleStatementAlignmentSniff now has correct error message if assignment is on a new line
+  - Generic MultipleStatementAlignmentSniff now has protected member var to allow it to ignore multi-line assignments
   - Generic LineEndingsSniff now supports checking of JS files
   - Generic LineEndingsSniff now supports checking of CSS files
   - Generic DisallowTabIndentSniff now supports checking of CSS files
-  - Generic MultipleStatementAlignmentSniff now has protected member var to allow it to ignore multi-line assignments
   - Squiz DoubleQuoteUsageSniff now bans the use of variables in double quoted strings in favour of concatenation
   - Squiz SuperfluousWhitespaceSniff now supports checking of JS files
   - Squiz SuperfluousWhitespaceSniff now supports checking of CSS files
@@ -654,9 +654,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="MultiLineAssignmentSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="MultipleStatementAlignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
