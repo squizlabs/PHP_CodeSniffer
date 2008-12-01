@@ -98,8 +98,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @see PHP_CodeSniffer.getValidScopeTokeners()
      * @throws PHP_CodeSniffer_Test_Exception If the specified tokens array is empty.
      */
-    public function __construct(array $scopeTokens, array $tokens, $listenOutside=false)
-    {
+    public function __construct(
+        array $scopeTokens,
+        array $tokens,
+        $listenOutside=false
+    ) {
         if (empty($scopeTokens) === true) {
             $error = 'The scope tokens list cannot be empty';
             throw new PHP_CodeSniffer_Test_Exception($error);
@@ -169,7 +172,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         if (in_array($tokens[$stackPtr]['code'], $this->_scopeTokens) === true) {
             $this->currScope = $stackPtr;
             $phpcsFile->addTokenListener($this, $this->_tokens);
-        } else if ($this->currScope !== null && isset($tokens[$this->currScope]['scope_closer']) === true && $stackPtr > $tokens[$this->currScope]['scope_closer']) {
+        } else if ($this->currScope !== null
+            && isset($tokens[$this->currScope]['scope_closer']) === true
+            && $stackPtr > $tokens[$this->currScope]['scope_closer']
+        ) {
             $this->currScope = null;
             if ($this->_listenOutside === true) {
                 // This is a token outside the current scope, so notify the
@@ -202,7 +208,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *
      * @return void
      */
-    protected abstract function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope);
+    protected abstract function processTokenWithinScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr,
+        $currScope
+    );
 
 
     /**
@@ -215,8 +225,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *
      * @return void
      */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
+    protected function processTokenOutsideScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    ) {
         return;
 
     }//end processTokenOutsideScope()

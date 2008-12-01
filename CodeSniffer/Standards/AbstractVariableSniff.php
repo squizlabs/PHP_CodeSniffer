@@ -93,8 +93,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @return void
      */
-    protected final function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
-    {
+    protected final function processTokenWithinScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr,
+        $currScope
+    ) {
         if ($this->currentFile !== $phpcsFile) {
             $this->currentFile   = $phpcsFile;
             $this->_functionOpen = false;
@@ -107,16 +110,20 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
             $this->_functionOpen = false;
         }
 
-        if ($tokens[$stackPtr]['code'] === T_FUNCTION && $this->_functionOpen === false) {
-
+        if ($tokens[$stackPtr]['code'] === T_FUNCTION
+            && $this->_functionOpen === false
+        ) {
             $this->_functionOpen = true;
 
             $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
             // If the function is abstract, or is in an interface,
             // then set the end of the function to it's closing semicolon.
-            if ($methodProps['is_abstract'] === true || $tokens[$currScope]['code'] === T_INTERFACE) {
-                $this->_endFunction = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
+            if ($methodProps['is_abstract'] === true
+                || $tokens[$currScope]['code'] === T_INTERFACE
+            ) {
+                $this->_endFunction
+                    = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
             } else {
                 if (isset($tokens[$stackPtr]['scope_closer']) === false) {
                     $error = 'Possible parse error: non-abstract method defined as abstract';
@@ -159,8 +166,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @return void
      */
-    protected final function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
+    protected final function processTokenOutsideScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    ) {
         $tokens = $phpcsFile->getTokens();
         // These variables are not member vars.
         if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
@@ -181,7 +190,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @return void
      */
-    abstract protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr);
+    abstract protected function processMemberVar(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    );
 
 
     /**
@@ -193,7 +205,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @return void
      */
-    abstract protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr);
+    abstract protected function processVariable(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    );
 
 
     /**
@@ -209,7 +224,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      *
      * @return void
      */
-    abstract protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr);
+    abstract protected function processVariableInString(
+        PHP_CodeSniffer_File
+        $phpcsFile,
+        $stackPtr
+    );
 
 
 }//end class

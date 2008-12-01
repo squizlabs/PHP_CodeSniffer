@@ -257,7 +257,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *
      * @return array(errors)
      */
-    protected function processPattern($patternInfo, PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processPattern(
+        $patternInfo,
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    )
     {
         $tokens      = $phpcsFile->getTokens();
         $pattern     = $patternInfo['pattern'];
@@ -268,7 +272,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $ignoreTokens = array(T_WHITESPACE);
 
         if ($this->_ignoreComments === true) {
-            $ignoreTokens = array_merge($ignoreTokens, PHP_CodeSniffer_Tokens::$commentTokens);
+            $ignoreTokens
+                = array_merge($ignoreTokens, PHP_CodeSniffer_Tokens::$commentTokens);
         }
 
         $origStackPtr = $stackPtr;
@@ -301,8 +306,16 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         // Check to see if this important token is the same as the
                         // previous important token in the pattern. If it is not,
                         // then the pattern cannot be for this piece of code.
-                        $prev = $phpcsFile->findPrevious($ignoreTokens, $stackPtr, null, true);
-                        if ($prev === false || $tokens[$prev]['code'] !== $pattern[$i]['token']) {
+                        $prev = $phpcsFile->findPrevious(
+                            $ignoreTokens,
+                            $stackPtr,
+                            null,
+                            true
+                        );
+
+                        if ($prev === false
+                            || $tokens[$prev]['code'] !== $pattern[$i]['token']
+                        ) {
                             return false;
                         }
 
@@ -316,7 +329,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                         $found = $tokens[$prev]['content'].$found;
 
-                        if (isset($pattern[($i - 1)]) === true && $pattern[($i - 1)]['type'] === 'skip') {
+                        if (isset($pattern[($i - 1)]) === true
+                            && $pattern[($i - 1)]['type'] === 'skip'
+                        ) {
                             $stackPtr = $prev;
                         } else {
                             $stackPtr = ($prev - 1);
@@ -332,7 +347,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     }
 
                     // Find the previous opener.
-                    $next = $phpcsFile->findPrevious($ignoreTokens, $stackPtr, null, true);
+                    $next = $phpcsFile->findPrevious(
+                        $ignoreTokens,
+                        $stackPtr,
+                        null,
+                        true
+                    );
+
                     if ($next === false || isset($tokens[$next][$to]) === false) {
                         // If there was not opener, then we must be
                         // using the wrong pattern.
@@ -362,11 +383,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $patternLen        = count($pattern);
 
         for ($i = $patternInfo['listen_pos']; $i < $patternLen; $i++) {
-
             if ($pattern[$i]['type'] === 'token') {
-
                 if ($pattern[$i]['token'] === T_WHITESPACE) {
-
                     if ($this->_ignoreComments === true) {
                         // If we are ignoring comments, check to see if this current
                         // token is a comment. If so skip it.
@@ -390,8 +408,18 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             $tokenContent = $tokens[$stackPtr]['content'];
                         } else {
                             // Get all the whitespace to the next token.
-                            $next              = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr, null, true);
-                            $tokenContent      = $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
+                            $next = $phpcsFile->findNext(
+                                PHP_CodeSniffer_Tokens::$emptyTokens,
+                                $stackPtr,
+                                null,
+                                true
+                            );
+
+                            $tokenContent = $phpcsFile->getTokensAsString(
+                                $stackPtr,
+                                ($next - $stackPtr)
+                            );
+
                             $lastAddedStackPtr = $stackPtr;
                             $stackPtr          = $next;
                         }
@@ -406,7 +434,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
                     }//end if
 
-                    if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
+                    if (isset($pattern[($i + 1)]) === true
+                        && $pattern[($i + 1)]['type'] === 'skip'
+                    ) {
                         // The next token is a skip token, so we just need to make
                         // sure the whitespace we found has *at least* the
                         // whitespace required.
@@ -423,8 +453,16 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     // Check to see if this important token is the same as the
                     // next important token in the pattern. If it is not, then
                     // the pattern cannot be for this piece of code.
-                    $next = $phpcsFile->findNext($ignoreTokens, $stackPtr, null, true);
-                    if ($next === false || $tokens[$next]['code'] !== $pattern[$i]['token']) {
+                    $next = $phpcsFile->findNext(
+                        $ignoreTokens,
+                        $stackPtr,
+                        null,
+                        true
+                    );
+
+                    if ($next === false
+                        || $tokens[$next]['code'] !== $pattern[$i]['token']
+                    ) {
                         return false;
                     }
 
@@ -443,7 +481,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         // whitespace or comment is not allowed. If we are
                         // ignoring comments, there needs to be at least one
                         // comment for this to be allowed.
-                        if ($this->_ignoreComments === false || ($this->_ignoreComments === true && $hasComment === false)) {
+                        if ($this->_ignoreComments === false
+                            || ($this->_ignoreComments === true
+                            && $hasComment === false)
+                        ) {
                             $hasError = true;
                         }
 
@@ -460,7 +501,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $lastAddedStackPtr = $next;
                     }
 
-                    if (isset($pattern[($i + 1)]) === true && $pattern[($i + 1)]['type'] === 'skip') {
+                    if (isset($pattern[($i + 1)]) === true
+                        && $pattern[($i + 1)]['type'] === 'skip'
+                    ) {
                         $stackPtr = $next;
                     } else {
                         $stackPtr = ($next + 1);
@@ -469,7 +512,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
             } else if ($pattern[$i]['type'] === 'skip') {
                 if ($pattern[$i]['to'] === 'unknown') {
-                    $next = $phpcsFile->findNext($pattern[($i + 1)]['token'], $stackPtr);
+                    $next = $phpcsFile->findNext(
+                        $pattern[($i + 1)]['token'],
+                        $stackPtr
+                    );
+
                     if ($next === false) {
                         // Couldn't find the next token, sowe we must
                         // be using the wrong pattern.
@@ -480,8 +527,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     $stackPtr = $next;
                 } else {
                     // Find the previous opener.
-                    $next = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$blockOpeners, $stackPtr);
-                    if ($next === false || isset($tokens[$next][$pattern[$i]['to']]) === false) {
+                    $next = $phpcsFile->findPrevious(
+                        PHP_CodeSniffer_Tokens::$blockOpeners,
+                        $stackPtr
+                    );
+
+                    if ($next === false
+                        || isset($tokens[$next][$pattern[$i]['to']]) === false
+                    ) {
                         // If there was not opener, then we must
                         // be using the wrong pattern.
                         return false;
@@ -535,7 +588,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     } else {
                         // Check that there were no significant tokens that we
                         // skipped over to find our newline character.
-                        $next = $phpcsFile->findNext($ignoreTokens, $stackPtr, null, true);
+                        $next = $phpcsFile->findNext(
+                            $ignoreTokens,
+                            $stackPtr,
+                            null,
+                            true
+                        );
+
                         if ($next < $newline) {
                             // We skipped a non-ignored token.
                             $hasError = true;
@@ -546,8 +605,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 }//end if
 
                 if ($stackPtr !== $lastAddedStackPtr) {
-                    $found            .= $phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr));
-                    $diff              = ($next - $stackPtr);
+                    $found .= $phpcsFile->getTokensAsString(
+                        $stackPtr,
+                        ($next - $stackPtr)
+                    );
+
+                    $diff = ($next - $stackPtr);
                     $lastAddedStackPtr = ($next - 1);
                 }
 
@@ -556,7 +619,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         }//end for
 
         if ($hasError === true) {
-            $error                 = $this->prepareError($found, $patternCode);
+            $error = $this->prepareError($found, $patternCode);
             $errors[$origStackPtr] = $error;
         }
 
@@ -624,8 +687,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
       * @return void
       * @see registerSupplementary()
       */
-    protected function processSupplementary(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
+    protected function processSupplementary(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr
+    ) {
          return;
 
     }//end processSupplementary()
