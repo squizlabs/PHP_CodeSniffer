@@ -69,20 +69,20 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         }
 
         // Make sure it is the first thing on the line, otherwise we ignore it.
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1));
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), false, true);
         if ($prev === false) {
             // Bad assignment.
             return;
         }
 
-        if ($tokens[($prev - 1)]['line'] === $tokens[$prev]['line']) {
+        if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             return;
         }
 
         // Find the required indent based on the ident of the previous line.
         $assignmentIndent = 0;
-        $prevLine         = $tokens[($prev - 1)]['line'];
-        for ($i = ($prev - 2); $i >= 0; $i--) {
+        $prevLine         = $tokens[$prev]['line'];
+        for ($i = ($prev - 1); $i >= 0; $i--) {
             if ($tokens[$i]['line'] !== $prevLine) {
                 $i++;
                 break;
@@ -92,6 +92,9 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         if ($tokens[$i]['code'] === T_WHITESPACE) {
             $assignmentIndent = strlen($tokens[$i]['content']);
         }
+
+        // Find the actual indent.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1));
 
         $expectedIndent = ($assignmentIndent + 4);
         $foundIndent    = strlen($tokens[$prev]['content']);
