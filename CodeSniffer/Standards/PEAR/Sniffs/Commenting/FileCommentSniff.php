@@ -159,11 +159,18 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Find the next non whitespace token.
-        $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        $commentStart
+            = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+
         // Ignore vim header.
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             if (strstr($tokens[$commentStart]['content'], 'vim:') !== false) {
-                $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($commentStart + 1), null, true);
+                $commentStart = $phpcsFile->findNext(
+                    T_WHITESPACE,
+                    ($commentStart + 1),
+                    null,
+                    true
+                );
             }
         }
 

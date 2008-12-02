@@ -90,7 +90,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($tokens[$stackPtr]['code'] === T_ELSE) {
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            $next = $phpcsFile->findNext(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($stackPtr + 1),
+                null,
+                true
+            );
+
             // We will handle the T_IF token in another call to process.
             if ($tokens[$next]['code'] === T_IF) {
                 return;
@@ -148,7 +154,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 } else {
                     // If this token does not have a scope_opener indice, then
                     // it's probably an inline scope, so let's skip to the next
-                    // semicolon. Inline scopes include inline if's, abstract methods etc.
+                    // semicolon. Inline scopes include inline if's, abstract
+                    // methods etc.
                     $nextToken = $phpcsFile->findNext(T_SEMICOLON, $i, $scopeCloser);
                     if ($nextToken !== false) {
                         $i = $nextToken;
@@ -158,8 +165,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 continue;
             }
 
-            // If this is a HEREDOC then we need to ignore it as the whitespace
-            // before the contents within the HEREDOC are considered part of the content.
+            // If this is a HEREDOC then we need to ignore it as the
+            // whitespace before the contents within the HEREDOC are
+            // considered part of the content.
             if ($tokens[$i]['code'] === T_START_HEREDOC) {
                 $inHereDoc = true;
                 continue;
@@ -187,7 +195,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
-                    $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
+                    $trimmedContentLength
+                        = strlen(ltrim($tokens[$firstToken]['content']));
                     if ($trimmedContentLength === 0) {
                         continue;
                     }
@@ -210,16 +219,21 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // This is a special condition for T_DOC_COMMENT and C-style
                 // comments, which contain whitespace between each line.
-                if (in_array($tokens[$firstToken]['code'], array(T_COMMENT, T_DOC_COMMENT)) === true) {
+                $comments = array(
+                             T_COMMENT,
+                             T_DOC_COMMENT
+                            );
 
+                if (in_array($tokens[$firstToken]['code'], $comments) === true) {
                     $content = trim($tokens[$firstToken]['content']);
                     if (preg_match('|^/\*|', $content) !== 0) {
                         // Check to see if the end of the comment is on the same line
                         // as the start of the comment. If it is, then we don't
                         // have to worry about opening a comment.
                         if (preg_match('|\*/$|', $content) === 0) {
-                            // We don't have to calculate the column for the start
-                            // of the comment as there is a whitespace token before it.
+                            // We don't have to calculate the column for the
+                            // start of the comment as there is a whitespace
+                            // token before it.
                             $commentOpen = true;
                         }
                     } else if ($commentOpen === true) {
@@ -229,9 +243,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             continue;
                         }
 
-                        $contentLength        = strlen($tokens[$firstToken]['content']);
-                        $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
-                        $column               = ($contentLength - $trimmedContentLength + 1);
+                        $contentLength = strlen($tokens[$firstToken]['content']);
+                        $trimmedContentLength
+                            = strlen(ltrim($tokens[$firstToken]['content']));
+
+                        $column = ($contentLength - $trimmedContentLength + 1);
                         if (preg_match('|\*/$|', $content) !== 0) {
                             $commentOpen = false;
                         }

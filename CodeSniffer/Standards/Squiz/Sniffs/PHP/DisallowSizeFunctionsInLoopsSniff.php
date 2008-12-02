@@ -100,7 +100,7 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
                     // Needs to be in the form object.function to be valid.
                     $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
                     if ($prev === false || $tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
-                       continue;
+                        continue;
                     }
 
                     $functionName = 'object.'.$functionName;

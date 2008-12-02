@@ -85,8 +85,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
@@ -113,7 +113,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         // end of the assignment so we can check assignment blocks correctly.
         $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
 
-        $nextAssign = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$assignmentTokens, ($lineEnd + 1));
+        $nextAssign = $phpcsFile->findNext(
+            PHP_CodeSniffer_Tokens::$assignmentTokens,
+            ($lineEnd + 1)
+        );
+
         if ($nextAssign !== false) {
             $isAssign = true;
             if ($tokens[$nextAssign]['line'] === ($tokens[$lineEnd]['line'] + 1)) {
@@ -148,7 +152,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($prevAssignment + 1));
 
             // And the end token must actually belong to this assignment.
-            $nextOpener = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$scopeOpeners, ($prevAssignment + 1));
+            $nextOpener = $phpcsFile->findNext(
+                PHP_CodeSniffer_Tokens::$scopeOpeners,
+                ($prevAssignment + 1)
+            );
+
             if ($nextOpener !== false && $nextOpener < $lineEnd) {
                 break;
             }
@@ -175,7 +183,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxVariableLength   = 0;
 
         foreach ($assignments as $assignment) {
-            $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($assignment - 1), null, true);
+            $prev = $phpcsFile->findPrevious(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($assignment - 1),
+                null,
+                true
+            );
 
             $endColumn = $tokens[($prev + 1)]['column'];
 
@@ -187,10 +200,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $maxAssignmentLength = strlen($tokens[$assignment]['content']);
             }
 
-            $assignmentData[$assignment] = array(
-                                            'variable_length'   => $endColumn,
-                                            'assignment_length' => strlen($tokens[$assignment]['content']),
-                                           );
+            $assignmentData[$assignment]
+                = array(
+                   'variable_length'   => $endColumn,
+                   'assignment_length' => strlen($tokens[$assignment]['content']),
+                  );
         }//end foreach
 
         foreach ($assignmentData as $assignment => $data) {
@@ -215,7 +229,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             // Actual column takes into account the length of the assignment operator.
             $actualColumn = ($column + $maxAssignmentLength - strlen($tokens[$assignment]['content']));
             if ($tokens[$assignment]['column'] !== $actualColumn) {
-                $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($assignment - 1), null, true);
+                $prev = $phpcsFile->findPrevious(
+                    PHP_CodeSniffer_Tokens::$emptyTokens,
+                    ($assignment - 1),
+                    null,
+                    true
+                );
 
                 $expected = ($actualColumn - $tokens[($prev + 1)]['column']);
 

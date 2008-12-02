@@ -108,7 +108,8 @@ class PHP_CodeSniffer_CLI
             $arg = $_SERVER['argv'][$i];
             if ($arg{0} === '-') {
                 if ($arg{1} === '-') {
-                    $values = $this->processLongArgument(substr($arg, 2), $i, $values);
+                    $values
+                        = $this->processLongArgument(substr($arg, 2), $i, $values);
                 } else {
                     $switches = str_split($arg);
                     foreach ($switches as $switch) {
@@ -233,7 +234,7 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
-                $values['ignored'] = preg_split('/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/', substr($arg, 7));
+                $values['ignored']= preg_split('/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/', substr($arg, 7));
             } else if (substr($arg, 0, 10) === 'generator=') {
                 $values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 10) === 'tab-width=') {
@@ -301,7 +302,11 @@ class PHP_CodeSniffer_CLI
 
         if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
-            $phpcs->generateDocs($values['standard'], $values['files'], $values['generator']);
+            $phpcs->generateDocs(
+                $values['standard'],
+                $values['files'],
+                $values['generator']
+            );
             exit(0);
         }
 
@@ -333,8 +338,18 @@ class PHP_CodeSniffer_CLI
             $phpcs->setIgnorePatterns($values['ignored']);
         }
 
-        $phpcs->process($values['files'], $values['standard'], array(), $values['local']);
-        return $this->printErrorReport($phpcs, $values['report'], $values['showWarnings']);
+        $phpcs->process(
+            $values['files'],
+            $values['standard'],
+            array(),
+            $values['local']
+        );
+
+        return $this->printErrorReport(
+            $phpcs,
+            $values['report'],
+            $values['showWarnings']
+        );
 
     }//end process()
 

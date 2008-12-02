@@ -51,9 +51,12 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
-            if ($token['code'] === T_COMMENT && substr($token['content'], 0, 2) !== '/*') {
-                $content       = ltrim($token['content'], '#/');
-                $commentTokens = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
+            if ($token['code'] === T_COMMENT
+                && substr($token['content'], 0, 2) !== '/*'
+            ) {
+                $content = ltrim($token['content'], '#/');
+                $commentTokens
+                    = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
@@ -66,7 +69,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // If the first content is just a number, it is probably a
                     // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
-                    if ($commentTokens[0]['code'] === T_LNUMBER && $commentTokens[1]['code'] === T_STRING) {
+                    if ($commentTokens[0]['code'] === T_LNUMBER
+                        && $commentTokens[1]['code'] === T_STRING
+                    ) {
                         $firstContent .= $commentTokens[1]['content'];
                         array_shift($commentTokens);
                     }
@@ -137,7 +142,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     $numTokens   = count($finalTokens);
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
-                    $finalTokens[($stackPtr + 1)]['content'] = '-'.$finalTokens[($stackPtr + 1)]['content'];
+                    $finalTokens[($stackPtr + 1)]['content']
+                        = '-'.$finalTokens[($stackPtr + 1)]['content'];
                     unset($finalTokens[$stackPtr]);
 
                     $finalTokens = array_values($finalTokens);

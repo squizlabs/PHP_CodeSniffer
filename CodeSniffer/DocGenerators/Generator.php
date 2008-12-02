@@ -137,8 +137,9 @@ class PHP_CodeSniffer_DocGenerators_Generator
             $standardDir = $this->_standard;
             $standard    = basename($this->_standard);
         } else {
-            $standardDir = realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
-            $standard    = $this->_standard;
+            $standardDir
+                = realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
+            $standard = $this->_standard;
         }
 
         $sniffs = PHP_CodeSniffer::getSniffFiles($standardDir, $standard);
@@ -155,7 +156,11 @@ class PHP_CodeSniffer_DocGenerators_Generator
                 }
             }
 
-            $standardFile = str_replace(DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR.'Docs'.DIRECTORY_SEPARATOR, $sniff);
+            $standardFile= str_replace(
+                DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR,
+                DIRECTORY_SEPARATOR.'Docs'.DIRECTORY_SEPARATOR,
+                $sniff
+            );
             $standardFile = str_replace('Sniff.php', 'Standard.xml', $standardFile);
 
             if (is_file($standardFile) === true) {

@@ -93,7 +93,12 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseParam($tokens)
     {
-        $param           = new PHP_CodeSniffer_CommentParser_ParameterElement($this->previousElement, $tokens, $this->phpcsFile);
+        $param = new PHP_CodeSniffer_CommentParser_ParameterElement(
+            $this->previousElement,
+            $tokens,
+            $this->phpcsFile
+        );
+
         $this->_params[] = $param;
         return $param;
 
@@ -109,7 +114,13 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseReturn($tokens)
     {
-        $return        = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'return', $this->phpcsFile);
+        $return = new PHP_CodeSniffer_CommentParser_PairElement(
+            $this->previousElement,
+            $tokens,
+            'return',
+            $this->phpcsFile
+        );
+
         $this->_return = $return;
         return $return;
 
@@ -125,7 +136,13 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
      */
     protected function parseThrows($tokens)
     {
-        $throws          = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'throws', $this->phpcsFile);
+        $throws = new PHP_CodeSniffer_CommentParser_PairElement(
+            $this->previousElement,
+            $tokens,
+            'throws',
+            $this->phpcsFile
+        );
+
         $this->_throws[] = $throws;
         return $throws;
 

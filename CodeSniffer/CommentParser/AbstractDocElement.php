@@ -127,9 +127,15 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @throws Exception If $previousElement in not a DocElement or if
      *                   getSubElements() does not return an array.
      */
-    public function __construct($previousElement, array $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
-    {
-        if ($previousElement !== null && ($previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false) {
+    public function __construct(
+        $previousElement,
+        array $tokens,
+        $tag,
+        PHP_CodeSniffer_File $phpcsFile
+    ) {
+        if ($previousElement !== null
+            && ($previousElement instanceof PHP_CodeSniffer_CommentParser_DocElement) === false
+        ) {
             $error = '$previousElement must be an instance of DocElement';
             throw new Exception($error);
         }
@@ -180,7 +186,12 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
         $lastElementName = $subElements[($numSubElements - 1)];
 
         // Process the last element in this tag.
-        $this->processSubElement($lastElementName, $lastElement, $lastElementWhitespace);
+        $this->processSubElement(
+            $lastElementName,
+            $lastElement,
+            $lastElementWhitespace
+        );
+
         $this->afterWhitespace = $whitespace;
 
     }//end __construct()
@@ -319,7 +330,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @return void
      * @see getSubElements()
      */
-    abstract protected function processSubElement($name, $content, $whitespaceBefore);
+    abstract protected function processSubElement(
+        $name,
+        $content,
+        $whitespaceBefore
+    );
 
 
 }//end class

@@ -205,7 +205,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
             */
 
             if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
-                if (isset($tokens[($stackPtr + 1)]) === true && is_array($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)][1][0] === "\n") {
+                if (isset($tokens[($stackPtr + 1)]) === true
+                    && is_array($tokens[($stackPtr + 1)]) === true
+                    && $tokens[($stackPtr + 1)][1][0] === "\n"
+                ) {
                     $token[1] .= "\n";
 
                     if ($tokens[($stackPtr + 1)][1] === "\n") {
@@ -213,7 +216,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         // so we can skip it.
                         $stackPtr++;
                     } else {
-                        $tokens[($stackPtr + 1)][1] = substr($tokens[($stackPtr + 1)][1], 1);
+                        $tokens[($stackPtr + 1)][1]
+                            = substr($tokens[($stackPtr + 1)][1], 1);
                     }
                 }
             }//end if
@@ -243,7 +247,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
                     }
 
-                    if ($subTokenIsArray === false && $tokens[$i] === '"' && empty($nestedVars) === true) {
+                    if ($subTokenIsArray === false
+                        && $tokens[$i] === '"'
+                        && empty($nestedVars) === true
+                    ) {
                         // We found the other end of the double quoted string.
                         break;
                     }
@@ -287,13 +294,16 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
                 // Add the start heredoc token to the final array.
-                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($token);
+                $finalTokens[$newStackPtr]
+                    = PHP_CodeSniffer::standardiseToken($token);
                 $newStackPtr++;
 
                 $tokenContent = '';
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
                     $subTokenIsArray = is_array($tokens[$i]);
-                    if ($subTokenIsArray === true && $tokens[$i][0] === T_END_HEREDOC) {
+                    if ($subTokenIsArray === true
+                        && $tokens[$i][0] === T_END_HEREDOC
+                    ) {
                         // We found the other end of the heredoc.
                         break;
                     }
@@ -330,7 +340,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 // Add the end heredoc token to the final array.
-                $finalTokens[$newStackPtr] = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
+                $finalTokens[$newStackPtr]
+                    = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
                 $newStackPtr++;
 
                 // Continue, as we're done with this token.

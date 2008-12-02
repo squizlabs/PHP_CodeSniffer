@@ -70,8 +70,12 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      *                                                                  this element
      *                                                                  is in.
      */
-    public function __construct($previousElement, $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
-    {
+    public function __construct(
+        $previousElement,
+        $tokens,
+        $tag,
+        PHP_CodeSniffer_File $phpcsFile
+    ) {
         parent::__construct($previousElement, $tokens, $tag, $phpcsFile);
 
     }//end __construct()
@@ -145,8 +149,11 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $commentStart, $docBlock)
-    {
+    public function process(
+        PHP_CodeSniffer_File $phpcsFile,
+        $commentStart,
+        $docBlock
+    ) {
         if ($this->content === '') {
             $errorPos = ($commentStart + $this->getLine());
             $error    = "Content missing for $this->tag tag in $docBlock comment";

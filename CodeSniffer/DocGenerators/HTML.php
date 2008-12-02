@@ -259,18 +259,18 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         $codeBlocks = $node->getElementsByTagName('code');
 
         $firstTitle = $codeBlocks->item(0)->getAttribute('title');
-        $first      = trim($codeBlocks->item(0)->nodeValue);
-        $first      = str_replace("\n", '</br>', $first);
-        $first      = str_replace(' ', '&nbsp;', $first);
-        $first      = str_replace('<em>', '<span class="code-comparison-highlight">', $first);
-        $first      = str_replace('</em>', '</span>', $first);
+        $first = trim($codeBlocks->item(0)->nodeValue);
+        $first = str_replace("\n", '</br>', $first);
+        $first = str_replace(' ', '&nbsp;', $first);
+        $first = str_replace('<em>', '<span class="code-comparison-highlight">', $first);
+        $first = str_replace('</em>', '</span>', $first);
 
         $secondTitle = $codeBlocks->item(1)->getAttribute('title');
-        $second      = trim($codeBlocks->item(1)->nodeValue);
-        $second      = str_replace("\n", '</br>', $second);
-        $second      = str_replace(' ', '&nbsp;', $second);
-        $second      = str_replace('<em>', '<span class="code-comparison-highlight">', $second);
-        $second      = str_replace('</em>', '</span>', $second);
+        $second = trim($codeBlocks->item(1)->nodeValue);
+        $second = str_replace("\n", '</br>', $second);
+        $second = str_replace(' ', '&nbsp;', $second);
+        $second = ('<em>', '<span class="code-comparison-highlight">', $second);
+        $second = str_replace('</em>', '</span>', $second);
 
         echo '  <table class="code-comparison">'.PHP_EOL;
         echo '   <tr>'.PHP_EOL;

@@ -70,8 +70,8 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
@@ -91,9 +91,12 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError("You must use \"/**\" style comments for a $type comment", $stackPtr);
+            $error = "You must use \"/**\" style comments for a $type comment";
+            $phpcsFile->addError($error, $stackPtr);
             return;
-        } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
+        } else if ($commentEnd === false
+            || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT
+        ) {
             $phpcsFile->addError("Missing $type doc comment", $stackPtr);
             return;
         }
@@ -112,11 +115,19 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                     // There is only 1 doc comment between open tag and class token.
                     $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
                     if ($newlineToken !== false) {
-                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, $phpcsFile->eolChar);
+                        $newlineToken = $phpcsFile->findNext(
+                            T_WHITESPACE,
+                            ($newlineToken + 1),
+                            $stackPtr,
+                            false,
+                            $phpcsFile->eolChar
+                        );
+
                         if ($newlineToken !== false) {
                             // Blank line between the class and the doc block.
                             // The doc block is most likely a file comment.
-                            $phpcsFile->addError("Missing $type doc comment", ($stackPtr + 1));
+                            $error = "Missing $type doc comment";
+                            $phpcsFile->addError($error, ($stackPtr + 1));
                             return;
                         }
                     }//end if
@@ -124,7 +135,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             }//end if
         }//end if
 
-        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+        $comment = $phpcsFile->getTokensAsString(
+            $commentStart,
+            ($commentEnd - $commentStart + 1)
+        );
 
         // Parse the class comment.docblock.
         try {

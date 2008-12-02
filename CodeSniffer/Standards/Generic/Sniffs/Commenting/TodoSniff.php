@@ -63,22 +63,22 @@ class Generic_Sniffs_Commenting_TodoSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-       $tokens = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
 
-       $content = $tokens[$stackPtr]['content'];
-       $matches = Array();
-       if (preg_match('|[^a-z]+todo[^a-z]+(.*)|i', $content, $matches) !== 0) {
-           // Clear whitespace and some common characters not required at
-           // the end of a to-do message to make the warning more informative.
-           $todoMessage = trim($matches[1]);
-           $todoMessage = trim($todoMessage, '[]().');
-           $error       = 'Comment refers to a TODO task';
-           if ($todoMessage !== '') {
-               $error .= " \"$todoMessage\"";
-           }
+        $content = $tokens[$stackPtr]['content'];
+        $matches = Array();
+        if (preg_match('|[^a-z]+todo[^a-z]+(.*)|i', $content, $matches) !== 0) {
+            // Clear whitespace and some common characters not required at
+            // the end of a to-do message to make the warning more informative.
+            $todoMessage = trim($matches[1]);
+            $todoMessage = trim($todoMessage, '[]().');
+            $error       = 'Comment refers to a TODO task';
+            if ($todoMessage !== '') {
+                $error .= " \"$todoMessage\"";
+            }
 
-           $phpcsFile->addWarning($error, $stackPtr);
-       }
+            $phpcsFile->addWarning($error, $stackPtr);
+        }
 
     }//end process()
 

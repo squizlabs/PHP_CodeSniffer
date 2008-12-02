@@ -82,8 +82,12 @@ class PHP_CodeSniffer_CommentParser_PairElement extends PHP_CodeSniffer_CommentP
      *                                                                  this element
      *                                                                  is in.
      */
-    public function __construct($previousElement, $tokens, $tag, PHP_CodeSniffer_File $phpcsFile)
-    {
+    public function __construct(
+        $previousElement,
+        $tokens,
+        $tag,
+        PHP_CodeSniffer_File $phpcsFile
+    ) {
         parent::__construct($previousElement, $tokens, $tag, $phpcsFile);
 
     }//end __construct()

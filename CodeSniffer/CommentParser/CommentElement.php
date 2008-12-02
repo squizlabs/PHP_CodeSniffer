@@ -66,8 +66,11 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      *                                                                    element is
      *                                                                    in.
      */
-    public function __construct($previousElement, $tokens, PHP_CodeSniffer_File $phpcsFile)
-    {
+    public function __construct(
+        $previousElement,
+        $tokens,
+        PHP_CodeSniffer_File $phpcsFile
+    ) {
         parent::__construct($previousElement, $tokens, 'comment', $phpcsFile);
 
     }//end __construct()
@@ -194,7 +197,10 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
             return '';
         }
 
-        return implode('', array_slice($this->tokens, $endShort, ($startLong - $endShort)));
+        return implode(
+            '',
+            array_slice($this->tokens, $endShort, ($startLong - $endShort))
+        );
 
     }//end getWhiteSpaceBetween()
 
