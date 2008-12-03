@@ -468,15 +468,18 @@ class PHP_CodeSniffer_Tokenizers_JS
                 // No matter what token we end up using, we don't
                 // need the content in the buffer any more because we have
                 // found a valid token.
-                $tokens[] = array(
-                             'code'    => T_STRING,
-                             'type'    => 'T_STRING',
-                             'content' => substr(str_replace("\n", $eolChar, $buffer), 0, -1),
-                            );
+                $newContent = substr(str_replace("\n", $eolChar, $buffer), 0, -1);
+                if ($newContent !== '') {
+                    $tokens[] = array(
+                                 'code'    => T_STRING,
+                                 'type'    => 'T_STRING',
+                                 'content' => $newContent,
+                                );
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = str_replace("\n", '\n', substr($buffer, 0, -1));
-                    echo "=> Added token T_STRING ($content)".PHP_EOL;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $content = str_replace("\n", '\n', substr($buffer, 0, -1));
+                        echo "=> Added token T_STRING ($content)".PHP_EOL;
+                    }
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
