@@ -37,16 +37,20 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new output format --report=emacs to output errors using the emacs standard compile output format
     -- Thanks to Len Trigg for the contribution
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
+  - PHP_CodeSniffer now has a token for an asperand (@ symbol) so sniffs can listen for them
+    -- Thanks to Andy Brockhurst for the patch
   - Added Generic DuplicateClassNameSniff that will warn if the same class name is used in multiple files
     -- Not currently used by any standard; more of a multi-file sniff sample than anything useful
-  - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
-    -- Thanks to Sertan Danis for the contribution
+  - Added Generic NoSilencedErrorsSniff that warns if PHP errors are being silenced using the @ symbol
+    -- Thanks to Andy Brockhurst for the contribution
   - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
   - Added PEAR MultiLineAssignmentSniff to enforce the correct indentation of multi-line assignments
   - Added PEAR MultiLineConditionSniff to enforce the new multi-line condition PEAR standard
   - Added MySource DisallowSelfActionSniff to ban the use of self::method() calls in Action classes
   - Added MySource DebugCodeSniff to ban the use of Debug::method() calls
   - Added MySource CreateWidgetTypeCallback sniff to check callback usage in widget type create methods
+  - Added Squiz DisallowObjectStringIndexSniff that forces object dot notation in JavaScript files
+    -- Thanks to Sertan Danis for the contribution
   - Added Squiz DiscouragedFunctionsSniff to warn when using debug functions
   - Added Squiz PropertyLabelSniff to check whitespace around colons in JS property and label declarations
   - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
@@ -331,6 +335,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="NoSilencedErrorsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -469,6 +476,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />

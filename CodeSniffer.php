@@ -1378,6 +1378,9 @@ class PHP_CodeSniffer
         case ',':
             $newToken['type'] = 'T_COMMA';
             break;
+        case '@':
+            $newToken['type'] = 'T_ASPERAND';
+            break;
         default:
             $newToken['type'] = 'T_NONE';
             break;
