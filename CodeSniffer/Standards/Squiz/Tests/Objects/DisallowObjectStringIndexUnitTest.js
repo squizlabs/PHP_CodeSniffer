@@ -19,3 +19,13 @@ test.prototype = {
     }
 
 };
+
+function test() {
+    this.errors['step_' + step] = errors;
+    this.errors['test'] = x;
+    this.errors['test' + 10] = x;
+    this.errors['test' + y] = x;
+    this.errors['test' + 'blah'] = x;
+    this.errors[y] = x;
+    this.errors[y + z] = x;
+}

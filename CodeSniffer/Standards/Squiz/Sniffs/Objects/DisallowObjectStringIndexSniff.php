@@ -62,13 +62,21 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
 
         // Check if the next non white space token is a string.
         $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($tokens[$next]['code'] === T_CONSTANT_ENCAPSED_STRING) {
-            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-            // Token before the opening square bracket cannot be a var name.
-            if ($tokens[$prev]['code'] === T_STRING) {
-                $error  = 'Object indexes must be written in dot notation';
-                $phpcsFile->addError($error, $prev);
-            }
+        if ($tokens[$next]['code'] !== T_CONSTANT_ENCAPSED_STRING) {
+            return;
+        }
+
+        // Make sure it is the only thing in the square brackets.
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+        if ($tokens[$next]['code'] !== T_CLOSE_SQUARE_BRACKET) {
+            return;
+        }
+
+        // Token before the opening square bracket cannot be a var name.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($tokens[$prev]['code'] === T_STRING) {
+            $error = 'Object indexes must be written in dot notation';
+            $phpcsFile->addError($error, $prev);
         }
 
     }//end process()
