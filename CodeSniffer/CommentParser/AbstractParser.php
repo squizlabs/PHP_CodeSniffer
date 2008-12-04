@@ -343,10 +343,32 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 $this->parseTag('comment', 0, count($this->words));
             } else {
                 // Process the last tag element.
-                $prevTag = substr($this->words[$prevTagPos], 1);
-                $this->parseTag($prevTag, $prevTagPos, count($this->words));
-            }
-        }
+                $prevTag  = substr($this->words[$prevTagPos], 1);
+                $numWords = count($this->words);
+                $endPos   = $numWords;
+
+                if ($prevTag === 'package' || $prevTag === 'subpaackage') {
+                    // These are single-word tags, so anything after a newline
+                    // is really a comment.
+                    for ($endPos = $prevTagPos; $endPos < $numWords; $endPos++) {
+                        if (strpos($this->words[$endPos], $this->phpcsFile->eolChar) !== false) {
+                            break;
+                        }
+                    }
+                }
+
+                $this->parseTag($prevTag, $prevTagPos, $endPos);
+
+                if ($endPos !== $numWords) {
+                    // Process the final comment, if it is not empty.
+                    $tokens  = array_slice($this->words, ($endPos + 1), $numWords);
+                    $content = implode('', $tokens);
+                    if (trim($content) !== '') {
+                        $this->parseTag('comment', ($endPos + 1), $numWords);
+                    }
+                }
+            }//end if
+        }//end if
 
     }//end _parseWords()
 

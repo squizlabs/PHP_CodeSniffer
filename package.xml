@@ -123,6 +123,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #15124 : AbstractParser.php uses deprecated split() function
     -- Thanks to Sebastian Bergmann for the patch
   - Fixed bug #15188 : PHPCS vs HEREDOC strings
+  - Fixed bug #15231 : Notice: Uninitialized string offset: 0 in FileCommentSniff.php on line 555
  </notes>
  <contents>
   <dir name="/">
