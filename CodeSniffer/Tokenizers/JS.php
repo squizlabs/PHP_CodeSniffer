@@ -564,6 +564,21 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo "\t* found end of comment *".PHP_EOL;
                     }
                 }
+
+                if ($inComment === '' && $cleanBuffer === false) {
+                    $tokens[] = array(
+                                 'code'    => T_STRING,
+                                 'type'    => 'T_STRING',
+                                 'content' => str_replace("\n", $eolChar, $buffer),
+                                );
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $content = str_replace("\n", '\n', $buffer);
+                        echo "=> Added token T_STRING ($content)".PHP_EOL;
+                    }
+
+                    $buffer = '';
+                }
             }//end if
 
             if ($cleanBuffer === true) {
