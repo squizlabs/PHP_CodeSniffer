@@ -491,4 +491,42 @@ if ($something) {
     // Line 19
     // Line 20
 }
+
+switch ($something) {
+    case '1':
+    // Line 1
+    // Line 2
+    // Line 3
+    // Line 4
+    // Line 5
+    break;
+    case '2':
+    // Line 1
+    // Line 2
+    // Line 3
+    // Line 4
+    // Line 5
+    break;
+    case '3':
+    // Line 1
+    // Line 2
+    // Line 3
+    // Line 4
+    // Line 5
+    break;
+    case '4':
+    // Line 1
+    // Line 2
+    // Line 3
+    // Line 4
+    // Line 5
+    break;
+    case '5':
+    // Line 1
+    // Line 2
+    // Line 3
+    // Line 4
+    // Line 5
+    break;
+}
 ?>
