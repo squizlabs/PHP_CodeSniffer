@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Not currently used by any standard; more of a multi-file sniff sample than anything useful
   - Added Generic NoSilencedErrorsSniff that warns if PHP errors are being silenced using the @ symbol
     -- Thanks to Andy Brockhurst for the contribution
+  - Added Generic UnnecessaryStringConcatSniff that checks for two strings being concatenated
   - Added PEAR FunctionDeclarationSniff to enforce the new multi-line function declaration PEAR standard
   - Added PEAR MultiLineAssignmentSniff to enforce the correct indentation of multi-line assignments
   - Added PEAR MultiLineConditionSniff to enforce the new multi-line condition PEAR standard
@@ -100,6 +101,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ForLoopDeclarationSniff no longer throws errors for JS FOR loops without semicolons
   - Squiz MultipleStatementAlignmentSniff no longer throws errors if a statement would take more than 8 spaces to align
   - Squiz standard now uses Genric TodoSniff
+  - Squiz standard now uses Genric UnnecessaryStringConcatSniff
   - Squiz standard now uses PEAR MultiLineAssignmentSniff
   - Squiz standard now uses PEAR MultiLineConditionSniff
   - Zend standard now uses OpeningFunctionBraceBsdAllmanSniff (feature request #14647)
@@ -344,6 +346,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="UnnecessaryStringConcatSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP" name="DisallowTabIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -486,6 +493,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="UnnecessaryStringConcatUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="UnnecessaryStringConcatUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="UnnecessaryStringConcatUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
