@@ -197,6 +197,13 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     continue;
                 }
 
+                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                    if ($tokens[$i]['code'] === $tokens[($i - 1)]['code']) {
+                        // Ignore multi-line string indentation.
+                        continue;
+                    }
+                }
+
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     // Closing brace needs to be indented to the same level
                     // as the function call.
@@ -215,12 +222,18 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $error = "Multi-line function call not indented correctly; expected $expectedIndent spaces but found $foundIndent";
                     $phpcsFile->addError($error, $i);
                 }
-            }
-        }
+            }//end if
+        }//end for
 
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $phpcsFile->addError($error, $stackPtr);
+        }
+
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
+        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+            $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
+            $phpcsFile->addError($error, $closeBracket);
         }
 
     }//end processMultiLineCall()
