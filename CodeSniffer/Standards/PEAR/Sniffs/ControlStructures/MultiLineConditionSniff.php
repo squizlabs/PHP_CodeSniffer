@@ -77,9 +77,17 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             if ($tokens[$i]['line'] !== $lastLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
-                    // Closing brace needs to be indented to the same level
-                    // as the function.
-                    $expectedIndent = $statementIndent;
+                    $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
+                    if ($next !== $closeBracket) {
+                        // CLosing bracket is on the same line as a condition.
+                        $error = 'Closing parenthesis of a multi-line IF statement must be on a new line';
+                        $phpcsFile->addError($error, $i);
+                        $expectedIndent = ($statementIndent + 4);
+                    } else {
+                        // Closing brace needs to be indented to the same level
+                        // as the function.
+                        $expectedIndent = $statementIndent;
+                    }
                 } else {
                     $expectedIndent = ($statementIndent + 4);
                 }

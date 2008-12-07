@@ -88,4 +88,13 @@ if ($condition1
 ) {
 }
 
+if ($condition1
+    || $condition2
+|| $condition3) {
+}
+
+if ($condition1
+    || $condition2 || $condition3
+) {
+}
 ?>
