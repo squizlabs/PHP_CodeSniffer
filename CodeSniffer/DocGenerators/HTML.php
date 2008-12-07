@@ -269,7 +269,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         $second = trim($codeBlocks->item(1)->nodeValue);
         $second = str_replace("\n", '</br>', $second);
         $second = str_replace(' ', '&nbsp;', $second);
-        $second = ('<em>', '<span class="code-comparison-highlight">', $second);
+        $second = str_replace('<em>', '<span class="code-comparison-highlight">', $second);
         $second = str_replace('</em>', '</span>', $second);
 
         echo '  <table class="code-comparison">'.PHP_EOL;
