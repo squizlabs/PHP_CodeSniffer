@@ -107,11 +107,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Zend standard now uses OpeningFunctionBraceBsdAllmanSniff (feature request #14647)
   - MySource JoinStringsSniff now bans the use of inline array joins and suggests the + operator
   - Fixed incorrect errors that can be generated from abstract scope sniffs when moving to a new file
+  - Core tokenizer now matches orphaned curly braces in the same way as square brackets
   - Whitespace tokens at the end of JS files are now added to the token stack
   - JavaScript tokenizer now identifies properties and labels as new token types
   - JavaScript tokenizer now identifies object definitions as a new token type and matches curly braces for them
   - JavaScript tokenizer now identifies DIV_EQUAL and MUL_EQUAL tokens
-  - Core tokenizer now matches orphaned curly braces in the same was a square brackets
   - Improved regular expression detection in the JavaScript tokenizer
   - Improve AbstractPatternSniff support so it can listen for any token type, not just weighted tokens
   - Fixed Squiz DoubleQuoteUsageSniff so it works correctly with short_open_tag=Off
