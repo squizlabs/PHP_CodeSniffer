@@ -4,3 +4,10 @@
    cursor: pointer;
    -moz-user-select: none;
 }
+
+.AssetLineageWidgetType-item {
+    float: left;
+    list-style: none;
+    height: 22px;
+    cursor: pointer;
+}

@@ -51,6 +51,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
+
+            // Styles like list-style are tokenized as T_LIST-T_STRING
+            // so convert the T_LIST to a string.
+            if ($token['code'] === T_LIST) {
+                $token['code'] = T_STRING;
+                $token['type'] = 'T_STRING';
+            }
+
             if ($token['code'] === T_COMMENT
                 && substr($token['content'], 0, 2) !== '/*'
             ) {
@@ -159,8 +167,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     }
                 }
 
-                // If the previous non-whitspace token is a string, it is a
-                // style definition.
                 $finalTokens[$x]['type'] = 'T_STYLE';
                 $finalTokens[$x]['code'] = T_STYLE;
                 break;
