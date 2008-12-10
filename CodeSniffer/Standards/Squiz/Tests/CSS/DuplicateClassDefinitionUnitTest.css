@@ -1,0 +1,33 @@
+.AssetLineageWidgetType-item {
+    color: #FFF;
+}
+
+.AssetLineageWidgetType-title {
+    color: #CCC;
+}
+
+.AssetLineageWidgetType-item {
+    color: #CCC;
+}
+
+.AssetLineageWidgetType-item .selected {
+}
+
+.AssetLineageWidgetType-item.selected {
+}
+
+#Blah .AssetLineageWidgetType-item {
+}
+
+#X.selected,
+.AssetLineageWidgetType-item {
+}
+
+.MyClass, .YourClass {
+}
+
+.YourClass, .MyClass {
+}
+
+.YourClass, .MyClass, .OurClass {
+}
