@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for a new multi-file sniff that sniffs all processed files at once
   - Added new output format --report=emacs to output errors using the emacs standard compile output format
     -- Thanks to Len Trigg for the contribution
+  - Reports can now be written to a file using the --report-file command line argument (feature request #14953)
+    -- The report is also written to screen when using this argument
   - Changed the max width of error lines from 80 to 79 chars to stop blank lines in the default windows cmd window
   - PHP_CodeSniffer now has a token for an asperand (@ symbol) so sniffs can listen for them
     -- Thanks to Andy Brockhurst for the patch

@@ -227,6 +227,26 @@ class PHP_CodeSniffer_CLI
                     echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
                     exit(2);
                 }
+            } else if (substr($arg, 0, 12) === 'report-file=') {
+                $values['reportFile'] = realpath(substr($arg, 12));
+
+                // It may not exist and return false instead.
+                if ($values['reportFile'] === false) {
+                    $values['reportFile'] = substr($arg, 12);
+                }
+
+                if (is_dir($values['reportFile']) === true) {
+                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
+
+                $dir = dirname($values['reportFile']);
+                if (is_dir($dir) === false) {
+                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" points to a non-existent directory.'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $values['standard'] = substr($arg, 9);
             } else if (substr($arg, 0, 11) === 'extensions=') {
@@ -345,10 +365,15 @@ class PHP_CodeSniffer_CLI
             $values['local']
         );
 
+        if (isset($values['reportFile']) === false) {
+            $values['reportFile'] = '';
+        }
+
         return $this->printErrorReport(
             $phpcs,
             $values['report'],
-            $values['showWarnings']
+            $values['showWarnings'],
+            $values['reportFile']
         );
 
     }//end process()
@@ -361,11 +386,16 @@ class PHP_CodeSniffer_CLI
      *                                      the errors.
      * @param string          $report       The type of report to print.
      * @param bool            $showWarnings TRUE if warnings should also be printed.
+     * @param string          $reportFile   A file to log the report out to.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($phpcs, $report, $showWarnings)
+    public function printErrorReport($phpcs, $report, $showWarnings, $reportFile='')
     {
+        if ($reportFile !== '') {
+            ob_start();
+        }
+
         switch ($report) {
         case 'xml':
             $numErrors = $phpcs->printXMLErrorReport($showWarnings);
@@ -385,6 +415,14 @@ class PHP_CodeSniffer_CLI
         default:
             $numErrors = $phpcs->printErrorReport($showWarnings);
             break;
+        }
+
+        if ($reportFile !== '') {
+            $report = ob_get_contents();
+            ob_end_flush();
+
+            $report = trim($report);
+            file_put_contents($reportFile, $report);
         }
 
         return $numErrors;
@@ -436,10 +474,11 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--standard=<standard>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--generator=<generator>] [--extensions=<extensions>]'.PHP_EOL;
-        echo '    [--ignore=<patterns>] [--tab-width=<width>] <file> ...'.PHP_EOL;
+        echo '    [--standard=<standard>] [--generator=<generator>]'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo '    [--tab-width=<width>] <file> ...'.PHP_EOL;
         echo '        -n           Do not print warnings'.PHP_EOL;
         echo '        -w           Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l           Local directory only, no recursion'.PHP_EOL;
@@ -459,6 +498,8 @@ class PHP_CodeSniffer_CLI
         echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
         echo '                     "csv", "emacs" or "summary" report'.PHP_EOL;
         echo '                     (the "full" report is printed by default)'.PHP_EOL;
+        echo '        <reportfile> Write the report to the specified file path'.PHP_EOL;
+        echo '                     (report is also written to screen)'.PHP_EOL;
 
     }//end printUsage()
 
