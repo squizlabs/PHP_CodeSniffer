@@ -920,7 +920,7 @@ class PHP_CodeSniffer
      */
     public function printCSVErrorReport($showWarnings=true)
     {
-        echo 'File,Line,Column,Severity,Message'.PHP_EOL;
+        echo 'File,Line,Column,Severity,Message,Source'.PHP_EOL;
 
         $errorsShown = 0;
 
