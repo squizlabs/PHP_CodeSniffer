@@ -204,6 +204,13 @@ class PHP_CodeSniffer_File
      */
     private $_listeners = array();
 
+     /**
+     * The class name of the sniff currently processing the file.
+     *
+     * @var string
+     */
+    private $_activeListener = '';
+
     /**
      * A constant to represent an error in PHP_CodeSniffer.
      *
@@ -363,12 +370,15 @@ class PHP_CodeSniffer_File
                         }
                     }
 
+                    $this->_activeListener = get_class($listener);
+
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
-                        echo "\t\t\tProcessing ".get_class($listener).'... ';
+                        echo "\t\t\tProcessing ".get_class($this->_activeListener).'... ';
                     }
 
                     $listener->process($this, $stackPtr);
+                    $this->_activeListener = '';
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $timeTaken = round((microtime(true) - $startTime), 4);
@@ -502,6 +512,10 @@ class PHP_CodeSniffer_File
      */
     public function addError($error, $stackPtr)
     {
+        // Work out which sniff generated the error.
+        $parts = explode('_', $this->_activeListener);
+        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
         if ($stackPtr === null) {
             $lineNum = 1;
             $column  = 1;
@@ -518,7 +532,10 @@ class PHP_CodeSniffer_File
             $this->errors[$lineNum][$column] = array();
         }
 
-        $this->_errors[$lineNum][$column][] = $error;
+        $this->_errors[$lineNum][$column][] = array(
+                                               'message' => $error,
+                                               'source'  => $sniff,
+                                              );
         $this->_errorCount++;
 
     }//end addError()
@@ -534,6 +551,10 @@ class PHP_CodeSniffer_File
      */
     public function addWarning($warning, $stackPtr)
     {
+        // Work out which sniff generated the warning.
+        $parts = explode('_', $this->_activeListener);
+        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
         if ($stackPtr === null) {
             $lineNum = 1;
             $column  = 1;
@@ -550,7 +571,10 @@ class PHP_CodeSniffer_File
             $this->_warnings[$lineNum][$column] = array();
         }
 
-        $this->_warnings[$lineNum][$column][] = $warning;
+        $this->_warnings[$lineNum][$column][] = array(
+                                               'message' => $warning,
+                                               'source'  => $sniff,
+                                              );
         $this->_warningCount++;
 
     }//end addWarning()

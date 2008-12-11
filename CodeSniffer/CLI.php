@@ -220,11 +220,12 @@ class PHP_CodeSniffer_CLI
                                      'checkstyle',
                                      'csv',
                                      'emacs',
+                                     'source',
                                      'summary',
                                     );
 
                 if (in_array($values['report'], $validReports) === false) {
-                    echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
+                    echo 'ERROR: Report type "'.$values['report'].'" not known.'.PHP_EOL;
                     exit(2);
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
@@ -412,6 +413,9 @@ class PHP_CodeSniffer_CLI
         case 'summary':
             $numErrors = $phpcs->printErrorReportSummary($showWarnings);
             break;
+        case 'source':
+            $numErrors = $phpcs->printSourceReport($showWarnings);
+            break;
         default:
             $numErrors = $phpcs->printErrorReport($showWarnings);
             break;
@@ -496,7 +500,7 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
         echo '                     (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
-        echo '                     "csv", "emacs" or "summary" report'.PHP_EOL;
+        echo '                     "csv", "emacs", "source" or "summary" report'.PHP_EOL;
         echo '                     (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportfile> Write the report to the specified file path'.PHP_EOL;
         echo '                     (report is also written to screen)'.PHP_EOL;
