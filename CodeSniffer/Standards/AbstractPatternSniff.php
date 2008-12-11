@@ -261,8 +261,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $patternInfo,
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr
-    )
-    {
+    ) {
         $tokens      = $phpcsFile->getTokens();
         $pattern     = $patternInfo['pattern'];
         $patternCode = $patternInfo['pattern_code'];
