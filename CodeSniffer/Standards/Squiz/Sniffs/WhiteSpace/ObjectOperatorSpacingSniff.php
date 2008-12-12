@@ -59,19 +59,13 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
 
         $prevType = $tokens[($stackPtr - 1)]['code'];
         if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
-            $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
-            $expected = $tokens[$nonSpace]['content'].'->';
-            $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).'->';
-            $error    = "Space found before object operator; expected \"$expected\" but found \"$found\"";
+            $error = 'Space found before object operator';
             $phpcsFile->addError($error, $stackPtr);
         }
 
         $nextType = $tokens[($stackPtr + 1)]['code'];
         if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
-            $nonSpace = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 2), null, true);
-            $expected = '->'.$tokens[$nonSpace]['content'];
-            $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace - $stackPtr + 1));
-            $error    = "Space found after object operator; expected \"$expected\" but found \"$found\"";
+            $error = 'Space found after object operator';
             $phpcsFile->addError($error, $stackPtr);
         }
 
