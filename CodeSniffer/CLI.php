@@ -63,13 +63,16 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']      = array();
-        $defaults['standard']   = null;
-        $defaults['verbosity']  = 0;
-        $defaults['local']      = false;
-        $defaults['extensions'] = array();
-        $defaults['ignored']    = array();
-        $defaults['generator']  = '';
+        $defaults['files']       = array();
+        $defaults['standard']    = null;
+        $defaults['verbosity']   = 0;
+        $defaults['local']       = false;
+        $defaults['showSources'] = false;
+        $defaults['extensions']  = array();
+        $defaults['sniffs']      = array();
+        $defaults['ignored']     = array();
+        $defaults['reportFile']  = '';
+        $defaults['generator']   = '';
 
         $defaults['report'] = PHP_CodeSniffer::getConfigData('report_format');
         if ($defaults['report'] === null) {
@@ -107,6 +110,11 @@ class PHP_CodeSniffer_CLI
         for ($i = 1; $i < $_SERVER['argc']; $i++) {
             $arg = $_SERVER['argv'][$i];
             if ($arg{0} === '-') {
+                if ($arg === '-' || $arg === '--') {
+                    // Empty argument, ignore it.
+                    continue;
+                }
+
                 if ($arg{1} === '-') {
                     $values
                         = $this->processLongArgument(substr($arg, 2), $i, $values);
@@ -157,6 +165,9 @@ class PHP_CodeSniffer_CLI
             break;
         case 'l' :
             $values['local'] = true;
+            break;
+        case 's' :
+            $values['showSources'] = true;
             break;
         case 'n' :
             $values['showWarnings'] = false;
@@ -212,7 +223,18 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         default:
-            if (substr($arg, 0, 7) === 'report=') {
+            if (substr($arg, 0, 7) === 'sniffs=') {
+                $values['sniffs'] = array();
+
+                $sniffs = substr($arg, 7);
+                $sniffs = explode(',', $sniffs);
+
+                // Convert the sniffs to class names.
+                foreach ($sniffs as $sniff) {
+                    $parts = explode('.', $sniff);
+                    $values['sniffs'][] = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
+                }
+            } else if (substr($arg, 0, 7) === 'report=') {
                 $values['report'] = substr($arg, 7);
                 $validReports     = array(
                                      'full',
@@ -362,18 +384,15 @@ class PHP_CodeSniffer_CLI
         $phpcs->process(
             $values['files'],
             $values['standard'],
-            array(),
+            $values['sniffs'],
             $values['local']
         );
-
-        if (isset($values['reportFile']) === false) {
-            $values['reportFile'] = '';
-        }
 
         return $this->printErrorReport(
             $phpcs,
             $values['report'],
             $values['showWarnings'],
+            $values['showSources'],
             $values['reportFile']
         );
 
@@ -387,11 +406,13 @@ class PHP_CodeSniffer_CLI
      *                                      the errors.
      * @param string          $report       The type of report to print.
      * @param bool            $showWarnings TRUE if warnings should also be printed.
+     * @param bool            $showSources  TRUE if the report should show error sources
+     *                                      (not used by all reports).
      * @param string          $reportFile   A file to log the report out to.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($phpcs, $report, $showWarnings, $reportFile='')
+    public function printErrorReport($phpcs, $report, $showWarnings, $showSources, $reportFile='')
     {
         if ($reportFile !== '') {
             ob_start();
@@ -411,13 +432,13 @@ class PHP_CodeSniffer_CLI
             $numErrors = $phpcs->printEmacsErrorReport($showWarnings);
             break;
         case 'summary':
-            $numErrors = $phpcs->printErrorReportSummary($showWarnings);
+            $numErrors = $phpcs->printErrorReportSummary($showWarnings, $showSources);
             break;
         case 'source':
-            $numErrors = $phpcs->printSourceReport($showWarnings);
+            $numErrors = $phpcs->printSourceReport($showWarnings, $showSources);
             break;
         default:
-            $numErrors = $phpcs->printErrorReport($showWarnings);
+            $numErrors = $phpcs->printErrorReport($showWarnings, $showSources);
             break;
         }
 
@@ -478,14 +499,15 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlvi] [--report=<report>] [--report-file=<reportfile>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsvi] [--report=<report>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--generator=<generator>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
-        echo '    [--tab-width=<width>] <file> ...'.PHP_EOL;
+        echo '    [--generator=<generator>] [--tab-width=<width>] <file> ...'.PHP_EOL;
         echo '        -n           Do not print warnings'.PHP_EOL;
         echo '        -w           Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l           Local directory only, no recursion'.PHP_EOL;
+        echo '        -s           Show sniff codes in all reports'.PHP_EOL;
         echo '        -v[v][v]     Print verbose output'.PHP_EOL;
         echo '        -i           Show a list of installed coding standards'.PHP_EOL;
         echo '        --help       Print this help message'.PHP_EOL;
@@ -495,6 +517,8 @@ class PHP_CodeSniffer_CLI
         echo '                     (only valid if checking a directory)'.PHP_EOL;
         echo '        <patterns>   A comma separated list of patterns that are used'.PHP_EOL;
         echo '                     to ignore directories and files'.PHP_EOL;
+        echo '        <sniffs>     A comma separated list of sniff codes to limit the check to'.PHP_EOL;
+        echo '                     (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
         echo '        <width>      The number of spaces each tab represents'.PHP_EOL;
         echo '        <generator>  The name of a doc generator to use'.PHP_EOL;

@@ -981,10 +981,11 @@ class PHP_CodeSniffer
      * Errors and warnings are displayed together, grouped by file.
      *
      * @param boolean $showWarnings Show warnings as well as errors.
+     * @param boolean $showSources  Show error sources in report.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($showWarnings=true)
+    public function printErrorReport($showWarnings=true, $showSources=false)
     {
         $errorsShown = 0;
 
@@ -1043,10 +1044,15 @@ class PHP_CodeSniffer
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
+                        $message = $error['message'];
+                        if ($showSources === true) {
+                            $message .= ' ('.substr($error['source'], 0, -5).')';
+                        }
+
                         // The padding that goes on the front of the line.
                         $padding  = ($maxLineLength - strlen($line));
                         $errorMsg = wordwrap(
-                            $error['message'],
+                            $message,
                             $maxErrorSpace,
                             PHP_EOL."$paddingLine2"
                         );
@@ -1080,10 +1086,11 @@ class PHP_CodeSniffer
      * show files that have at least one warning or error.
      *
      * @param boolean $showWarnings Show warnings as well as errors.
+     * @param boolean $showSources  Show error sources in report.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReportSummary($showWarnings=true)
+    public function printErrorReportSummary($showWarnings=true, $showSources=false)
     {
         $errorFiles = array();
 
@@ -1160,6 +1167,10 @@ class PHP_CodeSniffer
         echo "WERE FOUND IN $totalFiles FILE(S)".PHP_EOL;
         echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
 
+        if ($showSources === true) {
+            $this->printSourceReport($showWarnings, true);
+        }
+
         return ($totalErrors + $totalWarnings);
 
     }//end printErrorReportSummary()
@@ -1169,10 +1180,11 @@ class PHP_CodeSniffer
      * Prints the source of all errors and warnings.
      *
      * @param boolean $showWarnings Show warnings as well as errors.
+     * @param boolean $showSources  Show error sources in report.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printSourceReport($showWarnings=true)
+    public function printSourceReport($showWarnings=true, $showSources=false)
     {
         $sources = array();
 
@@ -1206,29 +1218,39 @@ class PHP_CodeSniffer
 
         echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
         echo str_repeat('-', 80).PHP_EOL;
-        echo 'STANDARD    CATEGORY            SNIFF'.str_repeat(' ', 38).'COUNT'.PHP_EOL;
-        echo str_repeat('-', 80).PHP_EOL;
+        if ($showSources === true) {
+            echo 'SOURCE'.str_repeat(' ', 69).'COUNT'.PHP_EOL;
+            echo str_repeat('-', 80).PHP_EOL;
+        } else {
+            echo 'STANDARD    CATEGORY            SNIFF'.str_repeat(' ', 38).'COUNT'.PHP_EOL;
+            echo str_repeat('-', 80).PHP_EOL;
+        }
 
         foreach ($sources as $source => $count) {
-            $parts = explode('.', $source);
+            if ($showSources === true) {
+                $source = substr($source, 0, -5);
+                echo $source.str_repeat(' ', (75 - strlen($source)));
+            } else {
+                $parts = explode('.', $source);
 
-            if (strlen($parts[0]) > 10) {
-                $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) -10) * -1));
-            }
-            echo $parts[0].str_repeat(' ', (12 - strlen($parts[0])));
+                if (strlen($parts[0]) > 10) {
+                    $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) -10) * -1));
+                }
+                echo $parts[0].str_repeat(' ', (12 - strlen($parts[0])));
 
-            $category = $this->makeFriendlyName($parts[1]);
-            if (strlen($category) > 18) {
-                $category = substr($category, 0, ((strlen($category) -18) * -1));
-            }
-            echo $category.str_repeat(' ', (20 - strlen($category)));
+                $category = $this->makeFriendlyName($parts[1]);
+                if (strlen($category) > 18) {
+                    $category = substr($category, 0, ((strlen($category) -18) * -1));
+                }
+                echo $category.str_repeat(' ', (20 - strlen($category)));
 
-            $sniff = substr($parts[2], 0, -5);
-            $sniff = $this->makeFriendlyName($sniff);
-            if (strlen($sniff) > 41) {
-                $sniff = substr($sniff, 0, ((strlen($sniff) - 41) * -1));
+                $sniff = substr($parts[2], 0, -5);
+                $sniff = $this->makeFriendlyName($sniff);
+                if (strlen($sniff) > 41) {
+                    $sniff = substr($sniff, 0, ((strlen($sniff) - 41) * -1));
+                }
+                echo $sniff.str_repeat(' ', (43 - strlen($sniff)));
             }
-            echo $sniff.str_repeat(' ', (43 - strlen($sniff)));
 
             echo $count.PHP_EOL;
         }//end foreach
