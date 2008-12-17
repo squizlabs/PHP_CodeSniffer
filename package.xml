@@ -136,6 +136,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sebastian Bergmann for the patch
   - Fixed bug #15188 : PHPCS vs HEREDOC strings
   - Fixed bug #15231 : Notice: Uninitialized string offset: 0 in FileCommentSniff.php on line 555
+  - Fixed bug #15336 : Notice: Undefined offset: 2 in /usr/share/php/PHP/CodeSniffer/File.php on line
  </notes>
  <contents>
   <dir name="/">
