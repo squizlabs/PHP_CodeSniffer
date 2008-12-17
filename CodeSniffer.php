@@ -626,9 +626,19 @@ class PHP_CodeSniffer
                 $this->processFile($filePath);
             }//end foreach
         } catch (Exception $e) {
-            $trace    = $e->getTrace();
+            $trace = $e->getTrace();
+
             $filename = $trace[0]['args'][0];
-            $error    = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+            if (is_numeric($filename) === true) {
+                // See if we can find the PHP_CodeSniffer_File object.
+                foreach ($trace as $data) {
+                    if (isset($data['args'][0]) === true && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true) {
+                        $filename = $data['args'][0]->getFilename();
+                    }
+                }
+            }
+
+            $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
 
             $phpcsFile = new PHP_CodeSniffer_File($filename, $this->listeners, $this->allowedFileExtensions);
             $this->addFile($phpcsFile);
