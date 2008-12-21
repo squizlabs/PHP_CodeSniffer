@@ -447,7 +447,7 @@ class PHP_CodeSniffer_CLI
             ob_end_flush();
 
             $report = trim($report);
-            file_put_contents($reportFile, $report);
+            file_put_contents($reportFile, "$report\n");
         }
 
         return $numErrors;
