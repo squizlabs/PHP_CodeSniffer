@@ -32,7 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Reports output to a file now include trailing newline
+  - Reports that are output to a file now include a trailing newline at the end of the file
   - Fixed sniff names not shown in -vvv token processing output
  </notes>
  <contents>
