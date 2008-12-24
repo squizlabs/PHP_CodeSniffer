@@ -503,7 +503,8 @@ class PHP_CodeSniffer
                 } else {
                     $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
                     if ($sniffDir === false) {
-                        throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
+                        $error = "Included sniff $sniff does not exist";
+                        throw new PHP_CodeSniffer_Exception($error);
                     }
                 }
 
@@ -517,7 +518,8 @@ class PHP_CodeSniffer
                     }
                 } else {
                     if (substr($sniffDir, -9) !== 'Sniff.php') {
-                        throw new PHP_CodeSniffer_Exception("Included sniff $sniff does not exist");
+                        $error = "Included sniff $sniff does not exist";
+                        throw new PHP_CodeSniffer_Exception($error);
                     }
 
                     $includedSniffs[] = $sniffDir;
@@ -536,7 +538,8 @@ class PHP_CodeSniffer
                 } else {
                     $sniffDir = realpath(dirname(__FILE__)."/CodeSniffer/Standards/$sniff");
                     if ($sniffDir === false) {
-                        throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
+                        $error = "Excluded sniff $sniff does not exist";
+                        throw new PHP_CodeSniffer_Exception($error);
                     }
                 }
 
@@ -556,7 +559,8 @@ class PHP_CodeSniffer
                     }
                 } else {
                     if (substr($sniffDir, -9) !== 'Sniff.php') {
-                        throw new PHP_CodeSniffer_Exception("Excluded sniff $sniff does not exist");
+                        $error = "Excluded sniff $sniff does not exist";
+                        throw new PHP_CodeSniffer_Exception($error);
                     }
 
                     $excludedSniffs[] = $sniffDir;
@@ -1403,16 +1407,25 @@ class PHP_CodeSniffer
         if (is_array($token) === false) {
             $newToken = self::resolveSimpleToken($token);
         } else {
-            // Some T_STRING tokens can be more specific.
-            if ($token[0] === T_STRING) {
+            switch ($token[0]) {
+            case T_STRING:
+                // Some T_STRING tokens can be more specific.
                 $newToken = self::resolveTstringToken($token);
-            } else {
+                break;
+            case T_CURLY_OPEN:
+                $newToken            = array();
+                $newToken['code']    = T_OPEN_CURLY_BRACKET;
+                $newToken['content'] = $token[1];
+                $newToken['type']    = 'T_OPEN_CURLY_BRACKET';
+                break;
+            default:
                 $newToken            = array();
                 $newToken['code']    = $token[0];
                 $newToken['content'] = $token[1];
                 $newToken['type']    = token_name($token[0]);
-            }
-        }
+                break;
+            }//end switch
+        }//end if
 
         return $newToken;
 
