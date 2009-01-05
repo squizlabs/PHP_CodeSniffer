@@ -340,6 +340,12 @@ class PHP_CodeSniffer
         // multiple files being sniffed.
         if (count($files) > 1) {
             foreach ($this->_tokenListeners['multifile'] as $listener) {
+                // Set the name of the listener for error messages.
+                $activeListener = get_class($listener);
+                foreach ($this->files as $file) {
+                    $file->setActiveListener($activeListener);
+                }
+
                 $listener->process($this->files);
             }
         }

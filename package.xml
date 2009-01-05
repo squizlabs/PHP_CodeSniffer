@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Reports that are output to a file now include a trailing newline at the end of the file
   - Fixed sniff names not shown in -vvv token processing output
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
+  - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
  </notes>
  <contents>
   <dir name="/">

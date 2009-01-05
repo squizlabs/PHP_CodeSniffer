@@ -258,6 +258,20 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Sets the name of the currently active sniff.
+     *
+     * @param string $activeListener The class name of the current sniff.
+     *
+     * @return void
+     */
+    public function setActiveListener($activeListener)
+    {
+        $this->_activeListener = $activeListener;
+
+    }//end setActiveListener()
+
+
+    /**
      * Adds a listener to the token stack that listens to the specific tokens.
      *
      * When PHP_CodeSniffer encounters on the the tokens specified in $tokens, it
@@ -370,7 +384,7 @@ class PHP_CodeSniffer_File
                         }
                     }
 
-                    $this->_activeListener = get_class($listener);
+                    $this->setActiveListener(get_class($listener));
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
