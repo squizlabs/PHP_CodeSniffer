@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Reports that are output to a file now include a trailing newline at the end of the file
   - Fixed sniff names not shown in -vvv token processing output
+  - Added Generic SubversionPropertiesSniff to check that specific svn props are set for files
+    -- Thanks to Jack Bates for the contribution
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
  </notes>
@@ -257,6 +259,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Strings">
         <file baseinstalldir="PHP" name="UnnecessaryStringConcatSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="VersionControl">
+        <file baseinstalldir="PHP" name="SubversionPropertiesSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
