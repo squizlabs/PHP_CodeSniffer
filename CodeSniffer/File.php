@@ -1230,9 +1230,7 @@ class PHP_CodeSniffer_File
                     }//end for
                 }//end if
 
-                if ($ignore === 0
-                    || $tokens[$stackPtr]['type'] !== T_OPEN_CURLY_BRACKET
-                ) {
+                if ($ignore === 0) {
                     // We found the opening scope token for $currType.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
