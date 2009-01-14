@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
   - Fixed bug #15519 : Uncaught PHP_CodeSniffer_Exception
+  - Fixed bug #15624 : Pre-commit hook fails with PHP errors
  </notes>
  <contents>
   <dir name="/">
