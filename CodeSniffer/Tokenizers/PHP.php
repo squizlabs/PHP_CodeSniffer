@@ -237,7 +237,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                     if ($subTokenIsArray === true) {
                         $tokenContent .= $tokens[$i][1];
-                        if ($tokens[$i][1] === '{') {
+                        if ($tokens[$i][1] === '{'
+                            && $tokens[$i][0] !== T_ENCAPSED_AND_WHITESPACE
+                        ) {
                             $nestedVars[] = $i;
                         }
                     } else {

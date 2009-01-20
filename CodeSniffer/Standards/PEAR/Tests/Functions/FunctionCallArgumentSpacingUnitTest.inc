@@ -46,4 +46,9 @@ make_foo($string /*the string*/ , true /*test*/);
 make_foo($string/*the string*/ ,   /*test*/ true);
 make_foo($string /*the string*/, /*test*/ true);
 
+class MyClass {
+    function myFunction() {
+        blah($foo, "{{$config['host']}}", "{$config}", "hi there{}{}{{{}{}{}}");
+    }
+}
 ?>
