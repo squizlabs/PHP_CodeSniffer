@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed sniff names not shown in -vvv token processing output
   - Added Generic SubversionPropertiesSniff to check that specific svn props are set for files
     -- Thanks to Jack Bates for the contribution
+  - The PHP version check can now be overridden in classes that extend PEAR FileCommentSniff
+    -- Thanks to Helgi Þormar Þorbjörnsson for the suggestion
   - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2

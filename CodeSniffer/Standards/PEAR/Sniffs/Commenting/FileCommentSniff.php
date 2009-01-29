@@ -307,10 +307,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Check the PHP Version.
-            if (strstr(strtolower($long), 'php version') === false) {
-                $error = 'PHP version not specified';
-                $phpcsFile->addWarning($error, $commentEnd);
-            }
+            $this->processPHPVersion($commentStart, $commentEnd, $long);
 
             // Check each tag.
             $this->processTags($commentStart, $commentEnd);
@@ -320,10 +317,29 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
+     * Check that the PHP version is specified.
+     *
+     * @param int    $commentStart Position in the stack where the comment started.
+     * @param int    $commentEnd   Position in the stack where the comment ended.
+     * @param string $comment      The text of the function comment.
+     *
+     * @return void
+     */
+    protected function processPHPVersion($commentStart, $commentEnd, $commentText)
+    {
+        if (strstr(strtolower($commentText), 'php version') === false) {
+            $error = 'PHP version not specified';
+             $this->currentFile->addWarning($error, $commentEnd);
+        }
+
+    }//end processPHPVersion()
+
+
+    /**
      * Processes each required or optional tag.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param int $commentStart Position in the stack where the comment started.
+     * @param int $commentEnd   Position in the stack where the comment ended.
      *
      * @return void
      */
