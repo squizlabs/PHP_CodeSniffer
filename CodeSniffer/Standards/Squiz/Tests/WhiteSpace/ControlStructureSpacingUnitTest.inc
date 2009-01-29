@@ -102,4 +102,11 @@ foreach ($this->children as $child) {
     echo $child;
 
 }
+
+if ($defaultPageDesign === 0
+    && $defaultCascade === TRUE
+    && $defaultChildDesign === 0
+) {
+    $settingsUpdated = FALSE;
+}
 ?>

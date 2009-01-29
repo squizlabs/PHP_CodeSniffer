@@ -46,7 +46,6 @@ class Squiz_Sniffs_Functions_FunctionDeclarationSniff extends PHP_CodeSniffer_St
         return array(
                 'function abc(...);',
                 'abstract function abc(...);',
-                'function abc(...)EOL',
                );
 
     }//end getPatterns()

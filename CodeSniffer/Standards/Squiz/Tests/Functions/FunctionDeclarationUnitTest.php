@@ -44,9 +44,6 @@ class Squiz_Tests_Functions_FunctionDeclarationUnitTest extends AbstractSniffUni
     public function getErrorList()
     {
         return array(
-                10 => 1,
-                25 => 1,
-                40 => 1,
                 55 => 1,
                );
 

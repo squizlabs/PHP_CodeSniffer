@@ -84,7 +84,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
 
         $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeOpener + 1), null, true);
-        if ($tokens[$firstContent]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+        if ($tokens[$firstContent]['line'] !== ($tokens[$scopeOpener]['line'] + 1)) {
             $error = 'Blank line found at start of control structure';
             $phpcsFile->addError($error, $scopeOpener);
         }

@@ -16,4 +16,19 @@ function myFunc( PHP_CodeSniffer $object,  array $array=array(), $blah3='yo') {}
 function myFunc( array  &$one,  array  &$two) {}
 function myFunc(&$blah) {}
 function myFunc( &$blah ) {}
+
+function multiLineFunction(
+    array $flatList,
+    $markup,
+    array $otherList,
+    $lastOffset=0
+) {
+}
+
+function multiLineFunction(
+    $markup,
+    array $otherList,
+    $lastOffset=0
+) {
+}
 ?>
