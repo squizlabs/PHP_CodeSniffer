@@ -211,7 +211,17 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                                           );
                 }
 
-                $allProblems[$line]['found_errors'] = array_merge($allProblems[$line]['found_errors'], $errors);
+                $foundErrorsTemp = array();
+                foreach ($allProblems[$line]['found_errors'] as $foundError) {
+                    $foundErrorsTemp[] = $foundError['message'];
+                }
+
+                $errorsTemp = array();
+                foreach ($errors as $foundError) {
+                    $errorsTemp[] = $foundError['message'];
+                }
+
+                $allProblems[$line]['found_errors'] = array_merge($foundErrorsTemp, $errorsTemp);
             }
 
             if (isset($expectedErrors[$line]) === true) {
@@ -247,7 +257,12 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                                           );
                 }
 
-                $allProblems[$line]['found_warnings'] = $warnings;
+                $warningsTemp = array();
+                foreach ($warnings as $warning) {
+                    $warningsTemp[] = $warning['message'];
+                }
+
+                $allProblems[$line]['found_warnings'] = $warningsTemp;
             }
 
             if (isset($expectedWarnings[$line]) === true) {
