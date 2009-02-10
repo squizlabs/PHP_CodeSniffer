@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #15519 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15624 : Pre-commit hook fails with PHP errors
   - Fixed bug #15661 : Uncaught PHP_CodeSniffer_Exception
+  - Fixed bug #15722 : "declare(encoding = 'utf-8');" leads to "Missing file doc comment"
  </notes>
  <contents>
   <dir name="/">

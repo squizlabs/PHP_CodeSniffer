@@ -162,6 +162,13 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $commentStart
             = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 
+        // Allow declare() statements at the top of the file.
+        if ($tokens[$commentStart]['code'] === T_DECLARE) {
+            $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($commentStart + 1));
+            $commentStart
+                = $phpcsFile->findNext(T_WHITESPACE, ($semicolon + 1), null, true);
+        }
+
         // Ignore vim header.
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             if (strstr($tokens[$commentStart]['content'], 'vim:') !== false) {
