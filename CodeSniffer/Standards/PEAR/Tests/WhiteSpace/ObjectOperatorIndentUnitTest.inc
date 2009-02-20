@@ -14,4 +14,18 @@ $someObject->someFunction("some", "parameter")->someOtherFunc(23, 42);
 $someObject->someFunction("some", "parameter")
         ->someOtherFunc(23, 42);
 
+func(
+    $bar->foo()
+)
+    ->bar();
+
+func(
+    $bar->foo()
+)
+    ->bar(
+        $bar->foo()
+        ->bar()
+            ->func()
+    );
+
 ?>

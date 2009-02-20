@@ -92,29 +92,53 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
 
         $requiredIndent += 4;
 
+        // Determine the scope of the original object operator.
+        $origBrackets = null;
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $origBrackets = $tokens[$stackPtr]['nested_parenthesis'];
+        }
+
+        $origConditions = null;
+        if (isset($tokens[$stackPtr]['conditions']) === true) {
+            $origConditions = $tokens[$stackPtr]['conditions'];
+        }
+
         // Check indentation of each object operator in the chain.
         while ($next !== false) {
-            // Make sure it starts a line, otherwise dont check indent.
-            $indent = $tokens[($next - 1)];
-            if ($indent['code'] === T_WHITESPACE) {
-                if ($indent['line'] === $tokens[$next]['line']) {
-                    $foundIndent = strlen($indent['content']);
-                } else {
-                    $foundIndent = 0;
+            // Make sure it is in the same scope, otherwise dont check indent.
+            $brackets = null;
+            if (isset($tokens[$next]['nested_parenthesis']) === true) {
+                $brackets = $tokens[$next]['nested_parenthesis'];
+            }
+
+            $conditions = null;
+            if (isset($tokens[$next]['conditions']) === true) {
+                $conditions = $tokens[$next]['conditions'];
+            }
+
+            if ($origBrackets === $brackets && $origConditions === $conditions) {
+                // Make sure it starts a line, otherwise dont check indent.
+                $indent = $tokens[($next - 1)];
+                if ($indent['code'] === T_WHITESPACE) {
+                    if ($indent['line'] === $tokens[$next]['line']) {
+                        $foundIndent = strlen($indent['content']);
+                    } else {
+                        $foundIndent = 0;
+                    }
+
+                    if ($foundIndent !== $requiredIndent) {
+                        $error = "Object operator not indented correctly; expected $requiredIndent spaces but found $foundIndent";
+                        $phpcsFile->addError($error, $next);
+                    }
                 }
 
-                if ($foundIndent !== $requiredIndent) {
-                    $error = "Object operator not indented correctly; expected $requiredIndent spaces but found $foundIndent";
+                // It cant be the last thing on the line either.
+                $content = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+                if ($tokens[$content]['line'] !== $tokens[$next]['line']) {
+                    $error = 'Object operator must be at the start of the line, not the end';
                     $phpcsFile->addError($error, $next);
                 }
-            }
-
-            // It cant be the last thing on the line either.
-            $content = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
-            if ($tokens[$content]['line'] !== $tokens[$next]['line']) {
-                $error = 'Object operator must be at the start of the line, not the end';
-                $phpcsFile->addError($error, $next);
-            }
+            }//end if
 
             $next = $phpcsFile->findNext(
                 T_OBJECT_OPERATOR,
