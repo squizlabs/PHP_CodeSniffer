@@ -60,7 +60,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($token['code'] === T_COMMENT
-                && substr($token['content'], 0, 2) !== '/*'
+                && (substr($token['content'], 0, 2) === '//'
+                || $token['content']{0} === '#')
             ) {
                 $content = ltrim($token['content'], '#/');
                 $commentTokens

@@ -18,3 +18,13 @@
 
 }
 
+.AssetLineageWidgetType-item {
+    color: #CCC;
+}
+
+/*.AssetLineageWidgetType-item2 .selected,
+.AssetLineageWidgetType-item .selected {
+}*/
+
+.AssetLineageWidgetType-item.selected {
+}

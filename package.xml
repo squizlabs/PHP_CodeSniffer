@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The PHP version check can now be overridden in classes that extend PEAR FileCommentSniff
     -- Thanks to Helgi Þormar Þorbjörnsson for the suggestion
   - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
+  - Fixed the incorrect tokenizing of multi-line block comments in CSS files
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
   - Fixed bug #15519 : Uncaught PHP_CodeSniffer_Exception
