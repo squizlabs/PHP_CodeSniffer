@@ -2242,6 +2242,51 @@ class PHP_CodeSniffer_File
     }//end hasCondition()
 
 
+    /**
+     * Returns the name of the extended class in the current scope
+     *
+     * Returns FALSE on error or if there is no extended class name.
+     *
+     * @param int $stackPtr The stack position to search around
+     *
+     * @return string
+     */
+    public function findExtendedClassName($stackPtr)
+    {
+        // Check for the existence of the token.
+        if (isset($this->_tokens[$stackPtr]) === false) {
+            return false;
+        }
+
+        if ($this->_tokens[$stackPtr]['code'] === T_CLASS) {
+            $classIndex = $stackPtr;
+        } else {
+            $classIndex = $this->findPrevious(array(T_CLASS), $stackPtr);
+            if ($classIndex === false) {
+                return false;
+            }
+        }
+
+        if (isset($this->_tokens[$classIndex]['scope_closer']) === false) {
+            return false;
+        }
+
+        $classCloserIndex = $this->_tokens[$classIndex]['scope_closer'];
+        $extendsIndex     = $this->findNext(array(T_EXTENDS), $classIndex, $classCloserIndex);
+        if (false === $extendsIndex) {
+            return false;
+        }
+
+        $stringIndex = $this->findNext(array(T_STRING), $extendsIndex, $classCloserIndex);
+        if (false === $stringIndex) {
+            return false;
+        }
+
+        return $this->_tokens[$stringIndex]['content'];
+
+    }//end findExtendedClassName()
+
+
 }//end class
 
 ?>

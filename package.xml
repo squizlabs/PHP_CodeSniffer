@@ -38,7 +38,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Jack Bates for the contribution
   - The PHP version check can now be overridden in classes that extend PEAR FileCommentSniff
     -- Thanks to Helgi Þormar Þorbjörnsson for the suggestion
+  - Added Generic ConstructorNameSniff to check for PHP4 constructor name usage
+    -- Thanks to Leif Wickland for the contribution
   - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
+  - Squiz standard now uses Generic ConstructorNameSniff
   - Fixed the incorrect tokenizing of multi-line block comments in CSS files
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
@@ -245,6 +248,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ConstructorNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -393,6 +399,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ConstructorNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ConstructorNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UpperCaseConstantNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
