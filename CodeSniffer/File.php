@@ -2243,11 +2243,11 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the name of the extended class in the current scope
+     * Returns the name of the class that the specified class extends.
      *
      * Returns FALSE on error or if there is no extended class name.
      *
-     * @param int $stackPtr The stack position to search around
+     * @param int $stackPtr The stack position of the class.
      *
      * @return string
      */
@@ -2258,26 +2258,21 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        if ($this->_tokens[$stackPtr]['code'] === T_CLASS) {
-            $classIndex = $stackPtr;
-        } else {
-            $classIndex = $this->findPrevious(array(T_CLASS), $stackPtr);
-            if ($classIndex === false) {
-                return false;
-            }
-        }
-
-        if (isset($this->_tokens[$classIndex]['scope_closer']) === false) {
+        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS) {
             return false;
         }
 
-        $classCloserIndex = $this->_tokens[$classIndex]['scope_closer'];
-        $extendsIndex     = $this->findNext(array(T_EXTENDS), $classIndex, $classCloserIndex);
+        if (isset($this->_tokens[$stackPtr]['scope_closer']) === false) {
+            return false;
+        }
+
+        $classCloserIndex = $this->_tokens[$stackPtr]['scope_closer'];
+        $extendsIndex     = $this->findNext(T_EXTENDS, $stackPtr, $classCloserIndex);
         if (false === $extendsIndex) {
             return false;
         }
 
-        $stringIndex = $this->findNext(array(T_STRING), $extendsIndex, $classCloserIndex);
+        $stringIndex = $this->findNext(T_STRING, $extendsIndex, $classCloserIndex);
         if (false === $stringIndex) {
             return false;
         }
