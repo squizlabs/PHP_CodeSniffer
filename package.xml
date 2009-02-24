@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Leif Wickland for the contribution
   - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
   - Squiz standard now uses Generic ConstructorNameSniff
+  - Added MySource GetRequestDataSniff to ensure REQUEST, GET and POST are not accessed directly
   - Fixed the incorrect tokenizing of multi-line block comments in CSS files
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
@@ -488,6 +489,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="GetRequestDataSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EvalObjectFactorySniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -541,6 +545,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
