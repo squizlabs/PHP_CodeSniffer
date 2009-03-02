@@ -90,11 +90,20 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
         // If we get to here, the super global was used incorrectly.
         // First find out how it is being used.
         $globalName   = strtolower(substr($varName, 2));
-        $openBracket  = $phpcsFile->findNext(T_OPEN_SQUARE_BRACKET, $stackPtr);
-        $closeBracket = $tokens[$openBracket]['bracket_closer'];
-        $usedVar      = $phpcsFile->getTokensAsString(($openBracket + 1), ($closeBracket - $openBracket - 1));
+        $usedVar      = '';
 
-        $error = "The $varName super global must not be accessed directly; use Security::getRequestData($usedVar, '$globalName') instead";
+        $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$openBracket]['code'] === T_OPEN_SQUARE_BRACKET) {
+            $closeBracket = $tokens[$openBracket]['bracket_closer'];
+            $usedVar      = $phpcsFile->getTokensAsString(($openBracket + 1), ($closeBracket - $openBracket - 1));
+        }
+
+        $error = "The $varName super global must not be accessed directly; use Security::getRequestData(";
+        if ($usedVar !== '') {
+            $error .= "$usedVar, '$globalName'";
+        }
+
+        $error .= ') instead';
         $phpcsFile->addError($error, $stackPtr);
 
     }//end process()

@@ -23,4 +23,7 @@ class Insecurity
     }
 }
 
+$sample = Util::getArrayIndex($_REQUEST, 'sample', '');
+$syntax = Util::getArrayIndex($_REQUEST, 'syntax', '');
+
 ?>
