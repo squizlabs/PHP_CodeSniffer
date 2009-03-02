@@ -81,3 +81,5 @@ var options = {
 };
 
 stepWidth = Math.round(this.width / 5);
+
+date.setMonth(d[2] - 1);

@@ -113,4 +113,6 @@ $three = ceil(($one / $two) / $four);
 $three = ceil($one / ($two / $four));
 
 $four = -0.25;
+
+$three = ceil($one[1] / $two);
 ?>

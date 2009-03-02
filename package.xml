@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
   - Squiz standard now uses Generic ConstructorNameSniff
   - Added MySource GetRequestDataSniff to ensure REQUEST, GET and POST are not accessed directly
+  - Squiz OperatorBracketSniff now allows square brackets in simple unbracketed operations
   - Fixed the incorrect tokenizing of multi-line block comments in CSS files
   - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
   - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2

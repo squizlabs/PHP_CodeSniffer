@@ -134,6 +134,8 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                                 T_WHITESPACE,
                                 T_THIS,
                                 T_OBJECT_OPERATOR,
+                                T_OPEN_SQUARE_BRACKET,
+                                T_CLOSE_SQUARE_BRACKET,
                                );
 
                     for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
