@@ -20,8 +20,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>no</active>
  </lead>
- <date>2008-12-18</date>
- <time>15:57:00</time>
+ <date>2009-03-09</date>
+ <time>14:23:00</time>
  <version>
   <release>1.2.0RC1</release>
   <api>1.2.0RC1</api>
@@ -1690,6 +1690,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.2.0RC1</release>
+    <api>1.2.0RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-03-09</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Reports that are output to a file now include a trailing newline at the end of the file
+    - Fixed sniff names not shown in -vvv token processing output
+    - Added Generic SubversionPropertiesSniff to check that specific svn props are set for files
+      -- Thanks to Jack Bates for the contribution
+    - The PHP version check can now be overridden in classes that extend PEAR FileCommentSniff
+      -- Thanks to Helgi Þormar Þorbjörnsson for the suggestion
+    - Added Generic ConstructorNameSniff to check for PHP4 constructor name usage
+      -- Thanks to Leif Wickland for the contribution
+    - Squiz standard now supports multi-line function and condition sniffs from PEAR standard
+    - Squiz standard now uses Generic ConstructorNameSniff
+    - Added MySource GetRequestDataSniff to ensure REQUEST, GET and POST are not accessed directly
+    - Squiz OperatorBracketSniff now allows square brackets in simple unbracketed operations
+    - Fixed the incorrect tokenizing of multi-line block comments in CSS files
+    - Fixed bug #15383 : Uncaught PHP_CodeSniffer_Exception
+    - Fixed bug #15408 : An unexpected exception has been caught: Undefined offset: 2
+    - Fixed bug #15519 : Uncaught PHP_CodeSniffer_Exception
+    - Fixed bug #15624 : Pre-commit hook fails with PHP errors
+    - Fixed bug #15661 : Uncaught PHP_CodeSniffer_Exception
+    - Fixed bug #15722 : "declare(encoding = 'utf-8');" leads to "Missing file doc comment"
+    - Fixed bug #15910 : Object operator indention not calculated correctly
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.2.0a1</release>
