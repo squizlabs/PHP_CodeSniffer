@@ -87,6 +87,16 @@ class PHP_CodeSniffer
     protected $files = array();
 
     /**
+     * The path that that PHP_CodeSniffer is being run from.
+     *
+     * Stored so that the path can be restored after it is changed
+     * in the constructor.
+     *
+     * @var string
+     */
+    private $_cwd = null;
+
+    /**
      * The listeners array.
      *
      * @var array(PHP_CodeSniffer_Sniff)
@@ -157,9 +167,25 @@ class PHP_CodeSniffer
 
         // Change into a directory that we know about to stop any
         // relative path conflicts.
+        $this->_cwd = getcwd();
         chdir(dirname(__FILE__).'/CodeSniffer/');
 
     }//end __construct()
+
+
+    /**
+     * Destructs a PHP_CodeSniffer object.
+     *
+     * Restores the current working directory to what it
+     * was before we started our run.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        chdir($this->_cwd);
+
+    }//end __destruct()
 
 
     /**
