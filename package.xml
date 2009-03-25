@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #15980 : PHP_CodeSniffer change php current directory
     -- Thanks to Dolly Aswin Harahap for the patch
+  - Fixed bug #16054 : phpcs-svn-pre-commit not showing any errors
  </notes>
  <contents>
   <dir name="/">
