@@ -65,7 +65,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }
         }
 
-        if ($tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
             $statementIndent = strlen($tokens[$i]['content']);
         }
 

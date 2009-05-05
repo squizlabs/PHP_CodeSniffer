@@ -1,4 +1,7 @@
-<?php
+<?php if (isset($param)) { ?>
+   <h3>some text</h3>
+<?php }
+
 if (($condition1
     || $condition2)
     && $condition3

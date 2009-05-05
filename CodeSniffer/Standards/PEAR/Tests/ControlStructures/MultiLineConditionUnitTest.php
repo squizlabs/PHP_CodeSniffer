@@ -44,21 +44,21 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                19 => 1,
-                32 => 1,
-                37 => 1,
-                38 => 1,
-                39 => 1,
+                22 => 1,
+                35 => 1,
                 40 => 1,
-                46 => 1,
-                51 => 1,
-                55 => 1,
-                56 => 1,
+                41 => 1,
+                42 => 1,
+                43 => 1,
+                49 => 1,
+                54 => 1,
                 58 => 1,
-                85 => 1,
-                86 => 1,
-                87 => 1,
-                93 => 2,
+                59 => 1,
+                61 => 1,
+                88 => 1,
+                89 => 1,
+                90 => 1,
+                96 => 2,
                );
 
     }//end getErrorList()
