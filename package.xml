@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16001 : Notice triggered
   - Fixed bug #16054 : phpcs-svn-pre-commit not showing any errors
   - Fixed bug #16170 : Undefined Offset -1 in MultiLineConditionSniff.php on line 68
+  - Fixed bug #16175 : Bug in Squiz-IncrementDecrementUsageSniff
  </notes>
  <contents>
   <dir name="/">

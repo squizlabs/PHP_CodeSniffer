@@ -192,7 +192,15 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         $nextNumber = $previousNumber;
         if ($tokens[$nextNumber]['content'] === '1') {
             if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-                $operator = $tokens[$phpcsFile->findNext(array(T_PLUS, T_MINUS), ($stackPtr + 1), $statementEnd)]['content'];
+                $opToken = $phpcsFile->findNext(array(T_PLUS, T_MINUS), ($nextVar + 1), $statementEnd);
+                if ($opToken === false) {
+                    // Operator was before the varaible, like:
+                    // $var = 1 + $var;
+                    // So we ignore it.
+                    return;
+                }
+
+                $operator = $tokens[$opToken]['content'];
             } else {
                 $operator = substr($tokens[$stackPtr]['content'], 0, 1);
             }
@@ -217,7 +225,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
             $error .= " operators should be used where possible; found \"$found\" but expected \"$expected\"";
             $phpcsFile->addError($error, $stackPtr);
-        }
+        }//end if
 
     }//end processAssignment()
 
