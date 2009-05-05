@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Test suite can now be run using the full path to AllTests.php (feature request #16179)
   - Fixed bug #15980 : PHP_CodeSniffer change php current directory
     -- Thanks to Dolly Aswin Harahap for the patch
   - Fixed bug #16001 : Notice triggered

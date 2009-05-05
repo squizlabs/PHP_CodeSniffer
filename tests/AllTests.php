@@ -88,4 +88,7 @@ class PHP_CodeSniffer_AllTests
 
 }//end class
 
+if (PHPUnit_MAIN_METHOD == 'PHP_CodeSniffer_AllTests::main') {
+    PHP_CodeSniffer_AllTests::main();
+}
 ?>
