@@ -501,6 +501,11 @@ class PHP_CodeSniffer_File
                 if ($secondLastChar === "\r") {
                     $eolChar = "\r\n";
                 }
+            } else if ($eolChar !== "\r") {
+                // Must not be an EOL char at the end of the line.
+                // Probably a one-line file, so assume \n as it really
+                // doesn't matter considering there are no newlines.
+                $eolChar = "\n";
             }
         } else {
             if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {

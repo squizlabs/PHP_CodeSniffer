@@ -86,7 +86,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
         }
 
         $requiredIndent = 0;
-        if ($tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
             $requiredIndent = strlen($tokens[$i]['content']);
         }
 
