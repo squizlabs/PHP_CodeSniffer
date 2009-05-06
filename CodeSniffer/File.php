@@ -1105,6 +1105,11 @@ class PHP_CodeSniffer_File
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
 
+        // We will need this to restore the value if we end up
+        // returning a token ID that causes our calling function to go back
+        // over already ignored braces.
+        $originalIgnore = $ignore;
+
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
         if ($currType === $tokenizer->scopeOpeners[$currType]['start']) {
@@ -1271,6 +1276,9 @@ class PHP_CodeSniffer_File
                     }
 
                     if ($tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
+                        // As we are going back to where we started originally, restore
+                        // the ignore value back to its original value.
+                        $ignore = $originalIgnore;
                         return $opener;
                     } else {
                         return $i;

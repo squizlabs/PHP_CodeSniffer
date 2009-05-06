@@ -57,4 +57,18 @@ class MyClass {
 '{$this->def["POP_{$cc}_B"]}')";
     }
 }
+
+class mpgResponse{
+   var $term_id;
+   var $currentTag;
+   function characterHandler($parser,$data){
+       switch($this->currentTag)
+       {
+           case "term_id": {
+               $this->term_id=$data;
+               break;
+           }
+       }
+   }//end characterHandler
+}//end class mpgResponse
 ?>
