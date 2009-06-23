@@ -85,11 +85,11 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
         $fileName = strtolower($phpcsFile->getFilename());
         $matches  = array();
-        if (preg_match('|/systems/([^/]+)/([^/]+)?actions.inc$|', $fileName, $matches) !== 0) {
+        if (preg_match('|/systems/(.*)/([^/]+)?actions.inc$|', $fileName, $matches) !== 0) {
             // This is an actions file, which means we don't
             // have to include the system in which it exists
             // We know the system from the path.
-            $includedClasses[] = $matches[1];
+            $includedClasses[] = $matches[2];
         }
 
         // Go searching for includeSystem and includeAsset calls within this
@@ -160,12 +160,11 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
 
     /**
-     * Processes a token that is found within the scope that this test is
-     * listening to.
+     * Processes a token within the scope that this test is listening to.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position in the stack where this token
-     *                                        was found.
+     * @param int                  $stackPtr  The position in the stack where
+     *                                        this token was found.
      *
      * @return void
      */

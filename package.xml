@@ -32,14 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Test suite can now be run using the full path to AllTests.php (feature request #16179)
-  - Fixed bug #15980 : PHP_CodeSniffer change php current directory
-    -- Thanks to Dolly Aswin Harahap for the patch
-  - Fixed bug #16001 : Notice triggered
-  - Fixed bug #16054 : phpcs-svn-pre-commit not showing any errors
-  - Fixed bug #16071 : Fatal error: Uncaught PHP_CodeSniffer_Exception
-  - Fixed bug #16170 : Undefined Offset -1 in MultiLineConditionSniff.php on line 68
-  - Fixed bug #16175 : Bug in Squiz-IncrementDecrementUsageSniff
+  - MySource IncludeSystemSniff now recognises widget action classes
  </notes>
  <contents>
   <dir name="/">
