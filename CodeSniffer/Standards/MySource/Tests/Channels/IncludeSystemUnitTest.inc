@@ -69,5 +69,24 @@ class MyWidget extends AbstractContainerWidgetType {}
 class MyOtherWidget extends BookWidgetType {}
 
 $zip = new ZipArchive();
-$res = $zip->open($path, ZipArchive::CREATE); 
+$res = $zip->open($path, ZipArchive::CREATE);
+
+class AssetListingUnitTest extends AbstractMySourceUnitTest
+{
+    function setUp() {
+        parent::setUp();
+        Channels::includeSystem('MySystem2');
+        include_once 'Libs/FileSystem.inc';
+    }
+
+    function two() {
+        $siteid = MySystem2::getCurrentSiteId();
+        $parserFiles = FileSystem::listDirectory();
+    }
+
+    function three() {
+        $siteid = MySystem3::getCurrentSiteId();
+        $parserFiles = FileSystem::listDirectory();
+    }
+}
 ?>

@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - MySource IncludeSystemSniff now recognises widget action classes
+  - MySource IncludeSystemSniff now knows about unit test classes and changes rules accordingly
  </notes>
  <contents>
   <dir name="/">
