@@ -354,6 +354,8 @@ class PHP_CodeSniffer_File
     {
         $this->_parse($contents);
 
+        $foundCode = false;
+
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
@@ -368,6 +370,10 @@ class PHP_CodeSniffer_File
             }
 
             $tokenType = $token['code'];
+            if ($tokenType !== T_INLINE_HTML) {
+                $foundCode = true;
+            }
+
             if (isset($this->_listeners[$tokenType]) === true) {
                 foreach ($this->_listeners[$tokenType] as $listener) {
                     // Make sure this sniff supports the tokenizer
@@ -401,6 +407,17 @@ class PHP_CodeSniffer_File
                 }//end foreach
             }//end if
         }//end foreach
+
+        // If short open tags are off but the file being checked uses
+        // short open tags, the whole content will be inline HTML
+        // and nothing will be checked. So try and handle this case.
+        if ($foundCode === false) {
+            $shortTags = (bool) ini_get('short_open_tag');
+            if ($shortTags === false) {
+                $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
+                $this->addWarning($error, null);
+            }
+        }
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
@@ -533,7 +550,11 @@ class PHP_CodeSniffer_File
     {
         // Work out which sniff generated the error.
         $parts = explode('_', $this->_activeListener);
-        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        if (isset($parts[3]) === true) {
+            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        } else {
+            $sniff = 'unknownSniff';
+        }
 
         if ($stackPtr === null) {
             $lineNum = 1;
