@@ -184,6 +184,13 @@ class PHP_CodeSniffer_File
     private $_warnings = array();
 
     /**
+     * And array of lines being ignored by PHP_CodeSniffer.
+     *
+     * @var array()
+     */
+    private $_ignoredLines = array();
+
+    /**
      * The total number of errors raised.
      *
      * @var int
@@ -354,15 +361,31 @@ class PHP_CodeSniffer_File
     {
         $this->_parse($contents);
 
-        $foundCode = false;
-
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
+        $foundCode = false;
+        $ignoring  = false;
+
         // Foreach of the listeners that have registed to listen for this
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
+            // Check for ignored lines.
+            if ($token['code'] === T_COMMENT) {
+                if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
+                    $ignoring = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
+                    $ignoring = false;
+                    // Ignore this comment too.
+                    $this->_ignoredLines[$token['line']] = true;
+                }
+            }
+
+            if ($ignoring === true) {
+                $this->_ignoredLines[$token['line']] = true;
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
                 $content = str_replace($this->eolChar, '\n', $token['content']);
@@ -407,6 +430,14 @@ class PHP_CodeSniffer_File
                 }//end foreach
             }//end if
         }//end foreach
+
+        // Remove errors and warnings for ignored lines.
+        foreach ($this->_ignoredLines as $line => $ignore) {
+            unset($this->_errors[$line]);
+            unset($this->_warnings[$line]);
+            $this->_errorCount = count($this->_errors);
+            $this->_warningCount = count($this->_warnings);
+        }
 
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML
@@ -565,11 +596,11 @@ class PHP_CodeSniffer_File
         }
 
         if (isset($this->_errors[$lineNum]) === false) {
-            $this->errors[$lineNum] = array();
+            $this->_errors[$lineNum] = array();
         }
 
         if (isset($this->_errors[$lineNum][$column]) === false) {
-            $this->errors[$lineNum][$column] = array();
+            $this->_errors[$lineNum][$column] = array();
         }
 
         $this->_errors[$lineNum][$column][] = array(
@@ -642,6 +673,18 @@ class PHP_CodeSniffer_File
         return $this->_warningCount;
 
     }//end getWarningCount()
+
+
+    /**
+     * Returns the list of ignored lines.
+     *
+     * @return array
+     */
+    public function getIgnoredLines()
+    {
+        return $this->_ignoredLines;
+
+    }//end getIgnoredLines()
 
 
     /**
