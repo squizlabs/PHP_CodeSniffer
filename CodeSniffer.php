@@ -328,30 +328,7 @@ class PHP_CodeSniffer
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
-        // Construct a list of listeners indexed by token being listened for.
-        foreach ($this->listeners as $listenerClass) {
-            $listener = new $listenerClass();
-
-            if (($listener instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $listener->register();
-                if (is_array($tokens) === false) {
-                    $msg = "Sniff $listenerClass register() method must return an array";
-                    throw new PHP_CodeSniffer_Exception($msg);
-                }
-
-                foreach ($tokens as $token) {
-                    if (isset($this->_tokenListeners['file'][$token]) === false) {
-                        $this->_tokenListeners['file'][$token] = array();
-                    }
-
-                    if (in_array($listener, $this->_tokenListeners['file'][$token], true) === false) {
-                        $this->_tokenListeners['file'][$token][] = $listener;
-                    }
-                }
-            } else if (($listener instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
-                $this->_tokenListeners['multifile'][] = $listener;
-            }
-        }//end foreach
+        $this->populateTokenListeners();
 
         foreach ($files as $file) {
             $this->file = $file;
@@ -470,6 +447,41 @@ class PHP_CodeSniffer
         $this->listeners = $this->getTokenListeners($standard, $sniffs);
 
     }//end setTokenListeners()
+
+
+    /**
+     * Populates the array of PHP_CodeSniffer_Sniff's for this file.
+     *
+     * @return void
+     */
+    public function populateTokenListeners()
+    {
+        // Construct a list of listeners indexed by token being listened for.
+        foreach ($this->listeners as $listenerClass) {
+            $listener = new $listenerClass();
+
+            if (($listener instanceof PHP_CodeSniffer_Sniff) === true) {
+                $tokens = $listener->register();
+                if (is_array($tokens) === false) {
+                    $msg = "Sniff $listenerClass register() method must return an array";
+                    throw new PHP_CodeSniffer_Exception($msg);
+                }
+
+                foreach ($tokens as $token) {
+                    if (isset($this->_tokenListeners['file'][$token]) === false) {
+                        $this->_tokenListeners['file'][$token] = array();
+                    }
+
+                    if (in_array($listener, $this->_tokenListeners['file'][$token], true) === false) {
+                        $this->_tokenListeners['file'][$token][] = $listener;
+                    }
+                }
+            } else if (($listener instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
+                $this->_tokenListeners['multifile'][] = $listener;
+            }
+        }//end foreach
+
+    }//end populateTokenListeners()
 
 
     /**
