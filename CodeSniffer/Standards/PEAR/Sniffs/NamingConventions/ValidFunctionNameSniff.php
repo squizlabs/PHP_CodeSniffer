@@ -41,30 +41,28 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @var array
      */
-    private $_magicMethods = array(
-                              'construct',
-                              'destruct',
-                              'call',
-                              'callStatic',
-                              'get',
-                              'set',
-                              'isset',
-                              'unset',
-                              'sleep',
-                              'wakeup',
-                              'toString',
-                              'set_state',
-                              'clone',
-                             );
+    protected $magicMethods = array(
+                               'construct',
+                               'destruct',
+                               'call',
+                               'callStatic',
+                               'get',
+                               'set',
+                               'isset',
+                               'unset',
+                               'sleep',
+                               'wakeup',
+                               'toString',
+                               'set_state',
+                               'clone',
+                              );
 
     /**
      * A list of all PHP magic functions.
      *
      * @var array
      */
-    private $_magicFunctions = array(
-                                'autoload',
-                               );
+    protected $magicFunctions = array('autoload');
 
 
     /**
@@ -95,7 +93,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Is this a magic method. IE. is prefixed with "__".
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = substr($methodName, 2);
-            if (in_array($magicPart, $this->_magicMethods) === false) {
+            if (in_array($magicPart, $this->magicMethods) === false) {
                  $error = "Method name \"$className::$methodName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
                  $phpcsFile->addError($error, $stackPtr);
             }
@@ -172,7 +170,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Is this a magic function. IE. is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
-            if (in_array($magicPart, $this->_magicFunctions) === false) {
+            if (in_array($magicPart, $this->magicFunctions) === false) {
                  $error = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
                  $phpcsFile->addError($error, $stackPtr);
             }

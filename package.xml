@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now use @codingStandardsIgnoreStart and @...End comments to suppress error messages (feature request #14002)
   - A warning is now included for files without any code when short_open_tag is set to Off (feature request #12952)
   - You can now use relative paths to your custom standards with the --standard cmd line arg (feature request #14967)
+  - You can now override magic methods and functions in PEAR ValidFunctionNameSniff (feature request #15830)
   - MySource IncludeSystemSniff now recognises widget action classes
   - MySource IncludeSystemSniff now knows about unit test classes and changes rules accordingly
  </notes>
