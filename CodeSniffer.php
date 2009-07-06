@@ -316,7 +316,7 @@ class PHP_CodeSniffer
                                  );
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo "Registering sniffs in $standard standard... ";
+            echo "Registering sniffs in ".basename($standard)." standard... ";
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo PHP_EOL;
             }
@@ -376,8 +376,12 @@ class PHP_CodeSniffer
     public function getTokenListeners($standard, array $sniffs=array())
     {
         if (is_dir($standard) === true) {
-            // This is a custom standard.
+            // This is an absolute path to a custom standard.
             $this->standardDir = $standard;
+            $standard          = basename($standard);
+        } else if (is_dir(realpath($this->_cwd.'/'.$standard)) === true) {
+            // This is a relative path to a custom standard.
+            $this->standardDir = realpath($this->_cwd.'/'.$standard);
             $standard          = basename($standard);
         } else {
             $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
