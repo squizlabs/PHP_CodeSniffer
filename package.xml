@@ -20,11 +20,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>mmcintyre@squiz.net</email>
   <active>no</active>
  </lead>
- <date>2009-05-25</date>
- <time>15:20:00</time>
+ <date>2009-07-07</date>
+ <time>11:50:00</time>
  <version>
-  <release>1.2.0RC2</release>
-  <api>1.2.0RC2</api>
+  <release>1.2.0RC3</release>
+  <api>1.2.0RC3</api>
  </version>
  <stability>
   <release>beta</release>
@@ -1676,6 +1676,26 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.2.0RC3</release>
+    <api>1.2.0RC3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-07-07</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - You can now use @codingStandardsIgnoreStart and @...End comments to suppress messages (feature request #14002)
+    - A warning is now included for files without any code when short_open_tag is set to Off (feature request #12952)
+    - You can now use relative paths to your custom standards with the --standard cmd line arg (feature request #14967)
+    - You can now override magic methods and functions in PEAR ValidFunctionNameSniff (feature request #15830)
+    - MySource IncludeSystemSniff now recognises widget action classes
+    - MySource IncludeSystemSniff now knows about unit test classes and changes rules accordingly
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.2.0RC2</release>
