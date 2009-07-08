@@ -379,12 +379,17 @@ class PHP_CodeSniffer
             // This is an absolute path to a custom standard.
             $this->standardDir = $standard;
             $standard          = basename($standard);
-        } else if (is_dir(realpath($this->_cwd.'/'.$standard)) === true) {
-            // This is a relative path to a custom standard.
-            $this->standardDir = realpath($this->_cwd.'/'.$standard);
-            $standard          = basename($standard);
         } else {
             $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            if (is_dir($this->standardDir) === false) {
+                // This isn't looking good. Let's see if this
+                // is a relative path to a custom standard.
+                if (is_dir(realpath($this->_cwd.'/'.$standard)) === true) {
+                    // This is a relative path to a custom standard.
+                    $this->standardDir = realpath($this->_cwd.'/'.$standard);
+                    $standard          = basename($standard);
+                }
+            }
         }
 
         $files = self::getSniffFiles($this->standardDir, $standard);
