@@ -47,9 +47,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      */
     public function register()
     {
-        return array(
-                T_OPEN_TAG,
-               );
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -98,7 +96,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                 $error = 'Subversion property "'.$key.'" = "'.$properties[$key].'" does not match "'.$this->properties[$key].'"';
                 $phpcsFile->addError($error, $stackPtr);
             }
-        }
+        }//end foreach
 
     }//end process()
 
@@ -128,12 +126,11 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                 }
 
                 while (!feof($handle)) {
-
                     // Read a key length line. Might be END, though.
-                    $buffer = fgets($handle);
+                    $buffer = trim(fgets($handle));
 
                     // Check for the end of the hash.
-                    if ("END\n" === $buffer) {
+                    if ($buffer === 'END') {
                         break;
                     }
 
@@ -144,10 +141,17 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                     fgetc($handle);
 
                     // Read a value length line.
-                    $buffer = fgets($handle);
+                    $buffer = trim(fgets($handle));
 
                     // Now read that much into a buffer.
-                    $value = fread($handle, substr($buffer, 2));
+                    $length = substr($buffer, 2);
+                    if ($length === '0') {
+                        // Length of value is ZERO characters, so
+                        // value is actually empty.
+                        $value = '';
+                    } else {
+                        $value = fread($handle, $length);
+                    }
 
                     // Suck up extra newline after value data.
                     fgetc($handle);
