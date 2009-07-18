@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Installed standards are now favoured over custom standards when using the cmd line arg with relative paths
   - Fixed bug #16424 : SubversionPropertiesSniff print PHP Warning
+  - Fixed bug #16450 : Constant PHP_CODESNIFFER_VERBOSITY already defined (unit tests)
  </notes>
  <contents>
   <dir name="/">
@@ -55,6 +56,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <dir name="tests">
     <dir name="Core">
      <file baseinstalldir="" name="AllTests.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="" name="ErrorSupressionTest.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test">
@@ -1649,6 +1653,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Core/ErrorSupressionTest.php" name="tests/Core/ErrorSupressionTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1660,6 +1665,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Core/ErrorSupressionTest.php" name="tests/Core/ErrorSupressionTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="scripts/phpcs.bat" />

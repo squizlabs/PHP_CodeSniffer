@@ -162,8 +162,13 @@ class PHP_CodeSniffer
      */
     public function __construct($verbosity=0, $tabWidth=0)
     {
-        define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
-        define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        }
+
+        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
+            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
 
         // Change into a directory that we know about to stop any
         // relative path conflicts.

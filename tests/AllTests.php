@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
+if (defined('PHPUnit_MAIN_METHOD') === false) {
     define('PHPUnit_MAIN_METHOD', 'PHP_CodeSniffer_AllTests::main');
 }
 
