@@ -62,4 +62,10 @@ fputs(STDOUT,
     $ {$app} --all",
 $something
     );
+
+// This is not a function call.
+function &testFunction($arg1,
+    $arg2,
+) {
+}
 ?>

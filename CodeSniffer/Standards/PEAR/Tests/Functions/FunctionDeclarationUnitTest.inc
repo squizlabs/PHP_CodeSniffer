@@ -47,4 +47,9 @@ function getInstalledStandards(
 {
 }
 
+function &testFunction($arg1,
+    $arg2,
+) {
+}
+
 ?>

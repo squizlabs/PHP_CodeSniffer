@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Installed standards are now favoured over custom standards when using the cmd line arg with relative paths
   - Fixed bug #16424 : SubversionPropertiesSniff print PHP Warning
   - Fixed bug #16450 : Constant PHP_CODESNIFFER_VERBOSITY already defined (unit tests)
+  - Fixed bug #16453 : function declaration long line splitted error
  </notes>
  <contents>
   <dir name="/">

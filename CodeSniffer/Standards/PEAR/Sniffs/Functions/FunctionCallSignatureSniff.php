@@ -69,7 +69,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         // Find the previous non-empty token.
-        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $search   = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $search[] = T_BITWISE_AND;
+        $previous = $phpcsFile->findPrevious($search, ($stackPtr - 1), null, true);
         if ($tokens[$previous]['code'] === T_FUNCTION) {
             // It's a function definition, not a function call.
             return;
