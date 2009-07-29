@@ -521,18 +521,20 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         foreach ($di as $file) {
+            $fileName = $file->getFilename();
+
             // Skip hidden files.
-            if (substr($file->getFilename(), 0, 1) === '.') {
+            if (substr($fileName, 0, 1) === '.') {
                 continue;
             }
 
             // We are only interested in PHP and sniff files.
-            $fileParts = explode('.', $file);
+            $fileParts = explode('.', $fileName);
             if (array_pop($fileParts) !== 'php') {
                 continue;
             }
 
-            $basename = basename($file, '.php');
+            $basename = basename($fileName, '.php');
             if (substr($basename, -5) !== 'Sniff') {
                 continue;
             }
