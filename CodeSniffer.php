@@ -675,7 +675,7 @@ class PHP_CodeSniffer
 
                 // Check that the file's extension is one we are checking.
                 // Note that because we are doing a whole directory, we
-                // are strick about checking the extension and we don't
+                // are strict about checking the extension and we don't
                 // let files with no extension through.
                 $fileParts = explode('.', $file);
                 $extension = array_pop($fileParts);
