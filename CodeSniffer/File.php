@@ -557,11 +557,11 @@ class PHP_CodeSniffer_File
             }
         } else {
             if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
-                $error = 'Could not auto-detect line endings from content';
-                throw new PHP_CodeSniffer_Exception($error);
+                // Assuming there are no newlines.
+                $eolChar = "\n";
+            } else {
+                $eolChar = $matches[0];
             }
-
-            $eolChar = $matches[0];
         }//end if
 
         return $eolChar;
