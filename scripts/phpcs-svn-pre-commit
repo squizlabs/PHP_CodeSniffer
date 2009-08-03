@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!@php_bin@
 <?php
 /**
  * A commit hook for SVN.
