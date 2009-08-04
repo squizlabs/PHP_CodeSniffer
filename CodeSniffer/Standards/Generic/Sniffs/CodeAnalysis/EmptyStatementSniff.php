@@ -51,21 +51,20 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      * The key of this hash identifies the required token while the boolean
      * value says mark an error or mark a warning.
      *
-     * @type array<boolean>
-     * @var array(integer=>boolean) $_tokens
+     * @var array
      */
-    private $_tokens = array(
-                        T_CATCH   => true,
-                        T_DO      => false,
-                        T_ELSE    => false,
-                        T_ELSEIF  => false,
-                        T_FOR     => false,
-                        T_FOREACH => false,
-                        T_IF      => false,
-                        T_SWITCH  => false,
-                        T_TRY     => false,
-                        T_WHILE   => false,
-                       );
+    protected $checkedTokens = array(
+                                T_CATCH   => true,
+                                T_DO      => false,
+                                T_ELSE    => false,
+                                T_ELSEIF  => false,
+                                T_FOR     => false,
+                                T_FOREACH => false,
+                                T_IF      => false,
+                                T_SWITCH  => false,
+                                T_TRY     => false,
+                                T_WHILE   => false,
+                               );
 
 
     /**
@@ -75,7 +74,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      */
     public function register()
     {
-        return array_keys($this->_tokens);
+        return array_keys($this->checkedTokens);
 
     }//end register()
 
@@ -114,7 +113,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
             // Get token identifier.
             $name  = $phpcsFile->getTokensAsString($stackPtr, 1);
             $error = sprintf('Empty %s statement detected', strtoupper($name));
-            if ($this->_tokens[$token['code']] === true) {
+            if ($this->checkedTokens[$token['code']] === true) {
                 $phpcsFile->addError($error, $stackPtr);
             } else {
                 $phpcsFile->addWarning($error, $stackPtr);

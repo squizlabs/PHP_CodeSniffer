@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Installed standards are now favoured over custom standards when using the cmd line arg with relative paths
   - Unit tests now use a lot less memory while running
+  - Squiz standard now uses Generic EmptyStatementSniff but throws errors instead of warnings
+  - Squiz standard now uses Generic UnusedFunctionParameterSniff
   - Fixed bug #16424 : SubversionPropertiesSniff print PHP Warning
   - Fixed bug #16450 : Constant PHP_CODESNIFFER_VERBOSITY already defined (unit tests)
   - Fixed bug #16453 : function declaration long line splitted error
@@ -791,6 +793,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP" name="EmptyStatementSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="BlockCommentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1130,6 +1137,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ValidClassNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ValidClassNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP" name="EmptyStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EmptyStatementUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
