@@ -112,6 +112,17 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $newStackPtr++;
 
                 foreach ($commentTokens as $tokenData) {
+                    if ($tokenData['code'] === T_COMMENT
+                        && (substr($tokenData['content'], 0, 2) === '//'
+                        || $tokenData['content']{0} === '#')
+                    ) {
+                        // This is a comment in a comment, so it needs
+                        // to go through the whole process again.
+                        $tokens[$stackPtr]['content'] = $tokenData['content'];
+                        $stackPtr--;
+                        break;
+                    }
+
                     $finalTokens[$newStackPtr] = $tokenData;
                     $newStackPtr++;
                 }

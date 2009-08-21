@@ -16,3 +16,8 @@ background: #8FB7DB url(diag_lines_bg.gif) top left;
     /*left :50%;*/
     width:450px;
 }
+
+#cacheConfig-dayLabel, #cacheConfig-hourLabel, #cacheConfig-minuteLabel {
+    float: left;
+    padding-right: 8px;
+}
