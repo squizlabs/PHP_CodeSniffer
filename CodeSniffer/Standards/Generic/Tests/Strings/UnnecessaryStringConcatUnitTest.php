@@ -46,9 +46,10 @@ class Generic_Tests_Strings_UnnecessaryStringConcatUnitTest extends AbstractSnif
         switch ($testFile) {
         case 'UnnecessaryStringConcatUnitTest.inc':
             return array(
-                    2 => 1,
-                    6 => 1,
-                    9 => 1,
+                    2  => 1,
+                    6  => 1,
+                    9  => 1,
+                    12 => 1,
                    );
             break;
         case 'UnnecessaryStringConcatUnitTest.js':

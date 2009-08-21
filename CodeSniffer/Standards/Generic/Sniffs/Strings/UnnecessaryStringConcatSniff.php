@@ -96,11 +96,13 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
         if (in_array($tokens[$prev]['code'], $stringTokens) === true
             && in_array($tokens[$next]['code'], $stringTokens) === true
         ) {
-            $error = 'String concat is not required here; use a single string instead';
-            if ($this->error === true) {
-                $phpcsFile->addError($error, $stackPtr);
-            } else {
-                $phpcsFile->addWarning($error, $stackPtr);
+            if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
+                $error = 'String concat is not required here; use a single string instead';
+                if ($this->error === true) {
+                    $phpcsFile->addError($error, $stackPtr);
+                } else {
+                    $phpcsFile->addWarning($error, $stackPtr);
+                }
             }
         }
 

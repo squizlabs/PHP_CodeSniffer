@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
  </notes>
  <contents>
