@@ -63,8 +63,18 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
             return;
         }
 
+        $scopeStart  = $tokens[$stackPtr]['scope_opener'];
+        $scopeEnd    = $tokens[$stackPtr]['scope_closer'];
+
+        // If the scope closer doesn't think it belongs to this scope opener
+        // then the opener is sharing its closer ith other tokens. We only
+        // want to process the closer once, so skip this one.
+        if ($tokens[$scopeEnd]['scope_condition'] !== $stackPtr) {
+            return;
+        }
+
         // We need to actually find the first piece of content on this line,
-        // as if this is a method with tokens before it (public, static etc)
+        // because if this is a method with tokens before it (public, static etc)
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
         $lineStart = ($stackPtr - 1);
@@ -84,8 +94,6 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         );
 
         $startColumn = $tokens[$lineStart]['column'];
-        $scopeStart  = $tokens[$stackPtr]['scope_opener'];
-        $scopeEnd    = $tokens[$stackPtr]['scope_closer'];
 
         // Check that the closing brace is on it's own line.
         $lastContent = $phpcsFile->findPrevious(

@@ -68,4 +68,26 @@ case 2:
     break;
 }
 
+switch ($httpResponseCode) {
+    case 100:
+        return 'Continue.';
+    case 101:
+        return 'Switching protocols.';
+    case 102:
+        return 'Processing.';
+    default:
+        return 'Unknown';
+}
+
+switch ($httpResponseCode) {
+    case 100:
+        return 'Continue.';
+    case 101:
+        return 'Switching protocols.';
+    case 102:
+        return 'Processing.';
+    default:
+        return 'Unknown';
+    break;
+}
 ?>
