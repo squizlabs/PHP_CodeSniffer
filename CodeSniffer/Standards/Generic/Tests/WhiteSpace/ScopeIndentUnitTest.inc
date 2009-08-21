@@ -203,17 +203,17 @@ if ($a === true || $a === true || $a === true || $a === true ||
 
 if ($true) {
     /* First comment line
-    * 
+    *
     * Comment test here
     * Comment test here
-    * 
+    *
     */
-    
+
     /* First comment line
-    * 
+    *
     * Comment test here
     * Comment test here
-    * 
+    *
     this si something */
 }
 
@@ -323,6 +323,41 @@ switch ($name) {
         }
     break;
     case "2":
+    break;
+}
+
+switch (true) {
+    case true: {
+    }
+    echo 'hi';
+    break;
+    case false:
+    case null:{
+    }
+    echo 'hi';
+    break;
+}
+
+switch (true) {
+    case true: {
+    }
+    echo 'hi';
+    // No break here.
+    case false:
+    case true:
+    case null:{
+    echo 'hi';
+    }
+    echo 'hi';
+    break;
+}
+
+switch (true) {
+    case true: {
+    }
+    if (true) {
+        echo 'hi';
+    }
     break;
 }
 

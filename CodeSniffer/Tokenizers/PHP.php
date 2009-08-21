@@ -413,6 +413,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
     /**
      * Performs additional processing after main tokenizing.
      *
+     * This additional processing checks for CASE statements
+     * that are using curly braces for scope openers and closers.
+     *
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
      *
@@ -420,6 +423,104 @@ class PHP_CodeSniffer_Tokenizers_PHP
      */
     public function processAdditional(&$tokens, $eolChar)
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START ADDITIONAL PHP PROCESSING ***".PHP_EOL;
+        }
+
+        $numTokens = count($tokens);
+        for ($i = ($numTokens - 1); $i >= 0; $i--) {
+            if ($tokens[$i]['code'] !== T_CASE) {
+                // Only interested in CASE statements.
+                continue;
+            }
+
+            $scopeOpener = $tokens[$i]['scope_opener'];
+            $scopeCloser = $tokens[$i]['scope_closer'];
+
+            // If the first char after the opener is a curly brace
+            // and that brace has been ignored, it is actually
+            // opening this case statement and the closer is
+            // probably set incorrectly.
+            for ($x = ($scopeOpener + 1); $x < $numTokens; $x++) {
+                if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    // Non-whitespace content.
+                    break;
+                }
+            }
+
+            if ($tokens[$x]['code'] === T_CASE) {
+                // Special case for multiple CASE statements that
+                // share the same closer. Because we are going
+                // backwards through the file, this next CASE
+                // statement is already fixed, so just use its
+                // closer and don't worry about fixing anything.
+                $tokens[$i]['scope_closer'] = $tokens[$x]['scope_closer'];
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $oldType = $tokens[$scopeCloser]['type'];
+                    $newType = $tokens[$tokens[$i]['scope_closer']]['type'];
+                    $line    = $tokens[$i]['line'];
+                    echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
+                }
+
+                continue;
+            }
+
+            if ($tokens[$x]['code'] !== T_OPEN_CURLY_BRACKET
+                || isset($tokens[$x]['scope_condition']) === true
+            ) {
+                // Not a CASE with a curly brace opener.
+                continue;
+            }
+
+            $newCloser = $tokens[$x]['bracket_closer'];
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $oldType = $tokens[$scopeCloser]['type'];
+                $newType = $tokens[$newCloser]['type'];
+                $line    = $tokens[$i]['line'];
+                echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
+            }
+
+            // The closer for this CASE should be the closing
+            // curly brace and not whatever it already is.
+            $tokens[$i]['scope_closer'] = $newCloser;
+
+            // Now fix up all the tokens that think they are
+            // inside the CASE statement when they are really outside.
+            for ($x = $newCloser; $x < $scopeCloser; $x++) {
+                foreach ($tokens[$x]['conditions'] as $num => $oldCond) {
+                    if ($oldCond === $tokens[$i]['code']) {
+                        $oldConditions = $tokens[$x]['conditions'];
+                        unset($tokens[$x]['conditions'][$num]);
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type     = $tokens[$x]['type'];
+                            $oldConds = '';
+                            foreach ($oldConditions as $condition) {
+                                $oldConds .= token_name($condition).',';
+                            }
+
+                            $oldConds = rtrim($oldConds, ',');
+
+                            $newConds = '';
+                            foreach ($tokens[$x]['conditions'] as $condition) {
+                                $newConds .= token_name($condition).',';
+                            }
+
+                            $newConds = rtrim($newConds, ',');
+
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                            echo "\t\t\t=> conditions changed from $oldConds to $newConds".PHP_EOL;
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }//end for
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END ADDITIONAL PHP PROCESSING ***".PHP_EOL;
+        }
 
     }//end processAdditional()
 

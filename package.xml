@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2009-08-17</date>
  <time>13:15:00</time>
  <version>
-  <release>1.2.0</release>
-  <api>1.2.0</api>
+  <release>1.2.1</release>
+  <api>1.2.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,15 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Installed standards are now favoured over custom standards when using the cmd line arg with relative paths
-  - Unit tests now use a lot less memory while running
-  - Squiz standard now uses Generic EmptyStatementSniff but throws errors instead of warnings
-  - Squiz standard now uses Generic UnusedFunctionParameterSniff
-  - Removed unused ValidArrayIndexNameSniff from the Squiz standard
-  - Fixed bug #16424 : SubversionPropertiesSniff print PHP Warning
-  - Fixed bug #16450 : Constant PHP_CODESNIFFER_VERBOSITY already defined (unit tests)
-  - Fixed bug #16453 : function declaration long line splitted error
-  - Fixed bug #16482 : phpcs-svn-pre-commit ignores extensions parameter
+  - Fixed bug #16530 : ScopeIndentSniff reports false positive
  </notes>
  <contents>
   <dir name="/">
