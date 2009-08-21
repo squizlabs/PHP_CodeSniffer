@@ -47,8 +47,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         $tokens      = parent::tokenizeString('<?php '.$string.' ?>', $eolChar);
         $finalTokens = array();
 
-        $newStackPtr = 0;
-        $numTokens   = count($tokens);
+        $newStackPtr      = 0;
+        $numTokens        = count($tokens);
+        $multiLineComment = false;
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
@@ -59,7 +60,16 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $token['type'] = 'T_STRING';
             }
 
+            if ($token['code'] === T_COMMENT 
+                && substr($token['content'], 0, 2) === '/*'
+            ) {
+                // Multi-line comment. Record it so we can ignore other
+                // comment tags until we get out of this one.
+                $multiLineComment = true;
+            }
+
             if ($token['code'] === T_COMMENT
+                && $multiLineComment === false
                 && (substr($token['content'], 0, 2) === '//'
                 || $token['content']{0} === '#')
             ) {
@@ -129,6 +139,13 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 continue;
             }//end if
+
+            if ($token['code'] === T_COMMENT 
+                && substr($token['content'], -2) === '*/'
+            ) {
+                // Multi-line comment is done.
+                $multiLineComment = false;
+            }
 
             $finalTokens[$newStackPtr] = $token;
             $newStackPtr++;

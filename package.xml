@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
+  - CSS tokenizer now correctly supports multi-line comments
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
   - Fixed bug #16533 : Duplicate errors and warnings
