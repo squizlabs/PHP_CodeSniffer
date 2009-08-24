@@ -419,7 +419,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
      *
-     * @return array
+     * @return void
      */
     public function processAdditional(&$tokens, $eolChar)
     {
