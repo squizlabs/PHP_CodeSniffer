@@ -189,7 +189,15 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 break;
             case T_COLON:
-                // Find the previous content.
+                // Possibly a style definition, but also could be a class name
+                // like .mystyle:hover.
+                if ($finalTokens[($stackPtr - 2)]['code'] === T_STRING_CONCAT
+                    || $finalTokens[($stackPtr - 2)]['code'] === T_HASH
+                ) {
+                    // As it turns out, this is a class name, so leave it as is.
+                    break;
+                }
+
                 for ($x = ($stackPtr - 1); $x >= 0; $x--) {
                     if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         break;
@@ -242,6 +250,23 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         return $finalTokens;
 
     }//end tokenizeString()
+
+
+    /**
+     * Performs additional processing after main tokenizing.
+     *
+     * This method is blank because we don't want the extra
+     * processing that the PHP tokenizer performs.
+     *
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return void
+     */
+    public function processAdditional(&$tokens, $eolChar)
+    {
+
+    }//end processAdditional()
 
 
 }//end class

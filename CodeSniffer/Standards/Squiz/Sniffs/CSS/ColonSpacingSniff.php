@@ -62,6 +62,12 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if ($tokens[$prev]['code'] !== T_STYLE) {
+            // The colon is not part of a style definition.
+            return;
+        }
+
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $error = 'There must be no space before a colon in a style definition';
             $phpcsFile->addError($error, $stackPtr);

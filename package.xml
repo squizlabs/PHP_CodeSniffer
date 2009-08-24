@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Can also be set via a config var: phpcs --config-set report_width 100
   - Reports now print their file lists in alphabetical order
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
+  - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
+  - Squiz ColonSpacingSniff now ensures it is only checking style definitions in CSS files and not class names
   - CSS tokenizer now correctly supports multi-line comments
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive

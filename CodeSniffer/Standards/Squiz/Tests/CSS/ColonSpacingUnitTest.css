@@ -8,3 +8,11 @@ margin-top:
 margin-bottom: 
 0px;
 }
+
+.TableWidgetType .recover:hover {
+    background-color: #FFF;
+}
+
+#clearCache-settings:rootNodes-list_0 {
+    border-top: none;
+}
