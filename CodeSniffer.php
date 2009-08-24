@@ -889,6 +889,8 @@ class PHP_CodeSniffer
             $report['files'][$filename]['messages'] = $errors;
         }//end foreach
 
+        ksort($report['files']);
+
         return $report;
 
     }//end prepareErrorReport()
@@ -1056,12 +1058,14 @@ class PHP_CodeSniffer
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      * @param boolean $showSources  Show error sources in report.
+     * @param int     $width        How wide the report should be.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($showWarnings=true, $showSources=false)
+    public function printErrorReport($showWarnings=true, $showSources=false, $width=80)
     {
         $errorsShown = 0;
+        $width       = max($width, 70);
 
         $report = $this->prepareErrorReport($showWarnings);
         foreach ($report['files'] as $filename => $file) {
@@ -1070,14 +1074,14 @@ class PHP_CodeSniffer
             }
 
             echo PHP_EOL.'FILE: ';
-            if (strlen($filename) <= 71) {
+            if (strlen($filename) <= ($width - 9)) {
                 echo $filename;
             } else {
-                echo '...'.substr($filename, (strlen($filename) - 71));
+                echo '...'.substr($filename, (strlen($filename) - $width - 9));
             }
 
             echo PHP_EOL;
-            echo str_repeat('-', 80).PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
 
             echo 'FOUND '.$file['errors'].' ERROR(S) ';
 
@@ -1086,7 +1090,7 @@ class PHP_CodeSniffer
             }
 
             echo 'AFFECTING '.count($file['messages']).' LINE(S)'.PHP_EOL;
-            echo str_repeat('-', 80).PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
 
             // Work out the max line number for formatting.
             $maxLine = 0;
@@ -1113,7 +1117,7 @@ class PHP_CodeSniffer
             $paddingLine2 .= ' | ';
 
             // The maxium amount of space an error message can use.
-            $maxErrorSpace = (79 - strlen($paddingLine2));
+            $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
@@ -1144,7 +1148,7 @@ class PHP_CodeSniffer
                 }//end foreach
             }//end foreach
 
-            echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
         }//end foreach
 
         return $errorsShown;
@@ -1161,17 +1165,19 @@ class PHP_CodeSniffer
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      * @param boolean $showSources  Show error sources in report.
+     * @param int     $width        How wide the report should be.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReportSummary($showWarnings=true, $showSources=false)
+    public function printErrorReportSummary($showWarnings=true, $showSources=false, $width=80)
     {
         $errorFiles = array();
+        $width      = max($width, 70);
 
-        foreach ($this->files as $file) {
-            $numWarnings = $file->getWarningCount();
-            $numErrors   = $file->getErrorCount();
-            $filename    = $file->getFilename();
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+            $numWarnings = $file['warnings'];
+            $numErrors   = $file['errors'];
 
             // If verbose output is enabled, we show the results for all files,
             // but if not, we only show files that had errors or warnings.
@@ -1193,14 +1199,14 @@ class PHP_CodeSniffer
         }
 
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
-        echo str_repeat('-', 80).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         if ($showWarnings === true) {
-            echo 'FILE'.str_repeat(' ', 60).'ERRORS  WARNINGS'.PHP_EOL;
+            echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
         } else {
-            echo 'FILE'.str_repeat(' ', 70).'ERRORS'.PHP_EOL;
+            echo 'FILE'.str_repeat(' ', ($width - 10)).'ERRORS'.PHP_EOL;
         }
 
-        echo str_repeat('-', 80).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
 
         $totalErrors   = 0;
         $totalWarnings = 0;
@@ -1208,9 +1214,9 @@ class PHP_CodeSniffer
 
         foreach ($errorFiles as $file => $errors) {
             if ($showWarnings === true) {
-                $padding = (62 - strlen($file));
+                $padding = ($width - 18 - strlen($file));
             } else {
-                $padding = (72 - strlen($file));
+                $padding = ($width - 8 - strlen($file));
             }
 
             if ($padding < 0) {
@@ -1232,14 +1238,14 @@ class PHP_CodeSniffer
             $totalFiles++;
         }//end foreach
 
-        echo str_repeat('-', 80).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo "A TOTAL OF $totalErrors ERROR(S) ";
         if ($showWarnings === true) {
             echo "AND $totalWarnings WARNING(S) ";
         }
 
         echo "WERE FOUND IN $totalFiles FILE(S)".PHP_EOL;
-        echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($showSources === true) {
             $this->printSourceReport($showWarnings, true);
@@ -1255,12 +1261,14 @@ class PHP_CodeSniffer
      *
      * @param boolean $showWarnings Show warnings as well as errors.
      * @param boolean $showSources  Show error sources in report.
+     * @param int     $width        How wide the report should be.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printSourceReport($showWarnings=true, $showSources=false)
+    public function printSourceReport($showWarnings=true, $showSources=false, $width=80)
     {
         $sources = array();
+        $width   = max($width, 70);
 
         $errorsShown = 0;
 
@@ -1291,19 +1299,19 @@ class PHP_CodeSniffer
         $sources = array_reverse($sources);
 
         echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
-        echo str_repeat('-', 80).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         if ($showSources === true) {
-            echo 'SOURCE'.str_repeat(' ', 69).'COUNT'.PHP_EOL;
-            echo str_repeat('-', 80).PHP_EOL;
+            echo 'SOURCE'.str_repeat(' ', ($width - 11)).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         } else {
-            echo 'STANDARD    CATEGORY            SNIFF'.str_repeat(' ', 38).'COUNT'.PHP_EOL;
-            echo str_repeat('-', 80).PHP_EOL;
+            echo 'STANDARD    CATEGORY            SNIFF'.str_repeat(' ', ($width - 42)).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
         }
 
         foreach ($sources as $source => $count) {
             if ($showSources === true) {
                 $source = substr($source, 0, -5);
-                echo $source.str_repeat(' ', (75 - strlen($source)));
+                echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
             } else {
                 $parts = explode('.', $source);
 
@@ -1320,19 +1328,19 @@ class PHP_CodeSniffer
 
                 $sniff = substr($parts[2], 0, -5);
                 $sniff = $this->makeFriendlyName($sniff);
-                if (strlen($sniff) > 41) {
-                    $sniff = substr($sniff, 0, ((strlen($sniff) - 41) * -1));
+                if (strlen($sniff) > ($width - 39)) {
+                    $sniff = substr($sniff, 0, ((strlen($sniff) - $width - 39) * -1));
                 }
-                echo $sniff.str_repeat(' ', (43 - strlen($sniff)));
+                echo $sniff.str_repeat(' ', ($width - 37 - strlen($sniff)));
             }
 
             echo $count.PHP_EOL;
         }//end foreach
 
-        echo str_repeat('-', 80).PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
         echo "A TOTAL OF $errorsShown SNIFF VIOLATION(S) ";
         echo 'WERE FOUND IN '.count($sources).' SOURCE(S)'.PHP_EOL;
-        echo str_repeat('-', 80).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         return $errorsShown;
 

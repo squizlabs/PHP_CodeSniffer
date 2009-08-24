@@ -93,6 +93,13 @@ class PHP_CodeSniffer_CLI
             $defaults['tabWidth'] = (int) $tabWidth;
         }
 
+        $reportWidth = PHP_CodeSniffer::getConfigData('report_width');
+        if ($reportWidth === null) {
+            $defaults['reportWidth'] = 80;
+        } else {
+            $defaults['reportWidth'] = (int) $reportWidth;
+        }
+
         return $defaults;
 
     }//end getDefaults()
@@ -282,6 +289,8 @@ class PHP_CodeSniffer_CLI
                 $values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $values['tabWidth'] = (int) substr($arg, 10);
+            } else if (substr($arg, 0, 13) === 'report-width=') {
+                $values['reportWidth'] = (int) substr($arg, 13);
             } else {
                 $values = $this->processUnknownArgument('--'.$arg, $pos, $values);
             }//end if
@@ -393,7 +402,8 @@ class PHP_CodeSniffer_CLI
             $values['report'],
             $values['showWarnings'],
             $values['showSources'],
-            $values['reportFile']
+            $values['reportFile'],
+            $values['reportWidth']
         );
 
     }//end process()
@@ -409,10 +419,11 @@ class PHP_CodeSniffer_CLI
      * @param bool            $showSources  TRUE if the report should show error sources
      *                                      (not used by all reports).
      * @param string          $reportFile   A file to log the report out to.
+     * @param int             $reportWidth  How wide the screen reports should be.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($phpcs, $report, $showWarnings, $showSources, $reportFile='')
+    public function printErrorReport($phpcs, $report, $showWarnings, $showSources, $reportFile='', $reportWidth=80)
     {
         if ($reportFile !== '') {
             ob_start();
@@ -432,13 +443,13 @@ class PHP_CodeSniffer_CLI
             $numErrors = $phpcs->printEmacsErrorReport($showWarnings);
             break;
         case 'summary':
-            $numErrors = $phpcs->printErrorReportSummary($showWarnings, $showSources);
+            $numErrors = $phpcs->printErrorReportSummary($showWarnings, $showSources, $reportWidth);
             break;
         case 'source':
-            $numErrors = $phpcs->printSourceReport($showWarnings, $showSources);
+            $numErrors = $phpcs->printSourceReport($showWarnings, $showSources, $reportWidth);
             break;
         default:
-            $numErrors = $phpcs->printErrorReport($showWarnings, $showSources);
+            $numErrors = $phpcs->printErrorReport($showWarnings, $showSources, $reportWidth);
             break;
         }
 
@@ -499,35 +510,36 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsvi] [--report=<report>] [--report-file=<reportfile>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsvi] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
-        echo '    [--generator=<generator>] [--tab-width=<width>] <file> ...'.PHP_EOL;
-        echo '        -n           Do not print warnings'.PHP_EOL;
-        echo '        -w           Print both warnings and errors (on by default)'.PHP_EOL;
-        echo '        -l           Local directory only, no recursion'.PHP_EOL;
-        echo '        -s           Show sniff codes in all reports'.PHP_EOL;
-        echo '        -v[v][v]     Print verbose output'.PHP_EOL;
-        echo '        -i           Show a list of installed coding standards'.PHP_EOL;
-        echo '        --help       Print this help message'.PHP_EOL;
-        echo '        --version    Print version information'.PHP_EOL;
-        echo '        <file>       One or more files and/or directories to check'.PHP_EOL;
-        echo '        <extensions> A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                     (only valid if checking a directory)'.PHP_EOL;
-        echo '        <patterns>   A comma separated list of patterns that are used'.PHP_EOL;
-        echo '                     to ignore directories and files'.PHP_EOL;
-        echo '        <sniffs>     A comma separated list of sniff codes to limit the check to'.PHP_EOL;
-        echo '                     (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo '        <standard>   The name of the coding standard to use'.PHP_EOL;
-        echo '        <width>      The number of spaces each tab represents'.PHP_EOL;
-        echo '        <generator>  The name of a doc generator to use'.PHP_EOL;
-        echo '                     (forces doc generation instead of checking)'.PHP_EOL;
-        echo '        <report>     Print either the "full", "xml", "checkstyle",'.PHP_EOL;
-        echo '                     "csv", "emacs", "source" or "summary" report'.PHP_EOL;
-        echo '                     (the "full" report is printed by default)'.PHP_EOL;
-        echo '        <reportfile> Write the report to the specified file path'.PHP_EOL;
-        echo '                     (report is also written to screen)'.PHP_EOL;
+        echo '    [--generator=<generator>] [--tab-width=<tabWidth>] <file> ...'.PHP_EOL;
+        echo '        -n            Do not print warnings'.PHP_EOL;
+        echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
+        echo '        -l            Local directory only, no recursion'.PHP_EOL;
+        echo '        -s            Show sniff codes in all reports'.PHP_EOL;
+        echo '        -v[v][v]      Print verbose output'.PHP_EOL;
+        echo '        -i            Show a list of installed coding standards'.PHP_EOL;
+        echo '        --help        Print this help message'.PHP_EOL;
+        echo '        --version     Print version information'.PHP_EOL;
+        echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
+        echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
+        echo '                      (only valid if checking a directory)'.PHP_EOL;
+        echo '        <patterns>    A comma separated list of patterns that are used'.PHP_EOL;
+        echo '                      to ignore directories and files'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
+        echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
+        echo '        <standard>    The name of the coding standard to use'.PHP_EOL;
+        echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
+        echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
+        echo '                      (forces doc generation instead of checking)'.PHP_EOL;
+        echo '        <report>      Print either the "full", "xml", "checkstyle",'.PHP_EOL;
+        echo '                      "csv", "emacs", "source" or "summary" report'.PHP_EOL;
+        echo '                      (the "full" report is printed by default)'.PHP_EOL;
+        echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
+        echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
+        echo '                      (report is also written to screen)'.PHP_EOL;
 
     }//end printUsage()
 

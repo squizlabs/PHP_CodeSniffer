@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added a new command line argument --report-width to allow you to set the column width of screen reports
+    -- Reports wont accept values less than 70 or else they get too small
+    -- Can also be set via a config var: phpcs --config-set report_width 100
+  - Reports now print their file lists in alphabetical order
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - CSS tokenizer now correctly supports multi-line comments
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
