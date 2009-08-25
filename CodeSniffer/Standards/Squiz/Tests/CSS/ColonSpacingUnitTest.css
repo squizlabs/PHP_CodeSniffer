@@ -16,3 +16,8 @@ margin-bottom:
 #clearCache-settings:rootNodes-list_0 {
     border-top: none;
 }
+
+.LookupEditScreenWidgetType-urls a, .LookupEditScreenWidgetType-urls a:visited {
+    text-decoration: none;
+    color: #444;
+}

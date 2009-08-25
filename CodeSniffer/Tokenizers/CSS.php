@@ -151,11 +151,22 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $newStackPtr++;
         }//end for
 
+        // A flag to indicate if we are inside a style definition,
+        // which is defined using curly braces. I'm assuming you can't
+        // have nested curly brackets.
+        $inStyleDef = false;
+
         $numTokens = count($finalTokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $finalTokens[$stackPtr];
 
             switch ($token['code']) {
+            case T_OPEN_CURLY_BRACKET:
+                $inStyleDef = true;
+                break;
+            case T_CLOSE_CURLY_BRACKET:
+                $inStyleDef = false;
+                break;
             case T_MINUS:
                 // Minus signs are often used instead of spaces inside
                 // class names, IDs and styles.
@@ -189,12 +200,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 break;
             case T_COLON:
-                // Possibly a style definition, but also could be a class name
-                // like .mystyle:hover.
-                if ($finalTokens[($stackPtr - 2)]['code'] === T_STRING_CONCAT
-                    || $finalTokens[($stackPtr - 2)]['code'] === T_HASH
-                ) {
-                    // As it turns out, this is a class name, so leave it as is.
+                // Only interested in colons that are defining styles.
+                if ($inStyleDef === false) {
                     break;
                 }
 
