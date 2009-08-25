@@ -14,3 +14,7 @@
 #clearCache-settings:rootNodes-list_0 {
     border-top: none;
 }
+
+.HelpWidgetType-list {
+    list-style-image: url();
+}

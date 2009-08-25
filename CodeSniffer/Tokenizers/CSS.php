@@ -221,6 +221,17 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         continue;
                     }
 
+                    // Make sure the content isn't empty.
+                    for ($y = ($x + 1); $y < $numTokens; $y++) {
+                        if (in_array($finalTokens[$y]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                            break;
+                        }
+                    }
+
+                    if ($finalTokens[$y]['code'] === T_CLOSE_PARENTHESIS) {
+                        continue;
+                    }
+
                     // Join all the content together inside the url() statement.
                     $newContent = '';
                     for ($i = ($x + 2); $i < $numTokens; $i++) {
@@ -232,12 +243,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         unset($finalTokens[$i]);
                     }
 
-                    $finalTokens[($x + 1)]['type']     = 'T_URL';
-                    $finalTokens[($x + 1)]['code']     = T_URL;
-                    $finalTokens[($x + 1)]['content'] .= $newContent;
+                    if ($newContent !== '') {
+                        $finalTokens[($x + 1)]['type']     = 'T_URL';
+                        $finalTokens[($x + 1)]['code']     = T_URL;
+                        $finalTokens[($x + 1)]['content'] .= $newContent;
 
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
+                        $finalTokens = array_values($finalTokens);
+                        $numTokens   = count($finalTokens);
+                    }
                 }//end if
 
                 break;
