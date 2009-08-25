@@ -251,6 +251,7 @@ class PHP_CodeSniffer_CLI
                                      'emacs',
                                      'source',
                                      'summary',
+                                     'svnblame',
                                     );
 
                 if (in_array($values['report'], $validReports) === false) {
@@ -448,6 +449,9 @@ class PHP_CodeSniffer_CLI
         case 'source':
             $numErrors = $phpcs->printSourceReport($showWarnings, $showSources, $reportWidth);
             break;
+        case 'svnblame':
+            $numErrors = $phpcs->printSvnBlameReport($showWarnings, $showSources, $reportWidth);
+            break;
         default:
             $numErrors = $phpcs->printErrorReport($showWarnings, $showSources, $reportWidth);
             break;
@@ -535,7 +539,7 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle",'.PHP_EOL;
-        echo '                      "csv", "emacs", "source" or "summary" report'.PHP_EOL;
+        echo '                      "csv", "emacs", "source", "summary" or "svnblame" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;

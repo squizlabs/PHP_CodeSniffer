@@ -1348,6 +1348,124 @@ class PHP_CodeSniffer
 
 
     /**
+     * Prints the author of all errors and warnings, as given by "svn blame".
+     *
+     * Requires you to have the svn command in your path.
+     *
+     * @param boolean $showWarnings Show warnings as well as errors.
+     * @param boolean $showSources  Show error sources in report.
+     * @param int     $width        How wide the report should be.
+     *
+     * @return int The number of error and warning messages shown.
+     */
+    public function printSvnBlameReport($showWarnings=true, $showSources=false, $width=80)
+    {
+        $authors = array();
+        $sources = array();
+        $width   = max($width, 70);
+
+        $errorsShown = 0;
+
+        $report = $this->prepareErrorReport($showWarnings);
+        foreach ($report['files'] as $filename => $file) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'Getting SVN blame info for '.basename($filename).'... ';
+            }
+
+            $command = 'svn blame '.$filename;
+            $handle  = popen($command, 'r');
+            if ($handle === false) {
+                echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
+                exit(2);
+            }
+
+            $rawContent = stream_get_contents($handle);
+            fclose($handle);
+
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'DONE'.PHP_EOL;
+            }
+
+            $blames = split("\n", $rawContent);
+
+            foreach ($file['messages'] as $line => $lineErrors) {
+                $blameParts = array();
+                preg_match('|\s+([^\s]+)\s+([^\s]+)|', $blames[$line], $blameParts);
+
+                if (isset($blameParts[2]) === false) {
+                    continue;
+                }
+
+                $author = $blameParts[2];
+                if (isset($authors[$author]) === false) {
+                    $authors[$author] = 0;
+                }
+
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $errorsShown++;
+                        $authors[$author]++;
+
+                        if ($showSources === true) {
+                            $source = $error['source'];
+                            if (isset($sources[$author][$source]) === false) {
+                                $sources[$author][$source] = 1;
+                            } else {
+                                $sources[$author][$source]++;
+                            }
+                        }
+                    }
+                }
+            }//end foreach
+        }//end foreach
+
+        if ($errorsShown === 0) {
+            // Nothing to show.
+            return 0;
+        }
+
+        asort($authors);
+        $authors = array_reverse($authors);
+
+        echo PHP_EOL.'PHP CODE SNIFFER SVN BLAME SUMMARY'.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
+        if ($showSources === true) {
+            echo 'AUTHOR   SOURCE'.str_repeat(' ', ($width - 20)).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
+        } else {
+            echo 'AUTHOR'.str_repeat(' ', ($width - 11)).'COUNT'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
+        }
+
+        foreach ($authors as $author => $count) {
+            echo $author.str_repeat(' ', ($width - 5 - strlen($author))).$count.PHP_EOL;
+            if ($showSources === true) {
+                $errors = $sources[$author];
+                asort($errors);
+                $errors = array_reverse($errors);
+
+                foreach ($errors as $source => $count) {
+                    if ($source === 'count') {
+                        continue;
+                    }
+
+                    $source = substr($source, 0, -5);
+                    echo '         '.$source.str_repeat(' ', ($width - 14 - strlen($source))).$count.PHP_EOL;
+                }
+            }
+        }
+
+        echo str_repeat('-', $width).PHP_EOL;
+        echo "A TOTAL OF $errorsShown SNIFF VIOLATION(S) ";
+        echo 'WERE COMMITTED BY '.count($authors).' AUTHOR(S)'.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+
+        return $errorsShown;
+
+    }//end printSvnBlameReport()
+
+
+    /**
      * Converts a camel caps name into a readable string.
      *
      * @param string $name The camel caps name to convert.
