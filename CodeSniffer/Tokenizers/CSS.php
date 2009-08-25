@@ -60,7 +60,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $token['type'] = 'T_STRING';
             }
 
-            if ($token['code'] === T_COMMENT 
+            if ($token['code'] === T_COMMENT
                 && substr($token['content'], 0, 2) === '/*'
             ) {
                 // Multi-line comment. Record it so we can ignore other
@@ -82,13 +82,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 array_pop($commentTokens);
 
                 if ($token['content']{0} === '#') {
-                    // The # character is not a comment in CSS files, so determine
-                    // what it means in this context.
+                    // The # character is not a comment in CSS files, so
+                    // determine what it means in this context.
                     $firstContent = $commentTokens[0]['content'];
 
                     // If the first content is just a number, it is probably a
                     // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
-                    if ($commentTokens[0]['code'] === T_LNUMBER
+                    if (($commentTokens[0]['code'] === T_LNUMBER
+                        || $commentTokens[0]['code'] === T_DNUMBER)
                         && $commentTokens[1]['code'] === T_STRING
                     ) {
                         $firstContent .= $commentTokens[1]['content'];
