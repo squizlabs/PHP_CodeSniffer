@@ -429,7 +429,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
-            if ($tokens[$i]['code'] !== T_CASE) {
+            if ($tokens[$i]['code'] !== T_CASE
+                || isset($tokens[$i]['scope_opener']) === false
+            ) {
                 // Only interested in CASE statements.
                 continue;
             }
