@@ -213,7 +213,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
                 $foundErrorsTemp = array();
                 foreach ($allProblems[$line]['found_errors'] as $foundError) {
-                    $foundErrorsTemp[] = $foundError['message'];
+                    $foundErrorsTemp[] = $foundError;
                 }
 
                 $errorsTemp = array();
