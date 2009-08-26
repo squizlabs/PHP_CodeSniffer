@@ -285,7 +285,10 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
-                $values['ignored']= preg_split('/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/', substr($arg, 7));
+                $values['ignored']= preg_split(
+                    '/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/',
+                    substr($arg, 7)
+                );
             } else if (substr($arg, 0, 10) === 'generator=') {
                 $values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 10) === 'tab-width=') {
@@ -417,15 +420,21 @@ class PHP_CodeSniffer_CLI
      *                                      the errors.
      * @param string          $report       The type of report to print.
      * @param bool            $showWarnings TRUE if warnings should also be printed.
-     * @param bool            $showSources  TRUE if the report should show error sources
+     * @param bool            $showSources  TRUE if report should show error sources
      *                                      (not used by all reports).
      * @param string          $reportFile   A file to log the report out to.
      * @param int             $reportWidth  How wide the screen reports should be.
      *
      * @return int The number of error and warning messages shown.
      */
-    public function printErrorReport($phpcs, $report, $showWarnings, $showSources, $reportFile='', $reportWidth=80)
-    {
+    public function printErrorReport(
+        $phpcs,
+        $report,
+        $showWarnings,
+        $showSources,
+        $reportFile='',
+        $reportWidth=80
+    ) {
         if ($reportFile !== '') {
             ob_start();
         }
@@ -444,16 +453,32 @@ class PHP_CodeSniffer_CLI
             $numErrors = $phpcs->printEmacsErrorReport($showWarnings);
             break;
         case 'summary':
-            $numErrors = $phpcs->printErrorReportSummary($showWarnings, $showSources, $reportWidth);
+            $numErrors = $phpcs->printErrorReportSummary(
+                $showWarnings,
+                $showSources,
+                $reportWidth
+            );
             break;
         case 'source':
-            $numErrors = $phpcs->printSourceReport($showWarnings, $showSources, $reportWidth);
+            $numErrors = $phpcs->printSourceReport(
+                $showWarnings,
+                $showSources,
+                $reportWidth
+            );
             break;
         case 'svnblame':
-            $numErrors = $phpcs->printSvnBlameReport($showWarnings, $showSources, $reportWidth);
+            $numErrors = $phpcs->printSvnBlameReport(
+                $showWarnings,
+                $showSources,
+                $reportWidth
+            );
             break;
         default:
-            $numErrors = $phpcs->printErrorReport($showWarnings, $showSources, $reportWidth);
+            $numErrors = $phpcs->printErrorReport(
+                $showWarnings,
+                $showSources,
+                $reportWidth
+            );
             break;
         }
 

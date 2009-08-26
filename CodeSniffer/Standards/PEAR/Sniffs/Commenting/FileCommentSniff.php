@@ -328,7 +328,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @param int    $commentStart Position in the stack where the comment started.
      * @param int    $commentEnd   Position in the stack where the comment ended.
-     * @param string $comment      The text of the function comment.
+     * @param string $commentText  The text of the function comment.
      *
      * @return void
      */
