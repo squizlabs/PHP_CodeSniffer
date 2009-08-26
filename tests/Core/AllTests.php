@@ -15,7 +15,7 @@
  */
 
 require_once 'IsCamelCapsTest.php';
-require_once 'ErrorSupressionTest.php';
+require_once 'ErrorSuppressionTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -64,7 +64,7 @@ class PHP_CodeSniffer_Core_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
         $suite->addTestSuite('Core_IsCamelCapsTest');
-        $suite->addTestSuite('Core_ErrorSupressionTest');
+        $suite->addTestSuite('Core_ErrorSuppressionTest');
         return $suite;
 
     }//end suite()
