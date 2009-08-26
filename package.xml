@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now get PHP_CodeSniffer to ignore a whole file by adding @codingStandardsIgnoreFile in the content
     -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
   - Reports now print their file lists in alphabetical order
+  - Added Generic CallTimePassByRefenceSniff to prohibit the passing of variables into functions by reference
+    -- Thanks to Florian Grandel for the contribution
   - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
@@ -233,6 +235,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Functions">
+        <file baseinstalldir="PHP" name="CallTimePassByReferenceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -380,6 +385,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Functions">
+        <file baseinstalldir="PHP" name="CallTimePassByReferenceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CallTimePassByReferenceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
