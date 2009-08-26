@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now get PHP_CodeSniffer to ignore a whole file by adding @codingStandardsIgnoreFile in the content
     -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
   - Reports now print their file lists in alphabetical order
+  - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
   - Fixed a problem tokenizing CSS files when style statements had empty url() calls

@@ -391,16 +391,6 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            if (isset($index['index_content']) === true) {
-                $indexContent = trim($index['index_content'], "'");
-                if (preg_match('|^[a-zA-Z0-9_]+$|', $indexContent) === 1) {
-                    if (strtolower($indexContent) !== $indexContent) {
-                        $error = 'Array index "'.$indexContent.'" should not contain uppercase characters';
-                        $phpcsFile->addError($error, $index['index']);
-                    }
-                }
-            }
-
             if (($tokens[$index['index']]['line'] === $tokens[$stackPtr]['line'])) {
                 $phpcsFile->addError('The first index in a multi-value array must be on a new line', $stackPtr);
                 continue;
