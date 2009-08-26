@@ -379,11 +379,19 @@ class PHP_CodeSniffer_File
                     $ignoring = false;
                     // Ignore this comment too.
                     $this->_ignoredLines[$token['line']] = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                    // Ignoring the whole file, just a little late.
+                    $this->_errors       = array();
+                    $this->_warnings     = array();
+                    $this->_errorCount   = 0;
+                    $this->_warningCount = 0;
+                    return;
                 }
             }
 
             if ($ignoring === true) {
                 $this->_ignoredLines[$token['line']] = true;
+                continue;
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
@@ -435,9 +443,10 @@ class PHP_CodeSniffer_File
         foreach ($this->_ignoredLines as $line => $ignore) {
             unset($this->_errors[$line]);
             unset($this->_warnings[$line]);
-            $this->_errorCount = count($this->_errors);
-            $this->_warningCount = count($this->_warnings);
         }
+
+        $this->_errorCount   = count($this->_errors);
+        $this->_warningCount = count($this->_warnings);
 
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML

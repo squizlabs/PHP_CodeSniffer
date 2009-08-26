@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added a new command line argument --report-width to allow you to set the column width of screen reports
     -- Reports wont accept values less than 70 or else they get too small
     -- Can also be set via a config var: phpcs --config-set report_width 100
+  - You can now get PHP_CodeSniffer to ignore a whole file by adding @codingStandardsIgnoreFile in the content
+    -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
   - Reports now print their file lists in alphabetical order
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
@@ -72,7 +74,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="AllTests.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
-     <file baseinstalldir="" name="ErrorSupressionTest.php" role="test">
+     <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test">

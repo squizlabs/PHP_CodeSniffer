@@ -745,6 +745,28 @@ class PHP_CodeSniffer
             }
         }
 
+        // Before we go and spend time tokenizing this file, just check
+        // to see if there is a tag up top to indicate that the whole
+        // file should be ignored. It must be on one of the first two lines.
+        $firstContent = $contents;
+        if ($contents === null) {
+            $handle = fopen($file, 'r');
+            if ($handle !== false) {
+                $firstContent  = fgets($handle);
+                $firstContent .= fgets($handle);
+                fclose($handle);
+            }
+        }
+
+        if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
+            // We are ignoring the whole file.
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'Ignoring '.basename($file).PHP_EOL;
+            }
+
+            return;
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
             echo 'Processing '.basename($file).' ';
