@@ -27,9 +27,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added a new report type --report=svnblame to show how many errors and warnings were committed by each author
+    -- Also shows the percentage of their code that are errors and warnings
     -- Requires you to have the SVN command in your path
     -- Make sure SVN is storing usernames and passwords (if required) or you will need to enter them for each file
     -- You can also use the -s command line argument to see the different types of errors authors are committing
+    -- You can use the -v command line argument to see all authors, even if they have no errors or warnings
   - Added a new command line argument --report-width to allow you to set the column width of screen reports
     -- Reports wont accept values less than 70 or else they get too small
     -- Can also be set via a config var: phpcs --config-set report_width 100

@@ -1383,6 +1383,7 @@ class PHP_CodeSniffer
     public function printSvnBlameReport($showWarnings=true, $showSources=false, $width=80)
     {
         $authors = array();
+        $praise  = array();
         $sources = array();
         $width   = max($width, 70);
 
@@ -1421,7 +1422,13 @@ class PHP_CodeSniffer
                 $author = $blameParts[2];
                 if (isset($authors[$author]) === false) {
                     $authors[$author] = 0;
+                    $praise[$author]  = array(
+                                         'good' => 0,
+                                         'bad'  => 0,
+                                        );
                 }
+
+                $praise[$author]['bad']++;
 
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
@@ -1438,6 +1445,35 @@ class PHP_CodeSniffer
                         }
                     }
                 }
+
+                unset($blames[$line]);
+            }//end foreach
+
+            // No go through and give the authors some credit for
+            // all the lines that do not have errors.
+            foreach ($blames as $line) {
+                $blameParts = array();
+                preg_match('|\s+([^\s]+)\s+([^\s]+)|', $line, $blameParts);
+
+                if (isset($blameParts[2]) === false) {
+                    continue;
+                }
+
+                $author = $blameParts[2];
+                if (isset($authors[$author]) === false) {
+                    // This author doesn't have any errors.
+                    if (PHP_CODESNIFFER_VERBOSITY === 0) {
+                        continue;
+                    }
+
+                    $authors[$author] = 0;
+                    $praise[$author]  = array(
+                                         'good' => 0,
+                                         'bad'  => 0,
+                                        );
+                }
+
+                $praise[$author]['good']++;
             }//end foreach
         }//end foreach
 
@@ -1452,16 +1488,23 @@ class PHP_CodeSniffer
         echo PHP_EOL.'PHP CODE SNIFFER SVN BLAME SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
         if ($showSources === true) {
-            echo 'AUTHOR   SOURCE'.str_repeat(' ', ($width - 20)).'COUNT'.PHP_EOL;
+            echo 'AUTHOR   SOURCE'.str_repeat(' ', ($width - 27)).'COUNT (%)'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         } else {
-            echo 'AUTHOR'.str_repeat(' ', ($width - 11)).'COUNT'.PHP_EOL;
+            echo 'AUTHOR'.str_repeat(' ', ($width - 18)).'COUNT (%)'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
 
         foreach ($authors as $author => $count) {
-            echo $author.str_repeat(' ', ($width - 5 - strlen($author))).$count.PHP_EOL;
-            if ($showSources === true) {
+            if ($praise[$author]['good'] === 0) {
+                $percent = 0;
+            } else {
+                $percent = round(($praise[$author]['bad'] / $praise[$author]['good'] * 100), 2);
+            }
+
+            echo $author.str_repeat(' ', ($width - 12 - strlen($author)))."$count ($percent)".PHP_EOL;
+
+            if ($showSources === true && isset($sources[$author]) === true) {
                 $errors = $sources[$author];
                 asort($errors);
                 $errors = array_reverse($errors);
@@ -1472,7 +1515,7 @@ class PHP_CodeSniffer
                     }
 
                     $source = substr($source, 0, -5);
-                    echo '         '.$source.str_repeat(' ', ($width - 14 - strlen($source))).$count.PHP_EOL;
+                    echo '         '.$source.str_repeat(' ', ($width - 21 - strlen($source))).$count.PHP_EOL;
                 }
             }
         }
