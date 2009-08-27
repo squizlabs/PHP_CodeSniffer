@@ -48,12 +48,14 @@ class MySource_Tests_Objects_CreateWidgetTypeCallbackUnitTest extends AbstractSn
         }
 
         return array(
-                18 => 1,
-                23 => 2,
-                26 => 1,
-                30 => 1,
-                34 => 1,
-                43 => 2,
+                18  => 1,
+                23  => 2,
+                26  => 1,
+                30  => 1,
+                34  => 1,
+                43  => 2,
+                91  => 1,
+                123 => 1,
                );
 
     }//end getErrorList()

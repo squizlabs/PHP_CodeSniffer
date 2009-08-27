@@ -85,3 +85,60 @@ SampleWidgetType.prototype = {
     }
 
 };
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        var something = callback;
+
+    }
+
+};
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        // Also valid because we are passing the callback to
+        // someone else to call.
+        if (y === 1) {
+            this.something(callback);
+            return;
+        }
+
+        this.init(callback);
+
+    }
+
+};
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        // Also valid because we are passing the callback to
+        // someone else to call.
+        if (y === 1) {
+            this.something(callback);
+        }
+
+        this.init(callback);
+
+    }
+
+};
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        if (a === 1) {
+            // This is ok because it is the last statement,
+            // even though it is conditional.
+            this.something(callback);
+        }
+
+    }
+
+};

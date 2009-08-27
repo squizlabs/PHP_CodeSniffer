@@ -97,7 +97,8 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
             followed by a return statement or the end of the method.
         */
 
-        $foundCallback = false;
+        $foundCallback  = false;
+        $passedCallback = false;
         for ($i = $start; $i <= $end; $i++) {
             if ($tokens[$i]['code'] === T_RETURN) {
                 // Make sure return statements are not returning anything.
@@ -113,29 +114,52 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
             // If this is the form "callback.call(" then it is a call
             // to the callback function.
-            if ($tokens[($i + 1)]['code'] !== T_OBJECT_OPERATOR) {
-                continue;
-            }
+            if ($tokens[($i + 1)]['code'] !== T_OBJECT_OPERATOR
+                || $tokens[($i + 2)]['content'] !== 'call'
+                || $tokens[($i + 3)]['code'] !== T_OPEN_PARENTHESIS
+            ) {
+                // One last chance; this might be the callback function
+                // being passed to another function, like this
+                // "this.init(something, callback, something)".
+                if (isset($tokens[$i]['nested_parenthesis']) === false) {
+                    continue;
+                }
 
-            if ($tokens[($i + 2)]['content'] !== 'call') {
-                continue;
-            }
+                // Note that we use this endBracket down further when checking
+                // for a RETURN statement.
+                $endBracket = end($tokens[$i]['nested_parenthesis']);
+                $bracket = key($tokens[$i]['nested_parenthesis']);
 
-            if ($tokens[($i + 3)]['code'] !== T_OPEN_PARENTHESIS) {
-                continue;
-            }
+                $prev = $phpcsFile->findPrevious(
+                    PHP_CodeSniffer_Tokens::$emptyTokens,
+                    ($bracket - 1),
+                    null,
+                    true
+                );
+
+                if ($tokens[$prev]['code'] !== T_STRING) {
+                    continue;
+                }
+
+                $passedCallback = true;
+            }//end if
 
             $foundCallback = true;
 
-            // The first argument must be "this" or "self".
-            $arg = $phpcsFile->findNext(T_WHITESPACE, ($i + 4), null, true);
-            if ($tokens[$arg]['content'] !== 'this' && $tokens[$arg]['content'] !== 'self') {
-                $error = 'The first argument passed to the callback function must be "this" or "self"';
-                $phpcsFile->addError($error, $arg);
+            if ($passedCallback === false) {
+                // The first argument must be "this" or "self".
+                $arg = $phpcsFile->findNext(T_WHITESPACE, ($i + 4), null, true);
+                if ($tokens[$arg]['content'] !== 'this' && $tokens[$arg]['content'] !== 'self') {
+                    $error = 'The first argument passed to the callback function must be "this" or "self"';
+                    $phpcsFile->addError($error, $arg);
+                }
             }
 
             // Now it must be followed by a return statement or the end of the function.
-            $endBracket = $tokens[($i + 3)]['parenthesis_closer'];
+            if ($passedCallback === false) {
+                $endBracket = $tokens[($i + 3)]['parenthesis_closer'];
+            }
+
             for ($next = $endBracket; $next <= $end; $next++) {
                 // Skip whitespace so we find the next content after the call.
                 if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
