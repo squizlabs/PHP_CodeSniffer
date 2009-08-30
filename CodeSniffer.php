@@ -1409,7 +1409,7 @@ class PHP_CodeSniffer
                 echo 'DONE'.PHP_EOL;
             }
 
-            $blames = split("\n", $rawContent);
+            $blames = explode("\n", $rawContent);
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 $blameParts = array();
