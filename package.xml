@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Reports now print their file lists in alphabetical order
   - Added Generic CallTimePassByRefenceSniff to prohibit the passing of variables into functions by reference
     -- Thanks to Florian Grandel for the contribution
+  - Added Squiz DisallowComparisonAssignmentSniff to ban the assignment of comparison values to a variable
   - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
   - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
@@ -1017,6 +1018,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowComparisonAssignmentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1418,6 +1422,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowComparisonAssignmentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowComparisonAssignmentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowInlineIfUnitTest.inc" role="test" />
