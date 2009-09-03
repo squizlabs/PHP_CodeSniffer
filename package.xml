@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Florian Grandel for the contribution
   - Added Squiz DisallowComparisonAssignmentSniff to ban the assignment of comparison values to a variable
   - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
+  - Squiz PostStatementCommentSniff now allows end comments for class member functions
   - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions

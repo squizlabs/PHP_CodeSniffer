@@ -72,7 +72,7 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
         }
 
         $commentLine = $tokens[$stackPtr]['line'];
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 
         if ($tokens[$lastContent]['line'] !== $commentLine) {
             return;
@@ -80,6 +80,14 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
 
         if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
             return;
+        }
+
+        // Special case for JS files.
+        if ($tokens[$lastContent]['code'] === T_COMMA) {
+            $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($lastContent - 1), null, true);
+            if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+                return;
+            }
         }
 
         $error = 'Comments may not appear after statements.';

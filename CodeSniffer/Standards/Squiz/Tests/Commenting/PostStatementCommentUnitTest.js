@@ -7,3 +7,17 @@ function test(id, buttons) // cool function
 }//end test()
 
 var good = true; // Indeed.
+
+mig.Gallery.prototype = {
+
+    init: function(cb)
+    {
+
+    },//end init()
+
+    imageClicked: function(id)
+    {
+
+    }//end imageClicked()
+
+};
