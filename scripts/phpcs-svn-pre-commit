@@ -141,7 +141,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             // We need to check file extensions ourself because they are
             // not checked when processing a single file.
             $fileParts = explode('.', $path);
-            $extension = array_pop($fileParts);
+            $extension = trim(array_pop($fileParts));
             if (isset($phpcs->allowedFileExtensions[$extension]) === false) {
                 continue;
             }

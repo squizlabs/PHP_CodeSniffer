@@ -53,6 +53,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
   - Fixed bug #16533 : Duplicate errors and warnings
+  - Fixed bug #16563 : Check file extensions problem in phpcs-svn-pre-commit
+    -- Thanks to Kaijung Chen for the patch
  </notes>
  <contents>
   <dir name="/">
