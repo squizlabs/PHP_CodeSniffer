@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
   - Squiz PostStatementCommentSniff now allows end comments for class member functions
   - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
+  - Generic MultipleStatementAlignmentSniff now enforces a single space before equals sign if max padding is reached
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
   - Fixed a problem tokenizing CSS files when style statements had empty url() calls

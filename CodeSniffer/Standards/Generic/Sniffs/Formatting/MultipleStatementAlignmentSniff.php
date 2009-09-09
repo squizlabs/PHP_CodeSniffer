@@ -248,9 +248,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
 
                 // If the expected number of spaces for alignment exceeds the
-                // maxPadding rule, we can ignore this assignment.
+                // maxPadding rule, we just check for a single space as no
+                // alignment is required.
                 if ($expected > $this->maxPadding) {
-                    continue;
+                    if ($found === 1) {
+                        continue;
+                    }
                 }
 
                 // Skip multi-line assignments if required.
