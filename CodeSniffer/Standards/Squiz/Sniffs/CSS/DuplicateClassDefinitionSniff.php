@@ -63,6 +63,7 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
         $tokens = $phpcsFile->getTokens();
 
         // Find the content of each class definition name.
+        $classNames = array();
         $next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1));
         if ($next === false) {
             // No class definitions in the file.
