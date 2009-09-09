@@ -1,0 +1,8 @@
+.ViperSubToolbar-wrapper {
+    height: 34px;
+    left: 0;
+    position: fixed;
+    top: 60px;
+    z-index: 997;
+    left: 50%;
+}
