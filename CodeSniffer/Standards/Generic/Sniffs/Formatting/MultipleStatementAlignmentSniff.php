@@ -253,6 +253,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 if ($expected > $this->maxPadding) {
                     if ($found === 1) {
                         continue;
+                    } else {
+                        $expected = 1;
                     }
                 }
 
