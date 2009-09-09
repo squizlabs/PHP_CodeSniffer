@@ -90,7 +90,7 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
                 $error = 'Opacity value does not require decimal point; use '.$value{0}.' instead';
                 $phpcsFile->addError($error, $next);
             } else if ($value{0} === '.') {
-                $error = 'Opacity values must not start with a decial point; use 0'.$value.' instead';
+                $error = 'Opacity values must not start with a decimal point; use 0'.$value.' instead';
                 $phpcsFile->addError($error, $next);
             } else if ($value{0} !== '0') {
                 $error = 'Opacity values must be between 0 and 1';
