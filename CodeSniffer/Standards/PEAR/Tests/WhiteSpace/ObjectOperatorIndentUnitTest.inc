@@ -28,4 +28,13 @@ func(
             ->func()
     );
 
+$object
+    ->setBar($foo)
+    ->setFoo($bar);
+
+if ($bar) {
+    $object
+    ->setBar($foo)
+    ->setFoo($bar);
+}
 ?>

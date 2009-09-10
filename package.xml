@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16533 : Duplicate errors and warnings
   - Fixed bug #16563 : Check file extensions problem in phpcs-svn-pre-commit
     -- Thanks to Kaijung Chen for the patch
+  - Fixed bug #16592 : Object operator indentation incorrect when first operator is on a new line
  </notes>
  <contents>
   <dir name="/">
