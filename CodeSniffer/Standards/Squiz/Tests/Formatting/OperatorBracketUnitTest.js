@@ -83,3 +83,9 @@ var options = {
 stepWidth = Math.round(this.width / 5);
 
 date.setMonth(d[2] - 1);
+
+if (urlValue.search(/[a-zA-z]+:\/\//) !== 0) {
+}
+
+if (urlValue.search(/[a-zA-z]+:\/\/*/) !== 0) {
+}

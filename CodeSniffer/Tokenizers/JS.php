@@ -541,11 +541,40 @@ class PHP_CodeSniffer_Tokenizers_JS
             if ($inComment === ''
                 && array_key_exists($buffer, $this->commentTokens) === true
             ) {
-                // We have started a comment.
-                $inComment = $buffer;
+                // This is not really a comment if the content
+                // looks like \// (i.e., it is escaped).
+                if (isset($chars[($i - 2)]) === true && $chars[($i - 2)] === '\\') {
+                    $lastToken   = array_pop($tokens);
+                    $lastContent = $lastToken['content'];
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $value   = $this->tokenValues[strtolower($lastContent)];
+                        $content = str_replace("\n", '\n', $lastContent);
+                        echo "=> Removed token $value ($content)".PHP_EOL;
+                    }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t* looking for end of comment *".PHP_EOL;
+                    $lastChars    = str_split($lastContent);
+                    $lastNumChars = count($lastChars);
+                    for ($x = 0; $x < $lastNumChars; $x++) {
+                        $lastChar = $lastChars[$x];
+                        $value    = $this->tokenValues[strtolower($lastChar)];
+                        $tokens[] = array(
+                                     'code'    => constant($value),
+                                     'type'    => $value,
+                                     'content' => $lastChar,
+                                    );
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $content = str_replace("\n", '\n', $lastChar);
+                            echo "=> Added token $value ($content)".PHP_EOL;
+                        }
+                    }
+                } else {
+                    // We have started a comment.
+                    $inComment = $buffer;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t* looking for end of comment *".PHP_EOL;
+                    }
                 }
             } else if ($inComment !== '') {
                 if ($this->commentTokens[$inComment] === null) {
