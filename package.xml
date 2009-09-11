@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz DuplicateStyleDefinitionSniff to check for duplicate CSS styles in a single class block
   - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
   - Squiz PostStatementCommentSniff now allows end comments for class member functions
+  - Squiz InlineCommentSniff now supports the checking of JS files
   - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
   - Generic MultipleStatementAlignmentSniff now enforces a single space before equals sign if max padding is reached
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
@@ -1217,6 +1218,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="InlineCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="InlineCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

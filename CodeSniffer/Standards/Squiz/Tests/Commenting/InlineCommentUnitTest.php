@@ -39,23 +39,43 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='InlineCommentUnitTest.inc')
     {
-        return array(
-                17 => 1,
-                27 => 1,
-                28 => 1,
-                32 => 2,
-                36 => 1,
-                44 => 2,
-                54 => 1,
-                58 => 1,
-                61 => 1,
-                64 => 2,
-                67 => 1,
-               );
+        switch ($testFile) {
+        case 'InlineCommentUnitTest.inc':
+            return array(
+                    17 => 1,
+                    27 => 1,
+                    28 => 1,
+                    32 => 2,
+                    36 => 1,
+                    44 => 2,
+                    54 => 1,
+                    58 => 1,
+                    61 => 1,
+                    64 => 2,
+                    67 => 1,
+                   );
+            break;
+        case 'InlineCommentUnitTest.js':
+            return array(
+                    31 => 1,
+                    36 => 2,
+                    44 => 1,
+                    48 => 1,
+                    51 => 1,
+                    54 => 2,
+                    57 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
