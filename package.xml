@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz PostStatementCommentSniff now allows end comments for class member functions
   - Squiz InlineCommentSniff now supports the checking of JS files
   - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
+  - MySource CreateWidgetTypeCallbackSniff now correctly ignores callbacks used inside conditions
   - Generic MultipleStatementAlignmentSniff now enforces a single space before equals sign if max padding is reached
   - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
   - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions

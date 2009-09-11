@@ -125,10 +125,18 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
                     continue;
                 }
 
+                // Just make sure those brackets dont belong to anyone,
+                // like an IF or FOR statement.
+                foreach ($tokens[$i]['nested_parenthesis'] as $bracket) {
+                    if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
+                        continue(2);
+                    }
+                }
+
                 // Note that we use this endBracket down further when checking
                 // for a RETURN statement.
                 $endBracket = end($tokens[$i]['nested_parenthesis']);
-                $bracket = key($tokens[$i]['nested_parenthesis']);
+                $bracket    = key($tokens[$i]['nested_parenthesis']);
 
                 $prev = $phpcsFile->findPrevious(
                     PHP_CodeSniffer_Tokens::$emptyTokens,
@@ -138,6 +146,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
                 );
 
                 if ($tokens[$prev]['code'] !== T_STRING) {
+                    // This is not a function passing the callback.
                     continue;
                 }
 

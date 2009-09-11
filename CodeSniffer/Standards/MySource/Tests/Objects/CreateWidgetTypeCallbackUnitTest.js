@@ -142,3 +142,16 @@ SampleWidgetType.prototype = {
     }
 
 };
+
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        if (dfx.isFn(callback) === true) {
+            callback.call(this, cont);
+            return;
+        }
+    }
+
+};
