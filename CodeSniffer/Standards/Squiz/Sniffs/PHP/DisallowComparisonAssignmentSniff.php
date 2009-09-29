@@ -65,6 +65,22 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
             }
         }
 
+        // Ignore function calls.
+        $ignore = array(
+                   T_STRING,
+                   T_WHITESPACE,
+                   T_OBJECT_OPERATOR,
+                  );
+
+        $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS
+            && $tokens[($next - 1)]['code'] === T_STRING
+        ) {
+            // Code will look like: $var = myFunction(
+            // and will be ignored.
+            return;
+        }
+
         $endStatement = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {

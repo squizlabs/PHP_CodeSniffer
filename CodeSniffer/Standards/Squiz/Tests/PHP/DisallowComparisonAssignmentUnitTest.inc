@@ -7,6 +7,7 @@ $var = ($foo || $bar);
 $var = ($foo === TRUE);
 $var = ($foo === TRUE
         || $bar === FALSE);
+$var = (!$foo);
 
 $var = is_array($foo);
 $var = myFunction($one, $two);
@@ -17,4 +18,7 @@ $var = myFunction(
 
 for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
 }
+
+// This condition is allowed by this sniff.
+$var = myFunction(!$var);
 ?>

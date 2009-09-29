@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed a problem tokenizing CSS files when style statements had empty url() calls
   - Fixed a problem tokenizing CSS colours with the letter E in first half of the code
   - Squiz ColonSpacingSniff now ensures it is only checking style definitions in CSS files and not class names
+  - Squiz DisallowComparisonAssignmentSniff no longer reports errors when assigning the return value of a function
   - CSS tokenizer now correctly supports multi-line comments
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
