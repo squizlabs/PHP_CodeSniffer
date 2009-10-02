@@ -97,6 +97,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
         }
 
         $allowedChars = array(
+                         '\0',
                          '\n',
                          '\r',
                          '\f',
