@@ -12,4 +12,5 @@ $string = "\x0";
 $string = 'Hello '.$there.' Greg';
 $string = "<div class='$class'>";
 $string = "Value: $var[test]";
+$string = "\0";
 ?>
