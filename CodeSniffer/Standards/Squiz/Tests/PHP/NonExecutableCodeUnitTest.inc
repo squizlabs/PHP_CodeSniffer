@@ -65,6 +65,26 @@ while ($line=fgets($fp,2*1024*1024))
     print $line;
 }
 
+switch ($var) {
+    case 1:
+        echo '1';
+    break;
+
+        echo 'non-executable';
+    default:
+        echo '2';
+    break;
+}
+
+switch (0) {
+    case 1:
+        return '1';
+
+        echo 'non-executable';
+    default:
+    break;
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

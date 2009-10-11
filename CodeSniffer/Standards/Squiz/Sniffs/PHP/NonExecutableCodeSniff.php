@@ -63,11 +63,37 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Break statements can themselves be scope closers, so if this
-        // is a closer, skip it.
-        if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+        if ($tokens[$stackPtr]['code'] === T_BREAK
+            && isset($tokens[$stackPtr]['scope_opener']) === true
+        ) {
+            // This break closes the scope of a CASE or DEFAULT statement
+            // so any code between this token and the next CASE, DEFAULT or
+            // end of SWITCH token will not be executable.
+            $next = $phpcsFile->findNext(
+                array(T_CASE, T_DEFAULT, T_CLOSE_CURLY_BRACKET),
+                ($stackPtr + 1)
+            );
+
+            if ($next !== false) {
+                $lastLine = $tokens[($stackPtr + 1)]['line'];
+                for ($i = ($stackPtr + 1); $i < $next; $i++) {
+                    if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                        continue;
+                    }
+
+                    $line = $tokens[$i]['line'];
+                    if ($line > $lastLine) {
+                        $type    = substr($tokens[$stackPtr]['type'], 2);
+                        $warning = "Code after $type statement cannot be executed";
+                        $phpcsFile->addWarning($warning, $i);
+                        $lastLine = $line;
+                    }
+                }
+            }//end if
+
+            // That's all we have to check for these types of BREAK statements.
             return;
-        }
+        }//end if
 
         // This token may be part of an inline condition.
         // If we find a closing parenthesis that belongs to a condition
@@ -142,35 +168,29 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             }
 
             $closer = $tokens[$condition]['scope_closer'];
-            if ($tokens[$closer]['scope_condition'] !== $condition) {
-                // The closer for our condition is shared with other openers,
-                // so we need to throw errors from this token to the next
-                // shared opener (if there is one), not to the scope closer.
-                $nextOpener = null;
-                for ($i = ($stackPtr + 1); $i < $closer; $i++) {
-                    if (isset($tokens[$i]['scope_closer']) === true) {
-                        if ($tokens[$i]['scope_closer'] === $closer) {
-                            // We found an opener that shares the same
-                            // closing token as us.
-                            $nextOpener = $i;
-                            break;
-                        }
+
+            // If the closer for our condition is shared with other openers,
+            // we will need to throw errors from this token to the next
+            // shared opener (if there is one), not to the scope closer.
+            $nextOpener = null;
+            for ($i = ($stackPtr + 1); $i < $closer; $i++) {
+                if (isset($tokens[$i]['scope_closer']) === true) {
+                    if ($tokens[$i]['scope_closer'] === $closer) {
+                        // We found an opener that shares the same
+                        // closing token as us.
+                        $nextOpener = $i;
+                        break;
                     }
-                }//end for
-
-                $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-
-                if ($nextOpener === null) {
-                    $end = $closer;
-                } else {
-                    $end = $nextOpener;
                 }
+            }//end for
+
+            $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+
+            if ($nextOpener === null) {
+                $end = $closer;
             } else {
-                // Any tokens between the return and the closer
-                // cannot be executed.
-                $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-                $end   = $tokens[$condition]['scope_closer'];
-            }//end if
+                $end = $nextOpener;
+            }
         } else {
             // This token is in the global scope.
             if ($tokens[$stackPtr]['code'] === T_BREAK) {
@@ -183,8 +203,6 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         }//end if
 
         $lastLine = $tokens[$start]['line'];
-        $endLine  = $tokens[$end]['line'];
-
         for ($i = ($start + 1); $i < $end; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 continue;
