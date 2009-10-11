@@ -633,7 +633,11 @@ class PHP_CodeSniffer_File
     {
         // Work out which sniff generated the warning.
         $parts = explode('_', $this->_activeListener);
-        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        if (isset($parts[3]) === true) {
+            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        } else {
+            $sniff = 'unknownSniff';
+        }
 
         if ($stackPtr === null) {
             $lineNum = 1;

@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16563 : Check file extensions problem in phpcs-svn-pre-commit
     -- Thanks to Kaijung Chen for the patch
   - Fixed bug #16592 : Object operator indentation incorrect when first operator is on a new line
+  - Fixed bug #16641 : Notice output
   - Fixed bug #16682 : Squiz_Sniffs_Strings_DoubleQuoteUsageSniff reports string "\0" as invalid
   - Fixed bug #16683 : Typing error in PHP_CodeSniffer_CommentParser_AbstractParser
  </notes>
