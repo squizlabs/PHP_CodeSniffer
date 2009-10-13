@@ -17,7 +17,7 @@
 /**
  * Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff.
  *
- * Verifies that there is a spce between each condition of foreach loops.
+ * Verifies that there is a space between each condition of foreach loops.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
