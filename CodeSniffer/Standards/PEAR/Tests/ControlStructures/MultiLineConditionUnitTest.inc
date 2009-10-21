@@ -100,4 +100,18 @@ if ($condition1
     || $condition2 || $condition3
 ) {
 }
+
+if ($condition1)
+    echo 'bar';
+
+if ($condition1
+    || $condition2
+|| $condition3)
+    echo 'bar';
+
+
+if ($condition1
+    || $condition2 || $condition3
+)
+    echo 'bar';
 ?>

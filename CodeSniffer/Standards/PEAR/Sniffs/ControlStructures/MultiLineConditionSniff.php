@@ -116,6 +116,12 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }//end if
         }//end for
 
+        // From here on, we are checking the spacing of the opening and closing
+        // braces. If this IF statement does not use braces, we end here.
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
         // The opening brace needs to be one space away
         // from the closing parenthesis.
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
