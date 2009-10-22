@@ -68,6 +68,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16684 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
   - Fixed bug #16696 : Spelling error in MultiLineConditionSniff
   - Fixed bug #16697 : MultiLineConditionSniff incorrect result with inline IF
+  - Fixed bug #16698 : Notice in JavaScript Tokenizer
  </notes>
  <contents>
   <dir name="/">
