@@ -67,7 +67,7 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $cmd = $jslPath.' -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process '.$fileName;
+        $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
         $msg = exec($cmd, $output, $retval);
 
         // $exitCode is the last line of $output if no error occures, on error it
