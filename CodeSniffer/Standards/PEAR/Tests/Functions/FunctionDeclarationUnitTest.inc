@@ -38,6 +38,11 @@ class MyClass
         $currScope
     );
 
+    protected abstract function processToken(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr,
+        $currScope);
+
 }
 
 function getInstalledStandards(
@@ -50,6 +55,10 @@ function getInstalledStandards(
 function &testFunction($arg1,
     $arg2,
 ) {
+}
+
+function testFunction($arg1,
+$arg2) {
 }
 
 ?>

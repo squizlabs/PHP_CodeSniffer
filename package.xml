@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now get PHP_CodeSniffer to ignore a whole file by adding @codingStandardsIgnoreFile in the content
     -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
   - Reports now print their file lists in alphabetical order
+  - PEAR FunctionDeclarationSniff now reports error for incorrect closing bracket placement in multi-line definitions
   - Added Generic CallTimePassByRefenceSniff to prohibit the passing of variables into functions by reference
     -- Thanks to Florian Grandel for the contribution
   - Added Squiz DisallowComparisonAssignmentSniff to ban the assignment of comparison values to a variable

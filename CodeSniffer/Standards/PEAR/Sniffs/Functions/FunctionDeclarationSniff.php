@@ -148,7 +148,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 
                 $lastLine = $tokens[$i]['line'];
             }
-        }
+        }//end for
 
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
             // The openning brace needs to be one space away
@@ -186,6 +186,20 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration';
                 $phpcsFile->addError($error, $next);
             }
+        }//end if
+
+        // The closing parenthesis must be on a new line, even
+        // when checking abstract function definitions.
+        $prev = $phpcsFile->findPrevious(
+                T_WHITESPACE,
+                ($closeBracket - 1),
+                null,
+                true
+            );
+
+        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+            $error = 'The closing parenthesis of a multi-line function declaration must be on a new line';
+            $phpcsFile->addError($error, $closeBracket);
         }
 
     }//end processMultiLineDeclaration()
