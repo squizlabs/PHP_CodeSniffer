@@ -72,6 +72,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16696 : Spelling error in MultiLineConditionSniff
   - Fixed bug #16697 : MultiLineConditionSniff incorrect result with inline IF
   - Fixed bug #16698 : Notice in JavaScript Tokenizer
+  - Fixed bug #16736 : Multi-files sniffs aren't processed when FILE is a single directory
+    -- Thanks to Alexey Shein for the patch
  </notes>
  <contents>
   <dir name="/">

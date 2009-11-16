@@ -346,7 +346,7 @@ class PHP_CodeSniffer
 
         // Now process the multi-file sniffs, assuming there are
         // multiple files being sniffed.
-        if (count($files) > 1) {
+        if (count($files) > 1 || is_dir($files[0]) === true) {
             foreach ($this->_tokenListeners['multifile'] as $listener) {
                 // Set the name of the listener for error messages.
                 $activeListener = get_class($listener);
