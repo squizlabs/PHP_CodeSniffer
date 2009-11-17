@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2009-08-17</date>
- <time>13:15:00</time>
+ <date>2009-11-17</date>
+ <time>14:30:00</time>
  <version>
   <release>1.2.1</release>
   <api>1.2.1</api>
@@ -58,7 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowComparisonAssignmentSniff no longer reports errors when assigning the return value of a function
   - CSS tokenizer now correctly supports multi-line comments
   - When only the case of var names differ for function comments, the error now indicates the case is different
-  - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
+  - Fixed an issue with Generic UnnecessaryStringConcatSniff where it incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
   - Fixed bug #16533 : Duplicate errors and warnings
   - Fixed bug #16563 : Check file extensions problem in phpcs-svn-pre-commit
@@ -1752,6 +1752,70 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.2.1</release>
+    <api>1.2.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-11-17</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added a new report type --report=svnblame to show how many errors and warnings were committed by each author
+      -- Also shows the percentage of their code that are errors and warnings
+      -- Requires you to have the SVN command in your path
+      -- Make sure SVN is storing usernames and passwords (if required) or you will need to enter them for each file
+      -- You can also use the -s command line argument to see the different types of errors authors are committing
+      -- You can use the -v command line argument to see all authors, even if they have no errors or warnings
+    - Added a new command line argument --report-width to allow you to set the column width of screen reports
+      -- Reports wont accept values less than 70 or else they get too small
+      -- Can also be set via a config var: phpcs --config-set report_width 100
+    - You can now get PHP_CodeSniffer to ignore a whole file by adding @codingStandardsIgnoreFile in the content
+      -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
+    - Reports now print their file lists in alphabetical order
+    - PEAR FunctionDeclarationSniff now reports error for incorrect closing bracket placement in multi-line definitions
+    - Added Generic CallTimePassByRefenceSniff to prohibit the passing of variables into functions by reference
+      -- Thanks to Florian Grandel for the contribution
+    - Added Squiz DisallowComparisonAssignmentSniff to ban the assignment of comparison values to a variable
+    - Added Squiz DuplicateStyleDefinitionSniff to check for duplicate CSS styles in a single class block
+    - Squiz ArrayDeclarationSniff no longer checks the case of array indexes because that is not its job
+    - Squiz PostStatementCommentSniff now allows end comments for class member functions
+    - Squiz InlineCommentSniff now supports the checking of JS files
+    - MySource CreateWidgetTypeCallbackSniff now allows the callback to be passed to another function
+    - MySource CreateWidgetTypeCallbackSniff now correctly ignores callbacks used inside conditions
+    - Generic MultipleStatementAlignmentSniff now enforces a single space before equals sign if max padding is reached
+    - Fixed a problem in the JS tokenizer where regular expressions containing \// were not converted correctly
+    - Fixed a problem tokenizing CSS files where multiple ID targets on a line would look like comments
+    - Fixed a problem tokenizing CSS files where class names containing a colon looked like style definitions
+    - Fixed a problem tokenizing CSS files when style statements had empty url() calls
+    - Fixed a problem tokenizing CSS colours with the letter E in first half of the code
+    - Squiz ColonSpacingSniff now ensures it is only checking style definitions in CSS files and not class names
+    - Squiz DisallowComparisonAssignmentSniff no longer reports errors when assigning the return value of a function
+    - CSS tokenizer now correctly supports multi-line comments
+    - When only the case of var names differ for function comments, the error now indicates the case is different
+    - Fixed an issue with Generic UnnecessaryStringConcatSniff where it incorrectly suggested removing a concat
+    - Fixed bug #16530 : ScopeIndentSniff reports false positive
+    - Fixed bug #16533 : Duplicate errors and warnings
+    - Fixed bug #16563 : Check file extensions problem in phpcs-svn-pre-commit
+      -- Thanks to Kaijung Chen for the patch
+    - Fixed bug #16592 : Object operator indentation incorrect when first operator is on a new line
+    - Fixed bug #16641 : Notice output
+    - Fixed bug #16682 : Squiz_Sniffs_Strings_DoubleQuoteUsageSniff reports string "\0" as invalid
+    - Fixed bug #16683 : Typing error in PHP_CodeSniffer_CommentParser_AbstractParser
+    - Fixed bug #16684 : Bug in Squiz_Sniffs_PHP_NonExecutableCodeSniff
+    - Fixed bug #16692 : Spaces in paths in Squiz_Sniffs_Debug_JavaScriptLintSniff
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Fixed bug #16696 : Spelling error in MultiLineConditionSniff
+    - Fixed bug #16697 : MultiLineConditionSniff incorrect result with inline IF
+    - Fixed bug #16698 : Notice in JavaScript Tokenizer
+    - Fixed bug #16736 : Multi-files sniffs aren't processed when FILE is a single directory
+      -- Thanks to Alexey Shein for the patch
+    - Fixed bug #16792 : Bug in Generic_Sniffs_PHP_ForbiddenFunctionsSniff
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.2.0</release>
