@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ColonSpacingSniff now ensures it is only checking style definitions in CSS files and not class names
   - Squiz DisallowComparisonAssignmentSniff no longer reports errors when assigning the return value of a function
   - CSS tokenizer now correctly supports multi-line comments
+  - When only the case of var names differ for function comments, the error now indicates the case is different
   - Fixed an issue with Generic UnnecessaryStringConcatSniff where it sometimes incorrectly suggested removing a concat
   - Fixed bug #16530 : ScopeIndentSniff reports false positive
   - Fixed bug #16533 : Duplicate errors and warnings

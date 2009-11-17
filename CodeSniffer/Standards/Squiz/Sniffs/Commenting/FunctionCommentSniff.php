@@ -685,10 +685,16 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $realName = '&'.$realName;
                     }
 
-                    if ($realName !== $param->getVarName()) {
-                        $error  = 'Doc comment var "'.$paramName;
-                        $error .= '" does not match actual variable name "'.$realName;
-                        $error .= '" at position '.$pos;
+                    if ($realName !== $paramName) {
+                        $error  = 'Doc comment for var '.$paramName;
+                        $error .= ' does not match ';
+                        if (strtolower($paramName) === strtolower($realName)) {
+                            $error .= 'case of ';
+                        }
+
+                        $error .= 'actual variable name '.$realName;
+                        $error .= ' at position '.$pos;
+
                         $this->currentFile->addError($error, $errorPos);
                     }
                 } else {
