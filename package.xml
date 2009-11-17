@@ -74,6 +74,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16698 : Notice in JavaScript Tokenizer
   - Fixed bug #16736 : Multi-files sniffs aren't processed when FILE is a single directory
     -- Thanks to Alexey Shein for the patch
+  - Fixed bug #16792 : Bug in Generic_Sniffs_PHP_ForbiddenFunctionsSniff
  </notes>
  <contents>
   <dir name="/">

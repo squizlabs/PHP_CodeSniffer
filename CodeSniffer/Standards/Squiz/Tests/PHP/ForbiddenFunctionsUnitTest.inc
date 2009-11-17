@@ -4,4 +4,9 @@ print 'hi';
 print($var);
 if (is_null($blah) === TRUE) {
 }
+
+class Test
+{
+    const DELETE = 'delete';
+}
 ?>
