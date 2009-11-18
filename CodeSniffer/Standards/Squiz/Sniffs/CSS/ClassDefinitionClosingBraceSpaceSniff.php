@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_CSS_ColonSpacingSniff.
+ * Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff.
  *
  * PHP version 5
  *
