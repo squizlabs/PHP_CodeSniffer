@@ -68,7 +68,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                          'xor' => '^',
                         );
 
-        $operator = $tokens[$stackPtr]['content'];
+        $operator = strtolower($tokens[$stackPtr]['content']);
         if (isset($replacements[$operator]) === false) {
             return;
         }
