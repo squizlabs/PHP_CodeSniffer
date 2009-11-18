@@ -61,6 +61,8 @@ class Squiz_Tests_Commenting_LongConditionClosingCommentUnitTest extends Abstrac
                     378 => 1,
                     493 => 1,
                     531 => 1,
+                    536 => 1,
+                    540 => 1,
                    );
             break;
         case 'LongConditionClosingCommentUnitTest.js':
@@ -76,6 +78,7 @@ class Squiz_Tests_Commenting_LongConditionClosingCommentUnitTest extends Abstrac
                     307 => 1,
                     401 => 1,
                     439 => 1,
+                    444 => 1,
                    );
             break;
         default:

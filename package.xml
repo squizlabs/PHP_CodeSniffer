@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
   - Fixed bug #16794 : ValidLogicalOperatorsSniff doesn't report operators not in lowercase
  </notes>
  <contents>

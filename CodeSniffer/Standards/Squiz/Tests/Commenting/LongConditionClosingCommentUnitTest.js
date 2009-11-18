@@ -437,3 +437,8 @@ switch (something) {
     // Line 5
     break;
 }
+
+// Wrong comment
+if (condition) {
+    condition = true;
+}//end foreach

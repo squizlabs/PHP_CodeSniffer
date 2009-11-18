@@ -131,16 +131,16 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
         }//end if
 
         $lineDifference = ($endBrace['line'] - $startBrace['line']);
-        if ($lineDifference < $this->lineLimit) {
-            return;
-        }
 
         $expected = '//end '.$startCondition['content'];
+        $comment  = $phpcsFile->findNext(array(T_COMMENT), $stackPtr, null, false);
 
-        $comment = $phpcsFile->findNext(array(T_COMMENT), $stackPtr, null, false);
         if (($comment === false) || ($tokens[$comment]['line'] !== $endBrace['line'])) {
-            $error = "End comment for long condition not found; expected \"$expected\"";
-            $phpcsFile->addError($error, $stackPtr);
+            if ($lineDifference >= $this->lineLimit) {
+                $error = "End comment for long condition not found; expected \"$expected\"";
+                $phpcsFile->addError($error, $stackPtr);
+            }
+
             return;
         }
 

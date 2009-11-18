@@ -529,4 +529,13 @@ switch ($something) {
     // Line 5
     break;
 }
+
+// Wrong comment
+if ($condition) {
+    echo "true";
+}//end foreach
+
+if ($condition) {
+    echo "true";
+} //end if
 ?>
