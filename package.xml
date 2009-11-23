@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
   - Fixed bug #16794 : ValidLogicalOperatorsSniff doesn't report operators not in lowercase
+  - Fixed bug #16821 : Bug in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
+    -- Thanks to Jaroslav Hanslík for the patch
  </notes>
  <contents>
   <dir name="/">

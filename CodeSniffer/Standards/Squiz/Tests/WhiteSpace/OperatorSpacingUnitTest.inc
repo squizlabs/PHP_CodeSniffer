@@ -94,4 +94,7 @@ function myFunction($variable=0, $var2='string') {}
 
 if (index > -1) {
 }
+
+// This is valid.
+$boo = -$foo;
 ?>

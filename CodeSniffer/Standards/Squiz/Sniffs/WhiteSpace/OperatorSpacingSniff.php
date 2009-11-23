@@ -151,7 +151,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 }
 
                 $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-                if ($tokens[$number]['code'] === T_LNUMBER) {
+                if (in_array($tokens[$number]['code'], array(T_LNUMBER, T_VARIABLE)) === true) {
                     $semi = $phpcsFile->findNext(T_WHITESPACE, ($number + 1), null, true);
                     if ($tokens[$semi]['code'] === T_SEMICOLON) {
                         if ($prev !== false && (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
