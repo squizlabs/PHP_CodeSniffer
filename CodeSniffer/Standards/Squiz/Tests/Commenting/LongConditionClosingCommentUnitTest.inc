@@ -538,4 +538,65 @@ if ($condition) {
 if ($condition) {
     echo "true";
 } //end if
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (Exception $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+}
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (Exception $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+}
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (Exception $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+}//end catch
 ?>

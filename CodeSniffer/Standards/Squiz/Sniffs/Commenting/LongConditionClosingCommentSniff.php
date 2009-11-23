@@ -50,6 +50,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                                 T_FOR,
                                 T_FOREACH,
                                 T_WHILE,
+                                T_TRY,
                                );
 
     /**
@@ -129,6 +130,13 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                 }
             } while (isset($tokens[$nextToken]['scope_closer']) === true);
         }//end if
+
+        if ($startCondition['code'] === T_TRY) {
+            // TRY statements need to check until the end of the CATCH.
+            $catch = $phpcsFile->findNext(T_CATCH, ($stackPtr + 1));
+            $stackPtr = $tokens[$catch]['scope_closer'];
+            $endBrace = $tokens[$stackPtr];
+        }
 
         $lineDifference = ($endBrace['line'] - $startBrace['line']);
 
