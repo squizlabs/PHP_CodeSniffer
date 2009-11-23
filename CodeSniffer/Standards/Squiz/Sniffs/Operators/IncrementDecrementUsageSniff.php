@@ -132,9 +132,9 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignedVar = $phpcsFile->findPrevious(array(T_VARIABLE), ($stackPtr - 1), null, false);
+        $assignedVar = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         // Not an assignment, return.
-        if ($assignedVar === false) {
+        if ($tokens[$assignedVar]['code'] !== T_VARIABLE) {
             return;
         }
 
