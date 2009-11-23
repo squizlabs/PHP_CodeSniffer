@@ -1099,7 +1099,7 @@ class PHP_CodeSniffer
             if (strlen($filename) <= ($width - 9)) {
                 echo $filename;
             } else {
-                echo '...'.substr($filename, (strlen($filename) - $width - 9));
+                echo '...'.substr($filename, (strlen($filename) - ($width - 9)));
             }
 
             echo PHP_EOL;
