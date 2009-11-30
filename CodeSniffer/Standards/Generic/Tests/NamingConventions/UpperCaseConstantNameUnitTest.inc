@@ -80,4 +80,7 @@ declare(ticks = 1) {
 }
 
 $binary = (binary) $string;
+
+$foo->define('bar');
+$foo->getBar()->define('foo');
 ?>

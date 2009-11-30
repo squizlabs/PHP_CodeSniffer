@@ -65,7 +65,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
         // If the next non-whitespace token after this token
         // is not an opening parenthesis then it is not a function call.
-        $openBracket = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             $functionKeyword = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMA, T_COMMENT, T_STRING), ($stackPtr - 1), null, true);
 
@@ -94,7 +94,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             // Is this a class name?
-            $nextPtr = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+            $nextPtr = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             if ($tokens[$nextPtr]['code'] === T_DOUBLE_COLON) {
                 return;
             }
@@ -107,7 +107,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             // Is this a member var name?
-            $prevPtr = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
+            $prevPtr = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
             if ($tokens[$prevPtr]['code'] === T_OBJECT_OPERATOR) {
                 return;
             }
@@ -130,8 +130,14 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 This may be a "define" or "constant" function call.
             */
 
+            // Make sure this is not a method call.
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($tokens[$prev]['code'] === T_OBJECT_OPERATOR) {
+                return;
+            }
+
             // The next non-whitespace token must be the constant name.
-            $constPtr = $phpcsFile->findNext(array(T_WHITESPACE), ($openBracket + 1), null, true);
+            $constPtr = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
             if ($tokens[$constPtr]['code'] !== T_CONSTANT_ENCAPSED_STRING) {
                 return;
             }
