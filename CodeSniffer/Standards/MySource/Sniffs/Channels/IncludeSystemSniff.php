@@ -50,6 +50,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                         'phpunit_framework_assert',
                         'abstractmysourceunittest',
                         'abstractdatacleanunittest',
+                        'exception',
                        );
 
 

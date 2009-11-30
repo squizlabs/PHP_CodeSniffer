@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements
   - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
   - Squiz IncrementDecrementUsageSniff now has better checking to ensure it only looks at simple variable assignments
+  - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
   - Fixed bug #16794 : ValidLogicalOperatorsSniff doesn't report operators not in lowercase
   - Fixed bug #16804 : Report filename is shortened too much
   - Fixed bug #16821 : Bug in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
