@@ -123,9 +123,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                     break;
                 }
 
-                if ($prevCode === T_STRING) {
-                    // We allow very simple operations to not be bracketed:
-                    // ceil($one / $two);
+                if ($prevCode === T_STRING || $prevCode === T_SWITCH) {
+                    // We allow very simple operations to not be bracketed.
+                    // For example, ceil($one / $two).
                     $allowed = array(
                                 T_VARIABLE,
                                 T_LNUMBER,
@@ -136,6 +136,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                                 T_OBJECT_OPERATOR,
                                 T_OPEN_SQUARE_BRACKET,
                                 T_CLOSE_SQUARE_BRACKET,
+                                T_MODULUS,
                                );
 
                     for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
@@ -174,7 +175,10 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
                     // This operation is inside an a control structure like FOREACH
                     // or IF, but has no bracket of it's own.
-                    break;
+                    // The only control structure allowed to do this is SWITCH.
+                    if ($prevCode !== T_SWITCH) {
+                        break;
+                    }
                 }
 
                 if ($prevCode === T_OPEN_PARENTHESIS) {

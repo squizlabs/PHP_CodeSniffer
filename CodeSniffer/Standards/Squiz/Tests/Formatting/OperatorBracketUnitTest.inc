@@ -115,4 +115,10 @@ $three = ceil($one / ($two / $four));
 $four = -0.25;
 
 $three = ceil($one[1] / $two);
+
+switch ($number % 10) {
+    case 1:
+        $suffix = 'st';
+    break;
+}
 ?>
