@@ -83,7 +83,9 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
         }
 
         // Special case for JS files.
-        if ($tokens[$lastContent]['code'] === T_COMMA) {
+        if ($tokens[$lastContent]['code'] === T_COMMA
+            || $tokens[$lastContent]['code'] === T_SEMICOLON
+        ) {
             $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($lastContent - 1), null, true);
             if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                 return;

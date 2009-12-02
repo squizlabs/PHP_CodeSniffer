@@ -136,12 +136,25 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         // We don't want end of block comments. If the last comment is a closing
         // curly brace.
-        $previousContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
-        if (($tokens[$previousContent]['line'] === $tokens[$stackPtr]['line']) && ($tokens[$previousContent]['code'] === T_CLOSE_CURLY_BRACKET)) {
-            return;
+        $previousContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($tokens[$previousContent]['line'] === $tokens[$stackPtr]['line']) {
+            if ($tokens[$previousContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+                return;
+            }
+
+            // Special case for JS files.
+            if ($tokens[$previousContent]['code'] === T_COMMA
+                || $tokens[$previousContent]['code'] === T_SEMICOLON
+            ) {
+                $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($previousContent - 1), null, true);
+                if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+                    return;
+                }
+            }
         }
 
         $comment = rtrim($tokens[$stackPtr]['content']);
+
         // Only want inline comments.
         if (substr($comment, 0, 2) !== '//') {
             return;

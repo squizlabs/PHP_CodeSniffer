@@ -77,3 +77,23 @@ myFunction = function() {
  */
 myClass.myFunction = function() {
 }
+
+dfx.getIframeDocument = function(iframe)
+{
+    return doc;
+
+};//end dfx.getIframeDocument()
+
+mig.Gallery.prototype = {
+
+    init: function(cb)
+    {
+
+    },//end init()
+
+    imageClicked: function(id)
+    {
+
+    }//end imageClicked()
+
+};

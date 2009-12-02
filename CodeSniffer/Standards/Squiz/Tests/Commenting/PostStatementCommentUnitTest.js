@@ -21,3 +21,10 @@ mig.Gallery.prototype = {
     }//end imageClicked()
 
 };
+
+dfx.getIframeDocument = function(iframe)
+{
+
+    return doc;
+
+};//end dfx.getIframeDocument()
