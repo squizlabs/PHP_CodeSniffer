@@ -95,6 +95,8 @@ function myFunction($variable=0, $var2='string') {}
 if (index > -1) {
 }
 
-// This is valid.
+// This is all valid.
 $boo = -$foo;
+function foo($boo = -1) {}
+$foo = array('boo' => -1);
 ?>

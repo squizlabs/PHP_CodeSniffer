@@ -71,13 +71,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-            // Skip for '=&' case.
-            if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
-                return;
-            }
-
-            // Skip default values in function declarations.
+        // Skip default values in function declarations.
+        if ($tokens[$stackPtr]['code'] === T_EQUAL
+            || $tokens[$stackPtr]['code'] === T_MINUS
+        ) {
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
                 $bracket = end($tokens[$stackPtr]['nested_parenthesis']);
                 if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
@@ -86,6 +83,13 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                         return;
                     }
                 }
+            }
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+            // Skip for '=&' case.
+            if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
+                return;
             }
         }
 
@@ -143,6 +147,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                                   T_COMMA,
                                   T_OPEN_PARENTHESIS,
                                   T_OPEN_SQUARE_BRACKET,
+                                  T_DOUBLE_ARROW,
                                  );
 
                 if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
