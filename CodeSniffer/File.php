@@ -1711,7 +1711,8 @@ class PHP_CodeSniffer_File
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
      *
-     * @return string The name of the class, interface or function.
+     * @return string|null The name of the class, interface or function.
+     *                     or NULL if the function is a closure.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS or T_INTERFACE.
      */
@@ -1725,10 +1726,53 @@ class PHP_CodeSniffer_File
             throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION, T_CLASS OR T_INTERFACE');
         }
 
+        if ($tokenCode === T_FUNCTION
+            && $this->isAnonymousFunction($stackPtr) === true) {
+            return null;
+        }
+
         $token = $this->findNext(T_STRING, $stackPtr);
         return $this->_tokens[$token]['content'];
 
     }//end getDeclarationName()
+
+
+    /**
+     * Check if the token at the specified position is a anonymus function.
+     *
+     * @param int $stackPtr The position of the declaration token which
+     *                      declared the class, interface or function.
+     *
+     * @return boolean
+     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
+     *                                   T_FUNCTION
+     */
+    public function isAnonymousFunction($stackPtr)
+    {
+        $tokenCode = $this->_tokens[$stackPtr]['code'];
+        if ($tokenCode !== T_FUNCTION) {
+            throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION');
+        }
+
+        if (isset($this->_tokens[$stackPtr]['parenthesis_opener']) === false) {
+            // Something is not right with this function.
+            return false;
+        }
+
+        $name = $this->findNext(T_STRING, ($stackPtr + 1));
+        if ($name === FALSE) {
+            // No name found.
+            return true;
+        }
+
+        $open = $this->_tokens[$stackPtr]['parenthesis_opener'];
+        if ($name > $open) {
+            return true;
+        }
+
+        return false;
+
+    }//end isAnonymousFunction()
 
 
     /**
@@ -1856,6 +1900,7 @@ class PHP_CodeSniffer_File
      *    'is_abstract'     => false,    // true if the abstract keyword was found.
      *    'is_final'        => false,    // true if the final keyword was found.
      *    'is_static'       => false,    // true if the static keyword was found.
+     *    'is_closure'      => false,    // true if no name is found.
      *   );
      * </code>
      *
@@ -1889,6 +1934,7 @@ class PHP_CodeSniffer_File
         $isAbstract     = false;
         $isFinal        = false;
         $isStatic       = false;
+        $isClosure      = $this->isAnonymousFunction($stackPtr);
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (in_array($this->_tokens[$i]['code'], $valid) === false) {
@@ -1926,6 +1972,7 @@ class PHP_CodeSniffer_File
                 'is_abstract'     => $isAbstract,
                 'is_final'        => $isFinal,
                 'is_static'       => $isStatic,
+                'is_closure'      => $isClosure,
                );
 
     }//end getMethodProperties()
