@@ -70,6 +70,11 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
                 return;
             }
 
+            // Closures do not require a closing comment.
+            if ($methodProps['is_closure'] === true) {
+                return;
+            }
+
             // If this function is in an interface then we don't require
             // a closing comment.
             if ($phpcsFile->hasCondition($stackPtr, T_INTERFACE) === true) {

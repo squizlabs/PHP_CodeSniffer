@@ -49,6 +49,9 @@ class Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff extends PEAR_Sniffs_
     protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($functionName === null) {
+            return;
+        }
 
         // Does this function claim to be magical?
         if (preg_match('|^__|', $functionName) !== 0) {

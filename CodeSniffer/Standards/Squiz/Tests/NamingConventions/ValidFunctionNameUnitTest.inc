@@ -16,4 +16,5 @@ function __my_function() {}
 function XMLParser() {}
 function xmlParser() {}
 
+echo preg_replace_callback('~-([a-z])~', function ($match) { return strtoupper($match[1]); }, 'hello-world');
 ?>

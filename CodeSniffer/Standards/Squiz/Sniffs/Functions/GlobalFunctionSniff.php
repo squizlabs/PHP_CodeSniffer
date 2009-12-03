@@ -59,6 +59,10 @@ class Squiz_Sniffs_Functions_GlobalFunctionSniff implements PHP_CodeSniffer_Snif
 
         if (empty($tokens[$stackPtr]['conditions']) === true) {
             $functionName = $phpcsFile->getDeclarationName($stackPtr);
+            if ($functionName === null) {
+                return;
+            }
+
             // Special exception for __autoload as it needs to be global.
             if ($functionName !== '__autoload') {
                 $error = "Consider putting global function \"$functionName\" in a static class";
