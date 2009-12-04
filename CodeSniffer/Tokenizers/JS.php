@@ -186,6 +186,10 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '<='        => 'T_IS_SMALLER_OR_EQUAL',
                               '>='        => 'T_IS_GREATER_OR_EQUAL',
                               '!'         => 'T_BOOLEAN_NOT',
+                              '||'        => 'T_BOOLEAN_OR',
+                              '&&'        => 'T_BOOLEAN_AND',
+                              '|'         => 'T_BITWISE_OR',
+                              '&'         => 'T_BITWISE_AND',
                               '!='        => 'T_IS_NOT_EQUAL',
                               '!=='       => 'T_IS_NOT_IDENTICAL',
                               '='         => 'T_EQUAL',
@@ -459,6 +463,11 @@ class PHP_CodeSniffer_Tokenizers_JS
                                          T_EQUAL,
                                          T_OPEN_PARENTHESIS,
                                          T_RETURN,
+                                         T_BOOLEAN_OR,
+                                         T_BOOLEAN_AND,
+                                         T_BITWISE_OR,
+                                         T_BITWISE_AND,
+                                         T_COMMA,
                                         );
 
                         $afterTokens = array(
