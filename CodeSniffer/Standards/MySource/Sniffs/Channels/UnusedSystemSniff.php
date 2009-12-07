@@ -80,6 +80,23 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['level'] < $level) {
                 // We have gone out of scope.
+                // If the original include was inside an IF statement that
+                // is checking if the system exists, check the outer scope
+                // as well.
+                if ($tokens[$stackPtr]['level'] === $level) {
+                    // We are still in the base level, so this is the first
+                    // time we have got here.
+                    $conditions = array_keys($tokens[$stackPtr]['conditions']);
+                    if (empty($conditions) === FALSE) {
+                        $cond = array_pop($conditions);
+                        if ($tokens[$cond]['code'] === T_IF) {
+                            $i = $tokens[$cond]['scope_closer'];
+                            $level--;
+                            continue;
+                        }
+                    }
+                }
+
                 break;
             }
 

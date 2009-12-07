@@ -89,4 +89,12 @@ class AssetListingUnitTest extends AbstractMySourceUnitTest
         $parserFiles = FileSystem::listDirectory();
     }
 }
+
+if (Channels::systemExists('Log') === TRUE) {
+   Channels::includeSystem('Log');
+} else {
+   return;
+}
+
+Log::addProjectLog('metadata.field.update', $msg);
 ?>

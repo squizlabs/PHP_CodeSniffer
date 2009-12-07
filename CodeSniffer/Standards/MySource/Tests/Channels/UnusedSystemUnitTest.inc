@@ -53,4 +53,15 @@ if (self::systemExists($systemName) === FALSE) {
 Channels::includeSystem('Widget');
 Widget::includeWidget('AbstractContainer');
 class MyOtherWidget extends BookWidgetType {}
+
+function myFunction()
+{
+    if (Channels::systemExists('Log5') === TRUE) {
+       Channels::includeSystem('Log5');
+    } else {
+       return;
+    }
+
+    Log5::addProjectLog('metadata.field.update', $msg);
+}
 ?>

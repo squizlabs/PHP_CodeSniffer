@@ -68,19 +68,28 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
+     * @param integer              $stackPtr  The position where the token was found.
+     * @param integer              $currScope The current scope opener token.
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
-    {
+    protected function processTokenWithinScope(
+        PHP_CodeSniffer_File $phpcsFile,
+        $stackPtr,
+        $currScope
+    ) {
         $tokens = $phpcsFile->getTokens();
 
         // Determine the name of the class that the static function
         // is being called on.
-        $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        $className      = $tokens[$classNameToken]['content'];
+        $classNameToken = $phpcsFile->findPrevious(
+            T_WHITESPACE,
+            ($stackPtr - 1),
+            null,
+            true
+        );
+
+        $className = $tokens[$classNameToken]['content'];
         if (in_array(strtolower($className), $this->_ignore) === true) {
             return;
         }
@@ -180,7 +189,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
     /**
      * Processes a token within the scope that this test is listening to.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
      * @param int                  $stackPtr  The position in the stack where
      *                                        this token was found.
      *
@@ -220,8 +229,18 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         // Go searching for includeSystem, includeAsset or require/include
         // calls outside our scope.
         for ($i = 0; $i < $stackPtr; $i++) {
-            // Skip other scopes.
-            if (isset($tokens[$i]['scope_closer']) === true) {
+            // Skip classes and functions as will we never get
+            // into their scopes when including this file, although
+            // we have a chance of getting into IF's, WHILE's etc.
+            $ignoreTokens = array(
+                             T_CLASS,
+                             T_INTERFACE,
+                             T_FUNCTION,
+                            );
+
+            if (in_array($tokens[$i]['code'], $ignoreTokens) === TRUE
+                && isset($tokens[$i]['scope_closer']) === true
+            ) {
                 $i = $tokens[$i]['scope_closer'];
                 continue;
             }
@@ -260,8 +279,11 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      *
      * @return string
      */
-    protected function getIncludedClassFromToken(PHP_CodeSniffer_File $phpcsFile, $tokens, $stackPtr)
-    {
+    protected function getIncludedClassFromToken(
+        PHP_CodeSniffer_File $phpcsFile,
+        array $tokens,
+        $stackPtr
+    ) {
         if (strtolower($tokens[$stackPtr]['content']) === 'includesystem') {
             $systemName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $systemName = trim($tokens[$systemName]['content'], " '");
