@@ -194,7 +194,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             if ($tokens[$stackPtr]['code'] === T_EQUAL) {
                 $opToken = $phpcsFile->findNext(array(T_PLUS, T_MINUS), ($nextVar + 1), $statementEnd);
                 if ($opToken === false) {
-                    // Operator was before the varaible, like:
+                    // Operator was before the variable, like:
                     // $var = 1 + $var;
                     // So we ignore it.
                     return;

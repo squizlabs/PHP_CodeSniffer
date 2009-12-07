@@ -84,7 +84,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
         $endStatement = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
-                $error = 'The value of a comparison must not be assigned to a varaible';
+                $error = 'The value of a comparison must not be assigned to a variable';
                 $phpcsFile->addError($error, $stackPtr);
                 break;
             }
@@ -92,7 +92,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$booleanOperators) === true
                 || $tokens[$i]['code'] === T_BOOLEAN_NOT
             ) {
-                $error = 'The value of a boolean operation must not be assigned to a varaible';
+                $error = 'The value of a boolean operation must not be assigned to a variable';
                 $phpcsFile->addError($error, $stackPtr);
                 break;
             }
