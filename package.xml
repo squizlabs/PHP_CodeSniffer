@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClosingDeclarationCommentSniff now ignores closures
   - Squiz GlobalFunctionSniff now ignores closures
   - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
+  - Squiz standard now throws nesting level and cyclomatic complexity errors at much higher levels
   - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
   - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements
   - MySource IncludeSystemSniff no longer throws errors for included widgets inside methods
@@ -979,6 +980,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Metrics">
+        <file baseinstalldir="PHP" name="CyclomaticComplexitySniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NestingLevelSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
