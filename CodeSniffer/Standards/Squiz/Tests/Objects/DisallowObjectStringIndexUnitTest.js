@@ -28,4 +28,5 @@ function test() {
     this.errors['test' + 'blah'] = x;
     this.errors[y] = x;
     this.errors[y + z] = x;
+    this.permissions['workflow.cancel'] = x;
 }

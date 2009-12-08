@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClosingDeclarationCommentSniff now ignores closures
   - Squiz GlobalFunctionSniff now ignores closures
   - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
+  - Squiz DisallowObjectStringIndexSniff now allows indexes that contain dots
   - Squiz standard now throws nesting level and cyclomatic complexity errors at much higher levels
   - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
   - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements

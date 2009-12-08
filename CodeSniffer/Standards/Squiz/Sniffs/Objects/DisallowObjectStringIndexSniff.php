@@ -60,15 +60,21 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Check if the next non white space token is a string.
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($tokens[$next]['code'] !== T_CONSTANT_ENCAPSED_STRING) {
+        // Check if the next non whitespace token is a string.
+        $index = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$index]['code'] !== T_CONSTANT_ENCAPSED_STRING) {
             return;
         }
 
         // Make sure it is the only thing in the square brackets.
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($index + 1), null, true);
         if ($tokens[$next]['code'] !== T_CLOSE_SQUARE_BRACKET) {
+            return;
+        }
+
+        // Allow indxes that have dots in them because we can't write
+        // them in dot notation.
+        if (strpos($tokens[$index]['content'], '.') !== false) {
             return;
         }
 
