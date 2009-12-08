@@ -109,4 +109,17 @@ if ($defaultPageDesign === 0
 ) {
     $settingsUpdated = FALSE;
 }
+
+foreach ( $blah as $var ) {
+    if (  $blah    ) {
+    }
+}
+
+if (
+    $defaultPageDesign === 0
+    && $defaultCascade === TRUE
+    && $defaultChildDesign === 0
+) {
+    $settingsUpdated = FALSE;
+}
 ?>

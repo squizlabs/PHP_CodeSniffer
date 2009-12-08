@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions
   - Squiz standard now uses the PEAR setting of 85 chars for LineLengthSniff
+  - Squiz ControlStructureSpacingSniff now ensure there are no spaces around parentheses
   - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements
   - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
   - Squiz IncrementDecrementUsageSniff now has better checking to ensure it only looks at simple variable assignments
