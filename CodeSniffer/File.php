@@ -442,12 +442,18 @@ class PHP_CodeSniffer_File
         // Remove errors and warnings for ignored lines.
         foreach ($this->_ignoredLines as $line => $ignore) {
             if (isset($this->_errors[$line]) === true) {
-                $this->_errorCount -= count($this->_errors[$line]);
+                foreach ($this->_errors[$line] as $col => $errors) {
+                    $this->_errorCount -= count($errors);
+                }
+
                 unset($this->_errors[$line]);
             }
 
             if (isset($this->_warnings[$line]) === true) {
-                $this->_warningCount -= count($this->_warnings[$line]);
+                foreach ($this->_warnings[$line] as $col => $warnings) {
+                    $this->_warningCount -= count($warnings);
+                }
+
                 unset($this->_warnings[$line]);
             }
         }
