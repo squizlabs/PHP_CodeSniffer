@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The reports now show the correct number of errors and warnings found
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions
+  - Squiz standard now uses the PEAR setting of 85 chars for LineLengthSniff
   - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements
   - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
   - Squiz IncrementDecrementUsageSniff now has better checking to ensure it only looks at simple variable assignments
@@ -945,9 +946,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FileExtensionSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
