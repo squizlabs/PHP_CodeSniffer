@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ValidFunctionNameSniff now ignores closures
   - Squiz ClosingDeclarationCommentSniff now ignores closures
   - Squiz GlobalFunctionSniff now ignores closures
+  - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
   - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
   - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements
   - MySource IncludeSystemSniff no longer throws errors for included widgets inside methods

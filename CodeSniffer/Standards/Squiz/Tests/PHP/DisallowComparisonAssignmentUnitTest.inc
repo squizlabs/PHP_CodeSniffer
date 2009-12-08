@@ -19,6 +19,21 @@ $var = myFunction(
 for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
 }
 
-// This condition is allowed by this sniff.
+// These conditions are allowed by this sniff.
 $var = myFunction(!$var);
+
+$depthAdv = array(
+             $this,
+             !$directLinks,
+             FALSE,
+            );
+
+$var = myFunction(
+    $var,
+    array(
+     $this,
+     !$directLinks,
+     FALSE,
+    );
+);
 ?>

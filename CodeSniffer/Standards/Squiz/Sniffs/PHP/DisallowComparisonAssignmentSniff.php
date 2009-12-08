@@ -65,6 +65,20 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
             }
         }
 
+        // Ignore values in array definitions.
+        $array = $phpcsFile->findNext(
+            T_ARRAY,
+            ($stackPtr + 1),
+            null,
+            false,
+            null,
+            true
+        );
+
+        if ($array !== false) {
+            return;
+        }
+
         // Ignore function calls.
         $ignore = array(
                    T_STRING,
