@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The core PHP_CodeSniffer_File methods now understand the concept of closures (feature request #16866)
     -- Thanks to Christian Kaps for the sample code
+  - The reports now show the correct number of errors and warnings found
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions
   - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements

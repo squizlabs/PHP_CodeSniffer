@@ -441,12 +441,12 @@ class PHP_CodeSniffer_File
 
         // Remove errors and warnings for ignored lines.
         foreach ($this->_ignoredLines as $line => $ignore) {
+            $this->_errorCount   -= count($this->_errors[$line]);
+            $this->_warningCount -= count($this->_warnings[$line]);
+
             unset($this->_errors[$line]);
             unset($this->_warnings[$line]);
         }
-
-        $this->_errorCount   = count($this->_errors);
-        $this->_warningCount = count($this->_warnings);
 
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML
