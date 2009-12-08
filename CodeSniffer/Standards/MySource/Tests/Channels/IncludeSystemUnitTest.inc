@@ -97,4 +97,9 @@ if (Channels::systemExists('Log') === TRUE) {
 }
 
 Log::addProjectLog('metadata.field.update', $msg);
+
+function two() {
+    Widget::includeWidget('CacheAdminScreen');
+    $barChart = CacheAdminScreenWidgetType::constructBarchart($data);
+}
 ?>
