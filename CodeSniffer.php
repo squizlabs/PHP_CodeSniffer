@@ -1146,7 +1146,7 @@ class PHP_CodeSniffer
                     foreach ($colErrors as $error) {
                         $message = $error['message'];
                         if ($showSources === true) {
-                            $message .= ' ('.substr($error['source'], 0, -5).')';
+                            $message .= ' ('.$error['source'].')';
                         }
 
                         // The padding that goes on the front of the line.
@@ -1326,35 +1326,40 @@ class PHP_CodeSniffer
             echo 'SOURCE'.str_repeat(' ', ($width - 11)).'COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         } else {
-            echo 'STANDARD    CATEGORY            SNIFF'.str_repeat(' ', ($width - 42)).'COUNT'.PHP_EOL;
+            echo 'STANDARD  CATEGORY            SNIFF'.str_repeat(' ', ($width - 40)).'COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
 
         foreach ($sources as $source => $count) {
             if ($showSources === true) {
-                $source = substr($source, 0, -5);
                 echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
             } else {
                 $parts = explode('.', $source);
 
-                if (strlen($parts[0]) > 10) {
-                    $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) -10) * -1));
+                if (strlen($parts[0]) > 8) {
+                    $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) -8) * -1));
                 }
-                echo $parts[0].str_repeat(' ', (12 - strlen($parts[0])));
+
+                echo $parts[0].str_repeat(' ', (10 - strlen($parts[0])));
 
                 $category = $this->makeFriendlyName($parts[1]);
                 if (strlen($category) > 18) {
                     $category = substr($category, 0, ((strlen($category) -18) * -1));
                 }
+
                 echo $category.str_repeat(' ', (20 - strlen($category)));
 
-                $sniff = substr($parts[2], 0, -5);
-                $sniff = $this->makeFriendlyName($sniff);
-                if (strlen($sniff) > ($width - 39)) {
-                    $sniff = substr($sniff, 0, ((strlen($sniff) - $width - 39) * -1));
+                $sniff = $this->makeFriendlyName($parts[2]);
+                if (isset($parts[3]) === true) {
+                    $sniff .= ' '.lcfirst($this->makeFriendlyName($parts[3]));
                 }
-                echo $sniff.str_repeat(' ', ($width - 37 - strlen($sniff)));
-            }
+
+                if (strlen($sniff) > ($width - 37)) {
+                    $sniff = substr($sniff, 0, ($width - 37 - strlen($sniff)));
+                }
+
+                echo $sniff.str_repeat(' ', ($width - 35 - strlen($sniff)));
+            }//end if
 
             echo $count.PHP_EOL;
         }//end foreach
@@ -1514,7 +1519,6 @@ class PHP_CodeSniffer
                         continue;
                     }
 
-                    $source = substr($source, 0, -5);
                     echo '         '.$source.str_repeat(' ', ($width - 21 - strlen($source))).$count.PHP_EOL;
                 }
             }

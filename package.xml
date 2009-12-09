@@ -28,6 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The core PHP_CodeSniffer_File methods now understand the concept of closures (feature request #16866)
     -- Thanks to Christian Kaps for the sample code
+  - Sniffs can now specify violation codes for each error and warning they add
+    -- Future versions will allow you to override messages and severities using these codes
+    -- Specifying a code is optional, but will be required if you wish to support overriding
   - The reports now show the correct number of errors and warnings found
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions

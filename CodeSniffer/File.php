@@ -593,17 +593,25 @@ class PHP_CodeSniffer_File
      *
      * @param string $error    The error message.
      * @param int    $stackPtr The stack position where the error occured.
+     * @param string $code     A violation code unique to the sniff message.
      *
      * @return void
      */
-    public function addError($error, $stackPtr)
+    public function addError($error, $stackPtr, $code='')
     {
         // Work out which sniff generated the error.
         $parts = explode('_', $this->_activeListener);
         if (isset($parts[3]) === true) {
             $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+            // Remove "Sniff" from the end.
+            $sniff = substr($sniff, 0, -5);
         } else {
             $sniff = 'unknownSniff';
+        }
+
+        if ($code !== '') {
+            $sniff .= '.'.$code;
         }
 
         if ($stackPtr === null) {
@@ -636,17 +644,25 @@ class PHP_CodeSniffer_File
      *
      * @param string $warning  The error message.
      * @param int    $stackPtr The stack position where the error occured.
+     * @param string $code     A violation code unique to the sniff message.
      *
      * @return void
      */
-    public function addWarning($warning, $stackPtr)
+    public function addWarning($warning, $stackPtr, $code='')
     {
         // Work out which sniff generated the warning.
         $parts = explode('_', $this->_activeListener);
         if (isset($parts[3]) === true) {
             $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+            // Remove "Sniff" from the end.
+            $sniff = substr($sniff, 0, -5);
         } else {
             $sniff = 'unknownSniff';
+        }
+
+        if ($code !== '') {
+            $sniff .= '.'.$code;
         }
 
         if ($stackPtr === null) {
