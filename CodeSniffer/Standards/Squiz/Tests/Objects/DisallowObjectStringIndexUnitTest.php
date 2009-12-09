@@ -51,6 +51,7 @@ class Squiz_Tests_Objects_DisallowObjectStringIndexUnitTest extends AbstractSnif
                 13 => 1,
                 17 => 1,
                 25 => 1,
+                35 => 1,
                );
 
     }//end getErrorList()

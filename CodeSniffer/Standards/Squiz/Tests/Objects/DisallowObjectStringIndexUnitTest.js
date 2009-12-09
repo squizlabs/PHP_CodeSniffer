@@ -30,3 +30,8 @@ function test() {
     this.errors[y + z] = x;
     this.permissions['workflow.cancel'] = x;
 }
+
+if (child.prototype) {
+    above.prototype['constructor'] = parent;
+    child.prototype['super']       = new above();
+}
