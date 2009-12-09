@@ -148,6 +148,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                                   T_OPEN_PARENTHESIS,
                                   T_OPEN_SQUARE_BRACKET,
                                   T_DOUBLE_ARROW,
+                                  T_COLON,
                                  );
 
                 if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
