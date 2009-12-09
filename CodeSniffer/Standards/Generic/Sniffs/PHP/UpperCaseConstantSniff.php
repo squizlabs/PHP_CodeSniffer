@@ -64,7 +64,7 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
         $keyword = $tokens[$stackPtr]['content'];
         if (strtoupper($keyword) !== $keyword) {
             $error = 'TRUE, FALSE and NULL must be uppercase; expected "'.strtoupper($keyword).'" but found "'.$keyword.'"';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NotUpperCase');
         }
 
     }//end process()

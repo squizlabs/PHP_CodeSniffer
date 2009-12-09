@@ -88,7 +88,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
             $found    = str_replace("\n", '\n', $found);
             $found    = str_replace("\r", '\r', $found);
             $error    = "End of line character is invalid; expected \"$expected\" but found \"$found\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar');
         }
 
     }//end process()
