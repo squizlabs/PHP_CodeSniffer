@@ -36,6 +36,23 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
      */
     public $supportedTokenizers = array('CSS');
 
+    /**
+     * A list of specific stylsheet suffixes we allow.
+     *
+     * These stylsheets contain browser specific styles
+     * so this sniff ignore them files in the form:
+     * *_moz.css and *_ie7.css etc.
+     *
+     * @var array
+     */
+    protected $specificStylesheets = array(
+                                      'moz',
+                                      'ie',
+                                      'ie7',
+                                      'ie8',
+                                      'webkit',
+                                     );
+
 
     /**
      * Returns the token types that this sniff is interested in.
@@ -60,12 +77,22 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        // Ignore files with browser-specific suffixes.
+        $filename  = $phpcsFile->getFilename();
+        $breakChar = strrpos($filename, '_');
+        if ($breakChar !== FALSE && substr($filename, -4) === '.css') {
+            $specific = substr($filename, ($breakChar + 1), -4);
+            if (in_array($specific, $this->specificStylesheets) === TRUE) {
+                return;
+            }
+        }
+
         $tokens  = $phpcsFile->getTokens();
         $content = $tokens[$stackPtr]['content'];
 
         if ($content{0} === '-') {
             $error = 'Browser-specific styles are not allowed';
-            $phpcsFile->addError($error, $stackPtr, 'BrowserSpecifcStyle');
+            $phpcsFile->addError($error, $stackPtr, 'ForbiddenStyle');
         }
 
     }//end process()
