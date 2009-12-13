@@ -59,9 +59,10 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
 
         // Find the opening bracket of the inline IF.
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if (isset($tokens[$i]['parenthesis_opener']) === true && $tokens[$i]['parenthesis_opener'] < $i) {
+            if (isset($tokens[$i]['parenthesis_opener']) === true
+                && $tokens[$i]['parenthesis_opener'] < $i
+            ) {
                 $i = $tokens[$i]['parenthesis_opener'];
-                continue;
             }
 
             if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {

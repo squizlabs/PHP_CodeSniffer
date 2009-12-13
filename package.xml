@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16855 : Generic standard sniffs incorrectly for define() method
   - Fixed bug #16865 : Two bugs in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík for the patch
+  - Fixed bug #16902 : Inline If Declaration bug
+    -- Thanks to Ben Pearson for the patch
  </notes>
  <contents>
   <dir name="/">
