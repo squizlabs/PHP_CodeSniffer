@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_CSS_ForbiddenStylesSniff.
+ * MySource_Sniffs_CSS_BrowserSpecificStylesSniff.
  *
  * PHP version 5
  *
@@ -9,12 +9,12 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id$
+ * @version   CVS: $Id: ForbiddenStylesSniff.php 268254 2008-11-04 05:08:07Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Squiz_Sniffs_CSS_ForbiddenStylesSniff.
+ * MySource_Sniffs_CSS_BrowserSpecificStylesSniff.
  *
  * Ensure that browser-specific styles are not used.
  *
@@ -26,7 +26,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
+class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -65,7 +65,7 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
 
         if ($content{0} === '-') {
             $error = 'Browser-specific styles are not allowed';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'BrowserSpecifcStyle');
         }
 
     }//end process()

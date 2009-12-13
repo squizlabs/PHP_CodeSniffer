@@ -48,6 +48,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
   - Squiz DisallowObjectStringIndexSniff now allows indexes that contain dots and reserved words
   - Squiz standard now throws nesting level and cyclomatic complexity errors at much higher levels
+  - Removed ForbiddenStylesSniff from Squiz standard
+    -- It is now in in the MySource standard as BrowserSpecificStylesSniff
   - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
   - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements
   - MySource IncludeSystemSniff no longer throws errors for included widgets inside methods
@@ -486,6 +488,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="CSS">
+        <file baseinstalldir="PHP" name="BrowserSpecificStylesSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="DebugCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -534,6 +541,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UnusedSystemUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UnusedSystemUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="CSS">
+        <file baseinstalldir="PHP" name="BrowserSpecificStylesUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="BrowserSpecificStylesUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
@@ -919,9 +932,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EmptyStyleDefinitionSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="ForbiddenStylesSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="IndentationSniff.php" role="php">
@@ -1313,10 +1323,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="EmptyStyleDefinitionUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="EmptyStyleDefinitionUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="ForbiddenStylesUnitTest.css" role="test" />
-        <file baseinstalldir="PHP" name="ForbiddenStylesUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="IndentationUnitTest.css" role="test" />

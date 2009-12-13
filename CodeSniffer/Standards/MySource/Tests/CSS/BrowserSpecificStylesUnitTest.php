@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ForbiddenStyles sniff.
+ * Unit test class for the BrowserSpecificStyles sniff.
  *
  * PHP version 5
  *
@@ -9,12 +9,12 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id$
+ * @version   CVS: $Id: ForbiddenStylesUnitTest.php 268254 2008-11-04 05:08:07Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for the ForbiddenStyles sniff.
+ * Unit test class for the BrowserSpecificStyles sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -27,7 +27,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_CSS_ForbiddenStylesUnitTest extends AbstractSniffUnitTest
+class MySource_Tests_CSS_BrowserSpecificStylesUnitTest extends AbstractSniffUnitTest
 {
 
     /**
