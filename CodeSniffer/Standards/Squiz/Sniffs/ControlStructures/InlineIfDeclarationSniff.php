@@ -63,6 +63,7 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
                 && $tokens[$i]['parenthesis_opener'] < $i
             ) {
                 $i = $tokens[$i]['parenthesis_opener'];
+                continue;
             }
 
             if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
@@ -71,12 +72,12 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         }
 
         if ($i <= 0) {
-            // Could not find the begining of the statement, so we can't
-            // find the end either.
-            return;
+            // Could not find the begining of the statement. Probably not
+            // wrapped with brackets, so assume it ends with a semicolon.
+            $statementEnd = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        } else {
+            $statementEnd = $tokens[$i]['parenthesis_closer'];
         }
-
-        $statementEnd = $tokens[$i]['parenthesis_closer'];
 
         // Make sure it's all on the same line.
         if ($tokens[$statementEnd]['line'] !== $tokens[$stackPtr]['line']) {
