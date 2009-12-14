@@ -30,4 +30,20 @@ class SomethingActions
         echo self::$yourVar;
     }
 }
+
+abstract class AbstractEditingScreenModeWidgetActions extends AbstractEditingModeWidgetActions {
+
+    public static function getScreens($systemName)
+    {
+
+    }//end getScreens()
+
+    public static function setHelpScreenTitle()
+    {
+        // This is allowed because we are in an abstract class.
+        $screens = self::getScreens('');
+
+    }//end setHelpScreenTitle()
+
+}//end class
 ?>

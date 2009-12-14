@@ -53,6 +53,12 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        // We are not interested in abstract classes.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($prev !== false && $tokens[$prev]['code'] === T_ABSTRACT) {
+            return;
+        }
+
         // We are only interested in Action classes.
         $classNameToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         $className      = $tokens[$classNameToken]['content'];
