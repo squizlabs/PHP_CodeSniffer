@@ -48,6 +48,7 @@ class MySource_Tests_PHP_GetRequestDataUnitTest extends AbstractSniffUnitTest
                 21 => 1,
                 26 => 1,
                 27 => 1,
+                28 => 1,
                );
 
     }//end getErrorList()
