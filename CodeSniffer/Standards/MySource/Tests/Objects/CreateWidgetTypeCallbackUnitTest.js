@@ -155,3 +155,32 @@ SampleWidgetType.prototype = {
     }
 
 };
+
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        dfx.foreach(items, function(item) {
+            return true;
+        });
+
+        if (dfx.isFn(callback) === true) {
+            callback.call(this);
+        }
+    }
+
+};
+
+SampleWidgetType.prototype = {
+
+    create: function(callback)
+    {
+        var self = this;
+        this.createChildren(null, function() {
+            callback.call(self, div);
+            return;
+        });
+    }
+
+};
