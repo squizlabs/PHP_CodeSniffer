@@ -90,6 +90,11 @@ switch (number % 10) {
     break;
 }
 
+var pathSplit = ipt.value.split(/\/|\\/);
+
+if (pairs[i].search(/=/) !== -1) {
+}
+
 if (urlValue.search(/[a-zA-z]+:\/\//) !== 0) {
 }
 
