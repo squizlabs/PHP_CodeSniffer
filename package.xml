@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- It is now in in the MySource standard as BrowserSpecificStylesSniff
     -- New BrowserSpecificStylesSniff ignores files with browser-specific suffixes
   - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
+  - MySource IncludeSystemSniff no longer throws errors for the abstract widget class
   - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements
   - MySource IncludeSystemSniff no longer throws errors for included widgets inside methods
   - MySource GetRequestDataSniff now throws errors for using $_FILES

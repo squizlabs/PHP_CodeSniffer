@@ -51,6 +51,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                         'abstractmysourceunittest',
                         'abstractdatacleanunittest',
                         'exception',
+                        'abstractwidgetwidgettype',
                        );
 
 

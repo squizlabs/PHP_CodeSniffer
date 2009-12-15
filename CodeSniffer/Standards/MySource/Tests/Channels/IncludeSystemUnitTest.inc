@@ -102,4 +102,6 @@ function two() {
     Widget::includeWidget('CacheAdminScreen');
     $barChart = CacheAdminScreenWidgetType::constructBarchart($data);
 }
+
+$adjustDialog->setOrientation(AbstractWidgetWidgetType::CENTER);
 ?>
