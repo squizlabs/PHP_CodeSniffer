@@ -134,6 +134,10 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             $content .= ' ?>';
         }
 
+        // Quite a few comments use multiple dashes, equals signs etc
+        // to frame comments and licence headers.
+        $content = preg_replace('/[-=*]+/', '-', $content);
+
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
 
         $emptyTokens = array(
