@@ -113,6 +113,7 @@ class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(PHP_CodeSniffer::isCamelCaps('ThisIsCamelCaps', true, true, true));
         $this->assertTrue(PHP_CodeSniffer::isCamelCaps('ThisISCamelCaps', true, true, false));
+        $this->assertTrue(PHP_CodeSniffer::isCamelCaps('This3IsCamelCaps', true, true, false));
 
     }//end testValidClassFormatPublic()
 
@@ -125,7 +126,6 @@ class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
     public function testInvalidClassFormat()
     {
         $this->assertFalse(PHP_CodeSniffer::isCamelCaps('thisIsCamelCaps', true));
-        $this->assertFalse(PHP_CodeSniffer::isCamelCaps('This3IsCamelCaps', true));
         $this->assertFalse(PHP_CodeSniffer::isCamelCaps('This-IsCamelCaps', true));
         $this->assertFalse(PHP_CodeSniffer::isCamelCaps('This_Is_Camel_Caps', true));
 

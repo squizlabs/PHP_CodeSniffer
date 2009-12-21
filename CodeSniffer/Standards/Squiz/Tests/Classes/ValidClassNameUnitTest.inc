@@ -24,11 +24,11 @@ class INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES extends MyClass {}
 class ValidCamelCaseClassWithUPPERCASE extends MyClass {}
 
 
-// Invalid usage of numeric characters.
-class InvalidCamelCaseClassWith1Number extends MyClass {}
-class InvalidCamelCaseClassWith12345Numbers extends MyClass {}
+// Usage of numeric characters.
+class ValidCamelCaseClassWith1Number extends MyClass {}
+class ValidCamelCaseClassWith12345Numbers extends MyClass {}
 class 5InvalidCamelCaseClassStartingWithNumber extends MyClass {}
-class InvalidCamelCaseClassEndingWithNumber5 extends MyClass {}
+class ValidCamelCaseClassEndingWithNumber5 extends MyClass {}
 class 12345 extends MyClass {}
 
 

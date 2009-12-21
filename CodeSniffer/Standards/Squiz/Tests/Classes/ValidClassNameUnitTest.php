@@ -49,10 +49,7 @@ class Squiz_Tests_Classes_ValidClassNameUnitTest extends AbstractSniffUnitTest
                 14 => 1,
                 15 => 1,
                 20 => 1,
-                28 => 1,
-                29 => 1,
                 30 => 1,
-                31 => 1,
                 32 => 1,
                );
 

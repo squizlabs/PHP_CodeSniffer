@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Future versions will allow you to override messages and severities using these codes
     -- Specifying a code is optional, but will be required if you wish to support overriding
   - The reports now show the correct number of errors and warnings found
+  - The isCamelCaps method now allows numbers in class names
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions
   - PEAR ValidFunctionNameSniff now ignores closures

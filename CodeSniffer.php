@@ -1873,12 +1873,7 @@ class PHP_CodeSniffer
         }
 
         // Check that the name only contains legal characters.
-        if ($classFormat === false) {
-            $legalChars = 'a-zA-Z0-9';
-        } else {
-            $legalChars = 'a-zA-Z';
-        }
-
+        $legalChars = 'a-zA-Z0-9';
         if (preg_match("|[^$legalChars]|", substr($string, 1)) > 0) {
             return false;
         }
