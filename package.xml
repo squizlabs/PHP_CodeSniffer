@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The reports now show the correct number of errors and warnings found
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
   - The JS tokenzier now correctly identifies regular expressions used in conditions
+  - PEAR ValidFunctionNameSniff now ignores closures
   - Squiz standard now uses the PEAR setting of 85 chars for LineLengthSniff
   - Squiz ControlStructureSpacingSniff now ensure there are no spaces around parentheses
   - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements
@@ -43,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz InlineCommentSniff no longer throws errors for end function comments
   - Squiz OperatorBracketSniff now allows simple arithmetic operations in SWITCH conditions
   - Squiz ValidFunctionNameSniff now ignores closures
+  - Squiz MethodScopeSniff now ignores closures
   - Squiz ClosingDeclarationCommentSniff now ignores closures
   - Squiz GlobalFunctionSniff now ignores closures
   - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays

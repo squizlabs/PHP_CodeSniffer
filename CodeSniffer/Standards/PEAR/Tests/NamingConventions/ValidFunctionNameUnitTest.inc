@@ -172,4 +172,13 @@ function my_package_function() {}
 function Package_() {}
 function Package() {}
 
+class Closure_Test {
+    function test() {
+        $foo = function() { echo 'foo'; };
+    }
+}
+
+function test() {
+    $foo = function() { echo 'foo'; };
+}
 ?>

@@ -8,4 +8,14 @@ class MyClass
     private function func1() {}
     protected function func1() {}
 }
+
+class Closure_Test {
+    public function test() {
+        $foo = function() { echo 'foo'; };
+    }
+}
+
+function test() {
+    $foo = function() { echo 'foo'; };
+}
 ?>

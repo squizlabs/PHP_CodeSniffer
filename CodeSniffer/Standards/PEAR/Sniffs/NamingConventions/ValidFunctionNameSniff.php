@@ -87,8 +87,13 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      */
     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
-        $className  = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($methodName === null) {
+            // Ignore closures.
+            return;
+        }
+
+        $className  = $phpcsFile->getDeclarationName($currScope);
 
         // Is this a magic method. IE. is prefixed with "__".
         if (preg_match('|^__|', $methodName) !== 0) {
@@ -166,6 +171,10 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
     protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($functionName === null) {
+            // Ignore closures.
+            return;
+        }
 
         // Is this a magic function. IE. is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
