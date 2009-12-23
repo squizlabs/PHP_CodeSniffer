@@ -78,6 +78,7 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
                 182 => 1,
                 187 => 1,
                 203 => 1,
+                205 => 1,
                );
 
     }//end getErrorList()

@@ -162,11 +162,11 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+            $commentString = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
             // Parse the header comment docblock.
             try {
-                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
+                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($commentString, $phpcsFile);
                 $this->commentParser->parse();
             } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
                 $line = ($e->getLineWithinComment() + $commentStart);
@@ -179,6 +179,14 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'File doc comment is empty';
                 $phpcsFile->addError($error, $commentStart);
                 return;
+            }
+
+            // The first line of the comment should just be the /** code.
+            $eolPos    = strpos($commentString, $phpcsFile->eolChar);
+            $firstLine = substr($commentString, 0, $eolPos);
+            if ($firstLine !== '/**') {
+                $error = 'The open comment tag must be the only content on the line';
+                $phpcsFile->addError($error, $commentStart);
             }
 
             // No extra newline before short description.

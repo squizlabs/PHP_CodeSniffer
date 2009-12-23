@@ -202,6 +202,13 @@ class VariableCommentUnitTest2
 
    public $hello;
 
+    /** Comment starts here.
+     *
+     * @var   string
+     * @since 4.0.0
+     */
+     private $_varCaseTypeCheck;
+
 }//end class
 
 ?>

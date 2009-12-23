@@ -147,4 +147,14 @@ class Incorect_Case2
 {
 
 }//end class
+
+
+/** Sample class comment.
+ *
+ * @since 4.0.0
+ */
+class Start_Tag_Incorrect
+{
+
+}//end class
 ?>

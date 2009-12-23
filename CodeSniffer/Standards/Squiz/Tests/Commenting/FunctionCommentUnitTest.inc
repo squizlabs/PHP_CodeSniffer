@@ -483,4 +483,15 @@ function test($test)
    return $test;
 
 }//end test()
+
+
+/** Comment.
+ *
+ * @since  4.0.0
+ * @return mixed
+ */
+function test()
+{
+
+}//end test()
 ?>
