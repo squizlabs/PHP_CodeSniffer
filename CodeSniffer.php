@@ -668,6 +668,9 @@ class PHP_CodeSniffer
 
             foreach ($di as $file) {
                 $filePath = realpath($file->getPathname());
+                if ($filePath === false) {
+                    continue;
+                }
 
                 if (is_dir($filePath) === true) {
                     continue;

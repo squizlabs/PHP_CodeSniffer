@@ -74,6 +74,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16865 : Two bugs in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #16902 : Inline If Declaration bug
+  - Fixed bug #16960 : False positive for late static binding in Squiz/ScopeKeywordSpacingSniff
+    -- Thanks to Jakub Tománek for the patch
+  - Fixed bug #16976 : The phpcs attempts to process symbolic links that don't resolve to files
  </notes>
  <contents>
   <dir name="/">
