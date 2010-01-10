@@ -16,5 +16,11 @@ class MyClass
 
     private  static
         function myFunction() {}
+
+    public static function output()
+    {
+        // New in PHP 5.3
+        static::bar();
+    }
 }
 ?>
