@@ -428,69 +428,24 @@ class PHP_CodeSniffer_CLI
      * @return int The number of error and warning messages shown.
      */
     public function printErrorReport(
-        $phpcs,
+        PHP_CodeSniffer $phpcs,
         $report,
         $showWarnings,
         $showSources,
-        $reportFile='',
-        $reportWidth=80
+        $reportFile,
+        $reportWidth
     ) {
-        if ($reportFile !== '') {
-            ob_start();
-        }
+        $filesViolations = $phpcs->getFilesErrors();
 
-        switch ($report) {
-        case 'xml':
-            $numErrors = $phpcs->printXMLErrorReport($showWarnings);
-            break;
-        case 'checkstyle':
-            $numErrors = $phpcs->printCheckstyleErrorReport($showWarnings);
-            break;
-        case 'csv':
-            $numErrors = $phpcs->printCSVErrorReport($showWarnings);
-            break;
-        case 'emacs':
-            $numErrors = $phpcs->printEmacsErrorReport($showWarnings);
-            break;
-        case 'summary':
-            $numErrors = $phpcs->printErrorReportSummary(
-                $showWarnings,
-                $showSources,
-                $reportWidth
-            );
-            break;
-        case 'source':
-            $numErrors = $phpcs->printSourceReport(
-                $showWarnings,
-                $showSources,
-                $reportWidth
-            );
-            break;
-        case 'svnblame':
-            $numErrors = $phpcs->printSvnBlameReport(
-                $showWarnings,
-                $showSources,
-                $reportWidth
-            );
-            break;
-        default:
-            $numErrors = $phpcs->printErrorReport(
-                $showWarnings,
-                $showSources,
-                $reportWidth
-            );
-            break;
-        }
-
-        if ($reportFile !== '') {
-            $report = ob_get_contents();
-            ob_end_flush();
-
-            $report = trim($report);
-            file_put_contents($reportFile, "$report\n");
-        }
-
-        return $numErrors;
+        $reporting = new PHP_CodeSniffer_Reporting();
+        return $reporting->printReport(
+            $report,
+            $filesViolations,
+            $showWarnings,
+            $showSources,
+            $reportFile,
+            $reportWidth
+        );
 
     }//end printErrorReport()
 

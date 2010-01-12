@@ -16,6 +16,15 @@
 
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
+require_once 'ReportingTest.php';
+require_once 'Reports/CheckstyleTest.php';
+require_once 'Reports/FullTest.php';
+require_once 'Reports/SummaryTest.php';
+require_once 'Reports/XmlTest.php';
+require_once 'Reports/CsvTest.php';
+require_once 'Reports/EmacsTest.php';
+require_once 'Reports/SourceTest.php';
+require_once 'Reports/SvnblameTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -65,6 +74,15 @@ class PHP_CodeSniffer_Core_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
         $suite->addTestSuite('Core_IsCamelCapsTest');
         $suite->addTestSuite('Core_ErrorSuppressionTest');
+        $suite->addTestSuite('Core_ReportingTest');
+        $suite->addTestSuite('Core_Reports_CheckstyleTest');
+        $suite->addTestSuite('Core_Reports_FullTest');
+        $suite->addTestSuite('Core_Reports_SummaryTest');
+        $suite->addTestSuite('Core_Reports_XmlTest');
+        $suite->addTestSuite('Core_Reports_CsvTest');
+        $suite->addTestSuite('Core_Reports_EmacsTest');
+        $suite->addTestSuite('Core_Reports_SourceTest');
+        $suite->addTestSuite('Core_Reports_SvnblameTest');
         return $suite;
 
     }//end suite()
