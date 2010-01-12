@@ -73,7 +73,6 @@ class PHP_CodeSniffer_Standards_PHPCS_PHPCSCodingStandard extends PHP_CodeSniffe
                 'Squiz/Sniffs/Commenting/VariableCommentSniff.php',
                 'Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff.php',
                 'Squiz/Sniffs/Files/FileExtensionSniff.php',
-                'Squiz/Sniffs/Files/LineLengthSniff.php',
                 'Squiz/Sniffs/NamingConventions/ConstantCaseSniff.php',
                 'Squiz/Sniffs/WhiteSpace/ScopeIndentSniff.php',
                );
