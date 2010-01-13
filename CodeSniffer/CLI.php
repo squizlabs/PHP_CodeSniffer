@@ -33,6 +33,13 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
 class PHP_CodeSniffer_CLI
 {
 
+    /**
+     * An array of values specified on the command line.
+     *
+     * @var array
+     */
+    protected $values = array();
+
 
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
@@ -66,6 +73,7 @@ class PHP_CodeSniffer_CLI
         $defaults['files']       = array();
         $defaults['standard']    = null;
         $defaults['verbosity']   = 0;
+        $defaults['interactive'] = false;
         $defaults['local']       = false;
         $defaults['showSources'] = false;
         $defaults['extensions']  = array();
@@ -112,6 +120,10 @@ class PHP_CodeSniffer_CLI
      */
     public function getCommandLineValues()
     {
+        if (empty($this->values) === false) {
+            return $this->values;
+        }
+
         $values = $this->getDefaults();
 
         for ($i = 1; $i < $_SERVER['argc']; $i++) {
@@ -140,6 +152,7 @@ class PHP_CodeSniffer_CLI
             }
         }//end for
 
+        $this->values = $values;
         return $values;
 
     }//end getCommandLineValues()
@@ -175,6 +188,9 @@ class PHP_CodeSniffer_CLI
             break;
         case 's' :
             $values['showSources'] = true;
+            break;
+        case 'a' :
+            $values['interactive'] = true;
             break;
         case 'n' :
             $values['showWarnings'] = false;
@@ -381,7 +397,11 @@ class PHP_CodeSniffer_CLI
             exit(2);
         }
 
-        $phpcs = new PHP_CodeSniffer($values['verbosity'], $values['tabWidth']);
+        $phpcs = new PHP_CodeSniffer(
+            $values['verbosity'],
+            $values['tabWidth'],
+            $values['interactive']
+        );
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
@@ -394,6 +414,7 @@ class PHP_CodeSniffer_CLI
             $phpcs->setIgnorePatterns($values['ignored']);
         }
 
+        $phpcs->setCli($this);
         $phpcs->process(
             $values['files'],
             $values['standard'],
@@ -494,7 +515,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsvi] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsavi] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
@@ -503,6 +524,7 @@ class PHP_CodeSniffer_CLI
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
+        echo '        -a            Run interactively'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;

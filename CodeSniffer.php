@@ -87,6 +87,13 @@ class PHP_CodeSniffer
     protected $files = array();
 
     /**
+     * The CLI object controlling the run.
+     *
+     * @var string
+     */
+    protected $cli = null;
+
+    /**
      * The path that that PHP_CodeSniffer is being run from.
      *
      * Stored so that the path can be restored after it is changed
@@ -151,16 +158,18 @@ class PHP_CodeSniffer
     /**
      * Constructs a PHP_CodeSniffer object.
      *
-     * @param int $verbosity The verbosity level.
-     *                       1: Print progress information.
-     *                       2: Print developer debug information.
-     * @param int $tabWidth  The number of spaces each tab represents.
-     *                       If greater than zero, tabs will be replaced
-     *                       by spaces before testing each file.
+     * @param int  $verbosity   The verbosity level.
+     *                          1: Print progress information.
+     *                          2: Print developer debug information.
+     * @param int  $tabWidth    The number of spaces each tab represents.
+     *                          If greater than zero, tabs will be replaced
+     *                          by spaces before testing each file.
+     * @param bool $interactive If TRUE, will stop after each file with errors
+     *                          and wait for user input.
      *
      * @see process()
      */
-    public function __construct($verbosity=0, $tabWidth=0)
+    public function __construct($verbosity=0, $tabWidth=0, $interactive=false)
     {
         if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
             define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
@@ -168,6 +177,10 @@ class PHP_CodeSniffer
 
         if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
             define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
+
+        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
+            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
         }
 
         // Change into a directory that we know about to stop any
@@ -265,6 +278,20 @@ class PHP_CodeSniffer
         $this->ignorePatterns = $patterns;
 
     }//end setIgnorePatterns()
+
+
+    /**
+     * Sets the internal CLI object.
+     *
+     * @param object $cli The CLI object controlling the run.
+     *
+     * @return void
+     */
+    public function setCli($cli)
+    {
+        $this->cli = $cli;
+
+    }//end setCli()
 
 
     /**
@@ -471,6 +498,11 @@ class PHP_CodeSniffer
     public function populateTokenListeners()
     {
         // Construct a list of listeners indexed by token being listened for.
+        $this->_tokenListeners = array(
+                                  'file'      => array(),
+                                  'multifile' => array(),
+                                 );
+
         foreach ($this->listeners as $listenerClass) {
             $listener = new $listenerClass();
 
@@ -731,6 +763,7 @@ class PHP_CodeSniffer
      *
      * @return void
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
+     * @see    _processFile()
      */
     public function processFile($file, $contents=null)
     {
@@ -773,6 +806,77 @@ class PHP_CodeSniffer
             return;
         }
 
+        $this->_processFile($file, $contents);
+
+        if (PHP_CODESNIFFER_INTERACTIVE === false) {
+            return;
+        }
+
+        /*
+            Running interactively.
+            Print the error report for the current file and then wait for user input.
+        */
+
+        $reporting = new PHP_CodeSniffer_Reporting();
+        $cliValues = $this->cli->getCommandLineValues();
+
+        // Get current violations and then clear the list to make sure
+        // we only print violations for a single file each time.
+        $numErrors = null;
+        while ($numErrors !== 0) {
+            $filesViolations = $this->getFilesErrors();
+            $this->files = array();
+
+            $numErrors = $reporting->printReport(
+                $cliValues['report'],
+                $filesViolations,
+                $cliValues['showWarnings'],
+                $cliValues['showSources'],
+                '',
+                $cliValues['reportWidth']
+            );
+
+            if ($numErrors === 0) {
+                continue;
+            }
+
+            echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+            $input = fgets(STDIN);
+            $input = trim($input);
+
+            switch ($input) {
+            case 's':
+                break;
+            case 'q':
+                exit(0);
+                break;
+            default:
+                // Repopulate the sniffs because some of them save their state
+                // and only clear it when the file changes, but we are rechecking
+                // the same file.
+                $this->populateTokenListeners();
+                $this->_processFile($file, $contents);
+                break;
+            }
+        }//end while
+
+    }//end processFile()
+
+
+    /**
+     * Process the sniffs for a single file.
+     *
+     * Does raw processing only. No interactive support or error checking.
+     *
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
+     *
+     * @return void
+     * @see    processFile()
+     */
+    private function _processFile($file, $contents)
+    {
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
             echo 'Processing '.basename($file).' ';
@@ -791,7 +895,9 @@ class PHP_CodeSniffer
 
         // Clean up the test if we can to save memory. This can't be done if
         // we need to leave the files around for multi-file sniffs.
-        if (empty($this->_tokenListeners['multifile']) === true) {
+        if (PHP_CODESNIFFER_INTERACTIVE === false
+            && empty($this->_tokenListeners['multifile']) === true
+        ) {
             $phpcsFile->cleanUp();
         }
 
@@ -810,7 +916,7 @@ class PHP_CodeSniffer
             echo " ($errors errors, $warnings warnings)".PHP_EOL;
         }
 
-    }//end processFile()
+    }//end _processFile()
 
 
     /**

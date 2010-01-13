@@ -34,6 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - All reports have been broken into separate classes
     -- Command line usage and report output remains the same
     -- Thanks to Gabriele Santini for the patch
+  - Added an interactive mode that can be enabled using the -a command line argument
+    -- Scans files and stops when it finds a file with errors
+    -- Waits for user input to recheck the file (hopefully you fixed the errors) or skip the file
+    -- Useful for very large code bases where full rechecks take a while
   - The reports now show the correct number of errors and warnings found
   - The isCamelCaps method now allows numbers in class names
   - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
