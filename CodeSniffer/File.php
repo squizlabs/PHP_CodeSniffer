@@ -1753,7 +1753,8 @@ class PHP_CodeSniffer_File
         }
 
         if ($tokenCode === T_FUNCTION
-            && $this->isAnonymousFunction($stackPtr) === true) {
+            && $this->isAnonymousFunction($stackPtr) === true
+        ) {
             return null;
         }
 
@@ -1786,7 +1787,7 @@ class PHP_CodeSniffer_File
         }
 
         $name = $this->findNext(T_STRING, ($stackPtr + 1));
-        if ($name === FALSE) {
+        if ($name === false) {
             // No name found.
             return true;
         }
