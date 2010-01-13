@@ -191,11 +191,11 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         // The closing parenthesis must be on a new line, even
         // when checking abstract function definitions.
         $prev = $phpcsFile->findPrevious(
-                T_WHITESPACE,
-                ($closeBracket - 1),
-                null,
-                true
-            );
+            T_WHITESPACE,
+            ($closeBracket - 1),
+            null,
+            true
+        );
 
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'The closing parenthesis of a multi-line function declaration must be on a new line';

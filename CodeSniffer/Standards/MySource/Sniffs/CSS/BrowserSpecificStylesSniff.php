@@ -80,9 +80,9 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
         // Ignore files with browser-specific suffixes.
         $filename  = $phpcsFile->getFilename();
         $breakChar = strrpos($filename, '_');
-        if ($breakChar !== FALSE && substr($filename, -4) === '.css') {
+        if ($breakChar !== false && substr($filename, -4) === '.css') {
             $specific = substr($filename, ($breakChar + 1), -4);
-            if (in_array($specific, $this->specificStylesheets) === TRUE) {
+            if (in_array($specific, $this->specificStylesheets) === true) {
                 return;
             }
         }

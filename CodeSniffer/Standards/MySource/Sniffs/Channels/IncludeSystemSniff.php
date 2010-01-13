@@ -244,7 +244,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                              T_FUNCTION,
                             );
 
-            if (in_array($tokens[$i]['code'], $ignoreTokens) === TRUE
+            if (in_array($tokens[$i]['code'], $ignoreTokens) === true
                 && isset($tokens[$i]['scope_closer']) === true
             ) {
                 $i = $tokens[$i]['scope_closer'];

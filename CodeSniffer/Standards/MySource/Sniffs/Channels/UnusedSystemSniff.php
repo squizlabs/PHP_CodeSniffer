@@ -87,7 +87,7 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                     // We are still in the base level, so this is the first
                     // time we have got here.
                     $conditions = array_keys($tokens[$stackPtr]['conditions']);
-                    if (empty($conditions) === FALSE) {
+                    if (empty($conditions) === false) {
                         $cond = array_pop($conditions);
                         if ($tokens[$cond]['code'] === T_IF) {
                             $i = $tokens[$cond]['scope_closer'];
