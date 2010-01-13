@@ -149,7 +149,7 @@ class PHP_CodeSniffer_CLI
                 }
             } else {
                 $values = $this->processUnknownArgument($arg, $i, $values);
-            }
+            }//end if
         }//end for
 
         $this->values = $values;
@@ -301,7 +301,7 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
-                $values['ignored']= preg_split(
+                $values['ignored'] = preg_split(
                     '/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/',
                     substr($arg, 7)
                 );

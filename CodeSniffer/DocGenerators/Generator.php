@@ -139,6 +139,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
         } else {
             $standardDir
                 = realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
+
             $standard = $this->_standard;
         }
 
@@ -156,7 +157,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
                 }
             }
 
-            $standardFile= str_replace(
+            $standardFile = str_replace(
                 DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR,
                 DIRECTORY_SEPARATOR.'Docs'.DIRECTORY_SEPARATOR,
                 $sniff
@@ -166,7 +167,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
             if (is_file($standardFile) === true) {
                 $standardFiles[] = $standardFile;
             }
-        }
+        }//end foreach
 
         return $standardFiles;
 

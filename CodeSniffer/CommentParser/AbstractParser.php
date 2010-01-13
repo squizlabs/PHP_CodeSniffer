@@ -240,7 +240,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 );
 
                 $this->words = array_merge($this->words, $words);
-            }
+            }//end if
         }//end foreach
 
         $this->_parseWords();
@@ -266,13 +266,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         $wordWasEmpty    = true;
 
         foreach ($this->words as $wordPos => $word) {
-
             if (trim($word) !== '') {
                 $wordWasEmpty = false;
             }
 
             if ($word{0} === '@') {
-
                 $tag = substr($word, 1);
 
                 // Filter out @ tags in the comment description.
@@ -330,9 +328,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                                             'line' => $this->getLine($wordPos),
                                            );
                     }
-
                 }//end if
-
             }//end if
         }//end foreach
 
