@@ -25,3 +25,10 @@ class Foo {
         // Empty body means interface method in many cases.
     }
 }
+
+function foo($bar)
+{
+    print <<<BAZ
+    $bar
+BAZ
+}
