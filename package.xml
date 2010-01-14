@@ -78,6 +78,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16804 : Report filename is shortened too much
   - Fixed bug #16821 : Bug in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík for the patch
+  - Fixed bug #16836 : Notice raised when using semicolon to open case
   - Fixed bug #16855 : Generic standard sniffs incorrectly for define() method
   - Fixed bug #16865 : Two bugs in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík for the patch

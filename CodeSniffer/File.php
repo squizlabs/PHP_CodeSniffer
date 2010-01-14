@@ -1215,7 +1215,7 @@ class PHP_CodeSniffer_File
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
-        if ($currType === $tokenizer->scopeOpeners[$currType]['start']) {
+        if (in_array($currType, $tokenizer->scopeOpeners[$currType]['start']) === true) {
             $opener = $stackPtr;
         }
 
@@ -1293,7 +1293,7 @@ class PHP_CodeSniffer_File
                         echo '* searching for opener *'.PHP_EOL;
                     }
 
-                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                    if (in_array(T_CLOSE_CURLY_BRACKET, $tokenizer->scopeOpeners[$tokenType]['end']) === true) {
                         $oldIgnore = $ignore;
                         $ignore = 0;
                     }
@@ -1308,13 +1308,13 @@ class PHP_CodeSniffer_File
                         $ignore
                     );
 
-                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                    if (in_array(T_CLOSE_CURLY_BRACKET, $tokenizer->scopeOpeners[$tokenType]['end']) === true) {
                         $ignore = $oldIgnore;
                     }
                 }//end if
             }//end if start scope
 
-            if ($tokenType === $tokenizer->scopeOpeners[$currType]['start']
+            if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['start']) == true
                 && $opener === null
             ) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
@@ -1353,7 +1353,7 @@ class PHP_CodeSniffer_File
 
                     $opener = $i;
                 }
-            } else if ($tokenType === $tokenizer->scopeOpeners[$currType]['end']
+            } else if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['end']) === true
                 && $opener !== null
             ) {
                 if ($ignore > 0 && $tokenType === T_CLOSE_CURLY_BRACKET) {
@@ -1565,7 +1565,7 @@ class PHP_CodeSniffer_File
                             $tokenizer->scopeOpeners[$thisType]['with']
                         );
 
-                        $sameEnd = ($tokenizer->scopeOpeners[$thisType]['end'] === $tokenizer->scopeOpeners[$tokens[$opener]['code']]['end']);
+                        $sameEnd = ($tokenizer->scopeOpeners[$thisType]['end'][0] === $tokenizer->scopeOpeners[$tokens[$opener]['code']]['end'][0]);
                         if ($isShared === true && $sameEnd === true) {
                             $badToken = $opener;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {

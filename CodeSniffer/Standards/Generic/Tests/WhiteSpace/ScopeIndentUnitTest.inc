@@ -333,30 +333,30 @@ switch (true) {
     break;
     case false:
     case null:{
-    }
     echo 'hi';
+    }
     break;
 }
 
 switch (true) {
     case true: {
+        echo 'hi';
     }
-    echo 'hi';
     // No break here.
     case false:
     case true:
     case null:{
     echo 'hi';
+        echo 'hi';
     }
-    echo 'hi';
     break;
 }
 
 switch (true) {
     case true: {
-    }
-    if (true) {
-        echo 'hi';
+        if (true) {
+            echo 'hi';
+        }
     }
     break;
 }
