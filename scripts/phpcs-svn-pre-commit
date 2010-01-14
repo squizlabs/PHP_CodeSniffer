@@ -58,7 +58,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
     /**
      * Processes an unknown command line argument.
      *
-     * All unkown args are sent to SVN commands.
+     * All unknown args are sent to SVN commands.
      *
      * @param string $arg    The command line argument.
      * @param int    $pos    The position of the argument on the command line.
@@ -130,6 +130,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         }
 
         // Initialize PHP_CodeSniffer listeners but don't process any files.
+        $phpcs->setCli($this);
         $phpcs->process(array(), $values['standard'], $values['sniffs']);
 
         foreach (preg_split('/\v/', $contents, -1, PREG_SPLIT_NO_EMPTY) as $path) {

@@ -362,6 +362,12 @@ class PHP_CodeSniffer
 
         $this->populateTokenListeners();
 
+        // The SVN pre-commit calls process() to init the sniffs
+        // so there may not be any files to process.
+        if (empty($files) === true) {
+            return;
+        }
+
         foreach ($files as $file) {
             $this->file = $file;
             if (is_dir($this->file) === true) {
