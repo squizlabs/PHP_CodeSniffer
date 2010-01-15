@@ -85,6 +85,17 @@ switch (0) {
     break;
 }
 
+function myFunction()
+{
+    if ($something === TRUE) {
+        return;
+    }
+
+    echo 'foo';
+    return;
+
+}//end myFunction()
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

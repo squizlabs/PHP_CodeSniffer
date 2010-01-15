@@ -63,6 +63,24 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if ($tokens[$stackPtr]['code'] === T_RETURN) {
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($tokens[$next]['code'] === T_SEMICOLON) {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+                if ($tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET) {
+                    // If this is the closing brace of a function
+                    // then this return statement doesn't return anything
+                    // and is not required anyway.
+                    $owner = $tokens[$next]['scope_condition'];
+                    if ($tokens[$owner]['code'] === T_FUNCTION) {
+                        $warning = 'Empty return statement not required here';
+                        $phpcsFile->addWarning($warning, $stackPtr, 'ReturnNotRequired');
+                        return;
+                    }
+                }
+            }
+        }
+
         if ($tokens[$stackPtr]['code'] === T_BREAK
             && isset($tokens[$stackPtr]['scope_opener']) === true
         ) {
@@ -85,7 +103,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     if ($line > $lastLine) {
                         $type    = substr($tokens[$stackPtr]['type'], 2);
                         $warning = "Code after $type statement cannot be executed";
-                        $phpcsFile->addWarning($warning, $i);
+                        $phpcsFile->addWarning($warning, $i, 'Unreachable');
                         $lastLine = $line;
                     }
                 }
@@ -212,7 +230,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             if ($line > $lastLine) {
                 $type    = substr($tokens[$stackPtr]['type'], 2);
                 $warning = "Code after $type statement cannot be executed";
-                $phpcsFile->addWarning($warning, $i);
+                $phpcsFile->addWarning($warning, $i, 'Unreachable');
                 $lastLine = $line;
             }
         }
