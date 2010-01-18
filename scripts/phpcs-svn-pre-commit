@@ -133,7 +133,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         $phpcs->setCli($this);
         $phpcs->process(array(), $values['standard'], $values['sniffs']);
 
-        foreach (preg_split('/\v/', $contents, -1, PREG_SPLIT_NO_EMPTY) as $path) {
+        foreach (preg_split('/\v|\n/', $contents, -1, PREG_SPLIT_NO_EMPTY) as $path) {
             // No need to process folders as each changed file is checked.
             if (substr($path, -1) === '/') {
                 continue;
