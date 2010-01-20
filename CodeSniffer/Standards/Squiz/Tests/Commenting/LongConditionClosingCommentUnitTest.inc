@@ -599,4 +599,32 @@ try {
     // some code here.
     // some code here.
 }//end catch
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (DALException $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (ChannelException $e) {
+    // some code here.
+} catch (Exception $e) {
+    // some code here.
+}
 ?>

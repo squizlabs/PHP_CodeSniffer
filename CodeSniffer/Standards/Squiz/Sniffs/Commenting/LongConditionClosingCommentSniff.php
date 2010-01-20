@@ -132,10 +132,17 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
         }//end if
 
         if ($startCondition['code'] === T_TRY) {
-            // TRY statements need to check until the end of the CATCH.
-            $catch = $phpcsFile->findNext(T_CATCH, ($stackPtr + 1));
-            $stackPtr = $tokens[$catch]['scope_closer'];
-            $endBrace = $tokens[$stackPtr];
+            // TRY statements need to check until the end of all CATCH statements.
+            do {
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                if ($tokens[$nextToken]['code'] === T_CATCH) {
+                    // The end brace becomes the CATCH's end brace.
+                    $stackPtr = $tokens[$nextToken]['scope_closer'];
+                    $endBrace = $tokens[$stackPtr];
+                } else {
+                    break;
+                }
+            } while (isset($tokens[$nextToken]['scope_closer']) === true);
         }
 
         $lineDifference = ($endBrace['line'] - $startBrace['line']);
