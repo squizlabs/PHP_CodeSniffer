@@ -37,6 +37,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 {
 
     /**
+     * The current file being checked.
+     *
+     * @var string
+     */
+    protected $currFile = '';
+
+    /**
      * The parsed patterns array.
      *
      * @var array
@@ -44,7 +51,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     private $_parsedPatterns = array();
 
     /**
-     * Tokens that wish this sniff wishes to process outside of the patterns.
+     * Tokens that this sniff wishes to process outside of the patterns.
      *
      * @var array(int)
      * @see registerSupplementary()
@@ -197,6 +204,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $file = $phpcsFile->getFilename();
+        if ($this->currFile !== $file) {
+            // We have changed files, so clean up.
+            $this->_errorPos = array();
+            $this->currFile  = $file;
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         if (in_array($tokens[$stackPtr]['code'], $this->_supplementaryTokens) === true) {

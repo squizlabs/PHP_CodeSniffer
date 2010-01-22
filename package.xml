@@ -88,6 +88,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #16960 : False positive for late static binding in Squiz/ScopeKeywordSpacingSniff
     -- Thanks to Jakub Tománek for the patch
   - Fixed bug #16976 : The phpcs attempts to process symbolic links that don't resolve to files
+  - Fixed bug #17017 : Including one file in the files sniffed alters errors reported for another file
  </notes>
  <contents>
   <dir name="/">
