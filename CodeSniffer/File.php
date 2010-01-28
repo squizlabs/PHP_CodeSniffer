@@ -219,20 +219,6 @@ class PHP_CodeSniffer_File
     private $_activeListener = '';
 
     /**
-     * A constant to represent an error in PHP_CodeSniffer.
-     *
-     * @var int
-     */
-    const ERROR = 0;
-
-    /**
-     * A constant to represent a warning in PHP_CodeSniffer.
-     *
-     * @var int
-     */
-    const WARNING = 1;
-
-    /**
      * An array of extensions mapping to the tokenizer to use.
      *
      * This value gets set by PHP_CodeSniffer when the object is created.
