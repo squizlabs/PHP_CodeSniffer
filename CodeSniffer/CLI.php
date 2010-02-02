@@ -34,11 +34,32 @@ class PHP_CodeSniffer_CLI
 {
 
     /**
-     * An array of values specified on the command line.
+     * An array of all values specified on the command line.
      *
      * @var array
      */
     protected $values = array();
+
+    /**
+     * Show warnings in the reports?
+     *
+     * @var bool
+     */
+    public $showWarnings = true;
+
+    /**
+     * The minimum severity level errors must have to be displayed.
+     *
+     * @var bool
+     */
+    public $errorSeverity = 0;
+
+    /**
+     * The minimum severity level warnings must have to be displayed.
+     *
+     * @var bool
+     */
+    public $warningSeverity = 0;
 
 
     /**
@@ -414,7 +435,12 @@ class PHP_CodeSniffer_CLI
             $phpcs->setIgnorePatterns($values['ignored']);
         }
 
+        // Set some convenience member vars.
+        $this->showWarnings    = $values['showWarnings'];
+        $this->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
+        $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
         $phpcs->setCli($this);
+
         $phpcs->process(
             $values['files'],
             $values['standard'],

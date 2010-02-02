@@ -133,6 +133,13 @@ class PHP_CodeSniffer_File
     public $eolChar = '';
 
     /**
+     * The PHP_CodeSniffer object controlling this run.
+     *
+     * @var PHP_CodeSniffer
+     */
+    public $phpcs = null;
+
+    /**
      * The tokenizer being used for this file.
      *
      * @var object
@@ -231,21 +238,27 @@ class PHP_CodeSniffer_File
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
-     * @param string        $file       The absolute path to the file
-     *                                  to process.
-     * @param array(string) $listeners  The initial listeners listening
-     *                                  to processing of this file.
-     * @param array         $tokenizers An array of extensions mapping
-     *                                  to the tokenizer to use.
+     * @param string          $file       The absolute path to the file to process.
+     * @param array(string)   $listeners  The initial listeners listening
+     *                                    to processing of this file.
+     * @param array           $tokenizers An array of extensions mapping
+     *                                    to the tokenizer to use.
+     * @param PHP_CodeSniffer $phpcs      The PHP_CodeSniffer object controlling
+     *                                    this run.
      *
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
      */
-    public function __construct($file, array $listeners, array $tokenizers)
-    {
+    public function __construct(
+        $file,
+        array $listeners,
+        array $tokenizers,
+        PHP_CodeSniffer $phpcs
+    ) {
         $this->_file      = trim($file);
         $this->_listeners = $listeners;
         $this->tokenizers = $tokenizers;
+        $this->phpcs      = $phpcs;
 
     }//end __construct()
 
@@ -600,6 +613,12 @@ class PHP_CodeSniffer_File
             $sniff .= '.'.$code;
         }
 
+        // Make sure we are interested in this severity level.
+        $severity = PHPCS_DEFAULT_ERROR_SEV;
+        if ($this->phpcs->cli->errorSeverity > $severity) {
+            return;
+        }
+
         if ($stackPtr === null) {
             $lineNum = 1;
             $column  = 1;
@@ -617,8 +636,9 @@ class PHP_CodeSniffer_File
         }
 
         $this->_errors[$lineNum][$column][] = array(
-                                               'message' => $error,
-                                               'source'  => $sniff,
+                                               'message'  => $error,
+                                               'source'   => $sniff,
+                                               'severity' => $severity,
                                               );
         $this->_errorCount++;
 
@@ -636,6 +656,12 @@ class PHP_CodeSniffer_File
      */
     public function addWarning($warning, $stackPtr, $code='')
     {
+        // Don't bother doing any processing if warnings are just going to
+        // be hidden in the reports anyway.
+        if ($this->phpcs->cli->showWarnings === false) {
+            return;
+        }
+
         // Work out which sniff generated the warning.
         $parts = explode('_', $this->_activeListener);
         if (isset($parts[3]) === true) {
@@ -649,6 +675,12 @@ class PHP_CodeSniffer_File
 
         if ($code !== '') {
             $sniff .= '.'.$code;
+        }
+
+        // Make sure we are interested in this severity level.
+        $severity = PHPCS_DEFAULT_WARN_SEV;
+        if ($this->phpcs->cli->warningSeverity > $severity) {
+            return;
         }
 
         if ($stackPtr === null) {
@@ -668,8 +700,9 @@ class PHP_CodeSniffer_File
         }
 
         $this->_warnings[$lineNum][$column][] = array(
-                                               'message' => $warning,
-                                               'source'  => $sniff,
+                                               'message'  => $warning,
+                                               'source'   => $sniff,
+                                               'severity' => $severity,
                                               );
         $this->_warningCount++;
 

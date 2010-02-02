@@ -70,14 +70,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    protected $file = array();
-
-    /**
-     * The directory to search for sniffs in.
-     *
-     * @var string
-     */
-    protected $standardDir = '';
+    protected $file = '';
 
     /**
      * The files that have been processed.
@@ -87,11 +80,25 @@ class PHP_CodeSniffer
     protected $files = array();
 
     /**
+     * The directory to search for sniffs in.
+     *
+     * @var string
+     */
+    protected $standardDir = '';
+
+    /**
      * The CLI object controlling the run.
      *
      * @var string
      */
-    protected $cli = null;
+    public $cli = null;
+
+    /**
+     * An array of sniffs that are being used to check files.
+     *
+     * @var array(PHP_CodeSniffer_Sniff)
+     */
+    protected $listeners = array();
 
     /**
      * The path that that PHP_CodeSniffer is being run from.
@@ -102,13 +109,6 @@ class PHP_CodeSniffer
      * @var string
      */
     private $_cwd = null;
-
-    /**
-     * The listeners array.
-     *
-     * @var array(PHP_CodeSniffer_Sniff)
-     */
-    protected $listeners = array();
 
     /**
      * The listeners array, indexed by token type.
@@ -183,10 +183,22 @@ class PHP_CodeSniffer
             define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
         }
 
+        if (defined('PHPCS_DEFAULT_ERROR_SEV') === false) {
+            define('PHPCS_DEFAULT_ERROR_SEV', 5);
+        }
+
+        if (defined('PHPCS_DEFAULT_WARN_SEV') === false) {
+            define('PHPCS_DEFAULT_WARN_SEV', 5);
+        }
+
         // Change into a directory that we know about to stop any
         // relative path conflicts.
         $this->_cwd = getcwd();
         chdir(dirname(__FILE__).'/CodeSniffer/');
+
+        // Set  default CLI object in case someone is running us
+        // without using the command line script.
+        $this->cli = new PHP_CodeSniffer_Cli();
 
     }//end __construct()
 
@@ -748,7 +760,13 @@ class PHP_CodeSniffer
 
             $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
 
-            $phpcsFile = new PHP_CodeSniffer_File($filename, $this->listeners, $this->allowedFileExtensions);
+            $phpcsFile = new PHP_CodeSniffer_File(
+                $filename,
+                $this->listeners,
+                $this->allowedFileExtensions,
+                $this
+            );
+
             $this->addFile($phpcsFile);
             $phpcsFile->addError($error, null);
             return;
@@ -894,7 +912,8 @@ class PHP_CodeSniffer
         $phpcsFile = new PHP_CodeSniffer_File(
             $file,
             $this->_tokenListeners['file'],
-            $this->allowedFileExtensions
+            $this->allowedFileExtensions,
+            $this
         );
         $this->addFile($phpcsFile);
         $phpcsFile->start($contents);
