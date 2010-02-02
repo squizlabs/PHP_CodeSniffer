@@ -59,15 +59,18 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
     {
         $tokens = $phpcsFile->getTokens();
 
-        $nextToken = $tokens[($stackPtr + 1)];
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 
         if ($tokens[$stackPtr]['code'] === T_STATIC
-            && $nextToken['code'] === T_DOUBLE_COLON
+            && ($tokens[$nextToken]['code'] === T_DOUBLE_COLON
+            || $tokens[$prevToken]['code'] === T_NEW)
         ) {
-            // Late static binding, e.g., static:: usage.
+            // Late static binding, e.g., static:: OR new static() usage.
             return;
         }
 
+        $nextToken = $tokens[($stackPtr + 1)];
         if ($nextToken['code'] !== T_WHITESPACE
             || strlen($nextToken['content']) !== 1
             || $nextToken['content'] === $phpcsFile->eolChar

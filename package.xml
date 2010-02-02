@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2010-01-27</date>
  <time>15:28:00</time>
  <version>
-  <release>1.2.2</release>
-  <api>1.2.2</api>
+  <release>1.2.3</release>
+  <api>1.2.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,69 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - The core PHP_CodeSniffer_File methods now understand the concept of closures (feature request #16866)
-    -- Thanks to Christian Kaps for the sample code
-  - Sniffs can now specify violation codes for each error and warning they add
-    -- Future versions will allow you to override messages and severities using these codes
-    -- Specifying a code is optional, but will be required if you wish to support overriding
-  - All reports have been broken into separate classes
-    -- Command line usage and report output remains the same
-    -- Thanks to Gabriele Santini for the patch
-  - Added an interactive mode that can be enabled using the -a command line argument
-    -- Scans files and stops when it finds a file with errors
-    -- Waits for user input to recheck the file (hopefully you fixed the errors) or skip the file
-    -- Useful for very large code bases where full rechecks take a while
-  - The reports now show the correct number of errors and warnings found
-  - The isCamelCaps method now allows numbers in class names
-  - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
-  - The JS tokenzier now correctly identifies regular expressions used in conditions
-  - PEAR ValidFunctionNameSniff now ignores closures
-  - Squiz standard now uses the PEAR setting of 85 chars for LineLengthSniff
-  - Squiz ControlStructureSpacingSniff now ensure there are no spaces around parentheses
-  - Squiz LongConditionClosingCommentSniff now checks for comments at the end of try/catch statements
-  - Squiz LongConditionClosingCommentSniff now checks validity of comments for short structures if they exist
-  - Squiz IncrementDecrementUsageSniff now has better checking to ensure it only looks at simple variable assignments
-  - Squiz PostStatementCommentSniff no longer throws errors for end function comments
-  - Squiz InlineCommentSniff no longer throws errors for end function comments
-  - Squiz OperatorBracketSniff now allows simple arithmetic operations in SWITCH conditions
-  - Squiz ValidFunctionNameSniff now ignores closures
-  - Squiz MethodScopeSniff now ignores closures
-  - Squiz ClosingDeclarationCommentSniff now ignores closures
-  - Squiz GlobalFunctionSniff now ignores closures
-  - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
-  - Squiz DisallowObjectStringIndexSniff now allows indexes that contain dots and reserved words
-  - Squiz standard now throws nesting level and cyclomatic complexity errors at much higher levels
-  - Squiz CommentedOutCodeSniff now ignores common comment framing chacacters
-  - Squiz ClassCommentSniff now ensures the open comment tag is the only content on the first line
-  - Squiz FileCommentSniff now ensures the open comment tag is the only content on the first line
-  - Squiz FunctionCommentSniff now ensures the open comment tag is the only content on the first line
-  - Squiz VariableCommentSniff now ensures the open comment tag is the only content on the first line
-  - Squiz NonExecutableCodeSniff now warns about empty return statements that are not required
-  - Removed ForbiddenStylesSniff from Squiz standard
-    -- It is now in in the MySource standard as BrowserSpecificStylesSniff
-    -- New BrowserSpecificStylesSniff ignores files with browser-specific suffixes
-  - MySource IncludeSystemSniff no longer throws errors when extending the Exception class
-  - MySource IncludeSystemSniff no longer throws errors for the abstract widget class
-  - MySource IncludeSystemSniff and UnusedSystemSniff now allow includes inside IF statements
-  - MySource IncludeSystemSniff no longer throws errors for included widgets inside methods
-  - MySource GetRequestDataSniff now throws errors for using $_FILES
-  - MySource CreateWidgetTypeCallbackSniff now allows return statements in nested functions
-  - MySource DisallowSelfActionsSniff now ignores abstract classes
-  - Fixed a problem with the SVN pre-commit hook for PHP versions without vertical whitespace regex support
-  - Fixed bug #16740 : False positives for heredoc strings and unused parameter sniff
-  - Fixed bug #16794 : ValidLogicalOperatorsSniff doesn't report operators not in lowercase
-  - Fixed bug #16804 : Report filename is shortened too much
-  - Fixed bug #16821 : Bug in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Fixed bug #16836 : Notice raised when using semicolon to open case
-  - Fixed bug #16855 : Generic standard sniffs incorrectly for define() method
-  - Fixed bug #16865 : Two bugs in Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Fixed bug #16902 : Inline If Declaration bug
-  - Fixed bug #16960 : False positive for late static binding in Squiz/ScopeKeywordSpacingSniff
-    -- Thanks to Jakub Tománek for the patch
-  - Fixed bug #16976 : The phpcs attempts to process symbolic links that don't resolve to files
-  - Fixed bug #17017 : Including one file in the files sniffed alters errors reported for another file
+  - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
  </notes>
  <contents>
   <dir name="/">

@@ -23,4 +23,12 @@ class MyClass
         static::bar();
     }
 }
+
+abstract class Foo
+{
+    public static function getInstance()
+    {
+        return new static();
+    }
+}
 ?>
