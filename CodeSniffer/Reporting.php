@@ -70,7 +70,6 @@ class PHP_CodeSniffer_Reporting
      * 
      * @param string  $report          Report type.
      * @param array   $filesViolations Collected violations.
-     * @param boolean $showWarnings    Show warnings?
      * @param boolean $showSources     Show sources?
      * @param string  $reportFile      Report file to generate.
      * @param integer $reportWidth     Report max width.
@@ -80,19 +79,18 @@ class PHP_CodeSniffer_Reporting
     public function printReport(
         $report,
         $filesViolations,
-        $showWarnings,
         $showSources,
         $reportFile='',
         $reportWidth=80
     ) {
         $reportClass = self::factory($report);
-        $reportData  = $this->prepare($filesViolations, $showWarnings);
+        $reportData  = $this->prepare($filesViolations);
 
         if ($reportFile !== '') {
             ob_start();
         }
 
-        $numErrors = $reportClass->generate($reportData, $showWarnings, $showSources, $reportWidth);
+        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth);
 
         if ($reportFile !== '') {
             $generatedReport = ob_get_contents();
@@ -113,11 +111,10 @@ class PHP_CodeSniffer_Reporting
      * Used by error reports to get a packaged list of all errors in each file.
      *
      * @param array   $filesViolations List of found violations.
-     * @param boolean $showWarnings    Show warnings as well as errors.
      *
      * @return array
      */
-    public function prepare(array $filesViolations, $showWarnings)
+    public function prepare(array $filesViolations)
     {
         $report = array(
                    'totals' => array(
@@ -144,22 +141,11 @@ class PHP_CodeSniffer_Reporting
                 continue;
             }
 
-            if ($numErrors === 0 && $showWarnings === false) {
-                // Prefect score (sort of).
-                continue;
-            }
+            $report['files'][$filename]['errors']   = $numErrors;
+            $report['files'][$filename]['warnings'] = $numWarnings;
 
-            $report['files'][$filename]['errors'] = $numErrors;
-            if ($showWarnings === true) {
-                $report['files'][$filename]['warnings'] = $numWarnings;
-            } else {
-                $report['files'][$filename]['warnings'] = 0;
-            }
-
-            $report['totals']['errors'] += $numErrors;
-            if ($showWarnings === true) {
-                $report['totals']['warnings'] += $numWarnings;
-            }
+            $report['totals']['errors']   += $numErrors;
+            $report['totals']['warnings'] += $numWarnings;
 
             // Merge errors and warnings.
             foreach ($errors as $line => $lineErrors) {
@@ -179,35 +165,33 @@ class PHP_CodeSniffer_Reporting
                 ksort($errors[$line]);
             }//end foreach
 
-            if ($showWarnings === true) {
-                foreach ($warnings as $line => $lineWarnings) {
-                    foreach ($lineWarnings as $column => $colWarnings) {
-                        $newWarnings = array();
-                        foreach ($colWarnings as $data) {
-                            $newWarnings[] = array(
-                                              'message' => $data['message'],
-                                              'source'  => $data['source'],
-                                              'type'    => 'WARNING',
-                                             );
-                        }//end foreach
-
-                        if (isset($errors[$line]) === false) {
-                            $errors[$line] = array();
-                        }
-
-                        if (isset($errors[$line][$column]) === true) {
-                            $errors[$line][$column] = array_merge(
-                                $newWarnings,
-                                $errors[$line][$column]
-                            );
-                        } else {
-                            $errors[$line][$column] = $newWarnings;
-                        }
+            foreach ($warnings as $line => $lineWarnings) {
+                foreach ($lineWarnings as $column => $colWarnings) {
+                    $newWarnings = array();
+                    foreach ($colWarnings as $data) {
+                        $newWarnings[] = array(
+                                          'message' => $data['message'],
+                                          'source'  => $data['source'],
+                                          'type'    => 'WARNING',
+                                         );
                     }//end foreach
 
-                    ksort($errors[$line]);
+                    if (isset($errors[$line]) === false) {
+                        $errors[$line] = array();
+                    }
+
+                    if (isset($errors[$line][$column]) === true) {
+                        $errors[$line][$column] = array_merge(
+                            $newWarnings,
+                            $errors[$line][$column]
+                        );
+                    } else {
+                        $errors[$line][$column] = $newWarnings;
+                    }
                 }//end foreach
-            }//end if
+
+                ksort($errors[$line]);
+            }//end foreach
 
             ksort($errors);
 

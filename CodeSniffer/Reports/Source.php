@@ -38,7 +38,6 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      * Prints the source of all errors and warnings.
      *
      * @param array   $report       Prepared report.
-     * @param boolean $showWarnings Show warnings?
      * @param boolean $showSources  Show sources?
      * @param int     $width        Maximum allowed lne width.
      * 
@@ -46,7 +45,6 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      */
     public function generate(
         $report,
-        $showWarnings=true,
         $showSources=false,
         $width=80
     ) {
@@ -111,7 +109,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
                 $sniff = $this->makeFriendlyName($parts[2]);
                 if (isset($parts[3]) === true) {
-                    $sniff .= ' '.ucfirst($this->makeFriendlyName($parts[3]));
+                    $sniff .= ' '.lcfirst($this->makeFriendlyName($parts[3]));
                 }
 
                 if (strlen($sniff) > ($width - 37)) {

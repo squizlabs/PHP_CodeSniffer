@@ -162,14 +162,14 @@ class Core_ReportingTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test prepare report method with $showWarning on.
+     * Test prepare report method.
      * 
      * @return void
      */
-    public function testPrepareWithShowWarning()
+    public function testPrepare()
     {
         $fixtureFilesViolations = $this->getFixtureFilesViolations();
-        $reports = $this->reporting->prepare($fixtureFilesViolations, true);
+        $reports = $this->reporting->prepare($fixtureFilesViolations);
 
         $this->assertArrayHasKey('files', $reports);
         $this->assertEquals(3, count($reports['files']));
@@ -221,70 +221,7 @@ class Core_ReportingTest extends PHPUnit_Framework_TestCase
         next($fooMessages[1]);
         $this->assertEquals(10, key($fooMessages[1]), 'column level violations order');
 
-    }//end testPrepareWithShowWarning()
-
-
-    /**
-     * Test prepare report method with $showWarning off.
-     * 
-     * @return void
-     */
-    public function testPrepareWithoutShowWarning()
-    {
-        $fixtureFilesViolations = $this->getFixtureFilesViolations();
-
-        $reports = $this->reporting->prepare($fixtureFilesViolations, false);
-
-        $this->assertArrayHasKey('files', $reports);
-        $this->assertEquals(3, count($reports['files']));
-
-        $this->assertArrayHasKey('foo', $reports['files']);
-        $this->assertArrayHasKey('errors', $reports['files']['foo']);
-        $this->assertEquals(4, $reports['files']['foo']['errors']);
-        $this->assertArrayHasKey('warnings', $reports['files']['foo']);
-        $this->assertEquals(0, $reports['files']['foo']['warnings']);
-
-        // Two errors on line 1 column 10.
-        $this->assertArrayHasKey('messages', $reports['files']['foo']);
-        $fooMessages = $reports['files']['foo']['messages'];
-        $this->assertArrayHasKey(1, $fooMessages);
-        $this->assertArrayHasKey(10, $fooMessages[1]);
-        $this->assertEquals(2, count($fooMessages[1][10]));
-
-        // One error on line 10 column 1.
-        $this->assertArrayHasKey(10, $fooMessages);
-        $this->assertArrayHasKey(1, $fooMessages[10]);
-        $this->assertEquals(1, count($fooMessages[10][1]));
-
-        $this->assertArrayHasKey('baz', $reports['files']);
-
-        $this->assertArrayHasKey(
-            'totals',
-            $reports,
-            'report totals exist'
-        );
-        $this->assertArrayHasKey(
-            'errors',
-            $reports['totals'],
-            'errors total exists'
-        );
-        $this->assertEquals(
-            8,
-            $reports['totals']['errors'],
-            'errors total is well calculated'
-        );
-        $this->assertArrayHasKey(
-            'warnings',
-            $reports['totals'],
-            'warnings total exists'
-        );
-        $this->assertEquals(
-            0,
-            $reports['totals']['warnings'],
-            'warnings total is well calculated'
-        );
-
-    }//end testPrepareWithoutShowWarning()
+    }//end testPrepare()
 
 
 }//end class

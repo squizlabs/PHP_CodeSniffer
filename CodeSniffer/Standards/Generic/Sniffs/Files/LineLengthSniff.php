@@ -38,7 +38,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      *
      * @var int
      */
-    protected $lineLimit = 80;
+    public $lineLimit = 80;
 
     /**
      * The limit that the length of a line must not exceed.
@@ -47,7 +47,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      *
      * @var int
      */
-    protected $absoluteLineLimit = 100;
+    public $absoluteLineLimit = 100;
 
 
     /**
@@ -118,11 +118,21 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         if (preg_match('|@version[^\$]+\$Id|', $lineContent) === 0 && preg_match('|@license|', $lineContent) === 0) {
             $lineLength = strlen($lineContent);
             if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
-                $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addError($error, $stackPtr, 'MaxLengthExceeded');
+                $data = array(
+                         $this->absoluteLineLimit,
+                         $lineLength,
+                        );
+
+                $error = 'Line exceeds maximum limit of %s characters; contains %s characters';
+                $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
             } else if ($lineLength > $this->lineLimit) {
-                $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addWarning($warning, $stackPtr, 'LineTooLong');
+                $data = array(
+                         $this->lineLimit,
+                         $lineLength,
+                        );
+
+                $warning = 'Line exceeds %s characters; contains %s characters';
+                $phpcsFile->addWarning($warning, $stackPtr, 'TooLong', $data);
             }
         }
 

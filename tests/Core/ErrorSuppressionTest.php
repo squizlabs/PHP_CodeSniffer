@@ -38,7 +38,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressError()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Generic', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
+        $phpcs->setTokenListeners('PEAR', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
         $phpcs->populateTokenListeners();
 
         // Process without suppression.
@@ -76,7 +76,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressSomeErrors()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Generic', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
+        $phpcs->setTokenListeners('PEAR', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
         $phpcs->populateTokenListeners();
 
         // Process without suppression.
@@ -114,7 +114,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressWarning()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Generic', array('Generic_Sniffs_Commenting_TodoSniff'));
+        $phpcs->setTokenListeners('Squiz', array('Generic_Sniffs_Commenting_TodoSniff'));
         $phpcs->populateTokenListeners();
 
         // Process without suppression.

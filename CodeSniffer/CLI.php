@@ -41,13 +41,6 @@ class PHP_CodeSniffer_CLI
     protected $values = array();
 
     /**
-     * Show warnings in the reports?
-     *
-     * @var bool
-     */
-    public $showWarnings = true;
-
-    /**
      * The minimum severity level errors must have to be displayed.
      *
      * @var bool
@@ -108,11 +101,13 @@ class PHP_CodeSniffer_CLI
             $defaults['report'] = 'full';
         }
 
+        $defaults['warningSeverity'] = null;
         $showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
-        if ($showWarnings === null) {
-            $defaults['showWarnings'] = true;
-        } else {
-            $defaults['showWarnings'] = (bool) $showWarnings;
+        if ($showWarnings !== null) {
+            $showWarnings = (bool) $showWarnings;
+            if ($showWarnings === false) {
+                $defaults['warningSeverity'] = 0;
+            }
         }
 
         $tabWidth = PHP_CodeSniffer::getConfigData('tab_width');
@@ -120,6 +115,29 @@ class PHP_CodeSniffer_CLI
             $defaults['tabWidth'] = 0;
         } else {
             $defaults['tabWidth'] = (int) $tabWidth;
+        }
+
+        $severity = PHP_CodeSniffer::getConfigData('severity');
+        if ($severity === null) {
+            $defaults['errorSeverity']   = null;
+            $defaults['warningSeverity'] = null;
+        } else {
+            $defaults['errorSeverity']   = (int) $severity;
+            $defaults['warningSeverity'] = (int) $severity;
+        }
+
+        $severity = PHP_CodeSniffer::getConfigData('error_severity');
+        if ($severity === null) {
+            $defaults['errorSeverity'] = null;
+        } else {
+            $defaults['errorSeverity'] = (int) $severity;
+        }
+
+        $severity = PHP_CodeSniffer::getConfigData('warning_severity');
+        if ($severity === null) {
+            $defaults['warningSeverity'] = null;
+        } else {
+            $defaults['warningSeverity'] = (int) $severity;
         }
 
         $reportWidth = PHP_CodeSniffer::getConfigData('report_width');
@@ -214,10 +232,10 @@ class PHP_CodeSniffer_CLI
             $values['interactive'] = true;
             break;
         case 'n' :
-            $values['showWarnings'] = false;
+            $values['warningSeverity'] = 0;
             break;
         case 'w' :
-            $values['showWarnings'] = true;
+            $values['warningSeverity'] = null;
             break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
@@ -319,6 +337,13 @@ class PHP_CodeSniffer_CLI
                 $values['standard'] = substr($arg, 9);
             } else if (substr($arg, 0, 11) === 'extensions=') {
                 $values['extensions'] = explode(',', substr($arg, 11));
+            } else if (substr($arg, 0, 9) === 'severity=') {
+                $values['errorSeverity']   = (int) substr($arg, 9);
+                $values['warningSeverity'] = $values['errorSeverity'];
+            } else if (substr($arg, 0, 15) === 'error-severity=') {
+                $values['errorSeverity'] = (int) substr($arg, 15);
+            } else if (substr($arg, 0, 17) === 'warning-severity=') {
+                $values['warningSeverity'] = (int) substr($arg, 17);
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
@@ -436,9 +461,18 @@ class PHP_CodeSniffer_CLI
         }
 
         // Set some convenience member vars.
-        $this->showWarnings    = $values['showWarnings'];
-        $this->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
-        $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
+        if ($values['errorSeverity'] === null) {
+            $this->errorSeverity = PHPCS_DEFAULT_ERROR_SEV;
+        } else {
+            $this->errorSeverity = $values['errorSeverity'];
+        }
+
+        if ($values['warningSeverity'] === null) {
+            $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
+        } else {
+            $this->warningSeverity = $values['warningSeverity'];
+        }
+
         $phpcs->setCli($this);
 
         $phpcs->process(
@@ -451,7 +485,6 @@ class PHP_CodeSniffer_CLI
         return $this->printErrorReport(
             $phpcs,
             $values['report'],
-            $values['showWarnings'],
             $values['showSources'],
             $values['reportFile'],
             $values['reportWidth']
@@ -466,7 +499,6 @@ class PHP_CodeSniffer_CLI
      * @param PHP_CodeSniffer $phpcs        The PHP_CodeSniffer object containing
      *                                      the errors.
      * @param string          $report       The type of report to print.
-     * @param bool            $showWarnings TRUE if warnings should also be printed.
      * @param bool            $showSources  TRUE if report should show error sources
      *                                      (not used by all reports).
      * @param string          $reportFile   A file to log the report out to.
@@ -477,7 +509,6 @@ class PHP_CodeSniffer_CLI
     public function printErrorReport(
         PHP_CodeSniffer $phpcs,
         $report,
-        $showWarnings,
         $showSources,
         $reportFile,
         $reportWidth
@@ -488,7 +519,6 @@ class PHP_CodeSniffer_CLI
         return $reporting->printReport(
             $report,
             $filesViolations,
-            $showWarnings,
             $showSources,
             $reportFile,
             $reportWidth
@@ -543,10 +573,11 @@ class PHP_CodeSniffer_CLI
     {
         echo 'Usage: phpcs [-nwlsavi] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
+        echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--generator=<generator>] [--tab-width=<tabWidth>] <file> ...'.PHP_EOL;
-        echo '        -n            Do not print warnings'.PHP_EOL;
+        echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
@@ -562,6 +593,8 @@ class PHP_CodeSniffer_CLI
         echo '                      to ignore directories and files'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
+        echo '        <severity>    The minimum severity that an error or warning must have'.PHP_EOL;
+        echo '                      for it to be displayed.'.PHP_EOL;
         echo '        <standard>    The name of the coding standard to use'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
@@ -591,7 +624,7 @@ class PHP_CodeSniffer_CLI
         } else {
             $lastStandard = array_pop($installedStandards);
             if ($numStandards === 1) {
-                echo 'The only coding standard installed is $lastStandard'.PHP_EOL;
+                echo "The only coding standard installed is $lastStandard".PHP_EOL;
             } else {
                 $standardList  = implode(', ', $installedStandards);
                 $standardList .= ' and '.$lastStandard;

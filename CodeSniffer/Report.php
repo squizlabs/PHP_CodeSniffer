@@ -36,7 +36,6 @@ interface PHP_CodeSniffer_Report
      * Generate the actual report.
      * 
      * @param array   $report       Prepared report.
-     * @param boolean $showWarnings Show warnings?
      * @param boolean $showSources  Show sources?
      * @param int     $width        Maximum allowed lne width.  
      * 
@@ -44,7 +43,6 @@ interface PHP_CodeSniffer_Report
      */
     public function generate(
         $report,
-        $showWarnings=true,
         $showSources=false,
         $width=80
     );

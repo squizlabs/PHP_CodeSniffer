@@ -40,7 +40,6 @@ class PHP_CodeSniffer_Reports_Svnblame implements PHP_CodeSniffer_Report
      * Requires you to have the svn command in your path.
      *
      * @param array   $report       Prepared report.
-     * @param boolean $showWarnings Show warnings?
      * @param boolean $showSources  Show sources?
      * @param int     $width        Maximum allowed lne width.
      * 
@@ -48,7 +47,6 @@ class PHP_CodeSniffer_Reports_Svnblame implements PHP_CodeSniffer_Report
      */
     public function generate(
         $report,
-        $showWarnings=true,
         $showSources=false,
         $width=80
     ) {

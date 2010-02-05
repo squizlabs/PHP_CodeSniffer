@@ -42,7 +42,6 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      * show files that have at least one warning or error.
      * 
      * @param array   $report       Prepared report.
-     * @param boolean $showWarnings Show warnings?
      * @param boolean $showSources  Show sources?
      * @param int     $width        Maximum allowed lne width.
      * 
@@ -50,7 +49,6 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      */
     public function generate(
         $report,
-        $showWarnings=true,
         $showSources=false,
         $width=80
     ) {
@@ -82,12 +80,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
-        if ($showWarnings === true) {
-            echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
-        } else {
-            echo 'FILE'.str_repeat(' ', ($width - 10)).'ERRORS'.PHP_EOL;
-        }
-
+        echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
         $totalErrors   = 0;
@@ -95,12 +88,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $totalFiles    = 0;
 
         foreach ($errorFiles as $file => $errors) {
-            if ($showWarnings === true) {
-                $padding = ($width - 18 - strlen($file));
-            } else {
-                $padding = ($width - 8 - strlen($file));
-            }
-
+            $padding = ($width - 18 - strlen($file));
             if ($padding < 0) {
                 $file    = '...'.substr($file, (($padding * -1) + 3));
                 $padding = 0;
@@ -108,33 +96,26 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
             echo $file.str_repeat(' ', $padding).'  ';
             echo $errors['errors'];
-            if ($showWarnings === true) {
-                echo str_repeat(' ', (8 - strlen((string) $errors['errors'])));
-                echo $errors['warnings'];
-            }
-
+            echo str_repeat(' ', (8 - strlen((string) $errors['errors'])));
+            echo $errors['warnings'];
             echo PHP_EOL;
 
-            $totalErrors   += $errors['errors'];
-            $totalWarnings += $errors['warnings'];
             $totalFiles++;
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$totalErrors.' ERROR(S) ';
-        if ($showWarnings === true) {
-            echo 'AND '.$totalWarnings.' WARNING(S) ';
-        }
+        echo 'A TOTAL OF '.$report['totals']['errors'].' ERROR(S) ';
+        echo 'AND '.$report['totals']['warnings'].' WARNING(S) ';
 
         echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($showSources === true) {
             $source = new PHP_CodeSniffer_Reports_Source();
-            $source->generate($report, $showWarnings, $showSources, $width);
+            $source->generate($report, $showSources, $width);
         }
 
-        return ($totalErrors + $totalWarnings);
+        return ($report['totals']['errors'] + $report['totals']['warnings']);
 
     }//end generate()
 

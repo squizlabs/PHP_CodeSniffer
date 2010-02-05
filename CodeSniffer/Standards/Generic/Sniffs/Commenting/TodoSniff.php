@@ -73,11 +73,12 @@ class Generic_Sniffs_Commenting_TodoSniff implements PHP_CodeSniffer_Sniff
             $todoMessage = trim($matches[1]);
             $todoMessage = trim($todoMessage, '[]().');
             $error       = 'Comment refers to a TODO task';
+            $data        = array($todoMessage);
             if ($todoMessage !== '') {
-                $error .= " \"$todoMessage\"";
+                $error .= ' "%s"';
             }
 
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, 'CommentFound', $data);
         }
 
     }//end process()

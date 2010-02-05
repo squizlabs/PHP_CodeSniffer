@@ -234,6 +234,17 @@ class PHP_CodeSniffer_File
      */
     protected $tokenizers = array();
 
+    /**
+     * An array of rules from the ruleset.xml file.
+     *
+     * This value gets set by PHP_CodeSniffer when the object is created.
+     * It may be empty, indicating that the ruleset does not override
+     * any of the default sniff settings.
+     *
+     * @var array
+     */
+    protected $ruleset = array();
+
 
     /**
      * Constructs a PHP_CodeSniffer_File.
@@ -243,6 +254,8 @@ class PHP_CodeSniffer_File
      *                                    to processing of this file.
      * @param array           $tokenizers An array of extensions mapping
      *                                    to the tokenizer to use.
+     * @param array           $ruleset    An array of rules from the
+     *                                    ruleset.xml file.
      * @param PHP_CodeSniffer $phpcs      The PHP_CodeSniffer object controlling
      *                                    this run.
      *
@@ -253,11 +266,13 @@ class PHP_CodeSniffer_File
         $file,
         array $listeners,
         array $tokenizers,
+        array $ruleset,
         PHP_CodeSniffer $phpcs
     ) {
         $this->_file      = trim($file);
         $this->_listeners = $listeners;
         $this->tokenizers = $tokenizers;
+        $this->ruleset    = $ruleset;
         $this->phpcs      = $phpcs;
 
     }//end __construct()
@@ -367,7 +382,7 @@ class PHP_CodeSniffer_File
         $foundCode = false;
         $ignoring  = false;
 
-        // Foreach of the listeners that have registed to listen for this
+        // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
@@ -464,7 +479,7 @@ class PHP_CodeSniffer_File
             $shortTags = (bool) ini_get('short_open_tag');
             if ($shortTags === false) {
                 $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
-                $this->addWarning($error, null);
+                $this->addWarning($error, null, 'Internal.NoCodeFound');
             }
         }
 
@@ -593,30 +608,60 @@ class PHP_CodeSniffer_File
      * @param string $error    The error message.
      * @param int    $stackPtr The stack position where the error occured.
      * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the error message.
+     * @param int    $severity The severity level for this error. A value of
+     *                         will be converted into the default severity level.
      *
      * @return void
      */
-    public function addError($error, $stackPtr, $code='')
+    public function addError($error, $stackPtr, $code='', $data=array(), $severity=0)
     {
-        // Work out which sniff generated the error.
-        $parts = explode('_', $this->_activeListener);
-        if (isset($parts[3]) === true) {
-            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
-
-            // Remove "Sniff" from the end.
-            $sniff = substr($sniff, 0, -5);
-        } else {
-            $sniff = 'unknownSniff';
+        // Don't bother doing any processing if errors are just going to
+        // be hidden in the reports anyway.
+        if ($this->phpcs->cli->errorSeverity === 0) {
+            return;
         }
 
-        if ($code !== '') {
-            $sniff .= '.'.$code;
+        // Work out which sniff generated the error.
+        if (substr($code, 0, 9) === 'Internal.') {
+            // Any internal message.
+            $sniff = $code;
+        } else {
+            $parts = explode('_', $this->_activeListener);
+            if (isset($parts[3]) === true) {
+                $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+                // Remove "Sniff" from the end.
+                $sniff = substr($sniff, 0, -5);
+            } else {
+                $sniff = 'unknownSniff';
+            }
+
+            if ($code !== '') {
+                $sniff .= '.'.$code;
+            }
         }
 
         // Make sure we are interested in this severity level.
-        $severity = PHPCS_DEFAULT_ERROR_SEV;
-        if ($this->phpcs->cli->errorSeverity > $severity) {
+        if (isset($this->ruleset[$sniff]['severity']) === true) {
+            $severity = $this->ruleset[$sniff]['severity'];
+        } else if ($severity === 0) {
+            $severity = PHPCS_DEFAULT_ERROR_SEV;
+        }
+
+        if ($this->phpcs->cli->warningSeverity > $severity) {
             return;
+        }
+
+        // Work out the warning message.
+        if (isset($this->ruleset[$sniff]['message']) === true) {
+            $error = $this->ruleset[$sniff]['message'];
+        }
+
+        if (empty($data) === true) {
+            $message = $error;
+        } else {
+            $message = vsprintf($error, $data);
         }
 
         if ($stackPtr === null) {
@@ -636,7 +681,7 @@ class PHP_CodeSniffer_File
         }
 
         $this->_errors[$lineNum][$column][] = array(
-                                               'message'  => $error,
+                                               'message'  => $message,
                                                'source'   => $sniff,
                                                'severity' => $severity,
                                               );
@@ -651,36 +696,60 @@ class PHP_CodeSniffer_File
      * @param string $warning  The error message.
      * @param int    $stackPtr The stack position where the error occured.
      * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the warning message.
+     * @param int    $severity The severity level for this warning. A value of
+     *                         will be converted into the default severity level.
      *
      * @return void
      */
-    public function addWarning($warning, $stackPtr, $code='')
+    public function addWarning($warning, $stackPtr, $code='', $data=array(), $severity=0)
     {
         // Don't bother doing any processing if warnings are just going to
         // be hidden in the reports anyway.
-        if ($this->phpcs->cli->showWarnings === false) {
+        if ($this->phpcs->cli->warningSeverity === 0) {
             return;
         }
 
         // Work out which sniff generated the warning.
-        $parts = explode('_', $this->_activeListener);
-        if (isset($parts[3]) === true) {
-            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
-
-            // Remove "Sniff" from the end.
-            $sniff = substr($sniff, 0, -5);
+        if (substr($code, 0, 9) === 'Internal.') {
+            // Any internal message.
+            $sniff = $code;
         } else {
-            $sniff = 'unknownSniff';
-        }
+            $parts = explode('_', $this->_activeListener);
+            if (isset($parts[3]) === true) {
+                $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
-        if ($code !== '') {
-            $sniff .= '.'.$code;
+                // Remove "Sniff" from the end.
+                $sniff = substr($sniff, 0, -5);
+            } else {
+                $sniff = 'unknownSniff';
+            }
+
+            if ($code !== '') {
+                $sniff .= '.'.$code;
+            }
         }
 
         // Make sure we are interested in this severity level.
-        $severity = PHPCS_DEFAULT_WARN_SEV;
+        if (isset($this->ruleset[$sniff]['severity']) === true) {
+            $severity = $this->ruleset[$sniff]['severity'];
+        } else if ($severity === 0) {
+            $severity = PHPCS_DEFAULT_WARN_SEV;
+        }
+
         if ($this->phpcs->cli->warningSeverity > $severity) {
             return;
+        }
+
+        // Work out the warning message.
+        if (isset($this->ruleset[$sniff]['message']) === true) {
+            $warning = $this->ruleset[$sniff]['message'];
+        }
+
+        if (empty($data) === true) {
+            $message = $warning;
+        } else {
+            $message = vsprintf($warning, $data);
         }
 
         if ($stackPtr === null) {
@@ -700,7 +769,7 @@ class PHP_CodeSniffer_File
         }
 
         $this->_warnings[$lineNum][$column][] = array(
-                                               'message'  => $warning,
+                                               'message'  => $message,
                                                'source'   => $sniff,
                                                'severity' => $severity,
                                               );
@@ -2060,7 +2129,7 @@ class PHP_CodeSniffer_File
                 && $this->_tokens[$ptr]['code'] === T_INTERFACE
             ) {
                 $error = 'Possible parse error: interfaces may not include member vars';
-                $this->addWarning($error, $stackPtr);
+                $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
                 return array();
             } else {
                 throw new PHP_CodeSniffer_Exception('$stackPtr is not a class member var');
