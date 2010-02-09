@@ -29,6 +29,10 @@ if (class_exists('PHP_CodeSniffer_Tokens', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Tokens not found');
 }
 
+if (class_exists('PHP_CodeSniffer_CLI', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CLI not found');
+}
+
 if (interface_exists('PHP_CodeSniffer_Sniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Interface PHP_CodeSniffer_Sniff not found');
 }
