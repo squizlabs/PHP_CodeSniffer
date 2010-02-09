@@ -14,6 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/Framework/TestSuite.php';
 
 /**
