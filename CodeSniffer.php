@@ -212,7 +212,7 @@ class PHP_CodeSniffer
 
         // Set  default CLI object in case someone is running us
         // without using the command line script.
-        $this->cli = new PHP_CodeSniffer_Cli();
+        $this->cli = new PHP_CodeSniffer_CLI();
         $this->cli->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
         $this->cli->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
 
