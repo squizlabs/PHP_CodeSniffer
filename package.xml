@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Custom standards will need to be converted over to this new format to continue working
   - You can specify a path to your own custom ruleset.xml file by using the --standard command line arg
     - e.g., phpcs --standard=/path/to/my/ruleset.xml
+  - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
+  - Added MySource ChannelExceptionSniff to ensure action files only throw ChannelException
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
  </notes>
  <contents>
@@ -517,6 +519,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="MySource">
       <dir name="Sniffs">
        <dir name="Channels">
+        <file baseinstalldir="PHP" name="ChannelExceptionSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowSelfActionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1156,6 +1161,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LanguageConstructSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LogicalOperatorSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="MemberVarSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1591,6 +1599,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LogicalOperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LogicalOperatorSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="LogicalOperatorSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="MemberVarSpacingUnitTest.inc" role="test" />
