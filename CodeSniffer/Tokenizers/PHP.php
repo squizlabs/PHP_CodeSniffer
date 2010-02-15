@@ -478,17 +478,17 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 continue;
             }
 
+            // The closer for this CASE should be the closing
+            // curly brace and not whatever it already is.
             $newCloser = $tokens[$x]['bracket_closer'];
+            $tokens[$i]['scope_closer'] = $newCloser;
+            $tokens[$newCloser]['scope_condition'] = $i;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $oldType = $tokens[$scopeCloser]['type'];
                 $newType = $tokens[$newCloser]['type'];
                 $line    = $tokens[$i]['line'];
                 echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
             }
-
-            // The closer for this CASE should be the closing
-            // curly brace and not whatever it already is.
-            $tokens[$i]['scope_closer'] = $newCloser;
 
             // Now fix up all the tokens that think they are
             // inside the CASE statement when they are really outside.

@@ -90,4 +90,8 @@ switch ($httpResponseCode) {
         return 'Unknown';
     break;
 }
+
+switch($i) {
+case 1: {}
+}
 ?>

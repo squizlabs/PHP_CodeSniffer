@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
   - Added MySource ChannelExceptionSniff to ensure action files only throw ChannelException
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
+  - Fixed bug #17096 : Notice: Undefined index: scope_condition in ScopeClosingBraceSniff.php
  </notes>
  <contents>
   <dir name="/">
