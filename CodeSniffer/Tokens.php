@@ -58,6 +58,7 @@ define('T_HASH', 1039);
 define('T_URL', 1040);
 define('T_STYLE', 1041);
 define('T_ASPERAND', 1042);
+define('T_DOLLAR', 1043);
 
 /**
  * The Tokens class contains weightings for tokens based on their
