@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
   - Fixed bug #17054 : phpcs more strict than PEAR CS regarding function parameter spacing
   - Fixed bug #17096 : Notice: Undefined index: scope_condition in ScopeClosingBraceSniff.php
+    -- Moved PEAR.Functions.FunctionCallArgumentSpacing to Generic.Functions.FunctionCallArgumentSpacing
  </notes>
  <contents>
   <dir name="/">
