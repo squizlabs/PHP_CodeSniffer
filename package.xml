@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
   - Added MySource ChannelExceptionSniff to ensure action files only throw ChannelException
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
+  - Fixed bug #17054 : phpcs more strict than PEAR CS regarding function parameter spacing
   - Fixed bug #17096 : Notice: Undefined index: scope_condition in ScopeClosingBraceSniff.php
  </notes>
  <contents>
@@ -295,6 +296,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CallTimePassByReferenceSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -444,6 +448,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Functions">
         <file baseinstalldir="PHP" name="CallTimePassByReferenceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="CallTimePassByReferenceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.inc" role="test" />
@@ -651,7 +659,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LineLengthStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
-        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ValidDefaultValueStandard.xml" role="php" />
        </dir>
@@ -705,9 +712,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Functions">
-        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="FunctionCallSignatureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -789,10 +793,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Functions">
-        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />

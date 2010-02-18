@@ -3,13 +3,13 @@
  <description>A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.</description>
 
  <!-- Include some sniffs from all around the place -->
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="PEAR.Classes.ClassDeclaration"/>
  <rule ref="PEAR.ControlStructures.ControlSignature"/>
  <rule ref="PEAR.Files.LineEndings"/>
- <rule ref="PEAR.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="PEAR.Functions.FunctionCallSignature"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>

@@ -8,6 +8,7 @@
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
  <rule ref="Generic.Formatting.SpaceAfterCast"/>
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="Generic.NamingConventions.ConstructorName"/>
  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
@@ -16,7 +17,6 @@
  <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
  <rule ref="PEAR.Files.IncludingFile"/>
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
- <rule ref="PEAR.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="PEAR.Functions.FunctionCallSignature"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 

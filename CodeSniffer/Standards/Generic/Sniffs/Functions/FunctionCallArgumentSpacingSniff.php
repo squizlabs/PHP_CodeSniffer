@@ -1,6 +1,6 @@
 <?php
 /**
- * PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
+ * Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
  * PHP version 5
  *
@@ -10,12 +10,12 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id$
+ * @version   CVS: $Id: FunctionCallArgumentSpacingSniff.php 240175 2007-07-23 01:47:54Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
+ * Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
  * Checks that calls to methods and functions are spaced correctly.
  *
@@ -28,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
 
@@ -90,12 +90,12 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
             if ($tokens[$nextSeperator]['code'] === T_COMMA) {
                 if ($tokens[($nextSeperator - 1)]['code'] === T_WHITESPACE) {
                     $error = 'Space found before comma in function call';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeComma');
                 }
 
                 if ($tokens[($nextSeperator + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'No space found after comma in function call';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterComma');
                 } else {
                     // If there is a newline in the space, then the must be formatting
                     // each argument on a newline, which is valid, so ignore it.
@@ -104,7 +104,7 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
                         if ($space > 1) {
                             $error  = 'Expected 1 space after comma in function call; ';
                             $error .= $space.' found';
-                            $phpcsFile->addError($error, $stackPtr);
+                            $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceAfterComma');
                         }
                     }
                 }
@@ -115,12 +115,12 @@ class PEAR_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_Code
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
                         if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
                             $error = 'Expected 1 space before = sign of default value';
-                            $phpcsFile->addError($error, $stackPtr);
+                            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeEquals');
                         }
 
                         if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
                             $error = 'Expected 1 space after = sign of default value';
-                            $phpcsFile->addError($error, $stackPtr);
+                            $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterEquals');
                         }
                     }
                 }

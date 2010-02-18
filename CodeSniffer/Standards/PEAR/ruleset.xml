@@ -3,6 +3,7 @@
  <description>The PEAR coding standard.</description>
 
  <!-- Include some additional sniffs from the Generic standard -->
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
  <rule ref="Generic.PHP.LowerCaseConstant"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
@@ -14,6 +15,11 @@
    <property name="lineLimit" value="85"/>
    <property name="absoluteLineLimit" value="0"/>
   </properties>
+ </rule>
+
+ <!-- This messgae is not required as spaces are allowed for alignment -->
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+  <severity>0</severity>
  </rule>
 
 </ruleset>
