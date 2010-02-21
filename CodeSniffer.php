@@ -982,7 +982,6 @@ class PHP_CodeSniffer
             $numErrors = $reporting->printReport(
                 $cliValues['report'],
                 $filesViolations,
-                $cliValues['showWarnings'],
                 $cliValues['showSources'],
                 '',
                 $cliValues['reportWidth']
