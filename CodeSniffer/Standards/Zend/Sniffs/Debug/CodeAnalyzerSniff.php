@@ -100,8 +100,8 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 // > Zend Code Analyzer 1.2.2
                 // > Analyzing <filename>...
                 // So skip these...
-                $res = eregi("^.+\(line ([0-9]+)\):(.+)$", $finding, $regs);
-                if ($regs === null || $res === false) {
+                $res = preg_match("/^.+\(line ([0-9]+)\):(.+)$/", $finding, $regs);
+                if (empty($regs) === true || $res === false) {
                     continue;
                 }
 
