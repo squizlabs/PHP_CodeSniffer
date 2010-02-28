@@ -112,7 +112,16 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                 unset($params[$token['content']]);
             } else if ($code === T_DOUBLE_QUOTED_STRING || $code === T_HEREDOC) {
                 // Tokenize strings that can contain variables.
-                $strTokens = token_get_all(sprintf('<?php %s;?>', $token['content']));
+                // Make sure the string is re-joined if it occurs over multiple lines.
+                $string = $token['content'];
+                for ($i = ($next + 1); $i <= $end; $i++) {
+                    if ($tokens[$i]['code'] === $code) {
+                        $string .= $tokens[$i]['content'];
+                        $next++;
+                    }
+                }
+
+                $strTokens = token_get_all(sprintf('<?php %s;?>', $string));
 
                 foreach ($strTokens as $tok) {
                     if (is_array($tok) === false || $tok[0] !== T_VARIABLE ) {
