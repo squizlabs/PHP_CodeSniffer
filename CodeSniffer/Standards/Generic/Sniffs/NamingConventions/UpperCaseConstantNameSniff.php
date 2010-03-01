@@ -77,7 +77,9 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_EXTENDS,
                              T_INSTANCEOF,
                              T_NEW,
+                             T_NAMESPACE,
                             );
+
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {
                 // This is just a declaration; no constants here.
                 return;
@@ -99,6 +101,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 return;
             }
 
+            // Is this a namespace name?
+            if ($tokens[$nextPtr]['code'] === T_NS_SEPARATOR) {
+                return;
+            }
+
             // Is this a type hint?
             if ($tokens[$nextPtr]['code'] === T_VARIABLE) {
                 return;
@@ -109,6 +116,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             // Is this a member var name?
             $prevPtr = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
             if ($tokens[$prevPtr]['code'] === T_OBJECT_OPERATOR) {
+                return;
+            }
+
+            // Is this a namespace name?
+            if ($tokens[$prevPtr]['code'] === T_NS_SEPARATOR) {
                 return;
             }
 

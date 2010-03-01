@@ -1,5 +1,9 @@
 <?php
 
+namespace foo;
+namespace foo\bar;
+namespace bar\foo\baz;
+
 define('VALID_NAME', true);
 define('invalidName', true);
 define("VALID_NAME", true);

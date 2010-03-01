@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Ian Young for the patch
   - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
   - Added MySource ChannelExceptionSniff to ensure action files only throw ChannelException
+  - Generic UpperCaseConstantSniff no longer throws errors about namespaces
+    -- Thanks to Christian Caps for the patch
   - Fixed a problem where Generic CodeAnalysisSniff could show warnings if checking multi-line strings
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
   - Fixed bug #17054 : phpcs more strict than PEAR CS regarding function parameter spacing
