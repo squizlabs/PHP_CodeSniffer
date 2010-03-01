@@ -2184,6 +2184,65 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Returns the visibility and implementation properies of a class.
+     *
+     * The format of the array is:
+     * <code>
+     *   array(
+     *    'is_abstract' => false, // true if the abstract keyword was found.
+     *    'is_final'    => false, // true if the final keyword was found.
+     *   );
+     * </code>
+     *
+     * @param int $stackPtr The position in the stack of the T_CLASS token to
+     *                      acquire the properties for.
+     *
+     * @return array
+     * @throws PHP_CodeSniffer_Exception If the specified position is not a
+     *                                   T_CLASS token.
+     */
+    public function getClassProperties($stackPtr)
+    {
+        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
+            throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_CLASS');
+        }
+
+        $valid = array(
+                  T_FINAL,
+                  T_ABSTRACT,
+                  T_WHITESPACE,
+                  T_COMMENT,
+                  T_DOC_COMMENT,
+                 );
+
+        $isAbstract = false;
+        $isFinal    = false;
+
+        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+            if (in_array($this->tokens[$i]['code'], $valid) === false) {
+                break;
+            }
+
+            switch ($this->tokens[$i]['code']) {
+            case T_ABSTRACT:
+                $isAbstract = true;
+                break;
+
+            case T_FINAL:
+                $isFinal = true;
+                break;
+            }
+        }//end for
+
+        return array(
+                'is_abstract' => $isAbstract,
+                'is_final'    => $isFinal
+               );
+
+    }//end getClassProperties()
+
+
+    /**
      * Determine if the passed token is a reference operator.
      *
      * Returns true if the specified token position represents a reference.
