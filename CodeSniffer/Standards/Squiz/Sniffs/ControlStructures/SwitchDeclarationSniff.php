@@ -68,6 +68,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
     {
         $tokens = $phpcsFile->getTokens();
 
+        // We can't process SWITCH statements unless we know where they start and end.
+        if (isset($tokens[$stackPtr]['scope_opener']) === false
+            || isset($tokens[$stackPtr]['scope_closer']) === false
+        ) {
+            return;
+        }
+
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + 4);

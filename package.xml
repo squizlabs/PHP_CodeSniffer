@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17096 : Notice: Undefined index: scope_condition in ScopeClosingBraceSniff.php
     -- Moved PEAR.Functions.FunctionCallArgumentSpacing to Generic.Functions.FunctionCallArgumentSpacing
   - Fixed bug #17144 : Deprecated: Function eregi() is deprecated
+  - Fixed bug #17243 : Alternate Switch Syntax causes endless loop of Notices in SwitchDeclaration
  </notes>
  <contents>
   <dir name="/">
