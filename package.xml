@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Christian Kaps for the patch
   - Generic UpperCaseConstantSniff no longer throws errors about namespaces
     -- Thanks to Christian Kaps for the patch
+  - Squiz OperatorBracketSniff now correctly checks value assignmnets in arrays
   - Fixed a problem where Generic CodeAnalysisSniff could show warnings if checking multi-line strings
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
   - Fixed bug #17054 : phpcs more strict than PEAR CS regarding function parameter spacing

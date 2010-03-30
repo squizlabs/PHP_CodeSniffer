@@ -162,6 +162,7 @@ final class PHP_CodeSniffer_Tokens
                                        T_MUL_EQUAL,
                                        T_PLUS_EQUAL,
                                        T_XOR_EQUAL,
+                                       T_DOUBLE_ARROW,
                                       );
 
     /**

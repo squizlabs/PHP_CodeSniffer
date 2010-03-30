@@ -121,4 +121,13 @@ switch ($number % 10) {
         $suffix = 'st';
     break;
 }
+
+$expectedPermission = array(
+                       'granted'        => 4,
+                       'denied'         => 1,
+                       'cascade'        => TRUE,
+                       'blockergranted' => 2,
+                       'blockerdenied'  => - 3,
+                       'effective'      => TRUE,
+                      );
 ?>

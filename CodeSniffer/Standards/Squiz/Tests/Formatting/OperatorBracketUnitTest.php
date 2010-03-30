@@ -74,6 +74,7 @@ class Squiz_Tests_Formatting_OperatorBracketUnitTest extends AbstractSniffUnitTe
                     86  => 1,
                     90  => 1,
                     109 => 1,
+                    130 => 1,
                    );
             break;
         case 'OperatorBracketUnitTest.js':
