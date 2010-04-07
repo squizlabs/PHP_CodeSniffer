@@ -13,4 +13,7 @@ $string = 'Hello '.$there.' Greg';
 $string = "<div class='$class'>";
 $string = "Value: $var[test]";
 $string = "\0";
+
+$x = "bar = '$z',
+baz = '" . $a . "'...$x";
 ?>
