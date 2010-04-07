@@ -60,6 +60,15 @@ define('T_STYLE', 1041);
 define('T_ASPERAND', 1042);
 define('T_DOLLAR', 1043);
 
+// Some PHP 5.3 tokens
+if (defined('T_NAMESPACE') === false) {
+    define('T_NAMESPACE', 1044);
+}
+
+if (defined('T_NS_SEPARATOR') === false) {
+    define('T_NS_SEPARATOR', 1045);
+}
+
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurance in a file.
