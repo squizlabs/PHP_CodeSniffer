@@ -51,6 +51,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                                 T_FOREACH,
                                 T_WHILE,
                                 T_TRY,
+                                T_CASE,
                                );
 
     /**

@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic UpperCaseConstantSniff no longer throws errors about namespaces
     -- Thanks to Christian Kaps for the patch
   - Squiz OperatorBracketSniff now correctly checks value assignmnets in arrays
+  - Squiz LongConditionClosingCommentSniff now requires a comment for long CASE statements that use curly braces
   - Removed found and expected messages from Squiz ConcatenationSpacingSniff because they were messy and not helpful
   - Fixed a problem where Generic CodeAnalysisSniff could show warnings if checking multi-line strings
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
@@ -48,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17144 : Deprecated: Function eregi() is deprecated
   - Fixed bug #17236 : PHP Warning due to token_get_all() in DoubleQuoteUsageSniff
   - Fixed bug #17243 : Alternate Switch Syntax causes endless loop of Notices in SwitchDeclaration
+  - Fixed bug #17313 : Bug with switch case struture
  </notes>
  <contents>
   <dir name="/">

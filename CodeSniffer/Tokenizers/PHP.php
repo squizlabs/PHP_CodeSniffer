@@ -444,7 +444,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             // If the first char after the opener is a curly brace
             // and that brace has been ignored, it is actually
-            // opening this case statement and the closer is
+            // opening this case statement and the opener and closer are
             // probably set incorrectly.
             for ($x = ($scopeOpener + 1); $x < $numTokens; $x++) {
                 if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
@@ -479,14 +479,24 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             // The closer for this CASE should be the closing
-            // curly brace and not whatever it already is.
+            // curly brace and not whatever it already is. The opener needs
+            // to be the opening curly brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
             $tokens[$i]['scope_closer'] = $newCloser;
+            $tokens[$x]['scope_closer'] = $newCloser;
+            $tokens[$i]['scope_opener'] = $x;
+            $tokens[$x]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_condition'] = $i;
+            $tokens[$newCloser]['scope_opener']    = $x;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $line = $tokens[$i]['line'];
+
+                $oldType = $tokens[$scopeOpener]['type'];
+                $newType = $tokens[$x]['type'];
+                echo "\t* token $i (T_CASE) on line $line opener changed from $scopeOpener ($oldType) to $x ($newType)".PHP_EOL;
+
                 $oldType = $tokens[$scopeCloser]['type'];
                 $newType = $tokens[$newCloser]['type'];
-                $line    = $tokens[$i]['line'];
                 echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
             }
 

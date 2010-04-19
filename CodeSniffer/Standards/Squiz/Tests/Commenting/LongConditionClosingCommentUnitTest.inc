@@ -627,4 +627,70 @@ try {
 } catch (Exception $e) {
     // some code here.
 }
+
+switch ($foo) {
+    case 'one' : {
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        break;
+    }
+    case 'one' :
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+        // some code here.
+    break;
+}//end switch
 ?>
