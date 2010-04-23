@@ -224,7 +224,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         }
                     }
 
-                    // Needs to be in the format url( for it to be a URL.
+                    // Needs to be in the format "url(" for it to be a URL.
                     if ($finalTokens[$x]['code'] !== T_OPEN_PARENTHESIS) {
                         continue;
                     }
@@ -251,9 +251,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         unset($finalTokens[$i]);
                     }
 
+                    // If the content inside the "url()" is in double quotes
+                    // there will only be one token and so we don't have to do
+                    // anything except change its type. If it is not empty,
+                    // we need to do some token merging.
+                    $finalTokens[($x + 1)]['type'] = 'T_URL';
+                    $finalTokens[($x + 1)]['code'] = T_URL;
+
                     if ($newContent !== '') {
-                        $finalTokens[($x + 1)]['type']     = 'T_URL';
-                        $finalTokens[($x + 1)]['code']     = T_URL;
                         $finalTokens[($x + 1)]['content'] .= $newContent;
 
                         $finalTokens = array_values($finalTokens);
