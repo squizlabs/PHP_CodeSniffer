@@ -195,4 +195,9 @@ function blah ($value = true) {
         $value = false;
     }
 }
+
+if (TRUE) {
+    $args = array('foo' => 'foo');
+    $res  = 'bar';
+}
 ?>

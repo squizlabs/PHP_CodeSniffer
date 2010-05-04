@@ -147,6 +147,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
         while (($prevAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, ($prevAssignment - 1))) !== false) {
 
+            // We are not interested in double arrows as they assign values inside
+            // arrays and loops and do not use the same indentation rules.
+            if ($tokens[$prevAssignment]['code'] === T_DOUBLE_ARROW) {
+                continue;
+            }
+
             // The assignment's end token must be on the line directly
             // above the current one to be in the same assignment block.
             $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($prevAssignment + 1));
