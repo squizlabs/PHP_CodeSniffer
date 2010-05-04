@@ -2128,9 +2128,17 @@ class PHP_CodeSniffer_File
             if (isset($this->_tokens[$ptr]) === true
                 && $this->_tokens[$ptr]['code'] === T_INTERFACE
             ) {
-                $error = 'Possible parse error: interfaces may not include member vars';
-                $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
-                return array();
+                // T_VARIABLEs in interfaces can actually be method arguments
+                // but they wont be seen as being inside the method because there
+                // are no scope openers and closers for abstract methods. If it is in
+                // parentheses, we can be pretty sure it is method argument.
+                if (isset($this->_tokens[$stackPtr]['nested_parenthesis']) === false
+                    || empty($this->_tokens[$stackPtr]['nested_parenthesis']) === true
+                ) {
+                    $error = 'Possible parse error: interfaces may not include member vars';
+                    $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
+                    return array();
+                }
             } else {
                 throw new PHP_CodeSniffer_Exception('$stackPtr is not a class member var');
             }
