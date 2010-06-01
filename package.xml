@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - e.g., phpcs --standard=/path/to/my/ruleset.xml
   - A new token type T_DOLLAR has been added to allow you to sniff for variable variables (feature request #17095)
     -- Thanks to Ian Young for the patch
+  - JS tokenizer now supports T_POWER (^) and T_MOD_EQUAL (%=) tokens (feature request #17441)
   - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
   - Added MySource ChannelExceptionSniff to ensure action files only throw ChannelException
   - Added new method getClassProperties() for sniffs to use to determine if a class is abstract and/or final
