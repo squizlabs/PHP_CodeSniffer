@@ -1514,8 +1514,12 @@ class PHP_CodeSniffer_File
             ) {
                 // If we still haven't found the opener after 3 lines,
                 // we're not going to find it, unless we know it requires
-                // an opener, in which case we better keep looking.
-                if ($tokens[$i]['line'] >= ($startLine + 3)) {
+                // an opener (in which case we better keep looking) or the last
+                // token was empty (in which case we'll just confirm there is
+                // more code in this file and not just a big comment).
+                if ($tokens[$i]['line'] >= ($startLine + 3)
+                    && in_array($tokens[($i - 1)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false
+                ) {
                     if ($tokenizer->scopeOpeners[$currType]['strict'] === true) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type  = $tokens[$stackPtr]['type'];
