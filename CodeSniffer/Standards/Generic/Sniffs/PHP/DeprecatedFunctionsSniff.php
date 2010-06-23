@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Generic_Sniffs_PHP_DeprecatedFunctionsSniff.
