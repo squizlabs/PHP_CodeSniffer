@@ -432,10 +432,11 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
-            if ($tokens[$i]['code'] !== T_CASE
+            if (($tokens[$i]['code'] !== T_CASE
+                && $tokens[$i]['code'] !== T_DEFAULT)
                 || isset($tokens[$i]['scope_opener']) === false
             ) {
-                // Only interested in CASE statements.
+                // Only interested in CASE and DEFAULT statements.
                 continue;
             }
 
@@ -478,7 +479,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 continue;
             }
 
-            // The closer for this CASE should be the closing
+            // The closer for this CASE/DEFAULT should be the closing
             // curly brace and not whatever it already is. The opener needs
             // to be the opening curly brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
@@ -489,19 +490,20 @@ class PHP_CodeSniffer_Tokenizers_PHP
             $tokens[$newCloser]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_opener']    = $x;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $line = $tokens[$i]['line'];
+                $line      = $tokens[$i]['line'];
+                $tokenType = $tokens[$i]['type'];
 
                 $oldType = $tokens[$scopeOpener]['type'];
                 $newType = $tokens[$x]['type'];
-                echo "\t* token $i (T_CASE) on line $line opener changed from $scopeOpener ($oldType) to $x ($newType)".PHP_EOL;
+                echo "\t* token $i ($tokenType) on line $line opener changed from $scopeOpener ($oldType) to $x ($newType)".PHP_EOL;
 
                 $oldType = $tokens[$scopeCloser]['type'];
                 $newType = $tokens[$newCloser]['type'];
-                echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
+                echo "\t* token $i ($tokenType) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
             }
 
             // Now fix up all the tokens that think they are
-            // inside the CASE statement when they are really outside.
+            // inside the CASE/DEFAULT statement when they are really outside.
             for ($x = $newCloser; $x < $scopeCloser; $x++) {
                 foreach ($tokens[$x]['conditions'] as $num => $oldCond) {
                     if ($oldCond === $tokens[$i]['code']) {
