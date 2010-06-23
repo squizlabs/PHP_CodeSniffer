@@ -225,6 +225,13 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $phpcsFile->addError($error, $i);
                 }
             }//end if
+
+            // Skip the rest of a closure.
+            if ($tokens[$i]['code'] === T_FUNCTION) {
+                $i        = $tokens[$i]['scope_closer'];
+                $lastLine = $tokens[$i]['line'];
+                continue;
+            }
         }//end for
 
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {

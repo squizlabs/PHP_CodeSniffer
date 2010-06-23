@@ -303,4 +303,13 @@ default :
     return true;
 }
 
+// Don't check the first token in the closure.
+$array = array();
+array_map(
+    function($x)
+    {
+       return trim($x);
+    },
+    $array
+);
 ?>

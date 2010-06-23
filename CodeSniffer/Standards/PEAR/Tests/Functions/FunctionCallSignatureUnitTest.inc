@@ -68,4 +68,21 @@ function &testFunction($arg1,
     $arg2,
 ) {
 }
+
+$array = array();
+array_map(
+    function($x)
+    {
+        return trim($x);
+    },
+    $array
+);
+
+array_map(
+     function($x)
+     {
+         return trim($x);
+     },
+    $array
+);
 ?>

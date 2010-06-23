@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17331 : Possible parse error: interfaces may not include member vars
   - Fixed bug #17337 : CSS tokenizer fails on quotes urls
   - Fixed bug #17420 : Uncaught exception when comment before function brace
+  - Fixed bug #17503 : closures formatting is not supported
  </notes>
  <contents>
   <dir name="/">
