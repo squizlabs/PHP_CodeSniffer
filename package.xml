@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LongConditionClosingCommentSniff now requires a comment for long CASE statements that use curly braces
   - Removed found and expected messages from Squiz ConcatenationSpacingSniff because they were messy and not helpful
   - Fixed a problem where Generic CodeAnalysisSniff could show warnings if checking multi-line strings
+  - Fixed error messages in Squiz ArrayDeclarationSniff reporting incorrect number of found and expected spaces
   - Fixed bug #17048 : False positive in Squiz_WhiteSpace_ScopeKeywordSpacingSniff
   - Fixed bug #17054 : phpcs more strict than PEAR CS regarding function parameter spacing
   - Fixed bug #17096 : Notice: Undefined index: scope_condition in ScopeClosingBraceSniff.php

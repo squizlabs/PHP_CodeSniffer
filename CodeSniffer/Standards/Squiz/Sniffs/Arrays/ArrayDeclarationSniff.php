@@ -400,7 +400,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($tokens[$index['index']]['column'] !== $indicesStart) {
-                $error = 'Array key not aligned correctly; expected '.$indicesStart.' spaces but found '.$tokens[$index['index']]['column'];
+                $error = 'Array key not aligned correctly; expected '.($indicesStart - 1).' spaces but found '.($tokens[$index['index']]['column'] - 1);
                 $phpcsFile->addError($error, $index['index'], 'KeyNotAligned');
                 continue;
             }
