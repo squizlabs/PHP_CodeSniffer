@@ -30,6 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Custom standards will need to be converted over to this new format to continue working
   - You can specify a path to your own custom ruleset.xml file by using the --standard command line arg
     - e.g., phpcs --standard=/path/to/my/ruleset.xml
+   - Added a new report type --report=gitblame to show how many errors and warnings were committed by each author
+      -- Has the same functionality as the svnblame report
+      -- Thanks to Ben Selby for the patch
   - A new token type T_DOLLAR has been added to allow you to sniff for variable variables (feature request #17095)
     -- Thanks to Ian Young for the patch
   - JS tokenizer now supports T_POWER (^) and T_MOD_EQUAL (%=) tokens (feature request #17441)
@@ -86,6 +89,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Core">
      <dir name="Reports">
       <dir name="Mock">
+       <file baseinstalldir="" name="Gitblame.php" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="" name="Svnblame.php" role="test">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
@@ -111,6 +117,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="FullTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="" name="GitblameTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="SourceTest.php" role="test">
@@ -212,6 +221,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Full.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Gitblame.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Source.php" role="php">
@@ -1799,12 +1811,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
    <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
+   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
    <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
    <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
    <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
+   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
@@ -1824,10 +1838,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
    <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
+   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
    <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
+   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
    <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
