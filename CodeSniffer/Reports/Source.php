@@ -109,7 +109,9 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
                 $sniff = $this->makeFriendlyName($parts[2]);
                 if (isset($parts[3]) === true) {
-                    $sniff .= ' '.lcfirst($this->makeFriendlyName($parts[3]));
+                    $name    = $this->makeFriendlyName($parts[3]);
+                    $name[0] = strtolower($name[0]);
+                    $sniff .= ' '.$name;
                 }
 
                 if (strlen($sniff) > ($width - 37)) {
