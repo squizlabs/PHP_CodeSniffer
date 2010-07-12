@@ -115,6 +115,10 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             $source->generate($report, $showSources, $width);
         }
 
+        if (class_exists('PHP_Timer', false) === true) {
+            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+        }
+
         return ($report['totals']['errors'] + $report['totals']['warnings']);
 
     }//end generate()

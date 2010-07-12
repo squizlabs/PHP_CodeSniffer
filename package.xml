@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - A new token type T_DOLLAR has been added to allow you to sniff for variable variables (feature request #17095)
     -- Thanks to Ian Young for the patch
   - JS tokenizer now supports T_POWER (^) and T_MOD_EQUAL (%=) tokens (feature request #17441)
+  - If you have PHP_Timer installed, you'll now get a time/memory summary at the end of a script run
+    -- Only happens when printing reports that are designed to be read on the command line
   - Added Generic DeprecatedFunctionsSniff to warn about the use of deprecated functions (feature request #16694)
     -- Thanks to Sebastian Bergmann for the patch
   - Added Squiz LogicalOperatorSniff to ensure that logical operators are surrounded by single spaces
@@ -1790,6 +1792,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <min>1.4.0b1</min>
    </pearinstaller>
   </required>
+  <optional>
+   <package>
+    <name>PHP_Timer</name>
+    <channel>pear.phpunit.de</channel>
+   </package>
+  </optional>
  </dependencies>
  <phprelease>
   <installconditions>
