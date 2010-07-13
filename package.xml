@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz OperatorBracketSniff now correctly checks value assignmnets in arrays
   - Squiz LongConditionClosingCommentSniff now requires a comment for long CASE statements that use curly braces
   - Squiz LongConditionClosingCommentSniff now requires an exact comment match on the brace
+  - MySource IncludeSystemSniff now ignores DOMDocument usage
+  - MySource IncludeSystemSniff no longer requires inclusion of systems that are being implemented
   - Removed found and expected messages from Squiz ConcatenationSpacingSniff because they were messy and not helpful
   - Fixed a problem where Generic CodeAnalysisSniff could show warnings if checking multi-line strings
   - Fixed error messages in Squiz ArrayDeclarationSniff reporting incorrect number of found and expected spaces

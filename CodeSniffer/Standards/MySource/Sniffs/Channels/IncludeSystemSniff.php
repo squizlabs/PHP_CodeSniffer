@@ -52,6 +52,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                         'abstractdatacleanunittest',
                         'exception',
                         'abstractwidgetwidgettype',
+                        'domdocument',
                        );
 
 
@@ -101,9 +102,19 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         $matches  = array();
         if (preg_match('|/systems/(.*)/([^/]+)?actions.inc$|', $fileName, $matches) !== 0) {
             // This is an actions file, which means we don't
-            // have to include the system in which it exists
-            // We know the system from the path.
+            // have to include the system in which it exists.
             $includedClasses[] = $matches[2];
+
+            // Or a system it implements.
+            $class = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
+            $class = $phpcsFile->findNext(T_IMPLEMENTS, $class);
+            if ($implements !== FALSE) {
+                $implementsClass     = $phpcsFile->findNext(T_STRING, $implements);
+                $implementsClassName = strtolower($tokens[$implementsClass]['content']);
+                if (substr($implementsClassName, -7) === 'actions') {
+                    $includedClasses[] = substr($implementsClassName, 0, -7);
+                }
+            }
         }
 
         // Go searching for includeSystem and includeAsset calls within this
