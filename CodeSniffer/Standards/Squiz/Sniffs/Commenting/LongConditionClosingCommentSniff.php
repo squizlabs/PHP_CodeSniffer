@@ -165,7 +165,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
             $phpcsFile->addError($error, $stackPtr);
         }
 
-        if ((strpos(trim($tokens[$comment]['content']), $expected)) === false) {
+        if (trim($tokens[$comment]['content']) !== $expected) {
             $found = trim($tokens[$comment]['content']);
             $error = "Incorrect closing comment; expected \"$expected\" but found \"$found\"";
             $phpcsFile->addError($error, $stackPtr);

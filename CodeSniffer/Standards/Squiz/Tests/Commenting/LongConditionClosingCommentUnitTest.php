@@ -52,6 +52,7 @@ class Squiz_Tests_Commenting_LongConditionClosingCommentUnitTest extends Abstrac
                     99  => 1,
                     146 => 1,
                     192 => 1,
+                    215 => 1,
                     238 => 1,
                     261 => 1,
                     286 => 1,

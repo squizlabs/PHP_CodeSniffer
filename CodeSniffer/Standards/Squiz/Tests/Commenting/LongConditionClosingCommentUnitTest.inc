@@ -212,7 +212,7 @@ while ($var < 20) {
     // Line 18
     // Line 19
     // Line 20
-}//end while
+}//end while looping
 
 while ($var < 20) {
     // Line 1
