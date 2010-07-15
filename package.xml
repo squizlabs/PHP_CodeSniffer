@@ -27,12 +27,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - All CodingStandard.php files have been replaced by ruleset.xml files
-    - Custom standards will need to be converted over to this new format to continue working
+    -- Custom standards will need to be converted over to this new format to continue working
   - You can specify a path to your own custom ruleset.xml file by using the --standard command line arg
-    - e.g., phpcs --standard=/path/to/my/ruleset.xml
-   - Added a new report type --report=gitblame to show how many errors and warnings were committed by each author
-      -- Has the same functionality as the svnblame report
-      -- Thanks to Ben Selby for the patch
+    -- e.g., phpcs --standard=/path/to/my/ruleset.xml
+  - Added a new report type --report=gitblame to show how many errors and warnings were committed by each author
+    -- Has the same functionality as the svnblame report
+    -- Thanks to Ben Selby for the patch
   - A new token type T_DOLLAR has been added to allow you to sniff for variable variables (feature request #17095)
     -- Thanks to Ian Young for the patch
   - JS tokenizer now supports T_POWER (^) and T_MOD_EQUAL (%=) tokens (feature request #17441)
