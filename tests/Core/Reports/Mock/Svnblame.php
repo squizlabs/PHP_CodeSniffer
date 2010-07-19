@@ -18,9 +18,11 @@
 if (is_file(dirname(__FILE__).'/../../../../CodeSniffer.php') === true) {
     // We are not installed.
     include_once dirname(__FILE__).'/../../../../CodeSniffer/Report.php';
+    include_once dirname(__FILE__).'/../../../../CodeSniffer/Reports/VersionControl.php';
     include_once dirname(__FILE__).'/../../../../CodeSniffer/Reports/Svnblame.php';
 } else {
     include_once 'PHP/CodeSniffer/Report.php';
+    include_once 'PHP/CodeSniffer/Reports/VersionControl.php';
     include_once 'PHP/CodeSniffer/Reports/Svnblame.php';
 }
 
@@ -121,7 +123,7 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      * @return string
      * @throws PHP_CodeSniffer_Exception
      */
-    protected function getSvnblameContent($filename)
+    protected function getBlameContent($filename)
     {
         switch ($filename) {
         case 'foo':
@@ -154,7 +156,7 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      */
     public function testGetSvnAuthor($line)
     {
-        return $this->getSvnAuthor($line);
+        return $this->getAuthor($line);
 
     }//end testGetSvnAuthor()
 

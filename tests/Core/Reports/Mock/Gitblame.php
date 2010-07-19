@@ -17,9 +17,11 @@
 if (is_file(dirname(__FILE__).'/../../../../CodeSniffer.php') === true) {
     // We are not installed.
     include_once dirname(__FILE__).'/../../../../CodeSniffer/Report.php';
+    include_once dirname(__FILE__).'/../../../../CodeSniffer/Reports/VersionControl.php';
     include_once dirname(__FILE__).'/../../../../CodeSniffer/Reports/Gitblame.php';
 } else {
     include_once 'PHP/CodeSniffer/Report.php';
+    include_once 'PHP/CodeSniffer/Reports/VersionControl.php';
     include_once 'PHP/CodeSniffer/Reports/Gitblame.php';
 }
 
@@ -119,7 +121,7 @@ class PHP_CodeSniffer_Reports_Mock_Gitblame extends PHP_CodeSniffer_Reports_Gitb
      * @return string
      * @throws PHP_CodeSniffer_Exception
      */
-    protected function getGitblameContent($filename)
+    protected function getBlameContent($filename)
     {
         switch ($filename) {
         case 'foo':
@@ -152,7 +154,7 @@ class PHP_CodeSniffer_Reports_Mock_Gitblame extends PHP_CodeSniffer_Reports_Gitb
      */
     public function testGetGitAuthor($line)
     {
-        return $this->getGitAuthor($line);
+        return $this->getAuthor($line);
 
     }//end testGetGitAuthor()
 

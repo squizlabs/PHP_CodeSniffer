@@ -17,6 +17,7 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once dirname(__FILE__).'/AbstractTestCase.php';
 require_once dirname(__FILE__).'/Mock/Gitblame.php';
+require_once dirname(__FILE__).'/../../../CodeSniffer/Reports/VersionControl.php';
 
 /**
  * Tests for the Gitblame report of PHP_CodeSniffer.
