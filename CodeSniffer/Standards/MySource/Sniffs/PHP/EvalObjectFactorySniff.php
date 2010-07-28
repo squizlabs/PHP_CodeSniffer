@@ -115,7 +115,7 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
             // of "new" is for object instantiation.
             if (strstr($string, ' new ') !== false) {
                 $error = 'Do not use eval() to create objects dynamically; use reflection instead';
-                $phpcsFile->addWarning($error, $stackPtr);
+                $phpcsFile->addWarning($error, $stackPtr, 'Found');
             }
         }
 

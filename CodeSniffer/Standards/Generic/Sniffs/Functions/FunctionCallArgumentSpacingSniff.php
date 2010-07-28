@@ -102,9 +102,9 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                     if (strpos($tokens[($nextSeperator + 1)]['content'], $phpcsFile->eolChar) === false) {
                         $space = strlen($tokens[($nextSeperator + 1)]['content']);
                         if ($space > 1) {
-                            $error  = 'Expected 1 space after comma in function call; ';
-                            $error .= $space.' found';
-                            $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceAfterComma');
+                            $error = 'Expected 1 space after comma in function call; %s found';
+                            $data  = array($space);
+                            $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceAfterComma', $data);
                         }
                     }
                 }

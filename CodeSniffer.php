@@ -796,6 +796,13 @@ class PHP_CodeSniffer
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
                 foreach ($this->ruleset[$code]['properties'] as $name => $value) {
+                    // Special case for booleans.
+                    if ($value === 'true') {
+                        $value = true;
+                    } else if ($value === 'false') {
+                        $value = false;
+                    }
+
                     $listener->$name = $value;
                 }
             }
@@ -1602,7 +1609,8 @@ class PHP_CodeSniffer
             // Might also be an actual ruleset file itself.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
-                && substr(strtolower($standard), -4) === '.xml') {
+                && substr(strtolower($standard), -4) === '.xml'
+            ) {
                 return true;
             }
         }

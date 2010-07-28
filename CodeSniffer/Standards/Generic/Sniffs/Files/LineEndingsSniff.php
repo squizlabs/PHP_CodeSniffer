@@ -47,7 +47,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
      *
      * @var string
      */
-    protected $eolChar = "\n";
+    public $eolChar = '\n';
 
 
     /**
@@ -80,15 +80,20 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        if ($phpcsFile->eolChar !== $this->eolChar) {
+        $found = $phpcsFile->eolChar;
+        $found = str_replace("\n", '\n', $found);
+        $found = str_replace("\r", '\r', $found);
+
+        if ($found !== $this->eolChar) {
+            $error    = 'End of line character is invalid; expected "%s" but found "%s"';
             $expected = $this->eolChar;
             $expected = str_replace("\n", '\n', $expected);
             $expected = str_replace("\r", '\r', $expected);
-            $found    = $phpcsFile->eolChar;
-            $found    = str_replace("\n", '\n', $found);
-            $found    = str_replace("\r", '\r', $found);
-            $error    = "End of line character is invalid; expected \"$expected\" but found \"$found\"";
-            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar');
+            $data     = array(
+                         $expected,
+                         $found,
+                        );
+            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
         }
 
     }//end process()

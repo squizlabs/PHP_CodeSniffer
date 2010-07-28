@@ -100,7 +100,7 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($message), $ptr);
+                    $phpcsFile->addWarning(trim($message), $ptr, 'ExternalTool');
                 }
             }//end foreach
         }//end if

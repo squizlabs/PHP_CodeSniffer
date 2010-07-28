@@ -108,7 +108,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 }
             }//end if
 
-            $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr);
+            $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
 
         } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
 
@@ -157,7 +157,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 }
             }
 
-            $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr);
+            $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
 
         } else {
 
@@ -172,7 +172,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
             if (empty($tokenContent) === false) {
                 if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
-                    $phpcsFile->addError('Whitespace found at end of line', $stackPtr);
+                    $phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
                 }
             }
 
@@ -188,8 +188,9 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
                     $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
                     if ($lines > 1) {
-                        $error = "Functions must not contain multiple empty lines in a row; found $lines empty lines";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
+                        $data  = array($lines);
+                        $phpcsFile->addError($error, $stackPtr, 'EmptyLines', $data);
                     }
                 }
             }

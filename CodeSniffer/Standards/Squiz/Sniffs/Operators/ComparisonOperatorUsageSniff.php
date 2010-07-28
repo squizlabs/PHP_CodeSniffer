@@ -165,9 +165,12 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
             if (in_array($type, array_keys(self::$_invalidOps[$tokenizer])) === true) {
-                $error  = 'Operator '.$tokens[$i]['content'].' prohibited;';
-                $error .= ' use '.self::$_invalidOps[$tokenizer][$type].' instead';
-                $phpcsFile->addError($error, $i);
+                $error = 'Operator %s prohibited; use %s instead';
+                $data  = array(
+                          $tokens[$i]['content'],
+                          self::$_invalidOps[$tokenizer][$type],
+                         );
+                $phpcsFile->addError($error, $i, 'NotAllowed', $data);
                 $foundOps++;
             } else if (in_array($type, self::$_validOps) === true) {
                 $foundOps++;
@@ -183,7 +186,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                     // if ($a === true), so let's add an error.
                     if ($requiredOps !== $foundOps) {
                         $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-                        $phpcsFile->addError($error, $stackPtr);
+                        $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
                         $foundOps++;
                     }
                 }
@@ -195,7 +198,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
         if ($phpcsFile->tokenizerType !== 'JS') {
             if ($foundOps < $requiredOps) {
                 $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
             }
         }
 

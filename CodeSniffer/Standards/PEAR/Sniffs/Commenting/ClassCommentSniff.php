@@ -79,25 +79,26 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
     {
         $this->currentFile = $phpcsFile;
 
-        $tokens = $phpcsFile->getTokens();
-        $type   = strtolower($tokens[$stackPtr]['content']);
-        $find   = array(
-                   T_ABSTRACT,
-                   T_WHITESPACE,
-                   T_FINAL,
-                  );
+        $tokens    = $phpcsFile->getTokens();
+        $type      = strtolower($tokens[$stackPtr]['content']);
+        $errorData = array($type);
+        $find      = array(
+                      T_ABSTRACT,
+                      T_WHITESPACE,
+                      T_FINAL,
+                     );
 
         // Extract the class comment docblock.
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $error = "You must use \"/**\" style comments for a $type comment";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'You must use "/**" style comments for a %s comment';
+            $phpcsFile->addError($error, $stackPtr, 'WrongStyle', $errorData);
             return;
         } else if ($commentEnd === false
             || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT
         ) {
-            $phpcsFile->addError("Missing $type doc comment", $stackPtr);
+            $phpcsFile->addError('Missing %s doc comment', $stackPtr, 'Missing', $errorData);
             return;
         }
 
@@ -126,8 +127,8 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
                         if ($newlineToken !== false) {
                             // Blank line between the class and the doc block.
                             // The doc block is most likely a file comment.
-                            $error = "Missing $type doc comment";
-                            $phpcsFile->addError($error, ($stackPtr + 1));
+                            $error = 'Missing %s doc comment';
+                            $phpcsFile->addError($error, ($stackPtr + 1), 'Missing', $errorData);
                             return;
                         }
                     }//end if
@@ -146,14 +147,14 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
             return;
         }
 
         $comment = $this->commentParser->getComment();
         if (is_null($comment) === true) {
-            $error = ucfirst($type).' doc comment is empty';
-            $phpcsFile->addError($error, $commentStart);
+            $error = 'Doc comment is empty for %s';
+            $phpcsFile->addError($error, $commentStart, 'Empty', $errorData);
             return;
         }
 
@@ -162,9 +163,8 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $newlineCount = 0;
         $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
-            $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-            $error = "Extra $line found before $type comment short description";
-            $phpcsFile->addError($error, ($commentStart + 1));
+            $error = 'Extra newline(s) found before %s comment short description';
+            $phpcsFile->addError($error, ($commentStart + 1), 'SpacingBeforeShort', $errorData);
         }
 
         $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
@@ -175,8 +175,8 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             $between        = $comment->getWhiteSpaceBetween();
             $newlineBetween = substr_count($between, $phpcsFile->eolChar);
             if ($newlineBetween !== 2) {
-                $error = "There must be exactly one blank line between descriptions in $type comments";
-                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+                $error = 'There must be exactly one blank line between descriptions in %s comments';
+                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1), 'SpacingAfterShort', $errorData);
             }
 
             $newlineCount += $newlineBetween;
@@ -187,12 +187,12 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         if (count($tags) > 1) {
             $newlineSpan = $comment->getNewlineAfter();
             if ($newlineSpan !== 2) {
-                $error = "There must be exactly one blank line before the tags in $type comments";
+                $error = 'There must be exactly one blank line before the tags in %s comments';
                 if ($long !== '') {
                     $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
 
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'SpacingBeforeTags', $errorData);
                 $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
@@ -218,10 +218,11 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             $matches = array();
             if (empty($content) === true) {
                 $error = 'Content missing for @version tag in doc comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'EmptyVersion');
             } else if ((strstr($content, 'Release:') === false)) {
-                $error = "Invalid version \"$content\" in doc comment; consider \"Release: <package_version>\" instead";
-                $this->currentFile->addWarning($error, $errorPos);
+                $error = 'Invalid version "%s" in doc comment; consider "Release: <package_version>" instead';
+                $data  = array($content);
+                $this->currentFile->addWarning($error, $errorPos, 'InvalidVersion', $data);
             }
         }
 

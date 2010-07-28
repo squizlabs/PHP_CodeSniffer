@@ -88,8 +88,9 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             $stringTokens = token_get_all('<?php '.$workingString);
             foreach ($stringTokens as $token) {
                 if (is_array($token) === true && $token[0] === T_VARIABLE) {
-                    $error = 'Variable "'.$token[1].'" not allowed in double quoted string; use concatenation instead';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $error = 'Variable "%s" not allowed in double quoted string; use concatenation instead';
+                    $data  = array($token[1]);
+                    $phpcsFile->addError($error, $stackPtr, 'ContainsVar', $data);
                 }
             }
 
@@ -123,8 +124,9 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        $error = "String $workingString does not require double quotes; use single quotes instead";
-        $phpcsFile->addError($error, $stackPtr);
+        $error = 'String %s does not require double quotes; use single quotes instead';
+        $data  = array($workingString);
+        $phpcsFile->addError($error, $stackPtr, 'NotRequired', $data);
 
     }//end process()
 

@@ -68,9 +68,12 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
             if ($tokens[$i]['code'] === T_STRING || $tokens[$i]['code'] === T_STYLE) {
                 $expected = strtolower($tokens[$i]['content']);
                 if ($expected !== $tokens[$i]['content']) {
-                    $found = $tokens[$i]['content'];
-                    $error = "Style definitions must be lowercase; expected $expected but found $found";
-                    $phpcsFile->addError($error, $i);
+                    $error = 'Style definitions must be lowercase; expected %s but found %s';
+                    $data  = array(
+                              $expected,
+                              $tokens[$i]['content'],
+                             );
+                    $phpcsFile->addError($error, $i, 'FoundUpper', $data);
                 }
             }
         }

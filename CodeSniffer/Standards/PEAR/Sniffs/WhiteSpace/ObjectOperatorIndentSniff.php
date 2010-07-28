@@ -133,8 +133,12 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                     }
 
                     if ($foundIndent !== $requiredIndent) {
-                        $error = "Object operator not indented correctly; expected $requiredIndent spaces but found $foundIndent";
-                        $phpcsFile->addError($error, $next);
+                        $error = 'Object operator not indented correctly; expected %s spaces but found %s';
+                        $data  = array(
+                                  $requiredIndent,
+                                  $foundIndent,
+                                 );
+                        $phpcsFile->addError($error, $next, 'Incorrect', $data);
                     }
                 }
 
@@ -142,7 +146,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                 $content = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
                 if ($tokens[$content]['line'] !== $tokens[$next]['line']) {
                     $error = 'Object operator must be at the start of the line, not the end';
-                    $phpcsFile->addError($error, $next);
+                    $phpcsFile->addError($error, $next, 'StartOfLine');
                 }
             }//end if
 

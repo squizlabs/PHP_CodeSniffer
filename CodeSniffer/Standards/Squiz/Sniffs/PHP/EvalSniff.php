@@ -56,7 +56,7 @@ class Squiz_Sniffs_PHP_EvalSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $error = 'Use of eval() is discouraged';
-        $phpcsFile->addWarning($error, $stackPtr);
+        $phpcsFile->addWarning($error, $stackPtr, 'Discouraged');
 
     }//end process()
 

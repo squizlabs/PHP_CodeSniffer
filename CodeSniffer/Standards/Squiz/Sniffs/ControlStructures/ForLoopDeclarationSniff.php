@@ -66,23 +66,24 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $errors = array();
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         if ($openingBracket === false) {
             $error = 'Possible parse error: no opening parenthesis for FOR keyword';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, 'NoOpenBracket');
             return;
         }
 
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
         if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
-            $errors[] = 'Space found after opening bracket of FOR loop';
+            $error = 'Space found after opening bracket of FOR loop';
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
         }
 
         if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
-            $errors[] = 'Space found before closing bracket of FOR loop';
+            $error = 'Space found before closing bracket of FOR loop';
+            $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose');
         }
 
         $firstSemicolon  = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
@@ -90,15 +91,19 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
         // Check whitespace around each of the tokens.
         if ($firstSemicolon !== false) {
             if ($tokens[($firstSemicolon - 1)]['code'] === T_WHITESPACE) {
-                $errors[] = 'Space found before first semicolon of FOR loop';
+                $error = 'Space found before first semicolon of FOR loop';
+                $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeFirst');
             }
 
             if ($tokens[($firstSemicolon + 1)]['code'] !== T_WHITESPACE) {
-                $errors[] = 'Expected 1 space after first semicolon of FOR loop; 0 found';
+                $error = 'Expected 1 space after first semicolon of FOR loop; 0 found';
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterFirst');
             } else {
                 if (strlen($tokens[($firstSemicolon + 1)]['content']) !== 1) {
-                    $spaces   = strlen($tokens[($firstSemicolon + 1)]['content']);
-                    $errors[] = "Expected 1 space after first semicolon of FOR loop; $spaces found";
+                    $spaces = strlen($tokens[($firstSemicolon + 1)]['content']);
+                    $error  = 'Expected 1 space after first semicolon of FOR loop; %s found';
+                    $data   = array($spaces);
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfterFirst', $data);
                 }
             }
 
@@ -106,23 +111,23 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
 
             if ($secondSemicolon !== false) {
                 if ($tokens[($secondSemicolon - 1)]['code'] === T_WHITESPACE) {
-                    $errors[] = 'Space found before second semicolon of FOR loop';
+                    $error = 'Space found before second semicolon of FOR loop';
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeSecond');
                 }
 
                 if ($tokens[($secondSemicolon + 1)]['code'] !== T_WHITESPACE) {
-                    $errors[] = 'Expected 1 space after second semicolon of FOR loop; 0 found';
+                    $error = 'Expected 1 space after second semicolon of FOR loop; 0 found';
+                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterSecond');
                 } else {
                     if (strlen($tokens[($secondSemicolon + 1)]['content']) !== 1) {
-                        $spaces   = strlen($tokens[($firstSemicolon + 1)]['content']);
-                        $errors[] = "Expected 1 space after second semicolon of FOR loop; $spaces found";
+                        $spaces = strlen($tokens[($firstSemicolon + 1)]['content']);
+                        $error  = 'Expected 1 space after second semicolon of FOR loop; %s found';
+                        $data   = array($spaces);
+                        $phpcsFile->addError($error, $stackPtr, 'SpacingAfterSecond', $data);
                     }
                 }
             }//end if
         }//end if
-
-        foreach ($errors as $error) {
-            $phpcsFile->addError($error, $stackPtr);
-        }
 
     }//end process()
 

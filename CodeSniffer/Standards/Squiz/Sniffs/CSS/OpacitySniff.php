@@ -80,21 +80,23 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$next]['code'] === T_LNUMBER) {
             if ($value !== '0' && $value !== '1') {
                 $error = 'Opacity values must be between 0 and 1';
-                $phpcsFile->addError($error, $next);
+                $phpcsFile->addError($error, $next, 'Invalid');
             }
         } else {
             if (strlen($value) > 3) {
                 $error = 'Opacity values must have a single value after the decimal point';
-                $phpcsFile->addError($error, $next);
+                $phpcsFile->addError($error, $next, 'SpacingAfterPoint');
             } else if ($value === '0.0' || $value === '1.0') {
-                $error = 'Opacity value does not require decimal point; use '.$value{0}.' instead';
-                $phpcsFile->addError($error, $next);
+                $error = 'Opacity value does not require decimal point; use %s instead';
+                $data  = array($value{0});
+                $phpcsFile->addError($error, $next, 'PointNotRequired', $data);
             } else if ($value{0} === '.') {
-                $error = 'Opacity values must not start with a decimal point; use 0'.$value.' instead';
-                $phpcsFile->addError($error, $next);
+                $error = 'Opacity values must not start with a decimal point; use 0%s instead';
+                $data  = array($value);
+                $phpcsFile->addError($error, $next, 'StartWithPoint', $data);
             } else if ($value{0} !== '0') {
                 $error = 'Opacity values must be between 0 and 1';
-                $phpcsFile->addError($error, $next);
+                $phpcsFile->addError($error, $next, 'Invalid');
             }
         }//end if
 

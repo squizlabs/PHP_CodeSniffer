@@ -58,7 +58,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
         $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
         if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
             $error = 'The first parameter of a multi-line function declaration must be on the line after the opening bracket';
-            $phpcsFile->addError($error, $next);
+            $phpcsFile->addError($error, $next, 'FirstParamSpacing');
         }
 
         // Each line between the brackets should contain a single parameter.
@@ -73,13 +73,13 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             if ($tokens[$i]['code'] === T_COMMA) {
                 if ($lastCommaLine !== null && $lastCommaLine === $tokens[$i]['line']) {
                     $error = 'Multi-line function declarations must define one parameter per line';
-                    $phpcsFile->addError($error, $i);
+                    $phpcsFile->addError($error, $i, 'OneParamPerLine');
                 } else {
                     // Comma must be the last thing on the line.
                     $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
                     if ($tokens[$next]['line'] !== ($tokens[$i]['line'] + 1)) {
                         $error = 'Commas in multi-line function declarations must be the last content on a line';
-                        $phpcsFile->addError($error, $next);
+                        $phpcsFile->addError($error, $next, 'ContentAfterComma');
                     }
                 }
 

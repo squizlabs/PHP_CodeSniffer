@@ -78,7 +78,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
             return;
         }
 
@@ -117,7 +117,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         $throws = $this->commentParser->getThrows();
         if (empty($throws) === true) {
             $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError($error, $commentEnd);
+            $phpcsFile->addError($error, $commentEnd, 'Missing');
         } else if (empty($throwTokens) === true) {
             // If token count is zero, it means that only variables are being
             // thrown, so we need at least one @throws tag (checked above).
@@ -138,17 +138,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             $tokenCount = count($throwTokens);
             $tagCount   = count($throwTags);
             if ($tokenCount !== $tagCount) {
-                $tags  = ($tokenCount > 1) ? 'tags' : 'tag';
-                $error = "Expected $tokenCount @throws $tags in function comment; $tagCount found";
-                $phpcsFile->addError($error, $commentEnd);
+                $error = 'Expected %s @throws tag(s) in function comment; %s found';
+                $data  = array(
+                          $tokenCount,
+                          $tagCount,
+                         );
+                $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
                 return;
             } else {
                 // Exception type in @throws tag must be thrown in the function.
                 foreach ($throwTags as $i => $throwTag) {
                     $errorPos = ($commentStart + $lineNumber[$throwTag]);
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
-                        $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for @throws tag exception";
-                        $phpcsFile->addError($error, $errorPos);
+                        $error = 'Expected "%s" but found "%s" for @throws tag exception';
+                        $data  = array(
+                                  $throwTokens[$i],
+                                  $throwTag,
+                                 );
+                        $phpcsFile->addError($error, $errorPos, 'WrongType', $data);
                     }
                 }
             }

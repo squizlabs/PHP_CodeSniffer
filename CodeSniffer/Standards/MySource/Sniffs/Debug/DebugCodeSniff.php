@@ -54,10 +54,10 @@ class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
 
         $className = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if (strtolower($tokens[$className]['content']) === 'debug') {
-            $method     = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            $methodName = $tokens[$method]['content'];
-            $error      = "Call to debug function Debug::$methodName() must be removed";
-            $phpcsFile->addError($error, $stackPtr);
+            $method = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            $error  = 'Call to debug function Debug::%s() must be removed';
+            $data   = array($tokens[$method]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

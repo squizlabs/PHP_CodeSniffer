@@ -95,7 +95,7 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($lineToken !== null) {
-                    $phpcsFile->addWarning($message, $lineToken);
+                    $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
                 }
             }//end foreach
         }//end if

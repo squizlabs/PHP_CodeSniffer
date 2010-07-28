@@ -38,7 +38,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @var int
      */
-    protected $indent = 4;
+    public $indent = 4;
 
     /**
      * Does the indent need to be exactly right.
@@ -48,7 +48,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @var bool
      */
-    protected $exact = false;
+    public $exact = false;
 
     /**
      * Any scope openers that should not cause an indent.
@@ -122,10 +122,12 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
 
         if ($tokens[$firstToken]['column'] !== $expectedIndent) {
-            $error  = 'Line indented incorrectly; expected ';
-            $error .= ($expectedIndent - 1).' spaces, found ';
-            $error .= ($tokens[$firstToken]['column'] - 1);
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Line indented incorrectly; expected %s spaces, found %s';
+            $data  = array(
+                      ($expectedIndent - 1),
+                      ($tokens[$firstToken]['column'] - 1),
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
@@ -259,16 +261,21 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // an error should be shown.
                 if ($column !== $indent) {
                     if ($this->exact === true || $column < $indent) {
-                        $error  = 'Line indented incorrectly; expected ';
+                        $type  = 'IncorrectExact';
+                        $error = 'Line indented incorrectly; expected ';
                         if ($this->exact === false) {
                             $error .= 'at least ';
+                            $type   = 'Incorrect';
                         }
 
-                        $error .= ($indent - 1).' spaces, found ';
-                        $error .= ($column - 1);
-                        $phpcsFile->addError($error, $firstToken);
+                        $error .= '%s spaces, found %s';
+                        $data = array(
+                                  ($indent - 1),
+                                  ($column - 1),
+                                );
+                        $phpcsFile->addError($error, $firstToken, $type, $data);
                     }
-                }
+                }//end if
             }//end if
         }//end for
 

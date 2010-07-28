@@ -48,7 +48,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      *
      * @var bool
      */
-    protected $error = false;
+    public $error = false;
 
     /**
      * The maximum amount of padding before the alignment is ignored.
@@ -59,14 +59,14 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      *
      * @var int
      */
-    protected $maxPadding = 1000;
+    public $maxPadding = 1000;
 
     /**
      * If true, multi-line assignments are not checked.
      *
      * @var int
      */
-    protected $ignoreMultiLine = false;
+    public $ignoreMultiLine = false;
 
 
     /**
@@ -277,15 +277,22 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
 
                 if (count($assignments) === 1) {
-                    $error = "Equals sign not aligned correctly; expected $expected but found $found";
+                    $type  = 'Incorrect';
+                    $error = 'Equals sign not aligned correctly; expected %s but found %s';
                 } else {
-                    $error = "Equals sign not aligned with surrounding assignments; expected $expected but found $found";
+                    $type  = 'NotSame';
+                    $error = 'Equals sign not aligned with surrounding assignments; expected %s but found %s';
                 }
 
+                $errorData = array(
+                              $expected,
+                              $found,
+                             );
+
                 if ($this->error === true) {
-                    $phpcsFile->addError($error, $assignment);
+                    $phpcsFile->addError($error, $assignment, $type, $errorData);
                 } else {
-                    $phpcsFile->addWarning($error, $assignment);
+                    $phpcsFile->addWarning($error, $assignment, $type.'Warning', $errorData);
                 }
             }//end if
         }//end foreach

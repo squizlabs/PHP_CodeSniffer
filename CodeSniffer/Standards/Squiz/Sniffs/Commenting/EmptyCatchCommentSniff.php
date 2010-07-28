@@ -39,9 +39,7 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
      */
     public function register()
     {
-        return array(
-                T_CATCH,
-               );
+        return array(T_CATCH);
 
     }//end register()
 
@@ -64,7 +62,7 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
 
         if ($firstContent === false) {
             $error = 'Empty CATCH statement must have a comment to explain why the exception is not handled';
-            $phpcsFile->addError($error, $scopeStart);
+            $phpcsFile->addError($error, $scopeStart, 'Missing');
         }
 
     }//end process()

@@ -65,8 +65,9 @@ class Squiz_Sniffs_Functions_GlobalFunctionSniff implements PHP_CodeSniffer_Snif
 
             // Special exception for __autoload as it needs to be global.
             if ($functionName !== '__autoload') {
-                $error = "Consider putting global function \"$functionName\" in a static class";
-                $phpcsFile->addWarning($error, $stackPtr);
+                $error = 'Consider putting global function "%s" in a static class';
+                $data  = array($functionName);
+                $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }
 

@@ -61,10 +61,9 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            $error  = 'Possible parse error: ';
-            $error .= $tokens[$stackPtr]['content'];
-            $error .= ' missing opening or closing brace';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $error = 'Possible parse error: %s missing opening or closing brace';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
             return;
         }
 
@@ -80,8 +79,12 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
-            $error = "$type name \"$name\" is not in camel caps format";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = '%s name "%s" is not in camel caps format';
+            $data  = array(
+                      $type,
+                      $name,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 
     }//end process()

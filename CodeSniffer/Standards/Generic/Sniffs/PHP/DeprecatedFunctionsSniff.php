@@ -32,6 +32,7 @@
  */
 class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff
 {
+
     /**
      * A list of forbidden functions with their alternatives.
      *
@@ -41,6 +42,7 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
      * @var array(string => string|null)
      */
     protected $forbiddenFunctions = array();
+
 
     /**
      * Constructor.
@@ -54,10 +56,14 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
         foreach ($functions['internal'] as $functionName) {
             $function = new ReflectionFunction($functionName);
 
-            if ($function->isDeprecated()) {
+            if ($function->isDeprecated() === true) {
                 $this->forbiddenFunctions[$functionName] = NULL;
             }
         }
-    }
-}
+
+    }//end __construct()
+
+
+}//end class
+
 ?>

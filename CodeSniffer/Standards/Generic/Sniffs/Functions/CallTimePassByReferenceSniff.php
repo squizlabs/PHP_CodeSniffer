@@ -135,7 +135,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
                 default:
                     // T_BITWISE_AND represents a pass-by-reference.
                     $error = 'Call-time pass-by-reference calls are prohibited';
-                    $phpcsFile->addError($error, $tokenBefore);
+                    $phpcsFile->addError($error, $tokenBefore, 'NotAllowed');
                     break;
                 }
             }//end if

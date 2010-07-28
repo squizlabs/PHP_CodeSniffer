@@ -87,8 +87,9 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
 
         $found = ($nextLine - $braceLine - 1);
         if ($found > 0) {
-            $error = "Expected 0 blank lines after opening function brace; $found found";
-            $phpcsFile->addError($error, $openBrace);
+            $error = 'Expected 0 blank lines after opening function brace; %s found';
+            $data  = array($found);
+            $phpcsFile->addError($error, $openBrace, 'SpacingAfter', $data);
         }
 
         if ($phpcsFile->tokenizerType === 'JS') {
@@ -100,24 +101,21 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
 
             if ($nestedFunction === true) {
                 if ($lineDifference > 0) {
-                    $error = "Expected 0 blank lines before openning brace of nested function; $found found";
-                    $phpcsFile->addError($error, $openBrace);
+                    $error = 'Expected 0 blank lines before opening brace of nested function; %s found';
+                    $data  = array($found);
+                    $phpcsFile->addError($error, $openBrace, 'SpacingAfterNested', $data);
                 }
             } else {
                 if ($lineDifference === 0) {
                     $error = 'Opening brace should be on a new line';
-                    $phpcsFile->addError($error, $openBrace);
+                    $phpcsFile->addError($error, $openBrace, 'ContentBefore');
                     return;
                 }
 
                 if ($lineDifference > 1) {
-                    $ender = 'line';
-                    if (($lineDifference - 1) !== 1) {
-                        $ender .= 's';
-                    }
-
-                    $error = 'Opening brace should be on the line after the declaration; found '.($lineDifference - 1).' blank '.$ender;
-                    $phpcsFile->addError($error, $openBrace);
+                    $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
+                    $data  = array(($lineDifference - 1));
+                    $phpcsFile->addError($error, $openBrace, 'SpacingBefore', $data);
                     return;
                 }
             }//end if

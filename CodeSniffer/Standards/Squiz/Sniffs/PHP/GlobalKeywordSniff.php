@@ -59,8 +59,9 @@ class Squiz_Sniffs_PHP_GlobalKeywordSniff implements PHP_CodeSniffer_Sniff
 
         $nextVar = $tokens[$phpcsFile->findNext(array(T_VARIABLE), $stackPtr)];
         $varName = str_replace('$', '', $nextVar['content']);
-        $error   = "Use of the \"global\" keyword is forbidden; use \"\$GLOBALS['$varName']\" instead";
-        $phpcsFile->addError($error, $stackPtr);
+        $error   = 'Use of the "global" keyword is forbidden; use "$GLOBALS[\'%s\']" instead';
+        $data    = array($varName);
+        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
 
     }//end process()
 

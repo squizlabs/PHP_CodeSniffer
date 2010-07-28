@@ -196,8 +196,9 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         }//end if
 
         if (in_array(strtolower($className), $includedClasses) === false) {
-            $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Static method called on non-included class or system "%s"; include system with Channels::includeSystem() or include class with require_once';
+            $data  = array($className);
+            $phpcsFile->addError($error, $stackPtr, 'NotIncludedCall', $data);
         }
 
     }//end processTokenWithinScope()
@@ -275,12 +276,14 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
         if (in_array(strtolower($className), $includedClasses) === false) {
             if ($tokens[$stackPtr]['code'] === T_EXTENDS) {
-                $error = "Class extends non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
+                $error = 'Class extends non-included class or system "%s"; include system with Channels::includeSystem() or include class with require_once';
+                $data  = array($className);
+                $phpcsFile->addError($error, $stackPtr, 'NotIncludedExtends', $data);
             } else {
-                $error = "Static method called on non-included class or system \"$className\"; include system with Channels::includeSystem() or include class with require_once";
+                $error = 'Static method called on non-included class or system "%s"; include system with Channels::includeSystem() or include class with require_once';
+                $data  = array($className);
+                $phpcsFile->addError($error, $stackPtr, 'NotIncludedCall', $data);
             }
-
-            $phpcsFile->addError($error, $stackPtr);
         }
 
     }//end processTokenOutsideScope()

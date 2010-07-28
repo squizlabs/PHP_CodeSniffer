@@ -75,8 +75,9 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
             || strlen($nextToken['content']) !== 1
             || $nextToken['content'] === $phpcsFile->eolChar
         ) {
-            $error = 'Scope keyword "'.$tokens[$stackPtr]['content'].'" must be followed by a single space';
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Scope keyword "%s" must be followed by a single space';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 
     }//end process()

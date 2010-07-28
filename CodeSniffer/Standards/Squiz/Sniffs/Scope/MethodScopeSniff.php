@@ -65,8 +65,9 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
 
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
-            $error = "No scope modifier specified for function \"$methodName\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'No scope modifier specified for function "%s"';
+            $data  = array($methodName);
+            $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 
     }//end processTokenWithinScope()

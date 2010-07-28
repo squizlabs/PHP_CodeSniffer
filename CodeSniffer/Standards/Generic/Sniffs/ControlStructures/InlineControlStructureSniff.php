@@ -46,7 +46,8 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
      *
      * @var bool
      */
-    protected $error = true;
+    public $error = true;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -104,9 +105,9 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             // This is a control structure without an opening brace,
             // so it is an inline statement.
             if ($this->error === true) {
-                $phpcsFile->addError('Inline control structures are not allowed', $stackPtr);
+                $phpcsFile->addError('Inline control structures are not allowed', $stackPtr, 'NotAllowed');
             } else {
-                $phpcsFile->addWarning('Inline control structures are discouraged', $stackPtr);
+                $phpcsFile->addWarning('Inline control structures are discouraged', $stackPtr, 'Discouraged');
             }
 
             return;

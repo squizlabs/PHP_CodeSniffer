@@ -65,8 +65,9 @@ class Squiz_Sniffs_Functions_FunctionDuplicateArgumentSniff implements PHP_CodeS
             if ($tokens[$i]['code'] === T_VARIABLE) {
                 $variable = $tokens[$i]['content'];
                 if (in_array($variable, $foundVariables) === true) {
-                    $error = "Variable \"$variable\" appears more than once in function declaration";
-                    $phpcsFile->addError($error, $i);
+                    $error = 'Variable "%s" appears more than once in function declaration';
+                    $data  = array($variable);
+                    $phpcsFile->addError($error, $i, 'Found', $data);
                 } else {
                     $foundVariables[] = $variable;
                 }

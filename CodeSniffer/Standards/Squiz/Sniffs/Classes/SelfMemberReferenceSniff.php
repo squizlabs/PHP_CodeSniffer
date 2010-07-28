@@ -68,8 +68,9 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
         $className = ($stackPtr - 1);
         if ($tokens[$className]['code'] === T_SELF) {
             if (strtolower($tokens[$className]['content']) !== $tokens[$className]['content']) {
-                $error = 'Must use "self::" for local static member reference; found "'.$tokens[$className]['content'].'::"';
-                $phpcsFile->addError($error, $className);
+                $error = 'Must use "self::" for local static member reference; found "%s::"';
+                $data  = array($tokens[$className]['content']);
+                $phpcsFile->addError($error, $className, 'IncorrectCase', $data);
                 return;
             }
         } else if ($tokens[$className]['code'] === T_STRING) {
@@ -78,21 +79,23 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             if ($declarationName === $tokens[$className]['content']) {
                 // Class name is the same as the current class.
                 $error = 'Must use "self::" for local static member reference';
-                $phpcsFile->addError($error, $className);
+                $phpcsFile->addError($error, $className, 'NotUsed');
                 return;
             }
         }
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr - 1)]['content']);
-            $error = "Expected 0 spaces before double colon; $found found";
-            $phpcsFile->addError($error, $className);
+            $error = 'Expected 0 spaces before double colon; %s found';
+            $data  = array($found);
+            $phpcsFile->addError($error, $className, 'SpaceBefore', $data);
         }
 
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr + 1)]['content']);
-            $error = "Expected 0 spaces after double colon; $found found";
-            $phpcsFile->addError($error, $className);
+            $error = 'Expected 0 spaces after double colon; %s found';
+            $data  = array($found);
+            $phpcsFile->addError($error, $className, 'SpaceAfter', $data);
         }
 
     }//end processTokenWithinScope()

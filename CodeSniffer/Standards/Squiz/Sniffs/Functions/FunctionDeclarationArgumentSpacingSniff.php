@@ -77,17 +77,21 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             if ($nextCode === T_EQUAL) {
                 // Check parameter default spacing.
                 if (($nextToken - $nextParam) > 1) {
-                    $gap   = strlen($tokens[($nextParam + 1)]['content']);
-                    $arg   = $tokens[$nextParam]['content'];
-                    $error = "Expected 0 spaces between argument \"$arg\" and equals sign; $gap found";
-                    $phpcsFile->addError($error, $nextToken);
+                    $error = 'Expected 0 spaces between argument "%s" and equals sign; %s found';
+                    $data  = array(
+                              $tokens[$nextParam]['content'],
+                              strlen($tokens[($nextParam + 1)]['content']),
+                             );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeEquals', $data);
                 }
 
                 if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
-                    $gap   = strlen($tokens[($nextToken + 1)]['content']);
-                    $arg   = $tokens[$nextParam]['content'];
-                    $error = "Expected 0 spaces between default value and equals sign for argument \"$arg\"; $gap found";
-                    $phpcsFile->addError($error, $nextToken);
+                    $error = 'Expected 0 spaces between default value and equals sign for argument "%s"; %s found';
+                    $data  = array(
+                              $tokens[$nextParam]['content'],
+                              strlen($tokens[($nextToken + 1)]['content']),
+                             );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceAfterDefault', $data);
                 }
             }
 
@@ -96,10 +100,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             if ($nextComma !== false) {
                 // Comma found.
                 if ($tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
-                    $space = strlen($tokens[($nextComma - 1)]['content']);
-                    $arg   = $tokens[$nextParam]['content'];
-                    $error = "Expected 0 spaces between argument \"$arg\" and comma; $space found";
-                    $phpcsFile->addError($error, $nextToken);
+                    $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
+                    $data  = array(
+                              $tokens[$nextParam]['content'],
+                              strlen($tokens[($nextComma - 1)]['content']),
+                             );
+                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeComma', $data);
                 }
             }
 
@@ -131,29 +137,43 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $hint = $tokens[$nextToken]['content'];
 
                         if ($gap !== 1) {
-                            $error = "Expected 1 space between type hint and argument \"$arg\"; $gap found";
-                            $phpcsFile->addError($error, $nextToken);
+                            $error = 'Expected 1 space between type hint and argument "%s"; %s found';
+                            $data  = array(
+                                      $arg,
+                                      $gap,
+                                     );
+                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
                         }
 
                         if ($multiLine === false) {
                             if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
-                                $error = "Expected 1 space between comma and type hint \"$hint\"; 0 found";
-                                $phpcsFile->addError($error, $nextToken);
+                                $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
+                                $data  = array($hint);
+                                $phpcsFile->addError($error, $nextToken, 'NoSapceBeforeHint', $data);
                             } else {
                                 $gap = strlen($tokens[($comma + 1)]['content']);
                                 if ($gap !== 1) {
-                                    $error = "Expected 1 space between comma and type hint \"$hint\"; $gap found";
-                                    $phpcsFile->addError($error, $nextToken);
+                                    $error = 'Expected 1 space between comma and type hint "%s"; %s found';
+                                    $data  = array(
+                                              $hint,
+                                              $gap,
+                                             );
+                                    $phpcsFile->addError($error, $nextToken, 'SpacingBeforeHint', $data);
                                 }
                             }
                         }
                     } else if ($multiLine === false && $gap !== 1) {
-                        $error = "Expected 1 space between comma and argument \"$arg\"; $gap found";
-                        $phpcsFile->addError($error, $nextToken);
+                        $error = 'Expected 1 space between comma and argument "%s"; %s found';
+                        $data  = array(
+                                  $arg,
+                                  $gap,
+                                 );
+                        $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
                     }//end if
                 } else {
-                    $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
-                    $phpcsFile->addError($error, $nextToken);
+                    $error = 'Expected 1 space between comma and argument "%s"; 0 found';
+                    $data  = array($arg);
+                    $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeArg', $data);
                 }//end if
             } else {
                 // First argument in function declaration.
@@ -174,20 +194,31 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                         $hint = $tokens[$nextToken]['content'];
 
                         if ($gap !== 1) {
-                            $error = "Expected 1 space between type hint and argument \"$arg\"; $gap found";
-                            $phpcsFile->addError($error, $nextToken);
+                            $error = 'Expected 1 space between type hint and argument "%s"; %s found';
+                            $data  = array(
+                                      $arg,
+                                      $gap,
+                                     );
+                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
                         }
 
                         if ($multiLine === false
                             && $tokens[($bracket + 1)]['code'] === T_WHITESPACE
                         ) {
-                            $gap   = strlen($tokens[($bracket + 1)]['content']);
-                            $error = "Expected 0 spaces between opening bracket and type hint \"$hint\"; $gap found";
-                            $phpcsFile->addError($error, $nextToken);
+                            $error = 'Expected 0 spaces between opening bracket and type hint "%s"; %s found';
+                            $data  = array(
+                                      $hint,
+                                      strlen($tokens[($bracket + 1)]['content']),
+                                     );
+                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpenHint', $data);
                         }
                     } else if ($multiLine === false) {
-                        $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
-                        $phpcsFile->addError($error, $nextToken);
+                        $error = 'Expected 0 spaces between opening bracket and argument "%s"; %s found';
+                        $data  = array(
+                                      $arg,
+                                      $gap,
+                                     );
+                        $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
                     }
                 }//end if
             }//end if
@@ -199,18 +230,20 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
         if (empty($params) === true) {
             // There are no parameters for this function.
             if (($closeBracket - $openBracket) !== 1) {
-                $space = strlen($tokens[($closeBracket - 1)]['content']);
-                $error = "Expected 0 spaces between brackets of function declaration; $space found";
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'Expected 0 spaces between brackets of function declaration; %s found';
+                $data  = array(strlen($tokens[($closeBracket - 1)]['content']));
+                $phpcsFile->addError($error, $stackPtr, 'SpacingBetween', $data);
             }
         } else if ($multiLine === false
             && $tokens[($closeBracket - 1)]['code'] === T_WHITESPACE
         ) {
             $lastParam = array_pop($params);
-            $arg       = $tokens[$lastParam]['content'];
-            $gap       = strlen($tokens[($closeBracket - 1)]['content']);
-            $error     = "Expected 0 spaces between argument \"$arg\" and closing bracket; $gap found";
-            $phpcsFile->addError($error, $closeBracket);
+            $error     = 'Expected 0 spaces between argument "%s" and closing bracket; %s found';
+            $data      = array(
+                          $tokens[$lastParam]['content'],
+                          strlen($tokens[($closeBracket - 1)]['content']),
+                         );
+            $phpcsFile->addError($error, $closeBracket, 'SpacingBeforeClose', $data);
         }
 
     }//end process()

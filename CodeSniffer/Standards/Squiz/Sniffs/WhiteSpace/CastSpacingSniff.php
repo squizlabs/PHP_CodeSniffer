@@ -62,8 +62,12 @@ class Squiz_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
         $expected = str_replace("\t", '', $expected);
 
         if ($content !== $expected) {
-            $error = "Cast statements must not contain whitespace; expected \"$expected\" but found \"$content\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Cast statements must not contain whitespace; expected "%s" but found "%s"';
+            $data  = array(
+                      $expected,
+                      $content,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'ContainsWhiteSpace', $data);
         }
 
     }//end process()

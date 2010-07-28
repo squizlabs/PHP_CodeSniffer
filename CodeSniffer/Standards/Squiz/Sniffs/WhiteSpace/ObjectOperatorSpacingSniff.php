@@ -60,13 +60,13 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
         $prevType = $tokens[($stackPtr - 1)]['code'];
         if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $error = 'Space found before object operator';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Before');
         }
 
         $nextType = $tokens[($stackPtr + 1)]['code'];
         if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $error = 'Space found after object operator';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'After');
         }
 
     }//end process()

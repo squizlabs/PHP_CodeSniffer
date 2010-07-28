@@ -70,7 +70,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
 
         if (in_array($tokens[$prev]['code'], $allowedTokens) === false) {
             $error = 'New objects must be assigned to a variable';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NotAssigned');
         }
 
     }//end process()

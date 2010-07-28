@@ -101,8 +101,9 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
             $diff  = array_intersect($outer, $inner);
 
             if (count($diff) !== 0) {
-                $error = sprintf('Loop incrementor (%s) jumbling with inner loop', join(', ', $diff));
-                $phpcsFile->addWarning($error, $stackPtr);
+                $error = 'Loop incrementor (%s) jumbling with inner loop';
+                $data  = array(join(', ', $diff));
+                $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }
 

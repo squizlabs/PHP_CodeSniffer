@@ -68,7 +68,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
         if (strcasecmp($methodName, $className) === 0) {
             $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'OldStyle');
         } else if (strcasecmp($methodName, '__construct') !== 0) {
             // Not a constructor.
             return;
@@ -88,7 +88,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
                 && $tokens[($doubleColonIndex + 1)]['content'] === $parentClassName
             ) {
                 $error = 'PHP4 style calls to parent constructors are not allowed; use "parent::__construct()" instead';
-                $phpcsFile->addError($error, ($doubleColonIndex + 1));
+                $phpcsFile->addError($error, ($doubleColonIndex + 1), 'OldStyleCall');
             }
 
             $startIndex = ($doubleColonIndex + 1);

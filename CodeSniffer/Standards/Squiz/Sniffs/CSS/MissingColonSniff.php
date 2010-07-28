@@ -73,7 +73,7 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
                 if ($foundColon === false && $foundString !== false) {
                     // We didn't find a colon on the previous line.
                     $error = 'No style definition found on line; check for missing colon';
-                    $phpcsFile->addError($error, $foundString);
+                    $phpcsFile->addError($error, $foundString, 'Found');
                 }
 
                 $foundColon  = false;

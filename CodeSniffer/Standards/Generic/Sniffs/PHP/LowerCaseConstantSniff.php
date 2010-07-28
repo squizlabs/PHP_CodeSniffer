@@ -72,8 +72,12 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
 
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
-            $error = 'TRUE, FALSE and NULL must be lowercase; expected "'.strtolower($keyword).'" but found "'.$keyword.'"';
-            $phpcsFile->addError($error, $stackPtr, 'NotLowerCase');
+            $error = 'TRUE, FALSE and NULL must be lowercase; expected "%s" but found "%s"';
+            $data  = array(
+                      strtolower($keyword),
+                      $keyword,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

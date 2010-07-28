@@ -65,7 +65,7 @@ class Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff implements PHP_CodeSniffer_Snif
 
         if ($next === false || $tokens[$next]['code'] === T_SEMICOLON || $tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             $error = 'Style definition is empty';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

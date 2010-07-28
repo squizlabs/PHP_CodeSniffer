@@ -9,7 +9,6 @@
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="PEAR.Classes.ClassDeclaration"/>
  <rule ref="PEAR.ControlStructures.ControlSignature"/>
- <rule ref="PEAR.Files.LineEndings"/>
  <rule ref="PEAR.Functions.FunctionCallSignature"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
  <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
@@ -20,6 +19,13 @@
   <properties>
    <property name="lineLimit" value="80"/>
    <property name="absoluteLineLimit" value="120"/>
+  </properties>
+ </rule>
+
+ <!-- Use Unix newlines -->
+ <rule ref="Generic.Files.LineEndings">
+  <properties>
+   <property name="eolChar" value="\n"/>
   </properties>
  </rule>
 

@@ -77,7 +77,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
                 && strlen($tokens[($stackPtr - 1)]['content']) !== 1
             ) {
                 $found = strlen($tokens[($stackPtr - 1)]['content']);
-                $error = 'Expected 1 space before logical operator; %d found';
+                $error = 'Expected 1 space before logical operator; %s found';
                 $data  = array($found);
                 $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceBefore', $data);
             }
@@ -93,7 +93,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
                 && strlen($tokens[($stackPtr + 1)]['content']) !== 1
             ) {
                 $found = strlen($tokens[($stackPtr + 1)]['content']);
-                $error = 'Expected 1 space after logical operator; %d found';
+                $error = 'Expected 1 space after logical operator; %s found';
                 $data  = array($found);
                 $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceAfter', $data);
             }

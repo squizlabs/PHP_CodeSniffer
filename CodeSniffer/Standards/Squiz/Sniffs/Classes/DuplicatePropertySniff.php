@@ -78,9 +78,12 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
             } else {
                 $propName = $tokens[$next]['content'];
                 if (isset($properties[$propName]) === true) {
-                    $line  = $tokens[$properties[$propName]]['line'];
-                    $error = "Duplicate property definition found for \"$propName\"; previously defined on line $line";
-                    $phpcsFile->addError($error, $next);
+                    $error = 'Duplicate property definition found for "%s"; previously defined on line %s';
+                    $data  = array(
+                              $propName,
+                              $tokens[$properties[$propName]]['line'],
+                             );
+                    $phpcsFile->addError($error, $next, 'Found', $data);
                 }
 
                 $properties[$propName] = $next;

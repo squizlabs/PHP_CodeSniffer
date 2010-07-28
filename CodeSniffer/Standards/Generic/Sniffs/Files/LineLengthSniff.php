@@ -115,9 +115,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         // If the content is a CVS or SVN id in a version tag, or it is
         // a license tag with a name and URL, there is nothing the
         // developer can do to shorten the line, so don't throw errors.
-        if (preg_match('|@version[^\$]+\$Id|', $lineContent) === 0 && preg_match('|@license|', $lineContent) === 0) {
+        if (preg_match('|@version[^\$]+\$Id|', $lineContent) === 0
+            && preg_match('|@license|', $lineContent) === 0
+        ) {
             $lineLength = strlen($lineContent);
-            if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
+            if ($this->absoluteLineLimit > 0
+                && $lineLength > $this->absoluteLineLimit
+            ) {
                 $data = array(
                          $this->absoluteLineLimit,
                          $lineLength,

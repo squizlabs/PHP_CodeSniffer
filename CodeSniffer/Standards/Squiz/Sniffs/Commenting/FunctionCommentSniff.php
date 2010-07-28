@@ -141,11 +141,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         if ($code === T_COMMENT) {
             $error = 'You must use "/**" style comments for a function comment';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
             return;
         } else if ($code !== T_DOC_COMMENT) {
             $error = 'Missing function doc comment';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Missing');
             return;
         }
 
@@ -158,7 +158,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $ignore[]  = T_FINAL;
         $prevToken = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($prevToken !== $commentEnd) {
-            $phpcsFile->addError('Missing function doc comment', $stackPtr);
+            $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
             return;
         }
 
@@ -182,14 +182,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
             return;
         }
 
         $comment = $this->commentParser->getComment();
         if (is_null($comment) === true) {
             $error = 'Function doc comment is empty';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'Empty');
             return;
         }
 
@@ -198,7 +198,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $firstLine = substr($commentString, 0, $eolPos);
         if ($firstLine !== '/**') {
             $error = 'The open comment tag must be the only content on the line';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'ContentAfterOpen');
         }
 
         $this->processParams($commentStart, $commentEnd);
@@ -211,7 +211,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $short = $comment->getShortComment();
         if (trim($short) === '') {
             $error = 'Missing short description in function doc comment';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'MissingShort');
             return;
         }
 
@@ -219,9 +219,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $newlineCount = 0;
         $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
-            $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-            $error = "Extra $line found before function comment short description";
-            $phpcsFile->addError($error, ($commentStart + 1));
+            $error = 'Extra newline(s) found before function comment short description';
+            $phpcsFile->addError($error, ($commentStart + 1), 'SpacingBeforeShort');
         }
 
         $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
@@ -233,7 +232,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $newlineBetween = substr_count($between, $phpcsFile->eolChar);
             if ($newlineBetween !== 2) {
                 $error = 'There must be exactly one blank line between descriptions in function comment';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+                $phpcsFile->addError($error, ($commentStart + $newlineCount + 1), 'SpacingBetween');
             }
 
             $newlineCount += $newlineBetween;
@@ -241,7 +240,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $testLong = trim($long);
             if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
                 $error = 'Function comment long description must start with a capital letter';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
             }
         }//end if
 
@@ -255,7 +254,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
 
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'SpacingBeforeTags');
                 $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
@@ -265,24 +264,25 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $lastChar  = $testShort[(strlen($testShort) - 1)];
         if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
             $error = 'Function comment short description must be on a single line';
-            $phpcsFile->addError($error, ($commentStart + 1));
+            $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
         }
 
         if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
             $error = 'Function comment short description must start with a capital letter';
-            $phpcsFile->addError($error, ($commentStart + 1));
+            $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
         }
 
         if ($lastChar !== '.') {
             $error = 'Function comment short description must end with a full stop';
-            $phpcsFile->addError($error, ($commentStart + 1));
+            $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
         }
 
         // Check for unknown/deprecated tags.
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
-            $error = "@$errorTag[tag] tag is not allowed in function comment";
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
+            $error = '@%s tag is not allowed in function comment';
+            $data  = array($errorTag['tag']);
+            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
         }
 
     }//end process()
@@ -313,24 +313,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $index           = array_keys($this->commentParser->getTagOrders(), 'since');
             if (count($index) > 1) {
                 $error = 'Only 1 @since tag is allowed in function comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'DuplicateSince');
                 return;
             }
 
             if ($index[0] !== $firstTag) {
                 $error = 'The @since tag is in the wrong order; the tag preceds @see (if used) or @return';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'SinceOrder');
             }
 
             $content = $since->getContent();
             if (empty($content) === true) {
                 $error = 'Version number missing for @since tag in function comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'MissingSinceVersion');
                 return;
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
                     $error = 'Expected version number to be in the form x.x.x in @since tag';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'InvalidSinceVersion');
                 }
             }
 
@@ -340,13 +340,16 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $correctSpacing = ($return !== null || empty($throws) === false) ? 2 : 1;
 
             if ($spacing !== $correctSpacing) {
-                $error  = '@since tag indented incorrectly; ';
-                $error .= "expected $correctSpacing spaces but found $spacing.";
-                $this->currentFile->addError($error, $errorPos);
+                $error = '@since tag indented incorrectly; expected %s spaces but found %s';
+                $data  = array(
+                          $correctSpacing,
+                          $spacing,
+                         );
+                $this->currentFile->addError($error, $errorPos, 'SinceIndent', $data);
             }
         } else {
             $error = 'Missing @since tag in function comment';
-            $this->currentFile->addError($error, $commentEnd);
+            $this->currentFile->addError($error, $commentEnd, 'MissingSince');
         }//end if
 
     }//end processSince()
@@ -372,22 +375,22 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $this->_tagIndex++;
                     if ($index[$i] !== $this->_tagIndex) {
                         $error = 'The @see tag is in the wrong order; the tag follows @since';
-                        $this->currentFile->addError($error, $errorPos);
+                        $this->currentFile->addError($error, $errorPos, 'SeeOrder');
                     }
                 }
 
                 $content = $see->getContent();
                 if (empty($content) === true) {
                     $error = 'Content missing for @see tag in function comment';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'EmptySee');
                     continue;
                 }
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== 4) {
-                    $error  = '@see tag indented incorrectly; ';
-                    $error .= "expected 4 spaces but found $spacing";
-                    $this->currentFile->addError($error, $errorPos);
+                    $error = '@see tag indented incorrectly; expected 4 spaces but found %s';
+                    $data  = array($spacing);
+                    $this->currentFile->addError($error, $errorPos, 'SeeIndent', $data);
                 }
             }//end foreach
         }//end if
@@ -425,7 +428,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                 if (count($index) > 1) {
                     $error = 'Only 1 @return tag is allowed in function comment';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'DuplicateReturn');
                     return;
                 }
 
@@ -434,13 +437,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $this->_tagIndex++;
                     if ($index[0] !== $this->_tagIndex) {
                         $error = 'The @return tag is in the wrong order; the tag follows @see (if used) or @since';
-                        $this->currentFile->addError($error, $errorPos);
+                        $this->currentFile->addError($error, $errorPos, 'ReturnOrder');
                     }
                 }
 
                 if (empty($content) === true) {
                     $error = 'Return type missing for @return tag in function comment';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'MissingReturnType');
                 } else {
                     // Check return type (can be multiple, separated by '|').
                     $typeNames      = explode('|', $content);
@@ -454,8 +457,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                     $suggestedType = implode('|', $suggestedNames);
                     if ($content !== $suggestedType) {
-                        $error = "Function return type \"$content\" is invalid";
-                        $this->currentFile->addError($error, $errorPos);
+                        $error = 'Function return type "%s" is invalid';
+                        $data  = array($content);
+                        $this->currentFile->addError($error, $errorPos, 'InvalidReturn', $data);
                     }
 
                     $tokens = $this->currentFile->getTokens();
@@ -472,7 +476,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
                                 if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
                                     $error = 'Function return type is void, but function contains return statement';
-                                    $this->currentFile->addError($error, $errorPos);
+                                    $this->currentFile->addError($error, $errorPos, 'InvalidReturnVoid');
                                 }
                             }
                         }
@@ -485,12 +489,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                             $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
                             if ($return === false) {
                                 $error = 'Function return type is not void, but function has no return statement';
-                                $this->currentFile->addError($error, $errorPos);
+                                $this->currentFile->addError($error, $errorPos, 'InvalidNoReturn');
                             } else {
                                 $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
                                 if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
                                     $error = 'Function return type is not void, but function is returning void here';
-                                    $this->currentFile->addError($error, $return);
+                                    $this->currentFile->addError($error, $return, 'InvalidReturnNotVoid');
                                 }
                             }
                         }
@@ -498,7 +502,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 }//end if
             } else {
                 $error = 'Missing @return tag in function comment';
-                $this->currentFile->addError($error, $commentEnd);
+                $this->currentFile->addError($error, $commentEnd, 'MissingReturn');
             }//end if
 
         } else {
@@ -506,7 +510,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if ($return !== null) {
                 $errorPos = ($commentStart + $return->getLine());
                 $error    = '@return tag is not required for constructor and destructor';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'ReturnNotRequired');
             }
         }//end if
 
@@ -535,22 +539,22 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $errorPos  = ($commentStart + $throw->getLine());
             if (empty($exception) === true) {
                 $error = 'Exception type and comment missing for @throws tag in function comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'InvalidThrows');
             } else if (empty($content) === true) {
                 $error = 'Comment missing for @throws tag in function comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'EmptyThrows');
             } else {
                 // Starts with a capital letter and ends with a fullstop.
                 $firstChar = $content{0};
                 if (strtoupper($firstChar) !== $firstChar) {
                     $error = '@throws tag comment must start with a capital letter';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'ThrowsNotCapital');
                 }
 
                 $lastChar = $content[(strlen($content) - 1)];
                 if ($lastChar !== '.') {
                     $error = '@throws tag comment must end with a full stop';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'ThrowsNoFullStop');
                 }
             }
 
@@ -559,7 +563,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 $this->_tagIndex++;
                 if ($index[$i] !== $this->_tagIndex) {
                     $error = 'The @throws tag is in the wrong order; the tag follows @return';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'ThrowsOrder');
                 }
             }
         }//end foreach
@@ -588,14 +592,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 2) {
                 $error    = 'Last parameter comment requires a blank newline after it';
                 $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'SpacingAfterParams');
             }
 
             // Parameters must appear immediately after the comment.
             if ($params[0]->getOrder() !== 2) {
                 $error    = 'Parameters must appear immediately after the comment';
                 $errorPos = ($params[0]->getLine() + $commentStart);
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'SpacingBeforeParams');
             }
 
             $previousParam      = null;
@@ -612,7 +616,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 // Make sure that there is only one space before the var type.
                 if ($param->getWhitespaceBeforeType() !== ' ') {
                     $error = 'Expected 1 space before variable type';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'SpacingBeforeParamType');
                 }
 
                 $spaceCount = substr_count($param->getWhitespaceBeforeVarName(), ' ');
@@ -637,13 +641,25 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                     // Check to see if the parameters align properly.
                     if ($param->alignsVariableWith($previousParam) === false) {
-                        $error = 'The variable names for parameters '.$previousName.' ('.($pos - 1).') and '.$paramName.' ('.$pos.') do not align';
-                        $this->currentFile->addError($error, $errorPos);
+                        $error = 'The variable names for parameters %s (%s) and %s (%s) do not align';
+                        $data  = array(
+                                  $previousName,
+                                  ($pos - 1),
+                                  $paramName,
+                                  $pos,
+                                 );
+                        $this->currentFile->addError($error, $errorPos, 'ParameterNamesNotAligned', $data);
                     }
 
                     if ($param->alignsCommentWith($previousParam) === false) {
-                        $error = 'The comments for parameters '.$previousName.' ('.($pos - 1).') and '.$paramName.' ('.$pos.') do not align';
-                        $this->currentFile->addError($error, $errorPos);
+                        $error = 'The comments for parameters %s (%s) and %s (%s) do not align';
+                        $data  = array(
+                                  $previousName,
+                                  ($pos - 1),
+                                  $paramName,
+                                  $pos,
+                                 );
+                        $this->currentFile->addError($error, $errorPos, 'ParameterCommentsNotAligned', $data);
                     }
                 }
 
@@ -652,8 +668,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 foreach ($typeNames as $typeName) {
                     $suggestedName = PHP_CodeSniffer::suggestType($typeName);
                     if ($typeName !== $suggestedName) {
-                        $error = "Expected \"$suggestedName\"; found \"$typeName\" for $paramName at position $pos";
-                        $this->currentFile->addError($error, $errorPos);
+                        $error = 'Expected "%s"; found "%s" for %s at position %s';
+                        $data  = array(
+                                  $suggestedName,
+                                  $typeName,
+                                  $paramName,
+                                  $pos,
+                                 );
+                        $this->currentFile->addError($error, $errorPos, 'IncorrectParamVarName', $data);
                     } else if (count($typeNames) === 1) {
                         // Check type hint for array and custom type.
                         $suggestedTypeHint = '';
@@ -666,17 +688,33 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         if ($suggestedTypeHint !== '' && isset($realParams[($pos - 1)]) === true) {
                             $typeHint = $realParams[($pos - 1)]['type_hint'];
                             if ($typeHint === '') {
-                                $error = "Type hint \"$suggestedTypeHint\" missing for $paramName at position $pos";
-                                $this->currentFile->addError($error, ($commentEnd + 2));
+                                $error = 'Type hint "%s" missing for %s at position %s';
+                                $data  = array(
+                                          $suggestedTypeHint,
+                                          $paramName,
+                                          $pos,
+                                         );
+                                $this->currentFile->addError($error, ($commentEnd + 2), 'TypeHintMissing', $data);
                             } else if ($typeHint !== $suggestedTypeHint) {
-                                $error = "Expected type hint \"$suggestedTypeHint\"; found \"$typeHint\" for $paramName at position $pos";
-                                $this->currentFile->addError($error, ($commentEnd + 2));
+                                $error = 'Expected type hint "%s"; found "%s" for %s at position %s';
+                                $data  = array(
+                                          $suggestedTypeHint,
+                                          $typeHint,
+                                          $paramName,
+                                          $pos,
+                                         );
+                                $this->currentFile->addError($error, ($commentEnd + 2), 'IncorrectTypeHint', $data);
                             }
                         } else if ($suggestedTypeHint === '' && isset($realParams[($pos - 1)]) === true) {
                             $typeHint = $realParams[($pos - 1)]['type_hint'];
                             if ($typeHint !== '') {
-                                $error = "Unknown type hint \"$typeHint\" found for $paramName at position $pos";
-                                $this->currentFile->addError($error, ($commentEnd + 2));
+                                $error = 'Unknown type hint "%s" found for %s at position %s';
+                                $data  = array(
+                                          $typeHint,
+                                          $paramName,
+                                          $pos,
+                                         );
+                                $this->currentFile->addError($error, ($commentEnd + 2), 'InvalidTypeHint', $data);
                             }
                         }
                     }//end if
@@ -694,49 +732,59 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     }
 
                     if ($realName !== $paramName) {
-                        $error  = 'Doc comment for var '.$paramName;
-                        $error .= ' does not match ';
+                        $code = 'ParamNameNoMatch';
+                        $data = array(
+                                    $paramName,
+                                    $realName,
+                                    $pos,
+                                );
+
+                        $error  = 'Doc comment for var %s does not match ';
                         if (strtolower($paramName) === strtolower($realName)) {
                             $error .= 'case of ';
+                            $code   = 'ParamNameNoCaseMatch';
                         }
 
-                        $error .= 'actual variable name '.$realName;
-                        $error .= ' at position '.$pos;
+                        $error .= 'actual variable name %s at position %s';
 
-                        $this->currentFile->addError($error, $errorPos);
+                        $this->currentFile->addError($error, $errorPos, $code, $data);
                     }
                 } else {
                     // We must have an extra parameter comment.
                     $error = 'Superfluous doc comment at position '.$pos;
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'ExtraParamComment');
                 }
 
                 if ($param->getVarName() === '') {
                     $error = 'Missing parameter name at position '.$pos;
-                     $this->currentFile->addError($error, $errorPos);
+                     $this->currentFile->addError($error, $errorPos, 'MissingParamName');
                 }
 
                 if ($param->getType() === '') {
                     $error = 'Missing type at position '.$pos;
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'MissingParamType');
                 }
 
                 if ($paramComment === '') {
-                    $error = 'Missing comment for param "'.$paramName.'" at position '.$pos;
-                    $this->currentFile->addError($error, $errorPos);
+                    $error = 'Missing comment for param "%s" at position %s';
+                    $data  = array(
+                              $paramName,
+                              $pos,
+                             );
+                    $this->currentFile->addError($error, $errorPos, 'MissingParamComment', $data);
                 } else {
                     // Param comments must start with a capital letter and
                     // end with the full stop.
                     $firstChar = $paramComment{0};
                     if (preg_match('|[A-Z]|', $firstChar) === 0) {
                         $error = 'Param comment must start with a capital letter';
-                        $this->currentFile->addError($error, $errorPos);
+                        $this->currentFile->addError($error, $errorPos, 'ParamCommentNotCapital');
                     }
 
                     $lastChar = $paramComment[(strlen($paramComment) - 1)];
                     if ($lastChar !== '.') {
                         $error = 'Param comment must end with a full stop';
-                        $this->currentFile->addError($error, $errorPos);
+                        $this->currentFile->addError($error, $errorPos, 'ParamCommentFullStop');
                     }
                 }
 
@@ -746,12 +794,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
             if ($spaceBeforeVar !== 1 && $spaceBeforeVar !== 10000 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 1 space after the longest type';
-                $this->currentFile->addError($error, $longestType);
+                $this->currentFile->addError($error, $longestType, 'SpacingAfterLongType');
             }
 
             if ($spaceBeforeComment !== 1 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 1 space after the longest variable name';
-                $this->currentFile->addError($error, $longestVar);
+                $this->currentFile->addError($error, $longestVar, 'SpacingAfterLongName');
             }
 
         }//end if
@@ -770,8 +818,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 $errorPos = $commentStart;
             }
 
-            $error = 'Doc comment for "'.$neededParam.'" missing';
-            $this->currentFile->addError($error, $errorPos);
+            $error = 'Doc comment for "%s" missing';
+            $data  = array($neededParam);
+            $this->currentFile->addError($error, $errorPos, 'MissingParamTag', $data);
         }
 
     }//end processParams()

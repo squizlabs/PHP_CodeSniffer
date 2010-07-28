@@ -115,7 +115,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($regs[2]), $ptr);
+                    $phpcsFile->addWarning(trim($regs[2]), $ptr, 'ExternalTool');
                 }
             }//end foreach
         }//end if

@@ -81,7 +81,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             // right next to each other.
             if ($tokens[$stackPtr]['scope_closer'] !== ($tokens[$stackPtr]['scope_opener'] + 1)) {
                 $error = 'The opening and closing braces of empty functions must be directly next to each other; e.g., function () {}';
-                $phpcsFile->addError($error, $closeBrace);
+                $phpcsFile->addError($error, $closeBrace, 'SpacingBetween');
             }
 
             return;
@@ -94,16 +94,18 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
         if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true || isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
             // Nested function.
             if ($found < 0) {
-                $error = "Closing brace of nested function must be on a new line";
-                $phpcsFile->addError($error, $closeBrace);
+                $error = 'Closing brace of nested function must be on a new line';
+                $phpcsFile->addError($error, $closeBrace, 'ContentBeforeClose');
             } else if ($found > 0) {
-                $error = "Expected 0 blank lines before closing brace of nested function; $found found";
-                $phpcsFile->addError($error, $closeBrace);
+                $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
+                $data  = array($found);
+                $phpcsFile->addError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
             }
         } else {
             if ($found !== 1) {
-                $error = "Expected 1 blank line before closing function brace; $found found";
-                $phpcsFile->addError($error, $closeBrace);
+                $error = 'Expected 1 blank line before closing function brace; %s found';
+                $data  = array($found);
+                $phpcsFile->addError($error, $closeBrace, 'SpacingBeforeClose', $data);
             }
         }
 

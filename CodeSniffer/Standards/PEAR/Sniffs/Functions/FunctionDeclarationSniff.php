@@ -142,8 +142,12 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 }
 
                 if ($expectedIndent !== $foundIndent) {
-                    $error = "Multi-line function declaration not indented correctly; expected $expectedIndent spaces but found $foundIndent";
-                    $phpcsFile->addError($error, $i);
+                    $error = 'Multi-line function declaration not indented correctly; expected %s spaces but found %s';
+                    $data  = array(
+                              $expectedIndent,
+                              $foundIndent,
+                             );
+                    $phpcsFile->addError($error, $i, 'Indent', $data);
                 }
 
                 $lastLine = $tokens[$i]['line'];
@@ -163,14 +167,18 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             }
 
             if ($length !== 1) {
+                $data = array($length);
+                $code = 'SpaceBeforeOpenBrace';
+
                 $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration; found ';
                 if ($length === -1) {
                     $error .= 'newline';
+                    $code   = 'NewlineBeforeOpenBrace';
                 } else {
-                    $error .= "$length spaces";
+                    $error .= '%s spaces';
                 }
 
-                $phpcsFile->addError($error, ($closeBracket + 1));
+                $phpcsFile->addError($error, ($closeBracket + 1), $code, $data);
                 return;
             }
 
@@ -184,7 +192,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 
             if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
                 $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line function declaration';
-                $phpcsFile->addError($error, $next);
+                $phpcsFile->addError($error, $next, 'NoSpaceBeforeOpenBrace');
             }
         }//end if
 
@@ -199,7 +207,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'The closing parenthesis of a multi-line function declaration must be on a new line';
-            $phpcsFile->addError($error, $closeBracket);
+            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
         }
 
     }//end processMultiLineDeclaration()

@@ -79,10 +79,13 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         if ($tokens[$stackPtr]['code'] !== T_STRING) {
             $content = $tokens[$stackPtr]['content'];
             if ($content !== strtolower($content)) {
-                $type     = strtoupper($content);
-                $expected = strtolower($content);
-                $error    = "$type keyword must be lowercase; expected \"$expected\" but found \"$content\"";
-                $phpcsFile->addError($error, $stackPtr);
+                $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
+                $data  = array(
+                          strtoupper($content),
+                          strtolower($content),
+                          $content,
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'KeywordUppercase', $data);
             }
 
             return;
@@ -126,9 +129,12 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         }
 
         if ($content !== strtolower($content)) {
-            $expected = strtolower($content);
-            $error    = "Calls to inbuilt PHP functions must be lowercase; expected \"$expected\" but found \"$content\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Calls to inbuilt PHP functions must be lowercase; expected "%s" but found "%s"';
+            $data  = array(
+                      strtolower($content),
+                      $content,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'CallUppercase', $data);
         }
 
     }//end process()

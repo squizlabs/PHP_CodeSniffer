@@ -112,11 +112,12 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
         if ($emptyBody === true) {
             // Get token identifier.
             $name  = $phpcsFile->getTokensAsString($stackPtr, 1);
-            $error = sprintf('Empty %s statement detected', strtoupper($name));
+            $error = 'Empty %s statement detected';
+            $data  = array(strtoupper($name));
             if ($this->checkedTokens[$token['code']] === true) {
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
             } else {
-                $phpcsFile->addWarning($error, $stackPtr);
+                $phpcsFile->addWarning($error, $stackPtr, 'NotAllowedWarning', $data);
             }
         }
 

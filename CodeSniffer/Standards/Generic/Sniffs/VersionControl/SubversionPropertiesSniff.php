@@ -79,22 +79,35 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             if (isset($properties[$key]) === true
                 && isset($this->properties[$key]) === false
             ) {
-                $error = 'Unexpected Subversion property "'.$key.'" = "'.$properties[$key].'"';
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'Unexpected Subversion property "%s" = "%s"';
+                $data  = array(
+                          $key,
+                          $properties[$key],
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'Unexpected', $data);
                 continue;
             }
 
             if (isset($properties[$key]) === false
                 && isset($this->properties[$key]) === true
             ) {
-                $error = 'Missing Subversion property "'.$key.'" = "'.$this->properties[$key].'"';
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'Missing Subversion property "%s" = "%s"';
+                $data  = array(
+                          $key,
+                          $this->properties[$key],
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
                 continue;
             }
 
             if ($properties[$key] !== $this->properties[$key]) {
-                $error = 'Subversion property "'.$key.'" = "'.$properties[$key].'" does not match "'.$this->properties[$key].'"';
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'Subversion property "%s" = "%s" does not match "%s"';
+                $data  = array(
+                          $key,
+                          $properties[$key],
+                          $this->properties[$key],
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
             }
         }//end foreach
 

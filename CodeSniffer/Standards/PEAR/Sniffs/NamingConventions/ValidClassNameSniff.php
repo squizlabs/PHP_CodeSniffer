@@ -63,11 +63,12 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
 
         $className = $phpcsFile->findNext(T_STRING, $stackPtr);
         $name      = trim($tokens[$className]['content']);
+        $errorData = array(ucfirst($tokens[$stackPtr]['content']));
 
         // Make sure the first letter is a capital.
         if (preg_match('|^[A-Z]|', $name) === 0) {
-            $error = ucfirst($tokens[$stackPtr]['content']).' name must begin with a capital letter';
-            $phpcsFile->addError($error, $stackPtr);
+            $error = '%s name must begin with a capital letter';
+            $phpcsFile->addError($error, $stackPtr, 'StartWithCaptial', $errorData);
         }
 
         // Check that each new word starts with a capital as well, but don't
@@ -82,13 +83,14 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
             }
         }
 
-        if ($validName !== true) {
+        if ($validName === false) {
             // Strip underscores because they cause the suggested name
             // to be incorrect.
             $nameBits = explode('_', trim($name, '_'));
             $firstBit = array_shift($nameBits);
             if ($firstBit === '') {
-                $error = ucfirst($tokens[$stackPtr]['content']).' name is not valid';
+                $error = '%s name is not valid';
+                $phpcsFile->addError($error, $stackPtr, 'Invalid', $errorData);
             } else {
                 $newName = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
                 foreach ($nameBits as $bit) {
@@ -98,10 +100,11 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
                 }
 
                 $newName = rtrim($newName, '_');
-                $error   = ucfirst($tokens[$stackPtr]['content'])." name is not valid; consider $newName instead";
+                $error   = '%s name is not valid; consider %s instead';
+                $data    = $errorData;
+                $data[]  = $newName;
+                $phpcsFile->addError($error, $stackPtr, 'Invalid', $data);
             }
-
-            $phpcsFile->addError($error, $stackPtr);
         }//end if
 
     }//end process()

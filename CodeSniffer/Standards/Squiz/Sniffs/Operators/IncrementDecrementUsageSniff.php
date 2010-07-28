@@ -101,7 +101,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
         if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens) === true) {
             $error = 'Increment and decrement operators cannot be used in an arithmetic operation';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
             return;
         }
 
@@ -113,7 +113,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         // Check if this is in a string concat.
         if ($tokens[$next]['code'] === T_STRING_CONCAT || $tokens[$prev]['code'] === T_STRING_CONCAT) {
             $error = 'Increment and decrement operators must be bracketed when used in string concatenation';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NoBrackets');
         }
 
     }//end processIncDec()

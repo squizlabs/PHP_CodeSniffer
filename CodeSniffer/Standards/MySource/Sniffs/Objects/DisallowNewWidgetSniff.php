@@ -60,8 +60,9 @@ class MySource_Sniffs_Objects_DisallowNewWidgetSniff implements PHP_CodeSniffer_
 
         if (substr(strtolower($tokens[$className]['content']), -10) === 'widgettype') {
             $widgetType = substr($tokens[$className]['content'], 0, -10);
-            $error      = "Manual creation of widget objects is banned; use Widget::getWidget('$widgetType'); instead";
-            $phpcsFile->addError($error, $stackPtr);
+            $error      = 'Manual creation of widget objects is banned; use Widget::getWidget(\'%s\'); instead';
+            $data       = array($widgetType);
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

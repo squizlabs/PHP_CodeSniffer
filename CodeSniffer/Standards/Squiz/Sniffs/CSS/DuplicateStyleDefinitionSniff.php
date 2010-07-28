@@ -76,9 +76,9 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
             $name = $tokens[$next]['content'];
             if (isset($styleNames[$name]) === true) {
                 $first = $styleNames[$name];
-                $line  = $tokens[$first]['line'];
-                $error = "Duplicate style definition found; first defined on line $line";
-                $phpcsFile->addError($error, $next);
+                $error = 'Duplicate style definition found; first defined on line %s';
+                $data  = array($tokens[$first]['line']);
+                $phpcsFile->addError($error, $next, 'Found', $data);
             } else {
                 $styleNames[$name] = $next;
             }

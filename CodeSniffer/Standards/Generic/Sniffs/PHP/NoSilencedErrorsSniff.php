@@ -39,7 +39,7 @@ class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
      *
      * @var bool
      */
-    protected $error = false;
+    public $error = false;
 
 
     /**
@@ -65,13 +65,13 @@ class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $error = 'Silencing errors is ';
+        $error = 'Silencing errors is forbidden';
         if ($this->error === true) {
-            $error .= 'forbidden';
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Silencing errors is forbidden';
+            $phpcsFile->addError($error, $stackPtr, 'Forbidden');
         } else {
-            $error .= 'discouraged';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $error = 'Silencing errors is discouraged';
+            $phpcsFile->addWarning($error, $stackPtr, 'Discouraged');
         }
 
     }//end process()

@@ -65,10 +65,13 @@ class Squiz_Sniffs_Functions_LowercaseFunctionKeywordsSniff implements PHP_CodeS
 
         $content = $tokens[$stackPtr]['content'];
         if ($content !== strtolower($content)) {
-            $type     = strtoupper($content);
-            $expected = strtolower($content);
-            $error    = "$type keyword must be lowercase; expected \"$expected\" but found \"$content\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
+            $data  = array(
+                      strtoupper($content),
+                      strtolower($content),
+                      $content,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
         }
 
     }//end process()

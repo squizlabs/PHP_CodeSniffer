@@ -59,7 +59,7 @@ class Squiz_Sniffs_PHP_InnerFunctionsSniff implements PHP_CodeSniffer_Sniff
 
         if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
             $error = 'The use of inner functions is forbidden';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
         }
 
     }//end process()

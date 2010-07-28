@@ -173,7 +173,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         if ($prevLine === $varLine) {
             $error = 'Assignments must be the first block of code on a line';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

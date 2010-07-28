@@ -105,7 +105,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
-            $phpcsFile->addError($error, $scopeEnd);
+            $phpcsFile->addError($error, $scopeEnd, 'Line');
             return;
         }
 
@@ -118,13 +118,21 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
             // BREAK statements should be indented 4 spaces from the
             // CASE or DEFAULT statement.
             if ($braceIndent !== ($startColumn + 4)) {
-                $error = 'Break statement indented incorrectly; expected '.($startColumn + 3).' spaces, found '.($braceIndent - 1);
-                $phpcsFile->addError($error, $scopeEnd);
+                $error = 'Break statement indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                          ($startColumn + 3),
+                          ($braceIndent - 1),
+                         );
+                $phpcsFile->addError($error, $scopeEnd, 'BreakIdent', $data);
             }
         } else {
             if ($braceIndent !== $startColumn) {
-                $error = 'Closing brace indented incorrectly; expected '.($startColumn - 1).' spaces, found '.($braceIndent - 1);
-                $phpcsFile->addError($error, $scopeEnd);
+                $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                          ($startColumn - 1),
+                          ($braceIndent - 1),
+                         );
+                $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
         }
 

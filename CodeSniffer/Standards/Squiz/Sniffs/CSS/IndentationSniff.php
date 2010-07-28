@@ -92,10 +92,14 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             $expectedIndent = ($indentLevel * 4);
             if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
                 $error = 'Blank lines are not allowed in class definitions';
-                $phpcsFile->addError($error, $i);
+                $phpcsFile->addError($error, $i, 'BlankLine');
             } else if ($foundIndent !== $expectedIndent) {
-                $error = "Line indented incorrectly; expected $expectedIndent spaces, found $foundIndent";
-                $phpcsFile->addError($error, $i);
+                $error = 'Line indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                          $expectedIndent,
+                          $foundIndent,
+                         );
+                $phpcsFile->addError($error, $i, 'Incorrect', $data);
             }
 
             $currentLine = $tokens[$i]['line'];

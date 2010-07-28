@@ -88,7 +88,7 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_STRING) {
             $error = 'Object indexes must be written in dot notation';
-            $phpcsFile->addError($error, $prev);
+            $phpcsFile->addError($error, $prev, 'Found');
         }
 
     }//end process()

@@ -77,13 +77,15 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
             if (($stringContent === 'ob_get_clean') || ($stringContent === 'ob_get_flush')) {
                 // Generate the error because the functions are not allowed, but
                 // continue to check the indentation.
-                $phpcsFile->addError('Output buffering must be closed using ob_end_clean or ob_end_flush', $bufferEnd);
+                $error = 'Output buffering must be closed using ob_end_clean or ob_end_flush';
+                $phpcsFile->addError($error, $bufferEnd, 'InvalidClose');
                 break;
             }
         }
 
         if ($bufferEnd === false) {
-            $phpcsFile->addError('Output buffering, started here, was never stopped', $stackPtr);
+            $error = 'Output buffering, started here, was never stopped';
+            $phpcsFile->addError($error, $stackPtr, 'NotClosed');
             return;
         }
 
@@ -111,8 +113,12 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
 
             // The line has content, now if it is less than the required indent, throw error.
             if ($foundIndent < $requiredIndent) {
-                $error = "Buffered line not indented correctly. Expected at least $requiredIndent spaces; found $foundIndent.";
-                $phpcsFile->addError($error, $nextContent);
+                $error = 'Buffered line not indented correctly; expected at least %s spaces but found %s';
+                $data  = array(
+                          $requiredIndent,
+                          $foundIndent,
+                         );
+                $phpcsFile->addError($error, $nextContent, 'Incorect', $data);
             }
         }
 

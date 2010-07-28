@@ -65,7 +65,7 @@ class Squiz_Sniffs_CSS_EmptyClassDefinitionSniff implements PHP_CodeSniffer_Snif
 
         if ($next === false || $tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET) {
             $error = 'Class definition is empty';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

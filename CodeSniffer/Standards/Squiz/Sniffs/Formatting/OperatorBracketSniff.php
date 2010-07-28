@@ -101,7 +101,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                         // adjacent.
                         if (($number - $stackPtr) !== 1) {
                             $error = 'No space allowed between minus sign and number';
-                            $phpcsFile->addError($error, $stackPtr);
+                            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterMinus');
                         }
 
                         return;
@@ -209,7 +209,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
                 if (in_array($tokens[$previousToken]['code'], $invalidTokens) === false) {
                     $error = 'Arithmetic operation must be bracketed';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
                 }
 
                 return;
@@ -217,7 +217,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         } else if ($tokens[$lastBracket]['parenthesis_closer'] < $stackPtr) {
             // There are a set of brackets in front of it that don't include it.
             $error = 'Arithmetic operation must be bracketed';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
             return;
         } else {
             // We are enclosed in a set of bracket, so the last thing to
@@ -233,7 +233,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 $closeSquareBracket = $phpcsFile->findNext($brackets, ($stackPtr + 1));
                 if ($closeSquareBracket !== false && $tokens[$closeSquareBracket]['code'] === T_CLOSE_SQUARE_BRACKET) {
                     $error = 'Arithmetic operation must be bracketed';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
                 }
             }
 
@@ -243,7 +243,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {
             $error = 'Arithmetic operation must be bracketed';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
         }
 
     }//end process()

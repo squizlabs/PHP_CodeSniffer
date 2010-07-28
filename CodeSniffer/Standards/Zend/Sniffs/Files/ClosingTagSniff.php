@@ -60,7 +60,7 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
         $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($next === false) {
             $error = 'A closing tag is not permitted at the end of a PHP file';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
         }
 
     }//end process()

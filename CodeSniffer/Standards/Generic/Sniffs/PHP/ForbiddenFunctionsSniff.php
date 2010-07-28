@@ -50,7 +50,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      *
      * @var bool
      */
-    protected $error = true;
+    public $error = true;
 
 
     /**
@@ -97,21 +97,26 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $error = "The use of function $function() is ";
+        $data  = array($function);
+        $error = 'The use of function %s() is ';
         if ($this->error === true) {
+            $type   = 'Found';
             $error .= 'forbidden';
         } else {
+            $type   = 'Discouraged';
             $error .= 'discouraged';
         }
 
         if ($this->forbiddenFunctions[$function] !== null) {
-            $error .= '; use '.$this->forbiddenFunctions[$function].'() instead';
+            $type  .= 'WithAlternative';
+            $data[] = $this->forbiddenFunctions[$function];
+            $error .= '; use %s() instead';
         }
 
         if ($this->error === true) {
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, $type, $data);
         } else {
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, $type, $data);
         }
 
     }//end process()

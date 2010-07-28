@@ -87,7 +87,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             if ($tokens[$next]['code'] === T_FINAL) {
                 $error = 'Unnecessary FINAL modifier in FINAL class';
-                $phpcsFile->addWarning($error, $next);
+                $phpcsFile->addWarning($error, $next, 'Found');
             }
         }
 

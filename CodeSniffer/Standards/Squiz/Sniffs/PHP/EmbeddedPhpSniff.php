@@ -111,7 +111,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $closingTag, true);
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Empty');
             return;
         }
 
@@ -124,18 +124,22 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             } while ($tokens[$i]['line'] !== ($tokens[$stackPtr]['line'] + 1));
 
             $error = 'Blank line found at start of embedded PHP content';
-            $phpcsFile->addError($error, $i);
+            $phpcsFile->addError($error, $i, 'SpacingBefore');
         } else if ($tokens[$firstContent]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Opening PHP tag must be on a line by itself';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpen');
         }
 
         // Check the indent of the first line.
         $startColumn   = $tokens[$stackPtr]['column'];
         $contentColumn = $tokens[$firstContent]['column'];
         if ($contentColumn !== $startColumn) {
-            $error = "First line of embedded PHP code must be indented $startColumn spaces; $contentColumn found";
-            $phpcsFile->addError($error, $firstContent);
+            $error = 'First line of embedded PHP code must be indented %s spaces; %s found';
+            $data  = array(
+                      $startColumn,
+                      $contentColumn,
+                     );
+            $phpcsFile->addError($error, $firstContent, 'Indent', $data);
         }
 
         // Check for a blank line at the bottom.
@@ -148,10 +152,10 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             } while ($tokens[$i]['line'] !== ($tokens[$closingTag]['line'] - 1));
 
             $error = 'Blank line found at end of embedded PHP content';
-            $phpcsFile->addError($error, $i);
+            $phpcsFile->addError($error, $i, 'SpacingAfter');
         } else if ($tokens[$lastContent]['line'] === $tokens[$closingTag]['line']) {
             $error = 'Closing PHP tag must be on a line by itself';
-            $phpcsFile->addError($error, $closingTag);
+            $phpcsFile->addError($error, $closingTag, 'ContentAfterEnd');
         }
 
     }//end _validateMultilineEmbeddedPhp()
@@ -182,7 +186,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
         if ($firstContent === false || $tokens[$firstContent]['code'] === T_CLOSE_TAG) {
             $error = 'Empty embedded PHP tag found';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Empty');
             return;
         }
 
@@ -192,8 +196,9 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (strlen($leadingSpace) >= 1) {
-            $error = 'Expected 1 space after openning PHP tag; '.(strlen($leadingSpace) + 1).' found';
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Expected 1 space after opening PHP tag; %s found';
+            $data  = array((strlen($leadingSpace) + 1));
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
         }
 
         $semiColonCount = 0;
@@ -211,14 +216,15 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         // Make sure there is atleast 1 semicolon.
         if ($semiColonCount === 0) {
             $error = 'Inline PHP statement must end with a semicolon';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NoSemicolon');
             return;
         }
 
         // Make sure that there aren't more semicolons than are allowed.
         if ($semiColonCount > 1) {
-            $error = "Inline PHP statement must contain one statement per line; $semiColonCount found";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Inline PHP statement must contain one statement per line; %s found';
+            $data  = array($semiColonCount);
+            $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
         }
 
         // The statement contains only 1 semicolon, now it must be spaced properly.
@@ -226,7 +232,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         for ($i = ($semiColon + 1); $i < $closeTag; $i++) {
             if ($tokens[$i]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space before closing PHP tag; 0 found';
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeClose');
                 return;
             }
 
@@ -239,10 +245,11 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
         if (strlen($whitespace) === 0) {
             $error = 'Expected 1 space before closing PHP tag; 0 found';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeClose');
         } else {
-            $error = 'Expected 1 space before closing PHP tag; '.strlen($whitespace).' found';
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Expected 1 space before closing PHP tag; %s found';
+            $data  = array(strlen($whitespace));
+            $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose', $data);
         }
 
     }//end _validateInlineEmbeddedPhp()

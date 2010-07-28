@@ -74,7 +74,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
 
         if ($lineDifference > 0) {
             $error = 'Opening brace should be on the same line as the declaration';
-            $phpcsFile->addError($error, $openingBrace);
+            $phpcsFile->addError($error, $openingBrace, 'BraceOnNewLine');
             return;
         }
 
@@ -86,8 +86,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         $columnDifference = ($braceColumn - $closerColumn);
 
         if ($columnDifference !== 2) {
-            $error = 'Expected 1 space between the closing parenthesis and the opening brace; found '.($columnDifference - 1).'.';
-            $phpcsFile->addError($error, $openingBrace);
+            $error = 'Expected 1 space between the closing parenthesis and the opening brace; found %s';
+            $data  = array(($columnDifference - 1));
+            $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
             return;
         }
 
@@ -95,8 +96,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         $spaceTokenPtr = ($tokens[$stackPtr]['parenthesis_closer'] + 1);
         $spaceContent  = $tokens[$spaceTokenPtr]['content'];
         if ($spaceContent !== ' ') {
-            $error = 'Expected a single space character between closing parenthesis and opening brace; found "'.$spaceContent.'".';
-            $phpcsFile->addError($error, $openingBrace);
+            $error = 'Expected a single space character between closing parenthesis and opening brace; found %s';
+            $data  = array($spaceContent);
+            $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
             return;
         }
 

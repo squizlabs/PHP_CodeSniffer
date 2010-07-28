@@ -69,6 +69,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                       T_STATIC,
                       T_ABSTRACT,
                      );
+
         if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
             // Could be a file comment.
             $prevToken = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
@@ -113,13 +114,14 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                 preg_match('|^(\s+)?\*(\s+)?@|', $content, $matches);
                 if (empty($matches) === false) {
                     if (isset($matches[2]) === false) {
-                        $error = "Expected 1 space between asterisk and tag; 0 found";
-                        $phpcsFile->addError($error, $commentPointer);
+                        $error = 'Expected 1 space between asterisk and tag; 0 found';
+                        $phpcsFile->addError($error, $commentPointer, 'NoSpaceBeforeTag');
                     } else {
                         $length = strlen($matches[2]);
                         if ($length !== 1) {
-                            $error = "Expected 1 space between asterisk and tag; $length found";
-                            $phpcsFile->addError($error, $commentPointer);
+                            $error = 'Expected 1 space between asterisk and tag; %s found';
+                            $data  = array($length);
+                            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeTag', $data);
                         }
                     }
                 }
@@ -134,11 +136,12 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                 continue;
             }
 
-            $expected  = ($requiredColumn - 1);
-            $expected .= ($expected === 1) ? ' space' : ' spaces';
-            $found     = ($currentColumn - 1);
-            $error     = "Expected $expected before asterisk; $found found";
-            $phpcsFile->addError($error, $commentPointer);
+            $error = 'Expected %s space(s) before asterisk; %s found';
+            $data  = array(
+                     ($requiredColumn - 1),
+                     ($currentColumn - 1),
+                    );
+            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeAsterisk', $data);
         }//end foreach
 
     }//end process()

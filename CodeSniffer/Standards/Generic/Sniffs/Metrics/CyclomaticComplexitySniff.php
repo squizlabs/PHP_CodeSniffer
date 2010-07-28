@@ -38,14 +38,14 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
      *
      * @var int
      */
-    protected $complexity = 10;
+    public $complexity = 10;
 
     /**
      * A complexity higer than this value will throw an error.
      *
      * @var int
      */
-    protected $absoluteComplexity = 20;
+    public $absoluteComplexity = 20;
 
 
     /**
@@ -107,11 +107,19 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
         }
 
         if ($complexity > $this->absoluteComplexity) {
-            $error = "Function's cyclomatic complexity ($complexity) exceeds allowed maximum of ".$this->absoluteComplexity;
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Function\'s cyclomatic complexity (%s) exceeds allowed maximum of %s';
+            $data  = array(
+                      $complexity,
+                      $this->absoluteComplexity,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($complexity > $this->complexity) {
-            $warning = "Function's cyclomatic complexity ($complexity) exceeds ".$this->complexity.'; consider refactoring the function';
-            $phpcsFile->addWarning($warning, $stackPtr);
+            $warning = 'Function\'s cyclomatic complexity (%s) exceeds %s; consider refactoring the function';
+            $data    = array(
+                        $complexity,
+                        $this->complexity,
+                       );
+            $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 
         return;

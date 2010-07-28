@@ -84,7 +84,7 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
         // We can only assign "this" to a var called "self".
         if ($tokens[$prev]['content'] !== 'self') {
             $error = 'Keyword "this" can only be assigned to a variable called "self"';
-            $phpcsFile->addError($error, $prev);
+            $phpcsFile->addError($error, $prev, 'NotSelf');
         }
 
     }//end process()

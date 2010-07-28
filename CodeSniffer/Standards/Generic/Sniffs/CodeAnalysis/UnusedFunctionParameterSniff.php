@@ -137,8 +137,9 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
         if ($emptyBody === false && count($params) > 0) {
             foreach ($params as $paramName => $position) {
-                $error = 'The method parameter '.$paramName.' is never used';
-                $phpcsFile->addWarning($error, $position);
+                $error = 'The method parameter %s is never used';
+                $data  = array($paramName);
+                $phpcsFile->addWarning($error, $position, 'Found', $data);
             }
         }
 

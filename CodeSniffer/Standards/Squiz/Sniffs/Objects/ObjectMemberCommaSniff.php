@@ -74,7 +74,7 @@ class Squiz_Sniffs_Objects_ObjectMemberCommaSniff implements PHP_CodeSniffer_Sni
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_COMMA) {
             $error = 'Last member of object must not be followed by a comma';
-            $phpcsFile->addError($error, $prev);
+            $phpcsFile->addError($error, $prev, 'Missing');
         }
 
     }//end process()

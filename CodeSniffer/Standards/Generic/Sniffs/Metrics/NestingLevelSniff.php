@@ -34,14 +34,14 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
      *
      * @var int
      */
-    protected $nestingLevel = 5;
+    public $nestingLevel = 5;
 
     /**
      * A nesting level than this value will throw an error.
      *
      * @var int
      */
-    protected $absoluteNestingLevel = 10;
+    public $absoluteNestingLevel = 10;
 
 
     /**
@@ -92,11 +92,19 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
         $nestingLevel = ($nestingLevel - $tokens[$stackPtr]['level'] - 1);
 
         if ($nestingLevel > $this->absoluteNestingLevel) {
-            $error = "Function's nesting level ($nestingLevel) exceeds allowed maximum of ".$this->absoluteNestingLevel;
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Function\'s nesting level (%s) exceeds allowed maximum of %s';
+            $data  = array(
+                      $nestingLevel,
+                      $this->absoluteNestingLevel,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($nestingLevel > $this->nestingLevel) {
-            $warning = "Function's nesting level ($nestingLevel) exceeds ".$this->nestingLevel.'; consider refactoring the function';
-            $phpcsFile->addWarning($warning, $stackPtr);
+            $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';
+            $data    = array(
+                        $nestingLevel,
+                        $this->nestingLevel,
+                       );
+            $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 
     }//end process()

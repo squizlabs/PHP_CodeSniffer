@@ -88,7 +88,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
                 }
 
                 $error = 'Usage of "$this" in static methods will cause runtime errors';
-                $phpcsFile->addError($error, $thisUsage);
+                $phpcsFile->addError($error, $thisUsage, 'Found');
             }
         }//end if
 

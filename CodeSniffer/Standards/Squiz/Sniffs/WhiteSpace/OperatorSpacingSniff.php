@@ -100,24 +100,26 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 // Check there is one space before the & operator.
                 if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                     $error = 'Expected 1 space before "&" operator; 0 found';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeAmp');
                 } else {
                     if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
                         $found = strlen($tokens[($stackPtr - 1)]['content']);
-                        $error = "Expected 1 space before \"&\" operator; $found found";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error = 'Expected 1 space before "&" operator; %s found';
+                        $data  = array($found);
+                        $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeAmp', $data);
                     }
                 }
 
                 // Check there is one space after the & operator.
                 if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'Expected 1 space after "&" operator; 0 found';
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterAmp');
                 } else {
                     if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
                         $found = strlen($tokens[($stackPtr + 1)]['content']);
-                        $error = "Expected 1 space after \"&\" operator; $found found";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error = 'Expected 1 space after "&" operator; %s found';
+                        $data  = array($found);
+                        $phpcsFile->addError($error, $stackPtr, 'SpacingAfterAmp', $data);
                     }
                 }
             }//end if
@@ -172,24 +174,32 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                 $error = "Expected 1 space before \"$operator\"; 0 found";
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore');
             } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
                 // Don't throw an error for assignments, because other standards allow
                 // multiple spaces there to align multiple assignments.
                 if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
                     $found = strlen($tokens[($stackPtr - 1)]['content']);
-                    $error = "Expected 1 space before \"$operator\"; $found found";
-                    $phpcsFile->addError($error, $stackPtr);
+                    $error = 'Expected 1 space before "%s"; %s found';
+                    $data  = array(
+                              $operator,
+                              $found,
+                             );
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
                 }
             }
 
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                 $error = "Expected 1 space after \"$operator\"; 0 found";
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfter');
             } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
                 $found = strlen($tokens[($stackPtr + 1)]['content']);
-                $error = "Expected 1 space after \"$operator\"; $found found";
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'Expected 1 space after "%s"; %s found';
+                $data  = array(
+                          $operator,
+                          $found,
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
             }
 
         }//end if

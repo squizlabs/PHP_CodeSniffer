@@ -73,9 +73,12 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
             return;
         }
 
-        $replacement = $replacements[$operator];
-        $error       = "Logical operator \"$operator\" is prohibited; use \"$replacement\" instead";
-        $phpcsFile->addError($error, $stackPtr);
+        $error = 'Logical operator "%s" is prohibited; use "%s" instead';
+        $data  = array(
+                  $operator,
+                  $replacements[$operator],
+                 );
+        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
 
     }//end process()
 

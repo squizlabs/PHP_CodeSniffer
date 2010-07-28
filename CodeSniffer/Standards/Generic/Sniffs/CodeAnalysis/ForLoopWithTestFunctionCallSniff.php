@@ -101,7 +101,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff implements PH
 
             if ($tokens[$index]['code'] === T_OPEN_PARENTHESIS) {
                 $error = 'Avoid function calls in a FOR loop test part';
-                $phpcsFile->addWarning($error, $stackPtr);
+                $phpcsFile->addWarning($error, $stackPtr, 'NotAllowed');
                 break;
             }
         }//end for

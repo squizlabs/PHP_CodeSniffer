@@ -64,7 +64,7 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
 
         if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             $error = 'Multi-line assignments must have the equal sign on the second line';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'EqualSignLine');
             return;
         }
 
@@ -99,8 +99,12 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         $expectedIndent = ($assignmentIndent + 4);
         $foundIndent    = strlen($tokens[$prev]['content']);
         if ($foundIndent !== $expectedIndent) {
-            $error = "Multi-line assignment not indented correctly; expected $expectedIndent spaces but found $foundIndent";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Multi-line assignment not indented correctly; expected %s spaces but found %s';
+            $data  = array(
+                      $expectedIndent,
+                      $foundIndent,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'Indent', $data);
         }
 
     }//end process()

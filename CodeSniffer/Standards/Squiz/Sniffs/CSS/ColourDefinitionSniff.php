@@ -65,8 +65,12 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
 
         $expected = strtoupper($colour);
         if ($colour !== $expected) {
-            $error = "CSS colours must be defined in uppercase; expected $expected but found $colour";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'CSS colours must be defined in uppercase; expected %s but found %s';
+            $data  = array(
+                      $expected,
+                      $colour,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'NotUpper', $data);
         }
 
         // Now check if shorthand can be used.
@@ -76,8 +80,12 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
 
         if ($colour{1} === $colour{2} && $colour{3} === $colour{4} && $colour{5} === $colour{6}) {
             $expected = '#'.$colour{1}.$colour{3}.$colour{5};
-            $error    = "CSS colours must use shorthand if available; expected $expected but found $colour";
-            $phpcsFile->addError($error, $stackPtr);
+            $error    = 'CSS colours must use shorthand if available; expected %s but found %s';
+            $data     = array(
+                         $expected,
+                         $colour,
+                        );
+            $phpcsFile->addError($error, $stackPtr, 'Shorthand', $data);
         }
 
     }//end process()

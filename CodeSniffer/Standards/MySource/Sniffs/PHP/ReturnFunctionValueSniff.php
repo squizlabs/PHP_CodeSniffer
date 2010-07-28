@@ -65,7 +65,7 @@ class MySource_Sniffs_PHP_ReturnFunctionValueSniff implements PHP_CodeSniffer_Sn
             }
 
             $error = 'The result of a function call should be assigned to a variable before being returned';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, 'NotAssigned');
             break;
         }
 

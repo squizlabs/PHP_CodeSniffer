@@ -202,8 +202,9 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             // Just in case.
             $percentCode = min(100, $percentCode);
 
-            $error = "This comment is ${percentCode}% valid code; is this commented out code?";
-            $phpcsFile->addWarning($error, $stackPtr);
+            $error = 'This comment is %s%% valid code; is this commented out code?';
+            $data  = array($percentCode);
+            $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
         }
 
     }//end process()

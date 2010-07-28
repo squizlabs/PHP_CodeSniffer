@@ -96,7 +96,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
 
         if ($goodCondition === false) {
             $error = 'Avoid IF statements that are always true or false';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, 'Found');
         }
 
     }//end process()

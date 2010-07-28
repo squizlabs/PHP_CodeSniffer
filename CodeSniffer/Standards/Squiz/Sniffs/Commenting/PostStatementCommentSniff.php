@@ -93,7 +93,7 @@ class Squiz_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniff
         }
 
         $error = 'Comments may not appear after statements.';
-        $phpcsFile->addError($error, $stackPtr);
+        $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()
 

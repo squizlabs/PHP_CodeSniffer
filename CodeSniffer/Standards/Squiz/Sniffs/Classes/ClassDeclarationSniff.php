@@ -77,7 +77,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
         if ($nextClass !== false) {
             // We have another, so an error is thrown.
             $error = 'Only one interface or class is allowed in a file';
-            $phpcsFile->addError($error, $nextClass);
+            $phpcsFile->addError($error, $nextClass, 'MultipleClasses');
         }
 
         /*
@@ -93,25 +93,33 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === false) {
                     if ($spaces !== 0) {
                         $type  = strtolower($tokens[$stackPtr]['content']);
-                        $error = "Expected 0 spaces before $type keyword; $spaces found";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error = 'Expected 0 spaces before %s keyword; %s found';
+                        $data  = array(
+                                  $type,
+                                  $spaces,
+                                 );
+                        $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
                     }
                 } else {
                     if ($spaces !== 1) {
                         $type        = strtolower($tokens[$stackPtr]['content']);
                         $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
-                        $error       = "Expected 1 space between $prevContent and $type keywords; $spaces found";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error       = 'Expected 1 space between %s and %s keywords; %s found';
+                        $data        = array(
+                                        $prevContent,
+                                        $type,
+                                        $spaces,
+                                       );
+                        $phpcsFile->addError($error, $stackPtr, 'SpacesBeforeKeyword', $data);
                     }
                 }
             }
         }//end if
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            $error  = 'Possible parse error: ';
-            $error .= $tokens[$stackPtr]['content'];
-            $error .= ' missing opening or closing brace';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $error = 'Possible parse error: %s missing opening or closing brace';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
             return;
         }
 
@@ -122,8 +130,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
                 if ($spaces !== 0) {
-                    $error = "Expected 0 spaces before closing brace; $spaces found";
-                    $phpcsFile->addError($error, $closeBrace);
+                    $error = 'Expected 0 spaces before closing brace; %s found';
+                    $data  = array($spaces);
+                    $phpcsFile->addError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
                 }
             }
         }
@@ -133,24 +142,24 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
         if ($nextContent === false) {
             // No content found, so we reached the end of the file.
             // That means there was no closing tag either.
-            $error  = 'Closing brace of a ';
-            $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be followed by a blank line and then a closing PHP tag';
-            $phpcsFile->addError($error, $closeBrace);
+            $error = 'Closing brace of a %s must be followed by a blank line and then a closing PHP tag';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
         } else {
             $nextLine  = $tokens[$nextContent]['line'];
             $braceLine = $tokens[$closeBrace]['line'];
             if ($braceLine === $nextLine) {
-                $error  = 'Closing brace of a ';
-                $error .= $tokens[$stackPtr]['content'];
-                $error .= ' must be followed by a single blank line';
-                $phpcsFile->addError($error, $closeBrace);
+                $error = 'Closing brace of a %s must be followed by a single blank line';
+                $data  = array($tokens[$stackPtr]['content']);
+                $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
             } else if ($nextLine !== ($braceLine + 2)) {
-                $difference = ($nextLine - $braceLine - 1).' lines';
-                $error      = 'Closing brace of a ';
-                $error     .= $tokens[$stackPtr]['content'];
-                $error     .= ' must be followed by a single blank line; found '.$difference;
-                $phpcsFile->addError($error, $closeBrace);
+                $difference = ($nextLine - $braceLine - 1);
+                $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
+                $data       = array(
+                               $tokens[$stackPtr]['content'],
+                               $difference,
+                              );
+                $phpcsFile->addError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
             }
         }//end if
 
@@ -159,8 +168,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
         $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
         if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']) {
             $type  = strtolower($tokens[$stackPtr]['content']);
-            $error = "Closing $type brace must be on a line by itself";
-            $phpcsFile->addError($error, $closeBrace);
+            $error = 'Closing %s brace must be on a line by itself';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
         }
 
         /*
@@ -183,16 +193,25 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
         $gap = $tokens[($stackPtr + 1)]['content'];
         if (strlen($gap) !== 1) {
             $found = strlen($gap);
-            $error = "Expected 1 space between $name keyword and $name name; $found found";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Expected 1 space between %s keyword and %s name; %s found';
+            $data  = array(
+                      $name,
+                      $name,
+                      $found,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterKeyword', $data);
         }
 
         // Check after the name.
         $gap = $tokens[($className + 1)]['content'];
         if (strlen($gap) !== 1) {
             $found = strlen($gap);
-            $error = "Expected 1 space after $name name; $found found";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Expected 1 space after %s name; %s found';
+            $data  = array(
+                      $name,
+                      $found,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterName', $data);
         }
 
         // Now check each of the parents.
@@ -211,14 +230,19 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
 
             if ($tokens[($parents[$i] - 1)]['code'] !== T_WHITESPACE) {
                 $name  = $tokens[$parents[$i]]['content'];
-                $error = "Expected 1 space before \"$name\"; 0 found";
-                $phpcsFile->addError($error, ($nextComma + 1));
+                $error = 'Expected 1 space before "%s"; 0 found';
+                $data  = array($name);
+                $phpcsFile->addError($error, ($nextComma + 1), 'NoSpaceBeforeName', $data);
             } else {
                 $spaceBefore = strlen($tokens[($parents[$i] - 1)]['content']);
                 if ($spaceBefore !== 1) {
                     $name  = $tokens[$parents[$i]]['content'];
-                    $error = "Expected 1 space before \"$name\"; $spaceBefore found";
-                    $phpcsFile->addError($error, $stackPtr);
+                    $error = 'Expected 1 space before "%s"; %s found';
+                    $data  = array(
+                              $name,
+                              $spaceBefore,
+                             );
+                    $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeName', $data);
                 }
             }
 
@@ -229,8 +253,12 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                     if ($tokens[($parents[$i] + 2)]['code'] !== T_IMPLEMENTS) {
                         $found = strlen($tokens[($parents[$i] + 1)]['content']);
                         $name  = $tokens[$parents[$i]]['content'];
-                        $error = "Expected 0 spaces between \"$name\" and comma; $found found";
-                        $phpcsFile->addError($error, $stackPtr);
+                        $error = 'Expected 0 spaces between "%s" and comma; $%s found';
+                        $data  = array(
+                                  $name,
+                                  $found,
+                                 );
+                        $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeComma', $data);
                     }
                 }
 

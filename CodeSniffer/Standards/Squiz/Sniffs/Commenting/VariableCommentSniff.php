@@ -76,16 +76,16 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         // Extract the var comment docblock.
         $commentEnd = $phpcsFile->findPrevious($commentToken, ($stackPtr - 3));
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr);
+            $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr, 'WrongStyle');
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            $phpcsFile->addError('Missing variable doc comment', $stackPtr);
+            $phpcsFile->addError('Missing variable doc comment', $stackPtr, 'Missing');
             return;
         } else {
             // Make sure the comment we have found belongs to us.
             $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE), ($commentEnd + 1));
             if ($commentFor !== $stackPtr) {
-                $phpcsFile->addError('Missing variable doc comment', $stackPtr);
+                $phpcsFile->addError('Missing variable doc comment', $stackPtr, 'Missing');
                 return;
             }
         }
@@ -99,14 +99,14 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line);
+            $phpcsFile->addError($e->getMessage(), $line, 'ErrorParsing');
             return;
         }
 
         $comment = $this->commentParser->getComment();
         if (is_null($comment) === true) {
             $error = 'Variable doc comment is empty';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'Empty');
             return;
         }
 
@@ -115,7 +115,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $firstLine = substr($commentString, 0, $eolPos);
         if ($firstLine !== '/**') {
             $error = 'The open comment tag must be the only content on the line';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'ContentAfterOpen');
         }
 
         // Check for a comment description.
@@ -123,16 +123,15 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $long  = '';
         if (trim($short) === '') {
             $error = 'Missing short description in variable doc comment';
-            $phpcsFile->addError($error, $commentStart);
+            $phpcsFile->addError($error, $commentStart, 'MissingShort');
             $newlineCount = 1;
         } else {
             // No extra newline before short description.
             $newlineCount = 0;
             $newlineSpan  = strspn($short, $phpcsFile->eolChar);
             if ($short !== '' && $newlineSpan > 0) {
-                $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-                $error = "Extra $line found before variable comment short description";
-                $phpcsFile->addError($error, ($commentStart + 1));
+                $error = 'Extra newline(s) found before variable comment short description';
+                $phpcsFile->addError($error, ($commentStart + 1), 'SpacingBeforeShort');
             }
 
             $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
@@ -144,7 +143,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $newlineBetween = substr_count($between, $phpcsFile->eolChar);
                 if ($newlineBetween !== 2) {
                     $error = 'There must be exactly one blank line between descriptions in variable comment';
-                    $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount + 1), 'SpacingBetween');
                 }
 
                 $newlineCount += $newlineBetween;
@@ -152,7 +151,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $testLong = trim($long);
                 if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
                     $error = 'Variable comment long description must start with a capital letter';
-                    $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
                 }
             }//end if
 
@@ -161,17 +160,17 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $lastChar  = $testShort[(strlen($testShort) - 1)];
             if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
                 $error = 'Variable comment short description must be on a single line';
-                $phpcsFile->addError($error, ($commentStart + 1));
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
             }
 
             if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
                 $error = 'Variable comment short description must start with a capital letter';
-                $phpcsFile->addError($error, ($commentStart + 1));
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
             }
 
             if ($lastChar !== '.') {
                 $error = 'Variable comment short description must end with a full stop';
-                $phpcsFile->addError($error, ($commentStart + 1));
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
             }
         }//end if
 
@@ -185,7 +184,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                     $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
 
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'SpacingBeforeTags');
                 $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
@@ -194,8 +193,9 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             // Unknown tags are not parsed, do not process further.
-            $error = "@$errorTag[tag] tag is not allowed in variable comment";
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
+            $error = '@%s tag is not allowed in variable comment';
+            $data  = array($errorTag['tag']);
+            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
         }
 
         // Check each tag.
@@ -224,37 +224,41 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
             if (count($index) > 1) {
                 $error = 'Only 1 @var tag is allowed in variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'DuplicateVar');
                 return;
             }
 
             if ($index[0] !== 1) {
                 $error = 'The @var tag must be the first tag in a variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'VarOrder');
             }
 
             $content = $var->getContent();
             if (empty($content) === true) {
                 $error = 'Var type missing for @var tag in variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'MissingVarType');
                 return;
             } else {
                 $suggestedType = PHP_CodeSniffer::suggestType($content);
                 if ($content !== $suggestedType) {
-                    $error = "Expected \"$suggestedType\"; found \"$content\" for @var tag in variable comment";
-                    $this->currentFile->addError($error, $errorPos);
+                    $error = 'Expected "%s"; found "%s" for @var tag in variable comment';
+                    $data  = array(
+                              $suggestedType,
+                              $content,
+                             );
+                    $this->currentFile->addError($error, $errorPos, 'IncorrectVarType', $data);
                 }
             }
 
             $spacing = substr_count($var->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== 3) {
-                $error  = '@var tag indented incorrectly. ';
-                $error .= "Expected 3 spaces but found $spacing.";
-                $this->currentFile->addError($error, $errorPos);
+                $error = '@var tag indented incorrectly; expected 3 spaces but found %s';
+                $data  = array($spacing);
+                $this->currentFile->addError($error, $errorPos, 'VarIndent', $data);
             }
         } else {
             $error = 'Missing @var tag in variable comment';
-            $this->currentFile->addError($error, $commentEnd);
+            $this->currentFile->addError($error, $commentEnd, 'MissingVar');
         }//end if
 
     }//end processVar()
@@ -279,37 +283,37 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
             if (count($index) > 1) {
                 $error = 'Only 1 @since tag is allowed in variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'DuplicateSince');
                 return;
             }
 
             // Only check order if there is one var tag in variable comment.
             if (count($var) === 1 && $index[0] !== 2) {
                 $error = 'The order of @since tag is wrong in variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'SinceOrder');
             }
 
             $content = $since->getContent();
             if (empty($content) === true) {
                 $error = 'Version number missing for @since tag in variable comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos, 'MissingSinceVersion');
                 return;
             } else if ($content !== '%release_version%') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
                     $error = 'Expected version number to be in the form x.x.x in @since tag';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'InvalidSinceVersion');
                 }
             }
 
             $spacing = substr_count($since->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== 1) {
-                $error  = '@since tag indented incorrectly. ';
-                $error .= "Expected 1 space but found $spacing.";
-                $this->currentFile->addError($error, $errorPos);
+                $error = '@since tag indented incorrectly; expected 1 space but found %s';
+                $data  = array($spacing);
+                $this->currentFile->addError($error, $errorPos, 'SinceIndent', $data);
             }
         } else {
             $error = 'Missing @since tag in variable comment';
-            $this->currentFile->addError($error, $commentEnd);
+            $this->currentFile->addError($error, $commentEnd, 'MissingSince');
         }//end if
 
     }//end processSince()
@@ -331,15 +335,15 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $content  = $see->getContent();
                 if (empty($content) === true) {
                     $error = 'Content missing for @see tag in variable comment';
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->currentFile->addError($error, $errorPos, 'EmptySees');
                     continue;
                 }
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== 3) {
-                    $error  = '@see tag indented incorrectly. ';
-                    $error .= "Expected 3 spaces but found $spacing.";
-                    $this->currentFile->addError($error, $errorPos);
+                    $error = '@see tag indented incorrectly; expected 3 spaces but found %s';
+                    $data  = array($spacing);
+                    $this->currentFile->addError($error, $errorPos, 'SeesIndent', $data);
                 }
             }
         }

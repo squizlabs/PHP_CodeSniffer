@@ -53,17 +53,18 @@ class Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff extends PEAR_Sniffs_
             return;
         }
 
+        $errorData = array($functionName);
+
         // Does this function claim to be magical?
         if (preg_match('|^__|', $functionName) !== 0) {
-            $magicPart = substr($functionName, 2);
-            $error     = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore.";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
+            $phpcsFile->addError($error, $stackPtr, 'DoubleUnderscore', $errorData);
             return;
         }
 
         if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, false) === false) {
-            $error = "Function name \"$functionName\" is not in camel caps format";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Function name "%s" is not in camel caps format';
+            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
         }
 
     }//end processTokenOutsideScope()

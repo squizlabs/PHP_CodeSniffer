@@ -49,9 +49,9 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
-            $var   = $tokens[$stackPtr]['content'];
-            $error = "Scope modifier not specified for member variable \"$var\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Scope modifier not specified for member variable "%s"';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 
     }//end processMemberVar()

@@ -52,8 +52,14 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                     $type  = strtolower($tokens[$stackPtr]['content']);
                     $file  = $foundClasses[$compareName]['file'];
                     $line  = $foundClasses[$compareName]['line'];
-                    $error = "Duplicate $type name \"$name\" found; first defined in $file on line $line";
-                    $phpcsFile->addWarning($error, $stackPtr);
+                    $error = 'Duplicate %s name "%s" found; first defined in %s on line %s';
+                    $data  = array(
+                              $type,
+                              $name,
+                              $file,
+                              $line,
+                             );
+                    $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
                 } else {
                     $foundClasses[$compareName] = array(
                                                         'file' => $phpcsFile->getFilename(),

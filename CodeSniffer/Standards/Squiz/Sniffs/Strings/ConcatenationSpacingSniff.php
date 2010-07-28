@@ -61,7 +61,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
             || $tokens[($stackPtr + 1)]['code'] === T_WHITESPACE
         ) {
             $message = 'Concat operator must not be surrounded by spaces';
-            $phpcsFile->addError($message, $stackPtr);
+            $phpcsFile->addError($message, $stackPtr, 'Missing');
         }
 
     }//end process()

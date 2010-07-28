@@ -113,8 +113,12 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                 // Either way, we can't really check this.
                 continue;
             } else if ($foundFunctions[$funcName] === 'public') {
-                $error = "Static calls to public methods in Action classes must not use the self keyword; use $errorClassName::$funcName() instead";
-                $phpcsFile->addError($error, $token);
+                $error = 'Static calls to public methods in Action classes must not use the self keyword; use %s::%s() instead';
+                $data  = array(
+                          $errorClassName,
+                          $funcName,
+                         );
+                $phpcsFile->addError($error, $token, 'Found', $data);
             }
         }
 

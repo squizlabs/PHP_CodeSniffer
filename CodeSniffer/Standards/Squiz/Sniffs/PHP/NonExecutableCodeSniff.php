@@ -102,8 +102,9 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     $line = $tokens[$i]['line'];
                     if ($line > $lastLine) {
                         $type    = substr($tokens[$stackPtr]['type'], 2);
-                        $warning = "Code after $type statement cannot be executed";
-                        $phpcsFile->addWarning($warning, $i, 'Unreachable');
+                        $warning = 'Code after %s statement cannot be executed';
+                        $data    = array($type);
+                        $phpcsFile->addWarning($warning, $i, 'Unreachable', $data);
                         $lastLine = $line;
                     }
                 }
@@ -229,8 +230,9 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             $line = $tokens[$i]['line'];
             if ($line > $lastLine) {
                 $type    = substr($tokens[$stackPtr]['type'], 2);
-                $warning = "Code after $type statement cannot be executed";
-                $phpcsFile->addWarning($warning, $i, 'Unreachable');
+                $warning = 'Code after %s statement cannot be executed';
+                $data    = array($type);
+                $phpcsFile->addWarning($warning, $i, 'Unreachable', $data);
                 $lastLine = $line;
             }
         }

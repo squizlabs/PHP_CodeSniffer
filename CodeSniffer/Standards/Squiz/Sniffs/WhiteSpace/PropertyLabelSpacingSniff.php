@@ -70,12 +70,12 @@ class Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff implements PHP_CodeSniff
 
         if ($colon !== ($stackPtr + 1)) {
             $error = 'There must be no space before the colon in a property/label declaration';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Before');
         }
 
         if ($tokens[($colon + 1)]['code'] !== T_WHITESPACE || $tokens[($colon + 1)]['content'] !== ' ') {
             $error = 'There must be a single space after the colon in a property/label declaration';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'After');
         }
 
     }//end process()

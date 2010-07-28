@@ -140,8 +140,9 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
         }//end for
 
         // If we get to here, the system was not use.
-        $error = "Included system \"$systemName\" is never used";
-        $phpcsFile->addError($error, $stackPtr);
+        $error = 'Included system "%s" is never used';
+        $data  = array($systemName);
+        $phpcsFile->addError($error, $stackPtr, 'Found', $data);
 
     }//end process()
 

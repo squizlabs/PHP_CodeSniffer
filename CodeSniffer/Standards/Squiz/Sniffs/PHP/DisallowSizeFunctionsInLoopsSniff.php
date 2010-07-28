@@ -108,8 +108,9 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
                     $functionName .= '()';
                 }
 
-                $error = 'The use of '.$functionName.' inside a loop condition is not allowed. Assign the return value of '.$functionName.' to a variable and use the variable in the loop condition instead.';
-                $phpcsFile->addError($error, $i);
+                $error = 'The use of %s inside a loop condition is not allowed; assign the return value to a variable and use the variable in the loop condition instead';
+                $data  = array($functionName);
+                $phpcsFile->addError($error, $i, 'Found', $data);
             }//end if
         }//end for
 

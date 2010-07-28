@@ -72,7 +72,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
         if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
             $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
         }
 
     }//end process()

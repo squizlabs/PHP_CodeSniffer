@@ -116,9 +116,14 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
                 if ($tokens[$nextToken]['code'] === T_ELSE || $tokens[$nextToken]['code'] === T_ELSEIF) {
                     // Check for ELSE IF (2 tokens) as opposed to ELSEIF (1 token).
-                    if ($tokens[$nextToken]['code'] === T_ELSE && isset($tokens[$nextToken]['scope_closer']) === false) {
+                    if ($tokens[$nextToken]['code'] === T_ELSE
+                        && isset($tokens[$nextToken]['scope_closer']) === false
+                    ) {
                         $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
-                        if ($tokens[$nextToken]['code'] !== T_IF) {
+                        if ($tokens[$nextToken]['code'] !== T_IF
+                            || isset($tokens[$nextToken]['scope_closer']) === false
+                        ) {
+                            // Not an ELSE IF or is an inline ELSE IF.
                             break;
                         }
                     }
@@ -153,22 +158,28 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 
         if (($comment === false) || ($tokens[$comment]['line'] !== $endBrace['line'])) {
             if ($lineDifference >= $this->lineLimit) {
-                $error = "End comment for long condition not found; expected \"$expected\"";
-                $phpcsFile->addError($error, $stackPtr);
+                $error = 'End comment for long condition not found; expected "%s"';
+                $data  = array($expected);
+                $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
             }
 
             return;
         }
 
         if (($comment - $stackPtr) !== 1) {
-            $error = "Space found before closing comment; expected \"$expected\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Space found before closing comment; expected "%s"';
+            $data  = array($expected);
+            $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
         }
 
         if (trim($tokens[$comment]['content']) !== $expected) {
             $found = trim($tokens[$comment]['content']);
-            $error = "Incorrect closing comment; expected \"$expected\" but found \"$found\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $error = 'Incorrect closing comment; expected "%s" but found "%s"';
+            $data  = array(
+                      $expected,
+                      $found,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'Invalid', $data);
             return;
         }
 

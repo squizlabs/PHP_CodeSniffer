@@ -67,7 +67,7 @@ class MySource_Sniffs_Debug_FirebugConsoleSniff implements PHP_CodeSniffer_Sniff
 
         if (strtolower($tokens[$stackPtr]['content']) === 'console') {
             $error = 'Variables, functions and labels must not be named "console"; name may conflict with Firebug internal variable';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'ConflictFound');
         }
 
     }//end process()

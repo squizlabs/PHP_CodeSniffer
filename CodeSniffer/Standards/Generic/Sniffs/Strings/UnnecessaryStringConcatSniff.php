@@ -45,7 +45,7 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      *
      * @var bool
      */
-    protected $error = true;
+    public $error = true;
 
 
     /**
@@ -99,9 +99,9 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
-                    $phpcsFile->addError($error, $stackPtr);
+                    $phpcsFile->addError($error, $stackPtr, 'Found');
                 } else {
-                    $phpcsFile->addWarning($error, $stackPtr);
+                    $phpcsFile->addWarning($error, $stackPtr, 'Found');
                 }
             }
         }

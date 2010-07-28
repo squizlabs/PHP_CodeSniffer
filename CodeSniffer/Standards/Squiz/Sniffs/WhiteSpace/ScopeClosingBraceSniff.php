@@ -86,7 +86,7 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
         $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($scopeEnd - 1), $scopeStart, true);
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
-            $phpcsFile->addError($error, $scopeEnd);
+            $phpcsFile->addError($error, $scopeEnd, 'ContentBefore');
             return;
         }
 
@@ -94,8 +94,12 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
         $braceIndent = $tokens[$scopeEnd]['column'];
         if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === false) {
             if ($braceIndent !== $startColumn) {
-                $error = 'Closing brace indented incorrectly; expected '.($startColumn - 1).' spaces, found '.($braceIndent - 1);
-                $phpcsFile->addError($error, $scopeEnd);
+                $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                          ($startColumn - 1),
+                          ($braceIndent - 1),
+                         );
+                $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
         }
 

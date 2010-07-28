@@ -58,7 +58,7 @@ class Squiz_Sniffs_PHP_DisallowObEndFlushSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content'] === 'ob_end_flush') {
-            $phpcsFile->addError('Use of ob_end_flush() is not allowed; use ob_get_contents() and ob_end_clean() instead', $stackPtr);
+            $phpcsFile->addError('Use of ob_end_flush() is not allowed; use ob_get_contents() and ob_end_clean() instead', $stackPtr, 'Found');
         }
 
     }//end process()

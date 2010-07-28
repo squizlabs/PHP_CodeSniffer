@@ -90,7 +90,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
 
         if ($parts[0] === 0 && $parts[2] === 0 && $parts[1] > 0) {
             $error = 'This FOR loop can be simplified to a WHILE loop';
-            $phpcsFile->addWarning($error, $stackPtr);
+            $phpcsFile->addWarning($error, $stackPtr, 'CanSimplify');
         }
 
     }//end process()
