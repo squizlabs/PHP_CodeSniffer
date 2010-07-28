@@ -118,7 +118,7 @@ class Squiz_Sniffs_Formatting_OutputBufferingIndentSniff implements PHP_CodeSnif
                           $requiredIndent,
                           $foundIndent,
                          );
-                $phpcsFile->addError($error, $nextContent, 'Incorect', $data);
+                $phpcsFile->addError($error, $nextContent, 'Incorrect', $data);
             }
         }
 

@@ -130,7 +130,7 @@ class Missing_Short_Desc
  *
  * @since 4.0.0
  */
-class Incorect_Case
+class Incorrect_Case
 {
 
 }//end class
@@ -143,7 +143,7 @@ class Incorect_Case
  *
  * @since 4.0.0
  */
-class Incorect_Case2
+class Incorrect_Case2
 {
 
 }//end class
