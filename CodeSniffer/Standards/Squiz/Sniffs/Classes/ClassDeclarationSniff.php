@@ -130,9 +130,14 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
                 if ($spaces !== 0) {
-                    $error = 'Expected 0 spaces before closing brace; %s found';
-                    $data  = array($spaces);
-                    $phpcsFile->addError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
+                    if ($tokens[($closeBrace - 1)]['line'] !== $tokens[$closeBrace]['line']) {
+                        $error = 'Expected 0 spaces before closing brace; newline found';
+                        $phpcsFile->addError($error, $closeBrace, 'NewLineBeforeCloseBrace');
+                    } else {
+                        $error = 'Expected 0 spaces before closing brace; %s found';
+                        $data  = array($spaces);
+                        $phpcsFile->addError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
+                    }
                 }
             }
         }
@@ -144,7 +149,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
             // That means there was no closing tag either.
             $error = 'Closing brace of a %s must be followed by a blank line and then a closing PHP tag';
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
+            $phpcsFile->addError($error, $closeBrace, 'EndFileAfterCloseBrace', $data);
         } else {
             $nextLine  = $tokens[$nextContent]['line'];
             $braceLine = $tokens[$closeBrace]['line'];
