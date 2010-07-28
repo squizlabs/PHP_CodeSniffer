@@ -114,4 +114,11 @@ if ($condition1
     || $condition2 || $condition3
 )
     echo 'bar';
+
+if (!empty($post)
+    && (!empty($context['header'])
+    xor stripos($context['header'], 'Content-Type'))
+) { 
+// ...
+}
 ?>

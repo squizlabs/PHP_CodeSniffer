@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The SVN and GIT blame reports now also show percentage of reported errors per author (feature request #17606)
     -- Thanks to Ben Selby for the patch
+  - Fixed bug #17629 : PHP_CodeSniffer_Tokens::$booleanOperators missing T_LOGICAL_XOR
+    -- Thanks to Matthew Turland for the patch
  </notes>
  <contents>
   <dir name="/">
