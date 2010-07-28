@@ -59,5 +59,18 @@ ob_start();
 ob_end_clean();
 
 ob_start();
+
+    $a = 1;
+    $b = 2;
+
+    /*
+        This is a multi-line comment.
+    */
+
+    $a = ($a + $b);
+
+ob_end_clean();
+
+ob_start();
     echo $hello;
 ?>
