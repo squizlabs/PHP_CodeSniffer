@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - The report is no longer printed to screen when using the --report-file command line option (feature request #17467)
+    -- If you want to print it to screen as well, use the -v command line argument
   - The SVN and GIT blame reports now also show percentage of reported errors per author (feature request #17606)
     -- Thanks to Ben Selby for the patch
   - Fixed a problem in Squiz OutputBufferingIndentSniff where block comments were reported as not indented

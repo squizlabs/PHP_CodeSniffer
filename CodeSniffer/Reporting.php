@@ -42,7 +42,7 @@ class PHP_CodeSniffer_Reporting
      * Produce the appropriate report object based on $type parameter.
      *
      * @param string $type Demanded report type.
-     * 
+     *
      * @return PHP_CodeSniffer_Report
      * @throws PHP_CodeSniffer_Exception If report is not available.
      */
@@ -94,7 +94,11 @@ class PHP_CodeSniffer_Reporting
 
         if ($reportFile !== '') {
             $generatedReport = ob_get_contents();
-            ob_end_flush();
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                ob_end_flush();
+            } else {
+                ob_end_clean();
+            }
 
             $generatedReport = trim($generatedReport);
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
