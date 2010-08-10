@@ -202,7 +202,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
         $this->processParams($commentStart, $commentEnd);
-        $this->processSince($commentStart, $commentEnd);
         $this->processSees($commentStart);
         $this->processReturn($commentStart, $commentEnd);
         $this->processThrows($commentStart);
@@ -289,73 +288,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
 
     /**
-     * Process the since tag.
-     *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
-     *
-     * @return void
-     */
-    protected function processSince($commentStart, $commentEnd)
-    {
-        $since = $this->commentParser->getSince();
-
-        if ($since !== null) {
-            $errorPos = ($commentStart + $since->getLine());
-            $tagOrder = $this->commentParser->getTagOrders();
-            $firstTag = 0;
-
-            while ($tagOrder[$firstTag] === 'comment' || $tagOrder[$firstTag] === 'param') {
-                $firstTag++;
-            }
-
-            $this->_tagIndex = $firstTag;
-            $index           = array_keys($this->commentParser->getTagOrders(), 'since');
-            if (count($index) > 1) {
-                $error = 'Only 1 @since tag is allowed in function comment';
-                $this->currentFile->addError($error, $errorPos, 'DuplicateSince');
-                return;
-            }
-
-            if ($index[0] !== $firstTag) {
-                $error = 'The @since tag is in the wrong order; the tag preceds @see (if used) or @return';
-                $this->currentFile->addError($error, $errorPos, 'SinceOrder');
-            }
-
-            $content = $since->getContent();
-            if (empty($content) === true) {
-                $error = 'Version number missing for @since tag in function comment';
-                $this->currentFile->addError($error, $errorPos, 'MissingSinceVersion');
-                return;
-            } else if ($content !== '%release_version%') {
-                if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in @since tag';
-                    $this->currentFile->addError($error, $errorPos, 'InvalidSinceVersion');
-                }
-            }
-
-            $spacing        = substr_count($since->getWhitespaceBeforeContent(), ' ');
-            $return         = $this->commentParser->getReturn();
-            $throws         = $this->commentParser->getThrows();
-            $correctSpacing = ($return !== null || empty($throws) === false) ? 2 : 1;
-
-            if ($spacing !== $correctSpacing) {
-                $error = '@since tag indented incorrectly; expected %s spaces but found %s';
-                $data  = array(
-                          $correctSpacing,
-                          $spacing,
-                         );
-                $this->currentFile->addError($error, $errorPos, 'SinceIndent', $data);
-            }
-        } else {
-            $error = 'Missing @since tag in function comment';
-            $this->currentFile->addError($error, $commentEnd, 'MissingSince');
-        }//end if
-
-    }//end processSince()
-
-
-    /**
      * Process the see tags.
      *
      * @param int $commentStart The position in the stack where the comment started.
@@ -374,7 +306,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[$i] !== $this->_tagIndex) {
-                        $error = 'The @see tag is in the wrong order; the tag follows @since';
+                        $error = 'The @see tag is in the wrong order; the tag precedes @return';
                         $this->currentFile->addError($error, $errorPos, 'SeeOrder');
                     }
                 }
@@ -436,7 +368,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[0] !== $this->_tagIndex) {
-                        $error = 'The @return tag is in the wrong order; the tag follows @see (if used) or @since';
+                        $error = 'The @return tag is in the wrong order; the tag follows @see (if used)';
                         $this->currentFile->addError($error, $errorPos, 'ReturnOrder');
                     }
                 }
@@ -468,12 +400,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     // no return statement in the function.
                     if ($content === 'void') {
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
-                            $endToken = $tokens[$this->_functionToken]['scope_closer'];
-                            $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
-                            if ($return !== false) {
+                            $endToken    = $tokens[$this->_functionToken]['scope_closer'];
+                            $returnToken = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
+                            if ($returnToken !== false) {
                                 // If the function is not returning anything, just
                                 // exiting, then there is no problem.
-                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
+                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
                                 if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
                                     $error = 'Function return type is void, but function contains return statement';
                                     $this->currentFile->addError($error, $errorPos, 'InvalidReturnVoid');
@@ -485,13 +417,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         // returns statement somewhere in the function that
                         // returns something.
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
-                            $endToken = $tokens[$this->_functionToken]['scope_closer'];
-                            $return   = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
-                            if ($return === false) {
+                            $endToken    = $tokens[$this->_functionToken]['scope_closer'];
+                            $returnToken = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
+                            if ($returnToken === false) {
                                 $error = 'Function return type is not void, but function has no return statement';
                                 $this->currentFile->addError($error, $errorPos, 'InvalidNoReturn');
                             } else {
-                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($return + 1), null, true);
+                                $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
                                 if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
                                     $error = 'Function return type is not void, but function is returning void here';
                                     $this->currentFile->addError($error, $return, 'InvalidReturnNotVoid');
@@ -499,6 +431,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                             }
                         }
                     }//end if
+
+                    $spacing = substr_count($return->getWhitespaceBeforeValue(), ' ');
+                    if ($spacing !== 1) {
+                        $error = '@return tag indented incorrectly; expected 1 space but found %s';
+                        $data  = array($spacing);
+                        $this->currentFile->addError($error, $errorPos, 'ReturnIndent', $data);
+                    }
                 }//end if
             } else {
                 $error = 'Missing @return tag in function comment';

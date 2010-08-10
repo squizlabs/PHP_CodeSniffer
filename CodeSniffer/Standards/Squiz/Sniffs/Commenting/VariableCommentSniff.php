@@ -200,7 +200,6 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
         // Check each tag.
         $this->processVar($commentStart, $commentEnd);
-        $this->processSince($commentStart, $commentEnd);
         $this->processSees($commentStart);
 
     }//end processMemberVar()
@@ -251,8 +250,8 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
 
             $spacing = substr_count($var->getWhitespaceBeforeContent(), ' ');
-            if ($spacing !== 3) {
-                $error = '@var tag indented incorrectly; expected 3 spaces but found %s';
+            if ($spacing !== 1) {
+                $error = '@var tag indented incorrectly; expected 1 space but found %s';
                 $data  = array($spacing);
                 $this->currentFile->addError($error, $errorPos, 'VarIndent', $data);
             }
@@ -262,61 +261,6 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         }//end if
 
     }//end processVar()
-
-
-    /**
-     * Process the since tag.
-     *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
-     *
-     * @return void
-     */
-    protected function processSince($commentStart, $commentEnd)
-    {
-        $since = $this->commentParser->getSince();
-        if ($since !== null) {
-            $errorPos  = ($commentStart + $since->getLine());
-            $foundTags = $this->commentParser->getTagOrders();
-            $index     = array_keys($foundTags, 'since');
-            $var       = array_keys($foundTags, 'var');
-
-            if (count($index) > 1) {
-                $error = 'Only 1 @since tag is allowed in variable comment';
-                $this->currentFile->addError($error, $errorPos, 'DuplicateSince');
-                return;
-            }
-
-            // Only check order if there is one var tag in variable comment.
-            if (count($var) === 1 && $index[0] !== 2) {
-                $error = 'The order of @since tag is wrong in variable comment';
-                $this->currentFile->addError($error, $errorPos, 'SinceOrder');
-            }
-
-            $content = $since->getContent();
-            if (empty($content) === true) {
-                $error = 'Version number missing for @since tag in variable comment';
-                $this->currentFile->addError($error, $errorPos, 'MissingSinceVersion');
-                return;
-            } else if ($content !== '%release_version%') {
-                if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in @since tag';
-                    $this->currentFile->addError($error, $errorPos, 'InvalidSinceVersion');
-                }
-            }
-
-            $spacing = substr_count($since->getWhitespaceBeforeContent(), ' ');
-            if ($spacing !== 1) {
-                $error = '@since tag indented incorrectly; expected 1 space but found %s';
-                $data  = array($spacing);
-                $this->currentFile->addError($error, $errorPos, 'SinceIndent', $data);
-            }
-        } else {
-            $error = 'Missing @since tag in variable comment';
-            $this->currentFile->addError($error, $commentEnd, 'MissingSince');
-        }//end if
-
-    }//end processSince()
 
 
     /**

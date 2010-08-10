@@ -280,8 +280,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     {
         // Required tags in correct order.
         $tags = array(
-                 'version'    => 'precedes @package',
-                 'package'    => 'follows @version',
+                 'package'    => 'precedes @subpackage',
                  'subpackage' => 'follows @package',
                  'author'     => 'follows @subpackage',
                  'copyright'  => 'follows @author',
@@ -411,34 +410,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * The version tag must have the exact keyword 'release_version'.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processVersion($errorPos)
-    {
-        $version = $this->commentParser->getVersion();
-        if ($version !== null) {
-            $content = $version->getContent();
-            if (empty($content) === true) {
-                $error = 'Content missing for @version tag in file comment';
-                $this->currentFile->addError($error, $errorPos, 'MissingVersion');
-            } else if ($content !== '%release_version%') {
-                if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    // Separate keyword so it does not get replaced when we commit.
-                    $error = 'Expected keyword "%'.'release_version%" for version number';
-                    $this->currentFile->addError($error, $errorPos, 'IncorrectVersion');
-                }
-            }
-        }
-
-    }//end processVersion()
-
-
-    /**
-     * The package name must be 'MySource4'.
+     * The package name must be camel-cased.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -452,9 +424,21 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (empty($content) === true) {
                 $error = 'Content missing for @package tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'MissingPackage');
-            } else if ($content !== 'MySource4') {
-                $error = 'Expected "MySource4" for package name';
-                $this->currentFile->addError($error, $errorPos, 'IncorrectPackage');
+            } else if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+                // Package name must be properly camel-cased.
+                $nameBits = explode('_', $content);
+                $firstBit = array_shift($nameBits);
+                $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                foreach ($nameBits as $bit) {
+                    $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                }
+
+                $error = 'Package name "%s" is not valid; consider "%s" instead';
+                $data  = array(
+                          $content,
+                          trim($newName, '_'),
+                         );
+                $this->currentFile->addError($error, $errorPos, 'IncorrectPackage', $data);
             }
         }
 
@@ -513,8 +497,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (empty($content) === true) {
                 $error = 'Content missing for @author tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'MissingAuthor');
-            } else if ($content !== 'Squiz Pty Ltd <mysource4@squiz.net>') {
-                $error = 'Expected "Squiz Pty Ltd <mysource4@squiz.net>" for author tag';
+            } else if ($content !== 'Squiz Pty Ltd <products@squiz.net>') {
+                $error = 'Expected "Squiz Pty Ltd <products@squiz.net>" for author tag';
                 $this->currentFile->addError($error, $errorPos, 'IncorrectAuthor');
             }
         }
@@ -540,8 +524,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Content missing for @copyright tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'MissingCopyright');
 
-            } else if (preg_match('/^([0-9]{4})-([0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $content) === 0) {
-                $error = 'Expected "2006-2007 Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
+            } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ACN 084 670 600\))$/', $content) === 0) {
+                $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ACN 084 670 600)" for copyright declaration';
                 $this->currentFile->addError($error, $errorPos, 'IncorrectCopyright');
             }
         }
@@ -570,8 +554,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if (empty($url) === true) {
                     $error = 'License URL missing for @license tag in file comment';
                     $this->currentFile->addError($error, $errorPos, 'MissingLinceseURL');
-                } else if ($url !== 'http://matrix.squiz.net/licence') {
-                    $error = 'Expected "http://matrix.squiz.net/licence" for license URL';
+                } else if ($url !== 'http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt') {
+                    $error = 'Expected "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" for license URL';
                     $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseURL');
                 }
 
@@ -579,8 +563,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if (empty($content) === true) {
                     $error = 'License name missing for @license tag in file comment';
                     $this->currentFile->addError($error, $errorPos, 'MissingLinceseName');
-                } else if ($content !== 'Squiz.Net Open Source Licence') {
-                    $error = 'Expected "Squiz.Net Open Source Licence" for license name';
+                } else if ($content !== 'GPLv2') {
+                    $error = 'Expected "GPLv2" for license name';
                     $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseName');
                 }
             }//end if
