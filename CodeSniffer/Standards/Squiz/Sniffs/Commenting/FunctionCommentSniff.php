@@ -277,11 +277,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
         // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            $error = '@%s tag is not allowed in function comment';
-            $data  = array($errorTag['tag']);
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
+        $this->processUnknownTags($commentStart, $commentEnd);
+
+        // The last content should be a newline and the content before
+        // that should not be blank. If there is more blank space
+        // then they have additional blank lines at the end of the comment.
+        $words   = $this->commentParser->getWords();
+        $lastPos = (count($words) - 1);
+        if (trim($words[($lastPos - 1)]) !== ''
+            || strpos($words[($lastPos - 1)], $this->currentFile->eolChar) === false
+            || trim($words[($lastPos - 2)]) === ''
+        ) {
+            $error = 'Additional blank lines found at end of function comment';
+            $this->currentFile->addError($error, $commentEnd, 'SpacingAfter');
         }
 
     }//end process()
@@ -426,7 +434,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                 $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
                                 if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
                                     $error = 'Function return type is not void, but function is returning void here';
-                                    $this->currentFile->addError($error, $return, 'InvalidReturnNotVoid');
+                                    $this->currentFile->addError($error, $returnToken, 'InvalidReturnNotVoid');
                                 }
                             }
                         }
@@ -763,6 +771,26 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         }
 
     }//end processParams()
+
+
+    /**
+     * Process a list of unknown tags.
+     *
+     * @param int $commentStart The position in the stack where the comment started.
+     * @param int $commentEnd   The position in the stack where the comment ended.
+     *
+     * @return void
+     */
+    protected function processUnknownTags($commentStart, $commentEnd)
+    {
+        $unknownTags = $this->commentParser->getUnknown();
+        foreach ($unknownTags as $errorTag) {
+            $error = '@%s tag is not allowed in function comment';
+            $data  = array($errorTag['tag']);
+            $this->currentFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
+        }
+
+    }//end processUnknownTags
 
 
 }//end class

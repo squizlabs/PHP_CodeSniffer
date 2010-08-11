@@ -8,10 +8,9 @@ class VariableCommentUnitTest
      * long description of member variable. Can span over multiple
      * lines and can have multiple paragraphs.
      *
-     * @var   array
-     * @since %release_version%
-     * @see   otherFunctions()
-     * @see   anotherFunctions()
+     * @var array
+     * @see otherFunctions()
+     * @see anotherFunctions()
      */
      public $variableName = array();
 
@@ -19,7 +18,6 @@ class VariableCommentUnitTest
      // Not "/**" style comment.
      //
      // @var   string
-     // @since 4.0.0
      private  $_incorrectCommentStyle = '';
 
 
@@ -30,9 +28,7 @@ class VariableCommentUnitTest
      *
      * Extra newline before short comment.
      *
-     * @var   string
-     * @since %release_version%
-     * @since another.since.tag
+     * @var string
      */
      public $extraNewlineBeforeShort = '';
 
@@ -43,10 +39,8 @@ class VariableCommentUnitTest
      *
      *
      * - Long description,
-     * with wrong tag order.
      *
-     * @since %release_version%
-     * @var   string
+     * @var string
      */
      private $_extraNewlineBetween = '';
 
@@ -58,17 +52,15 @@ class VariableCommentUnitTest
      * with two var tags.
      *
      *
-     * @var   string
-     * @var   array
-     * @since incorrect.version.number
+     * @var string
+     * @var array
      */
      protected $extraNewlineBeforeTags = '';
 
 
     /**
      * No newline before tags, var tag missing.
-     * @since 4.0.12
-     * @see   otherFunctions()
+     * @see otherFunctions()
      */
      protected $noNewlineBeforeTags = '';
 
@@ -79,7 +71,6 @@ class VariableCommentUnitTest
      * also var type is missing
      *
      * @var
-     * @since
      */
      public $singleLineFullStopShortComment = '';
 
@@ -88,7 +79,6 @@ class VariableCommentUnitTest
      * Incorrect tag indentation.
      *
      * @var     string
-     * @since    %release_version%
      * @see        otherFunctions()
      * @see anotherFunctions()
      * @see
@@ -97,18 +87,9 @@ class VariableCommentUnitTest
 
 
     /**
-     * Missing since tag
-     *
-     * @var     string
-     */
-     public $missingSinceTag = '';
-
-
-    /**
      * Unknown summary tag
      *
      * @var     string
-     * @since   mysource4-was-released
      * @summary unknown tag
      */
      public $missingSinceTag = '';
@@ -117,8 +98,7 @@ class VariableCommentUnitTest
     /**
      * T_VARIABLE check, without scope.
      *
-     * @var   string
-     * @since 4.0.0
+     * @var string
      */
      $variableCheck = '';
 
@@ -154,8 +134,7 @@ class VariableCommentUnitTest
      /**
      * Var type checking (int v.s. integer).
      *
-     * @var   int
-     * @since %release_version%
+     * @var int
      */
      private $_varSimpleTypeCheck;
 
@@ -163,8 +142,7 @@ class VariableCommentUnitTest
      /**
      * Var type checking (array(int => string) v.s. array(int => string)).
      *
-     * @var   array(int => string)
-     * @since %release_version%
+     * @var array(int => string)
      */
      private $_varArrayTypeCheck;
 
@@ -172,15 +150,13 @@ class VariableCommentUnitTest
      /**
      * Var type checking (STRING v.s. string).
      *
-     * @var   STRING
-     * @since %release_version%
+     * @var STRING
      */
      private $_varCaseTypeCheck;
 
 
     /**
-     * @var   integer
-     * @since %release_version%
+     * @var integer
      */
      private $_varWithNoShortComment;
 
@@ -195,7 +171,6 @@ class VariableCommentUnitTest
  *
  * Long description goes here.
  *
- * @since 4.0.0
  */
 class VariableCommentUnitTest2
 {
@@ -204,8 +179,8 @@ class VariableCommentUnitTest2
 
     /** Comment starts here.
      *
-     * @var   string
-     * @since 4.0.0
+     * @var string
+     *
      */
      private $_varCaseTypeCheck;
 

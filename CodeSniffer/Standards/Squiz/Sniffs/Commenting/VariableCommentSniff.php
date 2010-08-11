@@ -202,6 +202,19 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $this->processVar($commentStart, $commentEnd);
         $this->processSees($commentStart);
 
+        // The last content should be a newline and the content before
+        // that should not be blank. If there is more blank space
+        // then they have additional blank lines at the end of the comment.
+        $words   = $this->commentParser->getWords();
+        $lastPos = (count($words) - 1);
+        if (trim($words[($lastPos - 1)]) !== ''
+            || strpos($words[($lastPos - 1)], $this->currentFile->eolChar) === false
+            || trim($words[($lastPos - 2)]) === ''
+        ) {
+            $error = 'Additional blank lines found at end of variable comment';
+            $this->currentFile->addError($error, $commentEnd, 'SpacingAfter');
+        }
+
     }//end processMemberVar()
 
 
@@ -284,8 +297,8 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 }
 
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
-                if ($spacing !== 3) {
-                    $error = '@see tag indented incorrectly; expected 3 spaces but found %s';
+                if ($spacing !== 1) {
+                    $error = '@see tag indented incorrectly; expected 1 spaces but found %s';
                     $data  = array($spacing);
                     $this->currentFile->addError($error, $errorPos, 'SeesIndent', $data);
                 }

@@ -228,13 +228,25 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
         }
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
+        // No tags are allowed in the class comment.
+        $tags = $this->commentParser->getTags();
+        foreach ($tags as $errorTag) {
             $error = '@%s tag is not allowed in class comment';
             $data  = array($errorTag['tag']);
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
-            return;
+        }
+
+        // The last content should be a newline and the content before
+        // that should not be blank. If there is more blank space
+        // then they have additional blank lines at the end of the comment.
+        $words   = $this->commentParser->getWords();
+        $lastPos = (count($words) - 1);
+        if (trim($words[($lastPos - 1)]) !== ''
+            || strpos($words[($lastPos - 1)], $this->currentFile->eolChar) === false
+            || trim($words[($lastPos - 2)]) === ''
+        ) {
+            $error = 'Additional blank lines found at end of class comment';
+            $this->currentFile->addError($error, $commentEnd, 'SpacingAfter');
         }
 
     }//end process()

@@ -57,13 +57,12 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 8  => 1,
                 10 => 1,
                 21 => 1,
-                22 => 3,
-                23 => 2,
-                24 => 3,
-                26 => 2,
-                27 => 3,
-                28 => 2,
-                30 => 1,
+                22 => 2,
+                23 => 1,
+                24 => 2,
+                26 => 1,
+                27 => 2,
+                30 => 2,
                );
 
     }//end getErrorList()
@@ -80,7 +79,7 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return array(
-                29 => 1,
+                28 => 1,
                );
 
     }//end getWarningList()

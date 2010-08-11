@@ -1,32 +1,30 @@
 <?php
 /**
- * Unit test class for VariableCommentSniff.
+ * Unit test class for FunctionCommentSniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id$
+ * @version   CVS: $Id: FunctionCommentUnitTest.php 292513 2009-12-23 00:41:20Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for VariableCommentSniff.
+ * Unit test class for FunctionCommentSniff.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTest
+class MySource_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -41,34 +39,12 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                6   => 1,
-                8   => 1,
-                21  => 1,
-                24  => 1,
-                28  => 1,
-                38  => 1,
-                41  => 1,
-                53  => 1,
-                56  => 1,
-                63  => 1,
-                64  => 1,
-                69  => 2,
-                73  => 1,
-                81  => 1,
-                82  => 1,
-                84  => 1,
-                90  => 1,
-                92  => 1,
-                128 => 1,
-                137 => 1,
-                145 => 1,
-                153 => 1,
-                158 => 1,
-                159 => 1,
-                163 => 1,
-                178 => 1,
-                180 => 1,
-                184 => 1,
+                28 => 1,
+                36 => 1,
+                37 => 2,
+                49 => 1,
+                58 => 1,
+                65 => 1,
                );
 
     }//end getErrorList()
@@ -85,7 +61,8 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
     public function getWarningList()
     {
         return array(
-                93 => 1,
+                67 => 1,
+                68 => 1,
                );
 
     }//end getWarningList()

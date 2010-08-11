@@ -138,7 +138,6 @@ class PHP_CodeSniffer_File
      * @param array    $two    -comment
      * @param MyClas   $three  0comment
      *
-     * @since
      * @return void
      */
     public function oneSpaceAfterLongestVar($one, $two, MyClass $three)
@@ -157,7 +156,6 @@ class PHP_CodeSniffer_File
  *
  * @return void
  * @return
- * @since   %release_version%
  */
 public function functionOutsideClass(&$str)
 {
@@ -182,7 +180,6 @@ function tagBeforeComment()
  * no return tag.
  *
  * @see    FunctionCommentSniff.php
- * @since  unknown.release.date
  */
 public function noReturnOutsideClass()
 {
@@ -195,8 +192,6 @@ public function noReturnOutsideClass()
  *
  * @param integer $one comment
  *
- * @since  4.0.12
- * @since  4.0.12-rc1
  * @see     wrong indent
  * @see
  * @return void
@@ -212,7 +207,6 @@ public function missingTwoParamComment($one, $two, $three)
 /**
  * Missing return type.
  *
- * @since  4.0.12
  * @throws ExceptionWithNoComment
  * @return
  */
@@ -233,7 +227,6 @@ public function missingReturnType()
  * @param double  $a6 Comment here.
  * @param Myclass $a7 Comment here.
  *
- * @since  4.0.12
  * @return int|object|double|float|array(int=>MyClass)
  */
 public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
@@ -250,7 +243,6 @@ public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
  * @param MyClass $a3 Comment here.
  * @param MyClass $a4 Comment here.
  *
- * @since  4.0.0
  * @return array(int => MyClass)
  */
 public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
@@ -268,7 +260,6 @@ public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
  * @param string|array $a3 Comment here.
  * @param MyClass|int  $a4 Comment here.
  *
- * @since 4.0.0
  * @return bool
  */
 public function mixedType($a1, $a2, $a3, $a4)
@@ -290,7 +281,6 @@ public function mixedType($a1, $a2, $a3, $a4)
  * @param aRRay                  $a7 Use 'array' instead.
  * @param string                 $a8 String with unknown type hint.
  *
- * @since  4.0.0
  * @return int
  */
 public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownTypeHint $a8)
@@ -326,7 +316,6 @@ function empty3()
 
 
 /**
- * @since  4.0.0
  * @return boolean
  */
 public function missingShortDescriptionInFunctionComment()
@@ -342,7 +331,6 @@ class Another_Class
     /**
      * Destructor should not include a return tag.
      *
-     * @since  4.0.0
      * @return void
      */
     function __destruct()
@@ -370,7 +358,6 @@ class Another_Class
  * @param string  $vr2    Comment2.
  * @param string  $var3  Comment3..
  *
- * @since  4.0.0
  * @return void
  */
 public static function paramAlign($varrr1, $vr2, $var3)
@@ -385,7 +372,6 @@ public static function paramAlign($varrr1, $vr2, $var3)
  * @param string $id    Comment.
  * @param array $design Comment.
  *
- * @since  4.0.0
  * @return void
  */
 public static function paint($id, array $design)
@@ -412,7 +398,6 @@ public function myFunction()
 /**
  * Adds specified class name to class attribute of this widget.
  *
- * @since  4.0.0
  * @return string
  */
 public function myFunction()
@@ -430,7 +415,6 @@ public function myFunction()
 /**
  * Adds specified class name to class attribute of this widget.
  *
- * @since  4.0.0
  * @return string
  */
 public function myFunction()
@@ -460,7 +444,6 @@ class MyClass() {
     /**
      * An abstract function.
      *
-     * @since  4.0.0
      * @return array(string)
      */
     abstract final protected function myFunction();
@@ -471,7 +454,6 @@ class MyClass() {
  *
  * @param mixed $test An argument.
  *
- * @since  4.0.0
  * @return mixed
  */
 function test($test)
@@ -487,8 +469,8 @@ function test($test)
 
 /** Comment.
  *
- * @since  4.0.0
  * @return mixed
+ *
  */
 function test()
 {

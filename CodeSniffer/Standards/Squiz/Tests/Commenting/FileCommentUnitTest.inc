@@ -25,8 +25,8 @@
 * @author
 * @copyright  1997~1994 The PHP Group
 * @license    http://www.php.net/license/3_0.txt
-* @version     INVALID VERSION CONTENT
 * @summary    An unknown summary tag
+*
 */
 ?>
 <?php

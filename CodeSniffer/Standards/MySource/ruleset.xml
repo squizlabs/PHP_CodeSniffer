@@ -2,7 +2,9 @@
 <ruleset name="MySource">
  <description>The MySource coding standard builds on the Squiz coding standard. Currently used for MySource Mini development.</description>
 
- <!-- Include the whole Squiz standard -->
- <rule ref="Squiz"/>
+ <!-- Include the whole Squiz standard except FunctionComment, which we override -->
+ <rule ref="Squiz">
+  <exclude name="Squiz.Commenting.FunctionComment"/>
+ </rule>
 
 </ruleset>
