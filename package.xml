@@ -554,6 +554,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FunctionCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="CSS">
         <file baseinstalldir="PHP" name="BrowserSpecificStylesSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -607,6 +612,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UnusedSystemUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="UnusedSystemUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
