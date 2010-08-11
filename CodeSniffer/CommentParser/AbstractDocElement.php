@@ -290,6 +290,18 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
 
 
     /**
+     * Returns the comment tokens.
+     *
+     * @return array
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+
+    }//end getTokens()
+
+
+    /**
      * Returns the line in which this element first occured.
      *
      * @return int
