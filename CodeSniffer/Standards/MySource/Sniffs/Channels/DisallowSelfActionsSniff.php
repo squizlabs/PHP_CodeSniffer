@@ -77,8 +77,10 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                     // Cache the function information.
                     $funcName  = $phpcsFile->findNext(T_STRING, ($i + 1));
                     $funcScope = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, ($i - 1));
+
                     $foundFunctions[$tokens[$funcName]['content']] = strtolower($tokens[$funcScope]['content']);
                 }
+
                 continue;
             }
 
@@ -122,7 +124,7 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             }
         }
 
-    }//end processTokenWithinScope()
+    }//end process()
 
 
 }//end class

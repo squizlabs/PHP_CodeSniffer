@@ -108,7 +108,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             // Or a system it implements.
             $class      = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
             $implements = $phpcsFile->findNext(T_IMPLEMENTS, $class);
-            if ($implements !== FALSE) {
+            if ($implements !== false) {
                 $implementsClass     = $phpcsFile->findNext(T_STRING, $implements);
                 $implementsClassName = strtolower($tokens[$implementsClass]['content']);
                 if (substr($implementsClassName, -7) === 'actions') {

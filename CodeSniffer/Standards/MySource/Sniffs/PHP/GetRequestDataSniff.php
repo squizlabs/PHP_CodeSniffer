@@ -75,7 +75,7 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
                     // We don't have nested classes.
                     break;
                 }
-            } else if ($inClass == true && $tokens[$i]['code'] === T_FUNCTION) {
+            } else if ($inClass === true && $tokens[$i]['code'] === T_FUNCTION) {
                 $funcName = $phpcsFile->findNext(T_STRING, $i);
                 $funcName = $tokens[$funcName]['content'];
                 if (strtolower($funcName) === 'getrequestdata') {
@@ -90,8 +90,8 @@ class MySource_Sniffs_PHP_GetRequestDataSniff implements PHP_CodeSniffer_Sniff
 
         // If we get to here, the super global was used incorrectly.
         // First find out how it is being used.
-        $globalName   = strtolower(substr($varName, 2));
-        $usedVar      = '';
+        $globalName = strtolower(substr($varName, 2));
+        $usedVar    = '';
 
         $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$openBracket]['code'] === T_OPEN_SQUARE_BRACKET) {

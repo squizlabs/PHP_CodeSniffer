@@ -86,12 +86,12 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                 $error = '@%s tag is not allowed in function comment';
                 $data  = array($errorTag['tag']);
                 $this->currentFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
-            }
-        }
+            }//end if
+        }//end foreach
 
         if ($hasApiTag === true) {
             // API tags must be the last tags in a function comment.
-            $order = $this->commentParser->getTagOrders();
+            $order   = $this->commentParser->getTagOrders();
             $lastTag = array_pop($order);
             if ($lastTag !== 'api'
                 && substr($lastTag, 0, 4) !== 'api-'
@@ -101,7 +101,7 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
             }
         }
 
-    }//end processUnknownTags
+    }//end processUnknownTags()
 
 
 }//end class

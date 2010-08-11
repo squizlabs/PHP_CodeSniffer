@@ -78,8 +78,8 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
             continue;
         }
 
-        $start  = ($tokens[$function]['scope_opener'] + 1);
-        $end    = ($tokens[$function]['scope_closer'] - 1);
+        $start = ($tokens[$function]['scope_opener'] + 1);
+        $end   = ($tokens[$function]['scope_closer'] - 1);
 
         // Check that the first argument is called "callback".
         $arg = $phpcsFile->findNext(T_WHITESPACE, ($tokens[$function]['parenthesis_opener'] + 1), null, true);

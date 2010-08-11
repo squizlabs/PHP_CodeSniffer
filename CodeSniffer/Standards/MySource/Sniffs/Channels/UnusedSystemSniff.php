@@ -27,6 +27,7 @@
 class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Sniff
 {
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -98,9 +99,14 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                 }
 
                 break;
-            }
+            }//end if
 
-            $validTokens = array(T_DOUBLE_COLON, T_EXTENDS, T_IMPLEMENTS);
+            $validTokens = array(
+                            T_DOUBLE_COLON,
+                            T_EXTENDS,
+                            T_IMPLEMENTS,
+                           );
+
             if (in_array($tokens[$i]['code'], $validTokens) === false) {
                 continue;
             }
