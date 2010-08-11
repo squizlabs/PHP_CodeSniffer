@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="PHP_CodeSniffer">
  <description>The coding standard for PHP_CodeSniffer itself.</description>
+ <exclude-pattern>*/Tests/*</exclude-pattern>
 
  <!-- Include the whole PEAR standard -->
  <rule ref="PEAR"/>

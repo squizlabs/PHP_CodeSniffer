@@ -769,6 +769,11 @@ class PHP_CodeSniffer
             }
         }//end foreach
 
+        // Process custom ignore pattern rules.
+        foreach ($ruleset->{'exclude-pattern'} as $pattern) {
+            $this->ignorePatterns[] = (string) $pattern;
+        }
+
     }//end populateCustomRules()
 
 

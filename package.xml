@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added exclude pattern support to ruleset.xml file so you can hard-code ignore patterns into a standard (feature request #17683)
+    -- Use new exclude-pattern tags to include the ignroe rules into your ruleset.xml file
+    -- See CodeSniffer/Standards/PHPCS/ruleset.xml for an example
   - The report is no longer printed to screen when using the --report-file command line option (feature request #17467)
     -- If you want to print it to screen as well, use the -v command line argument
   - The SVN and GIT blame reports now also show percentage of reported errors per author (feature request #17606)
