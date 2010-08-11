@@ -102,6 +102,13 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     protected $words = array();
 
     /**
+     * An array of all tags found in the comment.
+     *
+     * @var array(string)
+     */
+    protected $foundTags = array();
+
+    /**
      * The previous doc element that was processed.
      *
      * null if the current element being processed is the first element in the
@@ -261,7 +268,6 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     {
         $allowedTags     = (self::$_tags + $this->getAllowedTags());
         $allowedTagNames = array_keys($allowedTags);
-        $foundTags       = array();
         $prevTagPos      = false;
         $wordWasEmpty    = true;
 
@@ -287,7 +293,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     continue;
                 }
 
-                $foundTags[] = $tag;
+                $this->foundTags[] = array(
+                                      'tag'  => $tag,
+                                      'line' => $this->getLine($wordPos),
+                                      'pos'  => $wordPos,
+                                     );
 
                 if ($prevTagPos !== false) {
                     // There was a tag before this so let's process it.
@@ -326,6 +336,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                         $this->unknown[] = array(
                                             'tag'  => $tag,
                                             'line' => $this->getLine($wordPos),
+                                            'pos'  => $wordPos,
                                            );
                     }
                 }//end if
@@ -517,6 +528,30 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         return $this->comment;
 
     }//end getComment()
+
+
+    /**
+     * Returns the word list.
+     *
+     * @return array
+     */
+    public function getWords()
+    {
+        return $this->words;
+
+    }//end getWords()
+
+
+    /**
+     * Returns the list of found tags.
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->foundTags;
+
+    }//end getTags()
 
 
     /**
