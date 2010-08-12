@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If you want to print it to screen as well, use the -v command line argument
   - The SVN and GIT blame reports now also show percentage of reported errors per author (feature request #17606)
     -- Thanks to Ben Selby for the patch
+  - Updated the SVN pre-commit hook to work with the new severity levels feature
   - Fixed a problem in Squiz OutputBufferingIndentSniff where block comments were reported as not indented
   - Fixed bug #17629 : PHP_CodeSniffer_Tokens::$booleanOperators missing T_LOGICAL_XOR
     -- Thanks to Matthew Turland for the patch
