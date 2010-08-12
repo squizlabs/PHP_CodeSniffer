@@ -129,6 +129,19 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             $phpcs->setIgnorePatterns($values['ignored']);
         }
 
+        // Set some convenience member vars.
+        if ($values['errorSeverity'] === null) {
+            $this->errorSeverity = PHPCS_DEFAULT_ERROR_SEV;
+        } else {
+            $this->errorSeverity = $values['errorSeverity'];
+        }
+
+        if ($values['warningSeverity'] === null) {
+            $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
+        } else {
+            $this->warningSeverity = $values['warningSeverity'];
+        }
+
         // Initialize PHP_CodeSniffer listeners but don't process any files.
         $phpcs->setCli($this);
         $phpcs->process(array(), $values['standard'], $values['sniffs']);
@@ -164,7 +177,6 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         return parent::printErrorReport(
             $phpcs,
             $values['report'],
-            $values['showWarnings'],
             $values['showSources'],
             $values['reportFile'],
             $values['reportWidth']
