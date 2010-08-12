@@ -49,6 +49,7 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
         $unknownTags = $this->commentParser->getUnknown();
         $words       = $this->commentParser->getWords();
         $hasApiTag   = false;
+        $apiLength   = 3;
         foreach ($unknownTags as $errorTag) {
             $pos = $errorTag['pos'];
             if ($errorTag['tag'] === 'api') {
@@ -74,6 +75,12 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                 }
             } else if (substr($errorTag['tag'], 0, 4) === 'api-') {
                 $hasApiTag = true;
+
+                $tagLength = strlen($errorTag['tag']);
+                if ($tagLength > $apiLength) {
+                    $apiLength = $tagLength;
+                }
+
                 if (trim($words[($pos - 2)]) !== ''
                     || strpos($words[($pos - 2)], $this->currentFile->eolChar) === false
                     || trim($words[($pos - 3)]) === ''
@@ -99,7 +106,26 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                 $error = 'The @api tags must be the last tags in a function comment';
                 $this->currentFile->addError($error, $commentEnd, 'ApiNotLast');
             }
-        }
+
+            // Check API tag indenting.
+            foreach ($unknownTags as $errorTag) {
+                if ($errorTag['tag'] === 'api'
+                    || substr($errorTag['tag'], 0, 4) === 'api-'
+                ) {
+                    $expected = ($apiLength - strlen($errorTag['tag']) + 1);
+                    $found    = strlen($words[($errorTag['pos'] + 1)]);
+                    if ($found !== $expected) {
+                        $error = '@%s tag indented incorrectly; expected %s spaces but found %s';
+                        $data  = array(
+                                  $errorTag['tag'],
+                                  $expected,
+                                  $found,
+                                 );
+                        $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiTagIndent', $data);
+                    }
+                }
+            }
+        }//end if
 
     }//end processUnknownTags()
 

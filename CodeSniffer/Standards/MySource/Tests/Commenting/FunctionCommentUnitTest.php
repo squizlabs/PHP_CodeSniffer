@@ -45,6 +45,8 @@ class MySource_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUni
                 49 => 1,
                 58 => 1,
                 65 => 1,
+                77 => 1,
+                79 => 1,
                );
 
     }//end getErrorList()
