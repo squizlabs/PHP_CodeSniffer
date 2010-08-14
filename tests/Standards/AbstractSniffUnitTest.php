@@ -173,7 +173,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      * @return array
      * @throws PHP_CodeSniffer_Exception
      */
-    public function generateFailureMessages($file)
+    public function generateFailureMessages(PHP_CodeSniffer_File $file)
     {
         $testFile = $file->getFilename();
 
