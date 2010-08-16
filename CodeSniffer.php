@@ -210,7 +210,7 @@ class PHP_CodeSniffer
         $this->_cwd = getcwd();
         chdir(dirname(__FILE__).'/CodeSniffer/');
 
-        // Set  default CLI object in case someone is running us
+        // Set default CLI object in case someone is running us
         // without using the command line script.
         $this->cli = new PHP_CodeSniffer_CLI();
         $this->cli->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
@@ -370,6 +370,7 @@ class PHP_CodeSniffer
         // Reset the members.
         $this->listeners       = array();
         $this->files           = array();
+        $this->ruleset         = array();
         $this->_tokenListeners = array(
                                   'file'      => array(),
                                   'multifile' => array(),
@@ -427,18 +428,30 @@ class PHP_CodeSniffer
         // Now process the multi-file sniffs, assuming there are
         // multiple files being sniffed.
         if (count($files) > 1 || is_dir($files[0]) === true) {
-            foreach ($this->_tokenListeners['multifile'] as $listener) {
-                // Set the name of the listener for error messages.
-                $activeListener = get_class($listener);
-                foreach ($this->files as $file) {
-                    $file->setActiveListener($activeListener);
-                }
-
-                $listener->process($this->files);
-            }
+            $this->processMulti();
         }
 
     }//end process()
+
+
+    /**
+     * Processes multi-file sniffs.
+     *
+     * @return void
+     */
+    public function processMulti()
+    {
+        foreach ($this->_tokenListeners['multifile'] as $listener) {
+            // Set the name of the listener for error messages.
+            $activeListener = get_class($listener);
+            foreach ($this->files as $file) {
+                $file->setActiveListener($activeListener);
+            }
+
+            $listener->process($this->files);
+        }
+
+    }//end processMulti()
 
 
     /**
