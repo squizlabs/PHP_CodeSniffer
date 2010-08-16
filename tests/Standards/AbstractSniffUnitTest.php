@@ -124,13 +124,16 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         $multiFileSniff  = false;
         foreach ($testFiles as $testFile) {
             try {
-                self::$phpcs->process($testFile, $standardName, array($sniffClass));
+                self::$phpcs->process(array(), $standardName, array($sniffClass));
+                self::$phpcs->setIgnorePatterns(array());
+                self::$phpcs->processFile($testFile);
+                self::$phpcs->processMulti();
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
             // After processing a file, check if the sniff was actually
-            // a multi-file sniff (i.e., had no indivdual file sniffs).
+            // a multi-file sniff (i.e., had no individual file sniffs).
             // If it is, we can skip checking of the other files and
             // do a single multi-file check.
             $sniffs = self::$phpcs->getTokenSniffs();
@@ -140,25 +143,42 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             }
 
             $files = self::$phpcs->getFiles();
-            $file  = array_pop($files);
+            if (empty($files) === true) {
+                // File was skipped for some reason.
+                echo "Skipped: $testFile\n";
+                $this->markTestSkipped();
+            }
 
-            $failures = $this->generateFailureMessages($file, $testFile);
+            $file = array_pop($files);
+
+            $failures        = $this->generateFailureMessages($file);
             $failureMessages = array_merge($failureMessages, $failures);
         }//end foreach
 
         if ($multiFileSniff === true) {
             try {
-                self::$phpcs->process($testFiles, $standardName, array($sniffClass));
+                self::$phpcs->process(array(), $standardName, array($sniffClass));
+                self::$phpcs->setIgnorePatterns(array());
+                foreach ($testFiles as $testFile) {
+                    self::$phpcs->processFile($testFile);
+                }
+
+                self::$phpcs->processMulti();
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
             $files = self::$phpcs->getFiles();
-            foreach ($files as $file) {
-                $failures = $this->generateFailureMessages($file);
-                $failureMessages = array_merge($failureMessages, $failures);
+            if (empty($files) === true) {
+                // File was skipped for some reason.
+                $this->markTestSkipped();
+            } else {
+                foreach ($files as $file) {
+                    $failures        = $this->generateFailureMessages($file);
+                    $failureMessages = array_merge($failureMessages, $failures);
+                }
             }
-        }
+        }//end if
 
         if (empty($failureMessages) === false) {
             $this->fail(implode(PHP_EOL, $failureMessages));
@@ -169,6 +189,8 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
     /**
      * Generate a list of test failures for a given sniffed file.
+     *
+     * @param PHP_CodeSniffer_File $file The file being tested.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception
