@@ -606,7 +606,6 @@ class PHP_CodeSniffer_CLI
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
-        echo '                      (report is also written to screen)'.PHP_EOL;
 
     }//end printUsage()
 
