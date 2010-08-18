@@ -17,7 +17,13 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once dirname(__FILE__).'/AbstractTestCase.php';
 require_once dirname(__FILE__).'/Mock/Gitblame.php';
-require_once dirname(__FILE__).'/../../../CodeSniffer/Reports/VersionControl.php';
+
+if (is_file(dirname(__FILE__).'/../../../CodeSniffer.php') === true) {
+    // We are not installed.
+    include_once dirname(__FILE__).'/../../../CodeSniffer/Reports/VersionControl.php';
+} else {
+    include_once 'PHP/CodeSniffer/Reports/VersionControl.php';
+}
 
 /**
  * Tests for the Gitblame report of PHP_CodeSniffer.
