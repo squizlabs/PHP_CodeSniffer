@@ -72,8 +72,7 @@ class PHP_CodeSniffer_Standards_AllSniffs
             $standardsDir = '';
         }
 
-        $standards   = PHP_CodeSniffer::getInstalledStandards(true, $standardsDir);
-        $standards[] = 'Generic';
+        $standards = PHP_CodeSniffer::getInstalledStandards(true, $standardsDir);
 
         foreach ($standards as $standard) {
             if ($isInstalled === false) {
