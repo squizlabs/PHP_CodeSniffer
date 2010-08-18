@@ -78,6 +78,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_INSTANCEOF,
                              T_NEW,
                              T_NAMESPACE,
+                             T_USE,
                             );
 
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {
