@@ -541,6 +541,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
       </dir>
+      <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="MySource">
       <dir name="Sniffs">
