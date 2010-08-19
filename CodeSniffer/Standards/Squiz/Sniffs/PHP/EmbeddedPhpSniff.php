@@ -60,6 +60,10 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         // If the close php tag is on the same line as the opening
         // then we have an inline embedded PHP block.
         $closeTag = $phpcsFile->findNext(array(T_CLOSE_TAG), $stackPtr);
+        if ($closeTag === FALSE) {
+            return;
+        }
+
         if ($tokens[$stackPtr]['line'] !== $tokens[$closeTag]['line']) {
             $this->_validateMultilineEmbeddedPhp($phpcsFile, $stackPtr);
         } else {

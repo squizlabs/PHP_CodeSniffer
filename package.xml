@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Matthew Turland for the patch
   - Fixed bug #17699 : Fatal error generating code coverage with PHPUnit 5.3.0RC1
   - Fixed bug #17718 : Namespace 'use' statement: used global class name is recognized as constant
+  - Fixed bug #17742 : EmbeddedPhpSniff reacts negatively to file without closing php tag
  </notes>
  <contents>
   <dir name="/">
