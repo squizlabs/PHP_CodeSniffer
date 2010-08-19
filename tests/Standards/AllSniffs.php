@@ -116,10 +116,8 @@ class PHP_CodeSniffer_Standards_AllSniffs
                     $className = $standard.'_Tests_'.$className;
                 }
 
-                $niceName  = substr($className, (strrpos($className, '_') + 1), -8);
-
                 include_once $filePath;
-                $class = new $className($niceName);
+                $class = new $className('getErrorList');
                 $suite->addTest($class);
             }//end foreach
         }//end foreach
