@@ -32,6 +32,10 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
     /**
      * The Subversion properties that should be set.
      *
+     * Key of array is the SVN property and the value is the
+     * exact value the property should have or NULL if the
+     * property should just be set but the value is not fixed.
+     *
      * @var array
      */
     protected $properties = array(
@@ -100,7 +104,9 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
                 continue;
             }
 
-            if ($properties[$key] !== $this->properties[$key]) {
+            if ($properties[$key] !== null
+                && $properties[$key] !== $this->properties[$key]
+            ) {
                 $error = 'Subversion property "%s" = "%s" does not match "%s"';
                 $data  = array(
                           $key,
