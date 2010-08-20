@@ -77,9 +77,14 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
         }
 
         $path       = $phpcsFile->getFileName();
-        $properties = $this->properties($path);
+        $properties = $this->getProperties($path);
+        if ($properties === null) {
+            // Not under version control.
+            return;
+        }
 
-        foreach (($properties + $this->properties) as $key => $value) {
+        $properties += $this->properties;
+        foreach ($properties as $key => $value) {
             if (isset($properties[$key]) === true
                 && isset($this->properties[$key]) === false
             ) {
@@ -123,13 +128,15 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
     /**
      * Returns the Subversion properties which are actually set on a path.
      *
+     * Returns NULL if the file is not under version control.
+     *
      * @param string $path The path to return Subversion properties on.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception If Subversion properties file could
      *                                   not be opened.
      */
-    protected function properties($path)
+    protected function getProperties($path)
     {
         $properties = array();
 
@@ -137,14 +144,18 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
         $paths[] = dirname($path).'/.svn/props/'.basename($path).'.svn-work';
         $paths[] = dirname($path).'/.svn/prop-base/'.basename($path).'.svn-base';
 
+        $foundPath = false;
         foreach ($paths as $path) {
-            if (true === file_exists($path)) {
-                if (false === $handle = fopen($path, 'r')) {
+            if (file_exists($path) === true) {
+                $foundPath = true;
+
+                $handle = fopen($path, 'r');
+                if ($handle === false) {
                     $error = 'Error opening file; could not get Subversion properties';
                     throw new PHP_CodeSniffer_Exception($error);
                 }
 
-                while (!feof($handle)) {
+                while (feof($handle) === false) {
                     // Read a key length line. Might be END, though.
                     $buffer = trim(fgets($handle));
 
@@ -182,9 +193,13 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             }//end if
         }//end foreach
 
+        if ($foundPath === false) {
+            return null;
+        }
+
         return $properties;
 
-    }//end properties()
+    }//end getProperties()
 
 
 }//end class
