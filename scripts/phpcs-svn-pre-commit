@@ -116,7 +116,11 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             exit(2);
         }
 
-        $phpcs = new PHP_CodeSniffer($values['verbosity'], $values['tabWidth']);
+        $phpcs = new PHP_CodeSniffer(
+            $values['verbosity'],
+            $values['tabWidth'],
+            $values['encoding']
+        );
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.

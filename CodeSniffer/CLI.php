@@ -117,6 +117,13 @@ class PHP_CodeSniffer_CLI
             $defaults['tabWidth'] = (int) $tabWidth;
         }
 
+        $encoding = PHP_CodeSniffer::getConfigData('encoding');
+        if ($encoding === null) {
+            $defaults['encoding'] = 'iso-8859-1';
+        } else {
+            $defaults['encoding'] = strtolower($encoding);
+        }
+
         $severity = PHP_CodeSniffer::getConfigData('severity');
         if ($severity === null) {
             $defaults['errorSeverity']   = null;
@@ -354,6 +361,8 @@ class PHP_CodeSniffer_CLI
                 );
             } else if (substr($arg, 0, 10) === 'generator=') {
                 $values['generator'] = substr($arg, 10);
+            } else if (substr($arg, 0, 9) === 'encoding=') {
+                $values['encoding'] = strtolower(substr($arg, 9));
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $values['tabWidth'] = (int) substr($arg, 10);
             } else if (substr($arg, 0, 13) === 'report-width=') {
@@ -406,7 +415,7 @@ class PHP_CodeSniffer_CLI
 
 
     /**
-     * Runs PHP_CodeSniffer over files are directories.
+     * Runs PHP_CodeSniffer over files and directories.
      *
      * @param array $values An array of values determined from CLI args.
      *
@@ -447,6 +456,7 @@ class PHP_CodeSniffer_CLI
         $phpcs = new PHP_CodeSniffer(
             $values['verbosity'],
             $values['tabWidth'],
+            $values['encoding'],
             $values['interactive']
         );
 
@@ -576,7 +586,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--generator=<generator>] [--tab-width=<tabWidth>] <file> ...'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
@@ -592,6 +602,7 @@ class PHP_CodeSniffer_CLI
         echo '                      (only valid if checking a directory)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns that are used'.PHP_EOL;
         echo '                      to ignore directories and files'.PHP_EOL;
+        echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity that an error or warning must have'.PHP_EOL;

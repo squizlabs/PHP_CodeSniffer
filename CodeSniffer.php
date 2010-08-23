@@ -172,25 +172,38 @@ class PHP_CodeSniffer
     /**
      * Constructs a PHP_CodeSniffer object.
      *
-     * @param int  $verbosity   The verbosity level.
-     *                          1: Print progress information.
-     *                          2: Print developer debug information.
-     * @param int  $tabWidth    The number of spaces each tab represents.
-     *                          If greater than zero, tabs will be replaced
-     *                          by spaces before testing each file.
-     * @param bool $interactive If TRUE, will stop after each file with errors
-     *                          and wait for user input.
+     * @param int    $verbosity   The verbosity level.
+     *                            1: Print progress information.
+     *                            2: Print tokenizer debug information.
+     *                            3: Print sniff debug information.
+     * @param int    $tabWidth    The number of spaces each tab represents.
+     *                            If greater than zero, tabs will be replaced
+     *                            by spaces before testing each file.
+     * @param string $encoding    The charset of the sniffed files.
+     *                            This is important for some reports that output
+     *                            with utf-8 encoding as you don't want it double
+     *                            encoding messages.
+     * @param bool   $interactive If TRUE, will stop after each file with errors
+     *                            and wait for user input.
      *
      * @see process()
      */
-    public function __construct($verbosity=0, $tabWidth=0, $interactive=false)
-    {
+    public function __construct(
+        $verbosity=0,
+        $tabWidth=0,
+        $encoding='iso-8859-1',
+        $interactive=false
+    ) {
         if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
             define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
         }
 
         if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
             define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
+
+        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
+            define('PHP_CODESNIFFER_ENCODING', $encoding);
         }
 
         if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {

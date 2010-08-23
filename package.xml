@@ -29,6 +29,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added exclude pattern support to ruleset.xml file so you can hard-code ignore patterns into a standard (feature request #17683)
     -- Use new exclude-pattern tags to include the ignroe rules into your ruleset.xml file
     -- See CodeSniffer/Standards/PHPCS/ruleset.xml for an example
+  - Added new --encoding command line argument to specify the encoding of the files being checked
+    -- When set to utf-8, stops the XML-based reports from double-encoding
+    -- When set to something else, helps the XML-based reports encode to utf-8
+    -- Default value is iso-8859-1 but can be changed with --config-set encoding [value]
   - The report is no longer printed to screen when using the --report-file command line option (feature request #17467)
     -- If you want to print it to screen as well, use the -v command line argument
   - The SVN and GIT blame reports now also show percentage of reported errors per author (feature request #17606)
@@ -37,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic SubversionPropertiesSniff now allows properties to have NULL values (feature request #17682)
     -- A null value indicates that the property should exist but the value should not be checked
   - Fixed a problem in Squiz OutputBufferingIndentSniff where block comments were reported as not indented
+  - Fixed bug #17092 : Problems with utf8_encode and htmlspecialchars with non-ascii chars
+    -- Use the new --encoding=utf-8 command line argument if your files are utf-8 encoded
   - Fixed bug #17629 : PHP_CodeSniffer_Tokens::$booleanOperators missing T_LOGICAL_XOR
     -- Thanks to Matthew Turland for the patch
   - Fixed bug #17699 : Fatal error generating code coverage with PHPUnit 5.3.0RC1

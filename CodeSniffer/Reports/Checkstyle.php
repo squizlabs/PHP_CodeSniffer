@@ -60,12 +60,15 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
-                        $error['type'] = strtolower($error['type']);
-                        echo '  <error';
-                        echo ' line="'.$line.'" column="'.$column.'"';
+                        $error['type']    = strtolower($error['type']);
+                        $error['message'] = htmlspecialchars($error['message']);
+                        if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
+                            $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
+                        }
+
+                        echo '  <error line="'.$line.'" column="'.$column.'"';
                         echo ' severity="'.$error['type'].'"';
-                        $message = utf8_encode(htmlspecialchars($error['message']));
-                        echo ' message="'.$message.'"';
+                        echo ' message="'.$error['message'].'"';
                         echo ' source="'.$error['source'].'"';
                         echo '/>'.PHP_EOL;
                         $errorsShown++;
