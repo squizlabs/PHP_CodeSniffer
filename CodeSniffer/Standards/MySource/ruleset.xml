@@ -4,7 +4,6 @@
 
  <exclude-pattern>*/Tests/*</exclude-pattern>
  <exclude-pattern>*/Oven/*</exclude-pattern>
- <exclude-pattern>*/web/*</exclude-pattern>
  <exclude-pattern>*/data/*</exclude-pattern>
  <exclude-pattern>DALConf.inc</exclude-pattern>
 
