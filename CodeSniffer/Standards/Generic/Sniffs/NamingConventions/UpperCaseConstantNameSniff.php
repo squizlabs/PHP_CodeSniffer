@@ -63,6 +63,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             return;
         }
 
+        // Special case for PHPUnit.
+        if ($constName === 'PHPUnit_MAIN_METHOD') {
+            return;
+        }
+
         // If the next non-whitespace token after this token
         // is not an opening parenthesis then it is not a function call.
         $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);

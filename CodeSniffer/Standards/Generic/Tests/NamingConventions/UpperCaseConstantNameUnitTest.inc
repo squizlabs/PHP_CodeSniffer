@@ -87,4 +87,9 @@ $binary = (binary) $string;
 
 $foo->define('bar');
 $foo->getBar()->define('foo');
+
+// This is allowed as it is required for PHPUnit.
+if (PHPUnit_MAIN_METHOD == 'PHP_Shell_AllTests::main') {
+    PHP_Shell_AllTests::main();
+}
 ?>
