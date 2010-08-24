@@ -63,8 +63,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             // but if not, we only show files that had errors or warnings.
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || $numErrors > 0
-                || ($numWarnings > 0
-                && $showWarnings === true)
+                || $numWarnings > 0
             ) {
                 $errorFiles[$filename] = array(
                                           'warnings' => $numWarnings,
