@@ -47,6 +47,16 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The header comment parser for the current file.
      *
      * @var PHP_CodeSniffer_Comment_Parser_ClassCommentParser
@@ -143,7 +153,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $blankLineBefore = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, false, $phpcsFile->eolChar);
         if ($blankLineBefore !== false && $blankLineBefore < $commentStart) {
             $error = 'Extra newline found after the open tag';
-            $phpcsFile->addError($error, ($stackPtr + 1), 'SpacingAfterOpen');
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
         }
 
         // Exactly one blank line after the file comment.
