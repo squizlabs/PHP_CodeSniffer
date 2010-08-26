@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17718 : Namespace 'use' statement: used global class name is recognized as constant
   - Fixed bug #17734 : Generic SubversionPropertiesSniff complains on non SVN files
   - Fixed bug #17742 : EmbeddedPhpSniff reacts negatively to file without closing php tag
+  - Fixed bug #17823 : Notice: Please no longer include PHPUnit/Framework.php
  </notes>
  <contents>
   <dir name="/">
