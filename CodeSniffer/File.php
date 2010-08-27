@@ -649,7 +649,7 @@ class PHP_CodeSniffer_File
             $severity = PHPCS_DEFAULT_ERROR_SEV;
         }
 
-        if ($this->phpcs->cli->warningSeverity > $severity) {
+        if ($this->phpcs->cli->errorSeverity > $severity) {
             return;
         }
 
