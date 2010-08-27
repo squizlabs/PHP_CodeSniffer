@@ -114,7 +114,7 @@ class PHP_CodeSniffer_Reporting
      *
      * Used by error reports to get a packaged list of all errors in each file.
      *
-     * @param array   $filesViolations List of found violations.
+     * @param array $filesViolations List of found violations.
      *
      * @return array
      */

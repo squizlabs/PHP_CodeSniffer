@@ -20,4 +20,9 @@
   <exclude name="Squiz.WhiteSpace.ScopeIndent"/>
  </rule>
 
+ <!-- We allow variables to be used inside double quoted strings -->
+ <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
+  <severity>0</severity>
+ </rule>
+
 </ruleset>

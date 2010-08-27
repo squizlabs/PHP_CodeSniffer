@@ -400,7 +400,7 @@ class PHP_CodeSniffer
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
-            } else if (is_file(realpath($this->_cwd.'/'.$standard)) == true) {
+            } else if (is_file(realpath($this->_cwd.'/'.$standard)) === true) {
                 $ruleset = simplexml_load_file(realpath($this->_cwd.'/'.$standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
@@ -484,6 +484,7 @@ class PHP_CodeSniffer
      *                         listeners to.
      *
      * @return void
+     * @throws PHP_CodeSniffer_Exception If the standard is not valid.
      */
     public function setTokenListeners($standard, array $sniffs=array())
     {
@@ -616,7 +617,7 @@ class PHP_CodeSniffer
 
                 $ownSniffs[] = $file->getPathname();
             }//end foreach
-        }
+        }//end if
 
         if ($standard !== null) {
             $rulesetPath = $dir;
@@ -702,7 +703,7 @@ class PHP_CodeSniffer
             }
         }//end if
 
-        if ($isDir == true) {
+        if ($isDir === true) {
             if (self::isInstalledStandard($sniff) === true) {
                 // We are referencing a coding standard.
                 $referencedSniffs = $this->getSniffFiles($path, $sniff);
@@ -807,6 +808,7 @@ class PHP_CodeSniffer
      * Populates the array of PHP_CodeSniffer_Sniff's for this file.
      *
      * @return void
+     * @throws PHP_CodeSniffer_Exception If sniff registration fails.
      */
     public function populateTokenListeners()
     {
@@ -821,8 +823,8 @@ class PHP_CodeSniffer
 
             // Work out the internal code for this sniff.
             $parts = explode('_', $listenerClass);
-            $code = $parts[0].'.'.$parts[2].'.'.$parts[3];
-            $code = substr($code, 0, -5);
+            $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
+            $code  = substr($code, 0, -5);
 
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
@@ -936,7 +938,7 @@ class PHP_CodeSniffer
             $this->addFile($phpcsFile);
             $phpcsFile->addError($error, null);
             return;
-        }
+        }//end try
 
     }//end processFiles()
 
@@ -1015,7 +1017,7 @@ class PHP_CodeSniffer
         $numErrors = null;
         while ($numErrors !== 0) {
             $filesViolations = $this->getFilesErrors();
-            $this->files = array();
+            $this->files     = array();
 
             $numErrors = $reporting->printReport(
                 $cliValues['report'],

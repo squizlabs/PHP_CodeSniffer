@@ -218,7 +218,7 @@ class PHP_CodeSniffer_File
      */
     private $_listeners = array();
 
-     /**
+    /**
      * The class name of the sniff currently processing the file.
      *
      * @var string
@@ -533,7 +533,7 @@ class PHP_CodeSniffer_File
             $contents = file_get_contents($this->_file);
         }
 
-        $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar);
+        $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
         $this->numTokens = count($this->_tokens);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -769,10 +769,10 @@ class PHP_CodeSniffer_File
         }
 
         $this->_warnings[$lineNum][$column][] = array(
-                                               'message'  => $message,
-                                               'source'   => $sniff,
-                                               'severity' => $severity,
-                                              );
+                                                 'message'  => $message,
+                                                 'source'   => $sniff,
+                                                 'severity' => $severity,
+                                                );
         $this->_warningCount++;
 
     }//end addWarning()
@@ -1220,7 +1220,7 @@ class PHP_CodeSniffer_File
                 if (empty($map) === false) {
                     $tokens[$i]['nested_parenthesis'] = $map;
                 }
-            }
+            }//end if
         }//end for
 
     }//end _createParenthesisNestingMap()
@@ -1383,7 +1383,7 @@ class PHP_CodeSniffer_File
 
                     if (in_array(T_CLOSE_CURLY_BRACKET, $tokenizer->scopeOpeners[$tokenType]['end']) === true) {
                         $oldIgnore = $ignore;
-                        $ignore = 0;
+                        $ignore    = 0;
                     }
 
                     $i = self::_recurseScopeMap(
@@ -1400,9 +1400,9 @@ class PHP_CodeSniffer_File
                         $ignore = $oldIgnore;
                     }
                 }//end if
-            }//end if start scope
+            }//end if
 
-            if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['start']) == true
+            if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['start']) === true
                 && $opener === null
             ) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
@@ -1497,7 +1497,7 @@ class PHP_CodeSniffer_File
                             echo '* skipping parenthesis *'.PHP_EOL;
                         }
                     }
-                }
+                }//end if
             } else if ($tokenType === T_OPEN_CURLY_BRACKET && $opener !== null) {
                 // We opened something that we don't have a scope opener for.
                 // Examples of this are curly brackets for string offsets etc.
@@ -2248,7 +2248,7 @@ class PHP_CodeSniffer_File
 
         return array(
                 'is_abstract' => $isAbstract,
-                'is_final'    => $isFinal
+                'is_final'    => $isFinal,
                );
 
     }//end getClassProperties()

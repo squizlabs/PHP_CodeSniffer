@@ -35,9 +35,9 @@ interface PHP_CodeSniffer_Report
     /**
      * Generate the actual report.
      * 
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.  
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.  
      * 
      * @return string 
      */
