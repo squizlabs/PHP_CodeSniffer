@@ -78,6 +78,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </dir>
    <dir name="tests">
     <dir name="Core">
+     <dir name="File">
+      <file baseinstalldir="" name="GetMethodParametersTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
      <dir name="Reports">
       <dir name="Mock">
        <file baseinstalldir="" name="Gitblame.php" role="test">
@@ -1799,6 +1804,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
+   <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
    <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
    <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
@@ -1826,6 +1832,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
+   <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
    <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
    <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />

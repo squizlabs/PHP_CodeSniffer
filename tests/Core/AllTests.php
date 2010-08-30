@@ -16,6 +16,7 @@
 
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
+require_once 'File/GetMethodParametersTest.php';
 require_once 'ReportingTest.php';
 require_once 'Reports/CheckstyleTest.php';
 require_once 'Reports/FullTest.php';
@@ -75,6 +76,7 @@ class PHP_CodeSniffer_Core_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
         $suite->addTestSuite('Core_IsCamelCapsTest');
         $suite->addTestSuite('Core_ErrorSuppressionTest');
+        $suite->addTestSuite('Core_File_GetMethodParametersTest');
         $suite->addTestSuite('Core_ReportingTest');
         $suite->addTestSuite('Core_Reports_CheckstyleTest');
         $suite->addTestSuite('Core_Reports_FullTest');
