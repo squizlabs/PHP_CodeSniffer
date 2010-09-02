@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- A null value indicates that the property should exist but the value should not be checked
   - Generic UpperCaseConstantName Sniff now longer complains about the PHPUnit_MAIN_METHOD constant (request #17798)
   - Squiz FileComment sniff now checks JS files as well as PHP files
+  - Squiz FunctionCommentSniff now supports namespaces in type hints
   - Fixed a problem in Squiz OutputBufferingIndentSniff where block comments were reported as not indented
   - Fixed bug #17092 : Problems with utf8_encode and htmlspecialchars with non-ascii chars
     -- Use the new --encoding=utf-8 command line argument if your files are utf-8 encoded

@@ -476,4 +476,30 @@ function test()
 {
 
 }//end test()
+
+/**
+ * Comment.
+ *
+ * @param \other\namespace\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\namespace\item $test)
+{
+   return $test;
+
+}//end test()
+
+/**
+ * Comment.
+ *
+ * @param item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\namespace\item $test)
+{
+   return $test;
+
+}//end test()
 ?>

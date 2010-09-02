@@ -1939,7 +1939,7 @@ class PHP_CodeSniffer_File
             // we cause problems in our parsing below, so lets just skip to the
             // end of it.
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true) {
-                // Don't do this if its the close parenthesis for the method.
+                // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->_tokens[$i]['parenthesis_closer']) {
                     $i = ($this->_tokens[$i]['parenthesis_closer'] + 1);
                 }
@@ -1966,7 +1966,12 @@ class PHP_CodeSniffer_File
                     }
                 }
 
-                $typeHint = $this->_tokens[$i]['content'];
+                $typeHint .= $this->_tokens[$i]['content'];
+                break;
+            case T_NS_SEPARATOR:
+            case T_NAMESPACE:
+                // Part of a type hint.
+                $typeHint .= $this->_tokens[$i]['content'];
                 break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
