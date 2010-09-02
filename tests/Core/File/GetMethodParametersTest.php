@@ -114,7 +114,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      */
     public function testArrayHint()
     {
-
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var',
@@ -137,11 +136,114 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     }//end testArrayHint()
 
 
+    /**
+     * Verify type hint parsing.
+     *
+     * @return void
+     */
+    public function testTypeHint()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var1',
+                        'pass_by_reference' => false,
+                        'type_hint'         => 'foo',
+                       );
+
+        $expected[1] = array(
+                        'name'              => '$var2',
+                        'pass_by_reference' => false,
+                        'type_hint'         => 'bar',
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testTypeHint */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testTypeHint()
+
+
+    /**
+     * Verify variable.
+     *
+     * @return void
+     */
+    public function testVariable()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var',
+                        'pass_by_reference' => false,
+                        'type_hint'         => '',
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testVariable */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testVariable()
+
+
+    /**
+     * Verify default value parsing.
+     *
+     * @return void
+     */
+    public function testDefaultValues()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var1',
+                        'default'           => '1',
+                        'pass_by_reference' => false,
+                        'type_hint'         => '',
+                       );
+        $expected[1] = array(
+                        'name'              => '$var2',
+                        'default'           => "'value'",
+                        'pass_by_reference' => false,
+                        'type_hint'         => '',
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testDefaultValues */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testDefaultValues()
+
+
 }//end class
 
 // @codingStandardsIgnoreStart
 /* testPassByReference */ function passByReference(&$var) {}
 /* testArrayHint */ function arrayHint(array $var) {}
+/* testVariable */ function variable($var) {}
+/* testDefaultValues */ function defaultValues($var1=1, $var2='value') {}
+/* testTypeHint */ function typeHint(foo $var1, bar $var2) {}
 // @codingStandardsIgnoreEnd
 
 ?>
