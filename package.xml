@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2010-09-03</date>
  <time>11:09:00</time>
  <version>
-  <release>1.3.0RC1</release>
-  <api>1.3.0RC1</api>
+  <release>1.3.0RC2</release>
+  <api>1.3.0RC2</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,33 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added exclude pattern support to ruleset.xml file so you can specify ignore patterns in a standard (request #17683)
-    -- Use new exclude-pattern tags to include the ignore rules into your ruleset.xml file
-    -- See CodeSniffer/Standards/PHPCS/ruleset.xml for an example
-  - Added new --encoding command line argument to specify the encoding of the files being checked
-    -- When set to utf-8, stops the XML-based reports from double-encoding
-    -- When set to something else, helps the XML-based reports encode to utf-8
-    -- Default value is iso-8859-1 but can be changed with --config-set encoding [value]
-  - The report is no longer printed to screen when using the --report-file command line option (request #17467)
-    -- If you want to print it to screen as well, use the -v command line argument
-  - The SVN and GIT blame reports now also show percentage of reported errors per author (request #17606)
-    -- Thanks to Ben Selby for the patch
-  - Updated the SVN pre-commit hook to work with the new severity levels feature
-  - Generic SubversionPropertiesSniff now allows properties to have NULL values (request #17682)
-    -- A null value indicates that the property should exist but the value should not be checked
-  - Generic UpperCaseConstantName Sniff now longer complains about the PHPUnit_MAIN_METHOD constant (request #17798)
-  - Squiz FileComment sniff now checks JS files as well as PHP files
-  - Squiz FunctionCommentSniff now supports namespaces in type hints
-  - Fixed a problem in Squiz OutputBufferingIndentSniff where block comments were reported as not indented
-  - Fixed bug #17092 : Problems with utf8_encode and htmlspecialchars with non-ascii chars
-    -- Use the new --encoding=utf-8 command line argument if your files are utf-8 encoded
-  - Fixed bug #17629 : PHP_CodeSniffer_Tokens::$booleanOperators missing T_LOGICAL_XOR
-    -- Thanks to Matthew Turland for the patch
-  - Fixed bug #17699 : Fatal error generating code coverage with PHPUnit 5.3.0RC1
-  - Fixed bug #17718 : Namespace 'use' statement: used global class name is recognized as constant
-  - Fixed bug #17734 : Generic SubversionPropertiesSniff complains on non SVN files
-  - Fixed bug #17742 : EmbeddedPhpSniff reacts negatively to file without closing php tag
-  - Fixed bug #17823 : Notice: Please no longer include PHPUnit/Framework.php
+  - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
  </notes>
  <contents>
   <dir name="/">
@@ -300,6 +274,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="InlineControlStructureSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="ClosureLinterSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>

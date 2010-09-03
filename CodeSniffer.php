@@ -791,7 +791,14 @@ class PHP_CodeSniffer
                     }
 
                     $name = (string) $prop['name'];
-                    $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
+                    if (isset($prop['type']) === true
+                        && (string) $prop['type'] === 'array'
+                    ) {
+                        $value = (string) $prop['value'];
+                        $this->ruleset[$code]['properties'][$name] = explode(',', $value);
+                    } else {
+                        $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
+                    }
                 }
             }
         }//end foreach
