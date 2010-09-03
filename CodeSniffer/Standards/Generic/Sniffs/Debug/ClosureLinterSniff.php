@@ -101,7 +101,7 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Skip error codes we are ignoring.
-            $code = (int) $matches[3];
+            $code = $matches[3];
             if (in_array($code, $this->ignoreCodes) === true) {
                 continue;
             }
