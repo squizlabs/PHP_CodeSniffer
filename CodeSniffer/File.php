@@ -1969,7 +1969,6 @@ class PHP_CodeSniffer_File
                 $typeHint .= $this->_tokens[$i]['content'];
                 break;
             case T_NS_SEPARATOR:
-            case T_NAMESPACE:
                 // Part of a type hint.
                 $typeHint .= $this->_tokens[$i]['content'];
                 break;

@@ -480,11 +480,11 @@ function test()
 /**
  * Comment.
  *
- * @param \other\namespace\item $test An argument.
+ * @param \other\ns\item $test An argument.
  *
  * @return mixed
  */
-function test(\other\namespace\item $test)
+function test(\other\ns\item $test)
 {
    return $test;
 
@@ -497,7 +497,7 @@ function test(\other\namespace\item $test)
  *
  * @return mixed
  */
-function test(\other\namespace\item $test)
+function test(\other\ns\item $test)
 {
    return $test;
 
