@@ -502,4 +502,30 @@ function test(\other\ns\item $test)
    return $test;
 
 }//end test()
+
+/**
+ * Comment.
+ *
+ * @param \first\ns\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\first\ns\item $test = \second\ns::CONSTANT)
+{
+   return $test;
+
+}//end test()
+
+/**
+ * Comment.
+ *
+ * @param \first\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\first\ns\item $test = \second\ns::CONSTANT)
+{
+   return $test;
+
+}//end test()
 ?>

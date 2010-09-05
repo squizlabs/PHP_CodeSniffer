@@ -1966,11 +1966,17 @@ class PHP_CodeSniffer_File
                     }
                 }
 
-                $typeHint .= $this->_tokens[$i]['content'];
+                if ($defaultStart === null) {
+                    $typeHint .= $this->_tokens[$i]['content'];
+                }
+
                 break;
             case T_NS_SEPARATOR:
-                // Part of a type hint.
-                $typeHint .= $this->_tokens[$i]['content'];
+                // Part of a type hint or default value.
+                if ($defaultStart === null) {
+                    $typeHint .= $this->_tokens[$i]['content'];
+                }
+
                 break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:

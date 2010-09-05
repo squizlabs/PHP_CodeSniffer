@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
+  - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace
  </notes>
  <contents>
   <dir name="/">
