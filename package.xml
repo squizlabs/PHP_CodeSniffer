@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
   - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace
     -- Thanks to Anti Veeranna for the patch
+  - Improved regular expression detection in JavaScript files
+    -- Added new T_TYPEOF token that can be used to target the typeof JS operator
+    -- Fixes bug #17611 : Regular expression tokens not recognised
  </notes>
  <contents>
   <dir name="/">

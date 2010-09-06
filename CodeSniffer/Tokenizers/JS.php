@@ -165,6 +165,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               'false'     => 'T_FALSE',
                               'null'      => 'T_NULL',
                               'this'      => 'T_THIS',
+                              'typeof'    => 'T_TYPEOF',
                               '('         => 'T_OPEN_PARENTHESIS',
                               ')'         => 'T_CLOSE_PARENTHESIS',
                               '{'         => 'T_OPEN_CURLY_BRACKET',
@@ -832,6 +833,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                          T_BITWISE_OR,
                          T_BITWISE_AND,
                          T_COMMA,
+                         T_COLON,
+                         T_TYPEOF,
                         );
 
         $afterTokens = array(
@@ -840,6 +843,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                          ';',
                          ' ',
                          '.',
+                         $eolChar,
                         );
 
         // Find the last non-whitespace token that was added
@@ -873,8 +877,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                     break;
                 }
             } else {
-                $possiblEolChar = substr($string, $next, strlen($eolChar));
-                if ($possiblEolChar === $eolChar) {
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
+                if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line and regular
                     // expressions need to be defined on a single line,
                     // so this is not a regular expression.
@@ -884,6 +888,10 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         if ($chars[$next] !== '/') {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t* could not find end of regular expression *".PHP_EOL;
+            }
+
             return null;
         }
 
@@ -895,13 +903,16 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         $regexEnd = $next;
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t* found end of regular expression at token $regexEnd *".PHP_EOL;
+        }
 
         for ($next = ($next + 1); $next < $numChars; $next++) {
             if ($chars[$next] !== ' ') {
                 break;
             } else {
-                $possiblEolChar = substr($string, $next, strlen($eolChar));
-                if ($possiblEolChar === $eolChar) {
+                $possibleEolChar = substr($string, $next, strlen($eolChar));
+                if ($possibleEolChar === $eolChar) {
                     // This is the last token on the line.
                     break;
                 }
@@ -909,6 +920,10 @@ class PHP_CodeSniffer_Tokenizers_JS
         }
 
         if (in_array($chars[$next], $afterTokens) === false) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t* tokens after regular expression do not look correct *".PHP_EOL;
+            }
+
             return null;
         }
 
