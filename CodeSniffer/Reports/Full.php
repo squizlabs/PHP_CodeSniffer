@@ -69,8 +69,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             echo str_repeat('-', $width).PHP_EOL;
 
             echo 'FOUND '.$file['errors'].' ERROR(S) ';
-
-            if ($file['warnings'] === true) {
+            if ($file['warnings'] > 0) {
                 echo 'AND '.$file['warnings'].' WARNING(S) ';
             }
 
