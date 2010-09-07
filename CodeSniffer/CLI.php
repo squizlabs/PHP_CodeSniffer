@@ -174,6 +174,10 @@ class PHP_CodeSniffer_CLI
 
         for ($i = 1; $i < $_SERVER['argc']; $i++) {
             $arg = $_SERVER['argv'][$i];
+            if ($arg === '') {
+                continue;
+            }
+
             if ($arg{0} === '-') {
                 if ($arg === '-' || $arg === '--') {
                     // Empty argument, ignore it.
@@ -205,7 +209,7 @@ class PHP_CodeSniffer_CLI
 
 
     /**
-     * Processes a sort (-e) command line argument.
+     * Processes a short (-e) command line argument.
      *
      * @param string $arg    The command line argument.
      * @param int    $pos    The position of the argument on the command line.
@@ -237,6 +241,16 @@ class PHP_CodeSniffer_CLI
             break;
         case 'a' :
             $values['interactive'] = true;
+            break;
+        case 'd' :
+            $ini = explode('=', $_SERVER['argv'][($pos + 1)]);
+            $_SERVER['argv'][($pos + 1)] = '';
+            if (isset($ini[1]) === true) {
+                ini_set($ini[0], $ini[1]);
+            } else {
+                ini_set($ini[0], true);
+            }
+
             break;
         case 'n' :
             $values['warningSeverity'] = 0;
@@ -582,7 +596,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsavi] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsavi] [-d key[=value]] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
@@ -595,25 +609,23 @@ class PHP_CodeSniffer_CLI
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
+        echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (only valid if checking a directory)'.PHP_EOL;
-        echo '        <patterns>    A comma separated list of patterns that are used'.PHP_EOL;
-        echo '                      to ignore directories and files'.PHP_EOL;
+        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo '        <severity>    The minimum severity that an error or warning must have'.PHP_EOL;
-        echo '                      for it to be displayed.'.PHP_EOL;
-        echo '        <standard>    The name of the coding standard to use'.PHP_EOL;
+        echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
+        echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
-        echo '        <report>      Print either the "full", "xml", "checkstyle",'.PHP_EOL;
-        echo '                      "csv", "emacs", "source", "summary",'.PHP_EOL;
-        echo '                      "svnblame" or "gitblame" report'.PHP_EOL;
+        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "emacs"'.PHP_EOL;
+        echo '                      "source", "summary", "svnblame" or "gitblame" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;

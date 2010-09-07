@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added -d command line argument to set php.ini settings while running
+    -- Usage is: phpcs -d memory_limit=32M -d ...
+    -- Thanks to Ben Selby for the patch
   - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
   - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace
     -- Thanks to Anti Veeranna for the patch
