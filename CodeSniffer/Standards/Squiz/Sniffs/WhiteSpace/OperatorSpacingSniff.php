@@ -76,7 +76,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             || $tokens[$stackPtr]['code'] === T_MINUS
         ) {
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $bracket = end($tokens[$stackPtr]['nested_parenthesis']);
+                $parenthesis = array_keys($tokens[$stackPtr]['nested_parenthesis']);
+                $bracket     = array_pop($parenthesis);
                 if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
                     $function = $tokens[$bracket]['parenthesis_owner'];
                     if ($tokens[$function]['code'] === T_FUNCTION) {

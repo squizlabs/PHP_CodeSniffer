@@ -99,7 +99,6 @@ function myFunction()
 exit();
 
 // Errors are thrown from here down from the exit() above.
-// No lines before should have duplicate errors.
 foreach ($vars as $var) {
     if ($something === TRUE) {
         break;

@@ -131,55 +131,8 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         }
 
         $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
-        $ourTokens     = $this->register();
-        $hasConditions = empty($ourConditions);
 
-        // Skip this token if it is non-executable code itself.
-        if ($hasConditions === false) {
-            for ($i = ($stackPtr - 1); $i >= 1; $i--) {
-                // Skip tokens that close the scope. They don't end
-                // the execution of code.
-                if (isset($tokens[$i]['scope_opener']) === true) {
-                    continue;
-                }
-
-                // Skip tokens that do not end execution.
-                if (in_array($tokens[$i]['code'], $ourTokens) === false) {
-                    continue;
-                }
-
-                if (empty($tokens[$i]['conditions']) === true) {
-                    // Found an end of execution token in the global
-                    // scope, so it will be executed before us.
-                    return;
-                }
-
-                // If the deepest condition this token is in also happens
-                // to be a condition we are in, it will get executed before us.
-                $conditions = array_keys($tokens[$i]['conditions']);
-                $condition  = array_pop($conditions);
-                if (in_array($condition, $ourConditions) === true) {
-                    return;
-                }
-            }//end for
-        } else {
-            // Look for other end of execution tokens in the global scope.
-            for ($i = ($stackPtr - 1); $i >= 1; $i--) {
-                if (in_array($tokens[$i]['code'], $ourTokens) === false) {
-                    continue;
-                }
-
-                if (empty($tokens[$i]['conditions']) === false) {
-                    continue;
-                }
-
-                // Another end of execution token was before us in the
-                // global scope, so we are not executable.
-                return;
-            }
-        }//end if
-
-        if ($hasConditions === false) {
+        if (empty($ourConditions) === false) {
             $condition = array_pop($ourConditions);
 
             if (isset($tokens[$condition]['scope_closer']) === false) {
