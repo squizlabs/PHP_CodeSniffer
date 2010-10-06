@@ -226,6 +226,13 @@ class PHP_CodeSniffer_File
     private $_activeListener = '';
 
     /**
+     * An array of sniffs being processed and how long they took.
+     *
+     * @var array()
+     */
+    private $_listenerTimes = array();
+
+    /**
      * An array of extensions mapping to the tokenizer to use.
      *
      * This value gets set by PHP_CodeSniffer when the object is created.
@@ -443,12 +450,20 @@ class PHP_CodeSniffer_File
                     }
 
                     $listener->process($this, $stackPtr);
-                    $this->_activeListener = '';
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                        $timeTaken = round((microtime(true) - $startTime), 4);
+                        $timeTaken = (microtime(true) - $startTime);
+                        if (isset($this->_listenerTimes[$this->_activeListener]) === FALSE) {
+                            $this->_listenerTimes[$this->_activeListener] = 0;
+                        }
+
+                        $this->_listenerTimes[$this->_activeListener] += $timeTaken;
+
+                        $timeTaken = round(($timeTaken), 4);
                         echo "DONE in $timeTaken seconds".PHP_EOL;
                     }
+
+                    $this->_activeListener = '';
                 }//end foreach
             }//end if
         }//end foreach
@@ -485,6 +500,18 @@ class PHP_CodeSniffer_File
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
+
+            asort($this->_listenerTimes, SORT_NUMERIC);
+            $this->_listenerTimes = array_reverse($this->_listenerTimes, TRUE);
+            foreach ($this->_listenerTimes as $listener => $timeTaken) {
+                echo "\t$listener: ".round(($timeTaken), 4).' secs'.PHP_EOL;
+            }
+
+            echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
 
     }//end start()
@@ -2134,8 +2161,8 @@ class PHP_CodeSniffer_File
             throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_VARIABLE');
         }
 
-        end($this->_tokens[$stackPtr]['conditions']);
-        $ptr = key($this->_tokens[$stackPtr]['conditions']);
+        $conditions = array_keys($this->_tokens[$stackPtr]['conditions']);
+        $ptr        = array_pop($conditions);
         if (isset($this->_tokens[$ptr]) === false
             || $this->_tokens[$ptr]['code'] !== T_CLASS
         ) {
@@ -2573,6 +2600,40 @@ class PHP_CodeSniffer_File
         return false;
 
     }//end hasCondition()
+
+
+    /**
+     * Return the position of the condition for the passed token.
+     *
+     * Returns FALSE if the token does not have the condition.
+     *
+     * @param int $stackPtr The position of the token we are checking.
+     * @param int $type     The type of token to search for.
+     *
+     * @return int
+     */
+    public function getCondition($stackPtr, $type)
+    {
+        // Check for the existence of the token.
+        if (isset($this->_tokens[$stackPtr]) === false) {
+            return false;
+        }
+
+        // Make sure the token has conditions.
+        if (isset($this->_tokens[$stackPtr]['conditions']) === false) {
+            return false;
+        }
+
+        $conditions = $this->_tokens[$stackPtr]['conditions'];
+        foreach ($conditions as $token => $condition) {
+            if ($condition === $type) {
+                return $token;
+            }
+        }
+
+        return false;
+
+    }//end getCondition()
 
 
     /**
