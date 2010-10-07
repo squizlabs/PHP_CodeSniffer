@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Fixes bug #17611 : Regular expression tokens not recognised
   - Squiz ScopeIndentSniff removed
     -- Squiz standard no longer requires additional indents between ob_* methods
+    -- Also removed Squiz OutputBufferingIndentSniff that was checking the same thing
   - PHP_CodeSniffer_File::getMemberProperties() performance improved significantly
     -- Improves performance of Squiz ValidVariableNameSniff significantly
   - Squiz OperatorSpacingSniff performance improved significantly
@@ -1044,9 +1045,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OperatorBracketSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="OutputBufferingIndentSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingSniff.php" role="php">
@@ -1430,10 +1428,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OperatorBracketUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OperatorBracketUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="OperatorBracketUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-        <file baseinstalldir="PHP" name="OutputBufferingIndentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="OutputBufferingIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
