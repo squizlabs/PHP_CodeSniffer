@@ -76,15 +76,20 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
         foreach ($standards as $standard) {
             if ($isInstalled === false) {
-                $standardDir = realpath($standardsDir.'/'.$standard.'/Tests/');
+                $standardDir = $standardsDir.'/'.$standard.'/Tests/';
             } else {
                 $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
             }
 
+            $standardDir = realpath($standardDir);
             if (is_dir($standardDir) === false) {
                 // No tests for this standard.
                 continue;
             }
+
+            // Locate the actual directory that contains the standard's tests.
+            // This is individual to each standard as they could be symlinked in.
+            $baseDir = realpath($standardDir.'/../../');
 
             $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
 
@@ -101,20 +106,10 @@ class PHP_CodeSniffer_Standards_AllSniffs
                     continue;
                 }
 
-                $filePath = realpath($file->getPathname());
-
-                if ($isInstalled === false) {
-                    $className = str_replace($standardDir.DIRECTORY_SEPARATOR, '', $filePath);
-                } else {
-                    $className = str_replace(dirname(__FILE__).DIRECTORY_SEPARATOR, '', $filePath);
-                }
-
+                $filePath  = realpath($file->getPathname());
+                $className = str_replace($baseDir.DIRECTORY_SEPARATOR, '', $filePath);
                 $className = substr($className, 0, -4);
                 $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
-
-                if ($isInstalled === false) {
-                    $className = $standard.'_Tests_'.$className;
-                }
 
                 include_once $filePath;
                 $class = new $className('getErrorList');

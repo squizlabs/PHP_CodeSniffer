@@ -46,6 +46,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz NonExecutableCodeSniff performance improved significantly
     -- Will throw duplicate errors in some cases now, but these should be rare
   - MySource IncludeSystemSniff performance improved significantly
+  - Fixed bug #17902 : Cannot run tests when tests are symlinked into tests dir
+    -- Thanks to Matt Button for the patch
  </notes>
  <contents>
   <dir name="/">
