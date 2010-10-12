@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added -d command line argument to set php.ini settings while running (request #17244)
     -- Usage is: phpcs -d memory_limit=32M -d ...
     -- Thanks to Ben Selby for the patch
+  - You can now add exclude rules for individual sniffs or error messages (request #17903)
+    -- Only available when using a ruleset.xml file to specify rules
+    -- Uses the same exclude-pattern tags as normal but allows them inside rule tags
   - Using the -vvv option will now print a list of sniffs executed for each file and how long they took to process
   - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
   - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace

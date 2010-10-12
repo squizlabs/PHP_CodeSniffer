@@ -430,7 +430,8 @@ class PHP_CodeSniffer_File
                 foreach ($this->_listeners[$tokenType] as $listener) {
                     // Make sure this sniff supports the tokenizer
                     // we are currently using.
-                    $vars = get_class_vars(get_class($listener));
+                    $class = get_class($listener);
+                    $vars  = get_class_vars($class);
                     if (isset($vars['supportedTokenizers']) === true) {
                         if (in_array($this->tokenizerType, $vars['supportedTokenizers']) === false) {
                             continue;
@@ -442,7 +443,25 @@ class PHP_CodeSniffer_File
                         }
                     }
 
-                    $this->setActiveListener(get_class($listener));
+                    // If the file path matches one of our ignore patterns, skip it.
+                    $parts = explode('_', $class);
+                    if (isset($parts[3]) === true) {
+                        $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
+                        $patterns = $this->phpcs->getIgnorePatterns($source);
+                        foreach ($patterns as $pattern) {
+                            $replacements = array(
+                                             '\\,' => ',',
+                                             '*'   => '.*',
+                                            );
+
+                            $pattern = strtr($pattern, $replacements);
+                            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                                continue(2);
+                            }
+                        }
+                    }
+
+                    $this->setActiveListener($class);
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $startTime = microtime(true);
@@ -680,6 +699,20 @@ class PHP_CodeSniffer_File
             return;
         }
 
+        // Make sure we are not ignoring this file.
+        $patterns = $this->phpcs->getIgnorePatterns($sniff);
+        foreach ($patterns as $pattern) {
+            $replacements = array(
+                             '\\,' => ',',
+                             '*'   => '.*',
+                            );
+
+            $pattern = strtr($pattern, $replacements);
+            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                return;
+            }
+        }
+
         // Work out the warning message.
         if (isset($this->ruleset[$sniff]['message']) === true) {
             $error = $this->ruleset[$sniff]['message'];
@@ -766,6 +799,20 @@ class PHP_CodeSniffer_File
 
         if ($this->phpcs->cli->warningSeverity > $severity) {
             return;
+        }
+
+        // Make sure we are not ignoring this file.
+        $patterns = $this->phpcs->getIgnorePatterns($sniff);
+        foreach ($patterns as $pattern) {
+            $replacements = array(
+                             '\\,' => ',',
+                             '*'   => '.*',
+                            );
+
+            $pattern = strtr($pattern, $replacements);
+            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                return;
+            }
         }
 
         // Work out the warning message.

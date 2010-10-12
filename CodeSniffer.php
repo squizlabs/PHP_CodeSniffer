@@ -322,6 +322,32 @@ class PHP_CodeSniffer
 
 
     /**
+     * Gets the array of ignore patterns.
+     *
+     * Optionally takes a listener to get ignore patterns specified
+     * for that sniff only.
+     *
+     * @param string $listener The listener to get patterns for. If NULL, all
+     *                         patterns are returned.
+     *
+     * @return array
+     */
+    public function getIgnorePatterns($listener=null)
+    {
+        if ($listener === null) {
+            return $this->ignorePatterns;
+        }
+
+        if (isset($this->ignorePatterns[$listener]) === true) {
+            return $this->ignorePatterns[$listener];
+        }
+
+        return array();
+
+    }//end getIgnorePatterns()
+
+
+    /**
      * Sets the internal CLI object.
      *
      * @param object $cli The CLI object controlling the run.
@@ -655,7 +681,7 @@ class PHP_CodeSniffer
             }
         }
 
-        return $files;
+        return array_unique($files);
 
     }//end getSniffFiles()
 
@@ -800,6 +826,15 @@ class PHP_CodeSniffer
                         $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
                     }
                 }
+            }//end if
+
+            // Ignore patterns.
+            foreach ($rule->{'exclude-pattern'} as $pattern) {
+                if (isset($this->ignorePatterns[$code]) === false) {
+                    $this->ignorePatterns[$code] = array();
+                }
+
+                $this->ignorePatterns[$code][] = (string) $pattern;
             }
         }//end foreach
 
@@ -972,6 +1007,11 @@ class PHP_CodeSniffer
 
         // If the file's path matches one of our ignore patterns, skip it.
         foreach ($this->ignorePatterns as $pattern) {
+            if (is_array($pattern) === true) {
+                // A sniff specific ignore pattern.
+                continue;
+            }
+
             $replacements = array(
                              '\\,' => ',',
                              '*'   => '.*',
