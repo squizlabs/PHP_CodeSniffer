@@ -10,4 +10,8 @@ echo $data[$x.$y.'My'.'String'];
 
 $code = '$actions = array();'."\n";
 $code = "$actions = array();"."\n";
+
+// No errors for these because they are needed in some cases.
+$code = ' ?'.'>';
+$code = '<'.'?php ';
 ?>

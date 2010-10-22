@@ -97,6 +97,18 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             && in_array($tokens[$next]['code'], $stringTokens) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
+                // Before we throw an error for PHP, allow strings to be
+                // combined if they would have < and ? next to each other because
+                // this trick is sometimes required in PHP strings.
+                if ($phpcsFile->tokenizerType === 'PHP') {
+                    $prevChar = substr($tokens[$prev]['content'], -2, 1);
+                    $nextChar = $tokens[$next]['content'][1];
+                    $combined = $prevChar.$nextChar;
+                    if ($combined === '?'.'>' || $combined === '<'.'?') {
+                        return;
+                    }
+                }
+
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
                     $phpcsFile->addError($error, $stackPtr, 'Found');
