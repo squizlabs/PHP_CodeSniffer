@@ -226,3 +226,15 @@ switch (name2) {
         // No default.
     break;
 }
+
+switch (foo) {
+    case "1":
+        return true;
+    break;
+
+    default:
+        if (foo === false) {
+            break;
+        }
+    break;
+}
