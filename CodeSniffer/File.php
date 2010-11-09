@@ -2299,7 +2299,7 @@ class PHP_CodeSniffer_File
      */
     public function getClassProperties($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
+        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS) {
             throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_CLASS');
         }
 
@@ -2315,11 +2315,11 @@ class PHP_CodeSniffer_File
         $isFinal    = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if (in_array($this->tokens[$i]['code'], $valid) === false) {
+            if (in_array($this->_tokens[$i]['code'], $valid) === false) {
                 break;
             }
 
-            switch ($this->tokens[$i]['code']) {
+            switch ($this->_tokens[$i]['code']) {
             case T_ABSTRACT:
                 $isAbstract = true;
                 break;
