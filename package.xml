@@ -53,6 +53,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - MySource IncludeSystemSniff performance improved significantly
   - Fixed bug #17902 : Cannot run tests when tests are symlinked into tests dir
     -- Thanks to Matt Button for the patch
+  - Fixed bug #17928 : Improve error message for Generic_Sniffs_PHP_UpperCaseConstantSniff
+    -- Thanks to Stefano Kowalke for the patch
   - Fixed bug #18039 : JS Tokenizer crash when ] is last character in file
  </notes>
  <contents>
