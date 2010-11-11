@@ -442,6 +442,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             // the end of a string, like FOR and this.FORmat.
             if (in_array(strtolower($buffer), $tokenTypes) === true
                 && (preg_match('|[a-zA-z0-9_]|', $char) === 0
+                || isset($chars[($i + 1)]) === false
                 || preg_match('|[a-zA-z0-9_]|', $chars[($i + 1)]) === 0)
             ) {
                 $matchedToken    = false;
