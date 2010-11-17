@@ -1,5 +1,5 @@
 <?php
-use Exception;
+use Exception as My_Exception;
 namespace foo;
 namespace foo\bar;
 namespace bar\foo\baz;

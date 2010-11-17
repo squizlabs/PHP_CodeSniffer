@@ -56,6 +56,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #17928 : Improve error message for Generic_Sniffs_PHP_UpperCaseConstantSniff
     -- Thanks to Stefano Kowalke for the patch
   - Fixed bug #18039 : JS Tokenizer crash when ] is last character in file
+  - Fixed bug #18047 : Incorrect handling of namespace aliases as constants
+    -- Thanks to Dmitri Medvedev for the patch
  </notes>
  <contents>
   <dir name="/">
