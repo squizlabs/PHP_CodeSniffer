@@ -118,9 +118,9 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             // Is this a type hint?
-            if ($tokens[$nextPtr]['code'] === T_VARIABLE) {
-                return;
-            } else if ($phpcsFile->isReference($nextPtr) === true) {
+            if ($tokens[$nextPtr]['code'] === T_VARIABLE
+                || $phpcsFile->isReference($nextPtr) === true
+            ) {
                 return;
             }
 
