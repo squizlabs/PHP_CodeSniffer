@@ -108,4 +108,14 @@ foreach ($vars as $var) {
 
 exit();
 
+function test() {
+    echo 'no error';
+}
+
+class myClass {
+    function myFunc() {
+        echo 'no error';
+    }
+}
+
 ?>

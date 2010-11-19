@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18039 : JS Tokenizer crash when ] is last character in file
   - Fixed bug #18047 : Incorrect handling of namespace aliases as constants
     -- Thanks to Dmitri Medvedev for the patch
+  - Fixed bug #18073 : Squiz.PHP.NonExecutableCode fault
  </notes>
  <contents>
   <dir name="/">
