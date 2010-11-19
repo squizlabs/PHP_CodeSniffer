@@ -2387,8 +2387,8 @@ class PHP_CodeSniffer_File
             $lastBracket = array_pop($brackets);
             if (isset($this->_tokens[$lastBracket]['parenthesis_owner']) === true) {
                 $owner = $this->_tokens[$this->_tokens[$lastBracket]['parenthesis_owner']];
-                if ($owner['code'] === T_FUNCTION) {
-                    // Inside a function declaration, this is a reference.
+                if ($owner['code'] === T_FUNCTION || $owner['code'] === T_ARRAY) {
+                    // Inside a function or array declaration, this is a reference.
                     return true;
                 }
             }
