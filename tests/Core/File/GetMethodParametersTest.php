@@ -201,6 +201,36 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Verify default value parsing with a single function param.
+     *
+     * @return void
+     */
+    public function testSingleDefaultValue()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var1',
+                        'default'           => 'self::CONSTANT',
+                        'pass_by_reference' => false,
+                        'type_hint'         => '',
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testSingleDefaultValue */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testSingleDefaultValue()
+
+
+    /**
      * Verify default value parsing.
      *
      * @return void
@@ -242,6 +272,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 /* testPassByReference */ function passByReference(&$var) {}
 /* testArrayHint */ function arrayHint(array $var) {}
 /* testVariable */ function variable($var) {}
+/* testSingleDefaultValue */ function defaultValue($var1=self::CONSTANT) {}
 /* testDefaultValues */ function defaultValues($var1=1, $var2='value') {}
 /* testTypeHint */ function typeHint(foo $var1, bar $var2) {}
 // @codingStandardsIgnoreEnd
