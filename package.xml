@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Will throw duplicate errors in some cases now, but these should be rare
   - MySource IncludeSystemSniff performance improved significantly
   - MySource JoinStringsSniff no longer reports an error when using join() on a named JS array
+  - Fixed bug #17693 : issue with pre-commit hook script with filenames that start with v
   - Fixed bug #17860 : isReference function fails with references in array
     -- Thanks to Lincoln Maskey for the patch
   - Fixed bug #17902 : Cannot run tests when tests are symlinked into tests dir
