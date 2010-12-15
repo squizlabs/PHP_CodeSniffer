@@ -63,6 +63,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18047 : Incorrect handling of namespace aliases as constants
     -- Thanks to Dmitri Medvedev for the patch
   - Fixed bug #18073 : Squiz.PHP.NonExecutableCode fault
+  - Fixed bug #18117 : PEAR coding standard: Method constructor not sniffed as a function
  </notes>
  <contents>
   <dir name="/">

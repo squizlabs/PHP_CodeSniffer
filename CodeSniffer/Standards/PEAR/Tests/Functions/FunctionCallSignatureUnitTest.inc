@@ -34,12 +34,12 @@ make_foo(/*the string*/$string, /*test*/true);
 make_foo( /*the string*/$string, /*test*/true);
 
 // No errors should be throw here because
-// this is not a function call per se.
+// this is multi-line.
 throw new Exception(
     'Exception text'
 );
 
-// Or here.
+// Objects are the same as a normal call.
 $obj = new TestClass( );
 
 // Heredocs dont need to be indented.
