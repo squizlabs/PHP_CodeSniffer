@@ -51,7 +51,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -71,8 +71,14 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
 
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
         if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
-            $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
-            $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
+            $opener = $tokens[$prev]['bracket_opener'];
+            if ($tokens[($opener - 1)]['code'] !== T_STRING) {
+                // This means the array is declared inline, like x = [a,b,c].join()
+                // and not elsewhere, like x = y[a].join()
+                // The first is not allowed while the second is.
+                $error = 'Joining strings using inline arrays is not allowed; use the + operator instead';
+                $phpcsFile->addError($error, $stackPtr, 'ArrayNotAllowed');
+            }
         }
 
     }//end process()
