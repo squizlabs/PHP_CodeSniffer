@@ -559,7 +559,12 @@ class PHP_CodeSniffer_File
      */
     private function _parse($contents=null)
     {
-        $this->eolChar = self::detectLineEndings($this->_file, $contents);
+        try {
+            $this->eolChar = self::detectLineEndings($this->_file, $contents);
+        } catch (PHP_CodeSniffer_Exception $e) {
+            $this->addWarning($e->getMessage(), null, 'Internal.DetectLineEndings');
+            return;
+        }
 
         // Determine the tokenizer from the file extension.
         $fileParts = explode('.', $this->_file);
@@ -613,10 +618,15 @@ class PHP_CodeSniffer_File
         if ($contents === null) {
             // Determine the newline character being used in this file.
             // Will be either \r, \r\n or \n.
-            $handle = fopen($file, 'r');
-            if ($handle === false) {
-                $error = 'Error opening file; could not auto-detect line endings';
+            if (is_readable($file) === false) {
+                $error = 'Error opening file; file no longer exists or you do not have access to read the file';
                 throw new PHP_CodeSniffer_Exception($error);
+            } else {
+                $handle = fopen($file, 'r');
+                if ($handle === false) {
+                    $error = 'Error opening file; could not auto-detect line endings';
+                    throw new PHP_CodeSniffer_Exception($error);
+                }
             }
 
             $firstLine = fgets($handle);

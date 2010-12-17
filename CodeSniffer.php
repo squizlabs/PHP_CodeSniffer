@@ -1027,7 +1027,7 @@ class PHP_CodeSniffer
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
         $firstContent = $contents;
-        if ($contents === null) {
+        if ($contents === null && is_readable($file) === true) {
             $handle = fopen($file, 'r');
             if ($handle !== false) {
                 $firstContent  = fgets($handle);

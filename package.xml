@@ -52,6 +52,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Will throw duplicate errors in some cases now, but these should be rare
   - MySource IncludeSystemSniff performance improved significantly
   - MySource JoinStringsSniff no longer reports an error when using join() on a named JS array
+  - Warnings are now reported for each file when they cannot be opened instead of stopping the script
+    -- Hide warnings with the -n command line argument
+    -- Can override the warnings using the code Internal.DetectLineEndings
   - Fixed bug #17693 : issue with pre-commit hook script with filenames that start with v
   - Fixed bug #17860 : isReference function fails with references in array
     -- Thanks to Lincoln Maskey for the patch
