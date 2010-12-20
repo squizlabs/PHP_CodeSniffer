@@ -929,6 +929,7 @@ class PHP_CodeSniffer
             }
 
             foreach ($di as $file) {
+                // Check if the file exists after all symlinks are reolved.
                 $filePath = realpath($file->getPathname());
                 if ($filePath === false) {
                     continue;
@@ -952,7 +953,9 @@ class PHP_CodeSniffer
                     continue;
                 }
 
-                $this->processFile($filePath);
+                // Pass in the non-realpath() file path so that
+                // it gets checked correctly for ignore patterns.
+                $this->processFile($file->getPathname());
             }//end foreach
         } catch (Exception $e) {
             $trace = $e->getTrace();
@@ -1005,7 +1008,10 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
-        // If the file's path matches one of our ignore patterns, skip it.
+        $filePath = realpath($file);
+
+        // If the file's path (before resolving syminks)
+        // matches one of our ignore patterns, skip it.
         foreach ($this->ignorePatterns as $pattern) {
             if (is_array($pattern) === true) {
                 // A sniff specific ignore pattern.
@@ -1021,14 +1027,14 @@ class PHP_CodeSniffer
             if (preg_match("|{$pattern}|i", $file) === 1) {
                 return;
             }
-        }
+        }//end foreach
 
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
         $firstContent = $contents;
-        if ($contents === null && is_readable($file) === true) {
-            $handle = fopen($file, 'r');
+        if ($contents === null && is_readable($filePath) === true) {
+            $handle = fopen($filePath, 'r');
             if ($handle !== false) {
                 $firstContent  = fgets($handle);
                 $firstContent .= fgets($handle);
@@ -1039,7 +1045,7 @@ class PHP_CodeSniffer
         if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
             // We are ignoring the whole file.
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Ignoring '.basename($file).PHP_EOL;
+                echo 'Ignoring '.basename($filePath).PHP_EOL;
             }
 
             return;
