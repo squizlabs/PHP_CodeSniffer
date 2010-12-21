@@ -135,7 +135,9 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
         }//end foreach
 
-        if (class_exists('PHP_Timer', false) === true) {
+        if (PHP_CODESNIFFER_INTERACTIVE === false
+            && class_exists('PHP_Timer', false) === true
+        ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
 
