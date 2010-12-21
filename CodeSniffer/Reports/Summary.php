@@ -41,9 +41,9 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      * they have no errors or warnings. If verbose output is disabled, we only
      * show files that have at least one warning or error.
      * 
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
      * 
      * @return string 
      */

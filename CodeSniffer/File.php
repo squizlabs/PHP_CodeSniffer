@@ -472,7 +472,7 @@ class PHP_CodeSniffer_File
 
                     if (PHP_CODESNIFFER_VERBOSITY > 2) {
                         $timeTaken = (microtime(true) - $startTime);
-                        if (isset($this->_listenerTimes[$this->_activeListener]) === FALSE) {
+                        if (isset($this->_listenerTimes[$this->_activeListener]) === false) {
                             $this->_listenerTimes[$this->_activeListener] = 0;
                         }
 
@@ -525,7 +525,7 @@ class PHP_CodeSniffer_File
             echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
 
             asort($this->_listenerTimes, SORT_NUMERIC);
-            $this->_listenerTimes = array_reverse($this->_listenerTimes, TRUE);
+            $this->_listenerTimes = array_reverse($this->_listenerTimes, true);
             foreach ($this->_listenerTimes as $listener => $timeTaken) {
                 echo "\t$listener: ".round(($timeTaken), 4).' secs'.PHP_EOL;
             }

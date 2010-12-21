@@ -126,7 +126,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
                     $lineLength = strlen($lineContent);
                 }
             } else {
-               $lineLength = strlen($lineContent);
+                $lineLength = strlen($lineContent);
             }
 
             if ($this->absoluteLineLimit > 0

@@ -37,9 +37,9 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
     /**
      * Prints the source of all errors and warnings.
      *
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
      * 
      * @return string 
      */

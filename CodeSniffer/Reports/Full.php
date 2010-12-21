@@ -39,9 +39,9 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
      *
      * Errors and warnings are displayed together, grouped by file.
      *
-     * @param array   $report       Prepared report.
-     * @param boolean $showSources  Show sources?
-     * @param int     $width        Maximum allowed lne width.
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
      * 
      * @return string 
      */

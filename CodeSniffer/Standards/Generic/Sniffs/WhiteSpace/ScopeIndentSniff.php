@@ -296,8 +296,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         // Empty conditions array (top level structure).
         if (empty($tokens[$stackPtr]['conditions']) === true) {
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === TRUE
-                && empty($tokens[$stackPtr]['nested_parenthesis']) === FALSE
+            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true
+                && empty($tokens[$stackPtr]['nested_parenthesis']) === false
             ) {
                 // Wrapped in parenthesis means it is probably in a
                 // function call (like a closure) so we have to assume indent

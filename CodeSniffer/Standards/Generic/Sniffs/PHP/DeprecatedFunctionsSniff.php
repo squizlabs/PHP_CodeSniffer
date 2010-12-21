@@ -57,7 +57,7 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
             $function = new ReflectionFunction($functionName);
 
             if ($function->isDeprecated() === true) {
-                $this->forbiddenFunctions[$functionName] = NULL;
+                $this->forbiddenFunctions[$functionName] = null;
             }
         }
 
