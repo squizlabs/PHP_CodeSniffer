@@ -600,7 +600,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsavip] [-d key[=value]] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsapvi] [-d key[=value]] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
