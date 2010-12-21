@@ -90,7 +90,6 @@ class PHP_CodeSniffer_CLI
         $defaults['interactive']  = false;
         $defaults['local']        = false;
         $defaults['showSources']  = false;
-        $defaults['showProgress'] = false;
         $defaults['extensions']   = array();
         $defaults['sniffs']       = array();
         $defaults['ignored']      = array();
@@ -153,6 +152,13 @@ class PHP_CodeSniffer_CLI
             $defaults['reportWidth'] = 80;
         } else {
             $defaults['reportWidth'] = (int) $reportWidth;
+        }
+
+        $showProgress = PHP_CodeSniffer::getConfigData('show_progress');
+        if ($showProgress === null) {
+            $defaults['showProgress'] = false;
+        } else {
+            $defaults['showProgress'] = (bool) $showProgress;
         }
 
         return $defaults;
