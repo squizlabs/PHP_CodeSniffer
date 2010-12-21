@@ -1110,13 +1110,19 @@ class PHP_CodeSniffer
             $trace = $e->getTrace();
 
             $filename = $trace[0]['args'][0];
-            if (is_numeric($filename) === true) {
+            if (is_object($filename) === true
+                && get_class($filename) === 'PHP_CodeSniffer_File'
+            ) {
+                $filename = $filename->getFilename();
+            } else if (is_numeric($filename) === true) {
                 // See if we can find the PHP_CodeSniffer_File object.
                 foreach ($trace as $data) {
                     if (isset($data['args'][0]) === true && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true) {
                         $filename = $data['args'][0]->getFilename();
                     }
                 }
+            } else if (is_string($filename) === false) {
+                $filename = (string) $filename;
             }
 
             $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
