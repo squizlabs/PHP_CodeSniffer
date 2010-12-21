@@ -29,6 +29,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added -d command line argument to set php.ini settings while running (request #17244)
     -- Usage is: phpcs -d memory_limit=32M -d ...
     -- Thanks to Ben Selby for the patch
+  -- Added -p command line argument to show progress during a run
+    -- Dot means pass, E means errors found, W means only warnings found and S means skipped file
+    -- Particularly good for runs where you are checking more than 100 files
+    -- Will not print anything if you are already printing verbose output
+    -- This has caused a big change in the way PHP_CodeSniffer processes files (API changes around processing)
   - You can now add exclude rules for individual sniffs or error messages (request #17903)
     -- Only available when using a ruleset.xml file to specify rules
     -- Uses the same exclude-pattern tags as normal but allows them inside rule tags

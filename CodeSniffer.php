@@ -455,13 +455,67 @@ class PHP_CodeSniffer
             return;
         }
 
-        foreach ($files as $file) {
+        $reporting    = new PHP_CodeSniffer_Reporting();
+        $cliValues    = $this->cli->getCommandLineValues();
+        $showProgress = $cliValues['showProgress'];
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            $numSniffs = count($this->listeners);
+            echo 'Creating file list... ';
+        }
+
+        $todo     = $this->getFilesToProcess($files, $local);
+        $numFiles = count($todo);
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            $numSniffs = count($this->listeners);
+            echo "DONE ($numFiles files in queue)".PHP_EOL;
+        }
+
+        $numProcessed = 0;
+        $dots         = 0;
+        $maxLength    = strlen($numFiles);
+        foreach ($todo as $file) {
             $this->file = $file;
-            if (is_dir($this->file) === true) {
-                $this->processFiles($this->file, $local);
-            } else {
-                $this->processFile($this->file);
+            $phpcsFile  = $this->processFile($file);
+            $numProcessed++;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 0
+                || PHP_CODESNIFFER_INTERACTIVE === true
+                || $showProgress === false
+            ) {
+                continue;
             }
+
+            // Show progress information.
+            if ($phpcsFile === null) {
+                echo 'S';
+            } else {
+                $errors   = $phpcsFile->getErrorCount();
+                $warnings = $phpcsFile->getWarningCount();
+                if ($errors > 0) {
+                    echo 'E';
+                } else if ($warnings > 0) {
+                    echo 'W';
+                } else {
+                    echo '.';
+                }
+            }
+
+            $dots++;
+            if ($dots === 60) {
+                $padding = ($maxLength - strlen($numProcessed));
+                echo str_repeat(' ', $padding);
+                echo " $numProcessed / $numFiles".PHP_EOL;
+                $dots = 0;
+            }
+        }//end foreach
+
+        if (PHP_CODESNIFFER_VERBOSITY === 0
+            && PHP_CODESNIFFER_INTERACTIVE === false
+            && $showProgress === true
+        ) {
+            echo PHP_EOL.PHP_EOL;
         }
 
         // Now process the multi-file sniffs, assuming there are
@@ -907,56 +961,151 @@ class PHP_CodeSniffer
 
 
     /**
-     * Run the code sniffs over each file in a given directory.
+     * Get a list of files that will be processed.
      *
-     * Recusively reads the specified directory and performs the PHP_CodeSniffer
-     * sniffs on each source file found within the directories.
+     * If passed directories, this method will find all files within them.
+     * The method will also perform file extension and ignore pattern filtering.
      *
-     * @param string  $dir   The directory to process.
-     * @param boolean $local If true, only process files in this directory, not
-     *                       sub directories.
+     * @param string  $paths A list of file or directory paths to process.
+     * @param boolean $local If true, only process 1 level of files in directories
      *
-     * @return void
-     * @throws Exception If there was an error opening the directory.
+     * @return array
+     * @throws Exception If there was an error opening a directory.
+     * @see    shouldProcessFile()
      */
-    public function processFiles($dir, $local=false)
+    public function getFilesToProcess($paths, $local=false)
     {
-        try {
-            if ($local === true) {
-                $di = new DirectoryIterator($dir);
+        $files = array();
+
+        foreach ($paths as $path) {
+            if (is_dir($path) === true) {
+                if ($local === true) {
+                    $di = new DirectoryIterator($path);
+                } else {
+                    $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+                }
+
+                foreach ($di as $file) {
+                    // Check if the file exists after all symlinks are reolved.
+                    $filePath = realpath($file->getPathname());
+                    if ($filePath === false) {
+                        continue;
+                    }
+
+                    if (is_dir($filePath) === true) {
+                        continue;
+                    }
+
+                    if ($this->shouldProcessFile($file->getPathname()) === false) {
+                        continue;
+                    }
+
+                    $files[] = $file->getPathname();
+                }//end foreach
             } else {
-                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+                $files[] = $path;
+            }//end if
+        }//end foreach
+
+        return $files;
+
+    }//end getFilesToProcess()
+
+
+    /**
+     * Checks filtering rules to see if a file should be checked.
+     *
+     * Checks both file extension filters and path ignore filters.
+     *
+     * @param string $path The path to the file being checked.
+     *
+     * @return bool
+     */
+    public function shouldProcessFile($path)
+    {
+        // Check that the file's extension is one we are checking.
+        // We are strict about checking the extension and we don't
+        // let files through with no extension.
+        $fileParts = explode('.', $path);
+        $extension = array_pop($fileParts);
+        if ($extension === $path) {
+            return false;
+        }
+
+        if (isset($this->allowedFileExtensions[$extension]) === false) {
+            return false;
+        }
+
+        // If the file's path matches one of our ignore patterns, skip it.
+        foreach ($this->ignorePatterns as $pattern) {
+            if (is_array($pattern) === true) {
+                // A sniff specific ignore pattern.
+                continue;
             }
 
-            foreach ($di as $file) {
-                // Check if the file exists after all symlinks are reolved.
-                $filePath = realpath($file->getPathname());
-                if ($filePath === false) {
-                    continue;
-                }
+            $replacements = array(
+                             '\\,' => ',',
+                             '*'   => '.*',
+                            );
 
-                if (is_dir($filePath) === true) {
-                    continue;
-                }
+            $pattern = strtr($pattern, $replacements);
+            if (preg_match("|{$pattern}|i", $path) === 1) {
+                return false;
+            }
+        }//end foreach
 
-                // Check that the file's extension is one we are checking.
-                // Note that because we are doing a whole directory, we
-                // are strict about checking the extension and we don't
-                // let files with no extension through.
-                $fileParts = explode('.', $file);
-                $extension = array_pop($fileParts);
-                if ($extension === $file) {
-                    continue;
-                }
+        return true;
 
-                if (isset($this->allowedFileExtensions[$extension]) === false) {
-                    continue;
-                }
+    }//end shouldProcessFile()
 
-                // Pass in the non-realpath() file path so that
-                // it gets checked correctly for ignore patterns.
-                $this->processFile($file->getPathname());
-            }//end foreach
+
+    /**
+     * Run the code sniffs over a single given file.
+     *
+     * Processes the file and runs the PHP_CodeSniffer sniffs to verify that it
+     * conforms with the standard. Returns the processed file object, or NULL
+     * if no file was processed due to error.
+     *
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
+     *
+     * @return PHP_CodeSniffer_File
+     * @throws PHP_CodeSniffer_Exception If the file could not be processed.
+     * @see    _processFile()
+     */
+    public function processFile($file, $contents=null)
+    {
+        if ($contents === null && file_exists($file) === false) {
+            throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
+        }
+
+        $filePath = realpath($file);
+
+        // Before we go and spend time tokenizing this file, just check
+        // to see if there is a tag up top to indicate that the whole
+        // file should be ignored. It must be on one of the first two lines.
+        $firstContent = $contents;
+        if ($contents === null && is_readable($filePath) === true) {
+            $handle = fopen($filePath, 'r');
+            if ($handle !== false) {
+                $firstContent  = fgets($handle);
+                $firstContent .= fgets($handle);
+                fclose($handle);
+            }
+        }
+
+        if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
+            // We are ignoring the whole file.
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'Ignoring '.basename($filePath).PHP_EOL;
+            }
+
+            return null;
+        }
+
+        try {
+            $phpcsFile = $this->_processFile($file, $contents);
         } catch (Exception $e) {
             $trace = $e->getTrace();
 
@@ -982,79 +1131,10 @@ class PHP_CodeSniffer
 
             $this->addFile($phpcsFile);
             $phpcsFile->addError($error, null);
-            return;
         }//end try
 
-    }//end processFiles()
-
-
-    /**
-     * Run the code sniffs over a single given file.
-     *
-     * Processes the file and runs the PHP_CodeSniffer sniffs to verify that it
-     * conforms with the standard.
-     *
-     * @param string $file     The file to process.
-     * @param string $contents The contents to parse. If NULL, the content
-     *                         is taken from the file system.
-     *
-     * @return void
-     * @throws PHP_CodeSniffer_Exception If the file could not be processed.
-     * @see    _processFile()
-     */
-    public function processFile($file, $contents=null)
-    {
-        if ($contents === null && file_exists($file) === false) {
-            throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
-        }
-
-        $filePath = realpath($file);
-
-        // If the file's path (before resolving syminks)
-        // matches one of our ignore patterns, skip it.
-        foreach ($this->ignorePatterns as $pattern) {
-            if (is_array($pattern) === true) {
-                // A sniff specific ignore pattern.
-                continue;
-            }
-
-            $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
-
-            $pattern = strtr($pattern, $replacements);
-            if (preg_match("|{$pattern}|i", $file) === 1) {
-                return;
-            }
-        }//end foreach
-
-        // Before we go and spend time tokenizing this file, just check
-        // to see if there is a tag up top to indicate that the whole
-        // file should be ignored. It must be on one of the first two lines.
-        $firstContent = $contents;
-        if ($contents === null && is_readable($filePath) === true) {
-            $handle = fopen($filePath, 'r');
-            if ($handle !== false) {
-                $firstContent  = fgets($handle);
-                $firstContent .= fgets($handle);
-                fclose($handle);
-            }
-        }
-
-        if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
-            // We are ignoring the whole file.
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Ignoring '.basename($filePath).PHP_EOL;
-            }
-
-            return;
-        }
-
-        $this->_processFile($file, $contents);
-
         if (PHP_CODESNIFFER_INTERACTIVE === false) {
-            return;
+            return $phpcsFile;
         }
 
         /*
@@ -1099,10 +1179,12 @@ class PHP_CodeSniffer
                 // and only clear it when the file changes, but we are rechecking
                 // the same file.
                 $this->populateTokenListeners();
-                $this->_processFile($file, $contents);
+                $phpcsFile = $this->_processFile($file, $contents);
                 break;
             }
         }//end while
+
+        return $phpcsFile;
 
     }//end processFile()
 
@@ -1116,7 +1198,7 @@ class PHP_CodeSniffer
      * @param string $contents The contents to parse. If NULL, the content
      *                         is taken from the file system.
      *
-     * @return void
+     * @return PHP_CodeSniffer_File
      * @see    processFile()
      */
     private function _processFile($file, $contents)
@@ -1161,6 +1243,8 @@ class PHP_CodeSniffer
             $warnings = $phpcsFile->getWarningCount();
             echo " ($errors errors, $warnings warnings)".PHP_EOL;
         }
+
+        return $phpcsFile;
 
     }//end _processFile()
 

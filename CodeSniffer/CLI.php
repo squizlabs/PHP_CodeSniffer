@@ -84,17 +84,18 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']       = array();
-        $defaults['standard']    = null;
-        $defaults['verbosity']   = 0;
-        $defaults['interactive'] = false;
-        $defaults['local']       = false;
-        $defaults['showSources'] = false;
-        $defaults['extensions']  = array();
-        $defaults['sniffs']      = array();
-        $defaults['ignored']     = array();
-        $defaults['reportFile']  = '';
-        $defaults['generator']   = '';
+        $defaults['files']        = array();
+        $defaults['standard']     = null;
+        $defaults['verbosity']    = 0;
+        $defaults['interactive']  = false;
+        $defaults['local']        = false;
+        $defaults['showSources']  = false;
+        $defaults['showProgress'] = false;
+        $defaults['extensions']   = array();
+        $defaults['sniffs']       = array();
+        $defaults['ignored']      = array();
+        $defaults['reportFile']   = '';
+        $defaults['generator']    = '';
 
         $defaults['report'] = PHP_CodeSniffer::getConfigData('report_format');
         if ($defaults['report'] === null) {
@@ -241,6 +242,9 @@ class PHP_CodeSniffer_CLI
             break;
         case 'a' :
             $values['interactive'] = true;
+            break;
+        case 'p' :
+            $values['showProgress'] = true;
             break;
         case 'd' :
             $ini = explode('=', $_SERVER['argv'][($pos + 1)]);
@@ -596,7 +600,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsavi] [-d key[=value]] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsavip] [-d key[=value]] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-width=<reportWidth>] [--report-file=<reportfile>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
@@ -607,6 +611,7 @@ class PHP_CodeSniffer_CLI
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
+        echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
