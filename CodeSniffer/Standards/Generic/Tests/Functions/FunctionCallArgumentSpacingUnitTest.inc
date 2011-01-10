@@ -51,4 +51,9 @@ class MyClass {
         blah($foo, "{{$config['host']}}", "{$config}", "hi there{}{}{{{}{}{}}");
     }
 }
+
+// Function definition, not function call, so should be ignored
+function &myFunction($arg1=1,$arg2=2)
+{
+}
 ?>

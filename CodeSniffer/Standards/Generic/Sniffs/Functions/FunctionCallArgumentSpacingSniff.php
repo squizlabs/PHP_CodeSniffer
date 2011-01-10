@@ -63,7 +63,9 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
         // "myFunction" is T_STRING but we should skip because it is not a
         // function or method *call*.
         $functionName    = $stackPtr;
-        $functionKeyword = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $ignoreTokens    = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $ignoreTokens[]  = T_BITWISE_AND;
+        $functionKeyword = $phpcsFile->findPrevious($ignoreTokens, ($stackPtr - 1), null, true);
         if ($tokens[$functionKeyword]['code'] === T_FUNCTION || $tokens[$functionKeyword]['code'] === T_CLASS) {
             return;
         }

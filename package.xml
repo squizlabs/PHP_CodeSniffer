@@ -79,6 +79,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18072 : Impossible to exclude path from processing when symlinked
   - Fixed bug #18073 : Squiz.PHP.NonExecutableCode fault
   - Fixed bug #18117 : PEAR coding standard: Method constructor not sniffed as a function
+  - Fixed bug #18135 : Generic FunctionCallArgumentSpacingSniff reports function declaration errors
  </notes>
  <contents>
   <dir name="/">
