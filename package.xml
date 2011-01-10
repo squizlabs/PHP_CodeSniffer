@@ -26,6 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - You can now print multiple reports for each run and print each to the screen or a file (request #12434)
+    -- Format is --report-[report]=[file] (e.g., --report-xml=out.xml)
+    -- Printing to screen is done by leaving [file] empty (e.g., --report-xml=)
+    -- Multiple reports can be specified in this way (e.g., --report-summary= --report-xml=out.xml)
+    -- The standard --report and --report-file command line arguments are unchanged
   - Added -d command line argument to set php.ini settings while running (request #17244)
     -- Usage is: phpcs -d memory_limit=32M -d ...
     -- Thanks to Ben Selby for the patch

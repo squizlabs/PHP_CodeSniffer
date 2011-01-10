@@ -86,13 +86,13 @@ class PHP_CodeSniffer_Reporting
         $reportClass = self::factory($report);
         $reportData  = $this->prepare($filesViolations);
 
-        if ($reportFile !== '') {
+        if ($reportFile !== null) {
             ob_start();
         }
 
         $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth);
 
-        if ($reportFile !== '') {
+        if ($reportFile !== null) {
             $generatedReport = ob_get_contents();
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 ob_end_flush();

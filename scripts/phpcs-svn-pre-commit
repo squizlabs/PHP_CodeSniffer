@@ -178,9 +178,9 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             $phpcs->processFile($path, $contents);
         }//end foreach
 
-        return parent::printErrorReport(
+        return $this->printErrorReport(
             $phpcs,
-            $values['report'],
+            $values['reports'],
             $values['showSources'],
             $values['reportFile'],
             $values['reportWidth']
