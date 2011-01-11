@@ -80,6 +80,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18073 : Squiz.PHP.NonExecutableCode fault
   - Fixed bug #18117 : PEAR coding standard: Method constructor not sniffed as a function
   - Fixed bug #18135 : Generic FunctionCallArgumentSpacingSniff reports function declaration errors
+  - Fixed bug #18140 : Generic scope indent in exact mode: strange expected/found values for switch
  </notes>
  <contents>
   <dir name="/">

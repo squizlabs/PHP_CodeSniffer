@@ -153,6 +153,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
                 if (isset($tokens[$i]['scope_opener']) === true) {
                     $i = $tokens[$i]['scope_closer'];
+
+                    // If the scope closer is followed by a semi-colon, the semi-colon is part
+                    // of the closer and should also be ignored. This most commonly happens with
+                    // CASE statements that end with "break;", where we don't want to stop
+                    // ignoring at the break, but rather at the semi-colon.
+                    $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
+                    if ($tokens[$nextToken]['code'] === T_SEMICOLON) {
+                        $i = $nextToken;
+                    }
                 } else {
                     // If this token does not have a scope_opener indice, then
                     // it's probably an inline scope, so let's skip to the next
