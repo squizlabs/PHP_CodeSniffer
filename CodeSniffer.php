@@ -579,7 +579,7 @@ class PHP_CodeSniffer
                 throw new PHP_CodeSniffer_Exception("Ruleset $standard is not valid");
             }
 
-            $this->standardDir = $standard;
+            $this->standardDir = dirname($standard);
             $standard          = (string) $ruleset['name'];
         } else {
             $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
