@@ -1159,10 +1159,10 @@ class PHP_CodeSniffer
             $this->files     = array();
 
             $numErrors = $reporting->printReport(
-                $cliValues['report'],
+                'full',
                 $filesViolations,
                 $cliValues['showSources'],
-                '',
+                null,
                 $cliValues['reportWidth']
             );
 
