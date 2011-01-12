@@ -738,7 +738,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 3);
+                $i              = ($i + 2);
 
                 if ($specialPattern['to'] !== 'unknown') {
                     $firstToken++;
@@ -756,7 +756,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             }
 
             if ($specialPattern !== false || $isLastChar === true) {
-
                 // If we are at the end of the string, don't worry about a limit.
                 if ($isLastChar === true) {
                     // Get the string from the end of the last skip pattern, if any,
@@ -765,18 +764,26 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else {
                     // Get the string from the end of the last special pattern,
                     // if any, to the start of this special pattern.
-                    $str = substr($pattern, $oldFirstToken, $lastToken);
+                    if ($lastToken === 0) {
+                        // Note that if the last special token was zero characters ago,
+                        // there will be nothing to process so we can skip this bit.
+                        // This happens if you have something like: EOL... in your pattern.
+                        $str = '';
+                    } else {
+                        $str = substr($pattern, $oldFirstToken, $lastToken);
+                    }
                 }
 
-                $tokenPatterns = $this->_createTokenPattern($str);
+                if ($str !== '') {
+                    $tokenPatterns = $this->_createTokenPattern($str);
+                    foreach ($tokenPatterns as $tokenPattern) {
+                        $patterns[] = $tokenPattern;
+                    }
+                }
 
                 // Make sure we don't skip the last token.
                 if ($isLastChar === false && $i === ($length - 1)) {
                     $i--;
-                }
-
-                foreach ($tokenPatterns as $tokenPattern) {
-                    $patterns[] = $tokenPattern;
                 }
             }//end if
 
@@ -786,7 +793,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             if ($specialPattern !== false) {
                 $patterns[] = $specialPattern;
             }
-
         }//end for
 
         return $patterns;
@@ -809,6 +815,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $skip = array('type' => 'skip');
 
         $nestedParenthesis = 0;
+        $nestedBraces      = 0;
         for ($start = $from; $start >= 0; $start--) {
             switch ($pattern[$start]) {
             case '(':
@@ -819,7 +826,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $nestedParenthesis--;
                 break;
             case '{':
-                $skip['to'] = 'scope_closer';
+                if ($nestedBraces === 0) {
+                    $skip['to'] = 'scope_closer';
+                }
+
+                $nestedBraces--;
+                break;
+            case '}':
+                $nestedBraces++;
                 break;
             case ')':
                 $nestedParenthesis++;
