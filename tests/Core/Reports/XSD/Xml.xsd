@@ -9,6 +9,7 @@
                             <xs:attribute name="line" type="xs:positiveInteger" />
                             <xs:attribute name="column" type="xs:positiveInteger" />
                             <xs:attribute name="source" type="xs:string" />
+                            <xs:attribute name="severity" type="xs:positiveInteger" />
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -20,6 +21,7 @@
                             <xs:attribute name="line" type="xs:positiveInteger" />
                             <xs:attribute name="column" type="xs:positiveInteger" />
                             <xs:attribute name="source" type="xs:string" />
+                            <xs:attribute name="severity" type="xs:positiveInteger" />
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>

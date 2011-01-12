@@ -69,7 +69,7 @@ class Core_Reports_CsvTest extends Core_Reports_AbstractTestCase
         file_put_contents($reportFile, $generated);
         $file = fopen($reportFile, 'r');
         while ($csvLine = fgetcsv($file)) {
-            $this->assertEquals(6, count($csvLine));
+            $this->assertEquals(7, count($csvLine));
         }
 
     }//end testGenerate()

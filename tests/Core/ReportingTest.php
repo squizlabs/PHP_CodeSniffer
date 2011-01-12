@@ -49,26 +49,30 @@ class Core_ReportingTest extends PHPUnit_Framework_TestCase
                                 10 => array(
                                        1 => array(
                                              array(
-                                              'message' => 'Fourth error message',
-                                              'source'  => 'MyStandard.MyType.Mysniff1.Mycode1',
+                                              'message'  => 'Fourth error message',
+                                              'source'   => 'MyStandard.MyType.Mysniff1.Mycode1',
+                                              'severity' => 5,
                                              ),
                                             )
                                       ),
                                 1  => array(
                                        10 => array(
                                               array(
-                                               'message' => 'Second error message',
-                                               'source'  => 'MyStandard.MyType.Mysniff2.Mycode1',
+                                               'message'  => 'Second error message',
+                                               'source'   => 'MyStandard.MyType.Mysniff2.Mycode1',
+                                               'severity' => 5,
                                               ),
                                               array(
-                                               'message' => 'Third error message',
-                                               'source'  => 'MyStandard.MyType.Mysniff1.Mycode2',
+                                               'message'  => 'Third error message',
+                                               'source'   => 'MyStandard.MyType.Mysniff1.Mycode2',
+                                               'severity' => 5,
                                               ),
                                              ),
                                        1  => array(
                                               array(
-                                               'message' => 'First error message',
-                                               'source'  => 'MyStandard.MyType.Mysniff1.Mycode2',
+                                               'message'  => 'First error message',
+                                               'source'   => 'MyStandard.MyType.Mysniff1.Mycode2',
+                                               'severity' => 5,
                                               ),
                                              )
                                       )
@@ -83,16 +87,18 @@ class Core_ReportingTest extends PHPUnit_Framework_TestCase
                                   10 => array(
                                          1 => array(
                                                array(
-                                                'message' => 'First warning message',
-                                                'source'  => 'MyStandard.MyType.Mysniff1.Mycode3',
+                                                'message'  => 'First warning message',
+                                                'source'   => 'MyStandard.MyType.Mysniff1.Mycode3',
+                                                'severity' => 5,
                                                ),
                                               )
                                         ),
                                   5  => array(
                                          1 => array(
                                                array(
-                                                'message' => 'Second warning message',
-                                                'source'  => 'MyStandard.MyType.Mysniff2.Mycode2',
+                                                'message'  => 'Second warning message',
+                                                'source'   => 'MyStandard.MyType.Mysniff2.Mycode2',
+                                                'severity' => 5,
                                                ),
                                               )
                                         ),
