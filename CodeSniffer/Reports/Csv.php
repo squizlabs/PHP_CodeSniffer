@@ -48,7 +48,7 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
-        echo 'File,Line,Column,Severity,Message,Source,Severity'.PHP_EOL;
+        echo 'File,Line,Column,Type,Message,Source,Severity'.PHP_EOL;
 
         $errorsShown = 0;
         foreach ($report['files'] as $filename => $file) {
