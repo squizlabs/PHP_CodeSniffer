@@ -356,10 +356,15 @@ class PHP_CodeSniffer_CLI
                 if ($arg[6] === '-') {
                     // This is a report with file output.
                     $split  = strpos($arg, '=');
-                    $report = substr($arg, 7, ($split - 7));
-                    $output = substr($arg, ($split + 1));
-                    if ($output === false) {
+                    if ($split == false) {
+                        $report = substr($arg, 7);
                         $output = null;
+                    } else {
+                        $report = substr($arg, 7, ($split - 7));
+                        $output = substr($arg, ($split + 1));
+                        if ($output === false) {
+                            $output = null;
+                        }
                     }
                 } else {
                     // This is a single report.
