@@ -157,9 +157,10 @@ class PHP_CodeSniffer_Reporting
                     $newErrors = array();
                     foreach ($colErrors as $data) {
                         $newErrors[] = array(
-                                        'message' => $data['message'],
-                                        'source'  => $data['source'],
-                                        'type'    => 'ERROR',
+                                        'message'  => $data['message'],
+                                        'source'   => $data['source'],
+                                        'severity' => $data['severity'],
+                                        'type'     => 'ERROR',
                                        );
                     }//end foreach
 
@@ -174,9 +175,10 @@ class PHP_CodeSniffer_Reporting
                     $newWarnings = array();
                     foreach ($colWarnings as $data) {
                         $newWarnings[] = array(
-                                          'message' => $data['message'],
-                                          'source'  => $data['source'],
-                                          'type'    => 'WARNING',
+                                          'message'  => $data['message'],
+                                          'source'   => $data['source'],
+                                          'severity' => $data['severity'],
+                                          'type'     => 'WARNING',
                                          );
                     }//end foreach
 

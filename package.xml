@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Uses the same exclude-pattern tags as normal but allows them inside rule tags
   - Using the -vvv option will now print a list of sniffs executed for each file and how long they took to process
   - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
+  - The XML and CSV reports now include the severity of the error (request #18165)
   - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace
     -- Thanks to Anti Veeranna for the patch
   - Generic FileLengthSniff now uses iconv_strlen to check line length if an encoding is specified (request #14237)

@@ -71,7 +71,7 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
                             $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
                         }
 
-                        echo '  <'.$error['type'].' line="'.$line.'" column="'.$column.'" source="'.$error['source'].'">';
+                        echo '  <'.$error['type'].' line="'.$line.'" column="'.$column.'" source="'.$error['source'].'" severity="'.$error['severity'].'">';
                         echo $error['message'].'</'.$error['type'].'>'.PHP_EOL;
                         $errorsShown++;
                     }
