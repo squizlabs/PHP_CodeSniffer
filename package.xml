@@ -87,6 +87,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18145 : Sniffs are not loaded for custom ruleset file
     -- Thanks to Scott McCammon for the patch
   - Fixed bug #18152 : While and do-while with AbstractPatternSniff
+  - Fixed bug #18191 : Squiz.PHP.LowercasePHPFunctions does not work with new Date()
  </notes>
  <contents>
   <dir name="/">

@@ -31,4 +31,5 @@ if (Function_Exists('myFunction') === TRUE) {
 
 function getType() {}
 
+$obj = new Date();
 ?>

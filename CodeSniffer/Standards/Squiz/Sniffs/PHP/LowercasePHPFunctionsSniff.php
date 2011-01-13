@@ -109,6 +109,11 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
             return;
         }
 
+        if ($tokens[$prev]['code'] === T_NEW) {
+            // Object creation, not an inbuilt function.
+            return;
+        }
+
         if ($tokens[$prev]['code'] === T_OBJECT_OPERATOR) {
             // Not an inbuilt function.
             return;
