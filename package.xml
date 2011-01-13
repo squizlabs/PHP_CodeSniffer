@@ -86,6 +86,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18140 : Generic scope indent in exact mode: strange expected/found values for switch
   - Fixed bug #18145 : Sniffs are not loaded for custom ruleset file
     -- Thanks to Scott McCammon for the patch
+  - Fixed bug #18152 : While and do-while with AbstractPatternSniff
  </notes>
  <contents>
   <dir name="/">
