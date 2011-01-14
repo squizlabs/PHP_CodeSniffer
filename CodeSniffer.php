@@ -415,6 +415,10 @@ class PHP_CodeSniffer
                                   'multifile' => array(),
                                  );
 
+        // Ensure this option is enabled or else line endings will not always
+        // be detected properly for files created on a Mac with the /r line ending.
+        ini_set('auto_detect_line_endings', true);
+
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             // If this is a custom ruleset.xml file, load the standard name
             // from the file. I know this looks a little ugly, but it is

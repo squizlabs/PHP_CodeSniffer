@@ -88,6 +88,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Scott McCammon for the patch
   - Fixed bug #18152 : While and do-while with AbstractPatternSniff
   - Fixed bug #18191 : Squiz.PHP.LowercasePHPFunctions does not work with new Date()
+  - Fixed bug #18193 : CodeSniffer doesn't reconize CR (\r) line endings
  </notes>
  <contents>
   <dir name="/">
