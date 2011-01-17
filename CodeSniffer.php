@@ -583,8 +583,22 @@ class PHP_CodeSniffer
                 throw new PHP_CodeSniffer_Exception("Ruleset $standard is not valid");
             }
 
-            $this->standardDir = dirname($standard);
-            $standard          = (string) $ruleset['name'];
+            if (basename($standard) === 'ruleset.xml') {
+                // The ruleset uses the generic name, so this may actually
+                // be a complete standard with it's own sniffs. By setting the
+                // the standardDir to be the directory, we will process both
+                // the directory (for custom sniffs) and the ruleset.xml file
+                // (as it uses the generic name) in getSniffFiles.
+                $this->standardDir = dirname($standard);
+            } else {
+                // This is a custom ruleset file with a custom name, so we have
+                // to assume there are no custom sniffs to go with this otherwise
+                // we'd be recursing through directories on every run, even if
+                // we don't need to.
+                $this->standardDir = $standard;
+            }
+
+            $standard = (string) $ruleset['name'];
         } else {
             $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
             if (is_dir($this->standardDir) === false) {

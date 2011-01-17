@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2011-01-14</date>
  <time>16:00:00</time>
  <version>
-  <release>1.3.0RC2</release>
-  <api>1.3.0RC2</api>
+  <release>1.3.0RC3</release>
+  <api>1.3.0RC3</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,69 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - You can now print multiple reports for each run and print each to the screen or a file (request #12434)
-    -- Format is --report-[report][=file] (e.g., --report-xml=out.xml)
-    -- Printing to screen is done by leaving [file] empty (e.g., --report-xml)
-    -- Multiple reports can be specified in this way (e.g., --report-summary --report-xml=out.xml)
-    -- The standard --report and --report-file command line arguments are unchanged
-  - Added -d command line argument to set php.ini settings while running (request #17244)
-    -- Usage is: phpcs -d memory_limit=32M -d ...
-    -- Thanks to Ben Selby for the patch
-  - Added -p command line argument to show progress during a run
-    -- Dot means pass, E means errors found, W means only warnings found and S means skipped file
-    -- Particularly good for runs where you are checking more than 100 files
-    -- Enable by default with --config-set show_progress 1
-    -- Will not print anything if you are already printing verbose output
-    -- This has caused a big change in the way PHP_CodeSniffer processes files (API changes around processing)
-  - You can now add exclude rules for individual sniffs or error messages (request #17903)
-    -- Only available when using a ruleset.xml file to specify rules
-    -- Uses the same exclude-pattern tags as normal but allows them inside rule tags
-  - Using the -vvv option will now print a list of sniffs executed for each file and how long they took to process
-  - Added Generic ClosureLinterSniff to run Google's gjslint over your JS files
-  - The XML and CSV reports now include the severity of the error (request #18165)
-    -- The Severity column in the CSV report has been renamed to Type, and a new Severity column added for this
-  - Fixed issue with Squiz FunctionCommentSniff reporting incorrect type hint when default value uses namespace
-    -- Thanks to Anti Veeranna for the patch
-  - Generic FileLengthSniff now uses iconv_strlen to check line length if an encoding is specified (request #14237)
-  - Generic UnnecessaryStringConcatSniff now allows strings to be combined to form a PHP open or close tag
-  - Squiz SwitchDeclarationSniff no longer reports indentation errors for BREAK statements inside IF conditions
-  - Interactive mode now always prints the full error report (ignores command line)
-  - Improved regular expression detection in JavaScript files
-    -- Added new T_TYPEOF token that can be used to target the typeof JS operator
-    -- Fixes bug #17611 : Regular expression tokens not recognised
-  - Squiz ScopeIndentSniff removed
-    -- Squiz standard no longer requires additional indents between ob_* methods
-    -- Also removed Squiz OutputBufferingIndentSniff that was checking the same thing
-  - PHP_CodeSniffer_File::getMemberProperties() performance improved significantly
-    -- Improves performance of Squiz ValidVariableNameSniff significantly
-  - Squiz OperatorSpacingSniff performance improved significantly
-  - Squiz NonExecutableCodeSniff performance improved significantly
-    -- Will throw duplicate errors in some cases now, but these should be rare
-  - MySource IncludeSystemSniff performance improved significantly
-  - MySource JoinStringsSniff no longer reports an error when using join() on a named JS array
-  - Warnings are now reported for each file when they cannot be opened instead of stopping the script
-    -- Hide warnings with the -n command line argument
-    -- Can override the warnings using the code Internal.DetectLineEndings
-  - Fixed bug #17693 : issue with pre-commit hook script with filenames that start with v
-  - Fixed bug #17860 : isReference function fails with references in array
-    -- Thanks to Lincoln Maskey for the patch
-  - Fixed bug #17902 : Cannot run tests when tests are symlinked into tests dir
-    -- Thanks to Matt Button for the patch
-  - Fixed bug #17928 : Improve error message for Generic_Sniffs_PHP_UpperCaseConstantSniff
-    -- Thanks to Stefano Kowalke for the patch
-  - Fixed bug #18039 : JS Tokenizer crash when ] is last character in file
-  - Fixed bug #18047 : Incorrect handling of namespace aliases as constants
-    -- Thanks to Dmitri Medvedev for the patch
-  - Fixed bug #18072 : Impossible to exclude path from processing when symlinked
-  - Fixed bug #18073 : Squiz.PHP.NonExecutableCode fault
-  - Fixed bug #18117 : PEAR coding standard: Method constructor not sniffed as a function
-  - Fixed bug #18135 : Generic FunctionCallArgumentSpacingSniff reports function declaration errors
-  - Fixed bug #18140 : Generic scope indent in exact mode: strange expected/found values for switch
-  - Fixed bug #18145 : Sniffs are not loaded for custom ruleset file
-    -- Thanks to Scott McCammon for the patch
-  - Fixed bug #18152 : While and do-while with AbstractPatternSniff
-  - Fixed bug #18191 : Squiz.PHP.LowercasePHPFunctions does not work with new Date()
-  - Fixed bug #18193 : CodeSniffer doesn't reconize CR (\r) line endings
+  - Fixed bug #18200 : Using custom named ruleset file as standard no longer works
  </notes>
  <contents>
   <dir name="/">
