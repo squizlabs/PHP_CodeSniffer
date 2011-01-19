@@ -100,8 +100,12 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 }
 
                 if ($expectedIndent !== $foundIndent) {
-                    $error = "Multi-line IF statement not indented correctly; expected $expectedIndent spaces but found $foundIndent";
-                    $phpcsFile->addError($error, $i, 'Alignment');
+                    $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found $%s';
+                    $data  = array(
+                              $expectedIndent,
+                              $foundIndent,
+                             );
+                    $phpcsFile->addError($error, $i, 'Alignment', $data);
                 }
 
                 if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
@@ -122,17 +126,28 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             return;
         }
 
-        // The opening brace needs to be one space away
-        // from the closing parenthesis.
+        // The opening brace needs to be one space away from the closing parenthesis.
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
             $length = 0;
+        } else if ($tokens[($closeBracket + 1)]['content'] === $phpcsFile->eolChar) {
+            $length = -1;
         } else {
             $length = strlen($tokens[($closeBracket + 1)]['content']);
         }
 
         if ($length !== 1) {
-            $error = "There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found $length spaces";
-            $phpcsFile->addError($error, ($closeBracket + 1), 'SpaceBeforeOpenBrace');
+            $data = array($length);
+            $code = 'SpaceBeforeOpenBrace';
+
+            $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found ';
+            if ($length === -1) {
+                $error .= 'newline';
+                $code   = 'NewlineBeforeOpenBrace';
+            } else {
+                $error .= '%s spaces';
+            }
+
+            $phpcsFile->addError($error, ($closeBracket + 1), $code, $data);
         }
 
         // And just in case they do something funny before the brace...

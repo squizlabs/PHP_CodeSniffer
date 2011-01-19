@@ -121,4 +121,9 @@ if (!empty($post)
 ) { 
 // ...
 }
+
+if ($foo)
+{
+    echo 'bar';
+}
 ?>
