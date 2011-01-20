@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed some error messages in PEAR MultiLineConditionSniff that were not using placeholders for message data
   - Fixed bug #18200 : Using custom named ruleset file as standard no longer works
   - Fixed bug #18196 : PEAR MultiLineCondition.SpaceBeforeOpenBrace not consistent with newline chars
+  - Fixed bug #18204 : FunctionCommentThrowTag picks wrong exception type when throwing function call
  </notes>
  <contents>
   <dir name="/">
