@@ -1375,16 +1375,18 @@ class PHP_CodeSniffer
                 $newToken = self::resolveTstringToken($token);
                 break;
             case T_CURLY_OPEN:
-                $newToken            = array();
-                $newToken['code']    = T_OPEN_CURLY_BRACKET;
-                $newToken['content'] = $token[1];
-                $newToken['type']    = 'T_OPEN_CURLY_BRACKET';
+                $newToken = array(
+                             'code'    => T_OPEN_CURLY_BRACKET,
+                             'content' => $token[1],
+                             'type'    => 'T_OPEN_CURLY_BRACKET',
+                            );
                 break;
             default:
-                $newToken            = array();
-                $newToken['code']    = $token[0];
-                $newToken['content'] = $token[1];
-                $newToken['type']    = token_name($token[0]);
+                $newToken = array(
+                             'code'    => $token[0],
+                             'content' => $token[1],
+                             'type'    => token_name($token[0]),
+                            );
                 break;
             }//end switch
         }//end if
