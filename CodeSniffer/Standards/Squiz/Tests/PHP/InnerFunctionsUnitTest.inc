@@ -6,4 +6,13 @@ function outer()
         }
     }
 }
+
+// Closures are allowed.
+function myFunc($foo)
+{
+    $callback = function ($bar) use ($foo)
+                {
+                    $bar += $foo;
+                };
+}
 ?>
