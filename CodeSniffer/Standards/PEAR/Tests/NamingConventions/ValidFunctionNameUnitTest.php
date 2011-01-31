@@ -131,9 +131,8 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
                 129 => 1,
                 130 => 1,
                 149 => 1,
-                150 => 1,
                 151 => 1,
-                154 => 1,
+                152 => 1,
                 155 => 1,
                 156 => 1,
                 157 => 1,
@@ -146,11 +145,13 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
                 164 => 1,
                 165 => 1,
                 166 => 1,
-                168 => 1,
+                167 => 1,
                 169 => 1,
+                170 => 1,
                 171 => 1,
-                172 => 1,
                 173 => 1,
+                174 => 1,
+                175 => 1,
                );
 
     }//end getErrorList()

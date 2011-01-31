@@ -147,6 +147,7 @@ class Magic_Test {
     function __set_state() {}
     function __clone() {}
     function __autoload() {}
+    function __invoke() {}
     function __myFunction() {}
     function __my_function() {}
 }
@@ -165,6 +166,7 @@ function __toString() {}
 function __set_state() {}
 function __clone() {}
 function __autoload() {}
+function __invoke() {}
 function __myFunction() {}
 function __my_function() {}
 
