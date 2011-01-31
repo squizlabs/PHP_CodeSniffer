@@ -226,7 +226,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }//end if
 
             // Skip the rest of a closure.
-            if ($tokens[$i]['code'] === T_FUNCTION) {
+            if ($tokens[$i]['code'] === T_CLOSURE) {
                 $i        = $tokens[$i]['scope_closer'];
                 $lastLine = $tokens[$i]['line'];
                 continue;

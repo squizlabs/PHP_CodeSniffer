@@ -184,4 +184,18 @@ class MyClass
 
 
 }//end class
+
+// Closures should be ignored.
+preg_replace_callback(
+    '~-([a-z])~',
+    function ($match) {
+        return strtoupper($match[1]);
+    },
+    'hello-world'
+);
+
+$callback = function ($bar) use ($foo)
+            {
+                $bar += $foo;
+            };
 ?>
