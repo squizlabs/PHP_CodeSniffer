@@ -60,14 +60,15 @@ define('T_STYLE', 1041);
 define('T_ASPERAND', 1042);
 define('T_DOLLAR', 1043);
 define('T_TYPEOF', 1044);
+define('T_CLOSURE', 1045);
 
-// Some PHP 5.3 tokens.
+// Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1045);
+    define('T_NAMESPACE', 1046);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1046);
+    define('T_NS_SEPARATOR', 1047);
 }
 
 /**
@@ -97,6 +98,7 @@ final class PHP_CodeSniffer_Tokens
     public static $weightings = array(
                                  T_CLASS               => 1000,
                                  T_FUNCTION            => 100,
+                                 T_CLOSURE             => 100,
 
                                  /*
                                      Conditions.
@@ -241,6 +243,7 @@ final class PHP_CodeSniffer_Tokens
     public static $parenthesisOpeners = array(
                                          T_ARRAY,
                                          T_FUNCTION,
+                                         T_CLOSURE,
                                          T_WHILE,
                                          T_FOR,
                                          T_FOREACH,
@@ -259,6 +262,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_CLASS,
                                    T_INTERFACE,
                                    T_FUNCTION,
+                                   T_CLOSURE,
                                    T_IF,
                                    T_SWITCH,
                                    T_CASE,

@@ -26,8 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Squiz FunctionCommentSniff no longer reports errors for closures
-  - Squiz InnerFunctionsSniff no longer reports errors for closures
+  - Add a new token T_CLOSURE that replaces T_FUNCTION if the function keyword is anonymous
+  - Many Squiz sniffs no longer report errors when checking closures; they are now ignored
   - Fixed some error messages in PEAR MultiLineConditionSniff that were not using placeholders for message data
   - Fixed bug #18200 : Using custom named ruleset file as standard no longer works
   - Fixed bug #18196 : PEAR MultiLineCondition.SpaceBeforeOpenBrace not consistent with newline chars
