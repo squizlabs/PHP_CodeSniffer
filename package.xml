@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Squiz FunctionCommentSniff no longer reports errors for closures
   - Squiz InnerFunctionsSniff no longer reports errors for closures
   - Fixed some error messages in PEAR MultiLineConditionSniff that were not using placeholders for message data
   - Fixed bug #18200 : Using custom named ruleset file as standard no longer works

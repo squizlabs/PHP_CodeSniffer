@@ -528,4 +528,19 @@ function test(\first\ns\item $test = \second\ns::CONSTANT)
    return $test;
 
 }//end test()
+
+// Closures should be ignored.
+preg_replace_callback(
+    '~-([a-z])~',
+    function ($match) {
+        return strtoupper($match[1]);
+    },
+    'hello-world'
+);
+
+$callback = function ($bar) use ($foo)
+            {
+                $bar += $foo;
+            };
+
 ?>

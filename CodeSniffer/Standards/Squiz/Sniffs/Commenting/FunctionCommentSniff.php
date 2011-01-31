@@ -121,6 +121,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore functions being based as arguments to other functions.
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true
+            && empty($tokens[$stackPtr]['nested_parenthesis']) === false
+        ) {
+            return;
+        }
+
+        // Ignore functions being assigned to a variable.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($tokens[$prev]['code'] === T_EQUAL) {
+            return;
+        }
+
         $find = array(
                  T_COMMENT,
                  T_DOC_COMMENT,
