@@ -177,5 +177,21 @@ class FunctionCommentThrowTagUnitTest
     }//end okFunction()
 
 
+    /**
+     * Comment inside function.
+     *
+     * @throws Exception
+     */
+    function okFunction()
+    {
+        /**
+         * @var FooClass
+         */
+        $foo = FooFactory::factory();
+        throw new Exception;
+
+    }//end okFunction
+
+
 }//end class
 ?>

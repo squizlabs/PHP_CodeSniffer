@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18196 : PEAR MultiLineCondition.SpaceBeforeOpenBrace not consistent with newline chars
   - Fixed bug #18204 : FunctionCommentThrowTag picks wrong exception type when throwing function call
   - Fixed bug #18222 : Add __invoke method to PEAR standard
+  - Fixed bug #18235 : Invalid error generation in Squiz.Commenting.FunctionCommentThrowTag
  </notes>
  <contents>
   <dir name="/">
