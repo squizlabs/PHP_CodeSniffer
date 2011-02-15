@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18204 : FunctionCommentThrowTag picks wrong exception type when throwing function call
   - Fixed bug #18222 : Add __invoke method to PEAR standard
   - Fixed bug #18235 : Invalid error generation in Squiz.Commenting.FunctionCommentThrowTag
+  - Fixed bug #18250 : --standard with relative path skips Standards' "implicit" sniffs
   - Fixed bug #18274 : Multi-line IF and function call indent rules conflict
  </notes>
  <contents>

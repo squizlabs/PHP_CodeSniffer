@@ -616,12 +616,18 @@ class PHP_CodeSniffer
                         throw new PHP_CodeSniffer_Exception("Ruleset $path is not valid");
                     }
 
-                    $this->standardDir = $path;
-                    $standard          = (string) $ruleset['name'];
+                    // See comments in ELSE IF condition above for why we do this.
+                    if (basename($path) === 'ruleset.xml') {
+                        $this->standardDir = dirname($path);
+                    } else {
+                        $this->standardDir = $path;
+                    }
+
+                    $standard = (string) $ruleset['name'];
                 }
             }
         }//end if
-
+        echo "Standard: $this->standardDir $standard\n";
         $files = $this->getSniffFiles($this->standardDir, $standard);
 
         if (empty($sniffs) === false) {
