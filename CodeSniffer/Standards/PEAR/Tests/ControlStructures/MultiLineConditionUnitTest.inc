@@ -126,4 +126,14 @@ if ($foo)
 {
     echo 'bar';
 }
+
+// Should be no errors even though lines are
+// not exactly aligned together. Multi-line function
+// call takes precedence.
+if (array_key_exists($key, $value)
+    && array_key_exists(
+        $key, $value2
+    )
+) {
+}
 ?>

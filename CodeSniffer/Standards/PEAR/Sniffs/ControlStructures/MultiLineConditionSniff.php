@@ -70,7 +70,8 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         }
 
         // Each line between the parenthesis should be indented 4 spaces
-        // and start with an operator.
+        // and start with an operator, unless the line is inside a
+        // function call, in which case it is ignored.
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
         $lastLine     = $tokens[$openBracket]['line'];
@@ -79,7 +80,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
                     if ($next !== $closeBracket) {
-                        // CLosing bracket is on the same line as a condition.
+                        // Closing bracket is on the same line as a condition.
                         $error = 'Closing parenthesis of a multi-line IF statement must be on a new line';
                         $phpcsFile->addError($error, $i, 'CloseBracketNewLine');
                         $expectedIndent = ($statementIndent + 4);
@@ -100,7 +101,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 }
 
                 if ($expectedIndent !== $foundIndent) {
-                    $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found $%s';
+                    $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found %s';
                     $data  = array(
                               $expectedIndent,
                               $foundIndent,
@@ -118,6 +119,17 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
 
                 $lastLine = $tokens[$i]['line'];
             }//end if
+
+            if ($tokens[$i]['code'] === T_STRING) {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
+                if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+                    // This is a function call, so skip to the end as they
+                    // have their own indentation rules.
+                    $i        = $tokens[$next]['parenthesis_closer'];
+                    $lastLine = $tokens[$i]['line'];
+                    continue;
+                }
+            }
         }//end for
 
         // From here on, we are checking the spacing of the opening and closing
