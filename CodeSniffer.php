@@ -627,7 +627,7 @@ class PHP_CodeSniffer
                 }
             }
         }//end if
-        echo "Standard: $this->standardDir $standard\n";
+
         $files = $this->getSniffFiles($this->standardDir, $standard);
 
         if (empty($sniffs) === false) {
