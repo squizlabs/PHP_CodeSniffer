@@ -75,6 +75,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                           T_FUNCTION,
                           T_PUBLIC,
                           T_PRIVATE,
+                          T_FINAL,
                           T_PROTECTED,
                           T_STATIC,
                           T_ABSTRACT,

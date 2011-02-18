@@ -87,6 +87,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                        T_PUBLIC,
                        T_PRIVATE,
                        T_PROTECTED,
+                       T_FINAL,
                        T_STATIC,
                        T_ABSTRACT,
                        T_CONST,

@@ -129,4 +129,17 @@ class MyClass
     const LEFT = 1;
 
 }
+
+/**
+ * Comment should be ignored.
+ *
+ */
+final class MyClass
+{
+    /**
+     * Comment should be ignored.
+     *
+     */
+    final public function test() {}
+}
 ?>
