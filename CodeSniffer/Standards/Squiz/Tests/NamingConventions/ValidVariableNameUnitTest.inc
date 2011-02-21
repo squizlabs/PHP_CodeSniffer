@@ -34,6 +34,7 @@ echo $_varName;
 
 echo "Hello $varName";
 echo "Hello $var_name";
+echo "Hello ${var_name}";
 echo "Hello $varname";
 echo "Hello $_varName";
 

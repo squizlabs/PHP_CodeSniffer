@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Add a new token T_CLOSURE that replaces T_FUNCTION if the function keyword is anonymous
   - Many Squiz sniffs no longer report errors when checking closures; they are now ignored
   - Fixed some error messages in PEAR MultiLineConditionSniff that were not using placeholders for message data
+  - AbstractVariableSniff now correctly finds variable names wrapped with curly braces inside double quoted strings
   - Fixed bug #18200 : Using custom named ruleset file as standard no longer works
   - Fixed bug #18196 : PEAR MultiLineCondition.SpaceBeforeOpenBrace not consistent with newline chars
   - Fixed bug #18204 : FunctionCommentThrowTag picks wrong exception type when throwing function call
