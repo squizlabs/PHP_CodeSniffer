@@ -61,4 +61,14 @@ function testFunction($arg1,
 $arg2) {
 }
 
+function validateUrl(
+    $url,
+    $requireScheme=TRUE,
+    array $allowedSchemes=array(
+                           'http',
+                           'https',
+                          )
+) {
+}
+
 ?>
