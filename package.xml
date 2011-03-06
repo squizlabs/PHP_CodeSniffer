@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18274 : Multi-line IF and function call indent rules conflict
   - Fixed bug #18282 : Squiz doesn't handle final keyword before function comments
     -- Thanks to Dave Perrett for the patch
+  - Fixed bug #18336 : Function isUnderscoreName gives php notices
  </notes>
  <contents>
   <dir name="/">
