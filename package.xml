@@ -14,15 +14,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2011-01-14</date>
- <time>16:00:00</time>
+ <date>2011-03-17</date>
+ <time>14:40:00</time>
  <version>
-  <release>1.3.0RC3</release>
-  <api>1.3.0RC3</api>
+  <release>1.3.0</release>
+  <api>1.3.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
@@ -1833,6 +1833,35 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.3.0</release>
+    <api>1.3.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-03-17</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Add a new token T_CLOSURE that replaces T_FUNCTION if the function keyword is anonymous
+    - Many Squiz sniffs no longer report errors when checking closures; they are now ignored
+    - Fixed some error messages in PEAR MultiLineConditionSniff that were not using placeholders for message data
+    - AbstractVariableSniff now correctly finds variable names wrapped with curly braces inside double quoted strings
+    - PEAR FunctionDeclarationSniff now ignores arrays in argument default values when checking multi-line declarations
+    - Fixed bug #18200 : Using custom named ruleset file as standard no longer works
+    - Fixed bug #18196 : PEAR MultiLineCondition.SpaceBeforeOpenBrace not consistent with newline chars
+    - Fixed bug #18204 : FunctionCommentThrowTag picks wrong exception type when throwing function call
+    - Fixed bug #18222 : Add __invoke method to PEAR standard
+    - Fixed bug #18235 : Invalid error generation in Squiz.Commenting.FunctionCommentThrowTag
+    - Fixed bug #18250 : --standard with relative path skips Standards' "implicit" sniffs
+    - Fixed bug #18274 : Multi-line IF and function call indent rules conflict
+    - Fixed bug #18282 : Squiz doesn't handle final keyword before function comments
+      -- Thanks to Dave Perrett for the patch
+    - Fixed bug #18336 : Function isUnderscoreName gives php notices
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.3.0RC2</release>
