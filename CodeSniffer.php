@@ -1049,14 +1049,24 @@ class PHP_CodeSniffer
     {
         // Check that the file's extension is one we are checking.
         // We are strict about checking the extension and we don't
-        // let files through with no extension.
-        $fileParts = explode('.', $path);
-        $extension = array_pop($fileParts);
-        if ($extension === $path) {
+        // let files through with no extension or that start with a dot.
+        $fileName  = basename($path);
+        $fileParts = explode('.', $fileName);
+        if ($fileParts[0] === $fileName || $fileParts[0] === '') {
             return false;
         }
 
-        if (isset($this->allowedFileExtensions[$extension]) === false) {
+        // Checking multi-part file extensions, so need to create a
+        // complete extension list and make sure one is allowed.
+        $extensions = array();
+        array_shift($fileParts);
+        foreach ($fileParts as $part) {
+            $extensions[implode('.', $fileParts)] = 1;
+            array_shift($fileParts);
+        }
+
+        $matches = array_intersect_key($extensions, $this->allowedFileExtensions);
+        if (empty($matches) === true) {
             return false;
         }
 
