@@ -97,6 +97,8 @@ final class PHP_CodeSniffer_Tokens
      */
     public static $weightings = array(
                                  T_CLASS               => 1000,
+                                 T_INTERFACE           => 1000,
+                                 T_NAMESPACE           => 1000,
                                  T_FUNCTION            => 100,
                                  T_CLOSURE             => 100,
 
@@ -261,6 +263,7 @@ final class PHP_CodeSniffer_Tokens
     public static $scopeOpeners = array(
                                    T_CLASS,
                                    T_INTERFACE,
+                                   T_NAMESPACE,
                                    T_FUNCTION,
                                    T_CLOSURE,
                                    T_IF,

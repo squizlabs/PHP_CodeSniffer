@@ -108,6 +108,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'shared' => false,
                                                 'with'   => array(),
                                                ),
+                            T_NAMESPACE     => array(
+                                                'start'  => array(T_OPEN_CURLY_BRACKET),
+                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'strict' => false,
+                                                'shared' => false,
+                                                'with'   => array(),
+                                               ),
                             T_WHILE         => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
                                                 'end'    => array(T_CLOSE_CURLY_BRACKET),

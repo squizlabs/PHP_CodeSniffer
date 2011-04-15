@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - The extensions command line argument now supports multi-part file extensions (request #17227)
+  - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
   - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
     -- Also now shown for all report types if nothing is being printed to the screen
  </notes>
