@@ -66,8 +66,8 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
      * Processes this sniff, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      *
      * @return void
      */
