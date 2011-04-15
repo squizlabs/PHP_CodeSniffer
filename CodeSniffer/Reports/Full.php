@@ -42,13 +42,15 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
      * @param array   $report      Prepared report.
      * @param boolean $showSources Show sources?
      * @param int     $width       Maximum allowed lne width.
-     * 
-     * @return string 
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
      */
     public function generate(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        $toScreen=true
     ) {
         $errorsShown = 0;
         $width       = max($width, 70);
@@ -135,7 +137,8 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
         }//end foreach
 
-        if (PHP_CODESNIFFER_INTERACTIVE === false
+        if ($toScreen === true
+            && PHP_CODESNIFFER_INTERACTIVE === false
             && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;

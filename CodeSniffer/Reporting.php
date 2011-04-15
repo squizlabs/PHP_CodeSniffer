@@ -86,11 +86,13 @@ class PHP_CodeSniffer_Reporting
         $reportClass = self::factory($report);
         $reportData  = $this->prepare($filesViolations);
 
+        $toScreen = true;
         if ($reportFile !== null) {
+            $toScreen = false;
             ob_start();
         }
 
-        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth);
+        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen);
 
         if ($reportFile !== null) {
             $generatedReport = ob_get_contents();

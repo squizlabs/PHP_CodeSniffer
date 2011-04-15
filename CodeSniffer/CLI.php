@@ -582,13 +582,21 @@ class PHP_CodeSniffer_CLI
             $reports['full'] = $reportFile;
         }
 
-        $errors = 0;
+        $errors   = 0;
+        $toScreen = false;
 
         foreach ($reports as $report => $output) {
             if ($output === null) {
                 $output = $reportFile;
             }
 
+            if ($reportFile === null) {
+                $toScreen = true;
+            }
+
+            // We don't add errors here because the number of
+            // errors reported by each report type will always be the
+            // same, so we really just need 1 number.
             $errors = $reporting->printReport(
                 $report,
                 $filesViolations,
@@ -596,6 +604,18 @@ class PHP_CodeSniffer_CLI
                 $output,
                 $reportWidth
             );
+        }
+
+        // Only print PHP_Timer output if no reports were
+        // printed to the screen so we don't put additional output
+        // in something like an XML report. If we are printing to screen,
+        // the report types would have already worked out who should
+        // print the timer info.
+        if ($toScreen === false
+            && PHP_CODESNIFFER_INTERACTIVE === false
+            && class_exists('PHP_Timer', false) === true
+        ) {
+            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
 
         // They should all return the same value, so it

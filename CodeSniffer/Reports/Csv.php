@@ -40,13 +40,15 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
      * @param array   $report      Prepared report.
      * @param boolean $showSources Show sources?
      * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
      * 
      * @return string 
      */
     public function generate(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        $toScreen=true
     ) {
         echo 'File,Line,Column,Type,Message,Source,Severity'.PHP_EOL;
 

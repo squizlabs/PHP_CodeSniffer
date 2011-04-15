@@ -40,13 +40,15 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      * @param array   $report      Prepared report.
      * @param boolean $showSources Show sources?
      * @param int     $width       Maximum allowed lne width.
-     * 
-     * @return string 
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
      */
     public function generate(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        $toScreen=true
     ) {
         $sources = array();
         $width   = max($width, 70);
@@ -67,8 +69,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                         }
                     }
                 }
-            }//end foreach
-        }//end foreach
+            }
+        }
 
         if ($errorsShown === 0) {
             // Nothing to show.
@@ -111,7 +113,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                 if (isset($parts[3]) === true) {
                     $name    = $this->makeFriendlyName($parts[3]);
                     $name[0] = strtolower($name[0]);
-                    $sniff .= ' '.$name;
+                    $sniff  .= ' '.$name;
                 }
 
                 if (strlen($sniff) > ($width - 37)) {
@@ -129,7 +131,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         echo 'WERE FOUND IN '.count($sources).' SOURCE(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
-        if (PHP_CODESNIFFER_INTERACTIVE === false
+        if ($toScreen === true
+            && PHP_CODESNIFFER_INTERACTIVE === false
             && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;

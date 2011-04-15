@@ -42,13 +42,15 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
      * @param array   $report      Prepared report.
      * @param boolean $showSources Show sources?
      * @param int     $width       Maximum allowed lne width.
-     * 
-     * @return string 
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
      */
     public function generate(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
         echo '<phpcs version="@package_version@">'.PHP_EOL;
