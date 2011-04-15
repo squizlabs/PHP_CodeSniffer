@@ -64,6 +64,31 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
     }//end __construct()
 
 
+    /**
+     * Generates the error or wanrning for this sniff.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the forbidden function
+     *                                        in the token array.
+     * @param string               $function  The name of the forbidden function.
+     *
+     * @return void
+     */
+    protected function addError($phpcsFile, $stackPtr, $function)
+    {
+        $data  = array($function);
+        $error = 'Function %s() has been deprecated';
+        $type  = 'Deprecated';
+
+        if ($this->error === true) {
+            $phpcsFile->addError($error, $stackPtr, $type, $data);
+        } else {
+            $phpcsFile->addWarning($error, $stackPtr, $type, $data);
+        }
+
+    }//end addError()
+
+
 }//end class
 
 ?>

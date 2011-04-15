@@ -69,8 +69,8 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      *
      * @return void
      */
@@ -97,6 +97,23 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
+        $this->addError($phpcsFile, $stackPtr, $function);
+
+    }//end process()
+
+
+    /**
+     * Generates the error or wanrning for this sniff.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the forbidden function
+     *                                        in the token array.
+     * @param string               $function  The name of the forbidden function.
+     *
+     * @return void
+     */
+    protected function addError($phpcsFile, $stackPtr, $function)
+    {
         $data  = array($function);
         $error = 'The use of function %s() is ';
         if ($this->error === true) {
@@ -119,7 +136,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->addWarning($error, $stackPtr, $type, $data);
         }
 
-    }//end process()
+    }//end addError()
 
 
 }//end class

@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Piotr Karas for the contribution
   - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
     -- Also now shown for all report types if nothing is being printed to the screen
+  - Generic DeprecatedFunctionSniff now reports functions as deprecated and not simply forbidden (request #18288)
  </notes>
  <contents>
   <dir name="/">
