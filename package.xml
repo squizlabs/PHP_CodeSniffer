@@ -28,6 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The extensions command line argument now supports multi-part file extensions (request #17227)
   - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
+  - Added new ByteOrderMarkSniff to Generic standard (request #18194)
+    -- Throws an error is a byte order mark is found in any PHP file
+    -- Thanks to Piotr Karas for the contribution
   - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
     -- Also now shown for all report types if nothing is being printed to the screen
  </notes>
@@ -286,6 +289,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ByteOrderMarkSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -433,6 +439,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ByteOrderMarkUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ByteOrderMarkUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.js" role="test" />
