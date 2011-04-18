@@ -486,10 +486,19 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
+        $fileContents = '';
         if (empty($values['files']) === true) {
-            echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-            $this->printUsage();
-            exit(2);
+            // Check if they passing in the file contents.
+            $handle       = fopen('php://stdin', 'r');
+            $fileContents = stream_get_contents($handle);
+            fclose($handle);
+
+            if ($fileContents === '') {
+                // No files and no content passed in.
+                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            }
         }
 
         $values['standard'] = $this->validateStandard($values['standard']);
@@ -540,6 +549,10 @@ class PHP_CodeSniffer_CLI
             $values['sniffs'],
             $values['local']
         );
+
+        if ($fileContents !== '') {
+            $phpcs->processFile('STDIN', $fileContents);
+        }
 
         return $this->printErrorReport(
             $phpcs,

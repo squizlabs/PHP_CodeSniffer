@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
     -- Also now shown for all report types if nothing is being printed to the screen
   - Generic DeprecatedFunctionSniff now reports functions as deprecated and not simply forbidden (request #18288)
+  - PHPCS now accepts file contents from STDIN (request #18447)
+    -- Example usage: cat temp.php | phpcs [options]  -OR-  phpcs [options] &lt; temp.php
+    -- Not every sniff will work correctly due to the lack of a valid file path
  </notes>
  <contents>
   <dir name="/">

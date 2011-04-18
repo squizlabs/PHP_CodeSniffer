@@ -1115,6 +1115,9 @@ class PHP_CodeSniffer
         }
 
         $filePath = realpath($file);
+        if ($filePath === false) {
+            $filePath = $file;
+        }
 
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
