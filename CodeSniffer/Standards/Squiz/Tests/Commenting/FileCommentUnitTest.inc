@@ -18,7 +18,7 @@
 * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
 * the PHP License and are unable to obtain it through the web, please
 * send a note to license@php.net so we can mail you a copy immediately.
-* @package    PHP_CodeSniffer
+* @package    SquizCMS
 * @package    ADDITIONAL PACKAGE TAG
 * @subpackage not_camelcased
 * @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
