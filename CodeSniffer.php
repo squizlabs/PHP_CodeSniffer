@@ -115,16 +115,6 @@ class PHP_CodeSniffer
     protected $ruleset = array();
 
     /**
-     * The path that that PHP_CodeSniffer is being run from.
-     *
-     * Stored so that the path can be restored after it is changed
-     * in the constructor.
-     *
-     * @var string
-     */
-    private $_cwd = null;
-
-    /**
      * The listeners array, indexed by token type.
      *
      * @var array
@@ -220,7 +210,10 @@ class PHP_CodeSniffer
 
         // Change into a directory that we know about to stop any
         // relative path conflicts.
-        $this->_cwd = getcwd();
+        if (defined('PHPCS_CWD') === false) {
+            define('PHPCS_CWD', getcwd());
+        }
+
         chdir(dirname(__FILE__).'/CodeSniffer/');
 
         // Set default CLI object in case someone is running us
@@ -242,7 +235,7 @@ class PHP_CodeSniffer
      */
     public function __destruct()
     {
-        chdir($this->_cwd);
+        chdir(PHPCS_CWD);
 
     }//end __destruct()
 
@@ -430,8 +423,8 @@ class PHP_CodeSniffer
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
-            } else if (is_file(realpath($this->_cwd.'/'.$standard)) === true) {
-                $ruleset = simplexml_load_file(realpath($this->_cwd.'/'.$standard));
+            } else if (is_file(realpath(PHPCS_CWD.'/'.$standard)) === true) {
+                $ruleset = simplexml_load_file(realpath(PHPCS_CWD.'/'.$standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -604,7 +597,7 @@ class PHP_CodeSniffer
             if (is_dir($this->standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
-                $path = realpath($this->_cwd.'/'.$standard);
+                $path = realpath(PHPCS_CWD.'/'.$standard);
                 if (is_dir($path) === true) {
                     // This is a relative path to a custom standard.
                     $this->standardDir = $path;
