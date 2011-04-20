@@ -2518,7 +2518,7 @@ class PHP_CodeSniffer_File
      *                           If value is ommited, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be cheked. IE. checking will stop
+     *                           will not be checked. i.e., checking will stop
      *                           at the next semi-colon found.
      *
      * @return int | bool
