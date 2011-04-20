@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Not every sniff will work correctly due to the lack of a valid file path
   - Squiz FileCommentSniff now enforces rule that package names cannot start with the word Squiz
   - Fixed issue in Squiz FileCommentSniff where suggested package name was the same as the incorrect package name
+  - Fixed some issues with Squiz ArrayDeclarationSniff when using function calls in array values
  </notes>
  <contents>
   <dir name="/">

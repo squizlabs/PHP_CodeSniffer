@@ -172,4 +172,10 @@ $array = array(
 // Malformed
 $foo = array(1
 , 2);
+
+$listItems[$aliasPath] = array('itemContent' => implode('<br/>', $aliases));
+
+$listItems[$aliasPath] = array(
+                          'itemContent' => implode('<br/>', $aliases)
+                         );
 ?>
