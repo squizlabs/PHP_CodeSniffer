@@ -38,6 +38,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS now accepts file contents from STDIN (request #18447)
     -- Example usage: cat temp.php | phpcs [options]  -OR-  phpcs [options] &lt; temp.php
     -- Not every sniff will work correctly due to the lack of a valid file path
+  - PHP_CodeSniffer_Exception no longer extends PEAR_Exception (request #18483)
+    -- PEAR_Exception added a requirement that PEAR had to be installed
+    -- PHP_CodeSniffer is not used as a library, so unlikely to have any impact
   - Squiz FileCommentSniff now enforces rule that package names cannot start with the word Squiz
   - Fixed issue in Squiz FileCommentSniff where suggested package name was the same as the incorrect package name
   - Fixed some issues with Squiz ArrayDeclarationSniff when using function calls in array values
@@ -1765,9 +1768,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <php>
     <min>5.1.2</min>
    </php>
-   <pearinstaller>
-    <min>1.4.0b1</min>
-   </pearinstaller>
   </required>
   <optional>
    <package>
