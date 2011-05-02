@@ -451,9 +451,22 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $tokens[$i]['code'] = T_CLOSURE;
+                    $tokens[$i]['type'] = 'T_CLOSURE';
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $tokens[$i]['line'];
                         echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                    }
+
+                    for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
+                        if (isset($tokens[$x]['conditions'][$i]) === false) {
+                            continue;
+                        }
+
+                        $tokens[$x]['conditions'][$i] = T_CLOSURE;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$x]['type'];
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                        }
                     }
                 }
 

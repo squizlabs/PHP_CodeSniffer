@@ -77,10 +77,13 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             // Make sure this is another class reference.
             $declarationName = $phpcsFile->getDeclarationName($currScope);
             if ($declarationName === $tokens[$className]['content']) {
-                // Class name is the same as the current class.
-                $error = 'Must use "self::" for local static member reference';
-                $phpcsFile->addError($error, $className, 'NotUsed');
-                return;
+                // Class name is the same as the current class, which is not allowed
+                // except if being used inside a closure.
+                if ($phpcsFile->hasCondition($stackPtr, T_CLOSURE) === false) {
+                    $error = 'Must use "self::" for local static member reference';
+                    $phpcsFile->addError($error, $className, 'NotUsed');
+                    return;
+                }
             }
         }
 

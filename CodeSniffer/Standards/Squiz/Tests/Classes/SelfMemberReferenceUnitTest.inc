@@ -45,4 +45,23 @@ class SelfMemberReferenceUnitTestExample
 }
 
 
+class MyClass {
+
+    public static function test($value) {
+        echo "$value\n";
+    }
+
+    public static function walk() {
+        $callback = function($value, $key) {
+                        // This is valid because you cant use self:: in a closure
+                        MyClass::test($value);
+                    };
+
+        $array = array(1,2,3);
+        array_walk($array, $callback);
+    }
+}
+
+MyClass::walk();
+
 ?>
