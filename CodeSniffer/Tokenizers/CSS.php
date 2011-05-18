@@ -100,10 +100,12 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // definition, join the tokens together.
                     if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1) {
                         array_shift($commentTokens);
+                        // Work out what we trimmed off above and remember to re-add it.
+                        $trimmed = substr($token['content'], 0, (strlen($token['content']) - strlen($content)));
                         $finalTokens[$newStackPtr] = array(
                                                       'type'    => 'T_COLOUR',
                                                       'code'    => T_COLOUR,
-                                                      'content' => '#'.$firstContent,
+                                                      'content' => $trimmed.$firstContent,
                                                      );
                     } else {
                         $finalTokens[$newStackPtr] = array(
