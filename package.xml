@@ -1771,6 +1771,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <php>
     <min>5.1.2</min>
    </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
   </required>
   <optional>
    <package>
