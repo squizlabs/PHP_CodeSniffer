@@ -56,6 +56,7 @@ class Squiz_Tests_Commenting_FunctionCommentThrowTagUnitTest extends AbstractSni
                 60  => 1,
                 106 => 1,
                 123 => 1,
+                214 => 1,
                );
 
     }//end getErrorList()

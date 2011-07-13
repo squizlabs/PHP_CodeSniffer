@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18465 : "self::" does not work in lambda functions
     -- Also corrects conversion of T_FUNCTION tokens to T_CLOSURE, which was not fixing token condition arrays
   - Fixed bug #18543 : CSS Tokenizer deletes too many #
+  - Fixed bug #18624 : @throws namespace problem
+    -- Thanks to Gavin Davies for the patch
  </notes>
  <contents>
   <dir name="/">

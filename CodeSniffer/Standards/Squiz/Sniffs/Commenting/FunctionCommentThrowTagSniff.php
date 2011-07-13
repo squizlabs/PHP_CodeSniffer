@@ -103,14 +103,41 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($currPos + 1), null, true);
                 if ($tokens[$nextToken]['code'] === T_NEW) {
-                    $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd, false, null, true);
+                    $currException = $phpcsFile->findNext(
+                        array(
+                         T_NS_SEPARATOR,
+                         T_STRING,
+                        ),
+                        $currPos,
+                        $currScopeEnd,
+                        false,
+                        null,
+                        true
+                    );
+
                     if ($currException !== false) {
-                        $throwTokens[] = $tokens[$currException]['content'];
-                    }
-                }
+                        $endException = $phpcsFile->findNext(
+                            array(
+                             T_NS_SEPARATOR,
+                             T_STRING,
+                            ),
+                            ($currException + 1),
+                            $currScopeEnd,
+                            true,
+                            null,
+                            true
+                        );
+
+                        if ($endException === false) {
+                            $throwTokens[] = $tokens[$currException]['content'];
+                        } else {
+                            $throwTokens[] = $phpcsFile->getTokensAsString($currException, ($endException - $currException));
+                        }
+                    }//end if
+                }//end if
 
                 $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
-            }
+            }//end while
         }//end if
 
         // Only need one @throws tag for each type of exception thrown.

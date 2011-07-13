@@ -194,4 +194,27 @@ class FunctionCommentThrowTagUnitTest
 
 
 }//end class
+
+class NamespacedException {
+    /**
+     * @throws \Exception
+     */
+    public function foo() {
+        throw new \Exception();
+    }
+
+    /**
+     * @throws \Foo\Bar\FooBarException
+     */
+    public function fooBar2() {
+        throw new \Foo\Bar\FooBarException();
+    }
+    
+    /**
+     * @throws FooBarException
+     */
+    public function fooBar2() {
+        throw new \Foo\Bar\FooBarException();
+    }
+}
 ?>
