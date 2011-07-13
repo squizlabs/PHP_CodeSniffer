@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18624 : @throws namespace problem
     -- Thanks to Gavin Davies for the patch
   - Fixed bug #18628 : Generic.Files.LineLength gives incorrect results with Windows line-endings
+  - Fixed bug #18633 : CSS Tokenizer doesn't replace T_LIST tokens inside some styles
  </notes>
  <contents>
   <dir name="/">

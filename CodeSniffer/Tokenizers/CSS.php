@@ -53,13 +53,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
-            // Styles like list-style are tokenized as T_LIST-T_STRING
-            // so convert the T_LIST to a string.
-            if ($token['code'] === T_LIST) {
-                $token['code'] = T_STRING;
-                $token['type'] = 'T_STRING';
-            }
-
             if ($token['code'] === T_COMMENT
                 && substr($token['content'], 0, 2) === '/*'
             ) {
@@ -283,8 +276,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
     /**
      * Performs additional processing after main tokenizing.
      *
-     * This method is blank because we don't want the extra
-     * processing that the PHP tokenizer performs.
+     * This additional processsing converts T_LIST tokens to T_STRING
+     * because there are no list constructs in CSS because list-* styles
+     * look like lists to the PHP tokenizer.
      *
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -293,6 +287,44 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      */
     public function processAdditional(&$tokens, $eolChar)
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
+        }
+
+        $numTokens  = count($tokens);
+        $changeMade = false;
+
+        for ($i = 0; $i < $numTokens; $i++) {
+            if ($tokens[$i]['code'] !== T_LIST) {
+                continue;
+            }
+
+            if ($tokens[($i + 1)]['code'] !== T_STYLE) {
+                continue;
+            }
+
+            $style = ($i + 1);
+
+            $tokens[$style]['content'] = $tokens[$i]['content'].$tokens[$style]['content'];
+            $tokens[$style]['column']  = $tokens[$i]['column'];
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $line = $tokens[$i]['line'];
+                echo "\t* T_LIST token $i on line $line merged into T_STYLE token $style *".PHP_EOL;
+            }
+
+            unset($tokens[$i]);
+            $changeMade = true;
+            $i++;
+        }//end for
+
+        if ($changeMade === true) {
+            $tokens = array_values($tokens);
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END ADDITIONAL JS PROCESSING ***".PHP_EOL;
+        }
 
     }//end processAdditional()
 
