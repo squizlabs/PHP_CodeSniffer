@@ -126,8 +126,8 @@ class Core_ReportingTest extends PHPUnit_Framework_TestCase
     {
         $type        = 'checkstyle';
         $reportClass = $this->reporting->factory($type);
-        $this->assertType('PHP_CodeSniffer_Report', $reportClass);
-        $this->assertType('PHP_CodeSniffer_Reports_Checkstyle', $reportClass);
+        $this->assertInstanceOf('PHP_CodeSniffer_Report', $reportClass);
+        $this->assertInstanceOf('PHP_CodeSniffer_Reports_Checkstyle', $reportClass);
 
         $this->setExpectedException('PHP_CodeSniffer_Exception');
         $type        = 'foo';

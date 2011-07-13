@@ -28,6 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - All report file command line arguments now work with relative paths (request #17240)
   - The extensions command line argument now supports multi-part file extensions (request #17227)
+  - Added report type --report=hgblame to show number of errors/warnings committed by authors in a Mercurial repository
+      -- Has the same functionality as the svnblame report
+      -- Thanks to Ben Selby for the patch
   - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
   - Added new ByteOrderMarkSniff to Generic standard (request #18194)
     -- Throws an error is a byte order mark is found in any PHP file
