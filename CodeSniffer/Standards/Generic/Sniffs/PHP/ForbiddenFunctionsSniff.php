@@ -46,6 +46,20 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                                     );
 
     /**
+     * A cache of forbidden function names, for faster lookups.
+     *
+     * @var array(string)
+     */
+    protected $_forbiddenFunctionNames = array();
+
+    /**
+     * If true, forbidden functions will be considered regular expressions.
+     *
+     * @var bool
+     */
+    protected $patternMatch = false;
+
+    /**
      * If true, an error will be thrown; otherwise a warning.
      *
      * @var bool
@@ -60,6 +74,16 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
+        // Everyone has had a chance to figure out what forbidden functions
+        // they want to check for, so now we can cache out the list.
+        $this->_forbiddenFunctionNames = array_keys($this->forbiddenFunctions);
+
+        if ($this->patternMatch === true) {
+            foreach ($this->_forbiddenFunctionNames as $i => $name) {
+                $this->_forbiddenFunctionNames[$i] = '/'.$name.'/i';
+            }
+        }
+
         return array(T_STRING);
 
     }//end register()
@@ -92,12 +116,31 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         }
 
         $function = strtolower($tokens[$stackPtr]['content']);
+        $pattern  = null;
 
-        if (in_array($function, array_keys($this->forbiddenFunctions)) === false) {
-            return;
+        if ($this->patternMatch === true) {
+            $count   = 0;
+            $pattern = preg_replace(
+                $this->_forbiddenFunctionNames,
+                $this->_forbiddenFunctionNames,
+                $function,
+                1,
+                $count
+                );
+
+            if ($count === 0) {
+                return;
+            }
+
+            // Remove the pattern delimiters and modifier.
+            $pattern = substr($pattern, 1, -2);
+        } else {
+            if (in_array($function, $this->_forbiddenFunctionNames) === false) {
+                return;
+            }
         }
 
-        $this->addError($phpcsFile, $stackPtr, $function);
+        $this->addError($phpcsFile, $stackPtr, $function, $pattern);
 
     }//end process()
 
@@ -109,10 +152,11 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      * @param int                  $stackPtr  The position of the forbidden function
      *                                        in the token array.
      * @param string               $function  The name of the forbidden function.
+     * @param string               $pattern   The pattern used for the match.
      *
      * @return void
      */
-    protected function addError($phpcsFile, $stackPtr, $function)
+    protected function addError($phpcsFile, $stackPtr, $function, $pattern=null)
     {
         $data  = array($function);
         $error = 'The use of function %s() is ';
@@ -124,9 +168,13 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             $error .= 'discouraged';
         }
 
-        if ($this->forbiddenFunctions[$function] !== null) {
+        if ($pattern === null) {
+            $pattern = $function;
+        }
+
+        if ($this->forbiddenFunctions[$pattern] !== null) {
             $type  .= 'WithAlternative';
-            $data[] = $this->forbiddenFunctions[$function];
+            $data[] = $this->forbiddenFunctions[$pattern];
             $error .= '; use %s() instead';
         }
 
