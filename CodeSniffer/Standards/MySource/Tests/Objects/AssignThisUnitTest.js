@@ -16,3 +16,5 @@ var itemid = this.items[i].getAttribute('itemid');
 for (var x = this; y < 10; y++) {
     var x = this + 1;
 }
+
+var _self = this;
