@@ -1020,6 +1020,10 @@ class PHP_CodeSniffer
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
+                if ($this->shouldProcessFile($path) === false) {
+                    continue;
+                }
+
                 $files[] = $path;
             }//end if
         }//end foreach
