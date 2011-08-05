@@ -361,4 +361,15 @@ switch (true) {
     break;
 }
 
+// Testing anon function.
+class a {
+    function c()
+    {
+        $this->doSomething(
+            function () {
+                echo 123;
+            }
+        );
+    }
+}
 ?>

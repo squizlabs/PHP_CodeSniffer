@@ -121,7 +121,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         // indent that we expect this current content to be.
         $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
 
-        if ($tokens[$firstToken]['column'] !== $expectedIndent) {
+        // Don't process the first token if it is a closure because they have
+        // different indentation rules as they are often used as function arguments
+        // for multi-line function calls. But continue to process the content of the
+        // closure because it should be indented as normal.
+        if ($tokens[$firstToken]['code'] !== T_CLOSURE
+            && $tokens[$firstToken]['column'] !== $expectedIndent
+        ) {
             $error = 'Line indented incorrectly; expected %s spaces, found %s';
             $data  = array(
                       ($expectedIndent - 1),
@@ -144,7 +150,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $commentOpen = false;
         $inHereDoc   = false;
 
-        // Only loop over the content beween the opening and closing brace, not
+        // Only loop over the content between the opening and closing brace, not
         // the braces themselves.
         for ($i = ($scopeOpener + 1); $i < $scopeCloser; $i++) {
 
@@ -174,7 +180,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 continue;
-            }
+            }//end if
 
             // If this is a HEREDOC then we need to ignore it as the
             // whitespace before the contents within the HEREDOC are
