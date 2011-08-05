@@ -170,11 +170,20 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             $constName = $tokens[$constPtr]['content'];
+
+            // Check for constants like self::CONSTANT.
+            $prefix   = '';
+            $splitPos = strpos($constName, '::');
+            if ($splitPos !== FALSE) {
+                $prefix    = substr($constName, 0, ($splitPos + 2));
+                $constName = substr($constName, ($splitPos + 2));
+            }
+
             if (strtoupper($constName) !== $constName) {
                 $error = 'Constants must be uppercase; expected %s but found %s';
                 $data  = array(
-                          strtoupper($constName),
-                          $constName,
+                          $prefix.strtoupper($constName),
+                          $prefix.$constName,
                          );
                 $phpcsFile->addError($error, $stackPtr, 'ConstantNotUpperCase', $data);
             }

@@ -92,4 +92,12 @@ $foo->getBar()->define('foo');
 if (PHPUnit_MAIN_METHOD == 'PHP_Shell_AllTests::main') {
     PHP_Shell_AllTests::main();
 }
+
+class ConstTest {
+    const TESTER = '1';
+    public function __construct() {
+        echo constant('self::TESTER');
+        echo constant('self::tester');
+    }
+}
 ?>
