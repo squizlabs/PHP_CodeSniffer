@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=hgblame to show number of errors/warnings committed by authors in a Mercurial repository
       -- Has the same functionality as the svnblame report
       -- Thanks to Ben Selby for the patch
+  - Added T_BACKTICK token type to make detection of backticks easier (request #18799)
   - Added pattern matching support to Generic ForbiddenFunctionsSniff
       -- If you are extending it and overriding register() or addError() you will need to review your sniff
   - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)

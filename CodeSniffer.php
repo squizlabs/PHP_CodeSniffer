@@ -1546,6 +1546,9 @@ class PHP_CodeSniffer
         case '$':
             $newToken['type'] = 'T_DOLLAR';
             break;
+        case '`':
+            $newToken['type'] = 'T_BACKTICK';
+            break;
         default:
             $newToken['type'] = 'T_NONE';
             break;

@@ -61,14 +61,15 @@ define('T_ASPERAND', 1042);
 define('T_DOLLAR', 1043);
 define('T_TYPEOF', 1044);
 define('T_CLOSURE', 1045);
+define('T_BACKTICK', 1046);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1046);
+    define('T_NAMESPACE', 1047);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1047);
+    define('T_NS_SEPARATOR', 1048);
 }
 
 /**
