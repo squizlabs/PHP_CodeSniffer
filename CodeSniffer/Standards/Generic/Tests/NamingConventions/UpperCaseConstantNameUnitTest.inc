@@ -100,4 +100,10 @@ class ConstTest {
         echo constant('self::tester');
     }
 }
+
+class A {
+    public static function constant($x) {}
+}
+
+A::constant('anything-not-in-uppercase');
 ?>

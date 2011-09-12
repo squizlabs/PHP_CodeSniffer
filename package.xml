@@ -62,6 +62,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #18670 : UpperCaseConstantNameSniff fails on dynamic retrieval of class constant
   - Fixed bug #18709 : Code sniffer sniffs file if even if it's in --ignore
     -- Thanks to Artem Lopata for the patch
+  - Fixed bug #18762 : Incorrect handling of define and constant in UpperCaseConstantNameSniff
+    -- Thanks to Thomas Baker for the patch
   - Fixed bug #18769 : CSS Tokenizer doesn't replace T_BREAK tokens inside some styles
  </notes>
  <contents>
