@@ -277,7 +277,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      * Performs additional processing after main tokenizing.
      *
      * This additional processsing converts T_LIST tokens to T_STRING
-     * because there are no list constructs in CSS because list-* styles
+     * because there are no list constructs in CSS and list-* styles
      * look like lists to the PHP tokenizer.
      *
      * @param array  &$tokens The array of tokens to process.
@@ -291,31 +291,75 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
         }
 
-        $numTokens  = count($tokens);
+        $numTokens  = (count($tokens) - 1);
         $changeMade = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if ($tokens[$i]['code'] !== T_LIST) {
-                continue;
-            }
-
             if ($tokens[($i + 1)]['code'] !== T_STYLE) {
                 continue;
             }
 
             $style = ($i + 1);
 
-            $tokens[$style]['content'] = $tokens[$i]['content'].$tokens[$style]['content'];
-            $tokens[$style]['column']  = $tokens[$i]['column'];
+            if ($tokens[$i]['code'] === T_LIST) {
+                $tokens[$style]['content'] = $tokens[$i]['content'].$tokens[$style]['content'];
+                $tokens[$style]['column']  = $tokens[$i]['column'];
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $line = $tokens[$i]['line'];
-                echo "\t* T_LIST token $i on line $line merged into T_STYLE token $style *".PHP_EOL;
-            }
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $line = $tokens[$i]['line'];
+                    echo "\t* T_LIST token $i on line $line merged into T_STYLE token $style *".PHP_EOL;
+                }
 
-            unset($tokens[$i]);
-            $changeMade = true;
-            $i++;
+                unset($tokens[$i]);
+                $changeMade = true;
+                $i++;
+            } else if ($tokens[$i]['code'] === T_BREAK) {
+                // Break is sometimes used in style definitions, like page-break-inside
+                // so we need merge the elements around it into the next T_STYLE.
+                $newStyle = 'break'.$tokens[$style]['content'];
+                for ($x = ($i - 1); $x >= 0; $x--) {
+                    if ($tokens[$x]['code'] !== T_STRING && $tokens[$x]['code'] !== T_MINUS) {
+                        break;
+                    }
+
+                    $newStyle = $tokens[$x]['content'].$newStyle;
+                }
+
+                $x++;
+                $tokens[$style]['content'] = $newStyle;
+                $tokens[$style]['column']  = $tokens[$x]['column'];
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $line = $tokens[$i]['line'];
+                    echo "\t* tokens $x - $i on line $line merged into T_STYLE token $style due to T_BREAK at token $i *".PHP_EOL;
+                }
+
+                // Now fix the brackets that surround this token as they will
+                // be pointing to far ahead now that we have removed tokens.
+                $diff = ($style - $x);
+                for ($t = $style; $t >= 0; $t--) {
+                    if (isset($tokens[$t]['bracket_closer']) === true) {
+                        $old = $tokens[$t]['bracket_closer'];
+                        $tokens[$t]['bracket_closer'] -= $diff;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $new  = $tokens[$t]['bracket_closer'];
+                            $type = $tokens[$t]['type'];
+                            $line = $tokens[$t]['line'];
+                            echo "\t\t* $type token $t on line $line closer changed from $old to $new *".PHP_EOL;
+                        }
+
+                        // Only need to fix one set of brackets.
+                        break;
+                    }
+                }
+
+                for ($x; $x <= $i; $x++) {
+                    unset($tokens[$x]);
+                }
+
+                $changeMade = true;
+                $i++;
+            }//end if
         }//end for
 
         if ($changeMade === true) {
