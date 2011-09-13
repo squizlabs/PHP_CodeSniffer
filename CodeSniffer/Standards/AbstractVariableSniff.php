@@ -67,18 +67,19 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      */
     public function __construct()
     {
-        $listen = array(
+        $scopes = array(
                    T_CLASS,
                    T_INTERFACE,
                   );
 
-        $scopes = array(
+        $listen = array(
                    T_FUNCTION,
                    T_VARIABLE,
                    T_DOUBLE_QUOTED_STRING,
+                   T_HEREDOC,
                   );
 
-        parent::__construct($listen, $scopes, true);
+        parent::__construct($scopes, $listen, true);
 
     }//end __construct()
 
@@ -133,15 +134,16 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
             }
-
         }
 
         if ($this->_functionOpen === true) {
             if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
                 $this->processVariable($phpcsFile, $stackPtr);
-            } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
+            } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
+                || $tokens[$stackPtr]['code'] === T_HEREDOC
+            ) {
                 // Check to see if this string has a variable in it.
-                $pattern = '|[^\\\]\${?[a-zA-Z0-9_]+}?|';
+                $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
                 if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
                     $this->processVariableInString($phpcsFile, $stackPtr);
                 }
@@ -174,8 +176,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
         // These variables are not member vars.
         if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
             $this->processVariable($phpcsFile, $stackPtr);
-        } else {
-            $this->processVariableInString($phpcsFile, $stackPtr);
+        } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
+            || $tokens[$stackPtr]['code'] === T_HEREDOC
+        ) {
+            // Check to see if this string has a variable in it.
+            $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
+            if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
+                $this->processVariableInString($phpcsFile, $stackPtr);
+            }
         }
 
     }//end processTokenOutsideScope()
@@ -212,10 +220,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
 
     /**
-     * Called to process variables found in duoble quoted strings.
+     * Called to process variables found in duoble quoted strings or heredocs.
      *
      * Note that there may be more than one variable in the string, which will
-     * result only in one call for the string.
+     * result only in one call for the string or one call per line for heredocs.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
      *                                        token was found.
