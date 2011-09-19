@@ -17,7 +17,6 @@
   <exclude name="Squiz.ControlStructures.SwitchDeclaration"/>
   <exclude name="Squiz.Files.FileExtension"/>
   <exclude name="Squiz.NamingConventions.ConstantCase"/>
-  <exclude name="Squiz.WhiteSpace.ScopeIndent"/>
  </rule>
 
  <!-- We allow variables to be used inside double quoted strings -->
