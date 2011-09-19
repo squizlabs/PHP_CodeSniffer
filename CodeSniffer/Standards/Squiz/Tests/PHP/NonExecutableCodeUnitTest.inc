@@ -96,6 +96,18 @@ function myFunction()
 
 }//end myFunction()
 
+function myFunction()
+{
+    return uksort(
+        $array,
+        function() {
+            return mt_rand(-1, 1);
+            echo 'done';
+        }
+    );
+
+}//end myFunction()
+
 exit();
 
 // Errors are thrown from here down from the exit() above.
