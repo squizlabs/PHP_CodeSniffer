@@ -279,12 +279,17 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                                           );
                 }
 
+                $foundWarningsTemp = array();
+                foreach ($allProblems[$line]['found_warnings'] as $foundWarning) {
+                    $foundWarningsTemp[] = $foundWarning;
+                }
+
                 $warningsTemp = array();
                 foreach ($warnings as $warning) {
                     $warningsTemp[] = $warning['message'];
                 }
 
-                $allProblems[$line]['found_warnings'] = $warningsTemp;
+                $allProblems[$line]['found_warnings'] = array_merge($foundWarningsTemp, $warningsTemp);
             }
 
             if (isset($expectedWarnings[$line]) === true) {

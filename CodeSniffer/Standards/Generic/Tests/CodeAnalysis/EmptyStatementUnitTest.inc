@@ -68,3 +68,5 @@ try {
 } catch (Exception $e) {
     // TODO: Handle this exception later :-)
 }
+
+if (true) {} elseif (false) {}

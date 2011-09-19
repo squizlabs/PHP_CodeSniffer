@@ -71,6 +71,7 @@ class Generic_Tests_CodeAnalysis_EmptyStatementUnitTest extends AbstractSniffUni
                 47 => 1,
                 52 => 1,
                 55 => 1,
+                72 => 2,
         );
 
     }//end getWarningList()
