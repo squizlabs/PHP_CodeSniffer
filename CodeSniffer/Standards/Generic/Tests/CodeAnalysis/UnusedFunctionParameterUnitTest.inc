@@ -24,6 +24,10 @@ class Foo {
     function barfoo($a, $b) {
         // Empty body means interface method in many cases.
     }
+
+    function fooBar($a, $b) {
+        return;
+    }
 }
 
 function foo($bar)

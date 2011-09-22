@@ -94,14 +94,14 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                 }
 
                 // There is a return.
-                if ($tokens[$tmp] === T_SEMICOLON) {
+                if ($tokens[$tmp]['code'] === T_SEMICOLON) {
                     return;
                 }
 
                 $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($tmp + 1), null, true);
 
                 // There is a return <token>.
-                if ($tmp !== false && $tokens[$tmp] === T_SEMICOLON) {
+                if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
                      return;
                 }
             }//end if

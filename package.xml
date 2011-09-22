@@ -72,6 +72,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Patrick Schmidt for the patch
   - Fixed bug #18839 : Fix miscount of warnings in AbstractSniffUnitTest.php
     -- Thanks to Sam Graham for the patch
+  - Fixed bug #18844 : Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff with empty body
+    -- Thanks to Dmitri Medvedev for the patch
  </notes>
  <contents>
   <dir name="/">
