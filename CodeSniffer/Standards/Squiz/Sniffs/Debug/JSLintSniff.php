@@ -77,7 +77,7 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
 
             foreach ($output as $finding) {
                 $matches    = array();
-                $numMatches = preg_match('/^Lint at line ([0-9]+).*:(.*)$/', $finding, $matches);
+                $numMatches = preg_match('/Lint at line ([0-9]+).*:(.*)$/', $finding, $matches);
                 if ($numMatches === 0) {
                     continue;
                 }
