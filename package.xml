@@ -74,6 +74,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sam Graham for the patch
   - Fixed bug #18844 : Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff with empty body
     -- Thanks to Dmitri Medvedev for the patch
+  - Fixed bug #18847 : Running Squiz_Sniffs_Classes_ClassDeclarationSniff results in PHP notice
   - Fixed bug #18868 : jslint+rhino: errors/warnings not detected
     -- Thanks to Christian Weiske for the patch
   - Fixed bug #18879 : phpcs-svn-pre-commit requires escapeshellarg

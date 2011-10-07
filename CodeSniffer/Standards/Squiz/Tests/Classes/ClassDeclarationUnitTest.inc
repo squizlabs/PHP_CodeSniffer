@@ -82,6 +82,10 @@ class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorre
 
 }//end class
 
+class File implements \Zend_Auth_Storage_Interface,\Zend_Auth_Storage
+{
+}
+
 interface MyInterface
 {
 

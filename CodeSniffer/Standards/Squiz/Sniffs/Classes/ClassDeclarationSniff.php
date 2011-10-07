@@ -233,7 +233,10 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 continue;
             }
 
-            if ($tokens[($parents[$i] - 1)]['code'] !== T_WHITESPACE) {
+            if ($tokens[($parents[$i] - 1)]['code'] === T_COMMA
+                || ($tokens[($parents[$i] - 1)]['code'] === T_NS_SEPARATOR
+                    && $tokens[($parents[$i] - 2)]['code'] === T_COMMA)
+            ) {
                 $name  = $tokens[$parents[$i]]['content'];
                 $error = 'Expected 1 space before "%s"; 0 found';
                 $data  = array($name);
