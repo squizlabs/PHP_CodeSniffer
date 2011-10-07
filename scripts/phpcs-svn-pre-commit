@@ -69,7 +69,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
      */
     public function processUnknownArgument($arg, $pos, $values)
     {
-        $values['svnArgs'][] = $arg;
+        $values['svnArgs'][] = escapeshellarg($arg);
         return $values;
 
     }//end processUnknownArgument()
@@ -165,7 +165,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             }
 
             // Get the contents of each file, as it would be after this transaction.
-            $command = PHP_CODESNIFFER_SVNLOOK.' cat '.implode(' ', $values['svnArgs']).' '.$path;
+            $command = PHP_CODESNIFFER_SVNLOOK.' cat '.implode(' ', $values['svnArgs']).' '.escapeshellarg($path);
             $handle  = popen($command, 'r');
             if ($handle === false) {
                 echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
