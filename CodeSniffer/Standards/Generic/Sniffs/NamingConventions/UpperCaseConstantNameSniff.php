@@ -176,7 +176,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             // Check for constants like self::CONSTANT.
             $prefix   = '';
             $splitPos = strpos($constName, '::');
-            if ($splitPos !== FALSE) {
+            if ($splitPos !== false) {
                 $prefix    = substr($constName, 0, ($splitPos + 2));
                 $constName = substr($constName, ($splitPos + 2));
             }

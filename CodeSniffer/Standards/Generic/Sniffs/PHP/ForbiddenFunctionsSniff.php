@@ -50,7 +50,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      *
      * @var array(string)
      */
-    protected $_forbiddenFunctionNames = array();
+    protected $forbiddenFunctionNames = array();
 
     /**
      * If true, forbidden functions will be considered regular expressions.
@@ -76,11 +76,11 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
     {
         // Everyone has had a chance to figure out what forbidden functions
         // they want to check for, so now we can cache out the list.
-        $this->_forbiddenFunctionNames = array_keys($this->forbiddenFunctions);
+        $this->forbiddenFunctionNames = array_keys($this->forbiddenFunctions);
 
         if ($this->patternMatch === true) {
-            foreach ($this->_forbiddenFunctionNames as $i => $name) {
-                $this->_forbiddenFunctionNames[$i] = '/'.$name.'/i';
+            foreach ($this->forbiddenFunctionNames as $i => $name) {
+                $this->forbiddenFunctionNames[$i] = '/'.$name.'/i';
             }
         }
 
@@ -121,12 +121,12 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         if ($this->patternMatch === true) {
             $count   = 0;
             $pattern = preg_replace(
-                $this->_forbiddenFunctionNames,
-                $this->_forbiddenFunctionNames,
+                $this->forbiddenFunctionNames,
+                $this->forbiddenFunctionNames,
                 $function,
                 1,
                 $count
-                );
+            );
 
             if ($count === 0) {
                 return;
@@ -135,7 +135,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             // Remove the pattern delimiters and modifier.
             $pattern = substr($pattern, 1, -2);
         } else {
-            if (in_array($function, $this->_forbiddenFunctionNames) === false) {
+            if (in_array($function, $this->forbiddenFunctionNames) === false) {
                 return;
             }
         }
