@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHP_CodeSniffer_Exception no longer extends PEAR_Exception (request #18483)
     -- PEAR_Exception added a requirement that PEAR had to be installed
     -- PHP_CodeSniffer is not used as a library, so unlikely to have any impact
+  - PEAR FileCommentSniff now allows GIT IDs in the version tag (request #14874)
   - AbstractVariableSniff now supports heredocs
     -- Also includes some variable detection fixes
     -- Thanks to Sam Graham for the patch
