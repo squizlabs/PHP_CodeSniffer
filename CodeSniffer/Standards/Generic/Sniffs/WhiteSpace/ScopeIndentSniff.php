@@ -300,6 +300,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     /**
      * Calculates the expected indent of a token.
      *
+     * Returns the column at which the token should be indented to, so 1 means
+     * that the token should not be indented at all.
+     *
      * @param array $tokens   The stack of tokens for this file.
      * @param int   $stackPtr The position of the token to get indent for.
      *
@@ -333,7 +336,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        return ((count($conditionStack) * $this->indent) + 1);
+        $indent = ((count($conditionStack) * $this->indent) + 1);
+        return $indent;
 
     }//end calculateExpectedIndent()
 
