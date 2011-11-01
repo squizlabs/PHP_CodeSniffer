@@ -53,6 +53,18 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
+            if ($token['code'] === T_FUNCTION) {
+                // There are no functions in CSS, so convert this to a string.
+                $finalTokens[$newStackPtr] = array(
+                                              'type'    => 'T_STRING',
+                                              'code'    => T_STRING,
+                                              'content' => $token['content'],
+                                             );
+
+                $newStackPtr++;
+                continue;
+            }
+
             if ($token['code'] === T_COMMENT
                 && substr($token['content'], 0, 2) === '/*'
             ) {
