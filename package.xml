@@ -61,7 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR ClassDeclaration sniff now supports indentation checks when using the alternate namespace syntax
     - PEAR.Classes.ClassDeclaration.SpaceBeforeBrace message now contains 2 variables instead of 1
     - Sniff allows overriding of the default indent level, which is set to 4
-    - Partial fix for bug #18933 : Alternative namespace declaration syntax confuses scope sniffs
+    - Fixes bug #18933 : Alternative namespace declaration syntax confuses scope sniffs
   - Fixed bug #18465 : "self::" does not work in lambda functions
     -- Also corrects conversion of T_FUNCTION tokens to T_CLOSURE, which was not fixing token condition arrays
   - Fixed bug #18543 : CSS Tokenizer deletes too many #
