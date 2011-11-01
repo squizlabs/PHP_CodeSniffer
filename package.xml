@@ -55,6 +55,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - MySource AssignThisSniff now allows "this" to be assigned to the private var _self
   - Fixed issue in Squiz FileCommentSniff where suggested package name was the same as the incorrect package name
   - Fixed some issues with Squiz ArrayDeclarationSniff when using function calls in array values
+  - Fixed doc generation so it actually works again
+    - Also now works when being run from an SVN checkout as well as when installed as a PEAR package
+    - Should fix bug #18949 : Call to private method from static
   - Fixed bug #18465 : "self::" does not work in lambda functions
     -- Also corrects conversion of T_FUNCTION tokens to T_CLOSURE, which was not fixing token condition arrays
   - Fixed bug #18543 : CSS Tokenizer deletes too many #

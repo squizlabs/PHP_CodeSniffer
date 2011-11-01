@@ -143,7 +143,8 @@ class PHP_CodeSniffer_DocGenerators_Generator
             $standard = $this->_standard;
         }
 
-        $sniffs = PHP_CodeSniffer::getSniffFiles($standardDir, $standard);
+        $phpcs = new PHP_CodeSniffer();
+        $sniffs = $phpcs->getSniffFiles($standardDir, $standard);
 
         $standardFiles = array();
         foreach ($sniffs as $sniff) {

@@ -728,11 +728,11 @@ class PHP_CodeSniffer
             }
 
             foreach ($ruleset->rule as $rule) {
-                $includedSniffs = array_merge($includedSniffs, self::_expandRulesetReference($rule['ref']));
+                $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rule['ref']));
 
                 if (isset($rule->exclude) === true) {
                     foreach ($rule->exclude as $exclude) {
-                        $excludedSniffs = array_merge($excludedSniffs, self::_expandRulesetReference($exclude['name']));
+                        $excludedSniffs = array_merge($excludedSniffs, $this->_expandRulesetReference($exclude['name']));
                     }
                 }
             }//end foreach
@@ -1323,7 +1323,9 @@ class PHP_CodeSniffer
      */
     public function generateDocs($standard, array $sniffs=array(), $generator='Text')
     {
-        include_once 'PHP/CodeSniffer/DocGenerators/'.$generator.'.php';
+        if (class_exists('PHP_CodeSniffer_DocGenerators_'.$generator, true) === false) {
+            throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_DocGenerators_'.$generator.' not found');
+        }
 
         $class     = "PHP_CodeSniffer_DocGenerators_$generator";
         $generator = new $class($standard, $sniffs);

@@ -14,7 +14,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHP/CodeSniffer/DocGenerators/Generator.php';
+if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_DocGenerators_Generator not found');
+}
 
 /**
  * A doc generator that outputs text-based documentation.
