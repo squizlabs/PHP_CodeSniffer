@@ -80,6 +80,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Christian Weiske for the patch
   - Fixed bug #18879 : phpcs-svn-pre-commit requires escapeshellarg
     -- Thanks to Bjorn Katuin for the patch
+  - Fixed bug #18951 : weird behaviour with closures and multi-line use () params
  </notes>
  <contents>
   <dir name="/">

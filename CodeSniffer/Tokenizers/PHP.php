@@ -97,7 +97,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                             T_FUNCTION      => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
                                                 'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => false,
+                                                'strict' => true,
                                                 'shared' => false,
                                                 'with'   => array(),
                                                ),
