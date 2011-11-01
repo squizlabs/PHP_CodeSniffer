@@ -60,4 +60,12 @@ abstract class CodeSnifferFail
         RecursiveIterator
 {
 }
+
+namespace A
+{
+    class B
+    {
+    }
+}
+
 ?>

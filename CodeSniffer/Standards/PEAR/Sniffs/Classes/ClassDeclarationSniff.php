@@ -31,6 +31,13 @@
 class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -93,14 +100,21 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
             $prevContent = $tokens[($curlyBrace - 1)]['content'];
-            if ($prevContent !== $phpcsFile->eolChar) {
+            if ($prevContent === $phpcsFile->eolChar) {
+                $spaces = 0;
+            } else {
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
-                if ($spaces !== 0) {
-                    $error = 'Expected 0 spaces before opening brace; %s found';
-                    $data  = array($spaces);
-                    $phpcsFile->addError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
-                }
+            }
+
+            $expected = ($tokens[$stackPtr]['level'] * $this->indent);
+            if ($spaces !== $expected) {
+                $error = 'Expected %s spaces before opening brace; %s found';
+                $data  = array(
+                          $expected,
+                          $spaces,
+                         );
+                $phpcsFile->addError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
             }
         }
 
