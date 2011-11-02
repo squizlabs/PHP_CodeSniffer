@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- If you are extending it and overriding register() or addError() you will need to review your sniff
   - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
   - Added new ByteOrderMarkSniff to Generic standard (request #18194)
-    -- Throws an error is a byte order mark is found in any PHP file
+    -- Throws an error if a byte order mark is found in any PHP file
     -- Thanks to Piotr Karas for the contribution
   - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
     -- Also now shown for all report types if nothing is being printed to the screen
@@ -124,6 +124,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <file baseinstalldir="" name="Gitblame.php" role="test">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="" name="Hgblame.php" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="" name="Svnblame.php" role="test">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
@@ -152,6 +155,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="GitblameTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="" name="HgblameTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="SourceTest.php" role="test">
@@ -256,6 +262,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Gitblame.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Hgblame.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Source.php" role="php">
@@ -1845,6 +1854,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
    <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
+   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
@@ -1852,6 +1862,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
    <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
+   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
@@ -1873,11 +1884,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
    <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
+   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
    <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
+   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
    <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
    <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
@@ -1909,7 +1922,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         -- If you are extending it and overriding register() or addError() you will need to review your sniff
     - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
     - Added new ByteOrderMarkSniff to Generic standard (request #18194)
-      -- Throws an error is a byte order mark is found in any PHP file
+      -- Throws an error if a byte order mark is found in any PHP file
       -- Thanks to Piotr Karas for the contribution
     - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
       -- Also now shown for all report types if nothing is being printed to the screen
