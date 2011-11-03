@@ -26,4 +26,4 @@ If you don't want to install PEAR, you can download the PHP\_CodeSniffer source 
 Documentation
 -------------
 
-The documentation for PHP\_CodeSnifer is available in the [PEAR manual](http://pear.php.net/manual/en/package.php.php-codesniffer.php).
+The documentation for PHP\_CodeSniffer is available in the [PEAR manual](http://pear.php.net/manual/en/package.php.php-codesniffer.php).
