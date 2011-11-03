@@ -21,9 +21,16 @@ If you don't want to install PEAR, you can download the PHP\_CodeSniffer source 
 
     git clone git://github.com/gsherwood/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
-    php scripts/phpcs -v
+    php scripts/phpcs -h
 
 Documentation
 -------------
 
 The documentation for PHP\_CodeSniffer is available in the [PEAR manual](http://pear.php.net/manual/en/package.php.php-codesniffer.php).
+
+Information about upcoming features and releases is available on the [Squiz Labs blog](http://www.squizlabs.com/php-codesniffer) or on [Twitter](http://twitter.com/#!/gregsherwood).
+
+Issues
+------
+
+Bug reports and feature requests can be submitted on the [PEAR bug tracker](http://pear.php.net/package/PHP_CodeSniffer/bugs).
