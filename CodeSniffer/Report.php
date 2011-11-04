@@ -9,7 +9,7 @@
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
  * @version   CVS: $Id: $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -23,7 +23,7 @@
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
