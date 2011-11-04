@@ -9,7 +9,6 @@
  * @author    Sertan Danis <sdanis@squiz.net>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id$
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 

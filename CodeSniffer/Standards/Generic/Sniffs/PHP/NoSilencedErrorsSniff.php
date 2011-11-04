@@ -8,7 +8,6 @@
  * @package  PHP_CodeSniffer
  * @author   Andy Brockhurst <abrock@yahoo-inc.com>
  * @license  http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version  CVS: $Id$
  * @link     http://pear.php.net/package/PHP_CodeSniffer
  */
 

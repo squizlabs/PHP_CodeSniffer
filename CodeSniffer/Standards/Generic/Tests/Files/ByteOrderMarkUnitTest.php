@@ -9,7 +9,6 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: LineLengthUnitTest.php 261688 2008-06-27 01:58:38Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 

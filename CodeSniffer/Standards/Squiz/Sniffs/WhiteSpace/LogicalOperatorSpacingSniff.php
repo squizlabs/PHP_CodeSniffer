@@ -10,7 +10,6 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: OperatorSpacingSniff.php 291903 2009-12-09 00:55:05Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 

@@ -9,7 +9,6 @@
  * @author    Florian Grandel <jerico.dev@gmail.com>
  * @copyright 2009 Florian Grandel
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: OpeningFunctionBraceBsdAllmanSniff.php 259084 2008-05-05 03:59:12Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 

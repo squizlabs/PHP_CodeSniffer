@@ -10,7 +10,6 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: FunctionCallArgumentSpacingSniff.php 240175 2007-07-23 01:47:54Z squiz $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 

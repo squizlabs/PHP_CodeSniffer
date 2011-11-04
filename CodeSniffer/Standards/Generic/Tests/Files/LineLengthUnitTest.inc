@@ -46,7 +46,6 @@ echo 'hi';
  * Comments contining CVS IDs can be long, but should be ignored because
  * they cannot be changed by the developer. Same with license URLs.
  *
- * @version CVS: $Id$
  * @license http://www.freebsd.org/copyright/freebsd-license.html BSD License (2 Clause)
  */
  ?>
