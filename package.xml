@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2011-11-03</date>
  <time>10:12:00</time>
  <version>
-  <release>1.3.1</release>
-  <api>1.3.1</api>
+  <release>1.3.2</release>
+  <api>1.3.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,68 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - All report file command line arguments now work with relative paths (request #17240)
-  - The extensions command line argument now supports multi-part file extensions (request #17227)
-  - Added report type --report=hgblame to show number of errors/warnings committed by authors in a Mercurial repository
-    -- Has the same functionality as the svnblame report
-    -- Thanks to Ben Selby for the patch
-  - Added T_BACKTICK token type to make detection of backticks easier (request #18799)
-  - Added pattern matching support to Generic ForbiddenFunctionsSniff
-    -- If you are extending it and overriding register() or addError() you will need to review your sniff
-  - Namespaces are now recognised as scope openers, although they do not require braces (request #18043)
-  - Added new ByteOrderMarkSniff to Generic standard (request #18194)
-    -- Throws an error if a byte order mark is found in any PHP file
-    -- Thanks to Piotr Karas for the contribution
-  - PHP_Timer output is no longer included in reports when being written to a file (request #18252)
-    -- Also now shown for all report types if nothing is being printed to the screen
-  - Generic DeprecatedFunctionSniff now reports functions as deprecated and not simply forbidden (request #18288)
-  - PHPCS now accepts file contents from STDIN (request #18447)
-    -- Example usage: cat temp.php | phpcs [options]  -OR-  phpcs [options] &lt; temp.php
-    -- Not every sniff will work correctly due to the lack of a valid file path
-  - PHP_CodeSniffer_Exception no longer extends PEAR_Exception (request #18483)
-    -- PEAR_Exception added a requirement that PEAR had to be installed
-    -- PHP_CodeSniffer is not used as a library, so unlikely to have any impact
-  - PEAR FileCommentSniff now allows GIT IDs in the version tag (request #14874)
-  - AbstractVariableSniff now supports heredocs
-    -- Also includes some variable detection fixes
-    -- Thanks to Sam Graham for the patch
-  - Squiz FileCommentSniff now enforces rule that package names cannot start with the word Squiz
-  - MySource AssignThisSniff now allows "this" to be assigned to the private var _self
-  - Fixed issue in Squiz FileCommentSniff where suggested package name was the same as the incorrect package name
-  - Fixed some issues with Squiz ArrayDeclarationSniff when using function calls in array values
-  - Fixed doc generation so it actually works again
-    -- Also now works when being run from an SVN checkout as well as when installed as a PEAR package
-    -- Should fix bug #18949 : Call to private method from static
-  - PEAR ClassDeclaration sniff now supports indentation checks when using the alternate namespace syntax
-    -- PEAR.Classes.ClassDeclaration.SpaceBeforeBrace message now contains 2 variables instead of 1
-    -- Sniff allows overriding of the default indent level, which is set to 4
-    -- Fixes bug #18933 : Alternative namespace declaration syntax confuses scope sniffs
-  - Fixed bug #18465 : "self::" does not work in lambda functions
-    -- Also corrects conversion of T_FUNCTION tokens to T_CLOSURE, which was not fixing token condition arrays
-  - Fixed bug #18543 : CSS Tokenizer deletes too many #
-  - Fixed bug #18624 : @throws namespace problem
-    -- Thanks to Gavin Davies for the patch
-  - Fixed bug #18628 : Generic.Files.LineLength gives incorrect results with Windows line-endings
-  - Fixed bug #18633 : CSS Tokenizer doesn't replace T_LIST tokens inside some styles
-  - Fixed bug #18657 : anonymous functions wrongly indented
-  - Fixed bug #18670 : UpperCaseConstantNameSniff fails on dynamic retrieval of class constant
-  - Fixed bug #18709 : Code sniffer sniffs file if even if it's in --ignore
-    -- Thanks to Artem Lopata for the patch
-  - Fixed bug #18762 : Incorrect handling of define and constant in UpperCaseConstantNameSniff
-    -- Thanks to Thomas Baker for the patch
-  - Fixed bug #18769 : CSS Tokenizer doesn't replace T_BREAK tokens inside some styles
-  - Fixed bug #18835 : Unreachable errors of inline returns of closure functions
-    -- Thanks to Patrick Schmidt for the patch
-  - Fixed bug #18839 : Fix miscount of warnings in AbstractSniffUnitTest.php
-    -- Thanks to Sam Graham for the patch
-  - Fixed bug #18844 : Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff with empty body
-    -- Thanks to Dmitri Medvedev for the patch
-  - Fixed bug #18847 : Running Squiz_Sniffs_Classes_ClassDeclarationSniff results in PHP notice
-  - Fixed bug #18868 : jslint+rhino: errors/warnings not detected
-    -- Thanks to Christian Weiske for the patch
-  - Fixed bug #18879 : phpcs-svn-pre-commit requires escapeshellarg
-    -- Thanks to Bjorn Katuin for the patch
-  - Fixed bug #18951 : weird behaviour with closures and multi-line use () params
+  - Fixed bug #18964 : "$stackPtr must be of type T_VARIABLE" on heredocs and nowdocs
  </notes>
  <contents>
   <dir name="/">

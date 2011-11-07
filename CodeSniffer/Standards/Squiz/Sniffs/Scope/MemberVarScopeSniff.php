@@ -45,6 +45,12 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore class constants.
+        $type = $phpcsFile->findPrevious(array(T_CONST, T_VARIABLE), ($stackPtr - 1));
+        if ($type === false || $tokens[$type]['code'] === T_CONST) {
+            return;
+        }
+
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {

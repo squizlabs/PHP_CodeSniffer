@@ -6,4 +6,11 @@ class MyClass
     public $var3 = null;
     $var4 = null;
 }
+
+class foo
+{
+    const bar = <<<BAZ
+qux
+BAZ;
+}
 ?>
