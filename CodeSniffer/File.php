@@ -2192,7 +2192,7 @@ class PHP_CodeSniffer_File
 
     /**
      * Returns the visibility and implementation properies of the class member
-     * variable found  at the specified position in the stack.
+     * variable found at the specified position in the stack.
      *
      * The format of the array is:
      *
