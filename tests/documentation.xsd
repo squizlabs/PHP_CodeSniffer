@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+    <xs:element name="documentation" type="documentation"/>
+ 
+    <xs:complexType name="documentation">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+           <xs:element name="properties" type="properties" minOccurs="0" maxOccurs="1"/>
+           <xs:sequence minOccurs="1" maxOccurs="unbounded">
+               <xs:element name="standard" type="xs:string" minOccurs="1" maxOccurs="1"/>
+               <xs:element name="code_comparison" type="code_comparison" minOccurs="0" maxOccurs="unbounded"/>
+           </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string" use="required" />
+    </xs:complexType>
+ 
+    <xs:complexType name="properties">
+        <xs:sequence>
+            <xs:element name="property" type="property" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+ 
+    <xs:complexType name="property">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" maxOccurs="1" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="boolean"/>
+                    <xs:enumeration value="integer"/>
+                    <xs:enumeration value="string"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="default" type="xs:string" use="required" />
+    </xs:complexType>
+ 
+    <xs:complexType name="code_comparison">
+        <xs:sequence>
+            <xs:element name="code" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="title" type="xs:string" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+ 
+</xs:schema>

@@ -1,7 +1,26 @@
-<documentation title="Line Length">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="Line Length" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
+    <properties>
+        <property name="lineLimit" type="integer" default="80">
+            <description>
+                <![CDATA[
+                The limit that the length of a line should not exceed.
+                ]]>
+            </description>
+        </property>
+        <property name="absoluteLineLimit" type="integer" default="100">
+            <description>
+                <![CDATA[
+                The limit that the length of a line must not exceed.
+
+                Set to zero (0) to disable.
+                ]]>
+            </description>
+        </property>
+    </properties>
     <standard>
     <![CDATA[
-    It is recommended to keep lines at approximately 80 characters long for better code readability.
+    Checks all lines in the file, and throws warnings if they are over 80 characters in length and errors if they are over 100. Both these figures can be changed by extending this sniff in your own standard.
     ]]>
     </standard>
 </documentation>

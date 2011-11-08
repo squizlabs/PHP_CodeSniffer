@@ -1,7 +1,22 @@
-<documentation title="PHP Code Tags">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="PHP Code Tags" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
     <standard>
     <![CDATA[
     Always use <?php ?> to delimit PHP code, not the <? ?> shorthand. This is the most portable way to include PHP code on differing operating systems and setups.
     ]]>
     </standard>
+    <code_comparison>
+           <code title="Valid: file with long open tag">
+           <![CDATA[
+<?php
+// contents...
+           ]]>
+           </code>
+           <code title="Invalid: file with short open tag">
+           <![CDATA[
+<?
+// contents...
+           ]]>
+           </code>
+       </code_comparison>
 </documentation>
