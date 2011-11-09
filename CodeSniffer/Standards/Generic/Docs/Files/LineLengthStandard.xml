@@ -20,7 +20,7 @@
     </properties>
     <standard>
     <![CDATA[
-    Checks all lines in the file, and throws warnings if they are over 80 characters in length and errors if they are over 100. Both these figures can be changed by extending this sniff in your own standard.
+    It is recommended to keep lines at approximately {lineLimit} characters long for better code readability and lines should never exceed {absoluteLineLimit} characters.
     ]]>
     </standard>
 </documentation>
