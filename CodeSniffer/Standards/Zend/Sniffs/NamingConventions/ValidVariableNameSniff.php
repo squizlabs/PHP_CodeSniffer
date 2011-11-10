@@ -153,6 +153,12 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore class constants.
+        $type = $phpcsFile->findPrevious(array(T_CONST, T_VARIABLE), ($stackPtr - 1));
+        if ($type === false || $tokens[$type]['code'] === T_CONST) {
+            return;
+        }
+
         $varName     = ltrim($tokens[$stackPtr]['content'], '$');
         $memberProps = $phpcsFile->getMemberProperties($stackPtr);
         $public      = ($memberProps['scope'] === 'public');
