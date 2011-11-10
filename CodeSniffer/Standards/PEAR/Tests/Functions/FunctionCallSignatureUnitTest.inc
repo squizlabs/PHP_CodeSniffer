@@ -99,4 +99,9 @@ $bar = new stdClass(
     6
 
 );
+
+$foo = new stdClass(
+    1,
+    2,
+    3);
 ?>
