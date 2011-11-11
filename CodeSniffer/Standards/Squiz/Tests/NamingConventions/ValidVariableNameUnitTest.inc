@@ -89,4 +89,9 @@ class foo
 qux
 BAZ;
 }
+
+$foo = <<<'BAR'
+$123
+"$456"
+BAR;
 ?>

@@ -212,8 +212,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                             '_FILES',
                             'GLOBALS',
                            );
-
-        if (preg_match_all('|[^\\\]\${?([a-zA-Z0-9_]+)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
+        if (preg_match_all('|[^\\\]\${?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.
                 if (in_array($varName, $phpReservedVars) === true) {
