@@ -307,6 +307,16 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // Add the start heredoc token to the final array.
                 $finalTokens[$newStackPtr]
                     = PHP_CodeSniffer::standardiseToken($token);
+
+                // Check if this is actually a nowdoc and use a different token
+                // to help the sniffs.
+                $nowdoc = false;
+                if ($token[1][3] === "'") {
+                    $finalTokens[$newStackPtr]['code'] = T_START_NOWDOC;
+                    $finalTokens[$newStackPtr]['type'] = 'T_START_NOWDOC';
+                    $nowdoc = true;
+                }
+
                 $newStackPtr++;
 
                 $tokenContent = '';
@@ -344,8 +354,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         $newToken['content'] .= $eolChar;
                     }
 
-                    $newToken['code']          = T_HEREDOC;
-                    $newToken['type']          = 'T_HEREDOC';
+                    if ($nowdoc === true) {
+                        $newToken['code'] = T_NOWDOC;
+                        $newToken['type'] = 'T_NOWDOC';
+                    } else {
+                        $newToken['code'] = T_HEREDOC;
+                        $newToken['type'] = 'T_HEREDOC';
+                    }
+
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
                 }
@@ -353,6 +369,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // Add the end heredoc token to the final array.
                 $finalTokens[$newStackPtr]
                     = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
+
+                if ($nowdoc === true) {
+                    $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
+                    $finalTokens[$newStackPtr]['type'] = 'T_END_NOWDOC';
+                    $nowdoc = true;
+                }
+
                 $newStackPtr++;
 
                 // Continue, as we're done with this token.

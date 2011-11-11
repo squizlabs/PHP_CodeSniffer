@@ -61,14 +61,17 @@ define('T_DOLLAR', 1043);
 define('T_TYPEOF', 1044);
 define('T_CLOSURE', 1045);
 define('T_BACKTICK', 1046);
+define('T_START_NOWDOC', 1047);
+define('T_NOWDOC', 1048);
+define('T_END_NOWDOC', 1049);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1047);
+    define('T_NAMESPACE', 1050);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1048);
+    define('T_NS_SEPARATOR', 1051);
 }
 
 /**

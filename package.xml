@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Nowdocs are now tokenized using PHP_CodeSniffer specific T_NOWDOC tokens for easier identification
   - Fixed bug #18964 : "$stackPtr must be of type T_VARIABLE" on heredocs and nowdocs
   - Fixed bug #18974 : Blank line causes "Multi-line function call not indented correctly"
     -- Adds new error message to ban empty lines in multi-line function calls
