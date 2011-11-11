@@ -38,7 +38,10 @@ class Squiz_Sniffs_PHP_HeredocSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_START_HEREDOC);
+        return array(
+                T_START_HEREDOC,
+                T_START_NOWDOC,
+               );
 
     }//end register()
 
@@ -54,7 +57,7 @@ class Squiz_Sniffs_PHP_HeredocSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $error = 'Use of heredoc syntax ("<<<") is not allowed; use standard strings or inline HTML instead';
+        $error = 'Use of heredoc and nowdoc syntax ("<<<") is not allowed; use standard strings or inline HTML instead';
         $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
 
     }//end process()

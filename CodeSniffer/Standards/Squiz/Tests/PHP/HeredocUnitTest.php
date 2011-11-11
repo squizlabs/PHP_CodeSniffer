@@ -44,6 +44,7 @@ class Squiz_Tests_PHP_HeredocUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 2 => 1,
+                8 => 1,
                );
 
     }//end getErrorList()
