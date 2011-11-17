@@ -95,6 +95,9 @@ function myFunction($variable=0, $var2='string') {}
 if (index > -1) {
 }
 
+array_walk_recursive($array, function(&$item) use (&$something) {
+});
+
 // This is all valid.
 $boo = -$foo;
 function foo($boo = -1) {}

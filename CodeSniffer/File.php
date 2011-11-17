@@ -2396,8 +2396,13 @@ class PHP_CodeSniffer_File
             $lastBracket = array_pop($brackets);
             if (isset($this->_tokens[$lastBracket]['parenthesis_owner']) === true) {
                 $owner = $this->_tokens[$this->_tokens[$lastBracket]['parenthesis_owner']];
-                if ($owner['code'] === T_FUNCTION || $owner['code'] === T_ARRAY) {
+                if ($owner['code'] === T_FUNCTION || $owner['code'] === T_CLOSURE || $owner['code'] === T_ARRAY) {
                     // Inside a function or array declaration, this is a reference.
+                    return true;
+                }
+            } else {
+                $prev = $this->findPrevious(array(T_WHITESPACE), $this->_tokens[$lastBracket]['parenthesis_opener'] - 1, null, true);
+                if ($prev !== false && $this->_tokens[$prev]['code'] === T_USE) {
                     return true;
                 }
             }
