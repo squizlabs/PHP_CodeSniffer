@@ -108,6 +108,16 @@ function myFunction()
 
 }//end myFunction()
 
+function myFunction()
+{
+    if ($something === TRUE) {
+        throw new Exception('exception');
+    }
+
+    throw new Exception('exception');
+    echo 'non-executable';
+}//end myFunction()
+
 exit();
 
 // Errors are thrown from here down from the exit() above.
