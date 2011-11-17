@@ -93,10 +93,10 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
             // We have not been installed.
             $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
-            $testFileBase = $standardsDir.'/'.str_replace('_', '/', $basename).'UnitTest.';
+            $testFileBase = $standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
         } else {
             // The name of the dummy file we are testing.
-            $testFileBase = dirname(__FILE__).'/'.str_replace('_', '/', $basename).'UnitTest.';
+            $testFileBase = dirname(__FILE__).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
         }
 
         // Get a list of all test files to check. These will have the same base
@@ -104,7 +104,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // class.
         $testFiles = array();
 
-        $dir = substr($testFileBase, 0, strrpos($testFileBase, '/'));
+        $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
         $di  = new DirectoryIterator($dir);
 
         foreach ($di as $file) {
