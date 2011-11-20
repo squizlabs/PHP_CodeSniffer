@@ -27,6 +27,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Nowdocs are now tokenized using PHP_CodeSniffer specific T_NOWDOC tokens for easier identification
+  - Generic UpperCaseConstantNameSniff no longer throws errors for namespaces
+    -- Thanks to Jaroslav Hanslík for the patch
+  - Squiz NonExecutableCodeSniff now detects code after thrown exceptions
+    -- Thanks to Jaroslav Hanslík for the patch
+  - Squiz OperatorSpacingSniff now ignores references
+    -- Thanks to Jaroslav Hanslík for the patch
+  - Fixed unit tests not running under Windows
+    -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #18964 : "$stackPtr must be of type T_VARIABLE" on heredocs and nowdocs
   - Fixed bug #18973 : phpcs is looking for variables in a nowdoc
   - Fixed bug #18974 : Blank line causes "Multi-line function call not indented correctly"
