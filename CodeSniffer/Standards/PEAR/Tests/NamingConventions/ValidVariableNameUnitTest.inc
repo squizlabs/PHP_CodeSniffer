@@ -78,4 +78,11 @@ class foo
 qux
 BAZ;
 }
+
+class foo
+{
+    var $c = <<<C
+ccc
+C;
+}
 ?>

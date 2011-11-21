@@ -135,20 +135,22 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
             }
         }
 
-        if ($this->_functionOpen === true) {
-            if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-                $this->processVariable($phpcsFile, $stackPtr);
-            } else if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
-                || $tokens[$stackPtr]['code'] === T_HEREDOC
-            ) {
-                // Check to see if this string has a variable in it.
-                $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
-                if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
-                    $this->processVariableInString($phpcsFile, $stackPtr);
-                }
+        if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
+            || $tokens[$stackPtr]['code'] === T_HEREDOC
+        ) {
+            // Check to see if this string has a variable in it.
+            $pattern = '|(?<!\\\\)(?:\\\\{2})*\${?[a-zA-Z0-9_]+}?|';
+            if (preg_match($pattern, $tokens[$stackPtr]['content']) !== 0) {
+                $this->processVariableInString($phpcsFile, $stackPtr);
             }
 
             return;
+        }
+
+        if ($this->_functionOpen === true) {
+            if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
+                $this->processVariable($phpcsFile, $stackPtr);
+            }
         } else {
             // What if we assign a member variable to another?
             // ie. private $_count = $this->_otherCount + 1;.

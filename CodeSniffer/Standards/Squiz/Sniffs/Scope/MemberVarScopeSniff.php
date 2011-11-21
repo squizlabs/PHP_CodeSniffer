@@ -43,14 +43,7 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
      */
     protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        // Ignore class constants.
-        $type = $phpcsFile->findPrevious(array(T_CONST, T_VARIABLE), ($stackPtr - 1));
-        if ($type === false || $tokens[$type]['code'] === T_CONST) {
-            return;
-        }
-
+        $tokens   = $phpcsFile->getTokens();
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
 
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
