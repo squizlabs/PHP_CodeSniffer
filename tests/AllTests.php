@@ -13,10 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (defined('PHPUnit_MAIN_METHOD') === false) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_CodeSniffer_AllTests::main');
-}
-
 require_once 'TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -87,7 +83,4 @@ class PHP_CodeSniffer_AllTests
 
 }//end class
 
-if (PHPUnit_MAIN_METHOD == 'PHP_CodeSniffer_AllTests::main') {
-    PHP_CodeSniffer_AllTests::main();
-}
 ?>
