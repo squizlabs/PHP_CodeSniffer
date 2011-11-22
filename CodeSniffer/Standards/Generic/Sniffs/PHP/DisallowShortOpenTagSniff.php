@@ -57,16 +57,6 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // If short open tags are off, then any short open tags will be converted
-        // to inline_html tags so we can just ignore them.
-        // If its on, then we want to ban the use of them.
-        $option = ini_get('short_open_tag');
-
-        // Ini_get returns a string "0" if short open tags is off.
-        if ($option === '0') {
-            return;
-        }
-
         $tokens  = $phpcsFile->getTokens();
         $openTag = $tokens[$stackPtr];
 
