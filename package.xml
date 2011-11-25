@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added Generic JSHintSniff to run jshint.js over a JS file and report warnings
+    -- Set jshint path using phpcs --config-set jshint_path /path/to/jshint-rhino.js
+    -- Set rhino path using phpcs --config-set rhino_path /path/to/rhino
+    -- Thanks to Alexander Weiß for the contribution
   - Nowdocs are now tokenized using PHP_CodeSniffer specific T_NOWDOC tokens for easier identification
   - Generic UpperCaseConstantNameSniff no longer throws errors for namespaces
     -- Thanks to Jaroslav Hanslík for the patch
@@ -301,6 +305,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="ClosureLinterSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="JSHintSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
