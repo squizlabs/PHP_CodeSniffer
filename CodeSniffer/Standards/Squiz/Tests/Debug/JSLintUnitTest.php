@@ -70,6 +70,7 @@ class Squiz_Tests_Debug_JSLintUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 1 => 2,
+                2 => 1,
                );
 
     }//end getWarningList()
