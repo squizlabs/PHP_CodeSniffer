@@ -66,9 +66,27 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             return;
         }
 
-        // Parse the function comment.
-        $tokens       = $phpcsFile->getTokens();
-        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($currScope - 1));
+        $tokens = $phpcsFile->getTokens();
+
+        $find = array(
+                 T_COMMENT,
+                 T_DOC_COMMENT,
+                 T_CLASS,
+                 T_FUNCTION,
+                 T_OPEN_TAG,
+                );
+
+        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1));
+
+        if ($commentEnd === false) {
+            return;
+        }
+
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
+            // Function doesn't have a comment. Let someone else warn about that.
+            return;
+        }
+
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 

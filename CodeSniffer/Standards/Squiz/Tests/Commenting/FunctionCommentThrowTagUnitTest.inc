@@ -217,4 +217,16 @@ class NamespacedException {
         throw new \Foo\Bar\FooBarException();
     }
 }
+
+class Foo {
+    /**
+     * Comment
+     */
+    public function foo() {
+    }//end foo()
+
+    public function bar() {
+        throw new Exception();
+    }
+}
 ?>
