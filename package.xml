@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Jaroslav Hanslík for the patch
   - Squiz OperatorSpacingSniff now ignores references
     -- Thanks to Jaroslav Hanslík for the patch
+  - Squiz FunctionCommentSniff now reports a missing function comment if it finds a standard code comment instead
+  - Squiz FunctionCommentThrownTagSniff no longer reports errors if it can't find a function comment
   - Fixed unit tests not running under Windows
     -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #18964 : "$stackPtr must be of type T_VARIABLE" on heredocs and nowdocs
