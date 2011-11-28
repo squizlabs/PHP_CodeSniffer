@@ -139,8 +139,17 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $code = $tokens[$commentEnd]['code'];
 
         if ($code === T_COMMENT) {
-            $error = 'You must use "/**" style comments for a function comment';
-            $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
+            // The function might actually be missing a comment, and this last comment
+            // found is just commenting a bit of code on a line. So if it is not the
+            // only thing on the line, assume we found nothing.
+            $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $commentEnd);
+            if ($tokens[$commentEnd]['line'] === $tokens[$commentEnd]['line']) {
+                $error = 'Missing function doc comment';
+                $phpcsFile->addError($error, $stackPtr, 'Missing');
+            } else {
+                $error = 'You must use "/**" style comments for a function comment';
+                $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
+            }
             return;
         } else if ($code !== T_DOC_COMMENT) {
             $error = 'Missing function doc comment';
