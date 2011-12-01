@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2011-11-03</date>
- <time>10:12:00</time>
+ <date>2011-12-01</date>
+ <time>15:17:00</time>
  <version>
   <release>1.3.2</release>
   <api>1.3.2</api>
@@ -1861,6 +1861,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.3.2</release>
+    <api>1.3.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-12-01</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added Generic JSHintSniff to run jshint.js over a JS file and report warnings
+      -- Set jshint path using phpcs --config-set jshint_path /path/to/jshint-rhino.js
+      -- Set rhino path using phpcs --config-set rhino_path /path/to/rhino
+      -- Thanks to Alexander Weiß for the contribution
+    - Nowdocs are now tokenized using PHP_CodeSniffer specific T_NOWDOC tokens for easier identification
+    - Generic UpperCaseConstantNameSniff no longer throws errors for namespaces
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Squiz NonExecutableCodeSniff now detects code after thrown exceptions
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Squiz OperatorSpacingSniff now ignores references
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Squiz FunctionCommentSniff now reports a missing function comment if it finds a standard code comment instead
+    - Squiz FunctionCommentThrownTagSniff no longer reports errors if it can't find a function comment
+    - Fixed unit tests not running under Windows
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Fixed bug #18964 : "$stackPtr must be of type T_VARIABLE" on heredocs and nowdocs
+    - Fixed bug #18973 : phpcs is looking for variables in a nowdoc
+    - Fixed bug #18974 : Blank line causes "Multi-line function call not indented correctly"
+      -- Adds new error message to ban empty lines in multi-line function calls
+    - Fixed bug #18975 : "Closing parenthesis must be on a line by itself" also causes indentation error
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.3.1</release>
