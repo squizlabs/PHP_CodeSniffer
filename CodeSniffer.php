@@ -1019,7 +1019,7 @@ class PHP_CodeSniffer
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldProcessFile($path) === false) {
+                if ($this->shouldIgnoreFile($path) === true) {
                     continue;
                 }
 
@@ -1067,6 +1067,24 @@ class PHP_CodeSniffer
         }
 
         // If the file's path matches one of our ignore patterns, skip it.
+        if ($this->shouldIgnoreFile($path) === true) {
+            return false;
+        }
+
+        return true;
+
+    }//end shouldProcessFile()
+
+
+    /**
+     * Checks filtering rules to see if a file should be ignored.
+     *
+     * @param string $path The path to the file being checked.
+     *
+     * @return bool
+     */
+    public function shouldIgnoreFile($path)
+    {
         foreach ($this->ignorePatterns as $pattern) {
             if (is_array($pattern) === true) {
                 // A sniff specific ignore pattern.
@@ -1080,13 +1098,13 @@ class PHP_CodeSniffer
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $path) === 1) {
-                return false;
+                return true;
             }
         }//end foreach
 
-        return true;
+        return false;
 
-    }//end shouldProcessFile()
+    }//end shouldIgnoreFile()
 
 
     /**
