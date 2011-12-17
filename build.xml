@@ -31,6 +31,7 @@
 			<arg value="--report=checkstyle" />
 			<arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
 			<arg value="--ignore=*/Tests/*" />
+			<arg value="--standard=ruleset.xml" />
 			<arg path="${basedir}" />
 		</exec>
 	</target>
