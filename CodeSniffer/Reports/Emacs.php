@@ -56,6 +56,10 @@ class PHP_CodeSniffer_Reports_Emacs implements PHP_CodeSniffer_Report
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
                         $message = $error['message'];
+                        if ($showSources === true) {
+                            $message .= ' ('.$error['source'].')';
+                        }
+
                         $type    = strtolower($error['type']);
                         echo $filename.':'.$line.':'.$column.': '.$type.' - '.$message.PHP_EOL;
                         $errorsShown++;
