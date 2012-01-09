@@ -44,33 +44,7 @@ class Generic_Tests_Commenting_TodoUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='TodoUnitTest.inc')
     {
-        switch ($testFile) {
-        case 'TodoUnitTest.inc':
-            return array(
-                    24 => 1,
-                    28 => 1,
-                    31 => 1,
-                    34 => 1,
-                    37 => 1,
-                    39 => 1,
-                    42 => 1,
-                   );
-            break;
-        case 'TodoUnitTest.js':
-            return array(
-                    24 => 1,
-                    28 => 1,
-                    31 => 1,
-                    34 => 1,
-                    37 => 1,
-                    39 => 1,
-                    42 => 1,
-                   );
-            break;
-        default:
-            return array();
-            break;
-        }//end switch
+        return array();
 
     }//end getErrorList()
 
