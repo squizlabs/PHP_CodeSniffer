@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19114 : CodeSniffer checks extension even for single file
   - Fixed bug #19171 : Show sniff codes option is ignored by some report types
     -- Thanks to Dominic Scheirlinck for the patch
+  - Fixed bug #19188 : Lots of PHP Notices when analyzing the Symfony framework
+    -- First issue was list-style.. lines in CSS files not properly adjusting open/close bracket positions
+    -- Second issue was notices caused by bug #19137
  </notes>
  <contents>
   <dir name="/">
