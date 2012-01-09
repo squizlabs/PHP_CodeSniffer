@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19188 : Lots of PHP Notices when analyzing the Symfony framework
     -- First issue was list-style.. lines in CSS files not properly adjusting open/close bracket positions
     -- Second issue was notices caused by bug #19137
+  - Fixed bug #19208 : UpperCaseConstantName reports class members
+    -- Was also a problem with LowerCaseConstantName as well
  </notes>
  <contents>
   <dir name="/">
