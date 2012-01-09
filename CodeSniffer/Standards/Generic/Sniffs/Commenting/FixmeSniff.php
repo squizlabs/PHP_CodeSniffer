@@ -16,7 +16,7 @@
 /**
  * Generic_Sniffs_Commenting_FixmeSniff.
  *
- * Warns about TODO comments.
+ * Warns about FIXME comments.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
