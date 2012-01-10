@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added new Generic FixmeSniff that shows error messages for all FIXME comments left in your code
+    -- Thanks to Sam Graham for the contribution
   - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overriden in a rulset.xml file
     -- Thanks to Volker Dusch for the patch
   - Fixed bug #19114 : CodeSniffer checks extension even for single file
