@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overriden in a rulset.xml file
+    -- Thanks to Volker Dusch for the patch
   - Fixed bug #19114 : CodeSniffer checks extension even for single file
   - Fixed bug #19171 : Show sniff codes option is ignored by some report types
     -- Thanks to Dominic Scheirlinck for the patch
