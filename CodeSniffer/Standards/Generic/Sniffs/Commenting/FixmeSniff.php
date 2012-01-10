@@ -67,16 +67,16 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         $content = $tokens[$stackPtr]['content'];
-        $matches = Array();
+        $matches = array();
         if (preg_match('|[^a-z]+fixme[^a-z]+(.*)|i', $content, $matches) !== 0) {
             // Clear whitespace and some common characters not required at
-            // the end of a to-do message to make the warning more informative.
-            $type        = 'CommentFound';
-            $todoMessage = trim($matches[1]);
-            $todoMessage = trim($todoMessage, '[]().');
-            $error       = 'Comment refers to a FIXME task';
-            $data        = array($todoMessage);
-            if ($todoMessage !== '') {
+            // the end of a fixme message to make the error more informative.
+            $type         = 'CommentFound';
+            $fixmeMessage = trim($matches[1]);
+            $fixmeMessage = trim($fixmeMessage, '[]().');
+            $error        = 'Comment refers to a FIXME task';
+            $data         = array($fixmeMessage);
+            if ($fixmeMessage !== '') {
                 $type   = 'TaskFound';
                 $error .= ' "%s"';
             }
