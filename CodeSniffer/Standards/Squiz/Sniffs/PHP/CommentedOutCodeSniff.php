@@ -45,7 +45,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      *
      * @var int
      */
-    protected $maxPercentage = 35;
+    public $maxPercentage = 35;
 
 
     /**
