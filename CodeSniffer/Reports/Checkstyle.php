@@ -56,7 +56,9 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
         $errorsShown = 0;
         foreach ($report['files'] as $filename => $file) {
-            echo ' <file name="'.$filename.'">'.PHP_EOL;
+            if (count($file['messages'])) {
+                echo ' <file name="'.$filename.'">'.PHP_EOL;
+            }
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
@@ -77,7 +79,9 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
                 }
             }//end foreach
 
-            echo ' </file>'.PHP_EOL;
+            if (count($file['messages'])) {
+                echo ' </file>'.PHP_EOL;
+            }
         }//end foreach
 
         echo '</checkstyle>'.PHP_EOL;
