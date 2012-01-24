@@ -31,8 +31,6 @@
  */
 class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 {
-
-
     /**
      * Prints all violations for processed files, in a Checkstyle format.
      *
@@ -99,10 +97,6 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         $out->flush();
 
         return $errorsShown;
-
     }//end generate()
-
-
 }//end class
-
 ?>
