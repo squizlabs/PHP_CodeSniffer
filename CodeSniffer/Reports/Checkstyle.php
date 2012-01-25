@@ -43,7 +43,7 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
      * @param int     $width       Maximum allowed lne width.
      * @param boolean $toScreen    Is the report being printed to screen?
      *
-     * @return string 
+     * @return string
      */
     public function generate(
         $report,
@@ -51,36 +51,44 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<checkstyle version="@package_version@">'.PHP_EOL;
+        $out = new XMLWriter;
+        $out->openMemory();
+        $out->setIndent(true);
+        $out->startDocument('1.0', 'UTF-8' );
+        $out->startElement('checkstyle');
+        $out->writeAttribute('version', '@package_version@');
 
         $errorsShown = 0;
         foreach ($report['files'] as $filename => $file) {
-            echo ' <file name="'.$filename.'">'.PHP_EOL;
+            $out->startElement('file');
+            $out->writeAttribute('name', $filename);
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
-                        $error['type']    = strtolower($error['type']);
-                        $error['message'] = htmlspecialchars($error['message']);
+                        $error['type'] = strtolower($error['type']);
                         if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
                             $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
                         }
 
-                        echo '  <error line="'.$line.'" column="'.$column.'"';
-                        echo ' severity="'.$error['type'].'"';
-                        echo ' message="'.$error['message'].'"';
-                        echo ' source="'.$error['source'].'"';
-                        echo '/>'.PHP_EOL;
+                        $out->startElement('error');
+                        $out->writeAttribute('line', $line);
+                        $out->writeAttribute('column', $column);
+                        $out->writeAttribute('severity', $error['type']);
+                        $out->writeAttribute('message', $error['message']);
+                        $out->writeAttribute('source', $error['source']);
+                        $out->endElement();
+
                         $errorsShown++;
                     }
                 }
             }//end foreach
 
-            echo ' </file>'.PHP_EOL;
+            $out->endElement();
         }//end foreach
 
-        echo '</checkstyle>'.PHP_EOL;
+        $out->endElement();
+        echo $out->flush();
 
         return $errorsShown;
 

@@ -30,6 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sam Graham for the contribution
   - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overriden in a rulset.xml file
     -- Thanks to Volker Dusch for the patch
+  - The Checkstyle and XML reports now use XMLWriter
+    -- Output should not be affected
+    -- Thanks to Sebastian Bergmann for the patch
   - Fixed bug #19114 : CodeSniffer checks extension even for single file
   - Fixed bug #19171 : Show sniff codes option is ignored by some report types
     -- Thanks to Dominic Scheirlinck for the patch
