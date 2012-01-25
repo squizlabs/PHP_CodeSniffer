@@ -60,6 +60,10 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
         $errorsShown = 0;
         foreach ($report['files'] as $filename => $file) {
+            if (count($file['messages']) === 0) {
+                continue;
+            }
+
             $out->startElement('file');
             $out->writeAttribute('name', $filename);
 
