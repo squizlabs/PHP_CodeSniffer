@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Sam Graham <php-codesniffer BLAHBLAH illusori.co.uk>
+ * @author    Sam Graham <php-codesniffer@illusori.co.uk>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -21,7 +21,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Sam Graham <php-codesniffer BLAHBLAH illusori.co.uk>
+ * @author    Sam Graham <php-codesniffer@illusori.co.uk>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
  * @version   Release: @package_version@

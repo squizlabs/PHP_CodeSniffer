@@ -54,7 +54,7 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $out = new XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
-        $out->startDocument('1.0', 'UTF-8' );
+        $out->startDocument('1.0', 'UTF-8');
         $out->startElement('phpcs');
         $out->writeAttribute('version', '@package_version@');
 
