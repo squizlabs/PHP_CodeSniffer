@@ -89,7 +89,7 @@ class PHP_CodeSniffer_CLI
         $defaults['interactive'] = false;
         $defaults['local']       = false;
         $defaults['showSources'] = false;
-        $defaults['extensions']  = array();
+        $defaults['extensions']  = array('php');
         $defaults['sniffs']      = array();
         $defaults['ignored']     = array();
         $defaults['reportFile']  = null;
