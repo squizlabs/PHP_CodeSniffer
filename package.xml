@@ -41,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Second issue was notices caused by bug #19137
   - Fixed bug #19208 : UpperCaseConstantName reports class members
     -- Was also a problem with LowerCaseConstantName as well
+  - Fixed bug #19256 : T_DOC_COMMENT in CSS files breaks ClassDefinitionNameSpacingSniff
+    -- Thanks to Klaus Purer for the patch
  </notes>
  <contents>
   <dir name="/">

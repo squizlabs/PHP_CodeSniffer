@@ -66,6 +66,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
         $endTokens = array(
                       T_CLOSE_CURLY_BRACKET,
                       T_COMMENT,
+                      T_DOC_COMMENT,
                       T_OPEN_TAG,
                      );
 

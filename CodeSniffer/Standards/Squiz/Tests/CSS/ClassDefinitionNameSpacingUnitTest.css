@@ -31,6 +31,10 @@
     width: 1000px;
 }
 
+/**
+ * More styles below here.
+ */
+
 td.TableWidgetType-header.TableWidgetType-header-lastLogin,
 td.TableWidgetType-header.TableWidgetType-header-remove,
 td.TableWidgetType-header.TableWidgetType-header-email,
