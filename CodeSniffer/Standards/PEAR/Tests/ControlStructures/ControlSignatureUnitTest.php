@@ -64,6 +64,7 @@ class PEAR_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSnif
                 132 => 3,
                 133 => 2,
                 147 => 1,
+                157 => 1,
                );
 
     }//end getErrorList()
