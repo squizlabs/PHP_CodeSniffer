@@ -118,6 +118,16 @@ function myFunction()
     echo 'non-executable';
 }//end myFunction()
 
+switch ($var) {
+    case 1: {
+        return '1';
+    }
+
+    case 2: {
+        return '2';
+    }
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.
