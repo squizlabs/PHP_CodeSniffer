@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The Checkstyle and XML reports now use XMLWriter
     -- Only change in output is that empty file tags are no longer produced for files with no violations
     -- Thanks to Sebastian Bergmann for the patch
+  - Added PHP_CodeSniffer_Tokens::$bracketTokens to give sniff writers fast access to open and close bracket tokens
   - Fixed an issue in AbstractPatternSniff where EOL tokens were not being correctly checked in some cases
   - Fixed bug #19114 : CodeSniffer checks extension even for single file
   - Fixed bug #19171 : Show sniff codes option is ignored by some report types
