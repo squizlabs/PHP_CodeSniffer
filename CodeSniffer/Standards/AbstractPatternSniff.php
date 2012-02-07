@@ -379,8 +379,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else if ($pattern[$i]['type'] === 'newline') {
                     if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
                         if ($tokens[$stackPtr]['content'] !== $phpcsFile->eolChar) {
-                            $found    = $tokens[$stackPtr]['content'].$found;
-                            $hasError = true;
+                            $found = $tokens[$stackPtr]['content'].$found;
+
+                            // This may just be an indent that comes after a newline
+                            // so check the token before to make sure. If it is a newline, we
+                            // can ignore the error here.
+                            if ($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar) {
+                                $hasError = true;
+                            }
                         } else {
                             $found = 'EOL'.$found;
                         }
