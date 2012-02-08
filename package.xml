@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19256 : T_DOC_COMMENT in CSS files breaks ClassDefinitionNameSpacingSniff
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #19264 : Squiz.PHP.NonExecutableCode does not handle RETURN in CASE without BREAK
+  - Fixed bug #19270 : DuplicateClassName does not handle namespaces correctly
  </notes>
  <contents>
   <dir name="/">
