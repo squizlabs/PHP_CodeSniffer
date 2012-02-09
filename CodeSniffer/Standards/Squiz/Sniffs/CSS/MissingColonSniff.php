@@ -64,6 +64,12 @@ class Squiz_Sniffs_CSS_MissingColonSniff implements PHP_CodeSniffer_Sniff
         $end      = $tokens[$stackPtr]['bracket_closer'];
         $endLine  = $tokens[$end]['line'];
 
+        // Do not check nested style definitions as, for example, in @media style rules.
+        $nested = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1), $end);
+        if ($nested !== false) {
+            return;
+        }
+
         $foundColon  = false;
         $foundString = false;
         for ($i = ($stackPtr + 1); $i <= $end; $i++) {

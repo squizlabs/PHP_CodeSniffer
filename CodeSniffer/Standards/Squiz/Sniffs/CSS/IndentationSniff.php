@@ -72,7 +72,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
                 $indentLevel++;
-            } else if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET) {
+            } else if ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $indentLevel--;
             }
 

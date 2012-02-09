@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #19264 : Squiz.PHP.NonExecutableCode does not handle RETURN in CASE without BREAK
   - Fixed bug #19270 : DuplicateClassName does not handle namespaces correctly
+  - Fixed bug #19283 : CSS @media rules cause false positives
+    -- Thanks to Klaus Purer for the patch
  </notes>
  <contents>
   <dir name="/">
