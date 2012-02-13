@@ -61,10 +61,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $numTokens   = (count($tokens) - 2);
-        $currentLine = 0;
-        $indentLevel = 0;
-        $nested      = false;
+        $numTokens    = (count($tokens) - 2);
+        $currentLine  = 0;
+        $indentLevel  = 0;
+        $nestingLevel = 0;
         for ($i = 1; $i < $numTokens; $i++) {
             if ($tokens[$i]['code'] === T_COMMENT) {
                 // Dont check the indent of comments.
@@ -74,12 +74,14 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
                 $indentLevel++;
 
-                // Check for nested style definitions as, for example, in @media style rules.
-                $found = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($i + 1), $tokens[$i]['bracket_closer']);
-                if ($found === false) {
-                    $nested = false;
-                } else {
-                    $nested = true;
+                // Check for nested class definitions.
+                $found  = $phpcsFile->findNext(
+                    T_OPEN_CURLY_BRACKET,
+                    ($i + 1),
+                    $tokens[$i]['bracket_closer']
+                );
+                if ($found !== false) {
+                    $nestingLevel = $indentLevel;
                 }
             } else if ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $indentLevel--;
@@ -98,8 +100,9 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             }
 
             $expectedIndent = ($indentLevel * 4);
-            if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
-                if ($nested === false) {
+            if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false
+            ) {
+                if ($nestingLevel !== $indentLevel) {
                     $error = 'Blank lines are not allowed in class definitions';
                     $phpcsFile->addError($error, $i, 'BlankLine');
                 }

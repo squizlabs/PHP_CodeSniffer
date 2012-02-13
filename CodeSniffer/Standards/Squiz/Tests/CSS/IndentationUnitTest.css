@@ -30,3 +30,15 @@ td {
          margin: 40px;
     }
 }
+
+@media screen and (max-device-width: 769px) {
+
+    header #logo img {
+        max-width: 100%;
+    }
+
+    header #logo img {
+        min-width: 100%;
+    }
+
+}
