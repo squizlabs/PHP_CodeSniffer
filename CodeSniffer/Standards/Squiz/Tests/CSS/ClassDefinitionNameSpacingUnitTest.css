@@ -46,3 +46,12 @@ td.TableWidgetType-header.TableWidgetType-header-userName {
     padding-left: 12px;
     width: 150px;
 }
+
+@media screen and (max-device-width: 769px) {
+
+    header #logo img {
+    max-width: 100%;
+        padding: 20px;
+         margin: 40px;
+    }
+}

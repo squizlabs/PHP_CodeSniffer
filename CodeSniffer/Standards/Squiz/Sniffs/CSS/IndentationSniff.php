@@ -64,6 +64,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
         $numTokens   = (count($tokens) - 2);
         $currentLine = 0;
         $indentLevel = 0;
+        $nested      = false;
         for ($i = 1; $i < $numTokens; $i++) {
             if ($tokens[$i]['code'] === T_COMMENT) {
                 // Dont check the indent of comments.
@@ -72,6 +73,14 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
                 $indentLevel++;
+
+                // Check for nested style definitions as, for example, in @media style rules.
+                $found = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($i + 1), $tokens[$i]['bracket_closer']);
+                if ($found === false) {
+                    $nested = false;
+                } else {
+                    $nested = true;
+                }
             } else if ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $indentLevel--;
             }
@@ -90,8 +99,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
 
             $expectedIndent = ($indentLevel * 4);
             if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
-                $error = 'Blank lines are not allowed in class definitions';
-                $phpcsFile->addError($error, $i, 'BlankLine');
+                if ($nested === false) {
+                    $error = 'Blank lines are not allowed in class definitions';
+                    $phpcsFile->addError($error, $i, 'BlankLine');
+                }
             } else if ($foundIndent !== $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
