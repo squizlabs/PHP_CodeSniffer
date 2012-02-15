@@ -31,6 +31,10 @@
     width: 1000px;
 }
 
+/**
+ * More styles below here.
+ */
+
 td.TableWidgetType-header.TableWidgetType-header-lastLogin,
 td.TableWidgetType-header.TableWidgetType-header-remove,
 td.TableWidgetType-header.TableWidgetType-header-email,
@@ -41,4 +45,13 @@ td.TableWidgetType-header.TableWidgetType-header-userName {
     height: 33px;
     padding-left: 12px;
     width: 150px;
+}
+
+@media screen and (max-device-width: 769px) {
+
+    header #logo img {
+    max-width: 100%;
+        padding: 20px;
+         margin: 40px;
+    }
 }

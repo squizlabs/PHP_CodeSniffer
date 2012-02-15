@@ -47,4 +47,7 @@ if ($variable === null) { }
 if ($variable === NULL) { }
 if ($variable === Null) { }
 
+$x = new stdClass();
+$x->NULL = 7;
+
 ?>

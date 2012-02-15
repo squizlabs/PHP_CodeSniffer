@@ -324,7 +324,7 @@ final class PHP_CodeSniffer_Tokens
                                       );
 
     /**
-     * Tokens that perform operations.
+     * Tokens that open code blocks.
      *
      * @var array(int)
      */
@@ -365,6 +365,20 @@ final class PHP_CodeSniffer_Tokens
     public static $stringTokens = array(
                                    T_CONSTANT_ENCAPSED_STRING,
                                    T_DOUBLE_QUOTED_STRING,
+                                  );
+
+    /**
+     * Tokens that represent brackets and parenthesis.
+     *
+     * @var array(int)
+     */
+    public static $bracketTokens = array(
+                                    T_OPEN_CURLY_BRACKET,
+                                    T_CLOSE_CURLY_BRACKET,
+                                    T_OPEN_SQUARE_BRACKET,
+                                    T_CLOSE_SQUARE_BRACKET,
+                                    T_OPEN_PARENTHESIS,
+                                    T_CLOSE_PARENTHESIS,
                                   );
 
     /**

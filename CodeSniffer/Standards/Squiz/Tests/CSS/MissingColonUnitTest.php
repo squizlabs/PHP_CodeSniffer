@@ -43,6 +43,7 @@ class Squiz_Tests_CSS_MissingColonUnitTest extends AbstractSniffUnitTest
                 2  => 1,
                 4  => 1,
                 6  => 1,
+                12 => 1,
                );
 
     }//end getErrorList()

@@ -175,7 +175,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             if ($nextOpener === null) {
                 $end = $closer;
             } else {
-                $end = $nextOpener;
+                $end = ($nextOpener - 1);
             }
         } else {
             // This token is in the global scope.
@@ -190,7 +190,9 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
+                || in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$bracketTokens) === true
+            ) {
                 continue;
             }
 

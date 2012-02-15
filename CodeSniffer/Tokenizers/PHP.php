@@ -464,7 +464,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
             // Looking for functions that are actually closures.
-            if ($tokens[$i]['code'] === T_FUNCTION) {
+            if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         break;

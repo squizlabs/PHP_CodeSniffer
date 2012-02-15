@@ -51,6 +51,8 @@ class Generic_Tests_Classes_DuplicateClassNameUnitTest extends AbstractSniffUnit
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
     public function getWarningList($testFile='')
@@ -66,6 +68,12 @@ class Generic_Tests_Classes_DuplicateClassNameUnitTest extends AbstractSniffUnit
             return array(
                     2 => 1,
                     3 => 1,
+                   );
+            break;
+        case 'DuplicateClassNameUnitTest.5.inc':
+            return array(
+                    3 => 1,
+                    7 => 1,
                    );
             break;
         default:

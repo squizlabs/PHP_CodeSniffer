@@ -61,11 +61,19 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Do not check nested style definitions as, for example, in @media style rules.
+        $nested = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1), $tokens[$stackPtr]['bracket_closer']);
+        if ($nested !== false) {
+            return;
+        }
+
         // Find the first blank line before this openning brace, unless we get
         // to another style definition, comment or the start of the file.
         $endTokens = array(
+                      T_OPEN_CURLY_BRACKET,
                       T_CLOSE_CURLY_BRACKET,
                       T_COMMENT,
+                      T_DOC_COMMENT,
                       T_OPEN_TAG,
                      );
 

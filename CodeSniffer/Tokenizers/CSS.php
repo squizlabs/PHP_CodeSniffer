@@ -321,6 +321,45 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     echo "\t* T_LIST token $i on line $line merged into T_STYLE token $style *".PHP_EOL;
                 }
 
+                // Now fix the brackets that surround this token as they will
+                // be pointing too far ahead now that we have removed a token.
+                for ($t = $i; $t >= 0; $t--) {
+                    if (isset($tokens[$t]['bracket_closer']) === true) {
+                        $old = $tokens[$t]['bracket_closer'];
+                        $tokens[$t]['bracket_closer']--;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $new  = $tokens[$t]['bracket_closer'];
+                            $type = $tokens[$t]['type'];
+                            $line = $tokens[$t]['line'];
+                            echo "\t\t* $type token $t on line $line closer changed from $old to $new *".PHP_EOL;
+                        }
+
+                        // Only need to fix one set of brackets.
+                        break;
+                    }
+                }
+
+                // Now fix all future brackets as they are no longer pointing
+                // to the correct tokens either.
+                for ($t = $i; $t <= $numTokens; $t++) {
+                    if (isset($tokens[$t]) === false) {
+                        break;
+                    }
+
+                    if ($tokens[$t]['code'] === T_OPEN_CURLY_BRACKET) {
+                        $old = $tokens[$t]['bracket_closer'];
+                        $tokens[$t]['bracket_closer']--;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $new  = $tokens[$t]['bracket_closer'];
+                            $type = $tokens[$t]['type'];
+                            $line = $tokens[$t]['line'];
+                            echo "\t\t* $type token $t on line $line closer changed from $old to $new *".PHP_EOL;
+                        }
+
+                        $t = $old;
+                    }
+                }
+
                 unset($tokens[$i]);
                 $changeMade = true;
                 $i++;
@@ -346,7 +385,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 // Now fix the brackets that surround this token as they will
-                // be pointing to far ahead now that we have removed tokens.
+                // be pointing too far ahead now that we have removed tokens.
                 $diff = ($style - $x);
                 for ($t = $style; $t >= 0; $t--) {
                     if (isset($tokens[$t]['bracket_closer']) === true) {
@@ -361,6 +400,27 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                         // Only need to fix one set of brackets.
                         break;
+                    }
+                }
+
+                // Now fix all future brackets as they are no longer pointing
+                // to the correct tokens either.
+                for ($t = $style; $t <= $numTokens; $t++) {
+                    if (isset($tokens[$t]) === false) {
+                        break;
+                    }
+
+                    if ($tokens[$t]['code'] === T_OPEN_CURLY_BRACKET) {
+                        $old = $tokens[$t]['bracket_closer'];
+                        $tokens[$t]['bracket_closer'] -= $diff;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $new  = $tokens[$t]['bracket_closer'];
+                            $type = $tokens[$t]['type'];
+                            $line = $tokens[$t]['line'];
+                            echo "\t\t* $type token $t on line $line closer changed from $old to $new *".PHP_EOL;
+                        }
+
+                        $t = $old;
                     }
                 }
 

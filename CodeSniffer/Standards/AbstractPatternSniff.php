@@ -300,7 +300,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
 
                         // Only check the size of the whitespace if this is not
-                        // not the first token. We don't care about the size of
+                        // the first token. We don't care about the size of
                         // leading whitespace, just that there is some.
                         if ($i !== 0) {
                             if ($tokens[$stackPtr]['content'] !== $pattern[$i]['value']) {
@@ -377,7 +377,23 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else if ($pattern[$i]['type'] === 'string') {
                     $found = 'abc';
                 } else if ($pattern[$i]['type'] === 'newline') {
-                    $found = 'EOL';
+                    if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
+                        if ($tokens[$stackPtr]['content'] !== $phpcsFile->eolChar) {
+                            $found = $tokens[$stackPtr]['content'].$found;
+
+                            // This may just be an indent that comes after a newline
+                            // so check the token before to make sure. If it is a newline, we
+                            // can ignore the error here.
+                            if ($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar) {
+                                $hasError = true;
+                            }
+                        } else {
+                            $found = 'EOL'.$found;
+                        }
+                    } else {
+                        $found    = $tokens[$stackPtr]['content'].$found;
+                        $hasError = true;
+                    }
                 }//end if
             }//end for
         }//end if

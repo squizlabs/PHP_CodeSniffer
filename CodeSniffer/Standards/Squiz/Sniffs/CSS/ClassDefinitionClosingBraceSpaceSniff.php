@@ -75,6 +75,18 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
             }
         }
 
+        // Ignore nested style definitions from here on. The spacing before the closing brace
+        // (a single blank line) will be enforced by the above check, which ensures there is a
+        // blank line after the last nested class.
+        $found = $phpcsFile->findPrevious(
+            T_CLOSE_CURLY_BRACKET,
+            ($stackPtr - 1),
+            $tokens[$stackPtr]['bracket_opener']
+        );
+        if ($found !== false) {
+            return;
+        }
+
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($prev !== false && $tokens[$prev]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {
             $num   = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
