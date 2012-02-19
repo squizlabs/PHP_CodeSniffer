@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added missing package.xml entries for new Generic TodoSniff
+  - Added missing package.xml entries for new Generic FixmeSniff
     -- Thanks to Jaroslav Hanslík for the patch
   - Expected indents for PEAR ScopeClosingBraceSniff and FunctionCallSignatureSniff can now be set in ruleset files
     -- Both sniffs use a variable called "indent"
