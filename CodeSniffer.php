@@ -262,6 +262,13 @@ class PHP_CodeSniffer
         } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
             // Check for included sniffs.
             include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+        } else if (!empty($GLOBALS['phpcs'])
+            && ($values = $GLOBALS['phpcs']->getCommandLineValues())
+            && !empty($values['standard'])
+            && is_file(dirname($values['standard']).'/'.$path) === true
+        ) {
+            // Check if this is a CLI run and the standard dir parameter is set.
+            include dirname($values['standard']).'/'.$path;
         } else {
             // Everything else.
             @include $path;
@@ -796,6 +803,11 @@ class PHP_CodeSniffer
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+
+                // Check if the standardDir parameter is set.
+                if (!$path && !empty($this->standardDir)) {
+                    $path = realpath($this->standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                }
             }
         }//end if
 
