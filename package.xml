@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2012-02-17</date>
  <time>13:03:00</time>
  <version>
-  <release>1.3.3</release>
-  <api>1.3.3</api>
+  <release>1.3.4</release>
+  <api>1.3.4</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,29 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added new Generic FixmeSniff that shows error messages for all FIXME comments left in your code
-    -- Thanks to Sam Graham for the contribution
-  - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overriden in a rulset.xml file
-    -- Thanks to Volker Dusch for the patch
-  - The Checkstyle and XML reports now use XMLWriter
-    -- Only change in output is that empty file tags are no longer produced for files with no violations
-    -- Thanks to Sebastian Bergmann for the patch
-  - Added PHP_CodeSniffer_Tokens::$bracketTokens to give sniff writers fast access to open and close bracket tokens
-  - Fixed an issue in AbstractPatternSniff where EOL tokens were not being correctly checked in some cases
-  - Fixed bug #19114 : CodeSniffer checks extension even for single file
-  - Fixed bug #19171 : Show sniff codes option is ignored by some report types
-    -- Thanks to Dominic Scheirlinck for the patch
-  - Fixed bug #19188 : Lots of PHP Notices when analyzing the Symfony framework
-    -- First issue was list-style.. lines in CSS files not properly adjusting open/close bracket positions
-    -- Second issue was notices caused by bug #19137
-  - Fixed bug #19208 : UpperCaseConstantName reports class members
-    -- Was also a problem with LowerCaseConstantName as well
-  - Fixed bug #19256 : T_DOC_COMMENT in CSS files breaks ClassDefinitionNameSpacingSniff
-    -- Thanks to Klaus Purer for the patch
-  - Fixed bug #19264 : Squiz.PHP.NonExecutableCode does not handle RETURN in CASE without BREAK
-  - Fixed bug #19270 : DuplicateClassName does not handle namespaces correctly
-  - Fixed bug #19283 : CSS @media rules cause false positives
-    -- Thanks to Klaus Purer for the patch
+  - Added missing package.xml entries for new Generic TodoSniff
+    -- Thanks to Jaroslav Hanslík for the patch
+  - Expected indents for PEAR ScopeClosingBraceSniff and FunctionCallSignatureSniff can now be set in ruleset files
+    -- Both sniffs use a variable called "indent"
+    -- Thanks to Thomas Despoix for the patch
  </notes>
  <contents>
   <dir name="/">

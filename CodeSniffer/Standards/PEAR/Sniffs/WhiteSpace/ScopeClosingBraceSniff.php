@@ -30,6 +30,13 @@
 class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -114,12 +121,12 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === true
             && $isBreakCloser === true
         ) {
-            // BREAK statements should be indented 4 spaces from the
+            // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.
-            if ($braceIndent !== ($startColumn + 4)) {
+            if ($braceIndent !== ($startColumn + $this->indent)) {
                 $error = 'Break statement indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn + 3),
+                          ($startColumn + $this->indent - 1),
                           ($braceIndent - 1),
                          );
                 $phpcsFile->addError($error, $scopeEnd, 'BreakIdent', $data);
