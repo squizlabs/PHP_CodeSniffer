@@ -456,6 +456,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FixmeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FixmeUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="FixmeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="TodoUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="TodoUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="TodoUnitTest.php" role="test">
