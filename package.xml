@@ -299,6 +299,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FixmeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="TodoSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
