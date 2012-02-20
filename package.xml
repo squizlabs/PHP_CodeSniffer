@@ -31,6 +31,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Expected indents for PEAR ScopeClosingBraceSniff and FunctionCallSignatureSniff can now be set in ruleset files
     -- Both sniffs use a variable called "indent"
     -- Thanks to Thomas Despoix for the patch
+  - Standards designed to be installed in the PHPCS Standards dir will now work outside this dir as well
+    -- In particular, allows the Drupal CS to work without needing to symlink it into the PHPCS install
+    -- Thanks to Peter Philipp for the patch
  </notes>
  <contents>
   <dir name="/">
