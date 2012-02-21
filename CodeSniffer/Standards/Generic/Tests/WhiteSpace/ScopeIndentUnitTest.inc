@@ -372,4 +372,29 @@ class a {
         );
     }
 }
+
+some_function(
+    function() {
+        $a = 403;
+        if ($a === 404) {
+        $a = 403;
+        }
+    }
+);
+
+some_function(
+   function() {
+      $a = 403;
+       if ($a === 404) {
+           $a = 403;
+       }
+    }
+);
+
+$myFunction = function() {
+    $a = 403;
+    if ($a === 404) {
+       $a = 403;
+    }
+}
 ?>

@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- In particular, allows the Drupal CS to work without needing to symlink it into the PHPCS install
     -- Thanks to Peter Philipp for the patch
   - Fixed an issue in AbstractPatternSniff where comments were not being ignored in some cases
+  - Fixed bug #19290 : Generic indent sniffer fails for anonymous functions
  </notes>
  <contents>
   <dir name="/">

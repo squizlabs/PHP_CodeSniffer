@@ -235,12 +235,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // This is a special condition for T_DOC_COMMENT and C-style
                 // comments, which contain whitespace between each line.
-                $comments = array(
-                             T_COMMENT,
-                             T_DOC_COMMENT
-                            );
-
-                if (in_array($tokens[$firstToken]['code'], $comments) === true) {
+                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                     $content = trim($tokens[$firstToken]['content']);
                     if (preg_match('|^/\*|', $content) !== 0) {
                         // Check to see if the end of the comment is on the same line
@@ -311,11 +306,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     {
         $conditionStack = array();
 
+        $inParenthesis = false;
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true
+            && empty($tokens[$stackPtr]['nested_parenthesis']) === false
+        ) {
+            $inParenthesis = true;
+        }
+
         // Empty conditions array (top level structure).
         if (empty($tokens[$stackPtr]['conditions']) === true) {
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true
-                && empty($tokens[$stackPtr]['nested_parenthesis']) === false
-            ) {
+            if ($inParenthesis === true) {
                 // Wrapped in parenthesis means it is probably in a
                 // function call (like a closure) so we have to assume indent
                 // is correct here and someone else will check it more
@@ -326,16 +326,29 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
         }
 
+        $indent = 0;
+
         $tokenConditions = $tokens[$stackPtr]['conditions'];
         foreach ($tokenConditions as $id => $condition) {
             // If it's an indenting scope ie. it's not in our array of
-            // scopes that don't indent, add it to our condition stack.
+            // scopes that don't indent, increase indent.
             if (in_array($condition, $this->nonIndentingScopes) === false) {
-                $conditionStack[$id] = $condition;
+                if ($condition === T_CLOSURE && $inParenthesis === true) {
+                    // Closures cause problems with indents when they are
+                    // used as function arguments because the code inside them
+                    // is not technically inside the function yet, so the indent
+                    // is always off by one. So instead, use the
+                    // indent of the closure as the base value.
+                    $indent = ($tokens[$id]['column'] - 1);
+                }
+
+                $indent += $this->indent;
             }
         }
 
-        $indent = ((count($conditionStack) * $this->indent) + 1);
+        // Increase by 1 to indiciate that the code should start at a specific column.
+        // E.g., code indented 4 spaces should start at column 5.
+        $indent++;
         return $indent;
 
     }//end calculateExpectedIndent()
