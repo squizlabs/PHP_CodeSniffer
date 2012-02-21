@@ -280,7 +280,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $found       = '';
 
         $ignoreTokens = array(T_WHITESPACE);
-
         if ($this->_ignoreComments === true) {
             $ignoreTokens
                 = array_merge($ignoreTokens, PHP_CodeSniffer_Tokens::$commentTokens);
@@ -326,13 +325,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                         // If we skipped past some whitespace tokens, then add them
                         // to the found string.
-                        if (($stackPtr - $prev) > 1) {
-                            for ($j = ($stackPtr - 1); $j > $prev; $j--) {
-                                $found = $tokens[$j]['content'].$found;
-                            }
-                        }
+                        $tokenContent = $phpcsFile->getTokensAsString(
+                            ($prev + 1),
+                            ($stackPtr - $prev - 1)
+                        );
 
-                        $found = $tokens[$prev]['content'].$found;
+                        $found = $tokens[$prev]['content'].$tokenContent.$found;
 
                         if (isset($pattern[($i - 1)]) === true
                             && $pattern[($i - 1)]['type'] === 'skip'
@@ -377,6 +375,29 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else if ($pattern[$i]['type'] === 'string') {
                     $found = 'abc';
                 } else if ($pattern[$i]['type'] === 'newline') {
+                    if ($this->_ignoreComments === true
+                        && in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true
+                    ) {
+                        $startComment = $phpcsFile->findPrevious(
+                            PHP_CodeSniffer_Tokens::$commentTokens,
+                            ($stackPtr - 1),
+                            null,
+                            true
+                        );
+
+                        if ($tokens[$startComment]['line'] !== $tokens[($startComment + 1)]['line']) {
+                            $startComment++;
+                        }
+
+                        $tokenContent = $phpcsFile->getTokensAsString(
+                            $startComment,
+                            ($stackPtr - $startComment + 1)
+                        );
+
+                        $found    = $tokenContent.$found;
+                        $stackPtr = ($startComment - 1);
+                    }
+
                     if ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
                         if ($tokens[$stackPtr]['content'] !== $phpcsFile->eolChar) {
                             $found = $tokens[$stackPtr]['content'].$found;
@@ -386,6 +407,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             // can ignore the error here.
                             if ($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar) {
                                 $hasError = true;
+                            } else {
+                                $stackPtr--;
                             }
                         } else {
                             $found = 'EOL'.$found;
@@ -393,6 +416,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     } else {
                         $found    = $tokens[$stackPtr]['content'].$found;
                         $hasError = true;
+                    }
+
+                    if ($hasError === false && $pattern[($i - 1)]['type'] !== 'newline') {
+                        // Make sure they only have 1 newline.
+                        $prev = $phpcsFile->findPrevious($ignoreTokens, ($stackPtr - 1), null, true);
+                        if ($prev !== false && $tokens[$prev]['line'] !== $tokens[$stackPtr]['line']) {
+                            $hasError = true;
+                        }
                     }
                 }//end if
             }//end for

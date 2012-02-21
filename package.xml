@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Standards designed to be installed in the PHPCS Standards dir will now work outside this dir as well
     -- In particular, allows the Drupal CS to work without needing to symlink it into the PHPCS install
     -- Thanks to Peter Philipp for the patch
+  - Fixed an issue in AbstractPatternSniff where comments were not being ignored in some cases
  </notes>
  <contents>
   <dir name="/">
