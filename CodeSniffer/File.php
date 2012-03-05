@@ -2435,6 +2435,10 @@ class PHP_CodeSniffer_File
     {
         $str = '';
         $end = ($start + $length);
+        if ($end > $this->numTokens) {
+            $end = $this->numTokens;
+        }
+
         for ($i = $start; $i < $end; $i++) {
             $str .= $this->_tokens[$i]['content'];
         }
