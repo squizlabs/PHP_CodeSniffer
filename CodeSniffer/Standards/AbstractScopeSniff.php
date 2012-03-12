@@ -95,7 +95,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                               processTokenOutideScope method.
      *
      * @see PHP_CodeSniffer.getValidScopeTokeners()
-     * @throws PHP_CodeSniffer_Test_Exception If the specified tokens array is empty.
+     * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
      */
     public function __construct(
         array $scopeTokens,
@@ -104,19 +104,19 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     ) {
         if (empty($scopeTokens) === true) {
             $error = 'The scope tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Test_Exception($error);
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         if (empty($tokens) === true) {
             $error = 'The tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Test_Exception($error);
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);
             $error   = "Scope tokens [$invalid] cant be in the tokens array";
-            throw new PHP_CodeSniffer_Test_Exception($error);
+            throw new PHP_CodeSniffer_Exception($error);
         }
 
         $this->_listenOutside = $listenOutside;
