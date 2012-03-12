@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Peter Philipp for the patch
   - Fixed an issue in AbstractPatternSniff where comments were not being ignored in some cases
   - Fixed bug #19290 : Generic indent sniffer fails for anonymous functions
+  - Fixed bug #19324 : Setting show_warnings configuration option does not work
  </notes>
  <contents>
   <dir name="/">
