@@ -97,6 +97,7 @@ class PHP_CodeSniffer_CLI
         $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
+        $defaults['explain']         = false;
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -262,6 +263,9 @@ class PHP_CodeSniffer_CLI
         case 'w' :
             $values['warningSeverity'] = null;
             break;
+        case 'e':
+            $values['explain'] = true;
+            break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
         }//end switch
@@ -309,6 +313,9 @@ class PHP_CodeSniffer_CLI
             print_r($data);
             exit(0);
             break;
+        case 'explain':
+            $values['explain'] = true;
+            break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $values['sniffs'] = array();
@@ -353,7 +360,7 @@ class PHP_CodeSniffer_CLI
                         $report = substr($arg, 7);
                         $output = null;
                     } else {
-                        
+
                         $report = substr($arg, 7, ($split - 7));
                         $output = substr($arg, ($split + 1));
                         if ($output === false) {
@@ -480,6 +487,28 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
+        $phpcs = new PHP_CodeSniffer(
+            $values['verbosity'],
+            $values['tabWidth'],
+            $values['encoding'],
+            $values['interactive']
+        );
+
+        $values['standard'] = $this->validateStandard($values['standard']);
+        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
+            // They didn't select a valid coding standard, so help them
+            // out by letting them know which standards are installed.
+            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
+            $this->printInstalledStandards();
+            exit(2);
+        }
+
+        if ($values['explain'] === true) {
+
+            $phpcs->explain($values['standard'], $values['sniffs']);
+            exit(0);
+        }
+
         $fileContents = '';
         if (empty($values['files']) === true) {
             // Check if they passing in the file contents.
@@ -494,22 +523,6 @@ class PHP_CodeSniffer_CLI
                 exit(2);
             }
         }
-
-        $values['standard'] = $this->validateStandard($values['standard']);
-        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
-            // They didn't select a valid coding standard, so help them
-            // out by letting them know which standards are installed.
-            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
-            $this->printInstalledStandards();
-            exit(2);
-        }
-
-        $phpcs = new PHP_CodeSniffer(
-            $values['verbosity'],
-            $values['tabWidth'],
-            $values['encoding'],
-            $values['interactive']
-        );
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
@@ -676,7 +689,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsapvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsapvie] [-d key[=value]]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -691,9 +704,11 @@ class PHP_CodeSniffer_CLI
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
+        echo '        -e            Explain the coding standard by listing all sniffs'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
+        echo '        --explain     Explain the coding standard by listing all sniffs'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (only valid if checking a directory)'.PHP_EOL;
