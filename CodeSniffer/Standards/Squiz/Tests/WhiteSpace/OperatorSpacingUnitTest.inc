@@ -98,6 +98,8 @@ if (index > -1) {
 array_walk_recursive($array, function(&$item) use (&$something) {
 });
 
+$var = saveFile(&$model, &$foo);
+
 // This is all valid.
 $boo = -$foo;
 function foo($boo = -1) {}

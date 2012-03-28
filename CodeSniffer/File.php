@@ -2417,6 +2417,20 @@ class PHP_CodeSniffer_File
             }
         }
 
+        $tokenAfter = $this->findNext(
+            PHP_CodeSniffer_Tokens::$emptyTokens,
+            ($stackPtr + 1),
+            null,
+            true
+        );
+
+        if ($this->_tokens[$tokenAfter]['code'] === T_VARIABLE
+            && ($this->_tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
+            || $this->_tokens[$tokenBefore]['code'] === T_COMMA)
+        ) {
+            return true;
+        }
+
         return false;
 
     }//end isReference()
