@@ -57,7 +57,7 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         $next = $phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1), null, true);
-        if ($next === true) {
+        if ($next !== false) {
             return;
         }
 
@@ -66,11 +66,6 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
         // whether or not it's just a bunch of whitespace.
         $content = '';
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['code'] !== T_INLINE_HTML) {
-                // This can't be the last closing tag if there is more code found.
-                return;
-            }
-
             $content .= $tokens[$i]['content'];
         }
 
