@@ -8,4 +8,6 @@ $objects = array('one' => new MyClass());
 $object->myFunction(new MyClass());
 
 throw new MyException($msg);
+
+function foo() { return new MyClass(); }
 ?>
