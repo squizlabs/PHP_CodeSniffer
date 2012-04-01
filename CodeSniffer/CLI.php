@@ -83,31 +83,24 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']       = array();
-        $defaults['standard']    = null;
-        $defaults['verbosity']   = 0;
-        $defaults['interactive'] = false;
-        $defaults['local']       = false;
-        $defaults['showSources'] = false;
-        $defaults['extensions']  = array();
-        $defaults['sniffs']      = array();
-        $defaults['ignored']     = array();
-        $defaults['reportFile']  = null;
-        $defaults['generator']   = '';
-        $defaults['reports']     = array();
+        $defaults['files']           = array();
+        $defaults['standard']        = null;
+        $defaults['verbosity']       = 0;
+        $defaults['interactive']     = false;
+        $defaults['local']           = false;
+        $defaults['showSources']     = false;
+        $defaults['extensions']      = array();
+        $defaults['sniffs']          = array();
+        $defaults['ignored']         = array();
+        $defaults['reportFile']      = null;
+        $defaults['generator']       = '';
+        $defaults['reports']         = array();
+        $defaults['errorSeverity']   = null;
+        $defaults['warningSeverity'] = null;
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
             $defaults['reports'][$reportFormat] = null;
-        }
-
-        $defaults['warningSeverity'] = null;
-        $showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
-        if ($showWarnings !== null) {
-            $showWarnings = (bool) $showWarnings;
-            if ($showWarnings === false) {
-                $defaults['warningSeverity'] = 0;
-            }
         }
 
         $tabWidth = PHP_CodeSniffer::getConfigData('tab_width');
@@ -125,26 +118,27 @@ class PHP_CodeSniffer_CLI
         }
 
         $severity = PHP_CodeSniffer::getConfigData('severity');
-        if ($severity === null) {
-            $defaults['errorSeverity']   = null;
-            $defaults['warningSeverity'] = null;
-        } else {
+        if ($severity !== null) {
             $defaults['errorSeverity']   = (int) $severity;
             $defaults['warningSeverity'] = (int) $severity;
         }
 
         $severity = PHP_CodeSniffer::getConfigData('error_severity');
-        if ($severity === null) {
-            $defaults['errorSeverity'] = null;
-        } else {
+        if ($severity !== null) {
             $defaults['errorSeverity'] = (int) $severity;
         }
 
         $severity = PHP_CodeSniffer::getConfigData('warning_severity');
-        if ($severity === null) {
-            $defaults['warningSeverity'] = null;
-        } else {
+        if ($severity !== null) {
             $defaults['warningSeverity'] = (int) $severity;
+        }
+
+        $showWarnings = PHP_CodeSniffer::getConfigData('show_warnings');
+        if ($showWarnings !== null) {
+            $showWarnings = (bool) $showWarnings;
+            if ($showWarnings === false) {
+                $defaults['warningSeverity'] = 0;
+            }
         }
 
         $reportWidth = PHP_CodeSniffer::getConfigData('report_width');

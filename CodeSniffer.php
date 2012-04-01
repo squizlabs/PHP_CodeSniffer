@@ -85,9 +85,14 @@ class PHP_CodeSniffer
     /**
      * The directory to search for sniffs in.
      *
+     * This is declared static because it is also used in the
+     * autoloader to look for sniffs outside the PHPCS install.
+     * This way, standards designed to be installed inside PHPCS can
+     * also be used from outside the PHPCS Standards directory.
+     *
      * @var string
      */
-    protected $standardDir = '';
+    protected static $standardDir = '';
 
     /**
      * The CLI object controlling the run.
@@ -262,6 +267,11 @@ class PHP_CodeSniffer
         } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
             // Check for included sniffs.
             include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+        } else if (self::$standardDir !== ''
+            && is_file(dirname(self::$standardDir).'/'.$path) === true
+        ) {
+            // Check standard file locations based on the passed standard directory.
+            include dirname(self::$standardDir).'/'.$path;
         } else {
             // Everything else.
             @include $path;
@@ -566,7 +576,7 @@ class PHP_CodeSniffer
     {
         if (is_dir($standard) === true) {
             // This is an absolute path to a custom standard.
-            $this->standardDir = $standard;
+            self::$standardDir = $standard;
             $standard          = basename($standard);
         } else if (is_file($standard) === true) {
             // Might be a custom ruleset file.
@@ -581,25 +591,25 @@ class PHP_CodeSniffer
                 // the standardDir to be the directory, we will process both
                 // the directory (for custom sniffs) and the ruleset.xml file
                 // (as it uses the generic name) in getSniffFiles.
-                $this->standardDir = dirname($standard);
+                self::$standardDir = dirname($standard);
             } else {
                 // This is a custom ruleset file with a custom name, so we have
                 // to assume there are no custom sniffs to go with this otherwise
                 // we'd be recursing through directories on every run, even if
                 // we don't need to.
-                $this->standardDir = $standard;
+                self::$standardDir = $standard;
             }
 
             $standard = (string) $ruleset['name'];
         } else {
-            $this->standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
-            if (is_dir($this->standardDir) === false) {
+            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            if (is_dir(self::$standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
                 $path = realpath(PHPCS_CWD.'/'.$standard);
                 if (is_dir($path) === true) {
                     // This is a relative path to a custom standard.
-                    $this->standardDir = $path;
+                    self::$standardDir = $path;
                     $standard          = basename($standard);
                 } else if (is_file($path) === true) {
                     // Might be a custom ruleset file.
@@ -610,9 +620,9 @@ class PHP_CodeSniffer
 
                     // See comments in ELSE IF condition above for why we do this.
                     if (basename($path) === 'ruleset.xml') {
-                        $this->standardDir = dirname($path);
+                        self::$standardDir = dirname($path);
                     } else {
-                        $this->standardDir = $path;
+                        self::$standardDir = $path;
                     }
 
                     $standard = (string) $ruleset['name'];
@@ -620,7 +630,7 @@ class PHP_CodeSniffer
             }
         }//end if
 
-        $files = $this->getSniffFiles($this->standardDir, $standard);
+        $files = $this->getSniffFiles(self::$standardDir, $standard);
 
         if (empty($sniffs) === false) {
             // Convert the allowed sniffs to lower case so
@@ -796,6 +806,13 @@ class PHP_CodeSniffer
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+                if ($path === false && self::$standardDir !== '') {
+                    // The sniff is not locally installed, so check if it is being
+                    // referenced as a remote sniff outside the install. We do this by
+                    // looking directly in the passed standard dir to see if it is
+                    // installed in there.
+                    $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                }
             }
         }//end if
 
@@ -839,7 +856,7 @@ class PHP_CodeSniffer
     public function populateCustomRules($standard=null)
     {
         if ($standard === null) {
-            $standard = $this->standardDir;
+            $standard = self::$standardDir;
         }
 
         if (is_file($standard) === false) {

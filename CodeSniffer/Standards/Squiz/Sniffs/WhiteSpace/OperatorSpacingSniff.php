@@ -94,115 +94,118 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
-            // If its not a reference, then we expect one space either side of the
+            // If it's not a reference, then we expect one space either side of the
             // bitwise operator.
-            if ($phpcsFile->isReference($stackPtr) === false) {
-                // Check there is one space before the & operator.
-                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-                    $error = 'Expected 1 space before "&" operator; 0 found';
-                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeAmp');
-                } else {
-                    if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
-                        $found = strlen($tokens[($stackPtr - 1)]['content']);
-                        $error = 'Expected 1 space before "&" operator; %s found';
-                        $data  = array($found);
-                        $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeAmp', $data);
-                    }
-                }
+            if ($phpcsFile->isReference($stackPtr) === true) {
+                return;
+            }
 
-                // Check there is one space after the & operator.
-                if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-                    $error = 'Expected 1 space after "&" operator; 0 found';
-                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterAmp');
-                } else {
-                    if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
-                        $found = strlen($tokens[($stackPtr + 1)]['content']);
-                        $error = 'Expected 1 space after "&" operator; %s found';
-                        $data  = array($found);
-                        $phpcsFile->addError($error, $stackPtr, 'SpacingAfterAmp', $data);
-                    }
-                }
-            }//end if
-        } else {
-            if ($tokens[$stackPtr]['code'] === T_MINUS) {
-                // Check minus spacing, but make sure we aren't just assigning
-                // a minus value or returning one.
-                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                if ($tokens[$prev]['code'] === T_RETURN) {
-                    // Just returning a negative value; eg. return -1.
-                    return;
-                }
-
-                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
-                    // Just trying to operate on a negative value; eg. ($var * -1).
-                    return;
-                }
-
-                if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
-                    // Just trying to compare a negative value; eg. ($var === -1).
-                    return;
-                }
-
-                // A list of tokens that indicate that the token is not
-                // part of an arithmetic operation.
-                $invalidTokens = array(
-                                  T_COMMA,
-                                  T_OPEN_PARENTHESIS,
-                                  T_OPEN_SQUARE_BRACKET,
-                                  T_DOUBLE_ARROW,
-                                  T_COLON,
-                                 );
-
-                if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
-                    // Just trying to use a negative value; eg. myFunction($var, -2).
-                    return;
-                }
-
-                $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-                if (in_array($tokens[$number]['code'], array(T_LNUMBER, T_VARIABLE)) === true) {
-                    $semi = $phpcsFile->findNext(T_WHITESPACE, ($number + 1), null, true);
-                    if ($tokens[$semi]['code'] === T_SEMICOLON) {
-                        if ($prev !== false && (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
-                            // This is a negative assignment.
-                            return;
-                        }
-                    }
-                }
-            }//end if
-
-            $operator = $tokens[$stackPtr]['content'];
-
+            // Check there is one space before the & operator.
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-                $error = "Expected 1 space before \"$operator\"; 0 found";
-                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore');
-            } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
-                // Don't throw an error for assignments, because other standards allow
-                // multiple spaces there to align multiple assignments.
-                if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
+                $error = 'Expected 1 space before "&" operator; 0 found';
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeAmp');
+            } else {
+                if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
                     $found = strlen($tokens[($stackPtr - 1)]['content']);
-                    $error = 'Expected 1 space before "%s"; %s found';
-                    $data  = array(
-                              $operator,
-                              $found,
-                             );
-                    $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
+                    $error = 'Expected 1 space before "&" operator; %s found';
+                    $data  = array($found);
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeAmp', $data);
                 }
             }
 
+            // Check there is one space after the & operator.
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-                $error = "Expected 1 space after \"$operator\"; 0 found";
-                $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfter');
-            } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
-                $found = strlen($tokens[($stackPtr + 1)]['content']);
-                $error = 'Expected 1 space after "%s"; %s found';
+                $error = 'Expected 1 space after "&" operator; 0 found';
+                $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterAmp');
+            } else {
+                if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+                    $found = strlen($tokens[($stackPtr + 1)]['content']);
+                    $error = 'Expected 1 space after "&" operator; %s found';
+                    $data  = array($found);
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfterAmp', $data);
+                }
+            }
+
+            return;
+        }//end if
+
+        if ($tokens[$stackPtr]['code'] === T_MINUS) {
+            // Check minus spacing, but make sure we aren't just assigning
+            // a minus value or returning one.
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($tokens[$prev]['code'] === T_RETURN) {
+                // Just returning a negative value; eg. return -1.
+                return;
+            }
+
+            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
+                // Just trying to operate on a negative value; eg. ($var * -1).
+                return;
+            }
+
+            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
+                // Just trying to compare a negative value; eg. ($var === -1).
+                return;
+            }
+
+            // A list of tokens that indicate that the token is not
+            // part of an arithmetic operation.
+            $invalidTokens = array(
+                              T_COMMA,
+                              T_OPEN_PARENTHESIS,
+                              T_OPEN_SQUARE_BRACKET,
+                              T_DOUBLE_ARROW,
+                              T_COLON,
+                             );
+
+            if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
+                // Just trying to use a negative value; eg. myFunction($var, -2).
+                return;
+            }
+
+            $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if (in_array($tokens[$number]['code'], array(T_LNUMBER, T_VARIABLE)) === true) {
+                $semi = $phpcsFile->findNext(T_WHITESPACE, ($number + 1), null, true);
+                if ($tokens[$semi]['code'] === T_SEMICOLON) {
+                    if ($prev !== false && (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
+                        // This is a negative assignment.
+                        return;
+                    }
+                }
+            }
+        }//end if
+
+        $operator = $tokens[$stackPtr]['content'];
+
+        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+            $error = "Expected 1 space before \"$operator\"; 0 found";
+            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore');
+        } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+            // Don't throw an error for assignments, because other standards allow
+            // multiple spaces there to align multiple assignments.
+            if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
+                $found = strlen($tokens[($stackPtr - 1)]['content']);
+                $error = 'Expected 1 space before "%s"; %s found';
                 $data  = array(
                           $operator,
                           $found,
                          );
-                $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
+                $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
             }
+        }
 
-        }//end if
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $error = "Expected 1 space after \"$operator\"; 0 found";
+            $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfter');
+        } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+            $found = strlen($tokens[($stackPtr + 1)]['content']);
+            $error = 'Expected 1 space after "%s"; %s found';
+            $data  = array(
+                      $operator,
+                      $found,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
+        }
 
     }//end process()
 

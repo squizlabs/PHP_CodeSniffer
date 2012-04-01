@@ -28,6 +28,13 @@
 class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -173,7 +180,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
-        // Each line between the parenthesis should be indented 4 spaces.
+        // Each line between the parenthesis should be indented n spaces.
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $lastLine     = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
@@ -214,7 +221,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     // as the function call.
                     $expectedIndent = $functionIndent;
                 } else {
-                    $expectedIndent = ($functionIndent + 4);
+                    $expectedIndent = ($functionIndent + $this->indent);
                 }
 
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
