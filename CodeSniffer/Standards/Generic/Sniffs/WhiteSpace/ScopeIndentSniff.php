@@ -184,11 +184,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             // If this is a HEREDOC then we need to ignore it as the
             // whitespace before the contents within the HEREDOC are
             // considered part of the content.
-            if ($tokens[$i]['code'] === T_START_HEREDOC) {
+            if ($tokens[$i]['code'] === T_START_HEREDOC
+                || $tokens[$i]['code'] === T_START_NOWDOC
+            ) {
                 $inHereDoc = true;
                 continue;
             } else if ($inHereDoc === true) {
-                if ($tokens[$i]['code'] === T_END_HEREDOC) {
+                if ($tokens[$i]['code'] === T_END_HEREDOC
+                    || $tokens[$i]['code'] === T_END_NOWDOC
+                ) {
                     $inHereDoc = false;
                 }
 

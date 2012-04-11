@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19324 : Setting show_warnings configuration option does not work
   - Fixed bug #19354 : Not recognizing references passed to method
   - Fixed bug #19361 : CSS tokenzier generates errors when PHP embedded in CSS file
+  - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
  </notes>
  <contents>
   <dir name="/">
