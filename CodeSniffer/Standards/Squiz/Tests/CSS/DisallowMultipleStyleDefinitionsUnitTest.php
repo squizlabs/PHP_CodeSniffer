@@ -40,8 +40,9 @@ class Squiz_Tests_CSS_DisallowMultipleStyleDefinitionsUnitTest extends AbstractS
     public function getErrorList()
     {
         return array(
-                3 => 1,
-                5 => 2,
+                3  => 1,
+                5  => 2,
+                10 => 4,
                );
 
     }//end getErrorList()

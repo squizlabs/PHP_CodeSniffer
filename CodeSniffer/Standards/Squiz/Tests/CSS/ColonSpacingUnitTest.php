@@ -40,11 +40,16 @@ class Squiz_Tests_CSS_ColonSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                3 => 1,
-                4 => 2,
-                5 => 1,
-                6 => 1,
-                8 => 1,
+                3  => 1,
+                4  => 2,
+                5  => 1,
+                6  => 1,
+                8  => 1,
+                27 => 1,
+                28 => 1,
+                29 => 1,
+                30 => 1,
+                31 => 1,
                );
 
     }//end getErrorList()
