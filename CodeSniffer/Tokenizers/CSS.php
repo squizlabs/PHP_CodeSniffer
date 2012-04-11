@@ -299,7 +299,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
     public function processAdditional(&$tokens, $eolChar)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
+            echo "\t*** START ADDITIONAL CSS PROCESSING ***".PHP_EOL;
         }
 
         $numTokens  = (count($tokens) - 1);
@@ -438,7 +438,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** END ADDITIONAL JS PROCESSING ***".PHP_EOL;
+            echo "\t*** END ADDITIONAL CSS PROCESSING ***".PHP_EOL;
         }
 
     }//end processAdditional()
