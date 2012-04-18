@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Peter Philipp for the patch
   - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
   - Debug option -vv now shows tokenizer status for CSS files
+  - Added support for new gjslint error formats
+    -- Thanks to Meck for the patch
   - Fixed an issue in AbstractPatternSniff where comments were not being ignored in some cases
   - Fixed an issue in Zend ClosingTagSniff where the closing tag was not always being detected correctly
     -- Thanks to Jonathan Robson for the patch
