@@ -94,7 +94,7 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
 
         foreach ($output as $finding) {
             $matches    = array();
-            $numMatches = preg_match('/^(.*):([0-9]+):\(([0-9]+)\)(.*)$/', $finding, $matches);
+            $numMatches = preg_match('/^(.*):([0-9]+):\(.*?([0-9]+)\)(.*)$/', $finding, $matches);
             if ($numMatches === 0) {
                 continue;
             }
