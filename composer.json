@@ -1,0 +1,9 @@
+{
+    "name": "zerkalica/PHP_CodeSniffer",
+    "description": "Unofficial version of PHP_CodeSniffer to be handled with Composer",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "bin": ["scripts/phpcs"]
+}
+
