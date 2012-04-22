@@ -1,4 +1,4 @@
-#!@php_bin@
+#!/usr/bin/env php
 <?php
 /**
  * PHP_CodeSniffer tokenises PHP code and detects violations of a
