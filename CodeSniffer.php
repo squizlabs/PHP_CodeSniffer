@@ -481,8 +481,18 @@ class PHP_CodeSniffer
         $numProcessed = 0;
         $dots         = 0;
         $maxLength    = strlen($numFiles);
+        $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
+            $currDir = dirname($file);
+            if ($lastDir !== $currDir) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Changing into directory '.$currDir.PHP_EOL;
+                }
+
+                $lastDir = $currDir;
+            }
+
             $phpcsFile  = $this->processFile($file);
             $numProcessed++;
 
