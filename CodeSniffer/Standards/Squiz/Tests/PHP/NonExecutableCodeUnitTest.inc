@@ -128,6 +128,12 @@ switch ($var) {
     }
 }
 
+defined('FOO') or die('error');
+interface myInterface {
+    function myFunc();
+}
+echo 'hello';
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

@@ -74,6 +74,11 @@ if (defined('T_NS_SEPARATOR') === false) {
     define('T_NS_SEPARATOR', 1051);
 }
 
+// Some PHP 5.4 tokens, replicated for lower versions.
+if (defined('T_TRAIT') === false) {
+    define('T_TRAIT', 1052);
+}
+
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurance in a file.
