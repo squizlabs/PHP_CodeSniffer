@@ -56,4 +56,13 @@ class MyClass {
 function &myFunction($arg1=1,$arg2=2)
 {
 }
+
+return array_udiff(
+    $foo,
+    $bar,
+    function($a, $b) {
+        $foo='bar';
+        return $foo;
+    }
+);
 ?>

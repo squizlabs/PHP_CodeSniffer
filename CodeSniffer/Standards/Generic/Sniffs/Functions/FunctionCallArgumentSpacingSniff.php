@@ -79,7 +79,12 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $nextSeperator = $openBracket;
-        while (($nextSeperator = $phpcsFile->findNext(array(T_COMMA, T_VARIABLE), ($nextSeperator + 1), $closeBracket)) !== false) {
+        while (($nextSeperator = $phpcsFile->findNext(array(T_COMMA, T_VARIABLE, T_CLOSURE), ($nextSeperator + 1), $closeBracket)) !== false) {
+            if ($tokens[$nextSeperator]['code'] === T_CLOSURE) {
+                $nextSeperator = $tokens[$nextSeperator]['scope_closer'];
+                continue;
+            }
+
             // Make sure the comma or variable belongs directly to this function call,
             // and is not inside a nested function call or array.
             $brackets    = $tokens[$nextSeperator]['nested_parenthesis'];
