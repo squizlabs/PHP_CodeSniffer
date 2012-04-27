@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Rule references for standards, directories and specific sniffs can now be relative in ruleset.xml files
     -- For example: ref="../MyStandard/Sniffs/Commenting/DisallowHashCommentsSniff.php"
   - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
+  - Added Squiz.Commenting.FileComment.MissingShort error message for file comments that only contains tags
+    -- Also stops undefined index errors being generated for these comments
   - Debug option -vv now shows tokenizer status for CSS files
   - Added support for new gjslint error formats
     -- Thanks to Meck for the patch
