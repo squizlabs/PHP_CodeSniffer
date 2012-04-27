@@ -310,7 +310,7 @@ class PHP_CodeSniffer_CLI
             print_r($data);
             exit(0);
             break;
-       case 'colors':
+        case 'colors':
             $values['colors'] = true;
             break;
         default:
@@ -577,6 +577,7 @@ class PHP_CodeSniffer_CLI
      *                                     (not used by all reports).
      * @param string          $reportFile  A default file to log report output to.
      * @param int             $reportWidth How wide the screen reports should be.
+     * @param bool            $colors      TRUE if report should show colored output.
      *
      * @return int The number of error and warning messages shown.
      */

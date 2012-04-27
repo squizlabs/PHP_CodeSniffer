@@ -72,6 +72,7 @@ class PHP_CodeSniffer_Reporting
      * @param boolean $showSources     Show sources?
      * @param string  $reportFile      Report file to generate.
      * @param integer $reportWidth     Report max width.
+     * @param boolean $colors          print with ANSI escape colored output?
      * 
      * @return integer
      */
