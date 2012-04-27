@@ -245,21 +245,26 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Short description must be single line and end with a full stop.
         $testShort = trim($short);
-        $lastChar  = $testShort[(strlen($testShort) - 1)];
-        if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
-            $error = 'File comment short description must be on a single line';
-            $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
-        }
+        if ($testShort === '') {
+            $error = 'Missing short description in file comment';
+            $phpcsFile->addError($error, ($commentStart + 1), 'MissingShort');
+        } else {
+            $lastChar  = $testShort[(strlen($testShort) - 1)];
+            if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
+                $error = 'File comment short description must be on a single line';
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
+            }
 
-        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-            $error = 'File comment short description must start with a capital letter';
-            $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
-        }
+            if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+                $error = 'File comment short description must start with a capital letter';
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
+            }
 
-        if ($lastChar !== '.') {
-            $error = 'File comment short description must end with a full stop';
-            $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
-        }
+            if ($lastChar !== '.') {
+                $error = 'File comment short description must end with a full stop';
+                $phpcsFile->addError($error, ($commentStart + 1), 'ShortFullStop');
+            }
+        }//end if
 
         // Check for unknown/deprecated tags.
         $unknownTags = $this->commentParser->getUnknown();

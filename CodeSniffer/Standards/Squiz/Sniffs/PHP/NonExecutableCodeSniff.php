@@ -63,6 +63,13 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        // If this token is preceeded with an "or", it only relates to one line
+        // and should be ignore. For example: fopen() or die().
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if ($tokens[$prev]['code'] === T_LOGICAL_OR) {
+            return;
+        }
+
         // Collect closure function parenthesises to use later for supressing some errors.
         $closureReturnParenthesises = array();
         $closureToken               = $phpcsFile->findNext(T_CLOSURE, $stackPtr);
@@ -203,9 +210,12 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 return;
             }
 
-            // Skip whole functions and classes because they are not
+            // Skip whole functions and classes/interfaces because they are not
             // technically executed code, but rather declarations that may be used.
-            if ($tokens[$i]['code'] === T_FUNCTION || $tokens[$i]['code'] === T_CLASS) {
+            if ($tokens[$i]['code'] === T_FUNCTION
+                || $tokens[$i]['code'] === T_CLASS
+                || $tokens[$i]['code'] === T_INTERFACE
+            ) {
                 $i = $tokens[$i]['scope_closer'];
                 continue;
             }

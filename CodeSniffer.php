@@ -480,8 +480,18 @@ class PHP_CodeSniffer
         $numProcessed = 0;
         $dots         = 0;
         $maxLength    = strlen($numFiles);
+        $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
+            $currDir = dirname($file);
+            if ($lastDir !== $currDir) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Changing into directory '.$currDir.PHP_EOL;
+                }
+
+                $lastDir = $currDir;
+            }
+
             $phpcsFile  = $this->processFile($file);
             $numProcessed++;
 
@@ -781,6 +791,17 @@ class PHP_CodeSniffer
         // hide and change internal messages.
         if (substr($sniff, 0, 9) === 'Internal.') {
             return $referencedSniffs;
+        }
+
+        // As sniffs can't begin with a full stop, assume sniffs in
+        // this format are relative paths and attempt to convert them
+        // to absolute paths. If this fails, let the sniff path run through
+        // the normal checks and have it fail as normal.
+        if (substr($sniff, 0, 1) === '.') {
+            $realpath = realpath(dirname(self::$standardDir).'/'.$sniff);
+            if ($realpath !== false) {
+                $sniff = $realpath;
+            }
         }
 
         $isDir = false;

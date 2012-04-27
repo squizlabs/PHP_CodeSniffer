@@ -74,6 +74,11 @@ if (defined('T_NS_SEPARATOR') === false) {
     define('T_NS_SEPARATOR', 1051);
 }
 
+// Some PHP 5.4 tokens, replicated for lower versions.
+if (defined('T_TRAIT') === false) {
+    define('T_TRAIT', 1052);
+}
+
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurance in a file.
@@ -101,6 +106,7 @@ final class PHP_CodeSniffer_Tokens
     public static $weightings = array(
                                  T_CLASS               => 1000,
                                  T_INTERFACE           => 1000,
+                                 T_TRAIT               => 1000,
                                  T_NAMESPACE           => 1000,
                                  T_FUNCTION            => 100,
                                  T_CLOSURE             => 100,
@@ -266,6 +272,7 @@ final class PHP_CodeSniffer_Tokens
     public static $scopeOpeners = array(
                                    T_CLASS,
                                    T_INTERFACE,
+                                   T_TRAIT,
                                    T_NAMESPACE,
                                    T_FUNCTION,
                                    T_CLOSURE,

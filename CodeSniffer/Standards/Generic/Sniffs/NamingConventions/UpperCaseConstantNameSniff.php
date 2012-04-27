@@ -77,6 +77,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_FUNCTION,
                              T_CLASS,
                              T_INTERFACE,
+                             T_TRAIT,
                              T_IMPLEMENTS,
                              T_EXTENDS,
                              T_INSTANCEOF,
