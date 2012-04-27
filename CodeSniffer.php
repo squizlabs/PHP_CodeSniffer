@@ -794,6 +794,17 @@ class PHP_CodeSniffer
             return $referencedSniffs;
         }
 
+        // As sniffs can't begin with a full stop, assume sniffs in
+        // this format are relative paths and attempt to convert them
+        // to absolute paths. If this fails, let the sniff path run through
+        // the normal checks and have it fail as normal.
+        if (substr($sniff, 0, 1) === '.') {
+            $realpath = realpath(dirname(self::$standardDir).'/'.$sniff);
+            if ($realpath !== false) {
+                $sniff = $realpath;
+            }
+        }
+
         $isDir = false;
         $path  = $sniff;
         if (is_dir($sniff) === true) {

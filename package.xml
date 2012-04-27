@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Standards designed to be installed in the PHPCS Standards dir will now work outside this dir as well
     -- In particular, allows the Drupal CS to work without needing to symlink it into the PHPCS install
     -- Thanks to Peter Philipp for the patch
+  - Rule references for standards, directories and specific sniffs can now be relative in ruleset.xml files
+    -- For example: ref="../MyStandard/Sniffs/Commenting/DisallowHashCommentsSniff.php"
   - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
   - Debug option -vv now shows tokenizer status for CSS files
   - Added support for new gjslint error formats
