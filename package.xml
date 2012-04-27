@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19354 : Not recognizing references passed to method
   - Fixed bug #19361 : CSS tokenzier generates errors when PHP embedded in CSS file
   - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
+  - Fixed bug #19381 : traits and indetations in traits are not handled properly
   - Fixed bug #19394 : Notice in NonExecutableCodeSniff
  </notes>
  <contents>
