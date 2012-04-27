@@ -58,6 +58,11 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
     ) {
         $errorsShown = 0;
         $width       = max($width, 70);
+        $errorColor = $warningColor = self::NORMALCOLOR; 
+        if (isset($colors) && $colors) {
+            $errorColor = self::RED;
+            $warningColor = self::YELLOW;
+        }
 
         foreach ($report['files'] as $filename => $file) {
             if (empty($file['messages']) === true) {
@@ -74,9 +79,9 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             echo PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
 
-            echo 'FOUND '.$file['errors'].' ERROR(S) ';
+            echo 'FOUND '.$this->_wrapInColor($file['errors'], $errorColor).' ERROR(S) ';
             if ($file['warnings'] > 0) {
-                echo 'AND '.$file['warnings'].' WARNING(S) ';
+                echo 'AND '.$this->_wrapInColor($file['warnings'], $warningColor).' WARNING(S) ';
             }
 
             echo 'AFFECTING '.count($file['messages']).' LINE(S)'.PHP_EOL;
@@ -109,11 +114,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             // The maxium amount of space an error message can use.
             $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
 
-            $errorColor = $warningColor = self::NORMALCOLOR; 
-            if (isset($colors) && $colors) {
-                $errorColor = self::RED;
-                $warningColor = self::YELLOW;
-            }
+     
 
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
@@ -133,12 +134,12 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
                         echo ' '.str_repeat(' ', $padding).$line.' | ';
                         if ($error['type'] === 'ERROR') {
-                            $this->_printInColor($error['type'], $errorColor);
+                            echo $this->_wrapInColor($error['type'], $errorColor);
                             if ($file['warnings'] > 0) {
                                 echo '  ';
                             }
                         } else {
-                            $this->_printInColor($error['type'], $warningColor);
+                            echo $this->_wrapInColor($error['type'], $warningColor);
                         }
 
                         echo ' | '.$errorMsg.PHP_EOL;
@@ -168,23 +169,25 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
      * @param string $text  the text to print
      * @param int    $color the color constant
      * 
-     * @return void
+     * @return string text wrapped in color codes
      */
-    private function _printInColor($text, $color)
+    private function _wrapInColor($text, $color)
     {
+        $return = '';
         switch ($color) {
         case self::RED:
-            echo "\033[1;31m";
+            $return .= "\033[1;31m";
             break;
         case self::YELLOW:
-            echo "\033[1;33m";
+            $return .= "\033[1;33m";
             break;
         }
-        echo $text;
+        $return .= $text;
         if (self::NORMALCOLOR != $color) {
-            echo "\033[0m";
+            $return .= "\033[0m";
         }
-    }
+        return $return;
+    }// end _wrapInColor
 
 }//end class
 ?>
