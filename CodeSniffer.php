@@ -260,15 +260,14 @@ class PHP_CodeSniffer
         }
 
         $path = str_replace('_', '/', $newClassName).'.php';
-
-        if (is_file(dirname(__FILE__).'/'.$path) === true) {
+        if (file_exists(dirname(__FILE__).'/'.$path) === true) {
             // Check standard file locations based on class name.
             include dirname(__FILE__).'/'.$path;
-        } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
+        } else if (file_exists(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
             // Check for included sniffs.
             include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
         } else if (self::$standardDir !== ''
-            && is_file(dirname(self::$standardDir).'/'.$path) === true
+            && file_exists(dirname(self::$standardDir).'/'.$path) === true
         ) {
             // Check standard file locations based on the passed standard directory.
             include dirname(self::$standardDir).'/'.$path;
@@ -1231,7 +1230,8 @@ class PHP_CodeSniffer
                 $filesViolations,
                 $cliValues['showSources'],
                 null,
-                $cliValues['reportWidth']
+                $cliValues['reportWidth'],
+                $cliValues['colors']
             );
 
             if ($numErrors === 0) {
@@ -1851,19 +1851,19 @@ class PHP_CodeSniffer
     {
         $standardDir  = dirname(__FILE__);
         $standardDir .= '/CodeSniffer/Standards/'.$standard;
-        if (is_file($standardDir.'/ruleset.xml') === true) {
+        if (file_exists($standardDir.'/ruleset.xml') === true) {
             return true;
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
             $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
-            if (is_file($ruleset) === true) {
+            if (file_exists($ruleset) === true) {
                 return true;
             }
 
             // Might also be an actual ruleset file itself.
             // If it has an XML extension, let's at least try it.
-            if (is_file($standard) === true
+            if (file_exists($standard) === true
                 && substr(strtolower($standard), -4) === '.xml'
             ) {
                 return true;

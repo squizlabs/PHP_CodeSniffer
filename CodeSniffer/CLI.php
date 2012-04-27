@@ -97,6 +97,7 @@ class PHP_CodeSniffer_CLI
         $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
+        $defaults['colors'] = false;
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -308,6 +309,9 @@ class PHP_CodeSniffer_CLI
             $data = PHP_CodeSniffer::getAllConfigData();
             print_r($data);
             exit(0);
+            break;
+       case 'colors':
+            $values['colors'] = true;
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
@@ -553,7 +557,8 @@ class PHP_CodeSniffer_CLI
             $values['reports'],
             $values['showSources'],
             $values['reportFile'],
-            $values['reportWidth']
+            $values['reportWidth'],
+            $values['colors']
         );
 
     }//end process()
@@ -580,7 +585,8 @@ class PHP_CodeSniffer_CLI
         $reports,
         $showSources,
         $reportFile,
-        $reportWidth
+        $reportWidth,
+        $colors
     ) {
         $reporting       = new PHP_CodeSniffer_Reporting();
         $filesViolations = $phpcs->getFilesErrors();
@@ -609,7 +615,8 @@ class PHP_CodeSniffer_CLI
                 $filesViolations,
                 $showSources,
                 $output,
-                $reportWidth
+                $reportWidth,
+                $colors
             );
         }
 
@@ -694,6 +701,7 @@ class PHP_CodeSniffer_CLI
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
+        echo '        --colors      Hightlight errors and warnings in terminal in color'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (only valid if checking a directory)'.PHP_EOL;

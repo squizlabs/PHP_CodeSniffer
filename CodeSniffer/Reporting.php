@@ -80,7 +80,8 @@ class PHP_CodeSniffer_Reporting
         $filesViolations,
         $showSources,
         $reportFile='',
-        $reportWidth=80
+        $reportWidth=80,
+        $colors=false
     ) {
         if ($reportFile !== null) {
             $reportDir = dirname($reportFile);
@@ -105,7 +106,7 @@ class PHP_CodeSniffer_Reporting
             ob_start();
         }
 
-        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen);
+        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen, $colors);
 
         if ($reportFile !== null) {
             $generatedReport = ob_get_contents();

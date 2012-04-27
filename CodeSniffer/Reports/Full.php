@@ -32,6 +32,9 @@
 class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 {
 
+    const normalColor = 0;
+    const red = 1;
+    const yellow = 3;
 
     /**
      * Prints all errors and warnings for each file processed.
@@ -49,7 +52,8 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         $report,
         $showSources=false,
         $width=80,
-        $toScreen=true
+        $toScreen=true,
+        $colors=false
     ) {
         $errorsShown = 0;
         $width       = max($width, 70);
@@ -104,6 +108,12 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             // The maxium amount of space an error message can use.
             $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
 
+            $errorColor = $warningColor = self::normalColor; 
+            if (isset($colors) && $colors) {
+                $errorColor = self::red;
+                $warningColor = self::yellow;
+            }
+
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
@@ -120,11 +130,14 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                             PHP_EOL.$paddingLine2
                         );
 
-                        echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
+                        echo ' '.str_repeat(' ', $padding).$line.' | ';
                         if ($error['type'] === 'ERROR') {
+                            $this->printInColor($error['type'], $errorColor);
                             if ($file['warnings'] > 0) {
                                 echo '  ';
                             }
+                        } else {
+                            $this->printInColor($error['type'], $warningColor);
                         }
 
                         echo ' | '.$errorMsg.PHP_EOL;
@@ -148,6 +161,20 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
     }//end generate()
 
 
-}//end class
 
+private function printInColor($text, $color) {
+    switch ($color) {
+        case self::red:
+            echo "\033[1;31m";
+            break;
+        case self::yellow:
+            echo "\033[1;33m";
+            break;
+    }
+    echo $text;
+    echo "\033[0m";
+
+}
+
+}//end class
 ?>
