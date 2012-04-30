@@ -72,6 +72,7 @@ class PHP_CodeSniffer_Reporting
      * @param boolean $showSources     Show sources?
      * @param string  $reportFile      Report file to generate.
      * @param integer $reportWidth     Report max width.
+     * @param boolean $colors          print with ANSI escape colored output?
      * 
      * @return integer
      */
@@ -80,7 +81,8 @@ class PHP_CodeSniffer_Reporting
         $filesViolations,
         $showSources,
         $reportFile='',
-        $reportWidth=80
+        $reportWidth=80,
+        $colors=false
     ) {
         if ($reportFile !== null) {
             $reportDir = dirname($reportFile);
@@ -105,7 +107,7 @@ class PHP_CodeSniffer_Reporting
             ob_start();
         }
 
-        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen);
+        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen, $colors);
 
         if ($reportFile !== null) {
             $generatedReport = ob_get_contents();
