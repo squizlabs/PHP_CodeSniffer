@@ -136,6 +136,13 @@ class PHP_CodeSniffer
     protected $ignorePatterns = array();
 
     /**
+     * An array of imported namespaces
+     *
+     * @var array
+     */
+    protected $importedNamespaces = array();
+
+    /**
      * An array of extensions for files we will check.
      *
      * @var array
@@ -746,6 +753,9 @@ class PHP_CodeSniffer
                 throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
             }
 
+            // Load imported namespaces for relative standards
+            $this->loadImportedNamespaces($dir, $ruleset);
+
             foreach ($ruleset->rule as $rule) {
                 $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rule['ref']));
 
@@ -775,6 +785,36 @@ class PHP_CodeSniffer
 
     }//end getSniffFiles()
 
+
+    /**
+     * Load namespaces for sniffs which are not located as installed sniff.
+     *
+     * @param string           $dir      The directory where to look for the files.
+     * @param SimpleXMLElement $ruleset  The ruleset xml of standard
+     *
+     * @return void
+     */
+    protected function loadImportedNamespaces($dir, SimpleXMLElement $ruleset) {
+        // If there are no namespace imports, exit right here
+        if(property_exists($ruleset, 'namespace-import') !== true) {
+            return;
+        }
+
+        // Import the namespaces
+        foreach ($ruleset->{'namespace-import'} as $ruleImport) {
+            $importedRulePath = $ruleImport['ref'];
+
+            // If an imported rule starts with / already is fine, because there is a absolute path
+            // If it starts with "../" the imported rule is relative to the ruleset.xml
+            if(substr($importedRulePath, 0, 3) === '../') {
+                $importedRulePath = realpath($dir . '/' . $importedRulePath);
+            }
+
+            if(is_dir($importedRulePath) === true) {
+                $this->importedNamespaces[(string) $ruleImport['name']] = $importedRulePath;
+            }
+        }
+    }//end loadImportedNamespaces()
 
     /**
      * Expand a ruleset sniff reference into a list of sniff files.
@@ -839,6 +879,11 @@ class PHP_CodeSniffer
                     // installed in there.
                     $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
+
+				// If there was no standard found, have a look at the namespace import
+				if ($path === false && isset($this->importedNamespaces[$parts[0]])) {
+					$path = realpath($this->importedNamespaces[$parts[0]].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+				}
             }
         }//end if
 
