@@ -544,6 +544,30 @@ class PHP_CodeSniffer
 
 
     /**
+     * Explain the coding standard with the sniffs registered
+     *
+     * @param string $standard The standard we want to explain
+     * @param array  $sniffs   The sniff names to restrict the allowed
+     *                         listeners to.
+     *
+     * @return void
+     */
+    public function explain($standard, $sniffs)
+    {
+        $this->setTokenListeners($standard, $sniffs);
+
+        echo 'The "'.$standard.'" standard has the following sniffs registered:';
+        echo PHP_EOL.PHP_EOL;
+        foreach ($this->listeners as $sniff) {
+            echo $sniff.PHP_EOL;
+        }
+
+        echo PHP_EOL;
+
+    }//end explain()
+
+
+    /**
      * Processes multi-file sniffs.
      *
      * @return void
