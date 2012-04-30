@@ -799,7 +799,12 @@ class PHP_CodeSniffer
         // to absolute paths. If this fails, let the sniff path run through
         // the normal checks and have it fail as normal.
         if (substr($sniff, 0, 1) === '.') {
-            $realpath = realpath(dirname(self::$standardDir).'/'.$sniff);
+            $standardDir = self::$standardDir;
+            if (substr(self::$standardDir, -4) === '.xml') {
+                $standardDir = dirname($standardDir);
+            }
+
+            $realpath = realpath($standardDir.'/'.$sniff);
             if ($realpath !== false) {
                 $sniff = $realpath;
             }
