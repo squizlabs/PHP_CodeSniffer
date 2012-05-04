@@ -59,8 +59,9 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
         if ($stackPtr > 0) {
             $tokens        = $phpcsFile->getTokens();
             $previousToken = $tokens[($stackPtr - 1)]['content'];
-            $error         = 'No character is allowed before php opening tag; expect " <?php " but found " '.$previousToken.' <?php ".';
-            $phpcsFile->addError($error, $stackPtr, 'NoCharacterBeforePHPOpeningTag');
+            $data          = array($previousToken);
+            $error         = 'No character is allowed before php opening tag; expect "<?php " but found "%s <?php ".';
+            $phpcsFile->addError($error, $stackPtr, 'NoCharacterBeforePHPOpeningTag', $data);
         }
 
     }//end process()
