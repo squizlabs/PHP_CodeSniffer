@@ -53,7 +53,7 @@ class Generic_Sniffs_PHP_CharacterAfterPHPClosingTagSniff implements PHP_CodeSni
         $keyword                     = $tokens[$stackPtr]['content'];
         $numberOfAllTokens           = (count($tokens) - 1);
         $diffCurrentTokenToAllTokens = ($numberOfAllTokens - $stackPtr);
-        if ($keyword === true) {
+        if ($keyword == true) {
             if ($keyword === '?>'.$phpcsFile->eolChar) {
                 $error = 'No newline character is allowed after php closing tag; expect " ?> " but found " ?>\n " ';
                 $phpcsFile->addError($error, $stackPtr, 'NoNewlineCharAfterPHPClosingTag');
