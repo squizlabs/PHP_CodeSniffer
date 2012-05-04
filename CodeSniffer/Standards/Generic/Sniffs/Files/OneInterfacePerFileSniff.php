@@ -6,7 +6,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andreas.grunwald@wmdb.de>
+ * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @copyright 2010 Andy Grunwald
  * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -18,7 +18,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andreas.grunwald@wmdb.de>
+ * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @copyright 2010 Andy Grunwald
  * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @version   Release: @package_version@

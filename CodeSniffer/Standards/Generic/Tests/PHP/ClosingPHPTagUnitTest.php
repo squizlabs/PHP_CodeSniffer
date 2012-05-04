@@ -6,7 +6,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andreas.grunwald@wmdb.de>
+ * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2010 Andy Grunwald
@@ -21,7 +21,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andreas.grunwald@wmdb.de>
+ * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2010 Andy Grunwald
