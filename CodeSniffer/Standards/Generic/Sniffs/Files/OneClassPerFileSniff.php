@@ -61,7 +61,7 @@ class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
         $nextClass = $phpcsFile->findNext($this->register(), ($stackPtr + 1));
         if ($nextClass !== false) {
             $error = 'Only one class is allowed in a file.';
-            $phpcsFile->addError($error, $nextClass);
+            $phpcsFile->addError($error, $nextClass, 'OnlyOneClassPerFile');
         }
 
     }//end process()

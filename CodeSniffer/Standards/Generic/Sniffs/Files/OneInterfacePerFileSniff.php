@@ -61,7 +61,7 @@ class Generic_Sniffs_Files_OneInterfacePerFileSniff implements PHP_CodeSniffer_S
         $nextInterface = $phpcsFile->findNext($this->register(), ($stackPtr + 1));
         if ($nextInterface !== false) {
             $error = 'Only one interface is allowed in a file.';
-            $phpcsFile->addError($error, $nextInterface);
+            $phpcsFile->addError($error, $nextInterface, 'OnlyOneInterfacePerFile');
         }
 
     }//end process()

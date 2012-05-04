@@ -133,7 +133,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
             $isSpace = preg_match('/[^\t]/', $indentionPart) ? true : false;
             if ($isSpace === true) {
                 $error = 'Tabs must be used to indent lines; spaces are not allowed';
-                $phpcsFile->addError($error, ($stackPtr - 1));
+                $phpcsFile->addError($error, ($stackPtr - 1), 'SpaceUsed');
             }
         }//end if
 

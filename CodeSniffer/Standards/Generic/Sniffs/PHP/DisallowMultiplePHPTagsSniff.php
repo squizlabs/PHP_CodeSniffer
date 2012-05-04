@@ -63,7 +63,7 @@ class Generic_Sniffs_PHP_DisallowMultiplePHPTagsSniff implements PHP_CodeSniffer
         $disallowTag = $phpcsFile->findNext($tokens[$stackPtr]['code'], ($stackPtr + 1));
         if (false !== $disallowTag) {
             $error = 'Exactly one "'.$tokens[$stackPtr]['content'].'" tag is allowed';
-            $phpcsFile->addError($error, $disallowTag);
+            $phpcsFile->addError($error, $disallowTag, 'OnlyOnePHPTag');
         }
 
         return;
