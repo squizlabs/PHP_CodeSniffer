@@ -42,8 +42,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     /**
      * Does the indent need to be exactly right.
      *
-     * If TRUE, indent needs to be exactly $ident spaces. If FALSE,
-     * indent needs to be at least $ident spaces (but can be more).
+     * If TRUE, indent needs to be exactly $indent spaces. If FALSE,
+     * indent needs to be at least $indent spaces (but can be more).
      *
      * @var bool
      */
