@@ -266,6 +266,14 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         if (preg_match('|\*/$|', $content) !== 0) {
                             $commentOpen = false;
                         }
+
+                        // We are in a comment, so the indent does not have to
+                        // be exact. The important thing is that the comment opens
+                        // at the correct column and nothing sits closer to the left
+                        // than that opening column.
+                        if ($column > $indent) {
+                            continue;
+                        }
                     }//end if
                 }//end if
 
