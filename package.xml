@@ -56,6 +56,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19381 : traits and indetations in traits are not handled properly
   - Fixed bug #19394 : Notice in NonExecutableCodeSniff
   - Fixed bug #19412 : Incorrect error about assigning objects to variables when inside inline IF
+  - Fixed bug #19413 : php_cs thinks I haven't used a parameter when I have
  </notes>
  <contents>
   <dir name="/">

@@ -36,3 +36,21 @@ function foo($bar)
     $bar
 BAZ
 }
+
+function foo( $parameter ) {
+    $wango = <<<HERE
+1 Must be a HEREdoc of at least one line
+HERE;
+    $x = $parameter; // This line must be immediately after the HERE; with no intervening blank lines.
+    $tango = <<<HERE
+1 Must be a HEREdoc
+2 
+3 
+4 
+5   
+6
+7
+8 
+9 at least 9 lines long
+HERE;
+}

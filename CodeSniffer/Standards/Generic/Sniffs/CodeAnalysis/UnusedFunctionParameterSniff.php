@@ -25,6 +25,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2007-2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   Release: @package_version@
@@ -73,68 +74,79 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
         $next = ++$token['scope_opener'];
         $end  = --$token['scope_closer'];
 
-        $emptyBody = true;
+        $foundContent = false;
 
         for (; $next <= $end; ++$next) {
             $token = $tokens[$next];
             $code  = $token['code'];
 
-            // Ingorable tokens.
+            // Ignorable tokens.
             if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 continue;
-            } else if ($code === T_THROW && $emptyBody === true) {
-                // Throw statement and an empty body indicate an interface method.
-                return;
-            } else if ($code === T_RETURN && $emptyBody === true) {
-                // Return statement and an empty body indicate an interface method.
-                $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
-                if ($tmp === false) {
+            }
+
+            if ($foundContent === false) {
+                // A throw statement as the first content indicates an interface method.
+                if ($code === T_THROW) {
                     return;
                 }
 
-                // There is a return.
-                if ($tokens[$tmp]['code'] === T_SEMICOLON) {
-                    return;
-                }
+                // A return statement as the first content indicates an interface method.
+                if ($code === T_RETURN) {
+                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+                    if ($tmp === false) {
+                        return;
+                    }
 
-                $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($tmp + 1), null, true);
+                    // There is a return.
+                    if ($tokens[$tmp]['code'] === T_SEMICOLON) {
+                        return;
+                    }
 
-                // There is a return <token>.
-                if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
-                     return;
-                }
+                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($tmp + 1), null, true);
+                    if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
+                        // There is a return <token>.
+                        return;
+                    }
+                }//end if
             }//end if
 
-            $emptyBody = false;
+            $foundContent = true;
 
             if ($code === T_VARIABLE && isset($params[$token['content']]) === true) {
                 unset($params[$token['content']]);
-            } else if ($code === T_DOUBLE_QUOTED_STRING || $code === T_HEREDOC) {
+            } else if ($code === T_DOUBLE_QUOTED_STRING
+                || $code === T_HEREDOC
+                || $code === T_NOWDOC
+            ) {
                 // Tokenize strings that can contain variables.
                 // Make sure the string is re-joined if it occurs over multiple lines.
-                $string = $token['content'];
+                $content = $token['content'];
                 for ($i = ($next + 1); $i <= $end; $i++) {
-                    if ($tokens[$i]['code'] === $code) {
-                        $string .= $tokens[$i]['content'];
+                    if ($tokens[$i]['code'] === $code
+                        || in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
+                    ) {
+                        $content .= $tokens[$i]['content'];
                         $next++;
+                    } else {
+                        break;
                     }
                 }
 
-                $strTokens = token_get_all(sprintf('<?php %s;?>', $string));
-
-                foreach ($strTokens as $tok) {
-                    if (is_array($tok) === false || $tok[0] !== T_VARIABLE ) {
+                $stringTokens = token_get_all(sprintf('<?php %s;?>', $content));
+                foreach ($stringTokens as $stringToken) {
+                    if (is_array($stringToken) === false || $stringToken[0] !== T_VARIABLE ) {
                         continue;
                     }
 
-                    if (isset($params[$tok[1]]) === true) {
-                        unset($params[$tok[1]]);
+                    if (isset($params[$stringToken[1]]) === true) {
+                        unset($params[$stringToken[1]]);
                     }
                 }
             }//end if
         }//end for
 
-        if ($emptyBody === false && count($params) > 0) {
+        if ($foundContent === true && count($params) > 0) {
             foreach ($params as $paramName => $position) {
                 $error = 'The method parameter %s is never used';
                 $data  = array($paramName);
