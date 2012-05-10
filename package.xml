@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
   - Fixed bug #19381 : traits and indetations in traits are not handled properly
   - Fixed bug #19394 : Notice in NonExecutableCodeSniff
+  - Fixed bug #19412 : Incorrect error about assigning objects to variables when inside inline IF
  </notes>
  <contents>
   <dir name="/">
