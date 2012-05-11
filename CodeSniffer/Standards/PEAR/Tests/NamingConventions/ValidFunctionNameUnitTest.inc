@@ -183,4 +183,11 @@ class Closure_Test {
 function test() {
     $foo = function() { echo 'foo'; };
 }
+
+/* @codingStandardsIgnoreStart */
+class MyClass
+{
+    /* @codingStandardsIgnoreEnd */
+    public function __construct() {}
+}
 ?>

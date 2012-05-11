@@ -62,20 +62,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     private $_scopeTokens = array();
 
     /**
-     * The position in the tokens array that opened the current scope.
-     *
-     * @var array()
-     */
-    protected $currScope = null;
-
-    /**
-     * The current file being checked.
-     *
-     * @var string
-     */
-    protected $currFile = '';
-
-    /**
      * True if this test should fire on tokens outside of the scope.
      *
      * @var boolean
@@ -138,11 +124,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      */
     public final function register()
     {
-        if ($this->_listenOutside === false) {
-            return $this->_scopeTokens;
-        } else {
-            return array_merge($this->_scopeTokens, $this->_tokens);
-        }
+        return $this->_tokens;
 
     }//end register()
 
@@ -159,35 +141,17 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $file = $phpcsFile->getFilename();
-        if ($this->currFile !== $file) {
-            // We have changed files, so clean up.
-            $this->currScope = null;
-            $this->currFile  = $file;
-        }
-
         $tokens = $phpcsFile->getTokens();
 
-        if (in_array($tokens[$stackPtr]['code'], $this->_scopeTokens) === true) {
-            $this->currScope = $stackPtr;
-            $phpcsFile->addTokenListener($this, $this->_tokens);
-        } else if ($this->currScope !== null
-            && isset($tokens[$this->currScope]['scope_closer']) === true
-            && $stackPtr > $tokens[$this->currScope]['scope_closer']
-        ) {
-            $this->currScope = null;
-            if ($this->_listenOutside === true) {
-                // This is a token outside the current scope, so notify the
-                // extender as they wish to know about this.
-                $this->processTokenOutsideScope($phpcsFile, $stackPtr);
-            } else {
-                // Don't remove the listener if the extender wants to know about
-                // tokens that live outside the current scope.
-                $phpcsFile->removeTokenListener($this, $this->_tokens);
+        $foundScope = false;
+        foreach ($tokens[$stackPtr]['conditions'] as $scope => $code) {
+            if (in_array($code, $this->_scopeTokens) === true) {
+                $this->processTokenWithinScope($phpcsFile, $stackPtr, $scope);
+                $foundScope = true;
             }
-        } else if ($this->currScope !== null) {
-            $this->processTokenWithinScope($phpcsFile, $stackPtr, $this->currScope);
-        } else {
+        }
+
+        if ($this->_listenOutside === true && $foundScope === false) {
             $this->processTokenOutsideScope($phpcsFile, $stackPtr);
         }
 
