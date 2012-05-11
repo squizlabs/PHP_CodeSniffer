@@ -57,16 +57,16 @@ class PEAR_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 23 => 2,
                 24 => 1,
                 26 => 2,
-                27 => 1,
                 28 => 1,
                 29 => 1,
                 30 => 1,
-                31 => 2,
-                32 => 1,
-                34 => 1,
+                31 => 1,
+                32 => 2,
+                33 => 1,
                 35 => 1,
                 36 => 1,
-                39 => 1,
+                37 => 1,
+                40 => 1,
                );
 
     }//end getErrorList()
@@ -83,10 +83,10 @@ class PEAR_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return array(
-                28 => 1,
                 29 => 1,
-                33 => 1,
-                39 => 1,
+                30 => 1,
+                34 => 1,
+                40 => 1,
                );
 
     }//end getWarningList()

@@ -48,6 +48,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an issue in Zend ClosingTagSniff where the closing tag was not always being detected correctly
     -- Thanks to Jonathan Robson for the patch
   - Fixed an issue in Generic FunctionCallArgumentSpacingSniff where closures could cause incorrect errors
+  - PEAR FileCommentSniff and ClassCommentSniff now support author emails with a single character in the local part
+    -- E.g., a@me.com
+    -- Thanks to Denis Shapkin for the patch
   - Fixed bug #19290 : Generic indent sniffer fails for anonymous functions
   - Fixed bug #19324 : Setting show_warnings configuration option does not work
   - Fixed bug #19354 : Not recognizing references passed to method

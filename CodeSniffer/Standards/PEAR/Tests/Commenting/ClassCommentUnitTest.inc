@@ -65,7 +65,8 @@ class Missing_Newlines_Before_Tags
  * @package    ADDITIONAL PACKAGE TAG
  * @subpackage SUBPACKAGE TAG
  * @author     Original Author <author@example.com>
- * @author       Rayn Ong rong@squiz.net
+ * @author       Greg Sherwood gsherwood@squiz.net
+ * @author     Mr T <t@squiz.net>
  * @author
  * @copyright  1997~1994 The PHP Group
  * @license    http://www.php.net/license/3_0.txt
