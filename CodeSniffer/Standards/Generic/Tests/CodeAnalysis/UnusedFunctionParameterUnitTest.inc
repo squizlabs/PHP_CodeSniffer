@@ -54,3 +54,13 @@ HERE;
 9 at least 9 lines long
 HERE;
 }
+
+function foo( $parameter ) {
+    return <<<HTML
+<?xml version="1.0"?>
+<value>$parameter</value>
+HTML;
+}
+
+print foo( 'PARAMETER' );
+print "\n";
