@@ -85,6 +85,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_NAMESPACE,
                              T_USE,
                              T_AS,
+                             T_GOTO,
                             );
 
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {
@@ -136,9 +137,16 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             // Is this an instance of declare()
-            $prevPtr = $phpcsFile->findPrevious(array(T_WHITESPACE, T_OPEN_PARENTHESIS), ($stackPtr - 1), null, true);
-            if ($tokens[$prevPtr]['code'] === T_DECLARE) {
+            $prevPtrDeclare = $phpcsFile->findPrevious(array(T_WHITESPACE, T_OPEN_PARENTHESIS), ($stackPtr - 1), null, true);
+            if ($tokens[$prevPtrDeclare]['code'] === T_DECLARE) {
                 return;
+            }
+
+            // Is this a goto label target?
+            if ($tokens[$nextPtr]['code'] === T_COLON) {
+                if (in_array($tokens[$prevPtr]['code'], array(T_SEMICOLON, T_OPEN_CURLY_BRACKET, T_COLON), true)) {
+                    return;
+                }
             }
 
             // This is a real constant.
