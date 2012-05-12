@@ -13,4 +13,4 @@ REM @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licenc
 REM @version   CVS: $Id: phpcs.bat,v 1.3 2007-11-04 22:02:16 squiz Exp $
 REM @link      http://pear.php.net/package/PHP_CodeSniffer
 
-"@php_bin@" -d auto_append_file="" -d auto_prepend_file="" -d include_path="@php_dir@" "@bin_dir@\phpcs" %*
+"@php_bin@" -d auto_append_file="" -d auto_prepend_file="" -d include_path="'@php_dir@'" -f "@bin_dir@\phpcs" -- %*
