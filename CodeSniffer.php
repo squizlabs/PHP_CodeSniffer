@@ -612,7 +612,7 @@ class PHP_CodeSniffer
 
             $standard = (string) $ruleset['name'];
         } else {
-            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards').DIRECTORY_SEPARATOR.$standard;
             if (is_dir(self::$standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
@@ -819,7 +819,7 @@ class PHP_CodeSniffer
             $sniff = basename($path);
         } else if (is_file($sniff) === false) {
             // See if this is a whole standard being referenced.
-            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
+            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards').DIRECTORY_SEPARATOR.$sniff;
             if (is_dir($path) === true) {
                 $isDir = true;
             } else {
@@ -831,7 +831,7 @@ class PHP_CodeSniffer
                 }
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
-                $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+                $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards').DIRECTORY_SEPARATOR.$path;
                 if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
