@@ -58,6 +58,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
   - Fixed bug #19381 : traits and indetations in traits are not handled properly
   - Fixed bug #19394 : Notice in NonExecutableCodeSniff
+  - Fixed bug #19402 : Syntax error when executing phpcs on Windows with parens in PHP path
+    -- Thanks to Tom Klingenberg for the patch
   - Fixed bug #19411 : magic method error on __construct()
     -- The fix required a rewrite of AbstractScopeSniff, so please test any sniffs that extend this class
   - Fixed bug #19412 : Incorrect error about assigning objects to variables when inside inline IF
