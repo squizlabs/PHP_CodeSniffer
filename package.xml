@@ -50,6 +50,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an issue in Zend ClosingTagSniff where the closing tag was not always being detected correctly
     -- Thanks to Jonathan Robson for the patch
   - Fixed an issue in Generic FunctionCallArgumentSpacingSniff where closures could cause incorrect errors
+  - Fixed an issue in Generic UpperCaseConstantNameSniff where errors were incorrectly reported on goto statements
+    -- Thanks to Tom Klingenberg for the patch
   - PEAR FileCommentSniff and ClassCommentSniff now support author emails with a single character in the local part
     -- E.g., a@me.com
     -- Thanks to Denis Shapkin for the patch
