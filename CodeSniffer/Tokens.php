@@ -74,6 +74,10 @@ if (defined('T_NS_SEPARATOR') === false) {
     define('T_NS_SEPARATOR', 1051);
 }
 
+if (defined('T_GOTO') === false) {
+    define('T_GOTO', 1053);
+}
+
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
     define('T_TRAIT', 1052);
