@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Peter Philipp for the patch
   - Rule references for standards, directories and specific sniffs can now be relative in ruleset.xml files
     -- For example: ref="../MyStandard/Sniffs/Commenting/DisallowHashCommentsSniff.php"
+  - Symlinked standards now work correctly, allowing aliasing of installed standards (request #19417)
+    -- Thanks to Tom Klingenberg for the patch
   - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
   - Added Squiz.Commenting.FileComment.MissingShort error message for file comments that only contains tags
     -- Also stops undefined index errors being generated for these comments
