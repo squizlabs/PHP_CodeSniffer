@@ -80,7 +80,6 @@ class PHP_CodeSniffer_Standards_AllSniffs
                 $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
             }
 
-            $standardDir = realpath($standardDir);
             if (is_dir($standardDir) === false) {
                 // No tests for this standard.
                 continue;
@@ -88,7 +87,7 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
             // Locate the actual directory that contains the standard's tests.
             // This is individual to each standard as they could be symlinked in.
-            $baseDir = realpath($standardDir.'/../../');
+            $baseDir = dirname(dirname($standardDir));
 
             $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
 
@@ -98,14 +97,14 @@ class PHP_CodeSniffer_Standards_AllSniffs
                     continue;
                 }
 
-                // Tests must have the extention 'php'.
+                // Tests must have the extension 'php'.
                 $parts = explode('.', $file);
                 $ext   = array_pop($parts);
                 if ($ext !== 'php') {
                     continue;
                 }
 
-                $filePath  = realpath($file->getPathname());
+                $filePath  = $file->getPathname();
                 $className = str_replace($baseDir.DIRECTORY_SEPARATOR, '', $filePath);
                 $className = substr($className, 0, -4);
                 $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
