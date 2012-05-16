@@ -1135,9 +1135,13 @@ class PHP_CodeSniffer
             }
 
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
+            
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $replacements[ '/' ] = DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR;
+            }
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $path) === 1) {
