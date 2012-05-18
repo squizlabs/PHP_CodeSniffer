@@ -122,5 +122,6 @@ switch($foo)
     gototarget3:
 }
 
+$a = 2 * ${x} - ${minus};
 
 ?>

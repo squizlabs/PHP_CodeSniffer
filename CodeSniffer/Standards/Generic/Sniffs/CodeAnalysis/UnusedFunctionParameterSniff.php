@@ -115,6 +115,17 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
             if ($code === T_VARIABLE && isset($params[$token['content']]) === true) {
                 unset($params[$token['content']]);
+            } else if ($code === T_DOLLAR) {
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+                if ($tokens[$nextToken]['code'] === T_OPEN_CURLY_BRACKET) {
+                    $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
+                    if ($tokens[$nextToken]['code'] === T_STRING) {
+                        $varContent = '$'.$tokens[$nextToken]['content'];
+                        if (isset($params[$varContent]) === true) {
+                            unset($params[$varContent]);
+                        }
+                    }
+                }
             } else if ($code === T_DOUBLE_QUOTED_STRING
                 || $code === T_START_HEREDOC
                 || $code === T_START_NOWDOC
@@ -141,13 +152,20 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                 }
 
                 $stringTokens = token_get_all(sprintf('<?php %s;?>', $content));
-                foreach ($stringTokens as $stringToken) {
-                    if (is_array($stringToken) === false || $stringToken[0] !== T_VARIABLE ) {
+                foreach ($stringTokens as $stringPtr => $stringToken) {
+                    if (is_array($stringToken) === false) {
                         continue;
                     }
 
-                    if (isset($params[$stringToken[1]]) === true) {
-                        unset($params[$stringToken[1]]);
+                    $varContent = '';
+                    if ($stringToken[0] === T_DOLLAR_OPEN_CURLY_BRACES) {
+                        $varContent = '$'.$stringTokens[($stringPtr + 1)][1];
+                    } else if ($stringToken[0] === T_VARIABLE) {
+                        $varContent = $stringToken[1];
+                    }
+
+                    if ($varContent !== '' && isset($params[$varContent]) === true) {
+                        unset($params[$varContent]);
                     }
                 }
             }//end if

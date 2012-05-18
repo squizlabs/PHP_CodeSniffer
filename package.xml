@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2012-05-17</date>
  <time>13:47:00</time>
  <version>
-  <release>1.3.4</release>
-  <api>1.3.4</api>
+  <release>1.3.5</release>
+  <api>1.3.5</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,49 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added missing package.xml entries for new Generic FixmeSniff
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Expected indents for PEAR ScopeClosingBraceSniff and FunctionCallSignatureSniff can now be set in ruleset files
-    -- Both sniffs use a variable called "indent"
-    -- Thanks to Thomas Despoix for the patch
-  - Standards designed to be installed in the PHPCS Standards dir will now work outside this dir as well
-    -- In particular, allows the Drupal CS to work without needing to symlink it into the PHPCS install
-    -- Thanks to Peter Philipp for the patch
-  - Rule references for standards, directories and specific sniffs can now be relative in ruleset.xml files
-    -- For example: ref="../MyStandard/Sniffs/Commenting/DisallowHashCommentsSniff.php"
-  - Symlinked standards now work correctly, allowing aliasing of installed standards (request #19417)
-    -- Thanks to Tom Klingenberg for the patch
-  - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
-  - Added Squiz.Commenting.FileComment.MissingShort error message for file comments that only contains tags
-    -- Also stops undefined index errors being generated for these comments
-  - Debug option -vv now shows tokenizer status for CSS files
-  - Added support for new gjslint error formats
-    -- Thanks to Meck for the patch
-  - Generic ScopeIndentSniff now allows comment indents to not be exact even if the exact flag is set
-    -- The start of the comment is still checked for exact indentation as normal
-  - Fixed an issue in AbstractPatternSniff where comments were not being ignored in some cases
-  - Fixed an issue in Zend ClosingTagSniff where the closing tag was not always being detected correctly
-    -- Thanks to Jonathan Robson for the patch
-  - Fixed an issue in Generic FunctionCallArgumentSpacingSniff where closures could cause incorrect errors
-  - Fixed an issue in Generic UpperCaseConstantNameSniff where errors were incorrectly reported on goto statements
-    -- Thanks to Tom Klingenberg for the patch
-  - PEAR FileCommentSniff and ClassCommentSniff now support author emails with a single character in the local part
-    -- E.g., a@me.com
-    -- Thanks to Denis Shapkin for the patch
-  - Fixed bug #19290 : Generic indent sniffer fails for anonymous functions
-  - Fixed bug #19324 : Setting show_warnings configuration option does not work
-  - Fixed bug #19354 : Not recognizing references passed to method
-  - Fixed bug #19361 : CSS tokenzier generates errors when PHP embedded in CSS file
-  - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
-  - Fixed bug #19381 : traits and indetations in traits are not handled properly
-  - Fixed bug #19394 : Notice in NonExecutableCodeSniff
-  - Fixed bug #19402 : Syntax error when executing phpcs on Windows with parens in PHP path
-    -- Thanks to Tom Klingenberg for the patch
-  - Fixed bug #19411 : magic method error on __construct()
-    -- The fix required a rewrite of AbstractScopeSniff, so please test any sniffs that extend this class
-  - Fixed bug #19412 : Incorrect error about assigning objects to variables when inside inline IF
-  - Fixed bug #19413 : php_cs thinks I haven't used a parameter when I have
-  - Fixed bug #19414 : php_cs seems to not track variables correctly in heredocs
+  - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
  </notes>
  <contents>
   <dir name="/">

@@ -64,3 +64,13 @@ HTML;
 
 print foo( 'PARAMETER' );
 print "\n";
+
+function foo($bar)
+{
+    print "${bar} things\n";
+}
+
+function bar($x)
+{
+    return 2 * ${x};
+}
