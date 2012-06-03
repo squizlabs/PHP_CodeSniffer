@@ -30,6 +30,12 @@
 class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
+    static $array_index_prev_tokens = array(
+                                       T_VARIABLE,
+                                       T_CLOSE_SQUARE_BRACKET,
+                                       T_STRING,
+                                      );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -58,6 +64,21 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
+            $openPtr = $stackPtr;
+        } else {
+            $openPtr = $tokens[$stackPtr]['bracket_opener'];
+        }
+        if (isset($openPtr)) {
+            $prevPtr = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($openPtr - 1), null, true);
+            if (($prevPtr !== false) &&
+                !in_array($tokens[$prevPtr]['code'], self::$array_index_prev_tokens)) {
+                // Not an array-index [ or ], looks like a 5.4 short-hand array insted.
+                // That's the business of other sniffs to deal with.
+                return;
+            }
+        }
 
         // No bracket can have space before them.
         $prevType = $tokens[($stackPtr - 1)]['code'];
