@@ -59,7 +59,21 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
     {
         $tokens = $phpcsFile->getTokens();
 
-        // No bracket can have space before them.
+        // PHP 5.4 introduced a shorthand array declaration syntax, so we need
+        // to ignore the these type of array declarations because this sniff is
+        // only dealing with array usage.
+        if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
+            $openBracket = $stackPtr;
+        } else {
+            $openBracket = $tokens[$stackPtr]['bracket_opener'];
+        }
+
+        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket - 1), null, true);
+        if ($tokens[$prev]['code'] === T_EQUAL) {
+            return;
+        }
+
+        // Square brackets can not have a space before them.
         $prevType = $tokens[($stackPtr - 1)]['code'];
         if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
             $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
@@ -73,8 +87,8 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
             $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeBracket', $data);
         }
 
-        if ($tokens[$stackPtr]['type'] === 'T_OPEN_SQUARE_BRACKET') {
-            // Open brackets can't have spaces on after them either.
+        // Open square brackets can't ever have spaces after them.
+        if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
             $nextType = $tokens[($stackPtr + 1)]['code'];
             if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                 $nonSpace = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 2), null, true);

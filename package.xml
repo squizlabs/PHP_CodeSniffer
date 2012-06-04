@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
  </notes>
  <contents>
