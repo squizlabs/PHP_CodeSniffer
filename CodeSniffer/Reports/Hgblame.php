@@ -88,13 +88,13 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
             echo 'Getting MERCURIAL blame info for '.basename($filename).'... ';
         }
 
-        $fileParts = explode('/', $filename);
+        $fileParts = explode(DIRECTORY_SEPARATOR, $filename);
         $found     = false;
         $location  = '';
         while (empty($fileParts) === false) {
             array_pop($fileParts);
-            $location = implode($fileParts, '/');
-            if (is_dir($location.'/.hg') === true) {
+            $location = implode($fileParts, DIRECTORY_SEPARATOR);
+            if (is_dir($location.DIRECTORY_SEPARATOR.'.hg') === true) {
                 $found = true;
                 break;
             }

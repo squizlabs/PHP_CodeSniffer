@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
+  - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
+    -- Thanks to Justin Rovang for the patch
  </notes>
  <contents>
   <dir name="/">
