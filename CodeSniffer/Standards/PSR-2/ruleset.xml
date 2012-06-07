@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="PSR-2">
+<ruleset name="PSR2">
  <description>The PSR-2 coding standard.</description>
 
  <!-- 2. General -->
@@ -7,7 +7,7 @@
  <!-- 2.1 Basic Coding Standard -->
 
  <!-- Include the whole PSR-1 standard -->
- <rule ref="PSR-1"/>
+ <rule ref="PSR1"/>
 
  <!-- 2.2 Files -->
 

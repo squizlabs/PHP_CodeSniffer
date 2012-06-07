@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added PSR-1 and PSR-2 coding standards that can be used to check your code against these guidelines
+  - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
   - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
     -- Does not allow underscore prefixes for private/protected methods
     -- Defaults to strict checking, where two uppercase characters can not be next to each other

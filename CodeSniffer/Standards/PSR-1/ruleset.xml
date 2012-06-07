@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PSR-1">
- <description>The PSR-1 coding standard.</description>
+ <description>The PSR1 coding standard.</description>
 
  <!-- 2. Files -->
 
