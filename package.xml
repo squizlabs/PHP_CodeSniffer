@@ -26,6 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Added PSR-1 and PSR-2 coding standards that can be used to check your code against these guidelines
+  - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
+    -- Does not allow underscore prefixes for private/protected methods
+    -- Defaults to strict checking, where two uppercase characters can not be next to each other
+    -- Strict checking can be disabled in a ruleset.xml file
   - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
   - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
@@ -348,6 +353,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="CamelCapsFunctionNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ConstructorNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -519,6 +527,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="CamelCapsFunctionNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CamelCapsFunctionNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ConstructorNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ConstructorNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -889,6 +901,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="PHPCS">
+      <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
+     </dir>
+     <dir name="PSR-1">
+      <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
+     </dir>
+     <dir name="PSR-2">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="Squiz">
