@@ -30,6 +30,13 @@
 class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * How many spaces should surround the equals signs.
+     *
+     * @var int
+     */
+    public $equalsSpacing = 0;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -62,6 +69,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         $multiLine = ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']);
 
+        $this->equalsSpacing = (int) $this->equalsSpacing;
+
         $nextParam = $openBracket;
         $params    = array();
         while (($nextParam = $phpcsFile->findNext(T_VARIABLE, ($nextParam + 1), $closeBracket)) !== false) {
@@ -75,24 +84,34 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
             if ($nextCode === T_EQUAL) {
                 // Check parameter default spacing.
+                $spacesBefore = 0;
                 if (($nextToken - $nextParam) > 1) {
-                    $error = 'Expected 0 spaces between argument "%s" and equals sign; %s found';
+                    $spacesBefore = strlen($tokens[($nextParam + 1)]['content']);
+                }
+
+                if ($spacesBefore !== $this->equalsSpacing) {
+                    $error = 'Incorrect spacing between argument "%s" and equals sign; expected '.$this->equalsSpacing.' but found %s';
                     $data  = array(
                               $tokens[$nextParam]['content'],
-                              strlen($tokens[($nextParam + 1)]['content']),
+                              $spacesBefore,
                              );
                     $phpcsFile->addError($error, $nextToken, 'SpaceBeforeEquals', $data);
                 }
 
+                $spacesAfter = 0;
                 if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
-                    $error = 'Expected 0 spaces between default value and equals sign for argument "%s"; %s found';
+                    $spacesAfter = strlen($tokens[($nextParam + 1)]['content']);
+                }
+
+                if ($spacesAfter !== $this->equalsSpacing) {
+                    $error = 'Incorrect spacing between default value and equals sign for argument "%s"; expected '.$this->equalsSpacing.' but found %s';
                     $data  = array(
                               $tokens[$nextParam]['content'],
-                              strlen($tokens[($nextToken + 1)]['content']),
+                              $spacesAfter,
                              );
                     $phpcsFile->addError($error, $nextToken, 'SpaceAfterDefault', $data);
                 }
-            }
+            }//end if
 
             // Find and check the comma (if there is one).
             $nextComma = $phpcsFile->findNext(T_COMMA, ($nextParam + 1), $closeBracket);
