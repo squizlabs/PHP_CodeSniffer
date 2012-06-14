@@ -241,7 +241,12 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                 $data  = array($name);
                 $phpcsFile->addError($error, ($nextComma + 1), 'NoSpaceBeforeName', $data);
             } else {
-                $spaceBefore = strlen($tokens[($parents[$i] - 1)]['content']);
+                if ($tokens[($parents[$i] - 1)]['code'] === T_NS_SEPARATOR) {
+                    $spaceBefore = strlen($tokens[($parents[$i] - 2)]['content']);
+                } else {
+                    $spaceBefore = strlen($tokens[($parents[$i] - 1)]['content']);
+                }
+
                 if ($spaceBefore !== 1) {
                     $name  = $tokens[$parents[$i]]['content'];
                     $error = 'Expected 1 space before "%s"; %s found';
@@ -251,7 +256,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Cla
                              );
                     $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeName', $data);
                 }
-            }
+            }//end if
 
             if ($tokens[($parents[$i] + 1)]['code'] !== T_COMMA) {
                 if ($i !== ($parentCount - 1)) {

@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz FunctionDeclarationArgumentSpacing now has a setting to specify how many spaces should surround equals signs
     -- Default remains at 0
     -- Override the equalsSpacing setting in a ruleset.xml file to change
+  - Squiz ClassDeclarationSniff now throws errors for > 1 space before extends/implements class name with ns seperator
   - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
   - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths

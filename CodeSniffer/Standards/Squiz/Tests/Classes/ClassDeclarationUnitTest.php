@@ -67,7 +67,7 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 74  => 2,
                 77  => 1,
                 80  => 1,
-                85  => 2,
+                85  => 3,
                 89  => 1,
                 92  => 1,
                 97  => 1,
