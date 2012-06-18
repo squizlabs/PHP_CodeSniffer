@@ -11,6 +11,7 @@
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="Generic.NamingConventions.ConstructorName"/>
  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+ <rule ref="Generic.PHP.DeprecatedFunctions"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
