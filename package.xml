@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
   - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
     -- Thanks to Justin Rovang for the patch
+  - Fixed bug #19471 : phpcs on Windows, when using Zend standard, doesn't catch problems
+    -- Thanks to Ivan Habunek for the patch
  </notes>
  <contents>
   <dir name="/">
