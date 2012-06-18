@@ -767,7 +767,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = $sniff;
+                $files[] = realpath($sniff);
             }
         }
 
