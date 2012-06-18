@@ -35,21 +35,6 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
 
 
     /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
-    {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-               );
-
-    }//end register()
-
-
-    /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
@@ -62,7 +47,23 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
     {
         // We want all the errors from the PEAR standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
+        $this->processOpen($phpcsFile, $stackPtr);
+        $this->processClose($phpcsFile, $stackPtr);
 
+    }//end process()
+
+
+    /**
+     * Processes the opening section of a class declaration.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function processOpen(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
 
         // Check alignment of the keyword and braces.
@@ -88,38 +89,10 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             }
         }//end if
 
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            $error = 'Possible parse error: %s missing opening or closing brace';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
-            return;
-        }
-
         // We'll need the indent of the class/interface keyword for later.
         $classIndent = 0;
         if (strpos($tokens[($stackPtr - 1)]['content'], $phpcsFile->eolChar) === false) {
             $classIndent = strlen($tokens[($stackPtr - 1)]['content']);
-        }
-
-        // Check that the closing brace comes right after the code body.
-        $closeBrace = $tokens[$stackPtr]['scope_closer'];
-        $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
-        if ($tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)) {
-            $error = 'The closing brace for the %s must go on the next line after the body';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'CloseBraceAfterBody', $data);
-        }
-
-        // Check the closing brace is on it's own line, but allow
-        // for comments like "//end class".
-        $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
-        if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar
-            && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
-        ) {
-            $type  = strtolower($tokens[$stackPtr]['content']);
-            $error = 'Closing %s brace must be on a line by itself';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
         }
 
         $keyword      = $stackPtr;
@@ -218,7 +191,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 } else {
                     $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($className - 1), $implements);
                     $found    = strlen($tokens[$prev]['content']);
-                    $expected = ($classIndent + 4);
+                    $expected = ($classIndent + $this->indent);
                     if ($found !== $expected) {
                         $error = 'Expected %s spaces before interface name; %s found';
                         $data  = array(
@@ -274,7 +247,44 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             }
         }//end foreach
 
-    }//end process()
+    }//end processOpen()
+
+
+    /**
+     * Processes the closing section of a class declaration.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Check that the closing brace comes right after the code body.
+        $closeBrace = $tokens[$stackPtr]['scope_closer'];
+        $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
+        if ($tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)) {
+            $error = 'The closing brace for the %s must go on the next line after the body';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $closeBrace, 'CloseBraceAfterBody', $data);
+        }
+
+        // Check the closing brace is on it's own line, but allow
+        // for comments like "//end class".
+        $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
+        if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar
+            && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
+        ) {
+            $type  = strtolower($tokens[$stackPtr]['content']);
+            $error = 'Closing %s brace must be on a line by itself';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
+        }
+
+    }//end processClose()
 
 
 }//end class
