@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="PSR-1">
+<ruleset name="PSR1">
  <description>The PSR1 coding standard.</description>
 
  <!-- 2. Files -->
