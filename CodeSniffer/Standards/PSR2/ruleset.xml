@@ -149,6 +149,7 @@
  <!-- 5.1. if, elseif, else -->
 
  <!-- The keyword elseif SHOULD be used instead of else if so that all control keywords look like single words. -->
+ <!-- checked in ControlStructures/ElseIfDeclarationSniff -->
 
  <!-- 5.2. switch, case -->
 
