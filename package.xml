@@ -908,10 +908,38 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="PHPCS">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
-     <dir name="PSR-1">
+     <dir name="PSR1">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
-     <dir name="PSR-2">
+     <dir name="PSR2">
+      <dir name="Sniffs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="EndFileWhitespaceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+      </dir>
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="Squiz">

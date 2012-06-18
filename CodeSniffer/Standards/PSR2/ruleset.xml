@@ -73,11 +73,10 @@
 
  <!-- 4.1. Extends and Implements -->
 
- <!-- The extends and implements keywords MUST be declared on the same line as the class name. -->
-
- <!-- The opening brace for the class go MUST go on its own line; the closing brace for the class MUST go on the next line after the body. -->
-
- <!-- Lists of implements MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+ <!-- The extends and implements keywords MUST be declared on the same line as the class name.
+      The opening brace for the class go MUST go on its own line; the closing brace for the class MUST go on the next line after the body.
+      Lists of implements MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+ <!-- checked in Classes/ClassDeclarationSniff -->
 
  <!-- 4.2. Properties -->
 
