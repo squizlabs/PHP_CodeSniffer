@@ -75,9 +75,9 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
         foreach ($standards as $standard) {
             if ($isInstalled === false) {
-                $standardDir = $standardsDir.'/'.$standard.'/Tests/';
+                $standardDir = $standardsDir.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
             } else {
-                $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
+                $standardDir = dirname(__FILE__).DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
             }
 
             if (is_dir($standardDir) === false) {
