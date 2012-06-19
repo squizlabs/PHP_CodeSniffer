@@ -108,6 +108,11 @@ function myFunction()
 
 }//end myFunction()
 
+public static function thisCausesAnError() {
+return new foo(function() {return $foo;}
+);
+}
+
 function myFunction()
 {
     if ($something === TRUE) {

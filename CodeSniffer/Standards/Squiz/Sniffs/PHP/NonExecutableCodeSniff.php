@@ -177,8 +177,6 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 }
             }//end for
 
-            $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-
             if ($nextOpener === null) {
                 $end = $closer;
             } else {
@@ -191,9 +189,25 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Throw an error for all lines until the end of the file.
-            $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-            $end   = ($phpcsFile->numTokens - 1);
+            $end = ($phpcsFile->numTokens - 1);
         }//end if
+
+        // Find the semicolon that ends this statement, skipping
+        // nested statements like FOR loops and closures.
+        for ($start = ($stackPtr + 1); $start < $phpcsFile->numTokens; $start++) {
+            if ($start === $end) {
+                break;
+            }
+
+            if ($tokens[$start]['code'] === T_OPEN_PARENTHESIS) {
+                $start = $tokens[$start]['parenthesis_closer'];
+                continue;
+            }
+
+            if ($tokens[$start]['code'] === T_SEMICOLON) {
+                break;
+            }
+        }
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {

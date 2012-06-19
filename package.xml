@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
     -- Thanks to Justin Rovang for the patch
   - Fixed bug #19448 : Problem with detecting remote standards
+  - Fixed bug #19463 :Anonymous functions incorrectly being flagged by NonExecutableCodeSniff
   - Fixed bug #19469 : PHP_CodeSniffer_File::getMemberProperties() sets wrong scope
   - Fixed bug #19471 : phpcs on Windows, when using Zend standard, doesn't catch problems
     -- Thanks to Ivan Habunek for the patch
