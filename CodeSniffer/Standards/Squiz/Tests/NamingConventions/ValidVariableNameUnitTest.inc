@@ -99,4 +99,12 @@ $foo = <<<BAR
 $123
 "$456"
 BAR;
+
+class a
+{
+    protected
+        $_sheet,
+        $_FieldParser,
+        $_key;
+}
 ?>

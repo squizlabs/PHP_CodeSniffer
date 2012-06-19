@@ -2249,6 +2249,8 @@ class PHP_CodeSniffer_File
                   T_WHITESPACE,
                   T_COMMENT,
                   T_DOC_COMMENT,
+                  T_VARIABLE,
+                  T_COMMA,
                  );
 
         $scope          = 'public';
