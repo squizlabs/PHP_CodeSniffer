@@ -1139,6 +1139,13 @@ class PHP_CodeSniffer
                              '*'   => '.*',
                             );
 
+            // We assume a / directory seperator, as do the exclude rules
+            // most developers write, so we need a special case for any system
+            // that is different.
+            if (DIRECTORY_SEPARATOR === '\\') {
+                $replacements['/'] = '\\\\';
+            }
+
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $path) === 1) {
                 return true;
@@ -1211,7 +1218,9 @@ class PHP_CodeSniffer
             } else if (is_numeric($filename) === true) {
                 // See if we can find the PHP_CodeSniffer_File object.
                 foreach ($trace as $data) {
-                    if (isset($data['args'][0]) === true && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true) {
+                    if (isset($data['args'][0]) === true
+                        && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true
+                    ) {
                         $filename = $data['args'][0]->getFilename();
                     }
                 }
