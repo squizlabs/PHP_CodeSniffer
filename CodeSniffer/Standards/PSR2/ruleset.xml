@@ -80,14 +80,11 @@
 
  <!-- 4.2. Properties -->
 
- <!-- Visibility MUST be declared on all properties. -->
- <rule ref="Squiz.Scope.MemberVarScope"/>
-
- <!-- The var keyword MUST NOT be used to declare a property. -->
-
- <!-- There MUST NOT be more than one property declared per statement. -->
-
- <!-- Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+ <!-- Visibility MUST be declared on all properties.
+      The var keyword MUST NOT be used to declare a property.
+      There MUST NOT be more than one property declared per statement.
+      Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+ <!-- checked in Classes/PropertyDeclarationSniff -->
 
  <!-- 4.3 Methods -->
 
