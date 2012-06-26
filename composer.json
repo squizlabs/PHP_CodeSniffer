@@ -1,0 +1,26 @@
+{
+    "name": "squizlabs/PHP_CodeSniffer",
+    "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards."
+    "homepage": "http://github.com/squizlabs/PHP_CodeSniffer",
+    "license": "BSD-3-Clause",
+    "version": "1.3.4",
+    "dist": {
+        "type": "zip",
+        "url":  "https://github.com/squizlabs/PHP_CodeSniffer/zipball/1.3.4"
+    },
+    "require": {
+        "php": ">=5.1.2"
+    },
+    "source": {
+        "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+        "type": "git",
+        "reference": "https://github.com/squizlabs/PHP_CodeSniffer/zipball"
+    },
+    "suggest": {
+        "sebastianbergmann/php-timer": "Allows more precise runtime tracking"
+    },
+    "autoload": {
+        "psr-0": {"PHP_CodeSniffer": "CodeSniffer/"}
+    }
+    "bin": ["scripts/phpcs"]
+}
