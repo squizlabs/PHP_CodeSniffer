@@ -151,6 +151,7 @@
  <!-- 5.2. switch, case -->
 
  <!-- The case statement MUST be indented once from switch, and the break keyword (or other terminating keyword) MUST be indented at the same level as the case body. There MUST be a comment such as // no break when fall-through is intentional in a non-empty case body. -->
+ <!-- checked in ControlStructures/SwitchDeclarationSniff -->
 
  <!-- 6. Closures -->
 
