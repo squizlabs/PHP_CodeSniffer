@@ -70,25 +70,19 @@ case 2:
 
 switch ($httpResponseCode) {
     case 100:
-        return 'Continue.';
     case 101:
-        return 'Switching protocols.';
     case 102:
-        return 'Processing.';
     default:
         return 'Unknown';
 }
 
 switch ($httpResponseCode) {
     case 100:
-        return 'Continue.';
     case 101:
-        return 'Switching protocols.';
     case 102:
         return 'Processing.';
     default:
-        return 'Unknown';
-    break;
+    return 'Unknown';
 }
 
 switch($i) {

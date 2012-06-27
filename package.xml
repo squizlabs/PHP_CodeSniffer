@@ -38,13 +38,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz standard now warns about deprecated functions using Generic DeprecatedFunctionsSniff
   - Exclude rules written for Unix systems will now work correctly on Windows
     -- Thanks to Walter Tamboer for the patch
+  - The PHP tokenizer now recognises T_RETURN as a valid closer for T_CASE and T_DEFAULT inside switch statements
   - Fixed bug #18651 : PHPunit Test cases for custom standards are not working on Windows
   - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
   - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
   - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
     -- Thanks to Justin Rovang for the patch
   - Fixed bug #19448 : Problem with detecting remote standards
-  - Fixed bug #19463 :Anonymous functions incorrectly being flagged by NonExecutableCodeSniff
+  - Fixed bug #19463 : Anonymous functions incorrectly being flagged by NonExecutableCodeSniff
   - Fixed bug #19469 : PHP_CodeSniffer_File::getMemberProperties() sets wrong scope
   - Fixed bug #19471 : phpcs on Windows, when using Zend standard, doesn't catch problems
     -- Thanks to Ivan Habunek for the patch

@@ -147,7 +147,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                              T_COLON,
                                                              T_SEMICOLON,
                                                             ),
-                                                'end'    => array(T_BREAK),
+                                                'end'    => array(
+                                                             T_BREAK,
+                                                             T_RETURN,
+                                                            ),
                                                 'strict' => true,
                                                 'shared' => true,
                                                 'with'   => array(
@@ -158,7 +161,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                ),
                             T_DEFAULT       => array(
                                                 'start'  => array(T_COLON),
-                                                'end'    => array(T_BREAK),
+                                                'end'    => array(
+                                                             T_BREAK,
+                                                             T_RETURN,
+                                                            ),
                                                 'strict' => true,
                                                 'shared' => true,
                                                 'with'   => array(
