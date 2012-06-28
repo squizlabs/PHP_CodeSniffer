@@ -216,6 +216,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     continue;
                 }
 
+                // Check if the next line contains an object operator, if so rely on
+                // the ObjectOperatorIndentSniff to test the indent.
+                if ($tokens[$nextCode]['type'] === 'T_OBJECT_OPERATOR') {
+                    continue;
+                }
+
                 if ($nextCode === $closeBracket) {
                     // Closing brace needs to be indented to the same level
                     // as the function call.

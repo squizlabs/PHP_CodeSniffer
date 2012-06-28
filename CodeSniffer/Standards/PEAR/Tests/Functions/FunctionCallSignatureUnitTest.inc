@@ -104,4 +104,14 @@ $foo = new stdClass(
     1,
     2,
     3);
+
+public function doSomething()
+{
+    return $this->getFoo()
+        ->doBar(
+            $this->getX() // no comma here
+                ->doY()  // this is still the first method argument
+                ->doZ()  // this is still the first method argument
+        );
+}
 ?>
