@@ -106,7 +106,7 @@ class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionCo
             exit(2);
         }
 
-        $command = 'git blame --date=short '.$filename;
+        $command = 'git blame --date=short "'.$filename.'"';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
