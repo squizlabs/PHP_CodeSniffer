@@ -53,11 +53,21 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
+        $hasUse = false;
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $hasUse = true;
+            }
+        }
+
         // The open bracket should be the last thing on the line.
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
-        if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
-            $error = 'The first parameter of a multi-line function declaration must be on the line after the opening bracket';
-            $phpcsFile->addError($error, $next, 'FirstParamSpacing');
+        if ($hasUse === false) {
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
+            if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
+                $error = 'The first parameter of a multi-line function declaration must be on the line after the opening bracket';
+                $phpcsFile->addError($error, $next, 'FirstParamSpacing');
+            }
         }
 
         // Each line between the brackets should contain a single parameter.
