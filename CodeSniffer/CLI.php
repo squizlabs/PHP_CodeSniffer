@@ -403,6 +403,21 @@ class PHP_CodeSniffer_CLI
                     '/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/',
                     substr($arg, 7)
                 );
+            } else if (substr($arg, 0, 12) === 'ignore-from=') {
+                // Split the ignore file string on commas.
+                $patternFiles = explode(',', substr($arg, 12));
+
+                foreach ($patternFiles as &$patternFile) {
+                    if (file_exists($patternFile) === false) {
+                        echo 'ERROR: The pattern file "'.$patternFile.'" does not exist.'.PHP_EOL.PHP_EOL;
+                        exit(2);
+                    }
+                    else {
+                        $patternFile = realpath($patternFile);
+                    }
+                }
+
+                $values['ignore-from'] = $patternFiles;
             } else if (substr($arg, 0, 10) === 'generator=') {
                 $values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 9) === 'encoding=') {
@@ -517,9 +532,22 @@ class PHP_CodeSniffer_CLI
             $phpcs->setAllowedFileExtensions($values['extensions']);
         }
 
+        $ignorePatterns = array();
         // Set ignore patterns if they were specified.
         if (empty($values['ignored']) === false) {
-            $phpcs->setIgnorePatterns($values['ignored']);
+            $ignorePatterns += $values['ignored'];
+        }
+
+        if (empty($values['ignore-from']) === false) {
+            foreach ($values['ignore-from'] as $patternFile) {
+                $patterns = file($patternFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+                $ignorePatterns += $patterns;
+            }
+        }
+
+        if (!empty($ignorePatterns)) {
+            $phpcs->setIgnorePatterns($ignorePatterns);
         }
 
         // Set some convenience member vars.
@@ -682,7 +710,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-from=<patternfile>] <file> ...'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -698,6 +726,7 @@ class PHP_CodeSniffer_CLI
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (only valid if checking a directory)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
+        echo '        <patternfile> A comma separated list of files containing a list of patterns, one per line, to ignore files and directories'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
