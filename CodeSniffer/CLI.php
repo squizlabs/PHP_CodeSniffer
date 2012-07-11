@@ -92,6 +92,7 @@ class PHP_CodeSniffer_CLI
         $defaults['extensions']      = array();
         $defaults['sniffs']          = array();
         $defaults['ignored']         = array();
+        $defaults['ignore-from']     = array();
         $defaults['reportFile']      = null;
         $defaults['generator']       = '';
         $defaults['reports']         = array();
