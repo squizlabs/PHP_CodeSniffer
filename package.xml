@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2012-07-12</date>
  <time>15:06:00</time>
  <version>
-  <release>1.3.5</release>
-  <api>1.3.5</api>
+  <release>1.3.6</release>
+  <api>1.3.6</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,35 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
-    -- Does not allow underscore prefixes for private/protected methods
-    -- Defaults to strict checking, where two uppercase characters can not be next to each other
-    -- Strict checking can be disabled in a ruleset.xml file
-  - Squiz FunctionDeclarationArgumentSpacing now has a setting to specify how many spaces should surround equals signs
-    -- Default remains at 0
-    -- Override the equalsSpacing setting in a ruleset.xml file to change
-  - Squiz ClassDeclarationSniff now throws errors for > 1 space before extends/implements class name with ns seperator
-  - Squiz standard now warns about deprecated functions using Generic DeprecatedFunctionsSniff
-  - PEAR FunctionDeclarationSniff now reports an error for multiple spaces after the FUNCTION keyword and around USE
-  - PEAR FunctionDeclarationSniff now supports closures
-  - Squiz MultiLineFunctionDeclarationSniff now supports closures
-  - Exclude rules written for Unix systems will now work correctly on Windows
-    -- Thanks to Walter Tamboer for the patch
-  - The PHP tokenizer now recognises T_RETURN as a valid closer for T_CASE and T_DEFAULT inside switch statements
-  - Fixed duplicate message codes in Generic OpeningFunctionBraceKernighanRitchieSniff
-  - Fixed bug #18651 : PHPunit Test cases for custom standards are not working on Windows
-  - Fixed bug #19416 : Shorthand arrays cause bracket spacing errors
-  - Fixed bug #19421 : phpcs doesn't recognize ${x} as equivalent to $x
-  - Fixed bug #19428 : PHPCS Report "hgblame" doesn't support windows paths
-    -- Thanks to Justin Rovang for the patch
-  - Fixed bug #19448 : Problem with detecting remote standards
-  - Fixed bug #19463 : Anonymous functions incorrectly being flagged by NonExecutableCodeSniff
-  - Fixed bug #19469 : PHP_CodeSniffer_File::getMemberProperties() sets wrong scope
-  - Fixed bug #19471 : phpcs on Windows, when using Zend standard, doesn't catch problems
-    -- Thanks to Ivan Habunek for the patch
-  - Fixed bug #19478 : Incorrect indent detection in PEAR standard
-    -- Thanks to Shane Auckland for the patch
-  - Fixed bug #19483 : Blame Reports fail with space in directory name
+  - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
  </notes>
  <contents>
   <dir name="/">
@@ -1942,6 +1914,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2012-07-12</date>
    <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
+    - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
     - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
       -- Does not allow underscore prefixes for private/protected methods
       -- Defaults to strict checking, where two uppercase characters can not be next to each other
