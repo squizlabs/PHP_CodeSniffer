@@ -65,17 +65,50 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         if ($spaces !== 1) {
             $error = 'Expected 1 space after FUNCTION keyword; %s found';
             $data  = array($spaces);
-            $phpcsFile->addError($error, $stackPtr, 'FunctionSpace', $data);
+            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterFunction', $data);
         }
 
-        // Check if this is a single line or multi-line declaration.
-        $singleLine   = false;
+        // Must be one space before and after USE keyword for closures.
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                if ($tokens[($use + 1)]['code'] !== T_WHITESPACE) {
+                    $length = 0;
+                } else if ($tokens[($use + 1)]['content'] === "\t") {
+                    $length = '\t';
+                } else {
+                    $length = strlen($tokens[($use + 1)]['content']);
+                }
+
+                if ($length !== 1) {
+                    $error = 'Expected 1 space after USE keyword; found %s';
+                    $data  = array($length);
+                    $phpcsFile->addError($error, $use, 'SpaceAfterUse', $data);
+                }
+
+                if ($tokens[($use - 1)]['code'] !== T_WHITESPACE) {
+                    $length = 0;
+                } else if ($tokens[($use - 1)]['content'] === "\t") {
+                    $length = '\t';
+                } else {
+                    $length = strlen($tokens[($use - 1)]['content']);
+                }
+
+                if ($length !== 1) {
+                    $error = 'Expected 1 space before USE keyword; found %s';
+                    $data  = array($length);
+                    $phpcsFile->addError($error, $use, 'SpaceBeforeUse', $data);
+                }
+            }//end if
+        }//end if
+
+        // Check if this is a single line or multi-line declaration.
+        $singleLine = false;
         if ($tokens[$openBracket]['line'] === $tokens[$closeBracket]['line']) {
             // Closures may use the USE keyword and so be multi-line in this way.
             if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-                $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
                 if ($use !== false) {
                     // If the opening and closing parenthesis of the use statement
                     // are also on the same line, this is a single line declaration.

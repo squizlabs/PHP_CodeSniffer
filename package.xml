@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Override the equalsSpacing setting in a ruleset.xml file to change
   - Squiz ClassDeclarationSniff now throws errors for > 1 space before extends/implements class name with ns seperator
   - Squiz standard now warns about deprecated functions using Generic DeprecatedFunctionsSniff
-  - PEAR FunctionDeclarationSniff now reports an error for multiple spaces after the FUNCTION keyword
+  - PEAR FunctionDeclarationSniff now reports an error for multiple spaces after the FUNCTION keyword and around USE
   - PEAR FunctionDeclarationSniff now supports closures
   - Squiz MultiLineFunctionDeclarationSniff now supports closures
   - Exclude rules written for Unix systems will now work correctly on Windows
