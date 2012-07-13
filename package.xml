@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
+  - Fixed bug #19508 : switch+return: Closing brace indented incorrectly
  </notes>
  <contents>
   <dir name="/">

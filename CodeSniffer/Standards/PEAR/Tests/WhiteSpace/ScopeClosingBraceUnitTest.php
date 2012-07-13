@@ -48,8 +48,7 @@ class PEAR_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnitT
                 24 => 1,
                 61 => 1,
                 65 => 1,
-                76 => 1,
-                83 => 1,
+                85 => 1,
                 89 => 1,
                );
 
