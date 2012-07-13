@@ -104,4 +104,11 @@ $var = saveFile(&$model, &$foo);
 $boo = -$foo;
 function foo($boo = -1) {}
 $foo = array('boo' => -1);
+
+// Operator line break for long lines is valid.
+$x = 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1
+    + 1 + 1;
+
+// Valid minus operator in conditional statement.
+$x = $test ? -1 : 1;
 ?>
