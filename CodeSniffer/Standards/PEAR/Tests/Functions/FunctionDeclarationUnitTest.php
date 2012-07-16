@@ -43,20 +43,22 @@ class PEAR_Tests_Functions_FunctionDeclarationUnitTest extends AbstractSniffUnit
     public function getErrorList()
     {
         return array(
-                3  => 1,
-                4  => 1,
-                5  => 1,
-                9  => 1,
-                10 => 1,
-                11 => 1,
-                14 => 1,
-                17 => 1,
-                27 => 1,
-                44 => 2,
-                51 => 1,
-                61 => 1,
-                86 => 1,
-                98 => 2,
+                3   => 1,
+                4   => 1,
+                5   => 1,
+                9   => 1,
+                10  => 1,
+                11  => 1,
+                14  => 1,
+                17  => 1,
+                27  => 1,
+                44  => 1,
+                51  => 1,
+                61  => 2,
+                86  => 1,
+                98  => 2,
+                108 => 1,
+                109 => 1,
                );
 
     }//end getErrorList()

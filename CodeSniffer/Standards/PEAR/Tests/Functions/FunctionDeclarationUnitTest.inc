@@ -102,4 +102,11 @@ $longArgs_longVars = function (
 ) {
     // body
 };
+
+$longArgs_longVars = function (
+    $longArgument,
+    $muchLongerArgument) use (
+    $muchLongerVar3) {
+    // body
+};
 ?>
