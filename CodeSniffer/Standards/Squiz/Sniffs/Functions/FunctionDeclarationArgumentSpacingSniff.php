@@ -45,7 +45,10 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -61,15 +64,37 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $functionName = $phpcsFile->findNext(array(T_STRING), $stackPtr);
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
-        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
-
-        $multiLine = ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']);
-
         $this->equalsSpacing = (int) $this->equalsSpacing;
+
+        $tokens       = $phpcsFile->getTokens();
+        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $this->processBracket($phpcsFile, $openBracket);
+
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($tokens[$openBracket]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
+                $this->processBracket($phpcsFile, $openBracket);
+            }
+        }
+
+    }//end process()
+
+
+    /**
+     * Processes the contents of a single set of brackets.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
+     * @param int                  $openBracket The position of the open bracket
+     *                                          in the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function processBracket(PHP_CodeSniffer_File $phpcsFile, $openBracket)
+    {
+        $tokens       = $phpcsFile->getTokens();
+        $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+        $multiLine    = ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']);
 
         $nextParam = $openBracket;
         $params    = array();
@@ -130,17 +155,17 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             // Take references into account when expecting the
             // location of whitespace.
             if ($phpcsFile->isReference(($nextParam - 1)) === true) {
-                $whitespace = $tokens[($nextParam - 2)];
+                $whitespace = ($nextParam - 2);
             } else {
-                $whitespace = $tokens[($nextParam - 1)];
+                $whitespace = ($nextParam - 1);
             }
 
             if (empty($params) === false) {
                 // This is not the first argument in the function declaration.
                 $arg = $tokens[$nextParam]['content'];
 
-                if ($whitespace['code'] === T_WHITESPACE) {
-                    $gap = strlen($whitespace['content']);
+                if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
+                    $gap = strlen($tokens[$whitespace]['content']);
 
                     // Before we throw an error, make sure there is no type hint.
                     $comma     = $phpcsFile->findPrevious(T_COMMA, ($nextParam - 1));
@@ -180,13 +205,16 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                 }
                             }
                         }
-                    } else if ($multiLine === false && $gap !== 1) {
-                        $error = 'Expected 1 space between comma and argument "%s"; %s found';
-                        $data  = array(
-                                  $arg,
-                                  $gap,
-                                 );
-                        $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
+                    } else if ($gap !== 1) {
+                        // Just make sure this is not actually an indent.
+                        if ($tokens[$whitespace]['line'] === $tokens[($whitespace - 1)]['line']) {
+                          $error = 'Expected 1 space between comma and argument "%s"; %s found';
+                          $data  = array(
+                                    $arg,
+                                    $gap,
+                                   );
+                          $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
+                        }
                     }//end if
                 } else {
                     $error = 'Expected 1 space between comma and argument "%s"; 0 found';
@@ -195,8 +223,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                 }//end if
             } else {
                 // First argument in function declaration.
-                if ($whitespace['code'] === T_WHITESPACE) {
-                    $gap = strlen($whitespace['content']);
+                if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
+                    $gap = strlen($tokens[$whitespace]['content']);
                     $arg = $tokens[$nextParam]['content'];
 
                     // Before we throw an error, make sure there is no type hint.
@@ -250,7 +278,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             if (($closeBracket - $openBracket) !== 1) {
                 $error = 'Expected 0 spaces between brackets of function declaration; %s found';
                 $data  = array(strlen($tokens[($closeBracket - 1)]['content']));
-                $phpcsFile->addError($error, $stackPtr, 'SpacingBetween', $data);
+                $phpcsFile->addError($error, $openBracket, 'SpacingBetween', $data);
             }
         } else if ($multiLine === false
             && $tokens[($closeBracket - 1)]['code'] === T_WHITESPACE
@@ -264,7 +292,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             $phpcsFile->addError($error, $closeBracket, 'SpacingBeforeClose', $data);
         }
 
-    }//end process()
+    }//end processBracket()
 
 
 }//end class
