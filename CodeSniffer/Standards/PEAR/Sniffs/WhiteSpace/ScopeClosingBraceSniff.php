@@ -118,11 +118,12 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         // Check now that the closing brace is lined up correctly.
         $braceIndent   = $tokens[$scopeEnd]['column'];
         if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === true) {
-            // BREAK statements should be indented n spaces from the
+            // BREAK and RETURN statements should be indented n spaces from the
             // CASE or DEFAULT statement.
             if ($braceIndent !== ($startColumn + $this->indent)) {
-                $error = 'Break statement indented incorrectly; expected %s spaces, found %s';
+                $error = '%s statement indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
+                          $tokens[$scopeEnd]['content'],
                           ($startColumn + $this->indent - 1),
                           ($braceIndent - 1),
                          );
