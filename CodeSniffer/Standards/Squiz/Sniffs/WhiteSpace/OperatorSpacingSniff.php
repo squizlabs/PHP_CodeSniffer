@@ -156,6 +156,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                               T_OPEN_SQUARE_BRACKET,
                               T_DOUBLE_ARROW,
                               T_COLON,
+                              T_INLINE_THEN,
                              );
 
             if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
@@ -180,7 +181,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space before \"$operator\"; 0 found";
             $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore');
-        } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+        } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1
+            // The token before the white space must also be on the same line.
+            && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
+        ) {
             // Don't throw an error for assignments, because other standards allow
             // multiple spaces there to align multiple assignments.
             if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
