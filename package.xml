@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz FunctionDeclarationArgumentSpacingSniff now supports closures
   - Squiz OperatorSpacingSniff no longer throws an error for negative values inside an inline THEN statement
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #19502 : Generic.Files.LineEndingsSniff fails if no new-lines in file
   - Fixed bug #19508 : switch+return: Closing brace indented incorrectly
  </notes>
  <contents>
