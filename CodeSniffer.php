@@ -1058,8 +1058,8 @@ class PHP_CodeSniffer
                     $relativePath = $file->getPathname();
 
                     if (strpos($relativePath, $path) === 0) {
-                        // + 1 cuts off the directory separator as well.
-                        $relativePath = substr($relativePath, strlen($path) + 1);
+                        // The +1 cuts off the directory separator as well.
+                        $relativePath = substr($relativePath, (strlen($path) + 1);
                     }
 
                     if ($this->shouldProcessFile($relativePath) === false) {
