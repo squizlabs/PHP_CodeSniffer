@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
   - Squiz FunctionDeclarationArgumentSpacingSniff now supports closures
+  - Squiz OperatorSpacingSniff no longer throws an error for negative values inside an inline THEN statement
   - Fixed bug #19508 : switch+return: Closing brace indented incorrectly
  </notes>
  <contents>
