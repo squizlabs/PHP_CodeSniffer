@@ -289,7 +289,8 @@ class PHP_CodeSniffer_File
         $this->phpcs      = $phpcs;
 
         $cliValues = $phpcs->cli->getCommandLineValues();
-        if ($cliValues['showSources'] !== true
+        if (isset($cliValues['showSources']) === true
+            && $cliValues['showSources'] !== true
             && array_key_exists('summary', $cliValues['reports']) === true
             && count($cliValues['reports']) === 1
         ) {

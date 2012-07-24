@@ -167,6 +167,10 @@ class PHP_CodeSniffer_CLI
      */
     public function getCommandLineValues()
     {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            return array();
+        }
+
         if (empty($this->values) === false) {
             return $this->values;
         }
