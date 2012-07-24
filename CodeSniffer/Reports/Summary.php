@@ -110,13 +110,15 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
+        $sources = 0;
         if ($showSources === true) {
             $source = new PHP_CodeSniffer_Reports_Source();
-            $source->generate($report, $showSources, $width);
+            $sources = $source->generate($report, $showSources, $width);
         }
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
+            && $sources === 0
             && class_exists('PHP_Timer', false) === true
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
