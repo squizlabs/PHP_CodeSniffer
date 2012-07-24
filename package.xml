@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Reduced memory is only available when displaying a single summary report to the screen
     -- PHP_CodeSniffer will not generate any messages in this case, storing only error counts instead
     -- Impact is most notable with very high error and warning counts
+  - Significantly improved the performance of Squiz NonExecutableCodeSniff
   - Ignore patterns now check the relative path of a file based on the dir being checked
     -- Allows ignore patterns to become more generic as the path to the code is no longer included when checking
     -- Thanks to Kristof Coomans for the patch
