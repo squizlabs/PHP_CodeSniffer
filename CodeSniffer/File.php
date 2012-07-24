@@ -190,6 +190,13 @@ class PHP_CodeSniffer_File
     private $_warnings = array();
 
     /**
+     * Record the errors and warnings raised.
+     *
+     * @var bool
+     */
+    private $_recordErrors = true;
+
+    /**
      * And array of lines being ignored by PHP_CodeSniffer.
      *
      * @var array()
@@ -280,6 +287,14 @@ class PHP_CodeSniffer_File
         $this->tokenizers = $tokenizers;
         $this->ruleset    = $ruleset;
         $this->phpcs      = $phpcs;
+
+        $cliValues = $phpcs->cli->getCommandLineValues();
+        if ($cliValues['showSources'] !== true
+            && array_key_exists('summary', $cliValues['reports']) === true
+            && count($cliValues['reports']) === 1
+        ) {
+            $this->_recordErrors = false;
+        }
 
     }//end __construct()
 
@@ -722,6 +737,11 @@ class PHP_CodeSniffer_File
             }
         }
 
+        $this->_errorCount++;
+        if ($this->_recordErrors === false) {
+            return;
+        }
+
         // Work out the warning message.
         if (isset($this->ruleset[$sniff]['message']) === true) {
             $error = $this->ruleset[$sniff]['message'];
@@ -754,7 +774,6 @@ class PHP_CodeSniffer_File
                                                'source'   => $sniff,
                                                'severity' => $severity,
                                               );
-        $this->_errorCount++;
 
     }//end addError()
 
@@ -824,6 +843,11 @@ class PHP_CodeSniffer_File
             }
         }
 
+        $this->_warningCount++;
+        if ($this->_recordErrors === false) {
+            return;
+        }
+
         // Work out the warning message.
         if (isset($this->ruleset[$sniff]['message']) === true) {
             $warning = $this->ruleset[$sniff]['message'];
@@ -856,7 +880,6 @@ class PHP_CodeSniffer_File
                                                  'source'   => $sniff,
                                                  'severity' => $severity,
                                                 );
-        $this->_warningCount++;
 
     }//end addWarning()
 

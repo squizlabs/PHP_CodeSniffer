@@ -27,6 +27,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
+  - Memory usage has been dramatically reduced when using the summary report
+    -- Reduced memory is only available when displaying a single summary report to the screen
+    -- PHP_CodeSniffer will not generate any messages in this case, storing only error counts instead
+    -- Impact is most notable with very high error and warning counts
   - Ignore patterns now check the relative path of a file based on the dir being checked
     -- Allows ignore patterns to become more generic as the path to the code is no longer included when checking
     -- Thanks to Kristof Coomans for the patch
