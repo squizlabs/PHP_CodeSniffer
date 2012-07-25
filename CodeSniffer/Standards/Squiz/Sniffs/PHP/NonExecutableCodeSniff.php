@@ -70,20 +70,6 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // Collect closure function parenthesises to use later for supressing some errors.
-        $closureReturnParenthesises = array();
-        $closureToken               = $phpcsFile->findNext(T_CLOSURE, $stackPtr);
-        if ($closureToken !== false) {
-            $closureToken--;
-            while (($closureToken = $phpcsFile->findNext(T_CLOSURE, ($closureToken + 1))) !== false) {
-                $closureEndToken = $tokens[$closureToken]['scope_closer'];
-                $parenthesis     = $phpcsFile->findNext(T_RETURN, $closureToken, $closureEndToken);
-                if (isset($tokens[$parenthesis]['nested_parenthesis']) === true) {
-                    $closureReturnParenthesises[] = $tokens[$parenthesis]['nested_parenthesis'];
-                }
-            }
-        }
-
         if ($tokens[$stackPtr]['code'] === T_RETURN) {
             $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             if ($tokens[$next]['code'] === T_SEMICOLON) {
@@ -216,13 +202,6 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 || in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$bracketTokens) === true
             ) {
                 continue;
-            }
-
-            // Skip returns found in closure functions.
-            if (isset($tokens[$i]['nested_parenthesis']) === true
-                && in_array($tokens[$i]['nested_parenthesis'], $closureReturnParenthesises) === true
-            ) {
-                return;
             }
 
             // Skip whole functions and classes/interfaces because they are not

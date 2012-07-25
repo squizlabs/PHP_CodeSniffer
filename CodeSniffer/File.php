@@ -190,6 +190,13 @@ class PHP_CodeSniffer_File
     private $_warnings = array();
 
     /**
+     * Record the errors and warnings raised.
+     *
+     * @var bool
+     */
+    private $_recordErrors = true;
+
+    /**
      * And array of lines being ignored by PHP_CodeSniffer.
      *
      * @var array()
@@ -281,6 +288,15 @@ class PHP_CodeSniffer_File
         $this->ruleset    = $ruleset;
         $this->phpcs      = $phpcs;
 
+        $cliValues = $phpcs->cli->getCommandLineValues();
+        if (isset($cliValues['showSources']) === true
+            && $cliValues['showSources'] !== true
+            && array_key_exists('summary', $cliValues['reports']) === true
+            && count($cliValues['reports']) === 1
+        ) {
+            $this->_recordErrors = false;
+        }
+
     }//end __construct()
 
 
@@ -301,8 +317,8 @@ class PHP_CodeSniffer_File
     /**
      * Adds a listener to the token stack that listens to the specific tokens.
      *
-     * When PHP_CodeSniffer encounters on the the tokens specified in $tokens, it
-     *  invokes the process method of the sniff.
+     * When PHP_CodeSniffer encounters on the the tokens specified in $tokens,
+     * it invokes the process method of the sniff.
      *
      * @param PHP_CodeSniffer_Sniff $listener The listener to add to the
      *                                        listener stack.
@@ -425,65 +441,61 @@ class PHP_CodeSniffer_File
                 $foundCode = true;
             }
 
-            if (isset($this->_listeners[$tokenType]) === true) {
-                foreach ($this->_listeners[$tokenType] as $listener) {
-                    // Make sure this sniff supports the tokenizer
-                    // we are currently using.
-                    $class = get_class($listener);
-                    $vars  = get_class_vars($class);
-                    if (isset($vars['supportedTokenizers']) === true) {
-                        if (in_array($this->tokenizerType, $vars['supportedTokenizers']) === false) {
-                            continue;
-                        }
-                    } else {
-                        // The default supported tokenizer is PHP.
-                        if ($this->tokenizerType !== 'PHP') {
-                            continue;
-                        }
-                    }
+            if (isset($this->_listeners[$tokenType]) === false) {
+                continue;
+            }
 
-                    // If the file path matches one of our ignore patterns, skip it.
-                    $parts = explode('_', $class);
-                    if (isset($parts[3]) === true) {
-                        $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
-                        $patterns = $this->phpcs->getIgnorePatterns($source);
-                        foreach ($patterns as $pattern) {
-                            $replacements = array(
-                                             '\\,' => ',',
-                                             '*'   => '.*',
-                                            );
+            foreach ($this->_listeners[$tokenType] as $listenerData) {
+                // Make sure this sniff supports the tokenizer
+                // we are currently using.
+                $listener = $listenerData['listener'];
+                $class    = $listenerData['class'];
 
-                            $pattern = strtr($pattern, $replacements);
-                            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
-                                continue(2);
-                            }
+                if (in_array($this->tokenizerType, $listenerData['tokenizers']) === false) {
+                    continue;
+                }
+
+                // If the file path matches one of our ignore patterns, skip it.
+                $parts = explode('_', $class);
+                if (isset($parts[3]) === true) {
+                    $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
+                    $patterns = $this->phpcs->getIgnorePatterns($source);
+                    foreach ($patterns as $pattern) {
+                        $replacements = array(
+                                         '\\,' => ',',
+                                         '*'   => '.*',
+                                        );
+
+                        $pattern = strtr($pattern, $replacements);
+                        if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                            continue(2);
                         }
                     }
+                }
 
-                    $this->setActiveListener($class);
+                $this->setActiveListener($class);
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                        $startTime = microtime(true);
-                        echo "\t\t\tProcessing ".$this->_activeListener.'... ';
+                if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                    $startTime = microtime(true);
+                    echo "\t\t\tProcessing ".$this->_activeListener.'... ';
+                }
+
+                $listener->process($this, $stackPtr);
+
+                if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                    $timeTaken = (microtime(true) - $startTime);
+                    if (isset($this->_listenerTimes[$this->_activeListener]) === false) {
+                        $this->_listenerTimes[$this->_activeListener] = 0;
                     }
 
-                    $listener->process($this, $stackPtr);
+                    $this->_listenerTimes[$this->_activeListener] += $timeTaken;
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                        $timeTaken = (microtime(true) - $startTime);
-                        if (isset($this->_listenerTimes[$this->_activeListener]) === false) {
-                            $this->_listenerTimes[$this->_activeListener] = 0;
-                        }
+                    $timeTaken = round(($timeTaken), 4);
+                    echo "DONE in $timeTaken seconds".PHP_EOL;
+                }
 
-                        $this->_listenerTimes[$this->_activeListener] += $timeTaken;
-
-                        $timeTaken = round(($timeTaken), 4);
-                        echo "DONE in $timeTaken seconds".PHP_EOL;
-                    }
-
-                    $this->_activeListener = '';
-                }//end foreach
-            }//end if
+                $this->_activeListener = '';
+            }//end foreach
         }//end foreach
 
         // Remove errors and warnings for ignored lines.
@@ -722,6 +734,11 @@ class PHP_CodeSniffer_File
             }
         }
 
+        $this->_errorCount++;
+        if ($this->_recordErrors === false) {
+            return;
+        }
+
         // Work out the warning message.
         if (isset($this->ruleset[$sniff]['message']) === true) {
             $error = $this->ruleset[$sniff]['message'];
@@ -754,7 +771,6 @@ class PHP_CodeSniffer_File
                                                'source'   => $sniff,
                                                'severity' => $severity,
                                               );
-        $this->_errorCount++;
 
     }//end addError()
 
@@ -824,6 +840,11 @@ class PHP_CodeSniffer_File
             }
         }
 
+        $this->_warningCount++;
+        if ($this->_recordErrors === false) {
+            return;
+        }
+
         // Work out the warning message.
         if (isset($this->ruleset[$sniff]['message']) === true) {
             $warning = $this->ruleset[$sniff]['message'];
@@ -856,7 +877,6 @@ class PHP_CodeSniffer_File
                                                  'source'   => $sniff,
                                                  'severity' => $severity,
                                                 );
-        $this->_warningCount++;
 
     }//end addWarning()
 

@@ -89,7 +89,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         if ($length !== 1) {
             $error = 'Expected 1 space after closing parenthesis; found %s';
             $data  = array($length);
-            $phpcsFile->addError($error, $openingBrace, 'SpaceAfterBracket', $data);
+            $phpcsFile->addError($error, $closeBracket, 'SpaceAfterBracket', $data);
             return;
         }
 

@@ -54,6 +54,9 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
                 36 => 1,
                 43 => 2,
                 48 => 1,
+                81 => 1,
+                82 => 2,
+                88 => 2,
                );
 
     }//end getErrorList()

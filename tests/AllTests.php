@@ -13,6 +13,10 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
 require_once 'TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 

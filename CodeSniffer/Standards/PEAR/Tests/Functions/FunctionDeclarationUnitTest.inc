@@ -83,7 +83,7 @@ $longArgs_longVars = function (
     $longArgument,
     $longerArgument,
     $muchLongerArgument
-) use (
+) use  (
     $longVar1,
     $longerVar2,
     $muchLongerVar3
@@ -95,11 +95,18 @@ $longArgs_longVars = function (
     $longArgument,
     $longerArgument,
     $muchLongerArgument
-    ) use (
+    )  use (
     $longVar1,
     $longerVar2,
     $muchLongerVar3
 ) {
+    // body
+};
+
+$longArgs_longVars = function (
+    $longArgument,
+    $muchLongerArgument) use (
+    $muchLongerVar3) {
     // body
 };
 ?>
