@@ -15,7 +15,10 @@
 /**
  * Summary report for PHP_CodeSniffer that can be used with notify-send.
  *
- * PHP version 5
+ * Supported configuration parameters:
+ * - notifysend_path    - Full path to notify-send cli command
+ * - notifysend_timeout - Timeout in milliseconds
+ * - notifysend_showok  - Show "ok, all fine" messages (0/1)
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -36,11 +39,40 @@ class PHP_CodeSniffer_Reports_Notifysend
     protected $timeout = 3000;
 
     /**
-     * Path to notify command
+     * Path to notify-send command
      *
      * @var string
      */
-    protected $cmd = 'notify-send';
+    protected $path = 'notify-send';
+
+    /**
+     * Show "ok, all fine" messages
+     *
+     * @var boolean
+     */
+    protected $showOk = true;
+
+
+    /**
+     * Load configuration data
+     */
+    public function __construct()
+    {
+        $path = PHP_CodeSniffer::getConfigData('notifysend_path');
+        if ($path !== null) {
+            $this->path = $path;
+        }
+
+        $timeout = PHP_CodeSniffer::getConfigData('notifysend_timeout');
+        if ($timeout !== null) {
+            $this->timeout = (int)$timeout;
+        }
+
+        $showOk = PHP_CodeSniffer::getConfigData('notifysend_showok');
+        if ($showOk !== null) {
+            $this->showOk = (boolean)$showOk;
+        }
+    }
 
 
     /**
@@ -62,7 +94,9 @@ class PHP_CodeSniffer_Reports_Notifysend
     ) {
         $msg = $this->generateMessage($report);
         if ($msg === null) {
-            $this->notifyAllFine();
+            if ($this->showOk) {
+                $this->notifyAllFine();
+            }
             return 0;
         }
 
@@ -145,7 +179,7 @@ class PHP_CodeSniffer_Reports_Notifysend
      */
     protected function getBasicCommand()
     {
-        return escapeshellcmd($this->cmd)
+        return escapeshellcmd($this->path)
             . ' --category dev.validate'
             . ' -a phpcs'
             . ' -t ' . (int) $this->timeout;
