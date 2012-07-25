@@ -58,17 +58,23 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
                     61 => 1,
                     64 => 2,
                     67 => 1,
+                    95 => 1,
+                    96 => 1,
+                    97 => 3,
                    );
             break;
         case 'InlineCommentUnitTest.js':
             return array(
-                    31 => 1,
-                    36 => 2,
-                    44 => 1,
-                    48 => 1,
-                    51 => 1,
-                    54 => 2,
-                    57 => 1,
+                    31  => 1,
+                    36  => 2,
+                    44  => 1,
+                    48  => 1,
+                    51  => 1,
+                    54  => 2,
+                    57  => 1,
+                    102 => 1,
+                    103 => 1,
+                    104 => 3,
                    );
             break;
         default:

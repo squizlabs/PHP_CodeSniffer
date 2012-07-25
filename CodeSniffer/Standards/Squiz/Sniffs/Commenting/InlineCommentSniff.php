@@ -179,7 +179,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($spaceCount > 1) {
-            $error = '%s spaces found before inline comment; expected "// %s" but found "%s"';
+            $error = '%s spaces found before inline comment line; use block comment if you need indentation';
             $data  = array(
                       $spaceCount,
                       substr($comment, (2 + $spaceCount)),
