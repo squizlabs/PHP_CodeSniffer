@@ -83,6 +83,14 @@ class PHP_CodeSniffer
     protected $files = array();
 
     /**
+     * A cache of different token types, resolved into arrays.
+     *
+     * @var array()
+     * @see standardiseToken()
+     */
+    private static $_resolveTokenCache = array();
+
+    /**
      * The directory to search for sniffs in.
      *
      * This is declared static because it is also used in the
@@ -1474,28 +1482,38 @@ class PHP_CodeSniffer
     public static function standardiseToken($token)
     {
         if (is_array($token) === false) {
-            $newToken = self::resolveSimpleToken($token);
+            if (isset(self::$_resolveTokenCache[$token]) === true) {
+                $newToken = self::$_resolveTokenCache[$token];
+            } else {
+                $newToken = self::resolveSimpleToken($token);
+            }
         } else {
             switch ($token[0]) {
             case T_STRING:
                 // Some T_STRING tokens can be more specific.
-                $newToken = self::resolveTstringToken($token);
+                $tokenType = strtolower($token[1]);
+                if (isset(self::$_resolveTokenCache[$tokenType]) === true) {
+                    $newToken = self::$_resolveTokenCache[$tokenType];
+                } else {
+                    $newToken = self::resolveTstringToken($tokenType);
+                }
+
                 break;
             case T_CURLY_OPEN:
                 $newToken = array(
                              'code'    => T_OPEN_CURLY_BRACKET,
-                             'content' => $token[1],
                              'type'    => 'T_OPEN_CURLY_BRACKET',
                             );
                 break;
             default:
                 $newToken = array(
                              'code'    => $token[0],
-                             'content' => $token[1],
                              'type'    => token_name($token[0]),
                             );
                 break;
             }//end switch
+
+            $newToken['content'] = $token[1];
         }//end if
 
         return $newToken;
@@ -1509,15 +1527,15 @@ class PHP_CodeSniffer
      * The token should be produced using the token_get_all() function.
      * Currently, not all T_STRING tokens are converted.
      *
-     * @param string|array $token The T_STRING token to convert as constructed
-     *                            by token_get_all().
+     * @param string $token The T_STRING token to convert as constructed
+     *                      by token_get_all().
      *
      * @return array The new token.
      */
-    public static function resolveTstringToken(array $token)
+    public static function resolveTstringToken($token)
     {
         $newToken = array();
-        switch (strtolower($token[1])) {
+        switch ($token) {
         case 'false':
             $newToken['type'] = 'T_FALSE';
             break;
@@ -1538,9 +1556,9 @@ class PHP_CodeSniffer
             break;
         }
 
-        $newToken['code']    = constant($newToken['type']);
-        $newToken['content'] = $token[1];
+        $newToken['code'] = constant($newToken['type']);
 
+        self::$_resolveTokenCache[$token] = $newToken;
         return $newToken;
 
     }//end resolveTstringToken()
@@ -1648,6 +1666,7 @@ class PHP_CodeSniffer
         $newToken['code']    = constant($newToken['type']);
         $newToken['content'] = $token;
 
+        self::$_resolveTokenCache[$token] = $newToken;
         return $newToken;
 
     }//end resolveSimpleToken()
