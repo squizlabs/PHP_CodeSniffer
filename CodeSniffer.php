@@ -550,14 +550,13 @@ class PHP_CodeSniffer
      */
     public function processMulti()
     {
-        foreach ($this->_tokenListeners['multifile'] as $listener) {
+        foreach ($this->_tokenListeners['multifile'] as $listenerData) {
             // Set the name of the listener for error messages.
-            $activeListener = get_class($listener);
             foreach ($this->files as $file) {
-                $file->setActiveListener($activeListener);
+                $file->setActiveListener($listenerData['class']);
             }
 
-            $listener->process($this->files);
+            $listenerData['listener']->process($this->files);
         }
 
     }//end processMulti()
@@ -995,6 +994,12 @@ class PHP_CodeSniffer
                 }
             }
 
+            $tokenizers = array('PHP');
+            $vars       = get_class_vars($listenerClass);
+            if (isset($vars['supportedTokenizers']) === true) {
+                $tokenizers = $vars['supportedTokenizers'];
+            }
+
             if (($listener instanceof PHP_CodeSniffer_Sniff) === true) {
                 $tokens = $listener->register();
                 if (is_array($tokens) === false) {
@@ -1008,11 +1013,19 @@ class PHP_CodeSniffer
                     }
 
                     if (in_array($listener, $this->_tokenListeners['file'][$token], true) === false) {
-                        $this->_tokenListeners['file'][$token][] = $listener;
+                        $this->_tokenListeners['file'][$token][] = array(
+                                                                    'listener'   => $listener,
+                                                                    'class'      => $listenerClass,
+                                                                    'tokenizers' => $tokenizers,
+                                                                   );
                     }
                 }
             } else if (($listener instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
-                $this->_tokenListeners['multifile'][] = $listener;
+                $this->_tokenListeners['multifile'][] = array(
+                                                         'listener'   => $listener,
+                                                         'class'      => $listenerClass,
+                                                         'tokenizers' => $tokenizers,
+                                                        );
             }
         }//end foreach
 
