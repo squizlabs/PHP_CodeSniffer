@@ -685,7 +685,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $listeners[] = $className;
+            $listeners[$className] = $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
@@ -981,24 +981,17 @@ class PHP_CodeSniffer
                                  );
 
         foreach ($this->listeners as $listenerClass) {
-            $listener = new $listenerClass();
-
             // Work out the internal code for this sniff.
             $parts = explode('_', $listenerClass);
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
+            $this->listeners[$listenerClass] = new $listenerClass();
+
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
                 foreach ($this->ruleset[$code]['properties'] as $name => $value) {
-                    // Special case for booleans.
-                    if ($value === 'true') {
-                        $value = true;
-                    } else if ($value === 'false') {
-                        $value = false;
-                    }
-
-                    $listener->$name = $value;
+                    $this->setSniffProperty($listenerClass, $name, $value);
                 }
             }
 
@@ -1008,8 +1001,8 @@ class PHP_CodeSniffer
                 $tokenizers = $vars['supportedTokenizers'];
             }
 
-            if (($listener instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $listener->register();
+            if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_Sniff) === true) {
+                $tokens = $this->listeners[$listenerClass]->register();
                 if (is_array($tokens) === false) {
                     $msg = "Sniff $listenerClass register() method must return an array";
                     throw new PHP_CodeSniffer_Exception($msg);
@@ -1020,17 +1013,17 @@ class PHP_CodeSniffer
                         $this->_tokenListeners['file'][$token] = array();
                     }
 
-                    if (in_array($listener, $this->_tokenListeners['file'][$token], true) === false) {
+                    if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
                         $this->_tokenListeners['file'][$token][] = array(
-                                                                    'listener'   => $listener,
+                                                                    'listener'   => $this->listeners[$listenerClass],
                                                                     'class'      => $listenerClass,
                                                                     'tokenizers' => $tokenizers,
                                                                    );
                     }
                 }
-            } else if (($listener instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
+            } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
                 $this->_tokenListeners['multifile'][] = array(
-                                                         'listener'   => $listener,
+                                                         'listener'   => $this->listeners[$listenerClass],
                                                          'class'      => $listenerClass,
                                                          'tokenizers' => $tokenizers,
                                                         );
@@ -1038,6 +1031,32 @@ class PHP_CodeSniffer
         }//end foreach
 
     }//end populateTokenListeners()
+
+
+    /**
+     * Set a single property for a sniff.
+     *
+     * @param string $listenerClass The class name of the sniff.
+     * @param string $name          The name of the property to change.
+     * @param string $value         The new value of the property.
+     *
+     * @return void
+     */
+    public function setSniffProperty($listenerClass, $name, $value) 
+    {
+        $name  = trim($name);
+        $value = trim($value);
+
+        // Special case for booleans.
+        if ($value === 'true') {
+            $value = true;
+        } else if ($value === 'false') {
+            $value = false;
+        }
+
+        $this->listeners[$listenerClass]->$name = $value;
+
+    }//end setSniffProperty()
 
 
     /**
@@ -1260,7 +1279,7 @@ class PHP_CodeSniffer
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
-                $this->listeners,
+                $this->_tokenListeners['file'],
                 $this->allowedFileExtensions,
                 $this->ruleset,
                 $this
