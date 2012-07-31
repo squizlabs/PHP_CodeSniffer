@@ -306,6 +306,20 @@ final class PHP_CodeSniffer_Tokens
                                     );
 
     /**
+     * Tokens that can prefix a method name
+     *
+     * @var array(int)
+     */
+    public static $methodPrefixes = array(
+                                     T_PRIVATE,
+                                     T_PUBLIC,
+                                     T_PROTECTED,
+                                     T_ABSTRACT,
+                                     T_STATIC,
+                                     T_FINAL,
+                                    );
+
+    /**
      * Tokens that perform operations.
      *
      * @var array(int)
