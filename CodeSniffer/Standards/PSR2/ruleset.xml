@@ -93,6 +93,7 @@
  <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
 
  <!-- Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+ <!-- checked in Methods/MethodDeclarationSniff -->
 
  <!-- Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
  <rule ref="Squiz.Functions.FunctionDeclaration"/>
@@ -115,9 +116,9 @@
 
  <!-- 4.4. abstract, final, and static -->
 
- <!-- When present, the abstract and final declarations MUST precede the visibility declaration. -->
-
- <!-- When present, the static declaration MUST come after the visibility declaration. -->
+ <!-- When present, the abstract and final declarations MUST precede the visibility declaration.
+      When present, the static declaration MUST come after the visibility declaration. -->
+ <!-- checked in Methods/MethodDeclarationSniff -->
 
  <!-- 4.5 Method and Function Calls -->
 

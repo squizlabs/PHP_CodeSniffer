@@ -929,11 +929,20 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Methods">
+        <file baseinstalldir="PHP" name="MethodDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="PropertyDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="PropertyDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
@@ -948,6 +957,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Methods">
+        <file baseinstalldir="PHP" name="MethodDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MethodDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
