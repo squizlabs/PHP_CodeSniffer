@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff settings can now be changed by specifying a special comment format inside a file
     -- e.g., // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
     -- If you change a setting, don't forget to change it back
+  - PEAR FunctionCallSignatureSniff now includes a setting to force one arg per line in multi-line calls
+    -- Set allowMultipleArguments to false
   - Squiz FunctionDeclarationArgumentSpacingSniff now supports closures
   - Squiz OperatorSpacingSniff no longer throws an error for negative values inside an inline THEN statement
     -- Thanks to Klaus Purer for the patch

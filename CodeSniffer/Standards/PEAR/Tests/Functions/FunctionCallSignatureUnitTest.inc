@@ -114,4 +114,38 @@ public function doSomething()
                 ->doZ()  // this is still the first method argument
         );
 }
+
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
+
+fputs(
+    STDOUT,
+    "Examples:
+    $ {$app} , --all
+    $ {$app} --all", $something
+);
+
+$array = array();
+array_map(
+    function($x)
+    {
+        return trim($x, $y);
+    }, $foo
+    $array
+);
+
+$bar = new stdClass(
+    4, 5, 6
+);
+
+public function doSomething()
+{
+    return $this->getFoo()
+        ->doBar(
+            $this->getX() // no comma here
+                ->doY()  // this is still the first method argument
+                ->doZ()  // this is still the first method argument
+        );
+}
+
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments true
 ?>
