@@ -44,7 +44,7 @@ class PSR2_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Stand
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content'][1] === '_') {
-            $error = 'Property name "%s" SHOULD NOT be prefixed with an underscore to indicate visibility';
+            $error = 'Property name "%s" should not be prefixed with an underscore to indicate visibility';
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
         }
