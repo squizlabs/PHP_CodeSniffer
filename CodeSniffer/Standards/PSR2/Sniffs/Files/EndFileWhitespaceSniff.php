@@ -61,21 +61,25 @@ class PSR2_Sniffs_Files_EndFileWhitespaceSniff implements PHP_CodeSniffer_Sniff
         // Skip to the end of the file.
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
+        $blankLines = 0;
 
         // Go looking for the last non-empty line.
-        $lastLine = $tokens[$stackPtr]['line'];
-        while ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
+        while ($tokens[$stackPtr]['code'] === T_WHITESPACE
+            || $tokens[$stackPtr]['code'] === T_CLOSE_TAG
+        ) {
+            // Remember that the newline character that creates a
+            // visual line actually resides on the line before, at
+            // least according to the tokenizer.
+            $blankLines += substr_count($tokens[$stackPtr]['content'], "\n");
             $stackPtr--;
         }
 
-        $lastCodeLine = $tokens[$stackPtr]['line'];
-        $blankLines   = $lastLine - $lastCodeLine;
         if ($blankLines === 0) {
             $error = 'Expected 1 blank line at end of file; 0 found';
             $data  = array($blankLines);
             $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
-        } else if ($blankLines > 1) {
-            $error = 'Expected 1 blank line at end of file; "%s" found';
+        } elseif ($blankLines > 1) {
+            $error = 'Expected 1 blank line at end of file; %s found';
             $data  = array($blankLines);
             $phpcsFile->addError($error, $stackPtr, 'TooMany', $data);
         }
