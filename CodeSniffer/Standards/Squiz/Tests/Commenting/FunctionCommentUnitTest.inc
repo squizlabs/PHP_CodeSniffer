@@ -543,4 +543,11 @@ $callback = function ($bar) use ($foo)
                 $bar += $foo;
             };
 
+/**
+ * Comment should end with '*', not '**' before the slash.
+ **/
+function test123() {
+
+}
+
 ?>
