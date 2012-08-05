@@ -155,6 +155,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $error = 'Missing function doc comment';
             $phpcsFile->addError($error, $stackPtr, 'Missing');
             return;
+        } else if (trim($tokens[$commentEnd]['content']) !== '*/') {
+            $error = 'Wrong function doc comment end; expected "*/", found "%s"';
+            $phpcsFile->addError($error, $commentEnd, 'WrongEnd', array(trim($tokens[$commentEnd]['content'])));
+            return;
         }
 
         // If there is any code between the function keyword and the doc block
