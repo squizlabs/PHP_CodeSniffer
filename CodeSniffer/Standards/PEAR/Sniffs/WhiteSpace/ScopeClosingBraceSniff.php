@@ -121,7 +121,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
             // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.
             if ($braceIndent !== ($startColumn + $this->indent)) {
-                $error = 'Break statement indented incorrectly; expected %s spaces, found %s';
+                $error = 'Case breaking statement indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
                           ($startColumn + $this->indent - 1),
                           ($braceIndent - 1),
