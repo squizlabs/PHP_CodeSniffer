@@ -75,6 +75,11 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // Class or namespace?
+        if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR) {
+            return;
+        }
+
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
             $error = 'TRUE, FALSE and NULL must be lowercase; expected "%s" but found "%s"';

@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed undefined variable error in PEAR FunctionCallSignatureSniff for lines with no indent
   - Fixed bug #19502 : Generic.Files.LineEndingsSniff fails if no new-lines in file
   - Fixed bug #19508 : switch+return: Closing brace indented incorrectly
+  - Fixed bug #19532 : The PSR-2 standard don't recognize Null in class names
  </notes>
  <contents>
   <dir name="/">
