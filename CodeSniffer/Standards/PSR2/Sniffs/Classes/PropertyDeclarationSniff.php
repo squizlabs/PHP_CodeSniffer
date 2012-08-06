@@ -60,19 +60,19 @@ class PSR2_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Stand
         }
 
         if ($tokens[$prev]['code'] === T_VAR) {
-            $error = 'The var keyword MUST NOT be used to declare a property';
+            $error = 'The var keyword must not be used to declare a property';
             $phpcsFile->addError($error, $stackPtr, 'VarUsed');
         }
 
         $next = $phpcsFile->findNext(array(T_VARIABLE, T_SEMICOLON), ($stackPtr + 1));
         if ($tokens[$next]['code'] === T_VARIABLE) {
-            $error = 'There MUST NOT be more than one property declared per statement';
+            $error = 'There must not be more than one property declared per statement';
             $phpcsFile->addError($error, $stackPtr, 'Multiple');
         }
 
         $modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
-            $error = 'Visibility MUST be declared on property "%s"';
+            $error = 'Visibility must be declared on property "%s"';
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
         }
