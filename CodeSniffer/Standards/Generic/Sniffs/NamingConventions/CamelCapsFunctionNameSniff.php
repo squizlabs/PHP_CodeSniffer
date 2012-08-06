@@ -55,6 +55,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                                'set_state',
                                'clone',
                                'invoke',
+                               'call',
                               );
 
     /**
@@ -77,7 +78,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION), true);
+        parent::__construct(array(T_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION), true);
 
     }//end __construct()
 
