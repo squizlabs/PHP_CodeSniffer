@@ -115,6 +115,11 @@ public function doSomething()
         );
 }
 
+$var = myFunction(
+$foo,
+$bar
+);
+
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
 
 fputs(

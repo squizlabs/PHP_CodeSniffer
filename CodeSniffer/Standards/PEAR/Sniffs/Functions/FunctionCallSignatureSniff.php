@@ -223,6 +223,8 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         $phpcsFile->addError($error, $i, 'EmptyLine');
                         continue;
                     }
+                } else {
+                    $nextCode = $i;
                 }
 
                 // Check if the next line contains an object operator, if so rely on
