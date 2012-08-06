@@ -1950,8 +1950,9 @@ class PHP_CodeSniffer_File
         if ($tokenCode !== T_FUNCTION
             && $tokenCode !== T_CLASS
             && $tokenCode !== T_INTERFACE
+            && $tokenCode !== T_TRAIT
         ) {
-            throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION, T_CLASS OR T_INTERFACE');
+            throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION, T_CLASS, T_INTERFACE or T_TRAIT');
         }
 
         if ($tokenCode === T_FUNCTION
