@@ -1,6 +1,6 @@
 <?php
 /**
- * PSR2_Sniffs_Files_EndFileWhitespaceSniff.
+ * Generic_Sniffs_Files_EndFileNewlineSniff.
  *
  * PHP version 5
  *
@@ -13,9 +13,9 @@
  */
 
 /**
- * PSR2_Sniffs_Files_EndFileWhitespaceSniff.
+ * Generic_Sniffs_Files_EndFileNewlineSniff.
  *
- * Checks that there is a single blank line at the end of PHP files.
+ * Ensures the file ends with a newline character.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -25,7 +25,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Sniffs_Files_EndFileWhitespaceSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -62,23 +62,13 @@ class PSR2_Sniffs_Files_EndFileWhitespaceSniff implements PHP_CodeSniffer_Sniff
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
-        // Go looking for the last non-empty line.
-        $lastLine = $tokens[$stackPtr]['line'];
-        while ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
-            $stackPtr--;
+        $eolCharLen = strlen($phpcsFile->eolChar);
+        $lastChars  = substr($tokens[$stackPtr]['content'], ($eolCharLen * -1));
+        if ($lastChars !== $phpcsFile->eolChar) {
+            $error = 'All PHP files must end with a newline character';
+            $phpcsFile->addError($error, $stackPtr);
         }
 
-        $lastCodeLine = $tokens[$stackPtr]['line'];
-        $blankLines   = $lastLine - $lastCodeLine;
-        if ($blankLines === 0) {
-            $error = 'Expected 1 blank line at end of file; 0 found';
-            $data  = array($blankLines);
-            $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
-        } else if ($blankLines > 1) {
-            $error = 'Expected 1 blank line at end of file; "%s" found';
-            $data  = array($blankLines);
-            $phpcsFile->addError($error, $stackPtr, 'TooMany', $data);
-        }
     }//end process()
 
 

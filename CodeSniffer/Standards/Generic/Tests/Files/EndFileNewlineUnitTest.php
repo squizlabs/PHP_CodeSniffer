@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the DuplicateClassName multi-file sniff.
+ * Unit test class for the EndFileNewline sniff.
  *
  * PHP version 5
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Unit test class for the EndFileWhitespace sniff.
+ * Unit test class for the EndFileNewline sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -26,7 +26,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Tests_Files_EndFileWhitespaceUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Files_EndFileNewlineUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -43,12 +43,7 @@ class PSR2_Tests_Files_EndFileWhitespaceUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'EndFileWhitespaceUnitTest.2.inc':
-            return array(
-                    2 => 1,
-                   );
-            break;
-        case 'EndFileWhitespaceUnitTest.3.inc':
+        case 'EndFileNewlineUnitTest.3.inc':
             return array(
                     2 => 1,
                    );

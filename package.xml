@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff settings can now be changed by specifying a special comment format inside a file
     -- e.g., // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
     -- If you change a setting, don't forget to change it back
+  - Added Generic EndFileNewlineSniff to ensure PHP files end with a newline character
   - PEAR FunctionCallSignatureSniff now includes a setting to force one argument per line in multi-line calls
     -- Set allowMultipleArguments to false
   - Squiz standard now enforces one argument per line in multi-line function calls
@@ -326,6 +327,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ByteOrderMarkSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNewlineSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -483,6 +487,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Files">
         <file baseinstalldir="PHP" name="ByteOrderMarkUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ByteOrderMarkUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
@@ -935,11 +945,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
-       <dir name="Files">
-        <file baseinstalldir="PHP" name="EndFileWhitespaceSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-       </dir>
        <dir name="Methods">
         <file baseinstalldir="PHP" name="MethodDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -960,14 +965,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.php" role="test">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
-       </dir>
-       <dir name="Files">
-        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.1.inc" role="test" />
-        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.2.inc" role="test" />
-        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.3.inc" role="test" />
-        <file baseinstalldir="PHP" name="EndFileWhitespaceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>

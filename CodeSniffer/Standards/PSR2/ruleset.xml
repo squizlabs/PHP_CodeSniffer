@@ -19,7 +19,7 @@
  </rule>
 
  <!-- All PHP files MUST end with a single blank line. -->
- <!-- checked in Files/EndFileWhitesapceSniff -->
+ <rule ref="Generic.Files.EndFileNewline"/>
 
  <!-- The closing ?> tag MUST be omitted from files containing only PHP. -->
  <rule ref="Zend.Files.ClosingTag"/>
@@ -62,12 +62,12 @@
  <!-- 3. Namespace and Use Declarations -->
 
  <!-- When present, there MUST be one blank line after the namespace declaration. -->
+ <!-- checked in Namespaces/NamespaceDeclarationSniff -->
 
- <!-- When present, all use declarations MUST go after the namespace declaration. -->
-
- <!-- There MUST be one use keyword per declaration. -->
-
- <!-- There MUST be one blank line after the use block. -->
+ <!-- When present, all use declarations MUST go after the namespace declaration.
+      There MUST be one use keyword per declaration.
+      There MUST be one blank line after the use block. -->
+ <!-- checked in Namespaces/UseDeclarationSniff -->
 
  <!-- 4. Classes, Properties, and Methods -->
 
