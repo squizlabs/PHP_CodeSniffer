@@ -950,6 +950,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP" name="NamespaceDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="UseDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Classes">
@@ -971,6 +979,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Methods">
         <file baseinstalldir="PHP" name="MethodDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="MethodDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP" name="NamespaceDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="NamespaceDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
