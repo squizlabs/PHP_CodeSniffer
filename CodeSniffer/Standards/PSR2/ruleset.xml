@@ -19,7 +19,7 @@
  </rule>
 
  <!-- All PHP files MUST end with a single blank line. -->
- <rule ref="Generic.Files.EndFileNewline"/>
+ <!-- checked in Files/EndFileNewlineSniff -->
 
  <!-- The closing ?> tag MUST be omitted from files containing only PHP. -->
  <rule ref="Zend.Files.ClosingTag"/>
