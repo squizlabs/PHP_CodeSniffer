@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-07-12</date>
- <time>15:06:00</time>
+ <date>2012-08-08</date>
+ <time>10:29:00</time>
  <version>
   <release>1.3.6</release>
   <api>1.3.6</api>
@@ -26,7 +26,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
   - Memory usage has been dramatically reduced when using the summary report
     -- Reduced memory is only available when displaying a single summary report to the screen
     -- PHP_CodeSniffer will not generate any messages in this case, storing only error counts instead
@@ -1973,6 +1972,46 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.3.6</release>
+    <api>1.3.6</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-08-08</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Memory usage has been dramatically reduced when using the summary report
+      -- Reduced memory is only available when displaying a single summary report to the screen
+      -- PHP_CodeSniffer will not generate any messages in this case, storing only error counts instead
+      -- Impact is most notable with very high error and warning counts
+    - Significantly improved the performance of Squiz NonExecutableCodeSniff
+    - Ignore patterns now check the relative path of a file based on the dir being checked
+      -- Allows ignore patterns to become more generic as the path to the code is no longer included when checking
+      -- Thanks to Kristof Coomans for the patch
+    - Sniff settings can now be changed by specifying a special comment format inside a file
+      -- e.g., // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
+      -- If you change a setting, don't forget to change it back
+    - Added Generic EndFileNewlineSniff to ensure PHP files end with a newline character
+    - PEAR FunctionCallSignatureSniff now includes a setting to force one argument per line in multi-line calls
+      -- Set allowMultipleArguments to false
+    - Squiz standard now enforces one argument per line in multi-line function calls
+    - Squiz FunctionDeclarationArgumentSpacingSniff now supports closures
+    - Squiz OperatorSpacingSniff no longer throws an error for negative values inside an inline THEN statement
+      -- Thanks to Klaus Purer for the patch
+    - Squiz FunctionCommentSniff now throws an error for not closing a comment with */
+      -- Thanks to Klaus Purer for the patch
+    - Summary report no longer shows two lines of PHP_Timer output when showing sources
+    - Fixed undefined variable error in PEAR FunctionCallSignatureSniff for lines with no indent
+    - Fixed bug #19502 : Generic.Files.LineEndingsSniff fails if no new-lines in file
+    - Fixed bug #19508 : switch+return: Closing brace indented incorrectly
+    - Fixed bug #19532 : The PSR-2 standard don't recognize Null in class names
+    - Fixed bug #19546 : Error thrown for __call() method in traits
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.3.5</release>
