@@ -949,6 +949,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ElseIfDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SwitchDeclarationSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="EndFileNewlineSniff.php" role="php">
@@ -2035,7 +2038,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2012-07-12</date>
    <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
    <notes>
-    - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
     - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
       -- Does not allow underscore prefixes for private/protected methods
       -- Defaults to strict checking, where two uppercase characters can not be next to each other
