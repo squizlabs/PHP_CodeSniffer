@@ -13,3 +13,9 @@ use LastThing;
 
 class Foo {
 }
+
+$var = new MyClass(
+    function () use ($foo, $bar) {
+        return true;
+    }
+);

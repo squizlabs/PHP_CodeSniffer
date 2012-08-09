@@ -54,6 +54,12 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore USE keywords inside closures.
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+            return;
+        }
+
         // Only one USE declaration allowed per statement.
         $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON), ($stackPtr + 1));
         if ($tokens[$next]['code'] === T_COMMA) {
