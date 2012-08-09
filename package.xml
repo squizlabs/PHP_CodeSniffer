@@ -915,11 +915,25 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="SideEffectsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClassDeclarationUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
