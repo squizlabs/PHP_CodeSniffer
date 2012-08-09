@@ -1044,8 +1044,10 @@ class PHP_CodeSniffer
      */
     public function setSniffProperty($listenerClass, $name, $value) 
     {
-        $name  = trim($name);
-        $value = trim($value);
+        $name = trim($name);
+        if (is_string($value) === true) {
+            $value = trim($value);
+        }
 
         // Special case for booleans.
         if ($value === 'true') {
