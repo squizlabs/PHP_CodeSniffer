@@ -63,7 +63,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
         $result = $this->_searchForConflict($phpcsFile, 0, ($phpcsFile->numTokens - 1), $tokens);
 
         if ($result['symbol'] !== null && $result['effect'] !== null) {
-            $error = 'A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line %s and the first effect is on line %s.';
+            $error = 'A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line %s and the first side effect is on line %s.';
             $data  = array(
                       $tokens[$result['symbol']]['line'],
                       $tokens[$result['effect']]['line'],
