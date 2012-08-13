@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -26,8 +26,8 @@ if (class_exists('Squiz_Sniffs_Commenting_FunctionCommentSniff', true) === false
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */

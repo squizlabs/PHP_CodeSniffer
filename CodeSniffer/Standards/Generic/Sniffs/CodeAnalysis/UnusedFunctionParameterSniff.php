@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
