@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
+  - Added report to show results using notify-send
+    -- Use --report=notifysend to generate the report
+    -- Thanks to Christian Weiske for the contribution 
   - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
   - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
  </notes>

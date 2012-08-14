@@ -1,6 +1,6 @@
 <?php
 /**
- * Summary report for PHP_CodeSniffer.
+ * Notify-send report for PHP_CodeSniffer.
  *
  * PHP version 5
  *
@@ -8,12 +8,12 @@
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
  * @copyright 2012 Christian Weiske
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Summary report for PHP_CodeSniffer that can be used with notify-send.
+ * Notify-send report for PHP_CodeSniffer.
  *
  * Supported configuration parameters:
  * - notifysend_path    - Full path to notify-send cli command
@@ -24,29 +24,29 @@
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
  * @copyright 2012 Christian Weiske
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Notifysend
-    implements PHP_CodeSniffer_Report
+class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
 {
+
     /**
-     * Notification timeout in milliseconds
+     * Notification timeout in milliseconds.
      *
      * @var integer
      */
     protected $timeout = 3000;
 
     /**
-     * Path to notify-send command
+     * Path to notify-send command.
      *
      * @var string
      */
     protected $path = 'notify-send';
 
     /**
-     * Show "ok, all fine" messages
+     * Show "ok, all fine" messages.
      *
      * @var boolean
      */
@@ -54,7 +54,9 @@ class PHP_CodeSniffer_Reports_Notifysend
 
 
     /**
-     * Load configuration data
+     * Load configuration data.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -65,14 +67,15 @@ class PHP_CodeSniffer_Reports_Notifysend
 
         $timeout = PHP_CodeSniffer::getConfigData('notifysend_timeout');
         if ($timeout !== null) {
-            $this->timeout = (int)$timeout;
+            $this->timeout = (int) $timeout;
         }
 
         $showOk = PHP_CodeSniffer::getConfigData('notifysend_showok');
         if ($showOk !== null) {
-            $this->showOk = (boolean)$showOk;
+            $this->showOk = (boolean) $showOk;
         }
-    }
+
+    }//end __construct()
 
 
     /**
@@ -90,27 +93,33 @@ class PHP_CodeSniffer_Reports_Notifysend
      * @return string
      */
     public function generate(
-        $report, $showSources = false, $width = 80,$toScreen = true
+        $report,
+        $showSources=false,
+        $width=80,
+        $toScreen=true
     ) {
         $msg = $this->generateMessage($report);
         if ($msg === null) {
             if ($this->showOk) {
                 $this->notifyAllFine();
             }
+
             return 0;
         }
 
         $this->notifyErrors($msg);
 
         return ($report['totals']['errors'] + $report['totals']['warnings']);
-    }
+
+    }//end generate()
+
 
     /**
-     * Generate the error message to show to the user
+     * Generate the error message to show to the user.
      *
-     * @param array $report CS report data
+     * @param array $report CS report data.
      *
-     * @return string Error message or NULL if no error/warning found
+     * @return string Error message or NULL if no error/warning found.
      */
     protected function generateMessage($report)
     {
@@ -136,7 +145,9 @@ class PHP_CodeSniffer_Reports_Notifysend
         }
 
         return $msg;
-    }
+
+    }//end generateMessage()
+
 
     /**
      * Tell the user that all is fine and no error/warning has been found.
@@ -151,13 +162,14 @@ class PHP_CodeSniffer_Reports_Notifysend
             . ' "PHP CodeSniffer: Ok"'
             . ' "All fine"'
         );
-    }
+
+    }//end notifyAllFine()
 
 
     /**
      * Tell the user that errors/warnings have been found.
      *
-     * @param string $msg Message to display
+     * @param string $msg Message to display.
      *
      * @return void
      */
@@ -169,13 +181,14 @@ class PHP_CodeSniffer_Reports_Notifysend
             . ' "PHP CodeSniffer: Error"'
             . ' ' . escapeshellarg(trim($msg))
         );
-    }
+
+    }//end notifyErrors()
 
 
     /**
-     * Generate and return the basic notify-send command string to execute
+     * Generate and return the basic notify-send command string to execute.
      *
-     * @return string Shell command with common parameters
+     * @return string Shell command with common parameters.
      */
     protected function getBasicCommand()
     {
@@ -183,7 +196,10 @@ class PHP_CodeSniffer_Reports_Notifysend
             . ' --category dev.validate'
             . ' -a phpcs'
             . ' -t ' . (int) $this->timeout;
-    }
-}
+
+    }//end getBasicCommand()
+
+
+}//end class
 
 ?>

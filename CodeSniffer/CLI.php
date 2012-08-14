@@ -357,7 +357,6 @@ class PHP_CodeSniffer_CLI
                         $report = substr($arg, 7);
                         $output = null;
                     } else {
-
                         $report = substr($arg, 7, ($split - 7));
                         $output = substr($arg, ($split + 1));
                         if ($output === false) {
