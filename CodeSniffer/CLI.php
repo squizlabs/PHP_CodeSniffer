@@ -87,6 +87,7 @@ class PHP_CodeSniffer_CLI
         $defaults['standard']        = null;
         $defaults['verbosity']       = 0;
         $defaults['interactive']     = false;
+        $defaults['explain']         = false;
         $defaults['local']           = false;
         $defaults['showSources']     = false;
         $defaults['extensions']      = array();
@@ -246,6 +247,9 @@ class PHP_CodeSniffer_CLI
             break;
         case 'a' :
             $values['interactive'] = true;
+            break;
+        case 'e':
+            $values['explain'] = true;
             break;
         case 'p' :
             $values['showProgress'] = true;
@@ -484,6 +488,20 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
+        $values['standard'] = $this->validateStandard($values['standard']);
+        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
+            // They didn't select a valid coding standard, so help them
+            // out by letting them know which standards are installed.
+            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
+            $this->printInstalledStandards();
+            exit(2);
+        }
+
+        if ($values['explain'] === true) {
+            $this->explainStandard($values['standard']);
+            exit(0);
+        }
+
         $fileContents = '';
         if (empty($values['files']) === true) {
             // Check if they passing in the file contents.
@@ -497,15 +515,6 @@ class PHP_CodeSniffer_CLI
                 $this->printUsage();
                 exit(2);
             }
-        }
-
-        $values['standard'] = $this->validateStandard($values['standard']);
-        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
-            // They didn't select a valid coding standard, so help them
-            // out by letting them know which standards are installed.
-            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
-            $this->printInstalledStandards();
-            exit(2);
         }
 
         $phpcs = new PHP_CodeSniffer(
@@ -674,13 +683,69 @@ class PHP_CodeSniffer_CLI
 
 
     /**
+     * Prints a report showing the sniffs contained in a standard.
+     *
+     * @param string $standard The standard to validate.
+     *
+     * @return void
+     */
+    public function explainStandard($standard)
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->setTokenListeners($standard);
+        $sniffs = $phpcs->getSniffs();
+        $sniffs = array_keys($sniffs);
+        sort($sniffs);
+
+        ob_start();
+
+        $lastStandard = '';
+        $lastCount    = '';
+        $sniffCount   = count($sniffs);
+        $sniffs[]     = '___';
+
+        echo PHP_EOL."The $standard standard contains $sniffCount sniffs".PHP_EOL;
+
+        ob_start();
+
+        foreach ($sniffs as $sniff) {
+            $parts = explode('_', $sniff);
+            if ($lastStandard === '') {
+                $lastStandard = $parts[0];
+            }
+
+            if ($parts[0] !== $lastStandard) {
+                $sniffList = ob_get_contents();
+                ob_end_clean();
+
+                echo PHP_EOL.$lastStandard.' ('.$lastCount.' sniffs)'.PHP_EOL;
+                echo str_repeat('-', strlen($lastStandard.$lastCount) + 10);
+                echo PHP_EOL;
+                echo $sniffList;
+
+                $lastStandard = $parts[0];
+                $lastCount    = 0;
+
+                ob_start();
+            }
+
+            echo '  '.$parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5).PHP_EOL;
+            $lastCount++;
+        }//end foreach
+
+        ob_end_clean();
+
+    }//end explainStandard()
+
+
+    /**
      * Prints out the usage information for this script.
      *
      * @return void
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsapvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -692,6 +757,7 @@ class PHP_CodeSniffer_CLI
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
+        echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
