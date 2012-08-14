@@ -208,6 +208,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP" name="Hgblame.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
+     <file baseinstalldir="PHP" name="Notifysend.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="PHP" name="Source.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
