@@ -357,7 +357,7 @@ class PHP_CodeSniffer_CLI
                         $report = substr($arg, 7);
                         $output = null;
                     } else {
-                        
+
                         $report = substr($arg, 7, ($split - 7));
                         $output = substr($arg, ($split + 1));
                         if ($output === false) {
@@ -376,6 +376,7 @@ class PHP_CodeSniffer_CLI
                                      'checkstyle',
                                      'csv',
                                      'emacs',
+                                     'notifysend',
                                      'source',
                                      'summary',
                                      'svnblame',
@@ -711,7 +712,8 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "emacs"'.PHP_EOL;
-        echo '                      "source", "summary", "svnblame", "gitblame" or "hgblame" report'.PHP_EOL;
+        echo '                      "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
+        echo '                      "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
