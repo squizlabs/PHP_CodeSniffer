@@ -190,4 +190,11 @@ class MyClass
     /* @codingStandardsIgnoreEnd */
     public function __construct() {}
 }
+
+class Magic_Case_Test {
+    function __Construct() {}
+    function __isSet() {}
+    function __tostring() {}
+}
+function __autoLoad() {}
 ?>

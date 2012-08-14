@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
   - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
+  - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
  </notes>
  <contents>
   <dir name="/">
