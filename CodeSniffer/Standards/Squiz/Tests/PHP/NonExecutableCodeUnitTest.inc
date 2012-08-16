@@ -139,6 +139,22 @@ interface myInterface {
 }
 echo 'hello';
 
+function foo($color) {
+    switch ($color) {
+        case 'red':
+            return 'yuck';
+            break;
+        case 'blue':
+            return 'yuck';
+            break;
+        case 'orange':
+            return 'yay';
+            break;
+        default:
+            return 'boring';
+    }
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

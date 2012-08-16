@@ -147,6 +147,17 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 return;
             }
 
+            // Special case for BREAK statements sitting directly inside SWITCH
+            // statements. If we get to this point, we know the BREAK is not being
+            // used to close a CASE statement, so it is most likely non-executable
+            // code itself (as is the case when you put return; break; at the end of
+            // a case). So we need to ignore this token.
+            if ($tokens[$condition]['code'] === T_SWITCH
+                && $tokens[$stackPtr]['code'] === T_BREAK
+            ) {
+                return;
+            }
+
             $closer = $tokens[$condition]['scope_closer'];
 
             // If the closer for our condition is shared with other openers,
