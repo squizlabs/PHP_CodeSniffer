@@ -177,7 +177,7 @@ switch (name) {
             break;
 
             case "2":
-                return true;
+            return true;
             break;
 
             default:
@@ -193,7 +193,7 @@ switch (name2) {
     break;
 
     case "2":
-        return true;
+    return true;
     break;
 
     default:
@@ -207,8 +207,7 @@ switch (name) {
     case "1":
         switch (name2) {
             case "1":
-                return true;
-            break;
+            return true;
 
             default:
                 // No default.
@@ -229,12 +228,31 @@ switch (name2) {
 
 switch (foo) {
     case "1":
-        return true;
-    break;
+    return true;
 
     default:
         if (foo === false) {
             break;
         }
     break;
+}
+
+// Valid SWITCH statement.
+switch (something) {
+    case '1':
+        myvar = '1';
+    return '1';
+
+    case '2':
+    case '3':
+        myvar = '5';
+    return '2';
+
+    case '4':
+        myvar = '4';
+    return '3';
+
+    default:
+        myvar = null;
+    return '4';
 }
