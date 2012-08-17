@@ -708,7 +708,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                         $this->currentFile->addError($error, $errorPos, $code, $data);
                     }
-                } else {
+                } else if (substr($paramName, -4) !== ',...') {
                     // We must have an extra parameter comment.
                     $error = 'Superfluous doc comment at position '.$pos;
                     $this->currentFile->addError($error, $errorPos, 'ExtraParamComment');
