@@ -27,6 +27,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
+  - PHP 5.4 short array syntax is now detected and tokens are assigned to the open and close characters
+    -- New tokens are T_OPEN_SHORT_ARRAY and T_CLOSE_SHORT_ARRAY as PHP does not define its own
   - Added the ability to explain a coding standard by listing the sniffs that it includes
     -- The sniff list includes all imported and native sniffs
     -- Explain a standard by using the -e and --standard=[standard] command line arguments

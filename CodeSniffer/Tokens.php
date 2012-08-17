@@ -64,23 +64,25 @@ define('T_BACKTICK', 1046);
 define('T_START_NOWDOC', 1047);
 define('T_NOWDOC', 1048);
 define('T_END_NOWDOC', 1049);
+define('T_OPEN_SHORT_ARRAY', 1050);
+define('T_CLOSE_SHORT_ARRAY', 1051);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1050);
+    define('T_NAMESPACE', 1052);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1051);
+    define('T_NS_SEPARATOR', 1053);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1052);
+    define('T_GOTO', 1054);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1053);
+    define('T_TRAIT', 1055);
 }
 
 /**
