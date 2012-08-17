@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
   - Fixed bug #17908 : CodeSniffer does not recognise optional @params
     -- Thanks to Pete Walker for the patch
+  - Fixed bug #19538 : Function identation code sniffer checks inside short arrays
   - Fixed bug #19565 : Non-Executable Code Sniff Broken for Case Statements with both return and break
  </notes>
  <contents>

@@ -153,4 +153,36 @@ public function doSomething()
 }
 
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments true
+
+// Don't report errors for closing braces. Leave that to other sniffs.
+foo(
+    [
+        'this',
+        'is',
+        'an',
+        'array'
+    ],
+[
+        'this',
+        'is',
+        'an',
+        'array'
+     ],
+    array(
+        'this',
+        'is',
+        'an',
+        'array'
+    ),
+    array(
+        'this',
+        'is',
+        'an',
+        'array'
+     ),
+    function($x)
+    {
+         return trim($x);
+   }
+);
 ?>

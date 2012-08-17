@@ -264,6 +264,13 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 continue;
             }
 
+            // Skip the rest of a short array.
+            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
+                $i        = $tokens[$i]['bracket_closer'];
+                $lastLine = $tokens[$i]['line'];
+                continue;
+            }
+
             if ($this->allowMultipleArguments === false && $tokens[$i]['code'] === T_COMMA) {
                 // Comma has to be the last token on the line.
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), $closeBracket, true);
