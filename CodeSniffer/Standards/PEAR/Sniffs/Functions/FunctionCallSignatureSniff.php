@@ -42,6 +42,13 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public $allowMultipleArguments = true;
 
+    /**
+     * If TRUE, multi-line function calls do not require a line-break after the opening paren
+     *
+     * @var bool
+     */
+    public $allowSameLineArguments = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -283,7 +290,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }
         }//end for
 
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+        if (!$this->allowSameLineArguments && $tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
         }
