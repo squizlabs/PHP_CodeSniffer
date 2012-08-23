@@ -49,6 +49,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public $allowSameLineArguments = false;
 
+    /**
+     * If TRUE, multi-line function calls do not require a separate line for the closing paren
+     *
+     * @var bool
+     */
+    public $allowSameLineClosingParen = false;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -296,7 +302,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+        if (!$this->allowSameLineClosingParen && $tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
         }
