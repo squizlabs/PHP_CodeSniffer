@@ -152,7 +152,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                     $nextCloser
                 );
 
-                if ($nextCode !== FALSE) {
+                if ($nextCode !== false) {
                     $prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCode - 1), $nextCase, true);
                     if ($tokens[$prevCode]['code'] !== T_COMMENT) {
                         $error = 'There must be a comment when fall-through is intentional in a non-empty case body';

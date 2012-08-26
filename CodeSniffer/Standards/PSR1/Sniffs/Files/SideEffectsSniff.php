@@ -78,8 +78,12 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
      * Processes this sniff, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the token stack.
+     * @param int                  $start     The first position
+     *                                        in the token stack
+     * @param int                  $end       The last position
+     *                                        in the token stack
+     * @param array                $tokens    The stack of tokens that make up
+     *                                        the file
      *
      * @return void
      */
