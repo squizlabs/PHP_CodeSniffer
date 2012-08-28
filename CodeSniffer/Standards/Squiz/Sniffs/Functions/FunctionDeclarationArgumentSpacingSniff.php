@@ -208,12 +208,12 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     } else if ($gap !== 1) {
                         // Just make sure this is not actually an indent.
                         if ($tokens[$whitespace]['line'] === $tokens[($whitespace - 1)]['line']) {
-                          $error = 'Expected 1 space between comma and argument "%s"; %s found';
-                          $data  = array(
-                                    $arg,
-                                    $gap,
-                                   );
-                          $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
+                            $error = 'Expected 1 space between comma and argument "%s"; %s found';
+                            $data  = array(
+                                        $arg,
+                                        $gap,
+                                    );
+                            $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
                         }
                     }//end if
                 } else {
