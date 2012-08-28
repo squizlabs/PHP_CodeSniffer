@@ -75,17 +75,19 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Processes this sniff, when one of its tokens is encountered.
+     * Searches for symbol declarations and side effects.
+     *
+     * Returns the positions of both the first symbol declaraed and the first
+     * side effect in the file. A NULL value for either indicates nothing was
+     * found.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $start     The first position
-     *                                        in the token stack
-     * @param int                  $end       The last position
-     *                                        in the token stack
+     * @param int                  $start     The token to start searching from.
+     * @param int                  $end       The token to search to.
      * @param array                $tokens    The stack of tokens that make up
-     *                                        the file
+     *                                        the file.
      *
-     * @return void
+     * @return array
      */
     private function _searchForConflict(PHP_CodeSniffer_File $phpcsFile, $start, $end, $tokens)
     {
