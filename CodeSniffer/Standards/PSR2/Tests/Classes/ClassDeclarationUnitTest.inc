@@ -18,7 +18,7 @@ implements \ArrayAccess, \Countable
 
 class ClassName extends  ParentClass  implements
    \ArrayAccess,
-        \Countable,
+        \Foo\Bar\Countable,
     \Serializable {
     // constants, properties, methods
 
@@ -32,7 +32,7 @@ class ClassName extends ParentClass  implements \ArrayAccess,
 }
 
 class ClassName extends ParentClass  implements
-    \ArrayAccess, \Countable, \Serializable
+    \ArrayAccess, \Countable, \Foo\Serializable
 {
     // constants, properties, methods
 }
@@ -46,6 +46,24 @@ if ($foo) {
     {
         // constants, properties, methods
     }
+}
+
+class Foo extends \Foo\Bar\Object
+{
+}
+
+class ClassName extends ParentClass implements
+    \Foo\Bar\Countable,
+    \Serializable
+{
+    // constants, properties, methods
+}
+
+class ClassName extends ParentClass implements
+    \Foo\Bar\Countable ,
+    \Serializable
+{
+    // constants, properties, methods
 }
 
 ?>
