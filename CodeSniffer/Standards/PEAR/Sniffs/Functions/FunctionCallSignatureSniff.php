@@ -242,7 +242,16 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 }
 
                 if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    $foundIndent = 0;
+                    // Just check if it is a multi-line block comment. If so, we can
+                    // calculate the indent from the whitespace before the content.
+                    if ($tokens[$i]['code'] === T_COMMENT
+                        && $tokens[($i - 1)]['code'] === T_COMMENT
+                    ) {
+                        $trimmed     = ltrim($tokens[$i]['content']);
+                        $foundIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
+                    } else {
+                        $foundIndent = 0;
+                    }
                 } else {
                     $foundIndent = strlen($tokens[$i]['content']);
                 }

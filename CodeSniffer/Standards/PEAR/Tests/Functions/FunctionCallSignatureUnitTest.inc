@@ -185,4 +185,18 @@ foo(
          return trim($x);
    }
 );
+
+function foo()
+{
+    myFunction(
+        'string'.
+        // comment
+        // comment 
+        'string'.
+        /* comment
+         * comment
+        */
+        'string'.
+    );
+}
 ?>
