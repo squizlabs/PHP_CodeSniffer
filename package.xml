@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Old method remains for backwards compatibility
   - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
   - Squiz SwitchDeclarationSniff now allows RETURN statements to close a CASE or DEFAULT statement
+  - Squiz BlockCommentSniff now correctly reports an error for blank lines before blocks at the start of a control structure
   - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
   - Fixed bug #17908 : CodeSniffer does not recognise optional @params
     -- Thanks to Pete Walker for the patch
