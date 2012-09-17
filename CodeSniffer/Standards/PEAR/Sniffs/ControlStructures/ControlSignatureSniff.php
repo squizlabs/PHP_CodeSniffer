@@ -32,15 +32,12 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === fal
 class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffer_Standards_AbstractPatternSniff
 {
 
-
     /**
-     * Constructs a PEAR_Sniffs_ControlStructures_ControlSignatureSniff.
+     * If true, comments will be ignored if they are found in the code.
+     *
+     * @var boolean
      */
-    public function __construct()
-    {
-        parent::__construct(true);
-
-    }//end __construct()
+    public $ignoreComments = true;
 
 
     /**
