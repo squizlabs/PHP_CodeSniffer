@@ -32,4 +32,11 @@ case 2:
         echo 'Default case';
     break;
 }
+
+switch ($foo) {
+    case 'Foo': {
+        echo 'foo';
+        break;
+        }
+}
 ?>

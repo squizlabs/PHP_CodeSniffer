@@ -106,7 +106,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             }
 
             if ($type === 'case'
-                && ($tokens[($nextCase + 1)]['type'] !== 'T_WHITESPACE'
+                && ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE
                 || $tokens[($nextCase + 1)]['content'] !== ' ')
             ) {
                 $error = 'CASE keyword must be followed by a single space';
@@ -114,9 +114,14 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             }
 
             $opener = $tokens[$nextCase]['scope_opener'];
-            if ($tokens[($opener - 1)]['type'] === 'T_WHITESPACE') {
-                $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
-                $phpcsFile->addError($error, $nextCase, 'SpaceBeforeColon'.$type);
+            if ($tokens[$opener]['code'] === T_COLON) {
+                if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
+                    $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
+                    $phpcsFile->addError($error, $nextCase, 'SpaceBeforeColon'.$type);
+                }
+            } else {
+                $error = strtoupper($type).' statements must not be defined using curly braces';
+                $phpcsFile->addError($error, $nextCase, 'WrongOpener'.$type);
             }
 
             $nextCloser = $tokens[$nextCase]['scope_closer'];
