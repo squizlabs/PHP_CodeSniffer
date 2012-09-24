@@ -43,7 +43,7 @@ class PSR2_Tests_Files_EndFileNewlineUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'EndFileNewlineUnitTest.2.inc':
+        case 'EndFileNewlineUnitTest.1.inc':
         case 'EndFileNewlineUnitTest.3.inc':
             return array(
                     2 => 1,
