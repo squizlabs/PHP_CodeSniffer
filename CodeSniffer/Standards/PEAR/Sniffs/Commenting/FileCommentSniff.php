@@ -584,31 +584,37 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     protected function processPackage($errorPos)
     {
         $package = $this->commentParser->getPackage();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
-
-                    $error     = 'Package name "%s" is not valid; consider "%s" instead';
-                    $validName = trim($newName, '_');
-                    $data      = array(
-                                  $content,
-                                  $validName,
-                                 );
-                    $this->currentFile->addError($error, $errorPos, 'InvalidPackage', $data);
-                }
-            } else {
-                $error = '@package tag must contain a name';
-                $this->currentFile->addError($error, $errorPos, 'EmptyPackage');
-            }
+        if ($package === null) {
+            return;
         }
+
+        $content = $package->getContent();
+        if ($content === '') {
+            $error = '@package tag must contain a name';
+            $this->currentFile->addError($error, $errorPos, 'EmptyPackage');
+            return;
+        }
+
+        if (PHP_CodeSniffer::isUnderscoreName($content) === true) {
+            return;
+        }
+
+        $newContent = str_replace(' ', '_', $content);
+        $newContent = preg_replace('/[^A-Za-z_]/', '', $newContent);
+        $nameBits   = explode('_', $newContent);
+        $firstBit   = array_shift($nameBits);
+        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+        foreach ($nameBits as $bit) {
+            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+        }
+
+        $error     = 'Package name "%s" is not valid; consider "%s" instead';
+        $validName = trim($newName, '_');
+        $data      = array(
+                      $content,
+                      $validName,
+                     );
+        $this->currentFile->addError($error, $errorPos, 'InvalidPackage', $data);
 
     }//end processPackage()
 

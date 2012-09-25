@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Pete Walker for the patch
   - Fixed bug #19538 : Function indentation code sniffer checks inside short arrays
   - Fixed bug #19565 : Non-Executable Code Sniff Broken for Case Statements with both return and break
+  - Fixed bug #19612 : Invalid @package suggestion
  </notes>
  <contents>
   <dir name="/">
