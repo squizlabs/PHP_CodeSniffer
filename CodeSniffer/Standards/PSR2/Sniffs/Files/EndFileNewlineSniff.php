@@ -67,6 +67,14 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
+        // Hard-coding the expected \n in this sniff as it is PSR-2 specific and
+        // PSR-2 enforces the use of unix style newlines.
+        if (substr($tokens[$stackPtr]['content'], -1) !== "\n") {
+            $error = 'Expected 1 newline at end of file; 0 found';
+            $phpcsFile->addError($error, $stackPtr, 'NoneFound');
+            return;
+        }
+
         // Go looking for the last non-empty line.
         $lastLine = $tokens[$stackPtr]['line'];
         while ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
@@ -74,14 +82,10 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         }
 
         $lastCodeLine = $tokens[$stackPtr]['line'];
-        $blankLines   = $lastLine - $lastCodeLine;
-        if ($blankLines === 0) {
-            $error = 'Expected 1 blank line at end of file; 0 found';
-            $data  = array($blankLines);
-            $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
-        } else if ($blankLines > 1) {
-            $error = 'Expected 1 blank line at end of file; "%s" found';
-            $data  = array($blankLines);
+        $blankLines   = ($lastLine - $lastCodeLine);
+        if ($blankLines > 0) {
+            $error = 'Expected 1 newline at end of file; %s found';
+            $data  = array($blankLines + 1);
             $phpcsFile->addError($error, $stackPtr, 'TooMany', $data);
         }
 
