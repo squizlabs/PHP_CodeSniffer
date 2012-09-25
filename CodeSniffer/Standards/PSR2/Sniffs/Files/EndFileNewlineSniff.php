@@ -84,7 +84,7 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         $lastCodeLine = $tokens[$stackPtr]['line'];
         $blankLines   = ($lastLine - $lastCodeLine);
         if ($blankLines > 0) {
-            $error = 'Expected 1 newline at end of file; %s found';
+            $error = 'Expected 1 blank line at end of file; %s found';
             $data  = array($blankLines + 1);
             $phpcsFile->addError($error, $stackPtr, 'TooMany', $data);
         }
