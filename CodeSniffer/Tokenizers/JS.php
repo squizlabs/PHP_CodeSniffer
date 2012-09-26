@@ -106,6 +106,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                                            'end'    => array(
                                                         T_BREAK,
                                                         T_RETURN,
+                                                        T_CONTINUE,
+                                                        T_THROW,
                                                        ),
                                            'strict' => true,
                                            'shared' => true,
@@ -120,6 +122,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                                            'end'    => array(
                                                         T_BREAK,
                                                         T_RETURN,
+                                                        T_CONTINUE,
+                                                        T_THROW,
                                                        ),
                                            'strict' => true,
                                            'shared' => true,

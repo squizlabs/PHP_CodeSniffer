@@ -148,7 +148,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             );
 
             if ($tokens[$nextCode]['code'] !== T_CASE && $tokens[$nextCode]['code'] !== T_DEFAULT) {
-                // This case statement has content. If the next case of default comes
+                // This case statement has content. If the next case or default comes
                 // before the closer, it means we dont have a terminating statement
                 // and instead need a comment.
                 $nextCode = $phpcsFile->findNext(

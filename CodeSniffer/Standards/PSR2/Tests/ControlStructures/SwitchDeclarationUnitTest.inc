@@ -39,4 +39,22 @@ switch ($foo) {
         break;
         }
 }
+
+while ($i < 10) {
+    switch ($foo) {
+        case '1':
+        case '2':
+            ++$i;
+            continue 2;
+        case '3':
+            return $i;
+    }
+}
+
+switch (true) {
+    case is_resource($value):
+        throw new Exception('foo');
+    case is_object($value):
+        return 'object';
+}
 ?>
