@@ -67,13 +67,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         $caseCount     = 0;
         $foundDefault  = false;
 
-        while (($nextCase = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), ($nextCase + 1), $switch['scope_closer'])) !== false) {
-            // Skip nested SWITCH statements; they are handled on their own.
-            if ($tokens[$nextCase]['code'] === T_SWITCH) {
-                $nextCase = $tokens[$nextCase]['scope_closer'];
-                continue;
-            }
-
+        while (($nextCase = $this->_findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
                 $type         = 'default';
                 $foundDefault = true;
@@ -151,12 +145,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 // This case statement has content. If the next case or default comes
                 // before the closer, it means we dont have a terminating statement
                 // and instead need a comment.
-                $nextCode = $phpcsFile->findNext(
-                    array(T_CASE, T_DEFAULT),
-                    ($tokens[$nextCase]['scope_opener'] + 1),
-                    $nextCloser
-                );
-
+                $nextCode = $this->_findNextCase($phpcsFile, ($tokens[$nextCase]['scope_opener'] + 1), $nextCloser);
                 if ($nextCode !== false) {
                     $prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCode - 1), $nextCase, true);
                     if ($tokens[$prevCode]['code'] !== T_COMMENT) {
@@ -164,10 +153,39 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                         $phpcsFile->addError($error, $nextCase, 'TerminatingComment');
                     }
                 }
-            }//end if
+            }
         }//end while
 
     }//end process()
+
+
+    /**
+     * Find the next CASE or DEFAULT statement from a point in the file.
+     *
+     * Note that nested switches are ignored.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position to start looking at.
+     * @param int                  $end       The position to stop looking at.
+     *
+     * @return int | bool
+     */
+    private function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end)
+    {
+        $tokens = $phpcsFile->getTokens();
+        while (($stackPtr = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), $stackPtr, $end)) !== false) {
+            // Skip nested SWITCH statements; they are handled on their own.
+            if ($tokens[$stackPtr]['code'] === T_SWITCH) {
+                $stackPtr = $tokens[$stackPtr]['scope_closer'];
+                continue;
+            }
+
+            break;
+        }
+
+        return $stackPtr;
+
+    }//end _findNextCase()
 
 
 }//end class

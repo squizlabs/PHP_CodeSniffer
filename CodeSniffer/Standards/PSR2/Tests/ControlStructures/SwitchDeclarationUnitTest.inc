@@ -57,4 +57,14 @@ switch (true) {
     case is_object($value):
         return 'object';
 }
+
+switch (0) {
+    case 0:
+        switch (1) {
+            case 1:
+                echo 'a';
+                break;
+        }
+        break;
+}
 ?>

@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2012-09-26</date>
  <time>14:13:00</time>
  <version>
-  <release>1.4.0</release>
-  <api>1.4.0</api>
+  <release>1.4.1</release>
+  <api>1.4.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,31 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
-  - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
-  - PHP 5.4 short array syntax is now detected and tokens are assigned to the open and close characters
-    -- New tokens are T_OPEN_SHORT_ARRAY and T_CLOSE_SHORT_ARRAY as PHP does not define its own
-  - Added the ability to explain a coding standard by listing the sniffs that it includes
-    -- The sniff list includes all imported and native sniffs
-    -- Explain a standard by using the -e and --standard=[standard] command line arguments
-    -- E.g., phpcs -e --standard=Squiz
-    -- Thanks to Ben Selby for the idea
-  - Added report to show results using notify-send
-    -- Use --report=notifysend to generate the report
-    -- Thanks to Christian Weiske for the contribution
-  - The JS tokenizer now recognises RETURN as a valid closer for CASE and DEFAULT inside switch statements
-  - AbstractPatternSniff now sets the ignoreComments option using a public var rather than through the constructor
-    -- This allows the setting to be overwritten in ruleset.xml files
-    -- Old method remains for backwards compatibility
-  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff no longer report errors on classes named True, False or Null
-  - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
-  - Squiz SwitchDeclarationSniff now allows RETURN statements to close a CASE or DEFAULT statement
-  - Squiz BlockCommentSniff now correctly reports an error for blank lines before blocks at the start of a control structure
-  - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
-  - Fixed bug #17908 : CodeSniffer does not recognise optional @params
-    -- Thanks to Pete Walker for the patch
-  - Fixed bug #19538 : Function indentation code sniffer checks inside short arrays
-  - Fixed bug #19565 : Non-Executable Code Sniff Broken for Case Statements with both return and break
-  - Fixed bug #19612 : Invalid @package suggestion
+  - Fixed bug #19616 : Nested switches cause false error in PSR2
  </notes>
  <contents>
   <dir name="/">
