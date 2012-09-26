@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - AbstractPatternSniff now sets the ignoreComments option using a public var rather than through the constructor
     -- This allows the setting to be overwritten in ruleset.xml files
     -- Old method remains for backwards compatibility
+  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff no longer report errors on classes named True, False or Null
   - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
   - Squiz SwitchDeclarationSniff now allows RETURN statements to close a CASE or DEFAULT statement
   - Squiz BlockCommentSniff now correctly reports an error for blank lines before blocks at the start of a control structure

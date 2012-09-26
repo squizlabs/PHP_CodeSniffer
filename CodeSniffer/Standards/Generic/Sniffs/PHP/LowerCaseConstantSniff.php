@@ -75,6 +75,14 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        // Is this a class name?
+        if ($tokens[$prevPtr]['code'] === T_CLASS
+            || $tokens[$prevPtr]['code'] === T_EXTENDS
+            || $tokens[$prevPtr]['code'] === T_IMPLEMENTS
+        ) {
+            return;
+        }
+
         // Class or namespace?
         if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR) {
             return;

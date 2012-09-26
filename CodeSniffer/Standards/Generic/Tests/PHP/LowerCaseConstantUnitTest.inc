@@ -52,4 +52,6 @@ $x->NULL = 7;
 
 use Zend\Log\Writer\NULL as NullWriter;
 new \Zend\Log\Writer\NULL()
+
+class True extends Null implements False {}
 ?>
