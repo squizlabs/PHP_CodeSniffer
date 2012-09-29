@@ -991,7 +991,12 @@ class PHP_CodeSniffer
 
         foreach ($this->listeners as $listenerClass) {
             // Work out the internal code for this sniff.
-            $parts = explode('_', $listenerClass);
+            if (false === strstr($listenerClass, '\\')) {
+                $parts = explode('_', $listenerClass);
+            } else {
+                $parts = explode('\\', $listenerClass);
+            }
+
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
