@@ -659,7 +659,16 @@ class PHP_CodeSniffer
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
+            /**
+             * PHP 5.3 uses the namespace seperator \ and not an underscore.
+             */
+            $classNameNS = str_replace('_', '\\', $className);
+
             include_once $file;
+
+            if (true === class_exists($classNameNS, false)) {
+                $className = $classNameNS;
+            }
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
