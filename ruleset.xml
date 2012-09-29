@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="PEAR-phpcs">
+ <description>The PEAR coding standard, as typically used by PHPCS.</description>
+
+ <!-- Include some additional sniffs from the Generic standard -->
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+ <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+ <rule ref="Generic.PHP.LowerCaseConstant"/>
+ <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+ <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+
+ <!-- Use Unix newlines -->
+ <rule ref="Generic.Files.LineEndings">
+  <properties>
+   <property name="eolChar" value="\n"/>
+  </properties>
+ </rule>
+
+ <!-- This messgae is not required as spaces are allowed for alignment -->
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+  <severity>0</severity>
+ </rule>
+
+ <!-- Use warnings for inline control structures -->
+ <rule ref="Generic.ControlStructures.InlineControlStructure">
+  <properties>
+   <property name="error" value="false"/>
+  </properties>
+ </rule>
+
+</ruleset>
