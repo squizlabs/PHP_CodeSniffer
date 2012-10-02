@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
+    -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
+    -- Thanks to Till Klampaeckel for the patch
   - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
     -- Thanks to Arnout Boks for the patch
   - Fixed bug #19616 : Nested switches cause false error in PSR2

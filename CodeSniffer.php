@@ -676,14 +676,13 @@ class PHP_CodeSniffer
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
-            /**
-             * PHP 5.3 uses the namespace seperator \ and not an underscore.
-             */
-            $classNameNS = str_replace('_', '\\', $className);
-
             include_once $file;
 
-            if (true === class_exists($classNameNS, false)) {
+            // Support the use of PHP namespaces. If the class name we included
+            // contains namespace seperators instead of underscores, use this as the
+            // class name from now on.
+            $classNameNS = str_replace('_', '\\', $className);
+            if (class_exists($classNameNS, false) === true) {
                 $className = $classNameNS;
             }
 
@@ -990,8 +989,9 @@ class PHP_CodeSniffer
                                  );
 
         foreach ($this->listeners as $listenerClass) {
-            // Work out the internal code for this sniff.
-            if (false === strstr($listenerClass, '\\')) {
+            // Work out the internal code for this sniff. Detect usage of namespace
+            // seperators instead of underscores to support PHP namespaces.
+            if (strstr($listenerClass, '\\') === false) {
                 $parts = explode('_', $listenerClass);
             } else {
                 $parts = explode('\\', $listenerClass);
