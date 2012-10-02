@@ -187,6 +187,8 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
+        $closureUsedInFunctionCall = false;
+
         // Each line between the parenthesis should be indented n spaces.
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $lastLine     = $tokens[$openBracket]['line'];
@@ -268,6 +270,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
             // Skip the rest of a closure.
             if ($tokens[$i]['code'] === T_CLOSURE) {
+                $closureUsedInFunctionCall  = true;
                 $i        = $tokens[$i]['scope_closer'];
                 $lastLine = $tokens[$i]['line'];
                 continue;
@@ -292,15 +295,22 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }
         }//end for
 
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
-            $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
-        }
+        /*If a closure was used in the function call skip those checks to allow the following call syntax:              
+        usort($array, function($a, $b) {                                                                                
+           return strncmp($a->x, $b->x);                                                                                
+        });                                                                                                             
+        */                                                                                                              
+        if(!$closureUsedInFunctionCall) {
+            if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+                $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
+                $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
+            }
 
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
-            $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
-            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
+            if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+                $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
+                $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+            }
         }
 
     }//end processMultiLineCall()
