@@ -105,4 +105,9 @@ $boo = -$foo;
 function foo($boo = -1) {}
 $foo = array('boo' => -1);
 $x = $test ? -1 : 1;
+
+switch ($foo) {
+	case -1:
+		break;
+}
 ?>
