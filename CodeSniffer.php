@@ -676,7 +676,16 @@ class PHP_CodeSniffer
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
+            /**
+             * PHP 5.3 uses the namespace seperator \ and not an underscore.
+             */
+            $classNameNS = str_replace('_', '\\', $className);
+
             include_once $file;
+
+            if (true === class_exists($classNameNS, false)) {
+                $className = $classNameNS;
+            }
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
@@ -982,7 +991,12 @@ class PHP_CodeSniffer
 
         foreach ($this->listeners as $listenerClass) {
             // Work out the internal code for this sniff.
-            $parts = explode('_', $listenerClass);
+            if (false === strstr($listenerClass, '\\')) {
+                $parts = explode('_', $listenerClass);
+            } else {
+                $parts = explode('\\', $listenerClass);
+            }
+
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
