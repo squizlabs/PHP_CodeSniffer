@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
+  - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
+    -- Thanks to Arnout Boks for the patch
   - Fixed bug #19616 : Nested switches cause false error in PSR2
   - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
  </notes>
