@@ -282,7 +282,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
             if ($this->allowMultipleArguments === false && $tokens[$i]['code'] === T_COMMA) {
                 // Comma has to be the last token on the line.
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), $closeBracket, true);
+                $next = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($i + 1), $closeBracket, true);
                 if ($next !== false
                     && $tokens[$i]['line'] === $tokens[$next]['line']
                 ) {

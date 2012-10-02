@@ -152,6 +152,12 @@ public function doSomething()
         );
 }
 
+doError(
+    404, // status code
+    'Not Found', // error name
+    'Check your id' // fix
+);
+
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments true
 
 // Don't report errors for closing braces. Leave that to other sniffs.

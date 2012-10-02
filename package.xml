@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Fixed bug #19616 : Nested switches cause false error in PSR2
+  - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
  </notes>
  <contents>
   <dir name="/">
