@@ -40,10 +40,16 @@ class PSR1_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2 => 1,
-                3 => 2,
-               );
+        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+            return array(
+                    2 => 1,
+                    3 => 2,
+                   );
+        } else {
+            return array(
+                    3 => 1,
+                   );
+        }
 
     }//end getErrorList()
 
