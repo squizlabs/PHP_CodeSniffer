@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project name="PHP_CodeSniffer" default="build" basedir=".">
+	<condition property="phpunit.bin" value="phpunit.bat" else="phpunit">
+        <os family="windows"/>
+    </condition>
+
+	<condition property="pear.bin" value="pear.bat" else="pear">
+        <os family="windows"/>
+    </condition>
+
+	<target name="clean" description="Clean up and create artifact directories">
+		<delete dir="${basedir}/lib" />
+		<delete dir="${basedir}/build/api"/>
+		<delete dir="${basedir}/build/code-browser"/>
+		<delete dir="${basedir}/build/coverage"/>
+		<delete dir="${basedir}/build/logs"/>
+		<delete dir="${basedir}/build/pdepend"/>
+		<delete dir="${basedir}/build"/>
+
+		<mkdir dir="${basedir}/lib/" />
+		<mkdir dir="${basedir}/build"/>
+		<mkdir dir="${basedir}/build/api"/>
+		<mkdir dir="${basedir}/build/code-browser"/>
+		<mkdir dir="${basedir}/build/coverage"/>
+		<mkdir dir="${basedir}/build/logs"/>
+		<mkdir dir="${basedir}/build/pdepend"/>
+	</target>
+
+	<target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer">
+		<exec executable="phpcs" output="/dev/null">
+			<arg value="--report=checkstyle" />
+			<arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+			<arg value="--ignore=*/Tests/*" />
+			<arg value="--standard=ruleset.xml" />
+			<arg path="${basedir}" />
+		</exec>
+	</target>
+
+	<target name="phpunit">
+		<exec dir="${basedir}" executable="${phpunit.bin}" failonerror="true">
+			<arg line="tests/AllTests.php"/>
+		</exec>
+	</target>
+
+	<target name="package">
+		<exec dir="${basedir}/build" executable="${pear.bin}" failonerror="true">
+			<arg line="package ../package.xml"/>
+		</exec>
+	</target>
+
+	<target name="build" depends="clean,phpunit,phpcs-ci,package"/>
+</project>
