@@ -56,6 +56,13 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        // We are only interested if this is the first open tag.
+        if ($stackPtr !== 0) {
+            if ($phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== false) {
+                return;
+            }
+        }
+
         $fileName = basename($phpcsFile->getFilename());
         $lowercaseFileName = strtolower($fileName);
         if ($fileName !== $lowercaseFileName) {
