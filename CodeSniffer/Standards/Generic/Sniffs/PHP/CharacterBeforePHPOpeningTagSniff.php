@@ -57,11 +57,8 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         if ($stackPtr > 0) {
-            $tokens        = $phpcsFile->getTokens();
-            $previousToken = $tokens[($stackPtr - 1)]['content'];
-            $data          = array($previousToken);
-            $error         = 'No character is allowed before php opening tag; expect "<?php " but found "%s <?php ".';
-            $phpcsFile->addError($error, $stackPtr, 'NoCharacterBeforePHPOpeningTag', $data);
+            $error = 'The opening PHP tag must be the first content in the file.';
+            $phpcsFile->addError($error, $stackPtr, 'NoCharacterBeforePHPOpeningTag');
         }
 
     }//end process()
