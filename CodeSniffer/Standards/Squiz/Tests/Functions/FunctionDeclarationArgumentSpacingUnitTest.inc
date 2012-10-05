@@ -31,4 +31,11 @@ function multiLineFunction(
     $lastOffset=0
 ) {
 }
+
+$noArgs_longVars = function ($longVar1,  $longerVar2= false) use (
+    $longVar1 ,  $longerVar2= false,
+    $muchLongerVar3
+)  {
+    // body
+};
 ?>

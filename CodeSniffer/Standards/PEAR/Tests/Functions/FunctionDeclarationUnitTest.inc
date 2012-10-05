@@ -14,7 +14,7 @@ $fifthParameter=123.12, $sixthParam=true
 function blah() {
 }
 
-function blah()
+function  blah()
 {
 }
 
@@ -71,4 +71,42 @@ function validateUrl(
 ) {
 }
 
+$noArgs_longVars = function () use (
+    $longVar1,
+    $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
+
+$longArgs_longVars = function (
+    $longArgument,
+    $longerArgument,
+    $muchLongerArgument
+) use  (
+    $longVar1,
+    $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
+
+$longArgs_longVars = function (
+    $longArgument,
+    $longerArgument,
+    $muchLongerArgument
+    )  use (
+    $longVar1,
+    $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
+
+$longArgs_longVars = function (
+    $longArgument,
+    $muchLongerArgument) use (
+    $muchLongerVar3) {
+    // body
+};
 ?>

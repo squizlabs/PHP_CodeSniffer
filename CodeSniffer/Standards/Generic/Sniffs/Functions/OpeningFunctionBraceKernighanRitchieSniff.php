@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -23,8 +23,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -77,26 +77,34 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             return;
         }
 
-        // Checks that the closing parenthesis and the opening brace are
-        // separated by a whitespace character.
-        $closerColumn = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['column'];
-        $braceColumn  = $tokens[$openingBrace]['column'];
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
+            $length = 0;
+        } else if ($tokens[($closeBracket + 1)]['content'] === "\t") {
+            $length = '\t';
+        } else {
+            $length = strlen($tokens[($closeBracket + 1)]['content']);
+        }
 
-        $columnDifference = ($braceColumn - $closerColumn);
-
-        if ($columnDifference !== 2) {
-            $error = 'Expected 1 space between the closing parenthesis and the opening brace; found %s';
-            $data  = array(($columnDifference - 1));
-            $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
+        if ($length !== 1) {
+            $error = 'Expected 1 space after closing parenthesis; found %s';
+            $data  = array($length);
+            $phpcsFile->addError($error, $closeBracket, 'SpaceAfterBracket', $data);
             return;
         }
 
-        // Check that a tab was not used instead of a space.
-        $spaceTokenPtr = ($tokens[$stackPtr]['parenthesis_closer'] + 1);
-        $spaceContent  = $tokens[$spaceTokenPtr]['content'];
-        if ($spaceContent !== ' ') {
-            $error = 'Expected a single space character between closing parenthesis and opening brace; found %s';
-            $data  = array($spaceContent);
+        $closeBrace = $tokens[$stackPtr]['scope_opener'];
+        if ($tokens[($closeBrace - 1)]['code'] !== T_WHITESPACE) {
+            $length = 0;
+        } else if ($tokens[($closeBrace - 1)]['content'] === "\t") {
+            $length = '\t';
+        } else {
+            $length = strlen($tokens[($closeBrace - 1)]['content']);
+        }
+
+        if ($length !== 1) {
+            $error = 'Expected 1 space before opening brace; found %s';
+            $data  = array($length);
             $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
             return;
         }

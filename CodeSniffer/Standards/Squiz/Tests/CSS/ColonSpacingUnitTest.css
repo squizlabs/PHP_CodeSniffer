@@ -21,3 +21,12 @@ margin-bottom:
     text-decoration: none;
     color: #444;
 }
+
+/* checking embedded PHP */
+li {
+    background:url(<?php print $staticserver; ?>/images/<?php print $staticdir; ?>/bullet.gif) left <?php print $left; ?>px no-repeat;
+    margin:0px;
+    padding-left:10px;
+    margin-bottom:<?php echo $marginBottom; ?>px;
+    line-height:13px;
+}

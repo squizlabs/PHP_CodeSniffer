@@ -9,8 +9,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -60,8 +60,8 @@ if (interface_exists('PHP_CodeSniffer_MultiFileSniff', true) === false) {
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -81,6 +81,14 @@ class PHP_CodeSniffer
      * @var array(PHP_CodeSniffer_File)
      */
     protected $files = array();
+
+    /**
+     * A cache of different token types, resolved into arrays.
+     *
+     * @var array()
+     * @see standardiseToken()
+     */
+    private static $_resolveTokenCache = array();
 
     /**
      * The directory to search for sniffs in.
@@ -481,8 +489,18 @@ class PHP_CodeSniffer
         $numProcessed = 0;
         $dots         = 0;
         $maxLength    = strlen($numFiles);
+        $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
+            $currDir = dirname($file);
+            if ($lastDir !== $currDir) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Changing into directory '.$currDir.PHP_EOL;
+                }
+
+                $lastDir = $currDir;
+            }
+
             $phpcsFile  = $this->processFile($file);
             $numProcessed++;
 
@@ -540,14 +558,13 @@ class PHP_CodeSniffer
      */
     public function processMulti()
     {
-        foreach ($this->_tokenListeners['multifile'] as $listener) {
+        foreach ($this->_tokenListeners['multifile'] as $listenerData) {
             // Set the name of the listener for error messages.
-            $activeListener = get_class($listener);
             foreach ($this->files as $file) {
-                $file->setActiveListener($activeListener);
+                $file->setActiveListener($listenerData['class']);
             }
 
-            $listener->process($this->files);
+            $listenerData['listener']->process($this->files);
         }
 
     }//end processMulti()
@@ -661,6 +678,14 @@ class PHP_CodeSniffer
 
             include_once $file;
 
+            // Support the use of PHP namespaces. If the class name we included
+            // contains namespace seperators instead of underscores, use this as the
+            // class name from now on.
+            $classNameNS = str_replace('_', '\\', $className);
+            if (class_exists($classNameNS, false) === true) {
+                $className = $classNameNS;
+            }
+
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
             $allowed = in_array(strtolower($className), $sniffs);
@@ -668,7 +693,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $listeners[] = $className;
+            $listeners[$className] = $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
@@ -757,7 +782,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = $sniff;
+                $files[] = realpath($sniff);
             }
         }
 
@@ -782,6 +807,22 @@ class PHP_CodeSniffer
         // hide and change internal messages.
         if (substr($sniff, 0, 9) === 'Internal.') {
             return $referencedSniffs;
+        }
+
+        // As sniffs can't begin with a full stop, assume sniffs in
+        // this format are relative paths and attempt to convert them
+        // to absolute paths. If this fails, let the sniff path run through
+        // the normal checks and have it fail as normal.
+        if (substr($sniff, 0, 1) === '.') {
+            $standardDir = self::$standardDir;
+            if (substr(self::$standardDir, -4) === '.xml') {
+                $standardDir = dirname($standardDir);
+            }
+
+            $realpath = realpath($standardDir.'/'.$sniff);
+            if ($realpath !== false) {
+                $sniff = $realpath;
+            }
         }
 
         $isDir = false;
@@ -948,29 +989,34 @@ class PHP_CodeSniffer
                                  );
 
         foreach ($this->listeners as $listenerClass) {
-            $listener = new $listenerClass();
+            // Work out the internal code for this sniff. Detect usage of namespace
+            // seperators instead of underscores to support PHP namespaces.
+            if (strstr($listenerClass, '\\') === false) {
+                $parts = explode('_', $listenerClass);
+            } else {
+                $parts = explode('\\', $listenerClass);
+            }
 
-            // Work out the internal code for this sniff.
-            $parts = explode('_', $listenerClass);
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
+
+            $this->listeners[$listenerClass] = new $listenerClass();
 
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
                 foreach ($this->ruleset[$code]['properties'] as $name => $value) {
-                    // Special case for booleans.
-                    if ($value === 'true') {
-                        $value = true;
-                    } else if ($value === 'false') {
-                        $value = false;
-                    }
-
-                    $listener->$name = $value;
+                    $this->setSniffProperty($listenerClass, $name, $value);
                 }
             }
 
-            if (($listener instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $listener->register();
+            $tokenizers = array('PHP');
+            $vars       = get_class_vars($listenerClass);
+            if (isset($vars['supportedTokenizers']) === true) {
+                $tokenizers = $vars['supportedTokenizers'];
+            }
+
+            if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_Sniff) === true) {
+                $tokens = $this->listeners[$listenerClass]->register();
                 if (is_array($tokens) === false) {
                     $msg = "Sniff $listenerClass register() method must return an array";
                     throw new PHP_CodeSniffer_Exception($msg);
@@ -981,16 +1027,52 @@ class PHP_CodeSniffer
                         $this->_tokenListeners['file'][$token] = array();
                     }
 
-                    if (in_array($listener, $this->_tokenListeners['file'][$token], true) === false) {
-                        $this->_tokenListeners['file'][$token][] = $listener;
+                    if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
+                        $this->_tokenListeners['file'][$token][] = array(
+                                                                    'listener'   => $this->listeners[$listenerClass],
+                                                                    'class'      => $listenerClass,
+                                                                    'tokenizers' => $tokenizers,
+                                                                   );
                     }
                 }
-            } else if (($listener instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
-                $this->_tokenListeners['multifile'][] = $listener;
+            } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
+                $this->_tokenListeners['multifile'][] = array(
+                                                         'listener'   => $this->listeners[$listenerClass],
+                                                         'class'      => $listenerClass,
+                                                         'tokenizers' => $tokenizers,
+                                                        );
             }
         }//end foreach
 
     }//end populateTokenListeners()
+
+
+    /**
+     * Set a single property for a sniff.
+     *
+     * @param string $listenerClass The class name of the sniff.
+     * @param string $name          The name of the property to change.
+     * @param string $value         The new value of the property.
+     *
+     * @return void
+     */
+    public function setSniffProperty($listenerClass, $name, $value) 
+    {
+        $name = trim($name);
+        if (is_string($value) === true) {
+            $value = trim($value);
+        }
+
+        // Special case for booleans.
+        if ($value === 'true') {
+            $value = true;
+        } else if ($value === 'false') {
+            $value = false;
+        }
+
+        $this->listeners[$listenerClass]->$name = $value;
+
+    }//end setSniffProperty()
 
 
     /**
@@ -1029,7 +1111,14 @@ class PHP_CodeSniffer
                         continue;
                     }
 
-                    if ($this->shouldProcessFile($file->getPathname()) === false) {
+                    $relativePath = $file->getPathname();
+
+                    if (strpos($relativePath, $path) === 0) {
+                        // The +1 cuts off the directory separator as well.
+                        $relativePath = substr($relativePath, (strlen($path) + 1));
+                    }
+
+                    if ($this->shouldProcessFile($relativePath) === false) {
                         continue;
                     }
 
@@ -1113,6 +1202,13 @@ class PHP_CodeSniffer
                              '*'   => '.*',
                             );
 
+            // We assume a / directory seperator, as do the exclude rules
+            // most developers write, so we need a special case for any system
+            // that is different.
+            if (DIRECTORY_SEPARATOR === '\\') {
+                $replacements['/'] = '\\\\';
+            }
+
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $path) === 1) {
                 return true;
@@ -1185,7 +1281,9 @@ class PHP_CodeSniffer
             } else if (is_numeric($filename) === true) {
                 // See if we can find the PHP_CodeSniffer_File object.
                 foreach ($trace as $data) {
-                    if (isset($data['args'][0]) === true && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true) {
+                    if (isset($data['args'][0]) === true
+                        && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true
+                    ) {
                         $filename = $data['args'][0]->getFilename();
                     }
                 }
@@ -1197,7 +1295,7 @@ class PHP_CodeSniffer
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
-                $this->listeners,
+                $this->_tokenListeners['file'],
                 $this->allowedFileExtensions,
                 $this->ruleset,
                 $this
@@ -1419,28 +1517,38 @@ class PHP_CodeSniffer
     public static function standardiseToken($token)
     {
         if (is_array($token) === false) {
-            $newToken = self::resolveSimpleToken($token);
+            if (isset(self::$_resolveTokenCache[$token]) === true) {
+                $newToken = self::$_resolveTokenCache[$token];
+            } else {
+                $newToken = self::resolveSimpleToken($token);
+            }
         } else {
             switch ($token[0]) {
             case T_STRING:
                 // Some T_STRING tokens can be more specific.
-                $newToken = self::resolveTstringToken($token);
+                $tokenType = strtolower($token[1]);
+                if (isset(self::$_resolveTokenCache[$tokenType]) === true) {
+                    $newToken = self::$_resolveTokenCache[$tokenType];
+                } else {
+                    $newToken = self::resolveTstringToken($tokenType);
+                }
+
                 break;
             case T_CURLY_OPEN:
                 $newToken = array(
                              'code'    => T_OPEN_CURLY_BRACKET,
-                             'content' => $token[1],
                              'type'    => 'T_OPEN_CURLY_BRACKET',
                             );
                 break;
             default:
                 $newToken = array(
                              'code'    => $token[0],
-                             'content' => $token[1],
                              'type'    => token_name($token[0]),
                             );
                 break;
             }//end switch
+
+            $newToken['content'] = $token[1];
         }//end if
 
         return $newToken;
@@ -1454,15 +1562,15 @@ class PHP_CodeSniffer
      * The token should be produced using the token_get_all() function.
      * Currently, not all T_STRING tokens are converted.
      *
-     * @param string|array $token The T_STRING token to convert as constructed
-     *                            by token_get_all().
+     * @param string $token The T_STRING token to convert as constructed
+     *                      by token_get_all().
      *
      * @return array The new token.
      */
-    public static function resolveTstringToken(array $token)
+    public static function resolveTstringToken($token)
     {
         $newToken = array();
-        switch (strtolower($token[1])) {
+        switch ($token) {
         case 'false':
             $newToken['type'] = 'T_FALSE';
             break;
@@ -1483,9 +1591,9 @@ class PHP_CodeSniffer
             break;
         }
 
-        $newToken['code']    = constant($newToken['type']);
-        $newToken['content'] = $token[1];
+        $newToken['code'] = constant($newToken['type']);
 
+        self::$_resolveTokenCache[$token] = $newToken;
         return $newToken;
 
     }//end resolveTstringToken()
@@ -1593,6 +1701,7 @@ class PHP_CodeSniffer
         $newToken['code']    = constant($newToken['type']);
         $newToken['content'] = $token;
 
+        self::$_resolveTokenCache[$token] = $newToken;
         return $newToken;
 
     }//end resolveSimpleToken()

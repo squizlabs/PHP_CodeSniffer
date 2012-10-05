@@ -7,8 +7,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -20,8 +20,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -36,7 +36,10 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -54,10 +57,73 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Check if this is a single line or multi-line declaration.
+        $spaces = 0;
+        if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+            $spaces = strlen($tokens[($stackPtr + 1)]['content']);
+        }
+
+        if ($spaces !== 1) {
+            $error = 'Expected 1 space after FUNCTION keyword; %s found';
+            $data  = array($spaces);
+            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterFunction', $data);
+        }
+
+        // Must be one space before and after USE keyword for closures.
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                if ($tokens[($use + 1)]['code'] !== T_WHITESPACE) {
+                    $length = 0;
+                } else if ($tokens[($use + 1)]['content'] === "\t") {
+                    $length = '\t';
+                } else {
+                    $length = strlen($tokens[($use + 1)]['content']);
+                }
+
+                if ($length !== 1) {
+                    $error = 'Expected 1 space after USE keyword; found %s';
+                    $data  = array($length);
+                    $phpcsFile->addError($error, $use, 'SpaceAfterUse', $data);
+                }
+
+                if ($tokens[($use - 1)]['code'] !== T_WHITESPACE) {
+                    $length = 0;
+                } else if ($tokens[($use - 1)]['content'] === "\t") {
+                    $length = '\t';
+                } else {
+                    $length = strlen($tokens[($use - 1)]['content']);
+                }
+
+                if ($length !== 1) {
+                    $error = 'Expected 1 space before USE keyword; found %s';
+                    $data  = array($length);
+                    $phpcsFile->addError($error, $use, 'SpaceBeforeUse', $data);
+                }
+            }//end if
+        }//end if
+
+        // Check if this is a single line or multi-line declaration.
+        $singleLine = false;
         if ($tokens[$openBracket]['line'] === $tokens[$closeBracket]['line']) {
+            // Closures may use the USE keyword and so be multi-line in this way.
+            if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+                if ($use !== false) {
+                    // If the opening and closing parenthesis of the use statement
+                    // are also on the same line, this is a single line declaration.
+                    $open  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                    $close = $tokens[$open]['parenthesis_closer'];
+                    if ($tokens[$open]['line'] === $tokens[$close]['line']) {
+                        $singleLine = true;
+                    }
+                }
+            } else {
+                $singleLine = true;
+            }
+        }
+
+        if ($singleLine === true) {
             $this->processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens);
         } else {
             $this->processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens);
@@ -81,11 +147,20 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
      */
     public function processSingleLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
     {
-        if (class_exists('Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff', true) === false) {
-            throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff not found');
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            if (class_exists('Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff', true) === false) {
+                throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff not found');
+            }
+
+            $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff();
+        } else {
+            if (class_exists('Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff', true) === false) {
+                throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff not found');
+            }
+
+            $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff();
         }
 
-        $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff();
         $sniff->process($phpcsFile, $stackPtr);
 
     }//end processSingleLineDeclaration()
@@ -119,14 +194,58 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
+        // The closing parenthesis must be on a new line, even
+        // when checking abstract function definitions.
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        $prev = $phpcsFile->findPrevious(
+            T_WHITESPACE,
+            ($closeBracket - 1),
+            null,
+            true
+        );
+
+        if ($tokens[$closeBracket]['line'] !== $tokens[$tokens[$closeBracket]['parenthesis_opener']]['line']) {
+            if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+                $error = 'The closing parenthesis of a multi-line function declaration must be on a new line';
+                $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+            }
+        }
+
+        // If this is a closure and is using a USE statement, the closing
+        // parenthesis we need to look at from now on is the closing parenthesis
+        // of the USE statement.
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $open         = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                $closeBracket = $tokens[$open]['parenthesis_closer'];
+
+                $prev = $phpcsFile->findPrevious(
+                    T_WHITESPACE,
+                    ($closeBracket - 1),
+                    null,
+                    true
+                );
+
+                if ($tokens[$closeBracket]['line'] !== $tokens[$tokens[$closeBracket]['parenthesis_opener']]['line']) {
+                    if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+                        $error = 'The closing parenthesis of a multi-line use declaration must be on a new line';
+                        $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+                    }
+                }
+            }//end if
+        }//end if
+
         // Each line between the parenthesis should be indented 4 spaces.
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
-        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
         $lastLine     = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             if ($tokens[$i]['line'] !== $lastLine) {
-                if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
-                    // Closing brace needs to be indented to the same level
+                if ($i === $tokens[$stackPtr]['parenthesis_closer']
+                    || ($tokens[$i]['code'] === T_WHITESPACE
+                    && ($i + 1) === $tokens[$stackPtr]['parenthesis_closer'])
+                ) {
+                    // Closing braces need to be indented to the same level
                     // as the function.
                     $expectedIndent = $functionIndent;
                 } else {
@@ -201,20 +320,6 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 $phpcsFile->addError($error, $next, 'NoSpaceBeforeOpenBrace');
             }
         }//end if
-
-        // The closing parenthesis must be on a new line, even
-        // when checking abstract function definitions.
-        $prev = $phpcsFile->findPrevious(
-            T_WHITESPACE,
-            ($closeBracket - 1),
-            null,
-            true
-        );
-
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
-            $error = 'The closing parenthesis of a multi-line function declaration must be on a new line';
-            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
-        }
 
     }//end processMultiLineDeclaration()
 

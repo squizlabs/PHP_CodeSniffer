@@ -9,8 +9,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -64,14 +64,25 @@ define('T_BACKTICK', 1046);
 define('T_START_NOWDOC', 1047);
 define('T_NOWDOC', 1048);
 define('T_END_NOWDOC', 1049);
+define('T_OPEN_SHORT_ARRAY', 1050);
+define('T_CLOSE_SHORT_ARRAY', 1051);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1050);
+    define('T_NAMESPACE', 1052);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1051);
+    define('T_NS_SEPARATOR', 1053);
+}
+
+if (defined('T_GOTO') === false) {
+    define('T_GOTO', 1054);
+}
+
+// Some PHP 5.4 tokens, replicated for lower versions.
+if (defined('T_TRAIT') === false) {
+    define('T_TRAIT', 1055);
 }
 
 /**
@@ -85,8 +96,8 @@ if (defined('T_NS_SEPARATOR') === false) {
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -101,6 +112,7 @@ final class PHP_CodeSniffer_Tokens
     public static $weightings = array(
                                  T_CLASS               => 1000,
                                  T_INTERFACE           => 1000,
+                                 T_TRAIT               => 1000,
                                  T_NAMESPACE           => 1000,
                                  T_FUNCTION            => 100,
                                  T_CLOSURE             => 100,
@@ -266,6 +278,7 @@ final class PHP_CodeSniffer_Tokens
     public static $scopeOpeners = array(
                                    T_CLASS,
                                    T_INTERFACE,
+                                   T_TRAIT,
                                    T_NAMESPACE,
                                    T_FUNCTION,
                                    T_CLOSURE,
@@ -292,6 +305,20 @@ final class PHP_CodeSniffer_Tokens
                                      T_PRIVATE,
                                      T_PUBLIC,
                                      T_PROTECTED,
+                                    );
+
+    /**
+     * Tokens that can prefix a method name
+     *
+     * @var array(int)
+     */
+    public static $methodPrefixes = array(
+                                     T_PRIVATE,
+                                     T_PUBLIC,
+                                     T_PROTECTED,
+                                     T_ABSTRACT,
+                                     T_STATIC,
+                                     T_FINAL,
                                     );
 
     /**

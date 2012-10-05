@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -24,8 +24,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -42,8 +42,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     /**
      * Does the indent need to be exactly right.
      *
-     * If TRUE, indent needs to be exactly $ident spaces. If FALSE,
-     * indent needs to be at least $ident spaces (but can be more).
+     * If TRUE, indent needs to be exactly $indent spaces. If FALSE,
+     * indent needs to be at least $indent spaces (but can be more).
      *
      * @var bool
      */
@@ -184,11 +184,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             // If this is a HEREDOC then we need to ignore it as the
             // whitespace before the contents within the HEREDOC are
             // considered part of the content.
-            if ($tokens[$i]['code'] === T_START_HEREDOC) {
+            if ($tokens[$i]['code'] === T_START_HEREDOC
+                || $tokens[$i]['code'] === T_START_NOWDOC
+            ) {
                 $inHereDoc = true;
                 continue;
             } else if ($inHereDoc === true) {
-                if ($tokens[$i]['code'] === T_END_HEREDOC) {
+                if ($tokens[$i]['code'] === T_END_HEREDOC
+                    || $tokens[$i]['code'] === T_END_NOWDOC
+                ) {
                     $inHereDoc = false;
                 }
 
@@ -261,6 +265,14 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         $column = ($contentLength - $trimmedContentLength + 1);
                         if (preg_match('|\*/$|', $content) !== 0) {
                             $commentOpen = false;
+                        }
+
+                        // We are in a comment, so the indent does not have to
+                        // be exact. The important thing is that the comment opens
+                        // at the correct column and nothing sits closer to the left
+                        // than that opening column.
+                        if ($column > $indent) {
+                            continue;
                         }
                     }//end if
                 }//end if

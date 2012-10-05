@@ -90,4 +90,16 @@ final class MyClass
      */
     final public function test() {}
 }
+
+// Here is some inline example code:
+//     -> One
+//         -> One.One
+//     -> Two
+
+/*
+    Here is some inline example code:
+        -> One
+            -> One.One
+        -> Two
+*/
 ?>

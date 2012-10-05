@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -20,8 +20,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -51,17 +51,17 @@ class PEAR_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
                 65  => 2,
                 66  => 1,
                 68  => 2,
-                69  => 1,
                 70  => 1,
                 71  => 1,
-                73  => 2,
-                74  => 1,
-                76  => 1,
+                72  => 1,
+                74  => 2,
+                75  => 1,
                 77  => 1,
                 78  => 1,
-                84  => 1,
-                92  => 1,
-                102 => 1,
+                79  => 1,
+                85  => 1,
+                93  => 1,
+                103 => 1,
                );
 
     }//end getErrorList()
@@ -78,8 +78,8 @@ class PEAR_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return array(
-                70 => 1,
-                72 => 1,
+                71 => 1,
+                73 => 1,
                );
 
     }//end getWarningList()

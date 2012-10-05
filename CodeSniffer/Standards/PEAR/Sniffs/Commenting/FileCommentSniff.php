@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -36,8 +36,8 @@ if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === f
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -584,31 +584,37 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     protected function processPackage($errorPos)
     {
         $package = $this->commentParser->getPackage();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
-
-                    $error     = 'Package name "%s" is not valid; consider "%s" instead';
-                    $validName = trim($newName, '_');
-                    $data      = array(
-                                  $content,
-                                  $validName,
-                                 );
-                    $this->currentFile->addError($error, $errorPos, 'InvalidPackage', $data);
-                }
-            } else {
-                $error = '@package tag must contain a name';
-                $this->currentFile->addError($error, $errorPos, 'EmptyPackage');
-            }
+        if ($package === null) {
+            return;
         }
+
+        $content = $package->getContent();
+        if ($content === '') {
+            $error = '@package tag must contain a name';
+            $this->currentFile->addError($error, $errorPos, 'EmptyPackage');
+            return;
+        }
+
+        if (PHP_CodeSniffer::isUnderscoreName($content) === true) {
+            return;
+        }
+
+        $newContent = str_replace(' ', '_', $content);
+        $newContent = preg_replace('/[^A-Za-z_]/', '', $newContent);
+        $nameBits   = explode('_', $newContent);
+        $firstBit   = array_shift($nameBits);
+        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+        foreach ($nameBits as $bit) {
+            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+        }
+
+        $error     = 'Package name "%s" is not valid; consider "%s" instead';
+        $validName = trim($newName, '_');
+        $data      = array(
+                      $content,
+                      $validName,
+                     );
+        $this->currentFile->addError($error, $errorPos, 'InvalidPackage', $data);
 
     }//end processPackage()
 
@@ -677,7 +683,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     // Dot character cannot be the first or last character
                     // in the local-part.
                     $localMiddle = $local.'.\w';
-                    if (preg_match('/^([^<]*)\s+<(['.$local.']['.$localMiddle.']*['.$local.']@[\da-zA-Z][-.\w]*[\da-zA-Z]\.[a-zA-Z]{2,7})>$/', $content) === 0) {
+                    if (preg_match('/^([^<]*)\s+<(['.$local.'](['.$localMiddle.']*['.$local.'])*@[\da-zA-Z][-.\w]*[\da-zA-Z]\.[a-zA-Z]{2,7})>$/', $content) === 0) {
                         $error = 'Content of the @author tag must be in the form "Display Name <username@example.com>"';
                         $this->currentFile->addError($error, $errorPos, 'InvalidAuthors');
                     }

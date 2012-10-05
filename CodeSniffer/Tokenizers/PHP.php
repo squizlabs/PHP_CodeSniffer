@@ -7,8 +7,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -18,8 +18,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -107,6 +107,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'shared' => false,
                                                 'with'   => array(),
                                                ),
+                            T_TRAIT         => array(
+                                                'start'  => array(T_OPEN_CURLY_BRACKET),
+                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'strict' => true,
+                                                'shared' => false,
+                                                'with'   => array(),
+                                               ),
                             T_NAMESPACE     => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
                                                 'end'    => array(T_CLOSE_CURLY_BRACKET),
@@ -140,7 +147,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                              T_COLON,
                                                              T_SEMICOLON,
                                                             ),
-                                                'end'    => array(T_BREAK),
+                                                'end'    => array(
+                                                             T_BREAK,
+                                                             T_RETURN,
+                                                             T_CONTINUE,
+                                                             T_THROW,
+                                                            ),
                                                 'strict' => true,
                                                 'shared' => true,
                                                 'with'   => array(
@@ -151,7 +163,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                ),
                             T_DEFAULT       => array(
                                                 'start'  => array(T_COLON),
-                                                'end'    => array(T_BREAK),
+                                                'end'    => array(
+                                                             T_BREAK,
+                                                             T_RETURN,
+                                                             T_CONTINUE,
+                                                             T_THROW,
+                                                            ),
                                                 'strict' => true,
                                                 'shared' => true,
                                                 'with'   => array(
@@ -445,10 +462,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
     /**
      * Performs additional processing after main tokenizing.
      *
-     * This additional processing checks for CASE statements
-     * that are using curly braces for scope openers and closers. It
-     * also turn some T_FUNCTION tokens into T_CLOSURE when they
-     * are not standard function definitions.
+     * This additional processing checks for CASE statements that are using curly
+     * braces for scope openers and closers. It also turns some T_FUNCTION tokens
+     * into T_CLOSURE when they are not standard function definitions. It also
+     * detects short array syntax and converts those square brackets into new tokens.
      *
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -493,14 +510,45 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
+            } else if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
+                // Unless there is a variable or a bracket before this token,
+                // it is the start of an array being defined using the short syntax.
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                $allowed = array(
+                            T_CLOSE_SQUARE_BRACKET,
+                            T_CLOSE_PARENTHESIS,
+                            T_VARIABLE,
+                            T_STRING,
+                           );
+
+                if (in_array($tokens[$x]['code'], $allowed) === false) {
+                    $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
+                    $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
+
+                    $closer                  = $tokens[$i]['bracket_closer'];
+                    $tokens[$closer]['code'] = T_CLOSE_SHORT_ARRAY;
+                    $tokens[$closer]['type'] = 'T_CLOSE_SHORT_ARRAY';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_OPEN_SQUARE_BRACKET to T_OPEN_SHORT_ARRAY".PHP_EOL;
+                        $line = $tokens[$closer]['line'];
+                        echo "\t* token $closer on line $line changed from T_CLOSE_SQUARE_BRACKET to T_CLOSE_SHORT_ARRAY".PHP_EOL;
+                    }
+                }
+
+                continue;
             }//end if
 
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)
                 || isset($tokens[$i]['scope_opener']) === false
             ) {
-                // Only interested in CASE and DEFAULT statements
-                // from here on in.
+                // Only interested in CASE and DEFAULT statements from here on in.
                 continue;
             }
 
@@ -519,11 +567,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($tokens[$x]['code'] === T_CASE) {
-                // Special case for multiple CASE statements that
-                // share the same closer. Because we are going
-                // backwards through the file, this next CASE
-                // statement is already fixed, so just use its
-                // closer and don't worry about fixing anything.
+                // Special case for multiple CASE statements that share the same
+                // closer. Because we are going backwards through the file, this next
+                // CASE statement is already fixed, so just use its closer and don't
+                // worry about fixing anything.
                 $newCloser = $tokens[$x]['scope_closer'];
                 $tokens[$i]['scope_closer'] = $newCloser;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -543,9 +590,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 continue;
             }
 
-            // The closer for this CASE/DEFAULT should be the closing
-            // curly brace and not whatever it already is. The opener needs
-            // to be the opening curly brace so everything matches up.
+            // The closer for this CASE/DEFAULT should be the closing curly brace and
+            // not whatever it already is. The opener needs to be the opening curly
+            // brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
             $tokens[$i]['scope_closer'] = $newCloser;
             $tokens[$x]['scope_closer'] = $newCloser;

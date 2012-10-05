@@ -7,8 +7,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -24,8 +24,8 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -87,6 +87,7 @@ class PHP_CodeSniffer_CLI
         $defaults['standard']        = null;
         $defaults['verbosity']       = 0;
         $defaults['interactive']     = false;
+        $defaults['explain']         = false;
         $defaults['local']           = false;
         $defaults['showSources']     = false;
         $defaults['extensions']      = array();
@@ -167,6 +168,10 @@ class PHP_CodeSniffer_CLI
      */
     public function getCommandLineValues()
     {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            return array();
+        }
+
         if (empty($this->values) === false) {
             return $this->values;
         }
@@ -243,6 +248,9 @@ class PHP_CodeSniffer_CLI
         case 'a' :
             $values['interactive'] = true;
             break;
+        case 'e':
+            $values['explain'] = true;
+            break;
         case 'p' :
             $values['showProgress'] = true;
             break;
@@ -290,7 +298,7 @@ class PHP_CodeSniffer_CLI
             break;
         case 'version':
             echo 'PHP_CodeSniffer version @package_version@ (@package_state@) ';
-            echo 'by Squiz Pty Ltd. (http://www.squiz.net)'.PHP_EOL;
+            echo 'by Squiz Pty Ltd. (http://www.squiz.com.au)'.PHP_EOL;
             exit(0);
             break;
         case 'config-set':
@@ -353,7 +361,6 @@ class PHP_CodeSniffer_CLI
                         $report = substr($arg, 7);
                         $output = null;
                     } else {
-                        
                         $report = substr($arg, 7, ($split - 7));
                         $output = substr($arg, ($split + 1));
                         if ($output === false) {
@@ -372,6 +379,7 @@ class PHP_CodeSniffer_CLI
                                      'checkstyle',
                                      'csv',
                                      'emacs',
+                                     'notifysend',
                                      'source',
                                      'summary',
                                      'svnblame',
@@ -480,6 +488,20 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
+        $values['standard'] = $this->validateStandard($values['standard']);
+        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
+            // They didn't select a valid coding standard, so help them
+            // out by letting them know which standards are installed.
+            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
+            $this->printInstalledStandards();
+            exit(2);
+        }
+
+        if ($values['explain'] === true) {
+            $this->explainStandard($values['standard']);
+            exit(0);
+        }
+
         $fileContents = '';
         if (empty($values['files']) === true) {
             // Check if they passing in the file contents.
@@ -493,15 +515,6 @@ class PHP_CodeSniffer_CLI
                 $this->printUsage();
                 exit(2);
             }
-        }
-
-        $values['standard'] = $this->validateStandard($values['standard']);
-        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
-            // They didn't select a valid coding standard, so help them
-            // out by letting them know which standards are installed.
-            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
-            $this->printInstalledStandards();
-            exit(2);
         }
 
         $phpcs = new PHP_CodeSniffer(
@@ -670,13 +683,69 @@ class PHP_CodeSniffer_CLI
 
 
     /**
+     * Prints a report showing the sniffs contained in a standard.
+     *
+     * @param string $standard The standard to validate.
+     *
+     * @return void
+     */
+    public function explainStandard($standard)
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->setTokenListeners($standard);
+        $sniffs = $phpcs->getSniffs();
+        $sniffs = array_keys($sniffs);
+        sort($sniffs);
+
+        ob_start();
+
+        $lastStandard = '';
+        $lastCount    = '';
+        $sniffCount   = count($sniffs);
+        $sniffs[]     = '___';
+
+        echo PHP_EOL."The $standard standard contains $sniffCount sniffs".PHP_EOL;
+
+        ob_start();
+
+        foreach ($sniffs as $sniff) {
+            $parts = explode('_', $sniff);
+            if ($lastStandard === '') {
+                $lastStandard = $parts[0];
+            }
+
+            if ($parts[0] !== $lastStandard) {
+                $sniffList = ob_get_contents();
+                ob_end_clean();
+
+                echo PHP_EOL.$lastStandard.' ('.$lastCount.' sniffs)'.PHP_EOL;
+                echo str_repeat('-', strlen($lastStandard.$lastCount) + 10);
+                echo PHP_EOL;
+                echo $sniffList;
+
+                $lastStandard = $parts[0];
+                $lastCount    = 0;
+
+                ob_start();
+            }
+
+            echo '  '.$parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5).PHP_EOL;
+            $lastCount++;
+        }//end foreach
+
+        ob_end_clean();
+
+    }//end explainStandard()
+
+
+    /**
      * Prints out the usage information for this script.
      *
      * @return void
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsapvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -688,6 +757,7 @@ class PHP_CodeSniffer_CLI
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
+        echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
@@ -707,7 +777,8 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "emacs"'.PHP_EOL;
-        echo '                      "source", "summary", "svnblame", "gitblame" or "hgblame" report'.PHP_EOL;
+        echo '                      "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
+        echo '                      "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;

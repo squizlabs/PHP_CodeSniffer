@@ -57,4 +57,37 @@ class MyClass
      }
 
 }
+
+$noArgs_longVars = function () use (
+    $longVar1,
+    $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
+
+$longArgs_longVars = function (
+    $longArgument,
+    $longerArgument,
+    $muchLongerArgument
+) use (
+    $longVar1,
+    $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
+
+$longArgs_longVars = function ($longArgument,
+    $muchLongerArgument) use ($muchLongerVar3
+) {
+    // body
+};
+
+$noArgs_longVars = function () use (
+    $longVar1,  $longerVar2,
+    $muchLongerVar3
+) {
+    // body
+};
 ?>

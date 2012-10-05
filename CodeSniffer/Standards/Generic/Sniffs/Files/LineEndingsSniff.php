@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -22,8 +22,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -84,6 +84,18 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
         $found = str_replace("\r", '\r', $found);
 
         if ($found !== $this->eolChar) {
+            // Check for single line files without an EOL. This is a very special
+            // case and the EOL char is set to \n when this happens.
+            if ($found === '\n') {
+                $tokens    = $phpcsFile->getTokens();
+                $lastToken = ($phpcsFile->numTokens - 1);
+                if ($tokens[$lastToken]['line'] === 1
+                    && $tokens[$lastToken]['content'] !== "\n"
+                ) {
+                    return;
+                }
+            }
+
             $error    = 'End of line character is invalid; expected "%s" but found "%s"';
             $expected = $this->eolChar;
             $expected = str_replace("\n", '\n', $expected);

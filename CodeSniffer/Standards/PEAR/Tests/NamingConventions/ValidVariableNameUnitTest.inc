@@ -85,4 +85,12 @@ class foo
 ccc
 C;
 }
+
+class a
+{
+    protected
+        $_sheet,
+        $_FieldParser,
+        $_key;
+}
 ?>

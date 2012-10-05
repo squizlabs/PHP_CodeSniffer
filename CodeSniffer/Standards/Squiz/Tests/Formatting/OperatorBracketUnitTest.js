@@ -85,7 +85,7 @@ stepWidth = Math.round(this.width / 5);
 date.setMonth(d[2] - 1);
 
 switch (number % 10) {
-    case 1:
+    case -1:
         suffix = 'st';
     break;
 }

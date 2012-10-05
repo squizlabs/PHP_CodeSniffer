@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -29,8 +29,8 @@ require_once dirname(__FILE__).'/AbstractSniffUnitTest.php';
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -75,12 +75,11 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
         foreach ($standards as $standard) {
             if ($isInstalled === false) {
-                $standardDir = $standardsDir.'/'.$standard.'/Tests/';
+                $standardDir = $standardsDir.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
             } else {
-                $standardDir = dirname(__FILE__).'/'.$standard.'/Tests/';
+                $standardDir = dirname(__FILE__).DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
             }
 
-            $standardDir = realpath($standardDir);
             if (is_dir($standardDir) === false) {
                 // No tests for this standard.
                 continue;
@@ -88,7 +87,7 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
             // Locate the actual directory that contains the standard's tests.
             // This is individual to each standard as they could be symlinked in.
-            $baseDir = realpath($standardDir.'/../../');
+            $baseDir = dirname(dirname($standardDir));
 
             $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($standardDir));
 
@@ -98,14 +97,14 @@ class PHP_CodeSniffer_Standards_AllSniffs
                     continue;
                 }
 
-                // Tests must have the extention 'php'.
+                // Tests must have the extension 'php'.
                 $parts = explode('.', $file);
                 $ext   = array_pop($parts);
                 if ($ext !== 'php') {
                     continue;
                 }
 
-                $filePath  = realpath($file->getPathname());
+                $filePath  = $file->getPathname();
                 $className = str_replace($baseDir.DIRECTORY_SEPARATOR, '', $filePath);
                 $className = substr($className, 0, -4);
                 $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);

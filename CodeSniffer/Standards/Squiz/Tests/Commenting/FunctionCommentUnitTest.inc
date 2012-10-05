@@ -543,4 +543,26 @@ $callback = function ($bar) use ($foo)
                 $bar += $foo;
             };
 
+/**
+ * Comment should end with '*', not '**' before the slash.
+ **/
+function test123() {
+
+}
+
+/**
+ * Variable number of args.
+ *
+ * @param string $a1     Comment here.
+ * @param string $a2     Comment here.
+ * @param string $a2,... Comment here.
+ *
+ * @return boolean
+ */
+public function variableArgs($a1, $a2)
+{
+    return true;
+
+}//end variableArgs()
+
 ?>

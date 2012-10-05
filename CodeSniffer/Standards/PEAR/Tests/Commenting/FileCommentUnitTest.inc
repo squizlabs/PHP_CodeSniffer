@@ -23,7 +23,8 @@ declare(encoding='utf-8');
 * @package    ADDITIONAL PACKAGE TAG
 * @subpackage SUBPACKAGE TAG
 * @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
-* @author       Rayn Ong rong@squiz.net
+* @author       Greg Sherwood gsherwood@squiz.net
+* @author     Mr T <t@squiz.net>
 * @author
 * @copyright  1997~1994 The PHP Group
 * @copyright  1997~1994 The PHP Group

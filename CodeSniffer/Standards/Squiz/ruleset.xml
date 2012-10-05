@@ -11,6 +11,7 @@
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="Generic.NamingConventions.ConstructorName"/>
  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+ <rule ref="Generic.PHP.DeprecatedFunctions"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
@@ -18,7 +19,6 @@
  <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
  <rule ref="PEAR.Files.IncludingFile"/>
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
- <rule ref="PEAR.Functions.FunctionCallSignature"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 
  <!-- Lines can be 85 chars long, but never show errors -->
@@ -68,6 +68,13 @@
  </rule>
  <rule ref="Generic.Debug.ClosureLinter.ExternalToolError">
   <message>%2$s</message>
+ </rule>
+
+ <!-- Only one argument per line in multi-line function calls -->
+ <rule ref="PEAR.Functions.FunctionCallSignature">
+  <properties>
+   <property name="allowMultipleArguments" value="false"/>
+  </properties>
  </rule>
 
 </ruleset>

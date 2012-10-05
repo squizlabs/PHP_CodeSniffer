@@ -142,4 +142,27 @@ final class MyClass
      */
     final public function test() {}
 }
+
+switch ($var) {
+    case 'foo':
+        /*
+            Foo comment.
+            This is a multiple
+            line comment for Foo.
+        */
+
+        echo 'Foo';
+    break;
+
+    default:
+
+        /*
+            Foo comment.
+            This is a multiple
+            line comment for Foo.
+        */
+
+        echo 'Default';
+    break;
+}//end switch
 ?>

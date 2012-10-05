@@ -397,4 +397,17 @@ $myFunction = function() {
        $a = 403;
     }
 }
+
+class Whatever
+{
+    protected $_protectedArray = array(
+        'normalString' => 'That email address is already in use!',
+        'offendingString' => <<<'STRING'
+Each line of this string is always said to be at column 0, 
+    no matter how many spaces are placed
+                at the beginning of each line
+and the ending STRING on the next line is reported as having to be indented.
+STRING
+    );
+}
 ?>

@@ -106,4 +106,22 @@ class A {
 }
 
 A::constant('anything-not-in-uppercase');
+
+// goto
+goto gotolabel;
+
+gototarget1:
+
+function ConstTest() {
+    gototarget2:
+}
+
+switch($foo)
+{
+    case $bar:
+    gototarget3:
+}
+
+$a = 2 * ${x} - ${minus};
+
 ?>

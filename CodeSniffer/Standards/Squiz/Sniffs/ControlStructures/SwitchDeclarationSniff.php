@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -23,8 +23,8 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -125,13 +125,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             }
 
             $nextBreak = $tokens[$nextCase]['scope_closer'];
-            if ($tokens[$nextBreak]['code'] === T_BREAK) {
+            if ($tokens[$nextBreak]['code'] === T_BREAK || $tokens[$nextBreak]['code'] === T_RETURN) {
                 if ($tokens[$nextBreak]['scope_condition'] === $nextCase) {
                     // Only need to check a couple of things once, even if the
                     // break is shared between multiple case statements, or even
                     // the default case.
                     if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
-                        $error = 'BREAK statement must be indented 4 spaces from SWITCH keyword';
+                        $error = 'Case breaking statement must be indented 4 spaces from SWITCH keyword';
                         $phpcsFile->addError($error, $nextBreak, 'BreakIndent');
                     }
 
@@ -145,7 +145,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     }
 
                     if ($prevLine !== ($breakLine - 1)) {
-                        $error = 'Blank lines are not allowed before BREAK statements';
+                        $error = 'Blank lines are not allowed before case breaking statements';
                         $phpcsFile->addError($error, $nextBreak, 'SpacingBeforeBreak');
                     }
 
@@ -163,13 +163,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                         // Ensure the BREAK statement is followed by
                         // a single blank line, or the end switch brace.
                         if ($nextLine !== ($breakLine + 2) && $i !== $tokens[$stackPtr]['scope_closer']) {
-                            $error = 'BREAK statements must be followed by a single blank line';
+                            $error = 'Case breaking statements must be followed by a single blank line';
                             $phpcsFile->addError($error, $nextBreak, 'SpacingAfterBreak');
                         }
                     } else {
                         // Ensure the BREAK statement is not followed by a blank line.
                         if ($nextLine !== ($breakLine + 1)) {
-                            $error = 'Blank lines are not allowed after the DEFAULT case\'s BREAK statement';
+                            $error = 'Blank lines are not allowed after the DEFAULT case\'s breaking statement';
                             $phpcsFile->addError($error, $nextBreak, 'SpacingAfterDefaultBreak');
                         }
                     }
@@ -189,45 +189,49 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     }
                 }//end if
 
-                if ($type === 'Case') {
-                    // Ensure empty CASE statements are not allowed.
-                    // They must have some code content in them. A comment is not enough.
-                    $foundContent = false;
-                    for ($i = ($tokens[$nextCase]['scope_opener'] + 1); $i < $nextBreak; $i++) {
-                        if ($tokens[$i]['code'] === T_CASE) {
-                            $i = $tokens[$i]['scope_opener'];
-                            continue;
+                if ($tokens[$nextBreak]['code'] === T_BREAK) {
+                    if ($type === 'Case') {
+                        // Ensure empty CASE statements are not allowed.
+                        // They must have some code content in them. A comment is not enough.
+                        // But count RETURN statements as valid content if they also
+                        // happen to close the CASE statement.
+                        $foundContent = false;
+                        for ($i = ($tokens[$nextCase]['scope_opener'] + 1); $i < $nextBreak; $i++) {
+                            if ($tokens[$i]['code'] === T_CASE) {
+                                $i = $tokens[$i]['scope_opener'];
+                                continue;
+                            }
+
+                            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                                $foundContent = true;
+                                break;
+                            }
                         }
 
-                        if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
-                            $foundContent = true;
-                            break;
+                        if ($foundContent === false) {
+                            $error = 'Empty CASE statements are not allowed';
+                            $phpcsFile->addError($error, $nextCase, 'EmptyCase');
                         }
-                    }
-
-                    if ($foundContent === false) {
-                        $error = 'Empty CASE statements are not allowed';
-                        $phpcsFile->addError($error, $nextCase, 'EmptyCase');
-                    }
-                } else {
-                    // Ensure empty DEFAULT statements are not allowed.
-                    // They must (at least) have a comment describing why
-                    // the default case is being ignored.
-                    $foundContent = false;
-                    for ($i = ($tokens[$nextCase]['scope_opener'] + 1); $i < $nextBreak; $i++) {
-                        if ($tokens[$i]['type'] !== 'T_WHITESPACE') {
-                            $foundContent = true;
-                            break;
+                    } else {
+                        // Ensure empty DEFAULT statements are not allowed.
+                        // They must (at least) have a comment describing why
+                        // the default case is being ignored.
+                        $foundContent = false;
+                        for ($i = ($tokens[$nextCase]['scope_opener'] + 1); $i < $nextBreak; $i++) {
+                            if ($tokens[$i]['type'] !== 'T_WHITESPACE') {
+                                $foundContent = true;
+                                break;
+                            }
                         }
-                    }
 
-                    if ($foundContent === false) {
-                        $error = 'Comment required for empty DEFAULT case';
-                        $phpcsFile->addError($error, $nextCase, 'EmptyDefault');
-                    }
+                        if ($foundContent === false) {
+                            $error = 'Comment required for empty DEFAULT case';
+                            $phpcsFile->addError($error, $nextCase, 'EmptyDefault');
+                        }
+                    }//end if
                 }//end if
             } else if ($type === 'Default') {
-                $error = 'DEFAULT case must have a BREAK statement';
+                $error = 'DEFAULT case must have a breaking statement';
                 $phpcsFile->addError($error, $nextCase, 'DefaultNoBreak');
             }//end if
         }//end while
