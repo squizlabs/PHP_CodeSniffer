@@ -39,7 +39,7 @@ class Generic_Tests_PHP_ClosingPHPTagUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(3 => 1);
+        return array(1 => 1);
 
     }//end getErrorList()
 

@@ -49,15 +49,10 @@ class Generic_Sniffs_PHP_ClosingPHPTagSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        // Get the php close tag or FALSE if not found.
         $closeTag = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
-        // Get the ID of the last token array by finding out how many
-        // arrays are in the stack and decrease this amount of one.
-        $lastTokenInStackID = (count($tokens) - 1);
         if ($closeTag === false) {
-            $error = 'A closing PHP tag is required at the end of a PHP file';
-            $phpcsFile->addError($error, $lastTokenInStackID, 'NoClosingPHPTag');
+            $error = 'The PHP open tag does not have a corresponding PHP close tag.';
+            $phpcsFile->addError($error, $stackPtr, 'NoClosingPHPTag');
         }
 
     }//end process()
