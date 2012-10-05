@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Julian Kleinhans <kleinhans@bergisch-media.de>
  * @copyright 2010 Julian Kleinhans
- * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 /**
@@ -18,7 +18,7 @@
  * @package   PHP_CodeSniffer
  * @author    Julian Kleinhans <kleinhans@bergisch-media.de>
  * @copyright 2010 Julian Kleinhans
- * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
