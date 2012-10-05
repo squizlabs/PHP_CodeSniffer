@@ -44,14 +44,14 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                                'construct',
                                'destruct',
                                'call',
-                               'callStatic',
+                               'callstatic',
                                'get',
                                'set',
                                'isset',
                                'unset',
                                'sleep',
                                'wakeup',
-                               'toString',
+                               'tostring',
                                'set_state',
                                'clone',
                                'invoke',
@@ -106,10 +106,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__|', $methodName) !== 0) {
-            $magicPart = substr($methodName, 2);
+            $magicPart = strtolower(substr($methodName, 2));
             if (in_array($magicPart, $this->magicMethods) === false) {
                  $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
-
                  $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
             }
 
@@ -165,9 +164,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
         $errorData = array($functionName);
 
-        // Is this a magic function. IE. is prefixed with "__".
+        // Is this a magic function. i.e., it is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
-            $magicPart = substr($functionName, 2);
+            $magicPart = strtolower(substr($functionName, 2));
             if (in_array($magicPart, $this->magicFunctions) === false) {
                  $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);

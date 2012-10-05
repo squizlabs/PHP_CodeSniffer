@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Till Klampaeckel for the patch
   - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
     -- Thanks to Arnout Boks for the patch
+  - Generic CamelCapsFunctionNameSniff no longer enforces exact case matching for PHP magic methods
+  - PEAR ValidFunctionNameSniff now supports traits
   - PSR1 ClassDeclarationSniff no longer throws an error for non-namespaced code if PHP version is < 5.3.0
   - Fixed bug #19616 : Nested switches cause false error in PSR2
   - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
