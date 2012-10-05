@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @copyright 2010 Andy Grunwald
- * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 /**
@@ -18,7 +18,7 @@
  * @package   PHP_CodeSniffer
  * @author    Andy Grunwald <andygrunwald@gmail.com>
  * @copyright 2010 Andy Grunwald
- * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
