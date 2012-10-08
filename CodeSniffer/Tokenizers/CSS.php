@@ -47,7 +47,13 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
         }
 
-        $tokens      = parent::tokenizeString('<?php '.$string.' ?>', $eolChar);
+        // If the content doesn't have an EOl char on the end, add one so
+        // the open and close tags we add are parsed correctly.
+        if (substr($string, 0, (strlen($eolChar) * -1)) !== $eolChar) {
+            $string .= $eolChar;
+        }
+
+        $tokens      = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
         $finalTokens = array();
 
         $newStackPtr      = 0;
