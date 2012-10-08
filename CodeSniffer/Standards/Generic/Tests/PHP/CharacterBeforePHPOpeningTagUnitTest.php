@@ -7,12 +7,11 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Andy Grunwald <andygrunwald@gmail.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2010 Andy Grunwald
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Unit test class for the CharacterBeforePHPOpeningTag sniff.
  *
@@ -22,8 +21,6 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Andy Grunwald <andygrunwald@gmail.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2010 Andy Grunwald
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@

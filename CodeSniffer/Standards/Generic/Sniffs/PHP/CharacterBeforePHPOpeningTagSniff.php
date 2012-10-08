@@ -11,8 +11,9 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
- * Checks that before php opening tag is no other char like newline.
+ * Checks that the opening PHP tag is the first content in a file.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -24,13 +25,6 @@
  */
 class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports
-     *
-     * @var array
-     */
-    public $supportedTokenizes = array('PHP');
 
 
     /**
@@ -57,8 +51,8 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         if ($stackPtr > 0) {
-            $error = 'The opening PHP tag must be the first content in the file.';
-            $phpcsFile->addError($error, $stackPtr, 'NoCharacterBeforePHPOpeningTag');
+            $error = 'The opening PHP tag must be the first content in the file';
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()
