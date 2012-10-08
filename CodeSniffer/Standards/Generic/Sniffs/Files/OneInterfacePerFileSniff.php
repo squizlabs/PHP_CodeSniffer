@@ -11,10 +11,9 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Checks that only one interface is declared per file.
- * The base of this sniff was "Squiz_Sniffs_Classes_ClassDeclarationSniff".
- * Thanks for this!
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -26,13 +25,6 @@
  */
 class Generic_Sniffs_Files_OneInterfacePerFileSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports
-     *
-     * @var array
-     */
-    public $supportedTokenizes = array('PHP');
 
 
     /**
@@ -60,8 +52,8 @@ class Generic_Sniffs_Files_OneInterfacePerFileSniff implements PHP_CodeSniffer_S
     {
         $nextInterface = $phpcsFile->findNext($this->register(), ($stackPtr + 1));
         if ($nextInterface !== false) {
-            $error = 'Only one interface is allowed in a file.';
-            $phpcsFile->addError($error, $nextInterface, 'OnlyOneInterfacePerFile');
+            $error = 'Only one interface is allowed in a file';
+            $phpcsFile->addError($error, $nextInterface, 'MultipleFound');
         }
 
     }//end process()

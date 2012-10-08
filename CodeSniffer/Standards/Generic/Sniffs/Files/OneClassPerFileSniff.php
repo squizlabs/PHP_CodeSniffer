@@ -11,10 +11,9 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Checks that only one class is declared per file.
- * The base of this sniff was "Squiz_Sniffs_Classes_ClassDeclarationSniff".
- * Thanks for this!
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -26,13 +25,6 @@
  */
 class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports
-     *
-     * @var array
-     */
-    public $supportedTokenizes = array('PHP');
 
 
     /**
@@ -60,8 +52,8 @@ class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
     {
         $nextClass = $phpcsFile->findNext($this->register(), ($stackPtr + 1));
         if ($nextClass !== false) {
-            $error = 'Only one class is allowed in a file.';
-            $phpcsFile->addError($error, $nextClass, 'OnlyOneClassPerFile');
+            $error = 'Only one class is allowed in a file';
+            $phpcsFile->addError($error, $nextClass, 'MultipleFound');
         }
 
     }//end process()
