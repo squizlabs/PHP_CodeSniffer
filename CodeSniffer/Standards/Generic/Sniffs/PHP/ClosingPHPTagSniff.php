@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Checks that the file does not end with a closing tag.
  *
@@ -51,8 +52,8 @@ class Generic_Sniffs_PHP_ClosingPHPTagSniff implements PHP_CodeSniffer_Sniff
     {
         $closeTag = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
         if ($closeTag === false) {
-            $error = 'The PHP open tag does not have a corresponding PHP close tag.';
-            $phpcsFile->addError($error, $stackPtr, 'NoClosingPHPTag');
+            $error = 'The PHP open tag does not have a corresponding PHP close tag';
+            $phpcsFile->addError($error, $stackPtr, 'NotFound');
         }
 
     }//end process()

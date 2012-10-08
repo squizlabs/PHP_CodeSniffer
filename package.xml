@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Grunwald for the contribution
   - Added Generic LowercasedFilenameSniff to check that filenames are lowercase
     -- Thanks to Andy Grunwald for the contribution
+  - Added Generic ClosingPHPTagSniff to check that each open PHP tag has a corresponding close tag
+    -- Thanks to Andy Grunwald for the contribution
   - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
     -- Thanks to Arnout Boks for the patch
   - Generic CamelCapsFunctionNameSniff no longer enforces exact case matching for PHP magic methods

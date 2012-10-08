@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Unit test class for the ClosingPHPTag sniff.
  *
@@ -40,10 +41,8 @@ class Generic_Tests_PHP_ClosingPHPTagUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-            1 => 0,
-            5 => 0,
-            9 => 1
-        );
+                9 => 1,
+               );
 
     }//end getErrorList()
 
