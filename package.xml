@@ -29,6 +29,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
     -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
     -- Thanks to Till Klampaeckel for the patch
+  - Added Generic OneClassPerFileSniff to check that only one class is defined in each file
+    -- Thanks to Andy Grunwald for the contribution
+  - Added Generic OneInterfacePerFileSniff to check that only one interface is defined in each file
+    -- Thanks to Andy Grunwald for the contribution
+  - Added Generic LowercasedFilenameSniff to check that filenames are lowercase
+    -- Thanks to Andy Grunwald for the contribution
   - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
     -- Thanks to Arnout Boks for the patch
   - Generic CamelCapsFunctionNameSniff no longer enforces exact case matching for PHP magic methods

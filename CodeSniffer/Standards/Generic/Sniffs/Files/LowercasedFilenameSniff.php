@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 /**
  * Checks that all file names are lowercased.
  *
@@ -24,13 +25,6 @@
  */
 class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports
-     *
-     * @var array
-     */
-    public $supportedTokenizes = array('PHP');
 
 
     /**
@@ -63,7 +57,7 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
             }
         }
 
-        $fileName = basename($phpcsFile->getFilename());
+        $fileName          = basename($phpcsFile->getFilename());
         $lowercaseFileName = strtolower($fileName);
         if ($fileName !== $lowercaseFileName) {
             $data  = array(
@@ -71,7 +65,7 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
                       $lowercaseFileName,
                      );
             $error = 'Filename "%s" doesn\'t match the expected filename "%s"';
-            $phpcsFile->addError($error, $stackPtr, 'LowercasedFileNames', $data);
+            $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
         }
 
     }//end process()
