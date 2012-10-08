@@ -333,6 +333,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LineLengthSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="OneClassPerFileSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OneInterfacePerFileSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="DisallowMultipleStatementsSniff.php" role="php">
@@ -382,6 +388,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClosingPHPTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DeprecatedFunctionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -412,6 +424,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowTabIndentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -505,6 +520,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LineLengthUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="OneClassPerFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OneClassPerFileUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OneInterfacePerFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OneInterfacePerFileUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="DisallowMultipleStatementsUnitTest.inc" role="test" />
@@ -568,6 +591,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ClosingPHPTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingPHPTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -598,6 +629,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.js" role="test" />
