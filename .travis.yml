@@ -4,4 +4,7 @@ php:
   - 5.3
   - 5.4
 
-script: phpunit tests/AllTests.php
+script:
+  - phpunit tests/AllTests.php
+  - pear package-validate package.xml
+  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PEAR --report=summary --ignore=*/tests/* -np
