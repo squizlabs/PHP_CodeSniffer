@@ -1058,6 +1058,11 @@ class PHP_CodeSniffer
      */
     public function setSniffProperty($listenerClass, $name, $value) 
     {
+        // Setting a property for a sniff we are not using.
+        if (isset($this->listeners[$listenerClass]) === false) {
+            return;
+        }
+
         $name = trim($name);
         if (is_string($value) === true) {
             $value = trim($value);
