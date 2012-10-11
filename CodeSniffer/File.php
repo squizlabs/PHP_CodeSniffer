@@ -467,7 +467,9 @@ class PHP_CodeSniffer_File
                 if (isset($parts[3]) === true) {
                     $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
                     $patterns = $this->phpcs->getIgnorePatterns($source);
-                    foreach ($patterns as $pattern) {
+                    foreach ($patterns as $pattern => $type) {
+                        // While there is support for a type of each pattern
+                        // (absolute or relative) we don't actually support it here.
                         $replacements = array(
                                          '\\,' => ',',
                                          '*'   => '.*',

@@ -962,13 +962,21 @@ class PHP_CodeSniffer
                     $this->ignorePatterns[$code] = array();
                 }
 
-                $this->ignorePatterns[$code][] = (string) $pattern;
+                if (isset($pattern['type']) === false) {
+                    $pattern['type'] = 'absolute';
+                }
+
+                $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
             }
         }//end foreach
 
         // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
-            $this->ignorePatterns[] = (string) $pattern;
+            if (isset($pattern['type']) === false) {
+                $pattern['type'] = 'absolute';
+            }
+
+            $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
         }
 
     }//end populateCustomRules()
@@ -1116,21 +1124,14 @@ class PHP_CodeSniffer
                         continue;
                     }
 
-                    $relativePath = $file->getPathname();
-
-                    if (strpos($relativePath, $path) === 0) {
-                        // The +1 cuts off the directory separator as well.
-                        $relativePath = substr($relativePath, (strlen($path) + 1));
-                    }
-
-                    if ($this->shouldProcessFile($relativePath) === false) {
+                    if ($this->shouldProcessFile($file->getPathname(), $path) === false) {
                         continue;
                     }
 
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path) === true) {
+                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
                     continue;
                 }
 
@@ -1148,11 +1149,12 @@ class PHP_CodeSniffer
      *
      * Checks both file extension filters and path ignore filters.
      *
-     * @param string $path The path to the file being checked.
+     * @param string $path    The path to the file being checked.
+     * @param string $basedir The directory to use for relative path checks.
      *
      * @return bool
      */
-    public function shouldProcessFile($path)
+    public function shouldProcessFile($path, $basedir)
     {
         // Check that the file's extension is one we are checking.
         // We are strict about checking the extension and we don't
@@ -1178,7 +1180,7 @@ class PHP_CodeSniffer
         }
 
         // If the file's path matches one of our ignore patterns, skip it.
-        if ($this->shouldIgnoreFile($path) === true) {
+        if ($this->shouldIgnoreFile($path, $basedir) === true) {
             return false;
         }
 
@@ -1190,13 +1192,20 @@ class PHP_CodeSniffer
     /**
      * Checks filtering rules to see if a file should be ignored.
      *
-     * @param string $path The path to the file being checked.
+     * @param string $path    The path to the file being checked.
+     * @param string $basedir The directory to use for relative path checks.
      *
      * @return bool
      */
-    public function shouldIgnoreFile($path)
+    public function shouldIgnoreFile($path, $basedir)
     {
-        foreach ($this->ignorePatterns as $pattern) {
+        $relativePath = $path;
+        if (strpos($path, $basedir) === 0) {
+            // The +1 cuts off the directory separator as well.
+            $relativePath = substr($path, (strlen($basedir) + 1));
+        }
+
+        foreach ($this->ignorePatterns as $pattern => $type) {
             if (is_array($pattern) === true) {
                 // A sniff specific ignore pattern.
                 continue;
@@ -1215,7 +1224,14 @@ class PHP_CodeSniffer
             }
 
             $pattern = strtr($pattern, $replacements);
-            if (preg_match("|{$pattern}|i", $path) === 1) {
+
+            if ($type === 'relative') {
+                $testPath = $relativePath;
+            } else {
+                $testPath = $path;
+            }
+
+            if (preg_match("|{$pattern}|i", $testPath) === 1) {
                 return true;
             }
         }//end foreach
