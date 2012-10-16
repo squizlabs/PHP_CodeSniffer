@@ -607,6 +607,20 @@ class PHP_CodeSniffer_File
         $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
         $this->numTokens = count($this->_tokens);
 
+        // Check for mixed line endings as these can cause tokenizer errors and we
+        // should let the user know that the results they get may be incorrect.
+        // This is done by removing all backslashes, removing the newline char we
+        // detected, then converting newlines chars into text. If any backslashes
+        // are left at the end, we have additional newline chars in use.
+        $contents = str_replace('\\', '', $contents);
+        $contents = str_replace($this->eolChar, '', $contents);
+        $contents = str_replace("\n", '\n', $contents);
+        $contents = str_replace("\r", '\r', $contents);
+        if (preg_match('/(\\\\.)+/', $contents) === 1) {
+            $error = 'File has mixed line endings; this may cause incorrect results';
+            $this->addWarning($error, 0, 'Internal.LineEndings.Mixed');
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
@@ -685,7 +699,7 @@ class PHP_CodeSniffer_File
      * @param int    $stackPtr The stack position where the error occured.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of
+     * @param int    $severity The severity level for this error. A value of 0
      *                         will be converted into the default severity level.
      *
      * @return void
@@ -716,6 +730,15 @@ class PHP_CodeSniffer_File
             if ($code !== '') {
                 $sniff .= '.'.$code;
             }
+        }
+
+        // Make sure this message type has not been set to "warning".
+        if (isset($this->ruleset[$sniff]['type']) === true
+            && $this->ruleset[$sniff]['type'] === 'warning'
+        ) {
+            // Pass this off to the warning handler.
+            $this->addWarning($error, $stackPtr, $code, $data, $severity);
+            return;
         }
 
         // Make sure we are interested in this severity level.
@@ -791,7 +814,7 @@ class PHP_CodeSniffer_File
      * @param int    $stackPtr The stack position where the error occured.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of
+     * @param int    $severity The severity level for this warning. A value of 0
      *                         will be converted into the default severity level.
      *
      * @return void
@@ -822,6 +845,15 @@ class PHP_CodeSniffer_File
             if ($code !== '') {
                 $sniff .= '.'.$code;
             }
+        }
+
+        // Make sure this message type has not been set to "error".
+        if (isset($this->ruleset[$sniff]['type']) === true
+            && $this->ruleset[$sniff]['type'] === 'error'
+        ) {
+            // Pass this off to the error handler.
+            $this->addError($warning, $stackPtr, $code, $data, $severity);
+            return;
         }
 
         // Make sure we are interested in this severity level.

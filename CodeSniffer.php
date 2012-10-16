@@ -924,6 +924,15 @@ class PHP_CodeSniffer
                 $this->ruleset[$code]['severity'] = (int) $rule->severity;
             }
 
+            // Custom message type.
+            if (isset($rule->type) === true) {
+                if (isset($this->ruleset[$code]) === false) {
+                    $this->ruleset[$code] = array();
+                }
+
+                $this->ruleset[$code]['type'] = (string) $rule->type;
+            }
+
             // Custom message.
             if (isset($rule->message) === true) {
                 if (isset($this->ruleset[$code]) === false) {
