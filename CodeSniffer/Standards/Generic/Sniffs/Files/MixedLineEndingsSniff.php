@@ -53,6 +53,23 @@ class Generic_Sniffs_Files_MixedLineEndingsSniff implements PHP_CodeSniffer_Snif
 
 
     /**
+     * Replaces \r and \n with their plain text representation.
+     *
+     * @param string $string String being processed.
+     *
+     * @return string
+     */
+    protected function replaceLineEnds($string)
+    {
+        $string = str_replace("\n", '\n', $string);
+        $string = str_replace("\r", '\r', $string);
+
+        return $string;
+
+    }//end replaceLineEnds()
+
+
+    /**
      * Processes this sniff, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
@@ -70,59 +87,26 @@ class Generic_Sniffs_Files_MixedLineEndingsSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        $filename = $phpcsFile->getFilename();
-        $handle   = fopen($filename, 'r');
-        if ($handle === false) {
-            $error = 'Error opening file; could not check line endings';
-            $phpcsFile->addError($error, 0, 'OpenFailed');
-            return;
+        $expected = $this->replaceLineEnds($phpcsFile->eolChar);
+
+        // Remove backslashes from original file to avoid false matches
+        $content = str_replace('\\', '', $phpcsFile->getFileContents());
+
+        // Replace \r and \n with plain text representation
+        $content = $this->replaceLineEnds($content);
+
+        // Remove all string representations of expected line ends
+        $content = str_replace($expected, '', $content);
+
+        // Check whether content still includes backslashes
+        if (preg_match('/(\\\\.)+/', $content, $found)) {
+            $error = 'File contains mixed end of line characters; found "%s" and "%s"';
+            $data  = array(
+                      $expected,
+                      $found[0],
+                     );
+            $phpcsFile->addError($error, 0, 'Found', $data);
         }
-
-        $expected = $phpcsFile->eolChar;
-        $expected = str_replace("\n", '\n', $expected);
-        $expected = str_replace("\r", '\r', $expected);
-
-        $line     = '';
-        $nextLine = '';
-        while ($nextLine !== false) {
-            if ($line === '') {
-                $line = fgets($handle);
-            }
-
-            // PHP will split the /r and /n of a /r/n over two lines, so we need
-            // bring them back together so the EOL character can be correctly
-            // determined.
-            if ($line[0] === "\n") {
-                $line = substr($line, 1);
-            }
-
-            $nextLine = fgets($handle);
-            if ($nextLine !== false && $nextLine[0] === "\n") {
-                $line .= "\n";
-            }
-
-            $found = $phpcsFile->detectLineEndings($filename, $line);
-            $found = str_replace("\n", '\n', $found);
-            $found = str_replace("\r", '\r', $found);
-
-            if ($found !== $expected) {
-                $error = 'File contains mixed end of line characters; found "%s" and "%s"';
-                $data  = array(
-                          $expected,
-                          $found,
-                         );
-                $phpcsFile->addError($error, 0, 'Found', $data);
-                break;
-            }
-
-            if ($nextLine === false) {
-                break;
-            }
-
-            $line = $nextLine;
-        }//end while
-
-        fclose($handle);
 
     }//end process()
 

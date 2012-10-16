@@ -125,6 +125,13 @@ class PHP_CodeSniffer_File
     private $_file = '';
 
     /**
+     * Complete file contents.
+     *
+     * @var string
+     */
+    private $_fileContents;
+
+    /**
      * The EOL character this file uses.
      *
      * @var string
@@ -602,6 +609,7 @@ class PHP_CodeSniffer_File
 
         if ($contents === null) {
             $contents = file_get_contents($this->_file);
+            $this->_fileContents = $contents;
         }
 
         $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
@@ -960,6 +968,18 @@ class PHP_CodeSniffer_File
         return $this->_file;
 
     }//end getFilename()
+
+
+    /**
+     * Returns complete contents of this file.
+     *
+     * @return string
+     */
+    public function getFileContents()
+    {
+        return $this->_fileContents;
+
+    }//end getFileContents()
 
 
     /**
