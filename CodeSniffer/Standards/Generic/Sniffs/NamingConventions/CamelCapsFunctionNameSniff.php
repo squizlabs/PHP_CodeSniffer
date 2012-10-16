@@ -59,6 +59,13 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                               );
 
     /**
+     * A list of all PHP non-magic methods starting by a double underscore.
+     *
+     * @var array
+     */
+    protected $methodsDoubleUnderscore = array('soapCall');
+
+    /**
      * A list of all PHP magic functions.
      *
      * @var array
@@ -107,7 +114,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
-            if (in_array($magicPart, $this->magicMethods) === false) {
+            if (in_array($magicPart, array_merge($this->magicMethods, $this->methodsDoubleUnderscore) === false) {
                  $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
             }
