@@ -136,4 +136,8 @@ if (array_key_exists($key, $value)
     )
 ) {
 }
+
+if (true) :
+    $foo = true;
+endif;
 ?>

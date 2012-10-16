@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR1 ClassDeclarationSniff no longer throws an error for non-namespaced code if PHP version is less than 5.3.0
   - Fixed bug #19616 : Nested switches cause false error in PSR2
   - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
+  - Fixed bug #19644 : Alternative syntax, e.g. if/endif triggers Inline Control Structure error
  </notes>
  <contents>
   <dir name="/">

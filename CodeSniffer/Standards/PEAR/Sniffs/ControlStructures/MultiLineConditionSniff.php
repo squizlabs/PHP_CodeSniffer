@@ -163,7 +163,10 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
 
         // And just in case they do something funny before the brace...
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
-        if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
+        if ($next !== false
+            && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET
+            && $tokens[$next]['code'] !== T_COLON
+        ) {
             $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement';
             $phpcsFile->addError($error, $next, 'NoSpaceBeforeOpenBrace');
         }
