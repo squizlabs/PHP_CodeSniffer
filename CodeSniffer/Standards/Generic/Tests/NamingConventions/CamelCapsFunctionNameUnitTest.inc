@@ -101,4 +101,17 @@ class Magic_Case_Test {
     function __tostring() {}
 }
 function __autoLoad() {}
+
+class Foo extends \SoapClient
+{
+    public function __soapCall(
+        $functionName,
+        $arguments,
+        $options = array(),
+        $inputHeaders = null,
+        &$outputHeaders = array()
+    ) {
+        // body
+    }
+}
 ?>

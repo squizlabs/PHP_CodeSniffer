@@ -59,21 +59,23 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                               );
 
     /**
-     * A list of all PHP non-magic methods starting by a double underscore.
+     * A list of all PHP non-magic methods starting with a double underscore.
+     *
+     * These come from PHP modules such as SOAPClient.
      *
      * @var array
      */
     protected $methodsDoubleUnderscore = array(
-                                          'soapcall', 
-                                          'getlastrequest', 
-                                          'getlastresponse', 
-                                          'getlastrequestheaders', 
-                                          'getlastresponseheaders', 
-                                          'getfunctions', 
-                                          'gettypes', 
-                                          'dorequest', 
-                                          'setcookie', 
-                                          'setlocation', 
+                                          'soapcall',
+                                          'getlastrequest',
+                                          'getlastresponse',
+                                          'getlastrequestheaders',
+                                          'getlastresponseheaders',
+                                          'getfunctions',
+                                          'gettypes',
+                                          'dorequest',
+                                          'setcookie',
+                                          'setlocation',
                                           'setsoapheaders',
                                          );
 
