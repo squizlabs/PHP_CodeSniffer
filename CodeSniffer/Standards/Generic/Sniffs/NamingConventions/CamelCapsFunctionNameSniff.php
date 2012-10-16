@@ -63,7 +63,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      *
      * @var array
      */
-    protected $methodsDoubleUnderscore = array('soapCall');
+    protected $methodsDoubleUnderscore = array('soapcall');
 
     /**
      * A list of all PHP magic functions.
