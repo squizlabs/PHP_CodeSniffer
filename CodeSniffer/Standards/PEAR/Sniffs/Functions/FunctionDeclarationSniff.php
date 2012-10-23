@@ -117,6 +117,8 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                     if ($tokens[$open]['line'] === $tokens[$close]['line']) {
                         $singleLine = true;
                     }
+                } else {
+                    $singleLine = true;
                 }
             } else {
                 $singleLine = true;
