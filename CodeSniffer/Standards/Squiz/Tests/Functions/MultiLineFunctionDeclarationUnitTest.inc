@@ -93,6 +93,6 @@ $noArgs_longVars = function () use (
 
 $shortArgs = function ($one, $two) {
     // body
-}
+};
 
 ?>
