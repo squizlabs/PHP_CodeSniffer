@@ -71,7 +71,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             $ignore    = array(
                           T_CLASS,
                           T_INTERFACE,
-						  defined('T_TRAIT') ? T_TRAIT : 355,
+                          defined('T_TRAIT') ? T_TRAIT : 355,
                           T_FUNCTION,
                           T_PUBLIC,
                           T_PRIVATE,
