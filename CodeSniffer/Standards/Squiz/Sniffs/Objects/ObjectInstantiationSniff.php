@@ -67,7 +67,7 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
                           T_THROW,
                           T_RETURN,
                           T_INLINE_THEN,
-                          T_COLON,
+                          T_INLINE_ELSE,
                          );
 
         if (in_array($tokens[$prev]['code'], $allowedTokens) === false) {

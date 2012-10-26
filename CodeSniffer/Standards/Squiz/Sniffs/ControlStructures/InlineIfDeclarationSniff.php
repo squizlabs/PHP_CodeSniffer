@@ -108,13 +108,8 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
             $phpcsFile->addError($error, $stackPtr, 'SpacingAfterThen', $data);
         }
 
-        // If there is an else in this condition, make sure it has correct spacing.
-        $inlineElse = $phpcsFile->findNext(T_COLON, ($stackPtr + 1), $statementEnd, false);
-        if ($inlineElse === false) {
-            // No else condition.
-            return;
-        }
-
+        // Make sure the ELSE has the correct spacing.
+        $inlineElse    = $phpcsFile->findNext(T_INLINE_ELSE, ($stackPtr + 1), $statementEnd, false);
         $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, ($inlineElse - 1), null, true);
         $contentAfter  = $phpcsFile->findNext(T_WHITESPACE, ($inlineElse + 1), null, true);
 

@@ -243,6 +243,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $newStackPtr = 0;
         $numTokens   = count($tokens);
+
+        $insideInlineIf = false;
+
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token        = $tokens[$stackPtr];
             $tokenIsArray = is_array($token);
@@ -453,8 +456,18 @@ class PHP_CodeSniffer_Tokenizers_PHP
             } else {
                 $newToken = PHP_CodeSniffer::standardiseToken($token);
 
-                // This is a special condition for T_ARRAY tokens use to
-                // type hint function arguments as being arrays. We want to keep
+                // Convert colons that are actually the ELSE component of an
+                // inline IF statement.
+                if ($newToken['code'] === T_INLINE_THEN) {
+                    $insideInlineIf = true;
+                } else if ($insideInlineIf === true && $newToken['code'] === T_COLON) {
+                    $insideInlineIf = false;
+                    $newToken['code'] = T_INLINE_ELSE;
+                    $newToken['type'] = 'T_INLINE_ELSE';
+                }
+
+                // This is a special condition for T_ARRAY tokens used for
+                // type hinting function arguments as being arrays. We want to keep
                 // the parenthsis map clean, so let's tag these tokens as
                 // T_ARRAY_HINT.
                 if ($newToken['code'] === T_ARRAY) {
