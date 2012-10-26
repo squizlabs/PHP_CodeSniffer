@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - All ignore patterns have been reverted to being checked against the absolute path of a file
     -- Patterns can be specified to be relative in a rulset.xml file, but nowhere else
     -- e.g., [exclude-pattern type="relative"]^tests/*[/exclude-pattern] (with angle brackets, not square brackets)
+  - Added support for PHP tokenizing of T_INLINE_ELSE colons, so this token type is now available
+    -- Custom sniffs that rely on looking for T_COLON tokens inside inline if statements must be changed to use the new token
+    -- Fixes bug #19666 : PSR1.Files.SideEffects throws a notice Undefined index: scope_closer
   - Messages can now be changed from errors to warnings (and vice versa) inside ruleset.xml files
     -- As you would with "message" and "severity", specify a "type" tag under a "rule" tag and set the value to "error" or "warning"
   - PHP_CodeSniffer will now generate a warning on files that it detects have mixed line endings
@@ -37,8 +40,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
     -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
     -- Thanks to Till Klampaeckel for the patch
-  - Added support for PHP tokenizing of T_INLINE_ELSE colons, so this token type is now available
-    -- Fixes bug #19666 : PSR1.Files.SideEffects throws a notice Undefined index: scope_closer
   - Added Generic DisallowSpaceIndent to check that files are indented using tabs
   - Added Generic OneClassPerFileSniff to check that only one class is defined in each file
     -- Thanks to Andy Grunwald for the contribution
