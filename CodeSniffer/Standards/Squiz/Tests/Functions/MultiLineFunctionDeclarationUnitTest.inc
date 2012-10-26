@@ -90,4 +90,11 @@ $noArgs_longVars = function () use (
 ) {
     // body
 };
+
+usort(
+    $data,
+    function ($a, $b) {
+        // body
+    }
+);
 ?>

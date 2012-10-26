@@ -105,7 +105,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         }//end if
 
         // Check if this is a single line or multi-line declaration.
-        $singleLine = false;
+        $singleLine = true;
         if ($tokens[$openBracket]['line'] === $tokens[$closeBracket]['line']) {
             // Closures may use the USE keyword and so be multi-line in this way.
             if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
@@ -114,13 +114,13 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                     // are also on the same line, this is a single line declaration.
                     $open  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
                     $close = $tokens[$open]['parenthesis_closer'];
-                    if ($tokens[$open]['line'] === $tokens[$close]['line']) {
-                        $singleLine = true;
+                    if ($tokens[$open]['line'] !== $tokens[$close]['line']) {
+                        $singleLine = false;
                     }
                 }
-            } else {
-                $singleLine = true;
             }
+        } else {
+            $singleLine = false;
         }
 
         if ($singleLine === true) {
