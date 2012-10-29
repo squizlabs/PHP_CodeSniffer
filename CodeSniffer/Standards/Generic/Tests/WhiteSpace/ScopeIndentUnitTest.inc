@@ -410,4 +410,14 @@ and the ending STRING on the next line is reported as having to be indented.
 STRING
     );
 }
+
+$var = call_user_func(
+    $new_var = function () use (&$a) {
+        if ($a > 0) {
+            return $a++;
+        } else {
+            return $a--;
+        }
+    }
+);
 ?>

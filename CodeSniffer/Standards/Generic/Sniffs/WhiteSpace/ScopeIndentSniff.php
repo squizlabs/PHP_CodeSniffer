@@ -342,21 +342,36 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         $tokenConditions = $tokens[$stackPtr]['conditions'];
         foreach ($tokenConditions as $id => $condition) {
-            // If it's an indenting scope ie. it's not in our array of
-            // scopes that don't indent, increase indent.
-            if (in_array($condition, $this->nonIndentingScopes) === false) {
-                if ($condition === T_CLOSURE && $inParenthesis === true) {
-                    // Closures cause problems with indents when they are
-                    // used as function arguments because the code inside them
-                    // is not technically inside the function yet, so the indent
-                    // is always off by one. So instead, use the
-                    // indent of the closure as the base value.
-                    $indent = ($tokens[$id]['column'] - 1);
+            // If it's not an indenting scope i.e., it's in our array of
+            // scopes that don't indent, skip it.
+            if (in_array($condition, $this->nonIndentingScopes) === true) {
+                continue;
+            }
+
+            if ($condition === T_CLOSURE && $inParenthesis === true) {
+                // Closures cause problems with indents when they are
+                // used as function arguments because the code inside them
+                // is not technically inside the function yet, so the indent
+                // is always off by one. So instead, use the
+                // indent of the closure as the base value.
+                $lastContent = $id;
+                for ($i = ($id - 1); $i > 0; $i--) {
+                    if ($tokens[$i]['line'] !== $tokens[$id]['line']) {
+                        // Changed lines, so the last content we saw is what
+                        // we want.
+                        break;
+                    }
+
+                    if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        $lastContent = $i;
+                    }
                 }
 
-                $indent += $this->indent;
+                $indent = ($tokens[$lastContent]['column'] - 1);
             }
-        }
+
+            $indent += $this->indent;
+        }//end foreach
 
         // Increase by 1 to indiciate that the code should start at a specific column.
         // E.g., code indented 4 spaces should start at column 5.

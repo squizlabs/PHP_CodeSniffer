@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
   - Fixed bug #19644 : Alternative syntax, e.g. if/endif triggers Inline Control Structure error
   - Fixed bug #19655 : Closures reporting as multi-line when they are not
+  - Fixed bug #19675 : Improper indent of nested anonymous function bodies in a call
  </notes>
  <contents>
   <dir name="/">
