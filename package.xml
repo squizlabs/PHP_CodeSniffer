@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
     -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
     -- Thanks to Till Klampaeckel for the patch
+  - Generic DuplicateClassNameSniff is no longer a multi-file sniff, so it won't max out your memory
+    -- Multi-file sniff support should be considered deprecated as standard sniffs can now do the same thing
   - Added Generic DisallowSpaceIndent to check that files are indented using tabs
   - Added Generic OneClassPerFileSniff to check that only one class is defined in each file
     -- Thanks to Andy Grunwald for the contribution

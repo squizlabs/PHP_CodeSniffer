@@ -116,29 +116,18 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        // Get them in order. This is particularly important for multi-file sniffs.
+        // Get them in order.
         sort($testFiles);
 
+        self::$phpcs->process(array(), $standardName, array($sniffClass));
+        self::$phpcs->setIgnorePatterns(array());
+
         $failureMessages = array();
-        $multiFileSniff  = false;
         foreach ($testFiles as $testFile) {
             try {
-                self::$phpcs->process(array(), $standardName, array($sniffClass));
-                self::$phpcs->setIgnorePatterns(array());
                 self::$phpcs->processFile($testFile);
-                self::$phpcs->processMulti();
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
-            }
-
-            // After processing a file, check if the sniff was actually
-            // a multi-file sniff (i.e., had no individual file sniffs).
-            // If it is, we can skip checking of the other files and
-            // do a single multi-file check.
-            $sniffs = self::$phpcs->getTokenSniffs();
-            if (empty($sniffs['file']) === true) {
-                $multiFileSniff = true;
-                break;
             }
 
             $files = self::$phpcs->getFiles();
@@ -153,31 +142,6 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             $failures        = $this->generateFailureMessages($file);
             $failureMessages = array_merge($failureMessages, $failures);
         }//end foreach
-
-        if ($multiFileSniff === true) {
-            try {
-                self::$phpcs->process(array(), $standardName, array($sniffClass));
-                self::$phpcs->setIgnorePatterns(array());
-                foreach ($testFiles as $testFile) {
-                    self::$phpcs->processFile($testFile);
-                }
-
-                self::$phpcs->processMulti();
-            } catch (Exception $e) {
-                $this->fail('An unexpected exception has been caught: '.$e->getMessage());
-            }
-
-            $files = self::$phpcs->getFiles();
-            if (empty($files) === true) {
-                // File was skipped for some reason.
-                $this->markTestSkipped();
-            } else {
-                foreach ($files as $file) {
-                    $failures        = $this->generateFailureMessages($file);
-                    $failureMessages = array_merge($failureMessages, $failures);
-                }
-            }
-        }//end if
 
         if (empty($failureMessages) === false) {
             $this->fail(implode(PHP_EOL, $failureMessages));
