@@ -711,10 +711,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
-        <file baseinstalldir="PHP" name="GetRequestDataSniff.php" role="php">
+        <file baseinstalldir="PHP" name="AjaxNullComparisonSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EvalObjectFactorySniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GetRequestDataSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ReturnFunctionValueSniff.php" role="php">
@@ -779,12 +782,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
-        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.php" role="test">
+        <file baseinstalldir="PHP" name="AjaxNullComparisonUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="AjaxNullComparisonUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="EvalObjectFactoryUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="GetRequestDataUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ReturnFunctionValueUnitTest.inc" role="test" />
