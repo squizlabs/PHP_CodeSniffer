@@ -420,4 +420,20 @@ $var = call_user_func(
         }
     }
 );
+
+class AnonymousFn
+{
+    public function getAnonFn()
+    {
+        return array(
+            'functions' => Array(
+                'function1' => function ($a, $b, $c) {
+                    $a = $b + $c;
+                    $b = $c / 2;
+                    return Array($a, $b, $c);
+                },
+            ),
+        );
+    }
+}
 ?>

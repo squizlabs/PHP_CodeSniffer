@@ -127,13 +127,24 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         if ($tokens[$firstToken]['code'] !== T_CLOSURE
             && $tokens[$firstToken]['column'] !== $expectedIndent
         ) {
-            $error = 'Line indented incorrectly; expected %s spaces, found %s';
-            $data  = array(
-                      ($expectedIndent - 1),
-                      ($tokens[$firstToken]['column'] - 1),
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
-        }
+            // If the scope opener is a closure but it is not the first token on the
+            // line, then the first token may be a variable or array index as so
+            // should not require exact identation unless the exact member var
+            // is set to TRUE.
+            $exact = true;
+            if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+                $exact = $this->exact;
+            }
+
+            if ($exact === true || $tokens[$firstToken]['column'] < $expectedIndent) {
+                $error = 'Line indented incorrectly; expected %s spaces, found %s';
+                $data  = array(
+                          ($expectedIndent - 1),
+                          ($tokens[$firstToken]['column'] - 1),
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+            }
+        }//end if
 
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];

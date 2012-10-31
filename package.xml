@@ -66,6 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19655 : Closures reporting as multi-line when they are not
   - Fixed bug #19675 : Improper indent of nested anonymous function bodies in a call
   - Fixed bug #19685 : PSR2 catch-22 with empty third statement in for loop
+  - Fixed bug #19687 : Anonymous functions inside arrays marked as indented incorrectly in PSR2
  </notes>
  <contents>
   <dir name="/">
