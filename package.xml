@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-09-26</date>
- <time>14:13:00</time>
+ <date>2012-11-02</date>
+ <time>10:08:00</time>
  <version>
   <release>1.4.1</release>
   <api>1.4.1</api>
@@ -2077,6 +2077,61 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.4.1</release>
+    <api>1.4.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-11-02</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - All ignore patterns have been reverted to being checked against the absolute path of a file
+      -- Patterns can be specified to be relative in a rulset.xml file, but nowhere else
+      -- e.g., [exclude-pattern type="relative"]^tests/*[/exclude-pattern] (with angle brackets, not square brackets)
+    - Added support for PHP tokenizing of T_INLINE_ELSE colons, so this token type is now available
+      -- Custom sniffs that rely on looking for T_COLON tokens inside inline if statements must be changed to use the new token
+      -- Fixes bug #19666 : PSR1.Files.SideEffects throws a notice Undefined index: scope_closer
+    - Messages can now be changed from errors to warnings (and vice versa) inside ruleset.xml files
+      -- As you would with "message" and "severity", specify a "type" tag under a "rule" tag and set the value to "error" or "warning"
+    - PHP_CodeSniffer will now generate a warning on files that it detects have mixed line endings
+      -- This warning has the code Internal.LineEndings.Mixed and can be overriden in a ruleset.xml file
+      -- Thanks to Vit Brunner for help with this
+    - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
+      -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
+      -- Thanks to Till Klampaeckel for the patch
+    - Generic DuplicateClassNameSniff is no longer a multi-file sniff, so it won't max out your memory
+      -- Multi-file sniff support should be considered deprecated as standard sniffs can now do the same thing
+    - Added Generic DisallowSpaceIndent to check that files are indented using tabs
+    - Added Generic OneClassPerFileSniff to check that only one class is defined in each file
+      -- Thanks to Andy Grunwald for the contribution
+    - Added Generic OneInterfacePerFileSniff to check that only one interface is defined in each file
+      -- Thanks to Andy Grunwald for the contribution
+    - Added Generic LowercasedFilenameSniff to check that filenames are lowercase
+      -- Thanks to Andy Grunwald for the contribution
+    - Added Generic ClosingPHPTagSniff to check that each open PHP tag has a corresponding close tag
+      -- Thanks to Andy Grunwald for the contribution
+    - Added Generic CharacterBeforePHPOpeningTagSniff to check that the open PHP tag is the first content in a file
+      -- Thanks to Andy Grunwald for the contribution
+    - Fixed incorrect errors in Squiz OperatorBracketSniff and OperatorSpacingSniff for negative numbers in CASE statements
+      -- Thanks to Arnout Boks for the patch
+    - Generic CamelCapsFunctionNameSniff no longer enforces exact case matching for PHP magic methods
+    - Generic CamelCapsFunctionNameSniff no longer throws errors for overridden SOAPClient methods prefixed with double underscores
+      -- Thanks to Dorian Villet for the patch
+    - PEAR ValidFunctionNameSniff now supports traits
+    - PSR1 ClassDeclarationSniff no longer throws an error for non-namespaced code if PHP version is less than 5.3.0
+    - Fixed bug #19616 : Nested switches cause false error in PSR2
+    - Fixed bug #19629 : PSR2 error for inline comments on multi-line argument lists
+    - Fixed bug #19644 : Alternative syntax, e.g. if/endif triggers Inline Control Structure error
+    - Fixed bug #19655 : Closures reporting as multi-line when they are not
+    - Fixed bug #19675 : Improper indent of nested anonymous function bodies in a call
+    - Fixed bug #19685 : PSR2 catch-22 with empty third statement in for loop
+    - Fixed bug #19687 : Anonymous functions inside arrays marked as indented incorrectly in PSR2
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.0</release>
