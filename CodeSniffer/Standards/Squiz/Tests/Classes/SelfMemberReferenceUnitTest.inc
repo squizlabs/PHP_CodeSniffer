@@ -67,18 +67,18 @@ MyClass::walk();
 namespace TYPO3\CMS\Reports;
 
 class Status {
-	const NOTICE = -2;
-	const INFO = -1;
-	const OK = 0;
-	const WARNING = 1;
-	const ERROR = 2;
+    const NOTICE = -2;
+    const INFO = -1;
+    const OK = 0;
+    const WARNING = 1;
+    const ERROR = 2;
 }
 
 namespace TYPO3\CMS\Reports\Report\Status;
 
 class Status implements \TYPO3\CMS\Reports\ReportInterface {
-	public function getHighestSeverity(array $statusCollection) {
-		$highestSeverity = \TYPO3\CMS\Reports\Status::NOTICE;
-	}
+    public function getHighestSeverity(array $statusCollection) {
+        $highestSeverity = \TYPO3\CMS\Reports\Status::NOTICE;
+    }
 }
 ?>

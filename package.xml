@@ -27,6 +27,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
  <notes>
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
+  - Squiz SelfMemberReferenceSniff now supports namespaces
+    -- Thanks to Andy Grunwald for the patch
  </notes>
  <contents>
   <dir name="/">

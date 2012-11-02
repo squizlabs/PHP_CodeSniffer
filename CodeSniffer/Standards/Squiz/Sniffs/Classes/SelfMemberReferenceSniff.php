@@ -74,16 +74,16 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             }
         } else if ($tokens[$className]['code'] === T_STRING) {
             // Make sure this is another class reference.
-            $declarationName = $phpcsFile->getDeclarationName($currScope);
+            $declarationName        = $phpcsFile->getDeclarationName($currScope);
             $fullQualifiedClassName = $tokens[$className]['content'];
 
-            // If the class is called with a namespace prefix
-            // build full qualified namespace calls for both (currenct scope class and requested class)
-            if ($tokens[$className - 1]['code'] === T_NS_SEPARATOR) {
-                $declarationName = $this->getDeclarationNameWithNamespace($tokens, $className);
-                $declarationName = substr($declarationName, 1);
-                $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
-                $fullQualifiedClassName .= '\\' . $tokens[$className]['content'];
+            // If the class is called with a namespace prefix, build fully qualified
+            // namespace calls for both current scope class and requested class.
+            if ($tokens[($className - 1)]['code'] === T_NS_SEPARATOR) {
+                $declarationName         = $this->getDeclarationNameWithNamespace($tokens, $className);
+                $declarationName         = substr($declarationName, 1);
+                $fullQualifiedClassName  = $this->getNamespaceOfScope($phpcsFile, $currScope);
+                $fullQualifiedClassName .= '\\'.$tokens[$className]['content'];
             }
 
             if ($declarationName === $fullQualifiedClassName) {
@@ -95,7 +95,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
                     return;
                 }
             }
-        }
+        }//end if
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr - 1)]['content']);
@@ -113,43 +113,55 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
 
     }//end processTokenWithinScope()
 
+
     /**
-     * Returns the declaration names for T_CLASS, T_INTERFACE and T_FUNCTION tokens
-     * with namespace.
+     * Returns the declaration names for classes/interfaces/functions with a namespace.
      *
      * @param array $tokens   Token stack for this file
      * @param int   $stackPtr The position where the namespace building will start.
      *
      * @return string
      */
-    protected function getDeclarationNameWithNamespace(array $tokens, $stackPtr) {
-        $nameParts = array();
+    protected function getDeclarationNameWithNamespace(array $tokens, $stackPtr)
+    {
+        $nameParts      = array();
         $currentPointer = $stackPtr;
-        while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR || $tokens[$currentPointer]['code'] === T_STRING) {
+        while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
+            || $tokens[$currentPointer]['code'] === T_STRING
+        ) {
             $nameParts[] = $tokens[$currentPointer]['content'];
             $currentPointer--;
         }
-        $nameParts = array_reverse($nameParts);
 
+        $nameParts = array_reverse($nameParts);
         return implode('', $nameParts);
+
     }//end getDeclarationNameWithNamespace()
 
+
     /**
-     * Returns the namespace declaration of file.
+     * Returns the namespace declaration of a file.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the search for namespace declaration will start.
+     * @param int                  $stackPtr  The position where the search for the
+     *                                        namespace declaration will start.
      *
      * @return string
      */
-    protected function getNamespaceOfScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-        $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
+    protected function getNamespaceOfScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $namespaceDeclaration      = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
         $endOfNamespaceDeclaration = $phpcsFile->findNext(T_SEMICOLON, $namespaceDeclaration);
 
-        $namespace = $this->getDeclarationNameWithNamespace($phpcsFile->getTokens(), $endOfNamespaceDeclaration - 1);
+        $namespace = $this->getDeclarationNameWithNamespace(
+            $phpcsFile->getTokens(),
+            ($endOfNamespaceDeclaration - 1)
+        );
 
         return $namespace;
+
     }//end getNamespaceOfScope
+
 
 }//end class
 
