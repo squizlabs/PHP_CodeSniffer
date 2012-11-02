@@ -165,4 +165,12 @@ switch ($var) {
         echo 'Default';
     break;
 }//end switch
+
+/**
+ * Comment should be ignored in PHP 5.4.
+ *
+ */
+trait MyTrait {
+
+}
 ?>
