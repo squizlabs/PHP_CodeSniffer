@@ -102,4 +102,12 @@ final class MyClass
             -> One.One
         -> Two
 */
+
+/**
+ * Comment should be ignored.
+ *
+ */
+trait MyTrait {
+
+}
 ?>

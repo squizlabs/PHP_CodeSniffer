@@ -165,4 +165,12 @@ switch ($var) {
         echo 'Default';
     break;
 }//end switch
+
+/**
+ * Comment should be ignored.
+ *
+ */
+trait MyTrait {
+
+}
 ?>
