@@ -20,7 +20,7 @@
     },
     "require": {
         "php": ">=5.1.2"
-    }
+    },
     "bin": [
         "scripts/phpcs"
     ],
