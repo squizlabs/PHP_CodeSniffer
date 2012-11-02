@@ -21,11 +21,6 @@
     "require": {
         "php": ">=5.1.2"
     },
-    "source": {
-        "url": "https://github.com/alcohol/PHP_CodeSniffer.git",
-        "type": "git",
-        "reference": "https://github.com/alcohol/PHP_CodeSniffer/zipball"
-    },
     "bin": [
         "scripts/phpcs"
     ],
