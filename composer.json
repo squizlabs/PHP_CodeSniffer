@@ -18,11 +18,14 @@
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
+    "suggests": {
+        "phpunit/php-timer": "*"
+    },
     "require": {
         "php": ">=5.1.2"
     },
     "bin": [
-        "scripts/phpcs"
+        "composer/bin/phpcs"
     ],
     "autoload": {
         "psr-0": {
