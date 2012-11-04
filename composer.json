@@ -1,0 +1,25 @@
+{
+	"name": "squizlabs/php_codesniffer",
+	"type": "library",
+	"description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+	"keywords": ["PEAR","PHP","CSS","JavaScript","sniff","tokenizer","coding standards","violations"],
+	"homepage": "http://pear.php.net/package/PHP_CodeSniffer/",
+	"license": "BSD-2-Clause",
+	"authors": [
+		{
+			"name": "Greg Sherwood",
+			"email": "gsherwood@squiz.net",
+			"homepage": "http://www.squizlabs.com/php-codesniffer/",
+			"role": "developer"
+		}
+	],
+	"require": {
+		"php": ">=5.1.2"
+	},
+	"support": {
+		"email": "gsherwood@squiz.net",
+		"issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
+		"wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
+		"source": "https://github.com/squizlabs/PHP_CodeSniffer"
+	}
+}
