@@ -7,6 +7,7 @@
         "standards",
         "codesniffs"
     ],
+    "license": "BSD-3-Clause",
     "homepage": "http://www.squizlabs.com/php-codesniffer",
     "authors": [
         {
@@ -26,10 +27,5 @@
     },
     "bin": [
         "scripts/phpcs"
-    ],
-    "autoload": {
-        "psr-0": {
-            "PHP_CodeSniffer": "CodeSniffer/"
-        }
-    }
+    ]
 }
