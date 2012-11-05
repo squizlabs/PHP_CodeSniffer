@@ -1,5 +1,5 @@
 {
-    "name": "squizlabs/codesniffer",
+    "name": "squizlabs/phpcs",
     "description": "The PHP Coding Standards sniffer.",
     "type": "library",
     "keywords": [
