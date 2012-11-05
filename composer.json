@@ -1,0 +1,31 @@
+{
+    "name": "squizlabs/phpcs",
+    "description": "The PHP Coding Standards sniffer.",
+    "type": "library",
+    "keywords": [
+        "phpcs",
+        "standards",
+        "codesniffs"
+    ],
+    "license": "BSD-3-Clause",
+    "homepage": "http://www.squizlabs.com/php-codesniffer",
+    "authors": [
+        {
+            "name": "Greg Sherwood",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
+        "source": "https://github.com/squizlabs/PHP_CodeSniffer"
+    },
+    "suggests": {
+        "phpunit/php-timer": "*"
+    },
+    "require": {
+        "php": ">=5.1.2"
+    },
+    "bin": [
+        "scripts/phpcs"
+    ]
+}

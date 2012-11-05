@@ -25,6 +25,14 @@ If you don't want to install PEAR, you can download the PHP\_CodeSniffer source 
     cd PHP_CodeSniffer
     php scripts/phpcs -h
 
+If you use Composer then all you need to do is run the following command:
+    
+    php composer.phar require --dev squizlabs/phpcs=1.* 
+
+You will then be able to run PHPCS from the vendor bin:
+
+    ./vendor/bin/phpcs -h
+
 Documentation
 -------------
 
