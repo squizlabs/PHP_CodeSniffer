@@ -25,7 +25,7 @@
         "php": ">=5.1.2"
     },
     "bin": [
-        "composer/bin/phpcs"
+        "scripts/phpcs"
     ],
     "autoload": {
         "psr-0": {
