@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PHP_CodeSniffer can now be installed using Composer
+    -- Require squizlabs/php_codesniffer in your composer.json file
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
   - Squiz SelfMemberReferenceSniff now supports namespaces
     -- Thanks to Andy Grunwald for the patch
