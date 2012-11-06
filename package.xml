@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
   - Squiz SelfMemberReferenceSniff now supports namespaces
     -- Thanks to Andy Grunwald for the patch
+  - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
  </notes>
  <contents>
   <dir name="/">
