@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SelfMemberReferenceSniff now supports namespaces
     -- Thanks to Andy Grunwald for the patch
   - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
+    -- Thanks to Kevin Winahradsky for the patch
  </notes>
  <contents>
   <dir name="/">
