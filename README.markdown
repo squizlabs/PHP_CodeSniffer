@@ -19,7 +19,19 @@ The easiest way to install PHP\_CodeSniffer is to use the PEAR installer. This w
 
     pear install PHP_CodeSniffer
 
-If you don't want to install PEAR, you can download the PHP\_CodeSniffer source and run the `phpcs` command directly from the GIT checkout:
+If you use [Composer](http://getcomposer.org/), include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
+
+    {
+        "require": {
+            "squizlabs/php_codesniffer": "1.*"
+        }
+    }
+
+You will then be able to run PHP_CodeSniffer from the vendor bin directory:
+
+    ./vendor/bin/phpcs -h
+
+You can also download the PHP\_CodeSniffer source and run the `phpcs` command directly from the GIT checkout:
 
     git clone git://github.com/squizlabs/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
