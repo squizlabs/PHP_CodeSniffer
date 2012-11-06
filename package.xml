@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHP_CodeSniffer can now be installed using Composer
     -- Require squizlabs/php_codesniffer in your composer.json file
+    -- Thanks to Rob (@alcohol on github), Stephen Rees-Carter, Stefano Kowalke and Ivan Habunek for help with this
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
   - Squiz SelfMemberReferenceSniff now supports namespaces
     -- Thanks to Andy Grunwald for the patch
