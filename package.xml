@@ -24,7 +24,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <release>stable</release>
   <api>stable</api>
  </stability>
- <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+ <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
   - Squiz SelfMemberReferenceSniff now supports namespaces
@@ -39,7 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file baseinstalldir="PHP" name="CodeSniffer.sample.conf" role="data" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
-     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
