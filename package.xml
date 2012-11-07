@@ -32,8 +32,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
   - Squiz SelfMemberReferenceSniff now supports namespaces
     -- Thanks to Andy Grunwald for the patch
+  - Fixed an incorrect error in Squiz OperatorSpacingSniff for default values inside a closure definition
   - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
     -- Thanks to Kevin Winahradsky for the patch
+  - Fixed bug #19692 : DisallowMultipleAssignments is triggered by a closure
   - Fixed bug #19693 : exclude-patterns no longer work on specific messages
   - Fixed bug #19694 : Squiz.PHP.LowercasePHPFunctions incorrectly matches return by ref functions
  </notes>

@@ -37,4 +37,6 @@ list ($a, $b) = explode(',', $c);
 $var1 ? $var2 = 0 : $var2 = 1;
 
 $obj->$classVar = $prefix.'-'.$type;
+
+$closureWithDefaultParamter = function(array $testArray=array()) {};
 ?>

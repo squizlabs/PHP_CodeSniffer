@@ -106,6 +106,8 @@ function foo($boo = -1) {}
 $foo = array('boo' => -1);
 $x = $test ? -1 : 1;
 
+$closureWithDefaultParamter = function (array $testArray=array()) {};
+
 switch ($foo) {
 	case -1:
 		break;
