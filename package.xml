@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
     -- Thanks to Kevin Winahradsky for the patch
   - Fixed bug #19693 : exclude-patterns no longer work on specific messages
+  - Fixed bug #19694 : Squiz.PHP.LowercasePHPFunctions incorrectly matches return by ref functions
  </notes>
  <contents>
   <dir name="/">

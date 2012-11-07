@@ -32,4 +32,16 @@ if (Function_Exists('myFunction') === TRUE) {
 function getType() {}
 
 $obj = new Date();
+
+$count = $object->Count();
+$count = $object::Count();
+$count = $object->count();
+$count = $object::count();
+class MyClass {
+    public function Count() {}
+}
+
+function &Sort() {
+
+}
 ?>
