@@ -80,7 +80,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
                     $function = $tokens[$bracket]['parenthesis_owner'];
                     if ($tokens[$function]['code'] === T_FUNCTION
-                      || $tokens[$function]['code'] === T_CLOSURE
+                        || $tokens[$function]['code'] === T_CLOSURE
                     ) {
                         return;
                     }
