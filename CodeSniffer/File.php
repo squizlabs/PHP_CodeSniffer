@@ -754,7 +754,9 @@ class PHP_CodeSniffer_File
 
         // Make sure we are not ignoring this file.
         $patterns = $this->phpcs->getIgnorePatterns($sniff);
-        foreach ($patterns as $pattern) {
+        foreach ($patterns as $pattern => $type) {
+            // While there is support for a type of each pattern
+            // (absolute or relative) we don't actually support it here.
             $replacements = array(
                              '\\,' => ',',
                              '*'   => '.*',
@@ -869,7 +871,9 @@ class PHP_CodeSniffer_File
 
         // Make sure we are not ignoring this file.
         $patterns = $this->phpcs->getIgnorePatterns($sniff);
-        foreach ($patterns as $pattern) {
+        foreach ($patterns as $pattern => $type) {
+            // While there is support for a type of each pattern
+            // (absolute or relative) we don't actually support it here.
             $replacements = array(
                              '\\,' => ',',
                              '*'   => '.*',

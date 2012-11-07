@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Grunwald for the patch
   - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
     -- Thanks to Kevin Winahradsky for the patch
+  - Fixed bug #19693 : exclude-patterns no longer work on specific messages
  </notes>
  <contents>
   <dir name="/">
