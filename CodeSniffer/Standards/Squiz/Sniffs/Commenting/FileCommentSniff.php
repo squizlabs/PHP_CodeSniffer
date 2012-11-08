@@ -324,7 +324,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (in_array($tag, $foundTags) === false) {
                 $error = 'Missing @%s tag in file comment';
                 $data  = array($tag);
-                $this->currentFile->addError($error, $commentEnd, 'MissingTag', $data);
+                $this->currentFile->addError($error, $commentEnd, 'Missing'.ucfirst($tag).'Tag', $data);
                 continue;
             }
 
@@ -351,7 +351,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (count($foundIndexes) > 1) {
                 $error = 'Only 1 @%s tag is allowed in file comment';
                 $data  = array($tag);
-                $this->currentFile->addError($error, $errorPos, 'DuplicateTag', $data);
+                $this->currentFile->addError($error, $errorPos, 'Duplicate'.ucfirst($tag).'Tag', $data);
             }
 
             // Check tag order.
@@ -363,7 +363,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                           $tag,
                           $orderText,
                          );
-                $this->currentFile->addError($error, $errorPos, 'TagOrder', $data);
+                $this->currentFile->addError($error, $errorPos, ucfirst($tag).'TagOrder', $data);
             }
 
             // Store the indentation of each tag.
@@ -403,7 +403,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                              $expected,
                              $space,
                             );
-                $this->currentFile->addError($error, $indentInfo['errorPos'], 'TagIndent', $data);
+                $this->currentFile->addError($error, $indentInfo['errorPos'], ucfirst($indentInfo['tag']).'TagIndent', $data);
             }
         }
 
