@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Grunwald for the patch
   - Squiz FileCommentSniff now uses tags names inside the error codes for many messages
     -- This allows you to exclude specific missing, out of order etc., tags
+  - Fixed gitblame report not working on Windows
+    -- Thanks to Rogerio Prado de Jesus
   - Fixed an incorrect error in Squiz OperatorSpacingSniff for default values inside a closure definition
   - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
     -- Thanks to Kevin Winahradsky for the patch

@@ -93,7 +93,7 @@ class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionCo
         while (empty($fileParts) === false) {
             array_pop($fileParts);
             $location = implode($fileParts, DIRECTORY_SEPARATOR);
-            if (is_dir($location . DIRECTORY_SEPARATOR.'.git') === true) {
+            if (is_dir($location.DIRECTORY_SEPARATOR.'.git') === true) {
                 $found = true;
                 break;
             }
