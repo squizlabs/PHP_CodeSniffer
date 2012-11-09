@@ -44,6 +44,16 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                                   );
 
     /**
+     * If TRUE, whitespace rules are not checked for blank lines.
+     *
+     * Blank lines are those that contain only whitespace.
+     *
+     * @var boolean
+     */
+    public $ignoreBlankLines = false;
+
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return array
@@ -164,7 +174,15 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for end of line whitespace.
             */
 
+            // Ignore whitespace that is not at the end of a line.
             if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
+                return;
+            }
+
+            // Ignore blank lines if required.
+            if ($this->ignoreBlankLines === true
+                && $tokens[($stackPtr - 1)]['line'] !== $tokens[$stackPtr]['line']
+            ) {
                 return;
             }
 

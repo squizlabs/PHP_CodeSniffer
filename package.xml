@@ -34,6 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Grunwald for the patch
   - Squiz FileCommentSniff now uses tags names inside the error codes for many messages
     -- This allows you to exclude specific missing, out of order etc., tags
+  - Squiz SuperfluousWhitespaceSniff now has an option to ignore blank lines
+    -- This will stop errors being reported for lines that contain only whitespace
+    -- Set the ignoreBlankLines property to true in your ruleset.xml file to enable this
+  - PSR2 no longer reports errors for whitespace at the end of blank lines
   - Fixed gitblame report not working on Windows
     -- Thanks to Rogerio Prado de Jesus
   - Fixed an incorrect error in Squiz OperatorSpacingSniff for default values inside a closure definition

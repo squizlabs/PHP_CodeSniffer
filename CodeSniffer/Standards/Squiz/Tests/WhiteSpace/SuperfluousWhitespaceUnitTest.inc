@@ -33,5 +33,17 @@ function myFunction2()
 
 }
 
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
+
+function myFunction2()
+{
+    echo 'code here';
+    
+    echo 'code here';
+    
+}
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+
 ?>
 
