@@ -18,6 +18,20 @@
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
+    "autoload": {
+        "psr-0": {
+            "PHP": "",
+            "Generic": "PHP/CodeSniffer/Standards",
+            "MySource": "PHP/CodeSniffer/Standards",
+            "PEAR": "PHP/CodeSniffer/Standards",
+            "PHPCS": "PHP/CodeSniffer/Standards",
+            "PSR1": "PHP/CodeSniffer/Standards",
+            "PSR2": "PHP/CodeSniffer/Standards",
+            "Squiz": "PHP/CodeSniffer/Standards",
+            "Zend": "PHP/CodeSniffer/Standards"
+        }
+    },
+    "target-dir": "PHP",
     "suggests": {
         "phpunit/php-timer": "*"
     },
