@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
  </notes>
  <contents>
@@ -307,6 +308,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -488,6 +492,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
