@@ -66,7 +66,7 @@ class Generic_Sniffs_Files_EndFileNoNewlineSniff implements PHP_CodeSniffer_Snif
         $lastChars  = substr($tokens[$stackPtr]['content'], ($eolCharLen * -1));
         if ($lastChars === $phpcsFile->eolChar) {
             $error = 'PHP files must not end with a newline character';
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()
