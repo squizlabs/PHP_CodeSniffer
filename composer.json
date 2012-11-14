@@ -19,7 +19,7 @@
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
     "autoload": {
-        "files": [ "CodeSniffer.php" ]
+        "classmap": [ "." ]
     },
     "suggests": {
         "phpunit/php-timer": "*"
