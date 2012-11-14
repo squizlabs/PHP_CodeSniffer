@@ -349,6 +349,17 @@ class PHP_CodeSniffer_CLI
                     $this->printUsage();
                     exit(2);
                 }
+
+                if ($dir === '.') {
+                    // Passed report file is a filename in the current directory.
+                    $values['reportFile'] = getcwd().'/'.basename($values['reportFile']);
+                } else {
+                    $dir = realpath(getcwd().'/'.$dir);
+                    if ($dir !== false) {
+                        // Report file path is relative.
+                        $values['reportFile'] = $dir.'/'.basename($values['reportFile']);
+                    }
+                }
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $values['reportWidth'] = (int) substr($arg, 13);
             } else if (substr($arg, 0, 7) === 'report='
@@ -365,8 +376,20 @@ class PHP_CodeSniffer_CLI
                         $output = substr($arg, ($split + 1));
                         if ($output === false) {
                             $output = null;
-                        }
-                    }
+                        } else {
+                            $dir = dirname($output);
+                            if ($dir === '.') {
+                                // Passed report file is a filename in the current directory.
+                                $output = getcwd().'/'.basename($output);
+                            } else {
+                                $dir = realpath(getcwd().'/'.$dir);
+                                if ($dir !== false) {
+                                    // Report file path is relative.
+                                    $output = $dir.'/'.basename($output);
+                                }
+                            }
+                        }//end if
+                    }//end if
                 } else {
                     // This is a single report.
                     $report = substr($arg, 7);

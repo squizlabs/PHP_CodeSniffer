@@ -101,20 +101,6 @@ class PHP_CodeSniffer_Reporting
             return;
         }
 
-        if ($reportFile !== null) {
-            $reportDir = dirname($reportFile);
-            if ($reportDir === '.') {
-                // Passed report file is a filename in the current directory.
-                $reportFile = PHPCS_CWD.'/'.basename($reportFile);
-            } else {
-                $reportDir = realpath(PHPCS_CWD.'/'.$reportDir);
-                if ($reportDir !== false) {
-                    // Report file path is relative.
-                    $reportFile = $reportDir.'/'.basename($reportFile);
-                }
-            }
-        }
-
         $reportClass = self::factory($report);
 
         $toScreen = true;
