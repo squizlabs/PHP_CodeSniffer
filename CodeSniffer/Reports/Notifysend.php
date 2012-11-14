@@ -7,7 +7,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2012 Christian Weiske
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,7 +25,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2012 Christian Weiske
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -52,6 +56,17 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected $showOk = true;
 
+    /**
+     * A record of the last file checked.
+     *
+     * This is used in case we only checked one file and need to print
+     * the name/path of the file. We wont have access to the checked file list
+     * after the run has been completed.
+     *
+     * @var string
+     */
+    private $_lastCheckedFile = '';
+
 
     /**
      * Load configuration data.
@@ -79,6 +94,30 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
 
 
     /**
+     * Prints all violations for processed files, in a Checkstyle format.
+     *
+     * Violations are grouped by file.
+     *
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+        // We don't need to print anything, but we want this file counted
+        // in the total number of checked files even if it has no errors.
+        $this->_lastCheckedFile = $report['filename'];
+        return true;
+    }
+
+
+    /**
      * Generates a summary of errors and warnings for each file processed.
      *
      * If verbose output is enabled, results are shown for all files, even if
@@ -93,23 +132,22 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      * @return string
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $msg = $this->generateMessage($report);
+        $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);
         if ($msg === null) {
             if ($this->showOk) {
                 $this->notifyAllFine();
             }
-
-            return 0;
+        } else {
+            $this->notifyErrors($msg);
         }
-
-        $this->notifyErrors($msg);
-
-        return ($report['totals']['errors'] + $report['totals']['warnings']);
 
     }//end generate()
 
@@ -121,27 +159,26 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      *
      * @return string Error message or NULL if no error/warning found.
      */
-    protected function generateMessage($report)
+    protected function generateMessage($totalFiles, $totalErrors, $totalWarnings)
     {
-        $allErrors   = $report['totals']['errors'];
-        $allWarnings = $report['totals']['warnings'];
-
-        if ($allErrors == 0 && $allWarnings == 0) {
+        if ($totalErrors === 0 && $totalWarnings === 0) {
             // Nothing to print.
             return null;
         }
 
         $msg = '';
-        if (count($report['files']) > 1) {
-            $msg .= 'Checked ' . count($report['files']) . ' files' . PHP_EOL;
+        if ($totalFiles > 1) {
+            $msg .= 'Checked '.$totalFiles.' files'.PHP_EOL;
         } else {
-            $msg .= key($report['files']) . PHP_EOL;
+            $msg .= $this->_lastCheckedFile.PHP_EOL;
         }
-        if ($allWarnings > 0) {
-            $msg .= $allWarnings . ' warnings' . PHP_EOL;
+
+        if ($totalWarnings > 0) {
+            $msg .= $totalWarnings.' warnings'.PHP_EOL;
         }
-        if ($allErrors > 0) {
-            $msg .= $allErrors . ' errors' . PHP_EOL;
+
+        if ($totalErrors > 0) {
+            $msg .= $totalErrors.' errors'.PHP_EOL;
         }
 
         return $msg;
@@ -156,12 +193,12 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function notifyAllFine()
     {
-        exec(
-            $this->getBasicCommand()
-            . ' -i info'
-            . ' "PHP CodeSniffer: Ok"'
-            . ' "All fine"'
-        );
+        $cmd  = $this->getBasicCommand();
+        $cmd .= ' -i info';
+        $cmd .= ' "PHP CodeSniffer: Ok"';
+        $cmd .= ' "All fine"';
+
+        exec($cmd);
 
     }//end notifyAllFine()
 
@@ -175,12 +212,12 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function notifyErrors($msg)
     {
-        exec(
-            $this->getBasicCommand()
-            . ' -i error'
-            . ' "PHP CodeSniffer: Error"'
-            . ' ' . escapeshellarg(trim($msg))
-        );
+        $cmd  = $this->getBasicCommand();
+        $cmd .= ' -i error';
+        $cmd .= ' "PHP CodeSniffer: Error"';
+        $cmd .= ' '.escapeshellarg(trim($msg));
+
+        exec($cmd);
 
     }//end notifyErrors()
 
@@ -192,10 +229,12 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function getBasicCommand()
     {
-        return escapeshellcmd($this->path)
-            . ' --category dev.validate'
-            . ' -a phpcs'
-            . ' -t ' . (int) $this->timeout;
+        $cmd = escapeshellcmd($this->path);
+        $cmd .= ' --category dev.validate';
+        $cmd .= ' -a phpcs';
+        $cmd .= ' -t '.(int) $this->timeout;
+
+        return $cmd;
 
     }//end getBasicCommand()
 
