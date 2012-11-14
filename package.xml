@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-11-02</date>
- <time>10:08:00</time>
+ <date>2012-11-09</date>
+ <time>13:32:00</time>
  <version>
-  <release>1.4.2</release>
-  <api>1.4.2</api>
+  <release>1.4.3</release>
+  <api>1.4.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,26 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHP_CodeSniffer can now be installed using Composer
-    -- Require squizlabs/php_codesniffer in your composer.json file
-    -- Thanks to Rob Bast, Stephen Rees-Carter, Stefano Kowalke and Ivan Habunek for help with this
-  - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
-  - Squiz SelfMemberReferenceSniff now supports namespaces
-    -- Thanks to Andy Grunwald for the patch
-  - Squiz FileCommentSniff now uses tags names inside the error codes for many messages
-    -- This allows you to exclude specific missing, out of order etc., tags
-  - Squiz SuperfluousWhitespaceSniff now has an option to ignore blank lines
-    -- This will stop errors being reported for lines that contain only whitespace
-    -- Set the ignoreBlankLines property to true in your ruleset.xml file to enable this
-  - PSR2 no longer reports errors for whitespace at the end of blank lines
-  - Fixed gitblame report not working on Windows
-    -- Thanks to Rogerio Prado de Jesus
-  - Fixed an incorrect error in Squiz OperatorSpacingSniff for default values inside a closure definition
-  - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
-    -- Thanks to Kevin Winahradsky for the patch
-  - Fixed bug #19692 : DisallowMultipleAssignments is triggered by a closure
-  - Fixed bug #19693 : exclude-patterns no longer work on specific messages
-  - Fixed bug #19694 : Squiz.PHP.LowercasePHPFunctions incorrectly matches return by ref functions
+  - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+  - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
  </notes>
  <contents>
   <dir name="/">
@@ -326,6 +308,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -507,6 +492,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
@@ -2056,6 +2048,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.4.2</release>
+    <api>1.4.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-11-09</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - PHP_CodeSniffer can now be installed using Composer
+      -- Require squizlabs/php_codesniffer in your composer.json file
+      -- Thanks to Rob Bast, Stephen Rees-Carter, Stefano Kowalke and Ivan Habunek for help with this
+    - Squiz BlockCommentSniff and InlineCommentSniff no longer report errors for trait block comments
+    - Squiz SelfMemberReferenceSniff now supports namespaces
+      -- Thanks to Andy Grunwald for the patch
+    - Squiz FileCommentSniff now uses tag names inside the error codes for many messages
+      -- This allows you to exclude specific missing, out of order etc., tags
+    - Squiz SuperfluousWhitespaceSniff now has an option to ignore blank lines
+      -- This will stop errors being reported for lines that contain only whitespace
+      -- Set the ignoreBlankLines property to TRUE in your ruleset.xml file to enable this
+    - PSR2 no longer reports errors for whitespace at the end of blank lines
+    - Fixed gitblame report not working on Windows
+      -- Thanks to Rogerio Prado de Jesus
+    - Fixed an incorrect error in Squiz OperatorSpacingSniff for default values inside a closure definition
+    - Fixed bug #19691 : SubversionPropertiesSniff fails to find missing properties
+      -- Thanks to Kevin Winahradsky for the patch
+    - Fixed bug #19692 : DisallowMultipleAssignments is triggered by a closure
+    - Fixed bug #19693 : exclude-patterns no longer work on specific messages
+    - Fixed bug #19694 : Squiz.PHP.LowercasePHPFunctions incorrectly matches return by ref functions
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.1</release>

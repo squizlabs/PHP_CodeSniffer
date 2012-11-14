@@ -1086,7 +1086,7 @@ class PHP_CodeSniffer_File
 
             if (strpos($tokenContent, "\t") === false) {
                 // There are no tabs in this content.
-                $currColumn += (strlen($tokenContent) - 1);
+                $currColumn += strlen($tokenContent);
             } else {
                 // We need to determine the length of each tab.
                 $tabs = preg_split(
@@ -1097,7 +1097,6 @@ class PHP_CodeSniffer_File
                 );
 
                 $tabNum       = 0;
-                $adjustedTab  = false;
                 $tabsToSpaces = array();
                 $newContent   = '';
 
@@ -1119,7 +1118,6 @@ class PHP_CodeSniffer_File
                             // This is the first tab, and we are already at a
                             // tab stop, so this tab counts as a single space.
                             $currColumn++;
-                            $adjustedTab = true;
                         } else {
                             $currColumn++;
                             while (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) != 0) {
@@ -1134,10 +1132,6 @@ class PHP_CodeSniffer_File
                     }//end if
                 }//end foreach
 
-                if ($tabNum === 1 && $adjustedTab === true) {
-                    $currColumn--;
-                }
-
                 $tokens[$i]['content'] = $newContent;
             }//end if
 
@@ -1145,8 +1139,6 @@ class PHP_CodeSniffer_File
                 && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
             ) {
                 $currColumn = 1;
-            } else {
-                $currColumn++;
             }
         }//end for
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic_Sniffs_Files_EndFileNewlineSniff.
+ * Generic_Sniffs_Files_EndFileNoNewlineSniff.
  *
  * PHP version 5
  *
@@ -13,9 +13,9 @@
  */
 
 /**
- * Generic_Sniffs_Files_EndFileNewlineSniff.
+ * Generic_Sniffs_Files_EndFileNoNewlineSniff.
  *
- * Ensures the file ends with a newline character.
+ * Ensures the file does not end with a newline character.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -25,7 +25,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Files_EndFileNoNewlineSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -64,9 +64,9 @@ class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 
         $eolCharLen = strlen($phpcsFile->eolChar);
         $lastChars  = substr($tokens[$stackPtr]['content'], ($eolCharLen * -1));
-        if ($lastChars !== $phpcsFile->eolChar) {
-            $error = 'All PHP files must end with a newline character';
-            $phpcsFile->addError($error, $stackPtr, 'NotFound');
+        if ($lastChars === $phpcsFile->eolChar) {
+            $error = 'PHP files must not end with a newline character';
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()
