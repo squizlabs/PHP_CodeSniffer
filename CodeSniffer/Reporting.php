@@ -103,13 +103,15 @@ class PHP_CodeSniffer_Reporting
 
         $reportClass = self::factory($report);
 
-        $toScreen = true;
         if ($reportFile !== null) {
+            $filename = $reportFile;
             $toScreen = false;
             ob_start();
+        } else {
+            $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+            $toScreen = true;
         }
 
-        $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
         if (file_exists($filename) === true) {
             $reportCache = file_get_contents($filename);
         } else {
@@ -135,9 +137,7 @@ class PHP_CodeSniffer_Reporting
 
             $generatedReport = trim($generatedReport);
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
-        }
-
-        if (file_exists($filename) === true) {
+        } else if (file_exists($filename) === true) {
             unlink($filename);
         }
 
@@ -183,15 +183,18 @@ class PHP_CodeSniffer_Reporting
                     $this->_cachedReports[] = $report;
                     $flags = null;
                 }
-                
-                $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
-                file_put_contents($filename, $generatedReport, $flags);
+
+                if ($output === null) {
+                  $output = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+                }
+
+                file_put_contents($output, $generatedReport, $flags);
             }
-        }
+        }//end foreach
 
         if ($errorsShown === true) {
             $this->totalFiles++;
-            $this->totalErrors += $reportData['errors'];
+            $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];
         }
 
