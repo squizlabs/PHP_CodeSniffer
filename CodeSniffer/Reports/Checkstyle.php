@@ -45,56 +45,74 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
      *
      * @return string
      */
-    public function generate(
+    public function generateFileReport(
         $report,
         $showSources=false,
-        $width=80,
-        $toScreen=true
+        $width=80
     ) {
         $out = new XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
-        $out->startDocument('1.0', 'UTF-8');
-        $out->startElement('checkstyle');
-        $out->writeAttribute('version', '@package_version@');
 
-        $errorsShown = 0;
-        foreach ($report['files'] as $filename => $file) {
-            if (count($file['messages']) === 0) {
-                continue;
-            }
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Nothing to print.
+            return false;
+        }
 
-            $out->startElement('file');
-            $out->writeAttribute('name', $filename);
+        $out->startElement('file');
+        $out->writeAttribute('name', $report['filename']);
 
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $error['type'] = strtolower($error['type']);
-                        if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
-                            $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
-                        }
-
-                        $out->startElement('error');
-                        $out->writeAttribute('line', $line);
-                        $out->writeAttribute('column', $column);
-                        $out->writeAttribute('severity', $error['type']);
-                        $out->writeAttribute('message', $error['message']);
-                        $out->writeAttribute('source', $error['source']);
-                        $out->endElement();
-
-                        $errorsShown++;
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $error['type'] = strtolower($error['type']);
+                    if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
+                        $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
                     }
-                }
-            }//end foreach
 
-            $out->endElement();
+                    $out->startElement('error');
+                    $out->writeAttribute('line', $line);
+                    $out->writeAttribute('column', $column);
+                    $out->writeAttribute('severity', $error['type']);
+                    $out->writeAttribute('message', $error['message']);
+                    $out->writeAttribute('source', $error['source']);
+                    $out->endElement();
+                }
+            }
         }//end foreach
 
         $out->endElement();
         echo $out->flush();
 
-        return $errorsShown;
+        return true;
+
+    }//end generate()
+
+    /**
+     * Prints all violations for processed files, in a Checkstyle format.
+     *
+     * Violations are grouped by file.
+     *
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generate(
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
+        $showSources=false,
+        $width=80,
+        $toScreen=true
+    ) {
+        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        echo '<checkstyle version="@package_version@">'.PHP_EOL;
+        echo $cachedData;
+        echo '</checkstyle>'.PHP_EOL;
 
     }//end generate()
 

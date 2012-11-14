@@ -34,6 +34,50 @@ class PHP_CodeSniffer_Reports_Emacs implements PHP_CodeSniffer_Report
 
 
     /**
+     * Generates a summary of errors and warnings for each file processed.
+     * 
+     * If verbose output is enabled, results are shown for all files, even if
+     * they have no errors or warnings. If verbose output is disabled, we only
+     * show files that have at least one warning or error.
+     * 
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Nothing to print.
+            return false;
+        }
+
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $message = $error['message'];
+                    if ($showSources === true) {
+                        $message .= ' ('.$error['source'].')';
+                    }
+
+                    $type = strtolower($error['type']);
+                    echo $report['filename'].':'.$line.':'.$column.': '.$type.' - '.$message.PHP_EOL;
+                }
+            }
+        }
+
+        return true;
+
+    }//end generateFileReport()
+
+
+    /**
      * Generates an emacs report.
      *
      * @param array   $report      Prepared report.
@@ -44,31 +88,16 @@ class PHP_CodeSniffer_Reports_Emacs implements PHP_CodeSniffer_Report
      * @return string
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $errorsShown = 0;
 
-        foreach ($report['files'] as $filename => $file) {
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $message = $error['message'];
-                        if ($showSources === true) {
-                            $message .= ' ('.$error['source'].')';
-                        }
-
-                        $type = strtolower($error['type']);
-                        echo $filename.':'.$line.':'.$column.': '.$type.' - '.$message.PHP_EOL;
-                        $errorsShown++;
-                    }
-                }
-            }//end foreach
-        }//end foreach
-
-        return $errorsShown;
+        echo $cachedData;
 
     }//end generate()
 

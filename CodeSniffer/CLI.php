@@ -507,7 +507,7 @@ class PHP_CodeSniffer_CLI
 
         $fileContents = '';
         if (empty($values['files']) === true) {
-            // Check if they passing in the file contents.
+            // Check if they are passing in the file contents.
             $handle       = fopen('php://stdin', 'r');
             $fileContents = stream_get_contents($handle);
             fclose($handle);
@@ -549,6 +549,10 @@ class PHP_CodeSniffer_CLI
             $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
         } else {
             $this->warningSeverity = $values['warningSeverity'];
+        }
+
+        if (empty($values['reports']) === true) {
+            $this->values['reports']['full'] = $values['reportFile'];
         }
 
         $phpcs->setCli($this);
@@ -598,7 +602,6 @@ class PHP_CodeSniffer_CLI
         $reportFile,
         $reportWidth
     ) {
-        $reporting       = new PHP_CodeSniffer_Reporting();
         $filesViolations = $phpcs->getFilesErrors();
 
         if (empty($reports) === true) {
@@ -620,7 +623,7 @@ class PHP_CodeSniffer_CLI
             // We don't add errors here because the number of
             // errors reported by each report type will always be the
             // same, so we really just need 1 number.
-            $errors = $reporting->printReport(
+            $errors = $phpcs->reporting->printReport(
                 $report,
                 $filesViolations,
                 $showSources,

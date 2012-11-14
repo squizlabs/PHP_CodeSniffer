@@ -45,59 +45,77 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
      *
      * @return string
      */
-    public function generate(
+    public function generateFileReport(
         $report,
         $showSources=false,
-        $width=80,
-        $toScreen=true
+        $width=80
     ) {
         $out = new XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
-        $out->startDocument('1.0', 'UTF-8');
-        $out->startElement('phpcs');
-        $out->writeAttribute('version', '@package_version@');
 
-        $errorsShown = 0;
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Nothing to print.
+            return false;
+        }
 
-        foreach ($report['files'] as $filename => $file) {
-            if (empty($file['messages']) === true) {
-                continue;
-            }
+        $out->startElement('file');
+        $out->writeAttribute('name', $report['filename']);
+        $out->writeAttribute('errors', $report['errors']);
+        $out->writeAttribute('warnings', $report['warnings']);
 
-            $out->startElement('file');
-            $out->writeAttribute('name', $filename);
-            $out->writeAttribute('errors', $file['errors']);
-            $out->writeAttribute('warnings', $file['warnings']);
-
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $error['type'] = strtolower($error['type']);
-                        if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
-                            $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
-                        }
-
-                        $out->startElement($error['type']);
-                        $out->writeAttribute('line', $line);
-                        $out->writeAttribute('column', $column);
-                        $out->writeAttribute('source', $error['source']);
-                        $out->writeAttribute('severity', $error['severity']);
-                        $out->text($error['message']);
-                        $out->endElement();
-
-                        $errorsShown++;
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $error['type'] = strtolower($error['type']);
+                    if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
+                        $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
                     }
-                }
-            }//end foreach
 
-            $out->endElement();
+                    $out->startElement($error['type']);
+                    $out->writeAttribute('line', $line);
+                    $out->writeAttribute('column', $column);
+                    $out->writeAttribute('source', $error['source']);
+                    $out->writeAttribute('severity', $error['severity']);
+                    $out->text($error['message']);
+                    $out->endElement();
+                }
+            }
         }//end foreach
 
         $out->endElement();
         echo $out->flush();
 
-        return $errorsShown;
+        return true;
+
+    }//end generate()
+
+
+    /**
+     * Prints all violations for processed files, in a proprietary XML format.
+     *
+     * Errors and warnings are displayed together, grouped by file.
+     *
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generate(
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
+        $showSources=false,
+        $width=80,
+        $toScreen=true
+    ) {
+        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        echo '<phpcs version="@package_version@">'.PHP_EOL;
+        echo $cachedData;
+        echo '</phpcs>'.PHP_EOL;
 
     }//end generate()
 

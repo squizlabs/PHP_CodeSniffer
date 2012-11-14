@@ -105,9 +105,16 @@ class PHP_CodeSniffer
     /**
      * The CLI object controlling the run.
      *
-     * @var string
+     * @var PHP_CodeSniffer_CLI
      */
     public $cli = null;
+
+    /**
+     * The Reporting object controlling report generation.
+     *
+     * @var PHP_CodeSniffer_Reporting
+     */
+    public $reporting = null;
 
     /**
      * An array of sniffs that are being used to check files.
@@ -233,6 +240,8 @@ class PHP_CodeSniffer
         $this->cli = new PHP_CodeSniffer_CLI();
         $this->cli->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
         $this->cli->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
+
+        $this->reporting = new PHP_CodeSniffer_Reporting();
 
     }//end __construct()
 
@@ -469,7 +478,6 @@ class PHP_CodeSniffer
             return;
         }
 
-        $reporting    = new PHP_CodeSniffer_Reporting();
         $cliValues    = $this->cli->getCommandLineValues();
         $showProgress = $cliValues['showProgress'];
 
@@ -503,6 +511,9 @@ class PHP_CodeSniffer
 
             $phpcsFile  = $this->processFile($file);
             $numProcessed++;
+
+            // Cache the report data for this file so we can unset it to save memory.
+            $this->reporting->cacheFileReport($phpcsFile, $cliValues);
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || PHP_CODESNIFFER_INTERACTIVE === true
@@ -1331,7 +1342,6 @@ class PHP_CodeSniffer
                 $this
             );
 
-            $this->addFile($phpcsFile);
             $phpcsFile->addError($error, null);
         }//end try
 
@@ -1344,7 +1354,6 @@ class PHP_CodeSniffer
             Print the error report for the current file and then wait for user input.
         */
 
-        $reporting = new PHP_CodeSniffer_Reporting();
         $cliValues = $this->cli->getCommandLineValues();
 
         // Get current violations and then clear the list to make sure
@@ -1354,7 +1363,7 @@ class PHP_CodeSniffer
             $filesViolations = $this->getFilesErrors();
             $this->files     = array();
 
-            $numErrors = $reporting->printReport(
+            $numErrors = $this->reporting->printReport(
                 'full',
                 $filesViolations,
                 $cliValues['showSources'],
@@ -1420,7 +1429,7 @@ class PHP_CodeSniffer
             $this->ruleset,
             $this
         );
-        $this->addFile($phpcsFile);
+
         $phpcsFile->start($contents);
 
         // Clean up the test if we can to save memory. This can't be done if

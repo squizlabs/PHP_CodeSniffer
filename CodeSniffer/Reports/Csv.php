@@ -32,6 +32,48 @@
 class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
 {
 
+    /**
+     * Generates a summary of errors and warnings for each file processed.
+     * 
+     * If verbose output is enabled, results are shown for all files, even if
+     * they have no errors or warnings. If verbose output is disabled, we only
+     * show files that have at least one warning or error.
+     * 
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Nothing to print.
+            return false;
+        }
+
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $filename = str_replace('"', '\"', $report['filename']);
+                    $message  = str_replace('"', '\"', $error['message']);
+                    $type     = strtolower($error['type']);
+                    $source   = $error['source'];
+                    $severity = $error['severity'];
+                    echo "\"$filename\",$line,$column,$type,\"$message\",$source,$severity".PHP_EOL;
+                }
+            }
+        }
+
+        return true;
+
+    }//end generateFileReport()
+
 
     /**
      * Generates a csv report.
@@ -44,31 +86,16 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
      * @return string 
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
         echo 'File,Line,Column,Type,Message,Source,Severity'.PHP_EOL;
-
-        $errorsShown = 0;
-        foreach ($report['files'] as $filename => $file) {
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $filename = str_replace('"', '\"', $filename);
-                        $message  = str_replace('"', '\"', $error['message']);
-                        $type     = strtolower($error['type']);
-                        $source   = $error['source'];
-                        $severity = $error['severity'];
-                        echo "\"$filename\",$line,$column,$type,\"$message\",$source,$severity".PHP_EOL;
-                        $errorsShown++;
-                    }
-                }
-            }//end foreach
-        }//end foreach
-
-        return $errorsShown;
+        echo $cachedData;
 
     }//end generate()
 

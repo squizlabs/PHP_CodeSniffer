@@ -36,6 +36,15 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
 class PHP_CodeSniffer_Reporting
 {
 
+    private $_cachedReports = array();
+    private $_reports = array();
+
+    public $totalFiles = 0;
+    public $totalErrors = 0;
+    public $totalWarnings = 0;
+
+
+
 
     /**
      * Produce the appropriate report object based on $type parameter.
@@ -47,7 +56,11 @@ class PHP_CodeSniffer_Reporting
      */
     public function factory($type)
     {
-        $type            = ucfirst($type);
+        $type = ucfirst($type);
+        if (isset($this->_reports[$type]) === true) {
+            return $this->_reports[$type];
+        }
+
         $filename        = $type.'.php';
         $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
         if (class_exists($reportClassName, true) === false) {
@@ -59,7 +72,8 @@ class PHP_CodeSniffer_Reporting
             throw new PHP_CodeSniffer_Exception('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer_Report" interface.');
         }
 
-        return $reportClass;
+        $this->_reports[$type] = $reportClass;
+        return $this->_reports[$type];
 
     }//end factory()
 
@@ -82,6 +96,11 @@ class PHP_CodeSniffer_Reporting
         $reportFile='',
         $reportWidth=80
     ) {
+        if ($this->totalFiles === 0) {
+            // No files generated errors.
+            return;
+        }
+
         if ($reportFile !== null) {
             $reportDir = dirname($reportFile);
             if ($reportDir === '.') {
@@ -97,7 +116,6 @@ class PHP_CodeSniffer_Reporting
         }
 
         $reportClass = self::factory($report);
-        $reportData  = $this->prepare($filesViolations);
 
         $toScreen = true;
         if ($reportFile !== null) {
@@ -105,7 +123,21 @@ class PHP_CodeSniffer_Reporting
             ob_start();
         }
 
-        $numErrors = $reportClass->generate($reportData, $showSources, $reportWidth, $toScreen);
+        $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+        if (file_exists($filename) === true) {
+            $reportCache = file_get_contents($filename);
+        } else {
+            $reportCache = '';
+        }
+
+        $reportClass->generate($reportCache,
+            $this->totalFiles,
+            $this->totalErrors,
+            $this->totalWarnings,
+            $showSources,
+            $reportWidth,
+            $toScreen
+        );
 
         if ($reportFile !== null) {
             $generatedReport = ob_get_contents();
@@ -119,7 +151,63 @@ class PHP_CodeSniffer_Reporting
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
         }
 
-        return $numErrors;
+        if (file_exists($filename) === true) {
+            unlink($filename);
+        }
+
+        return ($this->totalErrors + $this->totalWarnings);
+
+    }//end printReport()
+
+
+    /**
+     * Actually generates the report.
+     * 
+     * @param string  $report          Report type.
+     * @param array   $filesViolations Collected violations.
+     * @param boolean $showSources     Show sources?
+     * @param string  $reportFile      Report file to generate.
+     * @param integer $reportWidth     Report max width.
+     * 
+     * @return integer
+     */
+    public function cacheFileReport(
+        PHP_CodeSniffer_File $phpcsFile,
+        array $cliValues
+    ) {
+
+        $reportData  = $this->prepareFileReport($phpcsFile);
+        $errorsShown = false;
+
+        foreach ($cliValues['reports'] as $report => $output) {
+            $reportClass = self::factory($report);
+
+            ob_start();
+            $result = $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
+            if ($result === true) {
+                $errorsShown = true;
+            }
+
+            $generatedReport = ob_get_contents();
+            ob_end_clean();
+
+            if ($generatedReport !== '') {
+                $flags = FILE_APPEND;
+                if (in_array($report, $this->_cachedReports) === false) {
+                    $this->_cachedReports[] = $report;
+                    $flags = null;
+                }
+                
+                $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+                file_put_contents($filename, $generatedReport, $flags);
+            }
+        }
+
+        if ($errorsShown === true) {
+            $this->totalFiles++;
+            $this->totalErrors += $reportData['errors'];
+            $this->totalWarnings += $reportData['warnings'];
+        }
 
     }//end printReport()
 
@@ -133,94 +221,72 @@ class PHP_CodeSniffer_Reporting
      *
      * @return array
      */
-    public function prepare(array $filesViolations)
+    public function prepareFileReport(PHP_CodeSniffer_File $phpcsFile)
     {
         $report = array(
-                   'totals' => array(
-                                'warnings' => 0,
-                                'errors'   => 0,
-                               ),
-                   'files'  => array(),
+                   'filename' => $phpcsFile->getFilename(),
+                   'errors'   => $phpcsFile->getErrorCount(),
+                   'warnings' => $phpcsFile->getWarningCount(),
+                   'messages' => array(),
                   );
 
-        foreach ($filesViolations as $filename => $fileViolations) {
-            $warnings    = $fileViolations['warnings'];
-            $errors      = $fileViolations['errors'];
-            $numWarnings = $fileViolations['numWarnings'];
-            $numErrors   = $fileViolations['numErrors'];
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Prefect score!
+            return $report;
+        }
 
-            $report['files'][$filename] = array(
-                                           'errors'   => 0,
-                                           'warnings' => 0,
-                                           'messages' => array(),
-                                          );
+        $errors = array();
 
-            if ($numErrors === 0 && $numWarnings === 0) {
-                // Prefect score!
-                continue;
-            }
+        // Merge errors and warnings.
+        foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                $newErrors = array();
+                foreach ($colErrors as $data) {
+                    $newErrors[] = array(
+                                    'message'  => $data['message'],
+                                    'source'   => $data['source'],
+                                    'severity' => $data['severity'],
+                                    'type'     => 'ERROR',
+                                   );
+                }
 
-            $report['files'][$filename]['errors']   = $numErrors;
-            $report['files'][$filename]['warnings'] = $numWarnings;
-
-            $report['totals']['errors']   += $numErrors;
-            $report['totals']['warnings'] += $numWarnings;
-
-            // Merge errors and warnings.
-            foreach ($errors as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    $newErrors = array();
-                    foreach ($colErrors as $data) {
-                        $newErrors[] = array(
-                                        'message'  => $data['message'],
-                                        'source'   => $data['source'],
-                                        'severity' => $data['severity'],
-                                        'type'     => 'ERROR',
-                                       );
-                    }//end foreach
-
-                    $errors[$line][$column] = $newErrors;
-                }//end foreach
-
-                ksort($errors[$line]);
+                $errors[$line][$column] = $newErrors;
             }//end foreach
 
-            foreach ($warnings as $line => $lineWarnings) {
-                foreach ($lineWarnings as $column => $colWarnings) {
-                    $newWarnings = array();
-                    foreach ($colWarnings as $data) {
-                        $newWarnings[] = array(
-                                          'message'  => $data['message'],
-                                          'source'   => $data['source'],
-                                          'severity' => $data['severity'],
-                                          'type'     => 'WARNING',
-                                         );
-                    }//end foreach
-
-                    if (isset($errors[$line]) === false) {
-                        $errors[$line] = array();
-                    }
-
-                    if (isset($errors[$line][$column]) === true) {
-                        $errors[$line][$column] = array_merge(
-                            $newWarnings,
-                            $errors[$line][$column]
-                        );
-                    } else {
-                        $errors[$line][$column] = $newWarnings;
-                    }
-                }//end foreach
-
-                ksort($errors[$line]);
-            }//end foreach
-
-            ksort($errors);
-
-            $report['files'][$filename]['messages'] = $errors;
+            ksort($errors[$line]);
         }//end foreach
 
-        ksort($report['files']);
+        foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
+            foreach ($lineWarnings as $column => $colWarnings) {
+                $newWarnings = array();
+                foreach ($colWarnings as $data) {
+                    $newWarnings[] = array(
+                                      'message'  => $data['message'],
+                                      'source'   => $data['source'],
+                                      'severity' => $data['severity'],
+                                      'type'     => 'WARNING',
+                                     );
+                }
 
+                if (isset($errors[$line]) === false) {
+                    $errors[$line] = array();
+                }
+
+                if (isset($errors[$line][$column]) === true) {
+                    $errors[$line][$column] = array_merge(
+                        $newWarnings,
+                        $errors[$line][$column]
+                    );
+                } else {
+                    $errors[$line][$column] = $newWarnings;
+                }
+            }//end foreach
+
+            ksort($errors[$line]);
+        }//end foreach
+
+        ksort($errors);
+        $report['messages'] = $errors;
         return $report;
 
     }//end prepare()

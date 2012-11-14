@@ -32,6 +32,50 @@
 class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 {
 
+    private $_sourceCache = array();
+
+    /**
+     * Generates a summary of errors and warnings for each file processed.
+     * 
+     * If verbose output is enabled, results are shown for all files, even if
+     * they have no errors or warnings. If verbose output is disabled, we only
+     * show files that have at least one warning or error.
+     * 
+     * @param array   $report      Prepared report.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed lne width.
+     * @param boolean $toScreen    Is the report being printed to screen?
+     *
+     * @return string
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+
+        if ($report['errors'] === 0 && $report['warnings'] === 0) {
+            // Nothing to print.
+            return false;
+        }
+
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $source = $error['source'];
+                    if (isset($this->_sourceCache[$source]) === false) {
+                        $this->_sourceCache[$source] = 1;
+                    } else {
+                        $this->_sourceCache[$source]++;
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }//end generateFileReport()
+
 
     /**
      * Prints the source of all errors and warnings.
@@ -44,40 +88,23 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      * @return string
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $sources = array();
-        $width   = max($width, 70);
+        $width = max($width, 70);
 
-        $errorsShown = 0;
+        #if (empty($this->_sourceCache) === true) {
+        #    // Nothing to show.
+        #    return;
+        #}
 
-        foreach ($report['files'] as $filename => $file) {
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $errorsShown++;
-
-                        $source = $error['source'];
-                        if (isset($sources[$source]) === false) {
-                            $sources[$source] = 1;
-                        } else {
-                            $sources[$source]++;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($errorsShown === 0) {
-            // Nothing to show.
-            return 0;
-        }
-
-        asort($sources);
-        $sources = array_reverse($sources);
+        asort($this->_sourceCache);
+        $this->_sourceCache = array_reverse($this->_sourceCache);
 
         echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
@@ -89,7 +116,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             echo str_repeat('-', $width).PHP_EOL;
         }
 
-        foreach ($sources as $source => $count) {
+        foreach ($this->_sourceCache as $source => $count) {
             if ($showSources === true) {
                 echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
             } else {
@@ -126,8 +153,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION(S) ';
-        echo 'WERE FOUND IN '.count($sources).' SOURCE(S)'.PHP_EOL;
+        echo 'A TOTAL OF '.($totalErrors + $totalWarnings).' SNIFF VIOLATION(S) ';
+        echo 'WERE FOUND IN '.count($this->_sourceCache).' SOURCE(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
@@ -136,8 +163,6 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
-
-        return $errorsShown;
 
     }//end generate()
 
