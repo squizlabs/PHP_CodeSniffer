@@ -155,7 +155,33 @@ function foo($color) {
     }
 }
 
+function returnOverMultipleLines($color) {
+    switch ($color) {
+        case 'red':
+            return someFunction(
+                'multiple',
+                'arguments'
+            );
+            echo $foo;
+        default:
+            return array(
+                'multiline',
+                'array'
+            );
+    }
+}
+
+function test() {
+    return array(
+                'multiline',
+                'array'
+            );
+    echo $foo;
+}
+
+
 exit();
+
 
 // Errors are thrown from here down from the exit() above.
 foreach ($vars as $var) {

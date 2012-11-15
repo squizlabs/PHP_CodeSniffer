@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
     -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
   - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+  - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
+    -- Thanks to Marc Ypes for the patch
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
  </notes>
  <contents>

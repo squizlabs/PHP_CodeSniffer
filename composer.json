@@ -18,6 +18,9 @@
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
+    "autoload": {
+        "classmap": [ "." ]
+    },
     "suggests": {
         "phpunit/php-timer": "*"
     },
