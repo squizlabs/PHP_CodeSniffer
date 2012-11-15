@@ -155,6 +155,21 @@ function foo($color) {
     }
 }
 
+function returnOverMultipleLines($color) {
+    switch ($color) {
+        case 'red':
+            return someFunction(
+                'multiple',
+                'arguments'
+            );
+        default:
+            return array(
+                'multiline',
+                'array'
+            );
+    }
+}
+
 exit();
 
 // Errors are thrown from here down from the exit() above.

@@ -100,7 +100,11 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 );
 
                 if ($next !== false) {
-                    $lastLine = $tokens[($stackPtr + 1)]['line'];
+                    $end = $phpcsFile->findNext(
+                        array(T_SEMICOLON),
+                        ($stackPtr + 1)
+                    );
+                    $lastLine = $tokens[$end]['line'];
                     for ($i = ($stackPtr + 1); $i < $next; $i++) {
                         if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
                             continue;
