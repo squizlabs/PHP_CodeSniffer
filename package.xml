@@ -59,60 +59,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
-     <dir name="Reports">
-      <dir name="Mock">
-       <file baseinstalldir="" name="Gitblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Hgblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Svnblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-      </dir>
-      <dir name="XSD">
-       <file baseinstalldir="" name="Checkstyle.xsd" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Xml.xsd" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-      </dir>
-      <file baseinstalldir="" name="AbstractTestCase.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="CheckstyleTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="CsvTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="EmacsTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="FullTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="GitblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="HgblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SourceTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SummaryTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SvnblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="XmlTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-     </dir>
      <file baseinstalldir="" name="AllTests.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
@@ -120,9 +66,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="" name="ReportingTest.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
@@ -1994,24 +1937,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
-   <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
-   <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
-   <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
-   <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
-   <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
-   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
-   <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
-   <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
-   <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2024,24 +1950,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
-   <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
-   <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
-   <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
-   <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
-   <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
-   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
-   <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
-   <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
-   <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="scripts/phpcs.bat" />

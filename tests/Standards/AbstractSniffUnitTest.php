@@ -100,8 +100,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         }
 
         // Get a list of all test files to check. These will have the same base
-        // name but different extensions. We ignore the .php file as it is the
-        // class.
+        // name but different extensions. We ignore the .php file as it is the class.
         $testFiles = array();
 
         $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
@@ -125,21 +124,12 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         $failureMessages = array();
         foreach ($testFiles as $testFile) {
             try {
-                self::$phpcs->processFile($testFile);
+                $phpcsFile = self::$phpcs->processFile($testFile);
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
-            $files = self::$phpcs->getFiles();
-            if (empty($files) === true) {
-                // File was skipped for some reason.
-                echo "Skipped: $testFile\n";
-                $this->markTestSkipped();
-            }
-
-            $file = array_pop($files);
-
-            $failures        = $this->generateFailureMessages($file);
+            $failures        = $this->generateFailureMessages($phpcsFile);
             $failureMessages = array_merge($failureMessages, $failures);
         }//end foreach
 

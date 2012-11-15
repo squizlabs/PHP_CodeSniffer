@@ -192,7 +192,7 @@ class PHP_CodeSniffer_Reporting
             }
         }//end foreach
 
-        if ($errorsShown === true) {
+        if ($errorsShown === true || empty($cliValues['reports']) === true) {
             $this->totalFiles++;
             $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];

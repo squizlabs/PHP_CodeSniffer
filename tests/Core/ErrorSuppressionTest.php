@@ -42,10 +42,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
-        $phpcs->processFile('noSuppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[0];
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
@@ -54,10 +51,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $phpcs->processFile('suppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[1];
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
@@ -80,10 +74,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
-        $phpcs->processFile('noSuppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[0];
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
@@ -92,10 +83,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd'.PHP_EOL.'$var = TRUE;';
-        $phpcs->processFile('suppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[1];
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
@@ -118,10 +106,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $phpcs->processFile('noSuppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[0];
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();
         $numWarnings = $file->getWarningCount();
@@ -130,10 +115,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $phpcs->processFile('suppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[1];
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();
         $numWarnings = $file->getWarningCount();
@@ -156,26 +138,21 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
-        $phpcs->processFile('noSuppressionTest.php', $content);
-
-        $files = $phpcs->getFiles();
-        $file  = $files[0];
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
         $this->assertEquals(1, $numErrors);
         $this->assertEquals(1, count($errors));
-        $this->assertEquals(1, count($files));
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'$var = FALSE;';
-        $phpcs->processFile('suppressionTest.php', $content);
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
-        // The file shouldn't even be added to the $files array.
-        $files = $phpcs->getFiles();
-        $this->assertEquals(1, count($files));
+        // PHP_CodeSniffer should not have even attempted to process the file.
+        $this->assertEquals(null, $file);
 
-    }//end testSupressError()
+    }//end testSuppressFile()
 
 
 }//end class

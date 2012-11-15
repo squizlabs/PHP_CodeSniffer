@@ -509,7 +509,7 @@ class PHP_CodeSniffer
                 $lastDir = $currDir;
             }
 
-            $phpcsFile  = $this->processFile($file);
+            $phpcsFile = $this->processFile($file);
             $numProcessed++;
 
             // Cache the report data for this file so we can unset it to save memory.
