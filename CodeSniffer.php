@@ -76,13 +76,6 @@ class PHP_CodeSniffer
     protected $file = '';
 
     /**
-     * The files that have been processed.
-     *
-     * @var array(PHP_CodeSniffer_File)
-     */
-    protected $files = array();
-
-    /**
      * A cache of different token types, resolved into arrays.
      *
      * @var array()
@@ -117,11 +110,25 @@ class PHP_CodeSniffer
     public $reporting = null;
 
     /**
-     * An array of sniffs that are being used to check files.
+     * An array of sniff objects that are being used to check files.
      *
      * @var array(PHP_CodeSniffer_Sniff)
      */
     protected $listeners = array();
+
+    /**
+     * An array of sniffs that are being used to check files.
+     *
+     * @var array(string)
+     */
+    protected $sniffs = array();
+
+    /**
+     * The listeners array, indexed by token type.
+     *
+     * @var array
+     */
+    private $_tokenListeners = array();
 
     /**
      * An array of rules from the ruleset.xml file.
@@ -132,16 +139,6 @@ class PHP_CodeSniffer
      * @var array
      */
     protected $ruleset = array();
-
-    /**
-     * The listeners array, indexed by token type.
-     *
-     * @var array
-     */
-    private $_tokenListeners = array(
-                                'file'      => array(),
-                                'multifile' => array(),
-                               );
 
     /**
      * An array of patterns to use for skipping files.
@@ -381,22 +378,6 @@ class PHP_CodeSniffer
 
 
     /**
-     * Adds a file to the list of checked files.
-     *
-     * Checked files are used to generate error reports after the run.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file to add.
-     *
-     * @return void
-     */
-    public function addFile(PHP_CodeSniffer_File $phpcsFile)
-    {
-        $this->files[] = $phpcsFile;
-
-    }//end addFile()
-
-
-    /**
      * Processes the files/directories that PHP_CodeSniffer was constructed with.
      *
      * @param string|array $files    The files and directories to process. For
@@ -427,12 +408,9 @@ class PHP_CodeSniffer
 
         // Reset the members.
         $this->listeners       = array();
-        $this->files           = array();
+        $this->sniffs          = array();
         $this->ruleset         = array();
-        $this->_tokenListeners = array(
-                                  'file'      => array(),
-                                  'multifile' => array(),
-                                 );
+        $this->_tokenListeners = array();
 
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
@@ -467,7 +445,7 @@ class PHP_CodeSniffer
         $this->populateTokenListeners();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $numSniffs = count($this->listeners);
+            $numSniffs = count($this->sniffs);
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
@@ -482,7 +460,6 @@ class PHP_CodeSniffer
         $showProgress = $cliValues['showProgress'];
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $numSniffs = count($this->listeners);
             echo 'Creating file list... ';
         }
 
@@ -490,7 +467,6 @@ class PHP_CodeSniffer
         $numFiles = count($todo);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $numSniffs = count($this->listeners);
             echo "DONE ($numFiles files in queue)".PHP_EOL;
         }
 
@@ -553,32 +529,7 @@ class PHP_CodeSniffer
             echo PHP_EOL.PHP_EOL;
         }
 
-        // Now process the multi-file sniffs, assuming there are
-        // multiple files being sniffed.
-        if (count($files) > 1 || is_dir($files[0]) === true) {
-            $this->processMulti();
-        }
-
     }//end process()
-
-
-    /**
-     * Processes multi-file sniffs.
-     *
-     * @return void
-     */
-    public function processMulti()
-    {
-        foreach ($this->_tokenListeners['multifile'] as $listenerData) {
-            // Set the name of the listener for error messages.
-            foreach ($this->files as $file) {
-                $file->setActiveListener($listenerData['class']);
-            }
-
-            $listenerData['listener']->process($this->files);
-        }
-
-    }//end processMulti()
 
 
     /**
@@ -711,7 +662,7 @@ class PHP_CodeSniffer
             }
         }//end foreach
 
-        $this->listeners = $listeners;
+        $this->sniffs = $listeners;
 
     }//end setTokenListeners()
 
@@ -1011,12 +962,9 @@ class PHP_CodeSniffer
     public function populateTokenListeners()
     {
         // Construct a list of listeners indexed by token being listened for.
-        $this->_tokenListeners = array(
-                                  'file'      => array(),
-                                  'multifile' => array(),
-                                 );
+        $this->_tokenListeners = array();
 
-        foreach ($this->listeners as $listenerClass) {
+        foreach ($this->sniffs as $listenerClass) {
             // Work out the internal code for this sniff. Detect usage of namespace
             // seperators instead of underscores to support PHP namespaces.
             if (strstr($listenerClass, '\\') === false) {
@@ -1043,32 +991,24 @@ class PHP_CodeSniffer
                 $tokenizers = $vars['supportedTokenizers'];
             }
 
-            if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $this->listeners[$listenerClass]->register();
-                if (is_array($tokens) === false) {
-                    $msg = "Sniff $listenerClass register() method must return an array";
-                    throw new PHP_CodeSniffer_Exception($msg);
+            $tokens = $this->listeners[$listenerClass]->register();
+            if (is_array($tokens) === false) {
+                $msg = "Sniff $listenerClass register() method must return an array";
+                throw new PHP_CodeSniffer_Exception($msg);
+            }
+
+            foreach ($tokens as $token) {
+                if (isset($this->_tokenListeners[$token]) === false) {
+                    $this->_tokenListeners[$token] = array();
                 }
 
-                foreach ($tokens as $token) {
-                    if (isset($this->_tokenListeners['file'][$token]) === false) {
-                        $this->_tokenListeners['file'][$token] = array();
-                    }
-
-                    if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
-                        $this->_tokenListeners['file'][$token][] = array(
-                                                                    'listener'   => $this->listeners[$listenerClass],
-                                                                    'class'      => $listenerClass,
-                                                                    'tokenizers' => $tokenizers,
-                                                                   );
-                    }
+                if (in_array($this->listeners[$listenerClass], $this->_tokenListeners[$token], true) === false) {
+                    $this->_tokenListeners[$token][] = array(
+                                                        'listener'   => $this->listeners[$listenerClass],
+                                                        'class'      => $listenerClass,
+                                                        'tokenizers' => $tokenizers,
+                                                       );
                 }
-            } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
-                $this->_tokenListeners['multifile'][] = array(
-                                                         'listener'   => $this->listeners[$listenerClass],
-                                                         'class'      => $listenerClass,
-                                                         'tokenizers' => $tokenizers,
-                                                        );
             }
         }//end foreach
 
@@ -1336,7 +1276,7 @@ class PHP_CodeSniffer
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
-                $this->_tokenListeners['file'],
+                $this->_tokenListeners,
                 $this->allowedFileExtensions,
                 $this->ruleset,
                 $this
@@ -1360,20 +1300,14 @@ class PHP_CodeSniffer
         // we only print violations for a single file each time.
         $numErrors = null;
         while ($numErrors !== 0) {
-            $filesViolations = $this->getFilesErrors();
-            $this->files     = array();
-
-            $numErrors = $this->reporting->printReport(
-                'full',
-                $filesViolations,
-                $cliValues['showSources'],
-                null,
-                $cliValues['reportWidth']
-            );
-
+            $numErrors = ($phpcsFile->getErrorCount() + $phpcsFile->getWarningCount());
             if ($numErrors === 0) {
                 continue;
             }
+
+            $reportClass = $this->reporting->factory('full');
+            $reportData  = $this->reporting->prepareFileReport($phpcsFile);
+            $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
 
             echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
             $input = fgets(STDIN);
@@ -1381,7 +1315,7 @@ class PHP_CodeSniffer
 
             switch ($input) {
             case 's':
-                break;
+                break(2);
             case 'q':
                 exit(0);
                 break;
@@ -1424,21 +1358,14 @@ class PHP_CodeSniffer
 
         $phpcsFile = new PHP_CodeSniffer_File(
             $file,
-            $this->_tokenListeners['file'],
+            $this->_tokenListeners,
             $this->allowedFileExtensions,
             $this->ruleset,
             $this
         );
 
         $phpcsFile->start($contents);
-
-        // Clean up the test if we can to save memory. This can't be done if
-        // we need to leave the files around for multi-file sniffs.
-        if (PHP_CODESNIFFER_INTERACTIVE === false
-            && empty($this->_tokenListeners['multifile']) === true
-        ) {
-            $phpcsFile->cleanUp();
-        }
+        $phpcsFile->cleanUp();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = (time() - $startTime);
@@ -1458,29 +1385,6 @@ class PHP_CodeSniffer
         return $phpcsFile;
 
     }//end _processFile()
-
-
-    /**
-     * Gives collected violations for reports.
-     *
-     * @return array
-     */
-    public function getFilesErrors()
-    {
-        $files = array();
-        foreach ($this->files as $file) {
-            $files[$file->getFilename()]
-                = array(
-                   'warnings'    => $file->getWarnings(),
-                   'errors'      => $file->getErrors(),
-                   'numWarnings' => $file->getWarningCount(),
-                   'numErrors'   => $file->getErrorCount(),
-                  );
-        }
-
-        return $files;
-
-    }//end getFilesErrors()
 
 
     /**
@@ -1504,18 +1408,6 @@ class PHP_CodeSniffer
         $generator->generate();
 
     }//end generateDocs()
-
-
-    /**
-     * Returns the PHP_CodeSniffer file objects.
-     *
-     * @return array(PHP_CodeSniffer_File)
-     */
-    public function getFiles()
-    {
-        return $this->files;
-
-    }//end getFiles()
 
 
     /**

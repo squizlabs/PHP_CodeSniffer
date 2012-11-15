@@ -591,6 +591,13 @@ class PHP_CodeSniffer_CLI
             $phpcs->processFile('STDIN', $fileContents);
         }
 
+        // Interactive runs don't require a final report and it doesn't really
+        // matter what the retun value is because we know it isn't being read
+        // by a script.
+        if ($values['interactive'] === true) {
+            return 0;
+        }
+
         return $this->printErrorReport(
             $phpcs,
             $values['reports'],
@@ -625,8 +632,6 @@ class PHP_CodeSniffer_CLI
         $reportFile,
         $reportWidth
     ) {
-        $filesViolations = $phpcs->getFilesErrors();
-
         if (empty($reports) === true) {
             $reports['full'] = $reportFile;
         }
@@ -648,7 +653,6 @@ class PHP_CodeSniffer_CLI
             // same, so we really just need 1 number.
             $errors = $phpcs->reporting->printReport(
                 $report,
-                $filesViolations,
                 $showSources,
                 $output,
                 $reportWidth

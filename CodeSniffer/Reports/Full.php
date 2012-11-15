@@ -60,7 +60,6 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
         $width = max($width, 70);
         $file  = $report['filename'];
-            
 
         echo PHP_EOL.'FILE: ';
         if (strlen($file) <= ($width - 9)) {

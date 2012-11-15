@@ -91,7 +91,6 @@ class PHP_CodeSniffer_Reporting
      */
     public function printReport(
         $report,
-        $filesViolations,
         $showSources,
         $reportFile='',
         $reportWidth=80
@@ -192,7 +191,7 @@ class PHP_CodeSniffer_Reporting
             }
         }//end foreach
 
-        if ($errorsShown === true || empty($cliValues['reports']) === true) {
+        if ($errorsShown === true) {
             $this->totalFiles++;
             $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];
