@@ -27,6 +27,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+  - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
+    -- Thanks to Marc Ypes for the patch
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
  </notes>
  <contents>

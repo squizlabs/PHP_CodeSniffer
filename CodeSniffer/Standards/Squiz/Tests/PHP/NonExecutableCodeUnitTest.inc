@@ -162,6 +162,7 @@ function returnOverMultipleLines($color) {
                 'multiple',
                 'arguments'
             );
+            echo $foo;
         default:
             return array(
                 'multiline',
@@ -170,7 +171,17 @@ function returnOverMultipleLines($color) {
     }
 }
 
+function test() {
+    return array(
+                'multiline',
+                'array'
+            );
+    echo $foo;
+}
+
+
 exit();
+
 
 // Errors are thrown from here down from the exit() above.
 foreach ($vars as $var) {
