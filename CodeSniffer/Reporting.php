@@ -36,20 +36,46 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
 class PHP_CodeSniffer_Reporting
 {
 
-    private $_cachedReports = array();
-    private $_reports = array();
-
+    /**
+     * Total number of files that contain errors or warnings.
+     *
+     * @var int
+     */
     public $totalFiles = 0;
+
+    /**
+     * Total number of errors found during the run.
+     *
+     * @var int
+     */
     public $totalErrors = 0;
+
+    /**
+     * Total number of warnings found during the run.
+     *
+     * @var int
+     */
     public $totalWarnings = 0;
 
+    /**
+     * A list of reports that have written partial report output.
+     *
+     * @var array
+     */
+    private $_cachedReports = array();
 
+    /**
+     * A cache of report objects.
+     *
+     * @var array
+     */
+    private $_reports = array();
 
 
     /**
      * Produce the appropriate report object based on $type parameter.
      *
-     * @param string $type Demanded report type.
+     * @param string $type The type of the report.
      *
      * @return PHP_CodeSniffer_Report
      * @throws PHP_CodeSniffer_Exception If report is not available.
@@ -81,11 +107,59 @@ class PHP_CodeSniffer_Reporting
     /**
      * Actually generates the report.
      * 
-     * @param string  $report          Report type.
-     * @param array   $filesViolations Collected violations.
-     * @param boolean $showSources     Show sources?
-     * @param string  $reportFile      Report file to generate.
-     * @param integer $reportWidth     Report max width.
+     * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
+     * @param array                $cliValues An array of command line arguments.
+     * 
+     * @return void
+     */
+    public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
+    {
+        $reportData  = $this->prepareFileReport($phpcsFile);
+        $errorsShown = false;
+
+        foreach ($cliValues['reports'] as $report => $output) {
+            $reportClass = self::factory($report);
+
+            ob_start();
+            $result = $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
+            if ($result === true) {
+                $errorsShown = true;
+            }
+
+            $generatedReport = ob_get_contents();
+            ob_end_clean();
+
+            if ($generatedReport !== '') {
+                $flags = FILE_APPEND;
+                if (in_array($report, $this->_cachedReports) === false) {
+                    $this->_cachedReports[] = $report;
+                    $flags = null;
+                }
+
+                if ($output === null) {
+                    $output = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+                }
+
+                file_put_contents($output, $generatedReport, $flags);
+            }
+        }//end foreach
+
+        if ($errorsShown === true) {
+            $this->totalFiles++;
+            $this->totalErrors   += $reportData['errors'];
+            $this->totalWarnings += $reportData['warnings'];
+        }
+
+    }//end cacheFileReport()
+
+
+    /**
+     * Actually generates the report.
+     * 
+     * @param string  $report      Report type.
+     * @param boolean $showSources Show sources?
+     * @param string  $reportFile  Report file to generate.
+     * @param integer $reportWidth Report max width.
      * 
      * @return integer
      */
@@ -117,7 +191,8 @@ class PHP_CodeSniffer_Reporting
             $reportCache = '';
         }
 
-        $reportClass->generate($reportCache,
+        $reportClass->generate(
+            $reportCache,
             $this->totalFiles,
             $this->totalErrors,
             $this->totalWarnings,
@@ -128,10 +203,10 @@ class PHP_CodeSniffer_Reporting
 
         if ($reportFile !== null) {
             $generatedReport = ob_get_contents();
+            ob_end_clean();
+
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                ob_end_flush();
-            } else {
-                ob_end_clean();
+                echo $generatedReport;
             }
 
             $generatedReport = trim($generatedReport);
@@ -146,66 +221,11 @@ class PHP_CodeSniffer_Reporting
 
 
     /**
-     * Actually generates the report.
-     * 
-     * @param string  $report          Report type.
-     * @param array   $filesViolations Collected violations.
-     * @param boolean $showSources     Show sources?
-     * @param string  $reportFile      Report file to generate.
-     * @param integer $reportWidth     Report max width.
-     * 
-     * @return integer
-     */
-    public function cacheFileReport(
-        PHP_CodeSniffer_File $phpcsFile,
-        array $cliValues
-    ) {
-
-        $reportData  = $this->prepareFileReport($phpcsFile);
-        $errorsShown = false;
-
-        foreach ($cliValues['reports'] as $report => $output) {
-            $reportClass = self::factory($report);
-
-            ob_start();
-            $result = $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
-            if ($result === true) {
-                $errorsShown = true;
-            }
-
-            $generatedReport = ob_get_contents();
-            ob_end_clean();
-
-            if ($generatedReport !== '') {
-                $flags = FILE_APPEND;
-                if (in_array($report, $this->_cachedReports) === false) {
-                    $this->_cachedReports[] = $report;
-                    $flags = null;
-                }
-
-                if ($output === null) {
-                  $output = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
-                }
-
-                file_put_contents($output, $generatedReport, $flags);
-            }
-        }//end foreach
-
-        if ($errorsShown === true) {
-            $this->totalFiles++;
-            $this->totalErrors   += $reportData['errors'];
-            $this->totalWarnings += $reportData['warnings'];
-        }
-
-    }//end printReport()
-
-
-    /**
      * Pre-process and package violations for all files.
      *
      * Used by error reports to get a packaged list of all errors in each file.
      *
-     * @param array $filesViolations List of found violations.
+     * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
      *
      * @return array
      */
@@ -277,7 +297,7 @@ class PHP_CodeSniffer_Reporting
         $report['messages'] = $errors;
         return $report;
 
-    }//end prepare()
+    }//end prepareFileReport()
 
 
 }//end class

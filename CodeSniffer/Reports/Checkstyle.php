@@ -34,16 +34,17 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
 
     /**
-     * Prints all violations for processed files, in a Checkstyle format.
+     * Generate a partial report for a single processed file.
      *
-     * Violations are grouped by file.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report.
+     * @param array   $report      Prepared report data.
      * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param int     $width       Maximum allowed line width.
      *
-     * @return string
+     * @return boolean
      */
     public function generateFileReport(
         $report,
@@ -86,19 +87,22 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
         return true;
 
-    }//end generate()
+    }//end generateFileReport()
+
 
     /**
      * Prints all violations for processed files, in a Checkstyle format.
      *
-     * Violations are grouped by file.
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
-     *
-     * @return string
+     * @return void
      */
     public function generate(
         $cachedData,

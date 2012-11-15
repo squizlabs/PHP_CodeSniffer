@@ -32,26 +32,25 @@
 class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 {
 
+
     /**
-     * Generates a summary of errors and warnings for each file processed.
-     * 
+     * Generate a partial report for a single processed file.
+     *
      * If verbose output is enabled, results are shown for all files, even if
      * they have no errors or warnings. If verbose output is disabled, we only
      * show files that have at least one warning or error.
-     * 
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
      *
-     * @return string
+     * @param array   $report      Prepared report data.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed line width.
+     *
+     * @return boolean
      */
     public function generateFileReport(
         $report,
         $showSources=false,
         $width=80
     ) {
-
         if (PHP_CODESNIFFER_VERBOSITY === 0
             && $report['errors'] === 0
             && $report['warnings'] === 0
@@ -83,16 +82,16 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
     /**
      * Generates a summary of errors and warnings for each file processed.
      * 
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
-     * 
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @return string
+     * @return void
      */
     public function generate(
         $cachedData,
@@ -103,7 +102,6 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
         echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;

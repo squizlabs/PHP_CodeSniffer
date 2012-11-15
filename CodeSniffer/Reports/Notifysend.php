@@ -94,16 +94,17 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
 
 
     /**
-     * Prints all violations for processed files, in a Checkstyle format.
+     * Generate a partial report for a single processed file.
      *
-     * Violations are grouped by file.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report.
+     * @param array   $report      Prepared report data.
      * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param int     $width       Maximum allowed line width.
      *
-     * @return string
+     * @return boolean
      */
     public function generateFileReport(
         $report,
@@ -114,22 +115,23 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         // in the total number of checked files even if it has no errors.
         $this->_lastCheckedFile = $report['filename'];
         return true;
-    }
+
+    }//end generateFileReport()
 
 
     /**
      * Generates a summary of errors and warnings for each file processed.
      *
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
-     * @param boolean $toScreen    Is the report being printed to screen?
-     *
-     * @return string
+     * @return void
      */
     public function generate(
         $cachedData,
@@ -142,7 +144,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     ) {
         $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);
         if ($msg === null) {
-            if ($this->showOk) {
+            if ($this->showOk === true) {
                 $this->notifyAllFine();
             }
         } else {
@@ -155,7 +157,9 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     /**
      * Generate the error message to show to the user.
      *
-     * @param array $report CS report data.
+     * @param int $totalFiles    Total number of files processed during the run.
+     * @param int $totalErrors   Total number of errors found during the run.
+     * @param int $totalWarnings Total number of warnings found during the run.
      *
      * @return string Error message or NULL if no error/warning found.
      */
@@ -229,7 +233,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function getBasicCommand()
     {
-        $cmd = escapeshellcmd($this->path);
+        $cmd  = escapeshellcmd($this->path);
         $cmd .= ' --category dev.validate';
         $cmd .= ' -a phpcs';
         $cmd .= ' -t '.(int) $this->timeout;

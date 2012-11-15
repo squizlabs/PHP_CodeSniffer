@@ -37,30 +37,46 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      */
     protected $reportName = 'VERSION CONTROL';
 
+    /**
+     * A cache of author stats collected during the run.
+     *
+     * @var array
+     */
     private $_authorCache = array();
-    private $_praiseCache = array();
-    private $_sourceCache = array();
 
     /**
-     * Generates a summary of errors and warnings for each file processed.
-     * 
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
-     * 
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * A cache of blame stats collected during the run.
      *
-     * @return string
+     * @var array
+     */
+    private $_praiseCache = array();
+
+    /**
+     * A cache of source stats collected during the run.
+     *
+     * @var array
+     */
+    private $_sourceCache = array();
+
+
+    /**
+     * Generate a partial report for a single processed file.
+     *
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
+     *
+     * @param array   $report      Prepared report data.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed line width.
+     *
+     * @return boolean
      */
     public function generateFileReport(
         $report,
         $showSources=false,
         $width=80
     ) {
-
         $blames = $this->getBlameContent($report['filename']);
 
         foreach ($report['messages'] as $line => $lineErrors) {
@@ -71,10 +87,10 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
             if (isset($this->_authorCache[$author]) === false) {
                 $this->_authorCache[$author] = 0;
-                $this->_praiseCache[$author]  = array(
-                                     'good' => 0,
-                                     'bad'  => 0,
-                                    );
+                $this->_praiseCache[$author] = array(
+                                                'good' => 0,
+                                                'bad'  => 0,
+                                               );
             }
 
             $this->_praiseCache[$author]['bad']++;
@@ -112,10 +128,10 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
                 }
 
                 $this->_authorCache[$author] = 0;
-                $this->_praiseCache[$author]  = array(
-                                     'good' => 0,
-                                     'bad'  => 0,
-                                    );
+                $this->_praiseCache[$author] = array(
+                                                'good' => 0,
+                                                'bad'  => 0,
+                                               );
             }
 
             $this->_praiseCache[$author]['good']++;
@@ -125,15 +141,20 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
     }//end generateFileReport()
 
+
     /**
      * Prints the author of all errors and warnings, as given by "version control blame".
      *
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param integer $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @return string
+     * @return void
      */
     public function generate(
         $cachedData,
@@ -145,10 +166,10 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $toScreen=true
     ) {
         $errorsShown = ($totalErrors + $totalWarnings);
-        #if ($errorsShown === 0) {
-        #    // Nothing to show.
-        #    return;
-        #}
+        if ($errorsShown === 0) {
+            // Nothing to show.
+            return;
+        }
 
         $width = max($width, 70);
         arsort($this->_authorCache);
