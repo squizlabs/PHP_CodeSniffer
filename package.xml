@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
   - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
   - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
     -- Thanks to Marc Ypes for the patch

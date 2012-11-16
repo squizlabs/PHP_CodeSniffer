@@ -64,6 +64,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'shared' => false,
                                                 'with'   => array(),
                                                ),
+                            T_FINALLY       => array(
+                                                'start'  => array(T_OPEN_CURLY_BRACKET),
+                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'strict' => true,
+                                                'shared' => false,
+                                                'with'   => array(),
+                                               ),
                             T_ELSE          => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
                                                 'end'    => array(T_CLOSE_CURLY_BRACKET),
