@@ -159,6 +159,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                               T_DOUBLE_ARROW,
                               T_COLON,
                               T_INLINE_THEN,
+                              T_INLINE_ELSE,
                               T_CASE,
                              );
 
