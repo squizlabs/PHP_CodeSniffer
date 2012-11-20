@@ -177,6 +177,13 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                         return;
                     }
                 }
+
+                if (in_array($tokens[$semi]['code'], PHP_CodeSniffer_Tokens::$operators)) {
+                    if ($prev !== false && (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
+                        // This is an assignment with calculation; eg. $foo = -1 + 5;
+                        return;
+                    }
+                }
             }
         }//end if
 
