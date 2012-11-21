@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Marc Ypes for the patch
   - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements
     -- Thanks to Klaus Purer for the patch
+  - Squiz OperatorSpacingSniff no longer reports errors for the assignment of operations involving negative numbers
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
  </notes>
  <contents>
