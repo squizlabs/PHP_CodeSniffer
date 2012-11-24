@@ -22,7 +22,7 @@
         "classmap": [ "." ]
     },
     "suggests": {
-        "phpunit/php-timer": "*"
+        "phpunit/php-timer": "dev-master"
     },
     "require": {
         "php": ">=5.1.2"
