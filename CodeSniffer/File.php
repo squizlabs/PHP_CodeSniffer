@@ -111,7 +111,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
+ * @version   Release: 1.4.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_File
@@ -510,20 +510,33 @@ class PHP_CodeSniffer_File
         // Remove errors and warnings for ignored lines.
         foreach ($this->_ignoredLines as $line => $ignore) {
             if (isset($this->_errors[$line]) === true) {
-                foreach ($this->_errors[$line] as $col => $errors) {
-                    $this->_errorCount -= count($errors);
+                if ($this->_recordErrors === false) {
+                    $this->_errorCount -= $this->_errors[$line];
+                } else {
+                    foreach ($this->_errors[$line] as $col => $errors) {
+                        $this->_errorCount -= count($errors);
+                    }
                 }
 
                 unset($this->_errors[$line]);
             }
 
             if (isset($this->_warnings[$line]) === true) {
-                foreach ($this->_warnings[$line] as $col => $warnings) {
-                    $this->_warningCount -= count($warnings);
+                if ($this->_recordErrors === false) {
+                    $this->_errorCount -= $this->_warnings[$line];
+                } else {
+                    foreach ($this->_warnings[$line] as $col => $warnings) {
+                        $this->_warningCount -= count($warnings);
+                    }
                 }
 
                 unset($this->_warnings[$line]);
             }
+        }
+        
+        if ($this->_recordErrors === false) {
+            $this->_errors = array();
+            $this->_warnings = array();
         }
 
         // If short open tags are off but the file being checked uses
@@ -768,8 +781,20 @@ class PHP_CodeSniffer_File
             }
         }
 
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
         $this->_errorCount++;
         if ($this->_recordErrors === false) {
+            if (isset($this->_errors[$lineNum]) === false) {
+                $this->_errors[$lineNum] = 0;
+            }
+            $this->_errors[$lineNum]++;
             return;
         }
 
@@ -782,14 +807,6 @@ class PHP_CodeSniffer_File
             $message = $error;
         } else {
             $message = vsprintf($error, $data);
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         if (isset($this->_errors[$lineNum]) === false) {
@@ -885,8 +902,20 @@ class PHP_CodeSniffer_File
             }
         }
 
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
         $this->_warningCount++;
         if ($this->_recordErrors === false) {
+            if (isset($this->_warnings[$lineNum]) === false) {
+                $this->_warnings[$lineNum] = 0;
+            }
+            $this->_warnings[$lineNum]++;
             return;
         }
 
@@ -899,14 +928,6 @@ class PHP_CodeSniffer_File
             $message = $warning;
         } else {
             $message = vsprintf($warning, $data);
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         if (isset($this->_warnings[$lineNum]) === false) {
@@ -1086,7 +1107,7 @@ class PHP_CodeSniffer_File
 
             if (strpos($tokenContent, "\t") === false) {
                 // There are no tabs in this content.
-                $currColumn += strlen($tokenContent);
+                $currColumn += (strlen($tokenContent) - 1);
             } else {
                 // We need to determine the length of each tab.
                 $tabs = preg_split(
@@ -1097,6 +1118,7 @@ class PHP_CodeSniffer_File
                 );
 
                 $tabNum       = 0;
+                $adjustedTab  = false;
                 $tabsToSpaces = array();
                 $newContent   = '';
 
@@ -1118,6 +1140,7 @@ class PHP_CodeSniffer_File
                             // This is the first tab, and we are already at a
                             // tab stop, so this tab counts as a single space.
                             $currColumn++;
+                            $adjustedTab = true;
                         } else {
                             $currColumn++;
                             while (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) != 0) {
@@ -1132,6 +1155,10 @@ class PHP_CodeSniffer_File
                     }//end if
                 }//end foreach
 
+                if ($tabNum === 1 && $adjustedTab === true) {
+                    $currColumn--;
+                }
+
                 $tokens[$i]['content'] = $newContent;
             }//end if
 
@@ -1139,6 +1166,8 @@ class PHP_CodeSniffer_File
                 && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
             ) {
                 $currColumn = 1;
+            } else {
+                $currColumn++;
             }
         }//end for
 
