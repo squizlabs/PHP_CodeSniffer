@@ -31,4 +31,8 @@ abstract class Foo
         return new static();
     }
 }
+
+if ($geometry instanceof static) {
+    echo 'foo';
+}
 ?>

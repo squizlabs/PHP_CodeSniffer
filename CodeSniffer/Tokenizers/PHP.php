@@ -510,6 +510,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * braces for scope openers and closers. It also turns some T_FUNCTION tokens
      * into T_CLOSURE when they are not standard function definitions. It also
      * detects short array syntax and converts those square brackets into new tokens.
+     * It also corrects some usage of the static keyword.
      *
      * @param array  &$tokens The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -582,6 +583,24 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         echo "\t* token $i on line $line changed from T_OPEN_SQUARE_BRACKET to T_OPEN_SHORT_ARRAY".PHP_EOL;
                         $line = $tokens[$closer]['line'];
                         echo "\t* token $closer on line $line changed from T_CLOSE_SQUARE_BRACKET to T_CLOSE_SHORT_ARRAY".PHP_EOL;
+                    }
+                }
+
+                continue;
+            } else if ($tokens[$i]['code'] === T_STATIC) {
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] === T_INSTANCEOF) {
+                    $tokens[$i]['code'] = T_STRING;
+                    $tokens[$i]['type'] = 'T_STRING';
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_STATIC to T_STRING".PHP_EOL;
                     }
                 }
 
