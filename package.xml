@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
   - Added empty CodeSniffer.conf to enable config settings for Composer installs
   - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+  - Autoloader can now load PSR-0 compliant classes
+    -- Thanks to Maik Penz for the patch
   - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
     -- Thanks to Marc Ypes for the patch
   - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements

@@ -273,7 +273,7 @@ class PHP_CodeSniffer
             $newClassName = $className;
         }
 
-        $path = str_replace('_', '/', $newClassName).'.php';
+        $path = str_replace(array('_', '\\'), '/', $newClassName).'.php';
 
         if (is_file(dirname(__FILE__).'/'.$path) === true) {
             // Check standard file locations based on class name.
