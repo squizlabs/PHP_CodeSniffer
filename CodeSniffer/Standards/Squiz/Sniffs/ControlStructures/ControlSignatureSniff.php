@@ -58,6 +58,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
                 'if (...) {EOL',
                 'foreach (...) {EOL',
                 '} else if (...) {EOL',
+                '} elseif (...) {EOL',
                 '} else {EOL',
                );
 

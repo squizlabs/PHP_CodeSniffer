@@ -152,4 +152,10 @@ try { $code = 'this'; } catch (Exception $e) {
 do { echo $i;
 } while ($i > 0);
 
+if ($a) {
+
+}
+elseif ($b) {
+
+}
 ?>

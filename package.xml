@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Grunwald for the patch
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
   - Fixed bug #19726 : Wrong number of spaces expected after instanceof static
+  - Fixed bug #19727 : PSR2: no error reported when using } elseif {
  </notes>
  <contents>
   <dir name="/">
