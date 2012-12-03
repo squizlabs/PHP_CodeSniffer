@@ -72,6 +72,7 @@ class Squiz_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSni
                     139 => 1,
                     148 => 1,
                     152 => 1,
+                    158 => 1,
                    );
         break;
         case 'ControlSignatureUnitTest.js':

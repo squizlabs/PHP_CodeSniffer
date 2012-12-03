@@ -136,7 +136,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // a minus value or returning one.
             $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
             if ($tokens[$prev]['code'] === T_RETURN) {
-                // Just returning a negative value; eg. return -1.
+                // Just returning a negative value; eg. (return -1).
                 return;
             }
 
@@ -150,6 +150,11 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 return;
             }
 
+            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+                // Just trying to assign a negative value; eg. ($var = -1).
+                return;
+            }
+
             // A list of tokens that indicate that the token is not
             // part of an arithmetic operation.
             $invalidTokens = array(
@@ -159,23 +164,13 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                               T_DOUBLE_ARROW,
                               T_COLON,
                               T_INLINE_THEN,
+                              T_INLINE_ELSE,
                               T_CASE,
                              );
 
             if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
                 // Just trying to use a negative value; eg. myFunction($var, -2).
                 return;
-            }
-
-            $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            if (in_array($tokens[$number]['code'], array(T_LNUMBER, T_VARIABLE)) === true) {
-                $semi = $phpcsFile->findNext(T_WHITESPACE, ($number + 1), null, true);
-                if ($tokens[$semi]['code'] === T_SEMICOLON) {
-                    if ($prev !== false && (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true)) {
-                        // This is a negative assignment.
-                        return;
-                    }
-                }
             }
         }//end if
 

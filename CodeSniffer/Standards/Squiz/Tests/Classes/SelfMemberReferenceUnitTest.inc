@@ -64,6 +64,14 @@ class MyClass {
 
 MyClass::walk();
 
+class Controller
+{
+    public function Action()
+    {
+        Doctrine\Common\Util\Debug::dump();
+    }
+}
+
 namespace TYPO3\CMS\Reports;
 
 class Status {

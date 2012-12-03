@@ -29,10 +29,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Multi-file sniff support has been removed because they are too memory intensive
     -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
     -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+  - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
+  - Added empty CodeSniffer.conf to enable config settings for Composer installs
   - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
   - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
     -- Thanks to Marc Ypes for the patch
+  - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements
+    -- Thanks to Klaus Purer for the patch
+  - Squiz OperatorSpacingSniff no longer reports errors for the assignment of operations involving negative numbers
+  - Squiz SelfMemberReferenceSniff can no longer get into an infinite loop when checking a static call with a namespace
+    -- Thanks to Andy Grunwald for the patch
   - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
+  - Fixed bug #19726 : Wrong number of spaces expected after instanceof static
+  - Fixed bug #19727 : PSR2: no error reported when using } elseif {
  </notes>
  <contents>
   <dir name="/">
@@ -40,7 +49,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="PHP" name="CodeSniffer.sample.conf" role="data" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />

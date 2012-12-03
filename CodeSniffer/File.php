@@ -616,7 +616,7 @@ class PHP_CodeSniffer_File
         $contents = str_replace($this->eolChar, '', $contents);
         $contents = str_replace("\n", '\n', $contents);
         $contents = str_replace("\r", '\r', $contents);
-        if (preg_match('/(\\\\.)+/', $contents) === 1) {
+        if (strpos($contents, '\\') !== false) {
             $error = 'File has mixed line endings; this may cause incorrect results';
             $this->addWarning($error, 0, 'Internal.LineEndings.Mixed');
         }
