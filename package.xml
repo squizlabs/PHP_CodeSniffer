@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-11-09</date>
- <time>13:32:00</time>
+ <date>2012-12-04</date>
+ <time>14:12:00</time>
  <version>
   <release>1.4.3</release>
   <api>1.4.3</api>
@@ -2060,6 +2060,35 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.4.3</release>
+    <api>1.4.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-12-04</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
+    - Added empty CodeSniffer.conf to enable config settings for Composer installs
+    - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+    - Autoloader can now load PSR-0 compliant classes
+      -- Thanks to Maik Penz for the patch
+    - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
+      -- Thanks to Marc Ypes for the patch
+    - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements
+      -- Thanks to Klaus Purer for the patch
+    - Squiz OperatorSpacingSniff no longer reports errors for the assignment of operations involving negative numbers
+    - Squiz SelfMemberReferenceSniff can no longer get into an infinite loop when checking a static call with a namespace
+      -- Thanks to Andy Grunwald for the patch
+    - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
+    - Fixed bug #19726 : Wrong number of spaces expected after instanceof static
+  - Fixed bug #19727 : PSR2: no error reported when using } elseif {
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.2</release>
