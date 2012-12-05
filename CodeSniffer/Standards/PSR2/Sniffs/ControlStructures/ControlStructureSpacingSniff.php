@@ -63,10 +63,6 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-           # return;
-        }
-
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
