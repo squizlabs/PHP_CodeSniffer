@@ -192,7 +192,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
                                 $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
                                 $data  = array($hint);
-                                $phpcsFile->addError($error, $nextToken, 'NoSapceBeforeHint', $data);
+                                $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeHint', $data);
                             } else {
                                 $gap = strlen($tokens[($comma + 1)]['content']);
                                 if ($gap !== 1) {

@@ -15,7 +15,7 @@
 /**
  * Ensures that values submitted via JS are not compared to NULL.
  *
- * jQuery 1.8 changed the behavious of ajax requests so that null values are
+ * jQuery 1.8 changed the behaviour of ajax requests so that null values are
  * submitted as null= instead of null=null.
  *
  * @category  PHP
@@ -64,7 +64,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         }
 
 
-        // Find all the vars passed in as we are only interested in comparisions
+        // Find all the vars passed in as we are only interested in comparisons
         // to NULL for these specific variables.
         $foundVars = array();
         $open  = $tokens[$stackPtr]['parenthesis_opener'];

@@ -95,7 +95,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                     $isEquality   = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$equalityTokens);
                     $isComparison = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens);
                     if ($isAssignment === true || $isEquality === true || $isComparison === true) {
-                        // This is a negative assignment or comparion.
+                        // This is a negative assignment or comparison.
                         // We need to check that the minus and the number are
                         // adjacent.
                         if (($number - $stackPtr) !== 1) {

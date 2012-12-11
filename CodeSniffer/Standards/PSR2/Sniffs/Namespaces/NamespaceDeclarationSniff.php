@@ -63,7 +63,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
         }
 
         // The $i var now points to the first token on the line after the
-        // namespace delcaration, which must be a blank line.
+        // namespace declaration, which must be a blank line.
         $next = $phpcsFile->findNext(T_WHITESPACE, $i, $phpcsFile->numTokens, true);
         if ($tokens[$next]['line'] === $tokens[$i]['line']) {
             $error = 'There must be one blank line after the namespace declaration';

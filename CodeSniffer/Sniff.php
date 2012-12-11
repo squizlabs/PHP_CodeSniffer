@@ -69,7 +69,7 @@ interface PHP_CodeSniffer_Sniff
      *    print_r($tokens[$stackPtr]);
      * </code>
      *
-     * If the sniff discovers an anomilty in the code, they can raise an error
+     * If the sniff discovers an anomaly in the code, they can raise an error
      * by calling addError() on the PHP_CodeSniffer_File object, specifying an error
      * message and the position of the offending token:
      *

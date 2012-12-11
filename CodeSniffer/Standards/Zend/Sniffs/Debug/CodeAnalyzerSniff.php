@@ -55,7 +55,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // Because we are analyzing the whole file in one step, execute this method
-        // only on first occurence of a T_OPEN_TAG.
+        // only on first occurrence of a T_OPEN_TAG.
         $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
         if ($prevOpenTag !== false) {
             return;

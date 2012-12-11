@@ -679,7 +679,7 @@ class PHP_CodeSniffer
             include_once $file;
 
             // Support the use of PHP namespaces. If the class name we included
-            // contains namespace seperators instead of underscores, use this as the
+            // contains namespace separators instead of underscores, use this as the
             // class name from now on.
             $classNameNS = str_replace('_', '\\', $className);
             if (class_exists($classNameNS, false) === true) {
@@ -1007,7 +1007,7 @@ class PHP_CodeSniffer
 
         foreach ($this->listeners as $listenerClass) {
             // Work out the internal code for this sniff. Detect usage of namespace
-            // seperators instead of underscores to support PHP namespaces.
+            // separators instead of underscores to support PHP namespaces.
             if (strstr($listenerClass, '\\') === false) {
                 $parts = explode('_', $listenerClass);
             } else {
@@ -1123,7 +1123,7 @@ class PHP_CodeSniffer
                 }
 
                 foreach ($di as $file) {
-                    // Check if the file exists after all symlinks are reolved.
+                    // Check if the file exists after all symlinks are resolved.
                     $filePath = realpath($file->getPathname());
                     if ($filePath === false) {
                         continue;
@@ -1225,7 +1225,7 @@ class PHP_CodeSniffer
                              '*'   => '.*',
                             );
 
-            // We assume a / directory seperator, as do the exclude rules
+            // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system
             // that is different.
             if (DIRECTORY_SEPARATOR === '\\') {
@@ -1537,7 +1537,7 @@ class PHP_CodeSniffer
      * Takes a token produced from <code>token_get_all()</code> and produces a
      * more uniform token.
      *
-     * Note that this method also resolves T_STRING tokens into more descrete
+     * Note that this method also resolves T_STRING tokens into more discrete
      * types, therefore there is no need to call resolveTstringToken()
      *
      * @param string|array $token The token to convert.
@@ -1750,7 +1750,7 @@ class PHP_CodeSniffer
      *                             character must be an underscore. This
      *                             argument is only applicable if $classFormat
      *                             is false.
-     * @param boolean $strict      If true, the string must not have two captial
+     * @param boolean $strict      If true, the string must not have two capital
      *                             letters next to each other. If false, a
      *                             relaxed camel caps policy is used to allow
      *                             for acronyms.
@@ -1785,14 +1785,14 @@ class PHP_CodeSniffer
         }
 
         if ($strict === true) {
-            // Check that there are not two captial letters next to each other.
+            // Check that there are not two capital letters next to each other.
             $length          = strlen($string);
             $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {
                 $ascii = ord($string{$i});
                 if ($ascii >= 48 && $ascii <= 57) {
-                    // The character is a number, so it cant be a captial.
+                    // The character is a number, so it cant be a capital.
                     $isCaps = false;
                 } else {
                     if (strtoupper($string{$i}) === $string{$i}) {

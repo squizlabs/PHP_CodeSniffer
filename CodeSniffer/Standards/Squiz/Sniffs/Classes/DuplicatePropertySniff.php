@@ -15,7 +15,7 @@
 /**
  * Squiz_Sniffs_Classes_DuplicatePropertySniff.
  *
- * Ensures JS classes dont contain duplicate property names.
+ * Ensures JS classes don't contain duplicate property names.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

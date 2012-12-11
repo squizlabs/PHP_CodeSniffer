@@ -121,7 +121,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
 
                 // We have to exclude all uses of T_BITWISE_AND that are not
                 // references. We use a blacklist approach as we prefer false
-                // positives to not identifiying a pass-by-reference call at all.
+                // positives to not identifying a pass-by-reference call at all.
                 // The blacklist may not yet be complete.
                 switch ($tokens[$tokenBefore]['code']) {
                 case T_VARIABLE:

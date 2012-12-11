@@ -669,7 +669,7 @@ class PHP_CodeSniffer_Tokenizers_JS
         $buffer = substr($buffer, 0, -1);
 
         if (empty($buffer) === false) {
-            // Buffer contians whitespace from the end of the file, and not
+            // Buffer contains whitespace from the end of the file, and not
             // just the final newline.
             $tokens[] = array(
                          'code'    => T_WHITESPACE,
@@ -752,7 +752,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             /*
                 If this token has newlines in its content, split each line up
                 and create a new token for each line. We do this so it's easier
-                to asertain where errors occur on a line.
+                to ascertain where errors occur on a line.
                 Note that $token[1] is the token's content.
             */
 

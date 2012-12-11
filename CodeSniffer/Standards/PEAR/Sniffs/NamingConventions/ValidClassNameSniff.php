@@ -67,7 +67,7 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
         // Make sure the first letter is a capital.
         if (preg_match('|^[A-Z]|', $name) === 0) {
             $error = '%s name must begin with a capital letter';
-            $phpcsFile->addError($error, $stackPtr, 'StartWithCaptial', $errorData);
+            $phpcsFile->addError($error, $stackPtr, 'StartWithCapital', $errorData);
         }
 
         // Check that each new word starts with a capital as well, but don't

@@ -42,14 +42,14 @@ if (class_exists('PHP_CodeSniffer_CommentParser_ParserException', true) === fals
  * </ul>
  *
  * Extending classes should implement the getAllowedTags() method to return the
- * tags that they wish to process, ommiting the tags that this base class
+ * tags that they wish to process, omitting the tags that this base class
  * processes. When one of these tags in encountered, the process&lt;tag_name&gt;
  * method is called on that class. For example, if a parser's getAllowedTags()
  * method returns \@param as one of its tags, the processParam method will be
  * called so that the parser can process such a tag.
  *
  * The method is passed the tokens that comprise this tag. The tokens array
- * includes the whitespace that exists between the tokens, as seperate tokens.
+ * includes the whitespace that exists between the tokens, as separate tokens.
  * It's up to the method to create a element that implements the DocElement
  * interface, which should be returned. The AbstractDocElement class is a helper
  * class that can be used to handle most of the parsing of the tokens into their
@@ -260,7 +260,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @return void
      * @see _parse()
      * @throws PHP_CodeSniffer_CommentParser_ParserException If more than the allowed
-     *                                                       number of occurances of
+     *                                                       number of occurences of
      *                                                       a tag is found.
      */
     private function _parseWords()
@@ -424,7 +424,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     /**
      * Parses the comment element that appears at the top of the doc comment.
      *
-     * @param array(string) $tokens The word tokens that comprise tihs element.
+     * @param array(string) $tokens The word tokens that comprise this element.
      *
      * @return DocElement The element that represents this comment element.
      */
@@ -444,7 +444,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     /**
      * Parses \@deprecated tags.
      *
-     * @param array(string) $tokens The word tokens that comprise tihs element.
+     * @param array(string) $tokens The word tokens that comprise this element.
      *
      * @return DocElement The element that represents this deprecated tag.
      */
@@ -598,7 +598,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
     /**
      * Parses the specified tag.
      *
-     * @param string $tag   The tag name to parse (omitting the @ sybmol from
+     * @param string $tag   The tag name to parse (omitting the @ symbol from
      *                      the tag)
      * @param int    $start The position in the word tokens where this element
      *                      started.
@@ -647,7 +647,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      *
      * Each tag should indicate if only one entry of this tag can exist in the
      * comment by specifying true as the array value, or false if more than one
-     * is allowed. Each tag should ommit the @ symbol. Only tags other than
+     * is allowed. Each tag should omit the @ symbol. Only tags other than
      * the standard tags should be returned.
      *
      * @return array(string => boolean)

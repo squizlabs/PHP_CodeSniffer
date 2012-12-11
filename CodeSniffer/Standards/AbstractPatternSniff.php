@@ -66,7 +66,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     private $_supplementaryTokens = array();
 
     /**
-     * Positions in the stack where errors have occured.
+     * Positions in the stack where errors have occurred.
      *
      * @var array()
      */

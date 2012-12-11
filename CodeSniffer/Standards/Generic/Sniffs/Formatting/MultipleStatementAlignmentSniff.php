@@ -223,7 +223,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     // The assignment token is the longest out of all of the
                     // assignments, but the variable name is not, so the column
                     // the start at can go back more to cover the space
-                    // between the variable name and the assigment operator.
+                    // between the variable name and the assignment operator.
                     $column = ($maxVariableLength - ($maxAssignmentLength - 1) + 1);
                 }
             }

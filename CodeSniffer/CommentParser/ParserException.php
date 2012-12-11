@@ -1,6 +1,6 @@
 <?php
 /**
- * An exception to be thrown when a DocCommentParser finds an anomilty in a
+ * An exception to be thrown when a DocCommentParser finds an anomaly in a
  * doc comment.
  *
  * PHP version 5
@@ -15,7 +15,7 @@
  */
 
 /**
- * An exception to be thrown when a DocCommentParser finds an anomilty in a
+ * An exception to be thrown when a DocCommentParser finds an anomaly in a
  * doc comment.
  *
  * @category  PHP
@@ -31,7 +31,7 @@ class PHP_CodeSniffer_CommentParser_ParserException extends Exception
 {
 
     /**
-     * The line where the exception occured, in relation to the doc comment.
+     * The line where the exception occurred, in relation to the doc comment.
      *
      * @var int
      */
@@ -42,8 +42,8 @@ class PHP_CodeSniffer_CommentParser_ParserException extends Exception
      * Constructs a DocCommentParserException.
      *
      * @param string $message The message of the exception.
-     * @param int    $line    The position in comment where the error occured.
-     *                        A position of 0 indicates that the error occured
+     * @param int    $line    The position in comment where the error occurred.
+     *                        A position of 0 indicates that the error occurred
      *                        at the opening line of the doc comment.
      */
     public function __construct($message, $line)
@@ -55,7 +55,7 @@ class PHP_CodeSniffer_CommentParser_ParserException extends Exception
 
 
     /**
-     * Returns the line number within the comment where the exception occured.
+     * Returns the line number within the comment where the exception occurred.
      *
      * @return int
      */

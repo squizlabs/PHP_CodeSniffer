@@ -122,7 +122,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
      * @param int                  $stackPtr    The position of the current token
      *                                          in the stack passed in $tokens.
-     * @param int                  $openBracket The position of the openning bracket
+     * @param int                  $openBracket The position of the opening bracket
      *                                          in the stack passed in $tokens.
      * @param array                $tokens      The stack of tokens that make up
      *                                          the file.
