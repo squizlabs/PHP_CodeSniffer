@@ -235,7 +235,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 if (count($tokens[$nextToken]['nested_parenthesis']) > ($stackPtrCount + 1)) {
                     // This comma is inside more parenthesis than the ARRAY keyword,
-                    // then there it is actually a comma used to seperate arguments
+                    // then there it is actually a comma used to separate arguments
                     // in a function call.
                     continue;
                 }
@@ -344,7 +344,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             // Array cannot be empty, so this is a multi-line array with
             // a single value. It should be defined on single line.
             $error = 'Multi-line array contains a single value; use single-line array instead';
-            $phpcsFile->addError($error, $stackPtr, 'MulitLineNotAllowed');
+            $phpcsFile->addError($error, $stackPtr, 'MultiLineNotAllowed');
             return;
         }
 

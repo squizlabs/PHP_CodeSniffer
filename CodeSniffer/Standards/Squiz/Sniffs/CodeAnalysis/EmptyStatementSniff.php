@@ -1,6 +1,6 @@
 <?php
 /**
- * This sniff class detectes empty statement.
+ * This sniff class detects empty statement.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@ if (class_exists('Generic_Sniffs_CodeAnalysis_EmptyStatementSniff', true) === fa
 }
 
 /**
- * This sniff class detectes empty statement.
+ * This sniff class detects empty statement.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

@@ -225,7 +225,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 
             if ($functionName{0} !== strtoupper($functionName{0})) {
                 $error = 'Function name "%s" is prefixed with a package name but does not begin with a capital letter';
-                $phpcsFile->addError($error, $stackPtr, 'FunctionNoCaptial', $errorData);
+                $phpcsFile->addError($error, $stackPtr, 'FunctionNoCapital', $errorData);
                 return;
             }
         }

@@ -64,7 +64,7 @@
  *
  * Each parenthesis token (T_OPEN_PARENTHESIS and T_CLOSE_PARENTHESIS) has a
  * reference to their opening and closing parenthesis, one being itself, the
- * other being its oposite.
+ * other being its opposite.
  *
  * <code>
  *   array(
@@ -73,12 +73,12 @@
  *   );
  * </code>
  *
- * Some tokens can "own" a set of parethesis. For example a T_FUNCTION token
+ * Some tokens can "own" a set of parenthesis. For example a T_FUNCTION token
  * has parenthesis around its argument list. These tokens also have the
- * parenthesis_opener and and parenthesis_closer indicies. Not all parethesis
+ * parenthesis_opener and and parenthesis_closer indices. Not all parenthesis
  * have owners, for example parenthesis used for arithmetic operations and
  * function calls. The parenthesis tokens that have an owner have the following
- * auxilery array indicies.
+ * auxiliary array indices.
  *
  * <code>
  *   array(
@@ -88,12 +88,12 @@
  *   );
  * </code>
  *
- * Each token within a set of parenthesis also has an array indicy
+ * Each token within a set of parenthesis also has an array indice
  * 'nested_parenthesis' which is an array of the
  * left parenthesis => right parenthesis token positions.
  *
  * <code>
- *   'nested_parentheisis' => array(
+ *   'nested_parenthesis' => array(
  *                             12 => 15
  *                             11 => 14
  *                            );
@@ -570,7 +570,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Tokenizes the file and preapres it for the test run.
+     * Tokenizes the file and prepares it for the test run.
      *
      * @param string $contents The contents to parse. If NULL, the content
      *                         is taken from the file system.
@@ -696,7 +696,7 @@ class PHP_CodeSniffer_File
      * Adds an error to the error stack.
      *
      * @param string $error    The error message.
-     * @param int    $stackPtr The stack position where the error occured.
+     * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
      * @param int    $severity The severity level for this error. A value of 0
@@ -813,7 +813,7 @@ class PHP_CodeSniffer_File
      * Adds an warning to the warning stack.
      *
      * @param string $warning  The error message.
-     * @param int    $stackPtr The stack position where the error occured.
+     * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
      * @param int    $severity The severity level for this warning. A value of 0
@@ -1998,7 +1998,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Check if the token at the specified position is a anonymus function.
+     * Check if the token at the specified position is a anonymous function.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
@@ -2160,7 +2160,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of a method.
+     * Returns the visibility and implementation properties of a method.
      *
      * The format of the array is:
      * <code>
@@ -2249,7 +2249,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of the class member
+     * Returns the visibility and implementation properties of the class member
      * variable found at the specified position in the stack.
      *
      * The format of the array is:
@@ -2349,7 +2349,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of a class.
+     * Returns the visibility and implementation properties of a class.
      *
      * The format of the array is:
      * <code>
@@ -2498,7 +2498,7 @@ class PHP_CodeSniffer_File
 
     /**
      * Returns the content of the tokens from the specified start position in
-     * the token stack for the specified legnth.
+     * the token stack for the specified length.
      *
      * @param int $start  The position to start from in the token stack.
      * @param int $length The length of tokens to traverse from the start pos.
@@ -2539,10 +2539,10 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the next token that are NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be cheked. IE. checking will stop
+     *                           will not be checked. IE. checking will stop
      *                           at the next semi-colon found.
      *
      * @return int | bool
@@ -2606,7 +2606,7 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the next token that is NOT of
      *                           a type specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
      *                           will not be checked. i.e., checking will stop
@@ -2668,7 +2668,7 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the token that is NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      *
      * @return int | bool

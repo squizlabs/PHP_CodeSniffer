@@ -67,7 +67,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
         $nestingLevel = 0;
         for ($i = 1; $i < $numTokens; $i++) {
             if ($tokens[$i]['code'] === T_COMMENT) {
-                // Dont check the indent of comments.
+                // Don't check the indent of comments.
                 continue;
             }
 

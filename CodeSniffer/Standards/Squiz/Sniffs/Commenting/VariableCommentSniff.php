@@ -326,7 +326,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
 
     /**
-     * Called to process variables found in duoble quoted strings.
+     * Called to process variables found in double quoted strings.
      *
      * Not required for this sniff.
      *

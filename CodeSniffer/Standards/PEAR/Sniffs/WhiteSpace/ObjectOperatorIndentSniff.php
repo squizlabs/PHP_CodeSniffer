@@ -110,7 +110,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
         }
 
         while ($next !== false) {
-            // Make sure it is in the same scope, otherwise dont check indent.
+            // Make sure it is in the same scope, otherwise don't check indent.
             $brackets = null;
             if (isset($tokens[$next]['nested_parenthesis']) === true) {
                 $brackets = $tokens[$next]['nested_parenthesis'];

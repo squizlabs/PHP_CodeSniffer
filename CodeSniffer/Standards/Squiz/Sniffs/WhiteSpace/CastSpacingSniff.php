@@ -16,7 +16,7 @@
 /**
  * Squiz_Sniffs_WhiteSpace_CastSpacingSniff.
  *
- * Ensure cast statements dont contain whitespace.
+ * Ensure cast statements don't contain whitespace.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

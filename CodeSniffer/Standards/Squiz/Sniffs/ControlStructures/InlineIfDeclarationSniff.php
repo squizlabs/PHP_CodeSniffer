@@ -71,7 +71,7 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         }
 
         if ($i <= 0) {
-            // Could not find the begining of the statement. Probably not
+            // Could not find the beginning of the statement. Probably not
             // wrapped with brackets, so assume it ends with a semicolon.
             $statementEnd = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         } else {

@@ -436,7 +436,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             /*
                 If this token has newlines in its content, split each line up
                 and create a new token for each line. We do this so it's easier
-                to asertain where errors occur on a line.
+                to ascertain where errors occur on a line.
                 Note that $token[1] is the token's content.
             */
 
@@ -475,7 +475,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 // This is a special condition for T_ARRAY tokens used for
                 // type hinting function arguments as being arrays. We want to keep
-                // the parenthsis map clean, so let's tag these tokens as
+                // the parenthesis map clean, so let's tag these tokens as
                 // T_ARRAY_HINT.
                 if ($newToken['code'] === T_ARRAY) {
                     // Recalculate number of tokens.

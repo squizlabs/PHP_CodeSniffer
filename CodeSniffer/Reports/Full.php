@@ -101,7 +101,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             $paddingLine2 .= str_repeat(' ', $typeLength);
             $paddingLine2 .= ' | ';
 
-            // The maxium amount of space an error message can use.
+            // The maximum amount of space an error message can use.
             $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
 
             foreach ($file['messages'] as $line => $lineErrors) {

@@ -129,7 +129,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         ) {
             // If the scope opener is a closure but it is not the first token on the
             // line, then the first token may be a variable or array index as so
-            // should not require exact identation unless the exact member var
+            // should not require exact indentation unless the exact member var
             // is set to TRUE.
             $exact = true;
             if ($tokens[$stackPtr]['code'] === T_CLOSURE) {

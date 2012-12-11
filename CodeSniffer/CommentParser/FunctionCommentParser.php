@@ -86,7 +86,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
     /**
      * Parses parameter elements.
      *
-     * @param array(string) $tokens The tokens that conmpise this sub element.
+     * @param array(string) $tokens The tokens that comprise this sub element.
      *
      * @return PHP_CodeSniffer_CommentParser_ParameterElement
      */
@@ -107,7 +107,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
     /**
      * Parses return elements.
      *
-     * @param array(string) $tokens The tokens that conmpise this sub element.
+     * @param array(string) $tokens The tokens that comprise this sub element.
      *
      * @return PHP_CodeSniffer_CommentParser_PairElement
      */
@@ -129,7 +129,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
     /**
      * Parses throws elements.
      *
-     * @param array(string) $tokens The tokens that conmpise this sub element.
+     * @param array(string) $tokens The tokens that comprise this sub element.
      *
      * @return PHP_CodeSniffer_CommentParser_PairElement
      */
@@ -164,7 +164,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
 
 
     /**
-     * Returns the return element in this fucntion comment.
+     * Returns the return element in this function comment.
      *
      * Returns null if no return element exists in the comment.
      *
@@ -178,7 +178,7 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
 
 
     /**
-     * Returns the throws elements in this fucntion comment.
+     * Returns the throws elements in this function comment.
      *
      * Returns empty array if no throws elements in the comment.
      *

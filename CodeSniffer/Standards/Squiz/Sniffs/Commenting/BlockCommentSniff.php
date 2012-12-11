@@ -155,14 +155,14 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
             if (preg_match('|[A-Z]|', $commentText[0]) === 0) {
                 $error = 'Block comments must start with a capital letter';
-                $phpcsFile->addError($error, $commentLines[1], 'NoCaptial');
+                $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
             }
         }
 
         // Check that each line of the comment is indented past the star.
         foreach ($commentLines as $line) {
             $leadingSpace = (strlen($tokens[$line]['content']) - strlen(ltrim($tokens[$line]['content'])));
-            // First and last lines (comment opener and closer) are handled seperately.
+            // First and last lines (comment opener and closer) are handled separately.
             if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
                 continue;
             }

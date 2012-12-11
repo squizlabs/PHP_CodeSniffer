@@ -77,7 +77,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Searches for symbol declarations and side effects.
      *
-     * Returns the positions of both the first symbol declaraed and the first
+     * Returns the positions of both the first symbol declared and the first
      * side effect in the file. A NULL value for either indicates nothing was
      * found.
      *

@@ -100,7 +100,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
     protected $phpcsFile = null;
 
     /**
-     * The tag that this element represents (omiting the @ symbol).
+     * The tag that this element represents (omitting the @ symbol).
      *
      * @var string
      */

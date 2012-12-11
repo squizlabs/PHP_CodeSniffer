@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ComparionOperatorUsage sniff.
+ * Unit test class for the ComparisonOperatorUsage sniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Unit test class for the ComparionOperatorUsage sniff.
+ * Unit test class for the ComparisonOperatorUsage sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.

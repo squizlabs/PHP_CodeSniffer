@@ -1,7 +1,7 @@
 <?php
 /**
  * The Tokens class contains weightings for tokens based on their
- * probability of occurance in a file.
+ * probability of occurrence in a file.
  *
  * PHP version 5
  *
@@ -93,9 +93,9 @@ if (defined('T_FINALLY') === false) {
 
 /**
  * The Tokens class contains weightings for tokens based on their
- * probability of occurance in a file.
+ * probability of occurrence in a file.
  *
- * The less the chance of a high occurance of an abitrary token, the higher
+ * The less the chance of a high occurrence of an arbitrary token, the higher
  * the weighting.
  *
  * @category  PHP
@@ -259,7 +259,7 @@ final class PHP_CodeSniffer_Tokens
                                 );
 
     /**
-     * Token types that open parethesis.
+     * Token types that open parenthesis.
      *
      * @var array(int)
      */
@@ -454,7 +454,7 @@ final class PHP_CodeSniffer_Tokens
      *
      * Tokens are weighted by their approximate frequency of appearance in code
      * - the less frequently they appear in the code, the higher the weighting.
-     * For example T_CLASS tokens apprear very infrequently in a file, and
+     * For example T_CLASS tokens appear very infrequently in a file, and
      * therefore have a high weighting.
      *
      * Returns false if there are no weightings for any of the specified tokens.
