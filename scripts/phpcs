@@ -17,6 +17,8 @@
 
 error_reporting(E_ALL | E_STRICT);
 
+(@include_once __DIR__ . '/../vendor/autoload.php') || @include_once __DIR__ . '/../../../autoload.php';
+
 // Optionally use PHP_Timer to print time/memory stats for the run.
 // Note that the reports are the ones who actually print the data
 // as they decide if it is ok to print this data to screen.
