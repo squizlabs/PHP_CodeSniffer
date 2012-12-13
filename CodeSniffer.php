@@ -2015,6 +2015,31 @@ class PHP_CodeSniffer
 
 
     /**
+     * Get configuration file path
+     *
+     * @return string
+     * @see getAllConfigData()
+     * @see setConfigData()
+     */
+    private static function getCodeSnifferConfigFile()
+    {
+        $configFiles = array(
+                        dirname(__FILE__).'/CodeSniffer.conf',
+                        dirname(__FILE__).'/CodeSniffer.conf.dist',
+                        '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf',
+                       );
+
+        foreach ($configFiles as $configFile) {
+            if (is_file($configFile) === true) {
+                break;
+            }
+        }
+
+        return $configFile;
+    }
+
+
+    /**
      * Get a single config value.
      *
      * Config data is stored in the data dir, in a file called
@@ -2064,10 +2089,7 @@ class PHP_CodeSniffer
     public static function setConfigData($key, $value, $temp=false)
     {
         if ($temp === false) {
-            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-            if (is_file($configFile) === false) {
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-            }
+            $configFile = self::getCodeSnifferConfigFile();
 
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
@@ -2116,10 +2138,7 @@ class PHP_CodeSniffer
             return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
         }
 
-        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-        if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-        }
+        $configFile = self::getCodeSnifferConfigFile();
 
         if (is_file($configFile) === false) {
             return null;
