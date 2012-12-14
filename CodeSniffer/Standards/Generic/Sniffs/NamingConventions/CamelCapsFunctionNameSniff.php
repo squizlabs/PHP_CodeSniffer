@@ -8,6 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @author    Benjamin Carl <opensource@clickalicious.de> 
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -27,13 +28,31 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @author    Benjamin Carl <opensource@clickalicious.de> 
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
+ * @version   Release: 1.4.3
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+    /**
+     * Exclude flag for private methods which often fail 
+     * here cause of its leading underscores
+     *
+     * @var boolean
+     */
+    public $excludePrivateMethods = false;
+
+    /**
+     * Preparation flag: If set to TRUE - the method is checked for
+     * an underscore and the underscore get excluded for checking.
+     * So _myMethod is for the CamelCapsFunctionNameSniff converted to myMethod
+     *
+     * @var boolean
+     */
+    public $removeUnderscoreFromMethod = false;
+
 
     /**
      * A list of all PHP magic methods.
@@ -147,20 +166,33 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         }
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-        if (PHP_CodeSniffer::isCamelCaps($methodName, false, true, $this->strict) === false) {
-            if ($methodProps['scope_specified'] === true) {
-                $error = '%s method name "%s" is not in camel caps format';
-                $data  = array(
-                          ucfirst($methodProps['scope']),
-                          $errorData[0],
-                         );
-                $phpcsFile->addError($error, $stackPtr, 'ScopeNotCamelCaps', $data);
-            } else {
-                $error = 'Method name "%s" is not in camel caps format';
-                $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
-            }
 
-            return;
+
+        // private method often must start with "_" and so the CamelCase Test will always fail for private methods
+        if ($this->removeUnderscoreFromMethod) { 
+            if ($methodProps['scope_specified'] === true && $methodProps['scope'] == 'private' && substr($methodName, 0, 1) == '_')  {
+                $methodName = substr($methodName, 1);
+            }
+        }
+
+        // check for excluding private methods from check
+        if ($this->excludePrivateMethods === false || ($methodProps['scope_specified'] === false || $methodProps['scope'] != 'private')) {
+
+            if (PHP_CodeSniffer::isCamelCaps($methodName, false, true, $this->strict) === false) {
+                if ($methodProps['scope_specified'] === true) {
+                    $error = '%s method name "%s" is not in camel caps format';
+                    $data  = array(
+                              ucfirst($methodProps['scope']),
+                              $errorData[0],
+                             );
+                    $phpcsFile->addError($error, $stackPtr, 'ScopeNotCamelCaps', $data);
+                } else {
+                    $error = 'Method name "%s" is not in camel caps format';
+                    $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
+                }
+
+                return;
+            }
         }
 
     }//end processTokenWithinScope()
