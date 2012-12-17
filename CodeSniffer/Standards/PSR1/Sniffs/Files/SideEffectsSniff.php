@@ -119,7 +119,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            // Ignore entire namespace and use statements.
+            // Ignore entire namespace, const and use statements.
             if ($tokens[$i]['code'] === T_NAMESPACE) {
                 $next = $phpcsFile->findNext(array(T_SEMICOLON, T_OPEN_CURLY_BRACKET), ($i + 1));
                 if ($next === false) {
@@ -130,7 +130,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 
                 $i = $next;
                 continue;
-            } else if ($tokens[$i]['code'] === T_USE) {
+            } else if ($tokens[$i]['code'] === T_USE
+                || $tokens[$i]['code'] === T_CONST
+            ) {
                 $i = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
                 continue;
             }

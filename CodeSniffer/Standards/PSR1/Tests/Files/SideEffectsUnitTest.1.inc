@@ -1,6 +1,9 @@
 <?php
 namespace Vendor\Model;
 
+const CONSTANT1 = 1;
+const CONSTANT2 = 2;
+
 use Something;
 use SomethingElse;
 
