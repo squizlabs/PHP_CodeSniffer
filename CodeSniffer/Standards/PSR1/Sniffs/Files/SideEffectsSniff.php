@@ -143,7 +143,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Detect and skip over symbols.
-            if (in_array($tokens[$i]['code'], $symbols) === true) {
+            if (in_array($tokens[$i]['code'], $symbols) === true
+              && isset($tokens[$i]['scope_closer']) === true
+            ) {
                 if ($firstSymbol === null) {
                     $firstSymbol = $i;
                 }
