@@ -1466,6 +1466,19 @@ class PHP_CodeSniffer_File
                 echo "]: $type => $content".PHP_EOL;
             }
 
+            // Very special case for IF statements in PHP that can be defined without
+            // scope tokens. If an IF statement below this one has an opener but no
+            // keyword, the opener will be incorrectly assigned to this IF statement.
+            // E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
+            if ($currType === T_IF && $opener === null && $tokens[$i]['code'] === T_SEMICOLON) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found semicolon before scope opener for $stackPtr (T_IF), bailing".PHP_EOL;
+                }
+
+                return $stackPtr;
+            }
+
             // Is this an opening condition ?
             if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
                 if ($opener === null) {
