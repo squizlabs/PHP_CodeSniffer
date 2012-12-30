@@ -291,6 +291,9 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
         PHP_CodeSniffer_CommentParser_ParameterElement $other
     ) {
         // Compares the index before param comment.
+        if (strlen($other->_commentWhitespace)) === 0 && strlen($this->_commentWhitespace) === 0) {
+            return true;
+        }
         $otherComment
             = (strlen($other->_varName) + strlen($other->_commentWhitespace));
         $thisComment
