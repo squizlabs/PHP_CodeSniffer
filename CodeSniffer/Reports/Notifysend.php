@@ -52,6 +52,13 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected $showOk = true;
 
+    /**
+     * Version of installed notify-send executable.
+     *
+     * @var string
+     */
+    protected $version = null;
+
 
     /**
      * Load configuration data.
@@ -74,6 +81,12 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         if ($showOk !== null) {
             $this->showOk = (boolean) $showOk;
         }
+
+        $this->version = str_replace(
+            'notify-send ',
+            '',
+            exec($this->path . ' --version')
+        );
 
     }//end __construct()
 
@@ -192,10 +205,13 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function getBasicCommand()
     {
-        return escapeshellcmd($this->path)
+        $command = escapeshellcmd($this->path)
             . ' --category dev.validate'
-            . ' -a phpcs'
             . ' -t ' . (int) $this->timeout;
+        if (version_compare($this->version, '0.7.3', '>=')) {
+            $command .= ' -a phpcs';
+        }
+        return $command;
 
     }//end getBasicCommand()
 
