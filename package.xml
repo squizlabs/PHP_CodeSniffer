@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Notifysend report now supports notify-send versions before 0.7.3
     -- Thanks to Ken Guest for the patch
   - Fixed bug #19755 : Token of T_CLASS type has no scope_opener and scope_closer keys
+  - Fixed bug #19759 : Squiz.PHP.NonExecutableCode fails for return function()...
   - Fixed bug #19763 : Use statements for traits not recognised correctly for PSR2 code style
   - Fixed bug #19764 : Instead of for traits throws uppercase constant name errors
  </notes>

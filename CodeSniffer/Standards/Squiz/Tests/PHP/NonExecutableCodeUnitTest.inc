@@ -203,4 +203,10 @@ class myClass {
     }
 }
 
+function bar() {
+    return function() {
+        echo "1";
+    };
+}
+
 ?>

@@ -203,10 +203,15 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
+            if ($tokens[$start]['code'] === T_OPEN_CURLY_BRACKET) {
+                $start = $tokens[$start]['scope_closer'];
+                continue;
+            }
+
             if ($tokens[$start]['code'] === T_SEMICOLON) {
                 break;
             }
-        }
+        }//end for
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
