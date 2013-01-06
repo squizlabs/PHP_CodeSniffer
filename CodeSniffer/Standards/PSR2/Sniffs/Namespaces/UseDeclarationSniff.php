@@ -61,7 +61,7 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
         }
 
         // Ignore USE keywords for traits.
-        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === TRUE) {
+        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === true) {
             return;
         }
 
