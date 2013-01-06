@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
     -- Fixes bug #19732 : PSR2: some control structures errors not reported
   - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
+  - Notifysend report now supports notify-send versions before 0.7.3
+    -- Thanks to Ken Guest for the patch
   - Fixed bug #19755 : Token of T_CLASS type has no scope_opener and scope_closer keys
  </notes>
  <contents>

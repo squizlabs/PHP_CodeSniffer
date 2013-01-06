@@ -169,12 +169,10 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function notifyAllFine()
     {
-        exec(
-            $this->getBasicCommand()
-            . ' -i info'
-            . ' "PHP CodeSniffer: Ok"'
-            . ' "All fine"'
-        );
+        $cmd  = $this->getBasicCommand();
+        $cmd .= ' -i info';
+        $cmd .= ' "PHP CodeSniffer: Ok"';
+        $cmd .= ' "All fine"';
 
     }//end notifyAllFine()
 
@@ -188,12 +186,10 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function notifyErrors($msg)
     {
-        exec(
-            $this->getBasicCommand()
-            . ' -i error'
-            . ' "PHP CodeSniffer: Error"'
-            . ' ' . escapeshellarg(trim($msg))
-        );
+        $cmd  = $this->getBasicCommand();
+        $cmd .= ' -i error';
+        $cmd .= ' "PHP CodeSniffer: Error"';
+        $cmd .= ' '.escapeshellarg(trim($msg));
 
     }//end notifyErrors()
 
@@ -205,13 +201,14 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function getBasicCommand()
     {
-        $command = escapeshellcmd($this->path)
-            . ' --category dev.validate'
-            . ' -t ' . (int) $this->timeout;
-        if (version_compare($this->version, '0.7.3', '>=')) {
-            $command .= ' -a phpcs';
+        $cmd  = escapeshellcmd($this->path);
+        $cmd .= ' --category dev.validate';
+        $cmd .= ' -t '.(int) $this->timeout;
+        if (version_compare($this->version, '0.7.3', '>=') === true) {
+            $cmd .= ' -a phpcs';
         }
-        return $command;
+
+        return $cmd;
 
     }//end getBasicCommand()
 
