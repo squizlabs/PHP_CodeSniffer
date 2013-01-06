@@ -71,7 +71,12 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
         // is not an opening parenthesis then it is not a function call.
         $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
-            $functionKeyword = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMA, T_COMMENT, T_STRING, T_NS_SEPARATOR), ($stackPtr - 1), null, true);
+            $functionKeyword = $phpcsFile->findPrevious(
+                array(T_WHITESPACE, T_COMMA, T_COMMENT, T_STRING, T_NS_SEPARATOR),
+                ($stackPtr - 1),
+                null,
+                true
+            );
 
             $declarations = array(
                              T_FUNCTION,
@@ -86,6 +91,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_USE,
                              T_AS,
                              T_GOTO,
+                             T_INSTEADOF,
                             );
 
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {
@@ -115,6 +121,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             // Is this a namespace name?
             if ($tokens[$nextPtr]['code'] === T_NS_SEPARATOR) {
+                return;
+            }
+
+            // Is this an insteadof name?
+            if ($tokens[$nextPtr]['code'] === T_INSTEADOF) {
                 return;
             }
 

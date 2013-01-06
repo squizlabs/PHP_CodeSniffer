@@ -86,9 +86,13 @@ if (defined('T_TRAIT') === false) {
     define('T_TRAIT', 1055);
 }
 
+if (defined('T_INSTEADOF') === false) {
+    define('T_INSTEADOF', 1056);
+}
+
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1056);
+    define('T_FINALLY', 1057);
 }
 
 /**
