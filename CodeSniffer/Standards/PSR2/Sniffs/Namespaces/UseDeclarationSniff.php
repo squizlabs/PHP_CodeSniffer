@@ -60,6 +60,11 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
+        // Ignore USE keywords for traits.
+        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === TRUE) {
+            return;
+        }
+
         // Only one USE declaration allowed per statement.
         $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON), ($stackPtr + 1));
         if ($tokens[$next]['code'] === T_COMMA) {
