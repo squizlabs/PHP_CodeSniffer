@@ -173,6 +173,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $cmd .= ' -i info';
         $cmd .= ' "PHP CodeSniffer: Ok"';
         $cmd .= ' "All fine"';
+        exec($cmd);
 
     }//end notifyAllFine()
 
@@ -190,6 +191,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $cmd .= ' -i error';
         $cmd .= ' "PHP CodeSniffer: Error"';
         $cmd .= ' '.escapeshellarg(trim($msg));
+        exec($cmd);
 
     }//end notifyErrors()
 
