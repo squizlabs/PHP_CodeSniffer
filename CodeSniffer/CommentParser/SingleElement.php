@@ -126,7 +126,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
 
 
     /**
-     * Returns the witespace before the content of this tag.
+     * Returns the whitespace before the content of this tag.
      *
      * @return string
      */

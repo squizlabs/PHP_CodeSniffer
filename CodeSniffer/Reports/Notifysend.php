@@ -57,6 +57,13 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     protected $showOk = true;
 
     /**
+     * Version of installed notify-send executable.
+     *
+     * @var string
+     */
+    protected $version = null;
+
+    /**
      * A record of the last file checked.
      *
      * This is used in case we only checked one file and need to print
@@ -89,6 +96,12 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         if ($showOk !== null) {
             $this->showOk = (boolean) $showOk;
         }
+
+        $this->version = str_replace(
+            'notify-send ',
+            '',
+            exec($this->path . ' --version')
+        );
 
     }//end __construct()
 
@@ -201,7 +214,6 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $cmd .= ' -i info';
         $cmd .= ' "PHP CodeSniffer: Ok"';
         $cmd .= ' "All fine"';
-
         exec($cmd);
 
     }//end notifyAllFine()
@@ -220,7 +232,6 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $cmd .= ' -i error';
         $cmd .= ' "PHP CodeSniffer: Error"';
         $cmd .= ' '.escapeshellarg(trim($msg));
-
         exec($cmd);
 
     }//end notifyErrors()
@@ -235,8 +246,10 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     {
         $cmd  = escapeshellcmd($this->path);
         $cmd .= ' --category dev.validate';
-        $cmd .= ' -a phpcs';
         $cmd .= ' -t '.(int) $this->timeout;
+        if (version_compare($this->version, '0.7.3', '>=') === true) {
+            $cmd .= ' -a phpcs';
+        }
 
         return $cmd;
 

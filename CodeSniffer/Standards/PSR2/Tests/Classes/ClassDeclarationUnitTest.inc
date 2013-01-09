@@ -66,4 +66,12 @@ class ClassName extends ParentClass implements
     // constants, properties, methods
 }
 
+class Test
+{
+    public function test() {
+        if (1) 1;
+        1 ? (1 ? 1 : 1) : 1;
+    }
+}
+
 ?>

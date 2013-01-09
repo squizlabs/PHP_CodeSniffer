@@ -92,7 +92,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
 
 
     /**
-     * Returns the raw content of this element, ommiting the tag.
+     * Returns the raw content of this element, omitting the tag.
      *
      * @return string
      */

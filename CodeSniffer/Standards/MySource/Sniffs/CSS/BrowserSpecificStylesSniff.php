@@ -36,9 +36,9 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
     public $supportedTokenizers = array('CSS');
 
     /**
-     * A list of specific stylsheet suffixes we allow.
+     * A list of specific stylesheet suffixes we allow.
      *
-     * These stylsheets contain browser specific styles
+     * These stylesheets contain browser specific styles
      * so this sniff ignore them files in the form:
      * *_moz.css and *_ie7.css etc.
      *

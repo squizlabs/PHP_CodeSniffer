@@ -71,7 +71,7 @@ class Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff implements PHP_CodeSni
             return;
         }
 
-        // Allow indxes that have dots in them because we can't write
+        // Allow indexes that have dots in them because we can't write
         // them in dot notation.
         $content = trim($tokens[$index]['content'], '"\' ');
         if (strpos($content, '.') !== false) {

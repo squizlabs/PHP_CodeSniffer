@@ -126,7 +126,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             */
 
             if ($phpcsFile->tokenizerType === 'JS') {
-                // The last token is always the close tag inserted when tokenizsed
+                // The last token is always the close tag inserted when tokenized
                 // and the second last token is always the last piece of content in
                 // the file. If the second last token is whitespace, there was
                 // whitespace at the end of the file.

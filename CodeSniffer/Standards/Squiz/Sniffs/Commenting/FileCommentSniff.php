@@ -224,7 +224,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $testLong = trim($long);
             if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
                 $error = 'File comment long description must start with a capital letter';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCaptial');
+                $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
             }
         }//end if
 
@@ -588,7 +588,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Check for license URL.
                 if (empty($url) === true) {
                     $error = 'License URL missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLinceseURL');
+                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseURL');
                 } else if ($url !== 'http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt') {
                     $error = 'Expected "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" for license URL';
                     $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseURL');
@@ -597,7 +597,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Check for license name.
                 if (empty($content) === true) {
                     $error = 'License name missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLinceseName');
+                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseName');
                 } else if ($content !== 'GPLv2') {
                     $error = 'Expected "GPLv2" for license name';
                     $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseName');

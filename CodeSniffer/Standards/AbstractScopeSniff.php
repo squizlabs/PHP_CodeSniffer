@@ -1,7 +1,7 @@
 <?php
 /**
  * An AbstractScopeTest allows for tests that extend from this class to
- * listen for tokens within a particluar scope.
+ * listen for tokens within a particular scope.
  *
  * PHP version 5
  *
@@ -16,7 +16,7 @@
 
 /**
  * An AbstractScopeTest allows for tests that extend from this class to
- * listen for tokens within a particluar scope.
+ * listen for tokens within a particular scope.
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
@@ -50,7 +50,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     /**
      * The token types that this test wishes to listen to within the scope.
      *
-     * @var array()
+     * @var array
      */
     private $_tokens = array();
 
@@ -78,7 +78,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @param boolean $listenOutside If true this test will also alert the
      *                               extending class when a token is found outside
      *                               the scope, by calling the
-     *                               processTokenOutideScope method.
+     *                               processTokenOutsideScope method.
      *
      * @see PHP_CodeSniffer.getValidScopeTokeners()
      * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
@@ -192,7 +192,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr
     ) {
-        return;
 
     }//end processTokenOutsideScope()
 

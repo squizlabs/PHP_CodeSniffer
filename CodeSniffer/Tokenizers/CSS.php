@@ -98,7 +98,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     $oldNumTokens = $numTokens;
                 }
 
-                // Tokenize the string and remove the extra PHP tags we dont need.
+                // Tokenize the string and remove the extra PHP tags we don't need.
                 $moreTokens = parent::tokenizeString($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
@@ -353,7 +353,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
     /**
      * Performs additional processing after main tokenizing.
      *
-     * This additional processsing converts T_LIST tokens to T_STRING
+     * This additional processing converts T_LIST tokens to T_STRING
      * because there are no list constructs in CSS and list-* styles
      * look like lists to the PHP tokenizer.
      *

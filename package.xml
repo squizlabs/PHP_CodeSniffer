@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-11-09</date>
- <time>13:32:00</time>
+ <date>2012-12-04</date>
+ <time>14:12:00</time>
  <version>
-  <release>1.4.3</release>
-  <api>1.4.3</api>
+  <release>1.4.4</release>
+  <api>1.4.4</api>
  </version>
  <stability>
   <release>stable</release>
@@ -29,21 +29,21 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Multi-file sniff support has been removed because they are too memory intensive
     -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
     -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
-  - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
-  - Added empty CodeSniffer.conf to enable config settings for Composer installs
-  - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
-  - Autoloader can now load PSR-0 compliant classes
-    -- Thanks to Maik Penz for the patch
-  - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
-    -- Thanks to Marc Ypes for the patch
-  - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements
-    -- Thanks to Klaus Purer for the patch
-  - Squiz OperatorSpacingSniff no longer reports errors for the assignment of operations involving negative numbers
-  - Squiz SelfMemberReferenceSniff can no longer get into an infinite loop when checking a static call with a namespace
-    -- Thanks to Andy Grunwald for the patch
-  - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
-  - Fixed bug #19726 : Wrong number of spaces expected after instanceof static
-  - Fixed bug #19727 : PSR2: no error reported when using } elseif {
+  - Ignored lines no longer cause the summary report to show incorrect error and warning counts
+    -- Thanks to Bert Van Hauwaert for the patch
+  - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
+    -- Fixes bug #19732 : PSR2: some control structures errors not reported
+  - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
+  - Notifysend report now supports notify-send versions before 0.7.3
+    -- Thanks to Ken Guest for the patch
+  - PEAR and Squiz FunctionCommentSniffs no longer report errors for misaligned argument comments when they are blank
+    -- Thanks to Thomas Peterson for the patch
+  - Fixed bug #19755 : Token of T_CLASS type has no scope_opener and scope_closer keys
+  - Fixed bug #19759 : Squiz.PHP.NonExecutableCode fails for return function()...
+  - Fixed bug #19763 : Use statements for traits not recognised correctly for PSR2 code style
+  - Fixed bug #19764 : Instead of for traits throws uppercase constant name errors
+  - Fixed bug #19772 : PSR2_Sniffs_Namespaces_UseDeclarationSniff does not properly recognize last use
+  - Fixed bug #19775 : False positive in NonExecutableCode sniff when not using curly braces
  </notes>
  <contents>
   <dir name="/">
@@ -966,6 +966,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlStructureSpacingSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ElseIfDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1004,6 +1007,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ControlStructureSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ElseIfDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -1972,6 +1979,35 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.4.3</release>
+    <api>1.4.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2012-12-04</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
+    - Added empty CodeSniffer.conf to enable config settings for Composer installs
+    - Added Generic EndFileNoNewlineSniff to ensure there is no newline at the end of a file
+    - Autoloader can now load PSR-0 compliant classes
+      -- Thanks to Maik Penz for the patch
+    - Squiz NonExecutableCodeSniff no longer throws error for multi-line RETURNs inside CASE statements
+      -- Thanks to Marc Ypes for the patch
+    - Squiz OperatorSpacingSniff no longer reports errors for negative numbers inside inline THEN statements
+      -- Thanks to Klaus Purer for the patch
+    - Squiz OperatorSpacingSniff no longer reports errors for the assignment of operations involving negative numbers
+    - Squiz SelfMemberReferenceSniff can no longer get into an infinite loop when checking a static call with a namespace
+      -- Thanks to Andy Grunwald for the patch
+    - Fixed bug #19699 : Generic.Files.LineLength giving false positives when tab-width is used
+    - Fixed bug #19726 : Wrong number of spaces expected after instanceof static
+  - Fixed bug #19727 : PSR2: no error reported when using } elseif {
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.2</release>

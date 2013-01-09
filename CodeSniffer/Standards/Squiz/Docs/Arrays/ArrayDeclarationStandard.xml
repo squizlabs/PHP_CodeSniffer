@@ -15,7 +15,7 @@
 $array = <em>a</em>rray('val1', 'val2');
         ]]>
         </code>
-        <code title="Invalid: first letter capitialised">
+        <code title="Invalid: first letter capitalised">
         <![CDATA[
 $array = <em>A</em>rray('val1', 'val2');
         ]]>

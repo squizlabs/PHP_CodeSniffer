@@ -14,7 +14,7 @@
  */
 
 /**
- * Detects unnecessary overriden methods that simply call their parent.
+ * Detects unnecessary overridden methods that simply call their parent.
  *
  * This rule is based on the PMD rule catalog. The Useless Overriding Method
  * sniff detects the use of methods that only call their parent classes's method

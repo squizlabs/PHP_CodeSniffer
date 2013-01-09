@@ -63,10 +63,29 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // If this token is preceeded with an "or", it only relates to one line
-        // and should be ignore. For example: fopen() or die().
+        // If this token is preceded with an "or", it only relates to one line
+        // and should be ignored. For example: fopen() or die().
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_LOGICAL_OR) {
+            return;
+        }
+
+        // Check if this token is actually part of a one-line IF or ELSE statement.
+        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+            if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
+                $i = $tokens[$i]['parenthesis_opener'];
+                continue;
+            } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                continue;
+            }
+
+            break;
+        }
+
+        if ($tokens[$i]['code'] === T_IF
+            || $tokens[$i]['code'] === T_ELSE
+            || $tokens[$i]['code'] === T_ELSEIF
+        ) {
             return;
         }
 
@@ -203,10 +222,15 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
+            if ($tokens[$start]['code'] === T_OPEN_CURLY_BRACKET) {
+                $start = $tokens[$start]['scope_closer'];
+                continue;
+            }
+
             if ($tokens[$start]['code'] === T_SEMICOLON) {
                 break;
             }
-        }
+        }//end for
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {

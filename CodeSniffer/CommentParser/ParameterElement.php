@@ -193,7 +193,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
     /**
      * Returns the whitespace before the variable type.
      *
-     * @return stirng
+     * @return string
      * @see getWhiteSpaceBeforeVarName()
      * @see getWhiteSpaceBeforeComment()
      */
@@ -233,7 +233,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
 
 
     /**
-     * Returns the postition of this parameter are it appears in the comment.
+     * Returns the position of this parameter are it appears in the comment.
      *
      * This method differs from getOrder as it is only relative to method
      * parameters.
@@ -291,6 +291,10 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
         PHP_CodeSniffer_CommentParser_ParameterElement $other
     ) {
         // Compares the index before param comment.
+        if (strlen($other->_commentWhitespace) === 0 && strlen($this->_commentWhitespace) === 0) {
+            return true;
+        }
+
         $otherComment
             = (strlen($other->_varName) + strlen($other->_commentWhitespace));
         $thisComment

@@ -152,7 +152,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         /*
             We know what the first two and last two tokens should be
             (because we put them there) so ignore this comment if those
-            tokens were not parsed correctly. It obvously means this is not
+            tokens were not parsed correctly. It obviously means this is not
             valid code.
         */
 

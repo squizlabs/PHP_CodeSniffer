@@ -52,13 +52,11 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        // Ignore USE keywords inside closures.
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+        if ($this->_shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;
         }
+
+        $tokens = $phpcsFile->getTokens();
 
         // Only one USE declaration allowed per statement.
         $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON), ($stackPtr + 1));
@@ -79,6 +77,13 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
 
         // Only interested in the last USE statement from here onwards.
         $nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
+        while ($this->_shouldIgnoreUse($phpcsFile, $nextUse) === true) {
+            $nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
+            if ($nextUse === false) {
+                break;
+            }
+        }
+
         if ($nextUse !== false) {
             return;
         }
@@ -97,6 +102,35 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
         }
 
     }//end process()
+
+
+    /**
+     * Check if this use statement is part of the namespace block.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
+     *
+     * @return void
+     */
+    private function _shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Ignore USE keywords inside closures.
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+            return true;
+        }
+
+        // Ignore USE keywords for traits.
+        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === true) {
+            return true;
+        }
+
+        return false;
+
+    }//end _shouldIgnoreUse()
 
 
 }//end class

@@ -51,19 +51,19 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     /**
      * Constructs a PHP_CodeSniffer_CommentParser_CommentElement.
      *
-     * @param PHP_CodeSniffer_CommentParser_DocElemement $previousElement The element
-     *                                                                    that
-     *                                                                    appears
-     *                                                                    before this
-     *                                                                    element.
-     * @param array                                      $tokens          The tokens
-     *                                                                    that make
-     *                                                                    up this
-     *                                                                    element.
-     * @param PHP_CodeSniffer_File                       $phpcsFile       The file
-     *                                                                    that this
-     *                                                                    element is
-     *                                                                    in.
+     * @param PHP_CodeSniffer_CommentParser_DocElement $previousElement The element
+     *                                                                  that
+     *                                                                  appears
+     *                                                                  before this
+     *                                                                  element.
+     * @param array                                    $tokens          The tokens
+     *                                                                  that make
+     *                                                                  up this
+     *                                                                  element.
+     * @param PHP_CodeSniffer_File                     $phpcsFile       The file
+     *                                                                  that this
+     *                                                                  element is
+     *                                                                  in.
      */
     public function __construct(
         $previousElement,

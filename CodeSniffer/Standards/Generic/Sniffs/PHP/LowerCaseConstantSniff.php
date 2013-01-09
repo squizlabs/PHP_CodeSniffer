@@ -16,7 +16,7 @@
 /**
  * Generic_Sniffs_PHP_LowerCaseConstantSniff.
  *
- * Checks that all uses of true, false and null are lowerrcase.
+ * Checks that all uses of true, false and null are lowercase.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

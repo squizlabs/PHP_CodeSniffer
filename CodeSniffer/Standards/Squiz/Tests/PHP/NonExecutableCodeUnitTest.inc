@@ -179,6 +179,26 @@ function test() {
     echo $foo;
 }
 
+function test(){
+    switch($a) {
+        case 1:
+            if (empty($b))
+                return 0;
+            break;
+        default:
+            return 2;
+    }
+
+    if (empty($a))
+        echo '1';
+    elseif ($empty($b))
+        return 0;
+    else
+        return 1;
+
+    echo "oi";
+    return 1;
+}
 
 exit();
 
@@ -201,6 +221,12 @@ class myClass {
     function myFunc() {
         echo 'no error';
     }
+}
+
+function bar() {
+    return function() {
+        echo "1";
+    };
 }
 
 ?>

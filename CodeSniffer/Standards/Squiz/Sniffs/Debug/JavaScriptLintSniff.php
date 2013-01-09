@@ -15,7 +15,7 @@
 /**
  * Squiz_Sniffs_Debug_JavaScriptLintSniff.
  *
- * Runs JavaScipt Lint on the file.
+ * Runs JavaScript Lint on the file.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -69,7 +69,7 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
         $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
         $msg = exec($cmd, $output, $retval);
 
-        // $exitCode is the last line of $output if no error occures, on error it
+        // $exitCode is the last line of $output if no error occurs, on error it
         // is numeric. Try to handle various error conditions and provide useful
         // error reporting.
         if ($retval === 2 || $retval === 4) {

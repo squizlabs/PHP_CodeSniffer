@@ -151,7 +151,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         // Check each of the extends/implements class names. If the implements
         // keywords is the last content on the line, it means we need to check for
         // the multi-line implements format, so we do not include the class names
-        // from the implments list in the following check.
+        // from the implements list in the following check.
         $implements          = $phpcsFile->findNext(T_IMPLEMENTS, ($stackPtr + 1), $openingBrace);
         $multiLineImplements = false;
         if ($implements !== false) {

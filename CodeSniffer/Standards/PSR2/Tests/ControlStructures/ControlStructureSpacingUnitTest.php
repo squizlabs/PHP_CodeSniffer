@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ValidConstantName sniff.
+ * Unit test class for the FunctionSpacing sniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Unit test class for the ValidConstantName sniff.
+ * Unit test class for the FunctionSpacing sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -28,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_NamingConventions_UpperCaseConstantNameUnitTest extends AbstractSniffUnitTest
+class PSR2_Tests_ControlStructures_ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -42,27 +42,13 @@ class Generic_Tests_NamingConventions_UpperCaseConstantNameUnitTest extends Abst
      */
     public function getErrorList()
     {
-        $errors = array(
-                   8   => 1,
-                   10  => 1,
-                   15  => 1,
-                   25  => 1,
-                   26  => 1,
-                   27  => 1,
-                   28  => 1,
-                   29  => 1,
-                   32  => 1,
-                   35  => 1,
-                   100 => 1,
-                  );
-
-        // The trait insteadof test will only work in PHP version where traits exist
-        // and will throw errors in earlier versions.
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $errors[131] = 3;
-        }
-
-        return $errors;
+        return array(
+                4  => 1,
+                14 => 2,
+                26 => 2,
+                27 => 2,
+                31 => 1,
+               );
 
     }//end getErrorList()
 

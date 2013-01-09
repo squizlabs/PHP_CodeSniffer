@@ -24,7 +24,7 @@
   </properties>
  </rule>
 
- <!-- This messgae is not required as spaces are allowed for alignment -->
+ <!-- This message is not required as spaces are allowed for alignment -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
   <severity>0</severity>
  </rule>

@@ -47,6 +47,11 @@ class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
                     10 => 2,
                    );
             break;
+        case 'UseDeclarationUnitTest.3.inc':
+            return array(
+                    5  => 1,
+                   );
+            break;
         default:
             return array();
             break;

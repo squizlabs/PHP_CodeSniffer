@@ -89,7 +89,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
         /*
             Look for return statements within the function. They cannot return
-            anything and must be preceeded by the callback.call() line. The
+            anything and must be preceded by the callback.call() line. The
             callback itself must contain "self" or "this" as the first argument
             and there needs to be a call to the callback function somewhere
             in the create method. All calls to the callback function must be

@@ -87,7 +87,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
     protected $magicFunctions = array('autoload');
 
     /**
-     * If TRUE, the string must not have two captial letters next to each other.
+     * If TRUE, the string must not have two capital letters next to each other.
      *
      * @var bool
      */

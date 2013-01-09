@@ -64,7 +64,7 @@
  *
  * Each parenthesis token (T_OPEN_PARENTHESIS and T_CLOSE_PARENTHESIS) has a
  * reference to their opening and closing parenthesis, one being itself, the
- * other being its oposite.
+ * other being its opposite.
  *
  * <code>
  *   array(
@@ -73,12 +73,12 @@
  *   );
  * </code>
  *
- * Some tokens can "own" a set of parethesis. For example a T_FUNCTION token
+ * Some tokens can "own" a set of parenthesis. For example a T_FUNCTION token
  * has parenthesis around its argument list. These tokens also have the
- * parenthesis_opener and and parenthesis_closer indicies. Not all parethesis
+ * parenthesis_opener and and parenthesis_closer indices. Not all parenthesis
  * have owners, for example parenthesis used for arithmetic operations and
  * function calls. The parenthesis tokens that have an owner have the following
- * auxilery array indicies.
+ * auxiliary array indices.
  *
  * <code>
  *   array(
@@ -88,12 +88,12 @@
  *   );
  * </code>
  *
- * Each token within a set of parenthesis also has an array indicy
+ * Each token within a set of parenthesis also has an array indice
  * 'nested_parenthesis' which is an array of the
  * left parenthesis => right parenthesis token positions.
  *
  * <code>
- *   'nested_parentheisis' => array(
+ *   'nested_parenthesis' => array(
  *                             12 => 15
  *                             11 => 14
  *                            );
@@ -510,20 +510,33 @@ class PHP_CodeSniffer_File
         // Remove errors and warnings for ignored lines.
         foreach ($this->_ignoredLines as $line => $ignore) {
             if (isset($this->_errors[$line]) === true) {
-                foreach ($this->_errors[$line] as $col => $errors) {
-                    $this->_errorCount -= count($errors);
+                if ($this->_recordErrors === false) {
+                    $this->_errorCount -= $this->_errors[$line];
+                } else {
+                    foreach ($this->_errors[$line] as $col => $errors) {
+                        $this->_errorCount -= count($errors);
+                    }
                 }
 
                 unset($this->_errors[$line]);
             }
 
             if (isset($this->_warnings[$line]) === true) {
-                foreach ($this->_warnings[$line] as $col => $warnings) {
-                    $this->_warningCount -= count($warnings);
+                if ($this->_recordErrors === false) {
+                    $this->_errorCount -= $this->_warnings[$line];
+                } else {
+                    foreach ($this->_warnings[$line] as $col => $warnings) {
+                        $this->_warningCount -= count($warnings);
+                    }
                 }
 
                 unset($this->_warnings[$line]);
             }
+        }//end foreach
+
+        if ($this->_recordErrors === false) {
+            $this->_errors = array();
+            $this->_warnings = array();
         }
 
         // If short open tags are off but the file being checked uses
@@ -570,7 +583,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Tokenizes the file and preapres it for the test run.
+     * Tokenizes the file and prepares it for the test run.
      *
      * @param string $contents The contents to parse. If NULL, the content
      *                         is taken from the file system.
@@ -696,7 +709,7 @@ class PHP_CodeSniffer_File
      * Adds an error to the error stack.
      *
      * @param string $error    The error message.
-     * @param int    $stackPtr The stack position where the error occured.
+     * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
      * @param int    $severity The severity level for this error. A value of 0
@@ -768,8 +781,20 @@ class PHP_CodeSniffer_File
             }
         }
 
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
         $this->_errorCount++;
         if ($this->_recordErrors === false) {
+            if (isset($this->_errors[$lineNum]) === false) {
+                $this->_errors[$lineNum] = 0;
+            }
+            $this->_errors[$lineNum]++;
             return;
         }
 
@@ -782,14 +807,6 @@ class PHP_CodeSniffer_File
             $message = $error;
         } else {
             $message = vsprintf($error, $data);
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         if (isset($this->_errors[$lineNum]) === false) {
@@ -813,7 +830,7 @@ class PHP_CodeSniffer_File
      * Adds an warning to the warning stack.
      *
      * @param string $warning  The error message.
-     * @param int    $stackPtr The stack position where the error occured.
+     * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
      * @param int    $severity The severity level for this warning. A value of 0
@@ -885,8 +902,20 @@ class PHP_CodeSniffer_File
             }
         }
 
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
         $this->_warningCount++;
         if ($this->_recordErrors === false) {
+            if (isset($this->_warnings[$lineNum]) === false) {
+                $this->_warnings[$lineNum] = 0;
+            }
+            $this->_warnings[$lineNum]++;
             return;
         }
 
@@ -899,14 +928,6 @@ class PHP_CodeSniffer_File
             $message = $warning;
         } else {
             $message = vsprintf($warning, $data);
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         if (isset($this->_warnings[$lineNum]) === false) {
@@ -1466,6 +1487,19 @@ class PHP_CodeSniffer_File
                 echo "]: $type => $content".PHP_EOL;
             }
 
+            // Very special case for IF statements in PHP that can be defined without
+            // scope tokens. If an IF statement below this one has an opener but no
+            // keyword, the opener will be incorrectly assigned to this IF statement.
+            // E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
+            if ($currType === T_IF && $opener === null && $tokens[$i]['code'] === T_SEMICOLON) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found semicolon before scope opener for $stackPtr (T_IF), bailing".PHP_EOL;
+                }
+
+                return $stackPtr;
+            }
+
             // Is this an opening condition ?
             if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
                 if ($opener === null) {
@@ -1998,7 +2032,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Check if the token at the specified position is a anonymus function.
+     * Check if the token at the specified position is a anonymous function.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
@@ -2160,7 +2194,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of a method.
+     * Returns the visibility and implementation properties of a method.
      *
      * The format of the array is:
      * <code>
@@ -2249,7 +2283,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of the class member
+     * Returns the visibility and implementation properties of the class member
      * variable found at the specified position in the stack.
      *
      * The format of the array is:
@@ -2349,7 +2383,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the visibility and implementation properies of a class.
+     * Returns the visibility and implementation properties of a class.
      *
      * The format of the array is:
      * <code>
@@ -2498,7 +2532,7 @@ class PHP_CodeSniffer_File
 
     /**
      * Returns the content of the tokens from the specified start position in
-     * the token stack for the specified legnth.
+     * the token stack for the specified length.
      *
      * @param int $start  The position to start from in the token stack.
      * @param int $length The length of tokens to traverse from the start pos.
@@ -2539,10 +2573,10 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the next token that are NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be cheked. IE. checking will stop
+     *                           will not be checked. IE. checking will stop
      *                           at the next semi-colon found.
      *
      * @return int | bool
@@ -2606,7 +2640,7 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the next token that is NOT of
      *                           a type specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
      *                           will not be checked. i.e., checking will stop
@@ -2668,7 +2702,7 @@ class PHP_CodeSniffer_File
      * @param bool      $exclude If true, find the token that is NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token must be equal to.
-     *                           If value is ommited, tokens with any value will
+     *                           If value is omitted, tokens with any value will
      *                           be returned.
      *
      * @return int | bool
