@@ -532,8 +532,8 @@ class PHP_CodeSniffer_File
 
                 unset($this->_warnings[$line]);
             }
-        }
-        
+        }//end foreach
+
         if ($this->_recordErrors === false) {
             $this->_errors = array();
             $this->_warnings = array();
