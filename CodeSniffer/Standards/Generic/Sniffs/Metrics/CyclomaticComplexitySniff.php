@@ -121,8 +121,6 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
             $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 
-        return;
-
     }//end process()
 
 

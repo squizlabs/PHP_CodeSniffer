@@ -769,7 +769,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr
     ) {
-         return;
 
     }//end processSupplementary()
 

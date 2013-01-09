@@ -66,7 +66,6 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
-        return;
 
     }//end processVariable()
 
@@ -82,7 +81,6 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
-        return;
 
     }//end processVariableInString()
 

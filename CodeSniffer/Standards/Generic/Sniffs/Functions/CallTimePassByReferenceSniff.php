@@ -129,7 +129,6 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
                     // In these cases T_BITWISE_AND represents
                     // the bitwise and operator.
                     continue;
-                    break;
 
                 default:
                     // T_BITWISE_AND represents a pass-by-reference.

@@ -50,7 +50,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     /**
      * The token types that this test wishes to listen to within the scope.
      *
-     * @var array()
+     * @var array
      */
     private $_tokens = array();
 
@@ -192,7 +192,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         PHP_CodeSniffer_File $phpcsFile,
         $stackPtr
     ) {
-        return;
 
     }//end processTokenOutsideScope()
 
