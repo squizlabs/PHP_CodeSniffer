@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19763 : Use statements for traits not recognised correctly for PSR2 code style
   - Fixed bug #19764 : Instead of for traits throws uppercase constant name errors
   - Fixed bug #19772 : PSR2_Sniffs_Namespaces_UseDeclarationSniff does not properly recognize last use
+  - Fixed bug #19775 : False positive in NonExecutableCode sniff when not using curly braces
  </notes>
  <contents>
   <dir name="/">
