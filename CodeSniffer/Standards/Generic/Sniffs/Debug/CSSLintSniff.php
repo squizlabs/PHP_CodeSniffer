@@ -73,7 +73,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $cmd = "$csslintPath \"$fileName\"";
+        $cmd = $csslintPath.' '.escapeshellarg($fileName);
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
