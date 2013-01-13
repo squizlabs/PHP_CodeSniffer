@@ -38,4 +38,11 @@ $noArgs_longVars = function ($longVar1,  $longerVar2= false) use (
 )  {
     // body
 };
+
+// @codingStandardsChangeSetting Squiz.Functions.FunctionDeclarationArgumentSpacing equalsSpacing 1
+function myFunc($blah = 'hello') {}
+function myFunc($blah  =  'hello') {}
+function myFunc($blah =  'hello') {}
+function myFunc($blah  = 'hello') {}
+// @codingStandardsChangeSetting Squiz.Functions.FunctionDeclarationArgumentSpacing equalsSpacing 0
 ?>
