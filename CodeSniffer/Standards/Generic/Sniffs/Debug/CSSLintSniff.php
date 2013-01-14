@@ -104,9 +104,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($lineToken !== null) {
-                if ($this->considerWarningAsError === true) {
-                    $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
-                }
+                $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
             }
         }//end for
 
