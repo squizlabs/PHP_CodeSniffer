@@ -29,13 +29,6 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
-     * Separates all messages as errors and warning on false.
-     *
-     * @var bool
-     */
-    public $considerWarningAsError = true;
-
-    /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
@@ -111,11 +104,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($lineToken !== null) {
-                if ($this->considerWarningAsError === true
-                    && $matches[1] === 'error'
-                ) {
-                    $phpcsFile->addError($message, $lineToken, 'ExternalTool');
-                } else {
+                if ($this->considerWarningAsError === true) {
                     $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
                 }
             }
