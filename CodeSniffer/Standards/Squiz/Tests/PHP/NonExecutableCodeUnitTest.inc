@@ -200,6 +200,15 @@ function test(){
     return 1;
 }
 
+switch ($foo) {
+    case 'foo':
+        if ($foo)
+            return $foo;
+        return $bar;
+    default:
+        return $bar;
+}
+
 exit();
 
 
