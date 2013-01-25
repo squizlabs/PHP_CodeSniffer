@@ -28,6 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Ignored lines no longer cause the summary report to show incorrect error and warning counts
     -- Thanks to Bert Van Hauwaert for the patch
+  - Added Generic CSSLintSniff to run CSSLint over a CSS file and report warnings
+    -- Set full command to run CSSLint using phpcs --config-set csslint_path /path/to/csslint
+    -- Thanks to Roman Levishchenko for the contribution
   - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
     -- Fixes bug #19732 : PSR2: some control structures errors not reported
   - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
@@ -310,6 +313,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="ClosureLinterSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="CSSLintSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="JSHintSniff.php" role="php">
