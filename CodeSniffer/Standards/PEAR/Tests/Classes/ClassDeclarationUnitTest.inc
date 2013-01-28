@@ -1,6 +1,6 @@
 <?php
 
-//  Correct declarations.
+//	Correct declarations.
 class CorrectClassDeclaration
 {
 
@@ -39,33 +39,33 @@ class IncorrectBracePlacement
  }
 
 abstract class CodeSnifferFail
-    extends
-        ArrayObject
-    implements
-        Serializable,
-        Iterator,
-        Countable,
-        OuterIterator,
-        RecursiveIterator {
+		extends
+				ArrayObject
+		implements
+				Serializable,
+				Iterator,
+				Countable,
+				OuterIterator,
+				RecursiveIterator {
 }
 
 abstract class CodeSnifferFail
-    extends
-        ArrayObject
-    implements
-        Serializable,
-        Iterator,
-        Countable,
-        OuterIterator,
-        RecursiveIterator
+		extends
+				ArrayObject
+		implements
+				Serializable,
+				Iterator,
+				Countable,
+				OuterIterator,
+				RecursiveIterator
 {
 }
 
 namespace A
 {
-    class B
-    {
-    }
+		class B
+		{
+		}
 }
 
 ?>

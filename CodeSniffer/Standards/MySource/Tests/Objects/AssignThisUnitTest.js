@@ -1,6 +1,6 @@
 var self = this;
 buttonWidget.addClickEvent(function() {
-    self.addDynamicSouce();
+		self.addDynamicSouce();
 });
 
 var x = self;
@@ -8,13 +8,13 @@ var y = this;
 
 var test = '';
 if (true) {
-    test = this
+		test = this
 }
 
 var itemid = this.items[i].getAttribute('itemid');
 
 for (var x = this; y < 10; y++) {
-    var x = this + 1;
+		var x = this + 1;
 }
 
 var _self = this;

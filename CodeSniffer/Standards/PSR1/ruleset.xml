@@ -8,7 +8,7 @@
 
  <!-- PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags; it MUST NOT use the other tag variations. -->
  <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
-  <severity>0</severity>
+	<severity>0</severity>
  </rule>
 
  <!-- 2.2. Character Encoding -->
@@ -24,7 +24,7 @@
  <!-- 3. Namespace and Class Names -->
 
  <!-- Namespaces and classes MUST follow PSR-0.
-      This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
+			This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
  <!-- checked in Classes/ClassDeclarationSniff -->
 
  <!-- Class names MUST be declared in StudlyCaps. -->
@@ -41,8 +41,8 @@
 
  <!-- Method names MUST be declared in camelCase(). -->
  <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
-  <properties>
-   <property name="strict" value="false"/>
-  </properties>
+	<properties>
+	 <property name="strict" value="false"/>
+	</properties>
  </rule>
 </ruleset>

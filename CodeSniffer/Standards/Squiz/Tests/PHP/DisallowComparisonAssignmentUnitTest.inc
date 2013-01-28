@@ -6,15 +6,15 @@ $var = !$foo;
 $var = ($foo || $bar);
 $var = ($foo === TRUE);
 $var = ($foo === TRUE
-        || $bar === FALSE);
+				|| $bar === FALSE);
 $var = (!$foo);
 
 $var = is_array($foo);
 $var = myFunction($one, $two);
 $var = myFunction(
-        'one',
-        'two'
-       );
+				'one',
+				'two'
+			 );
 
 for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
 }
@@ -23,17 +23,17 @@ for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
 $var = myFunction(!$var);
 
 $depthAdv = array(
-             $this,
-             !$directLinks,
-             FALSE,
-            );
+						 $this,
+						 !$directLinks,
+						 FALSE,
+						);
 
 $var = myFunction(
-    $var,
-    array(
-     $this,
-     !$directLinks,
-     FALSE,
-    );
+		$var,
+		array(
+		 $this,
+		 !$directLinks,
+		 FALSE,
+		);
 );
 ?>

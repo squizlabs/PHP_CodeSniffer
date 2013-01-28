@@ -1,7 +1,3 @@
-
-
-
-
 /**
 *
 * 0Multi-line short description without full stop
@@ -15,17 +11,17 @@
 *
 * LICENSE: This source file is subject to version 3.0 of the PHP license
 * that is available through the world-wide-web at the following URI:
-* http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+* http://www.php.net/license/3_0.txt.	If you did not receive a copy of
 * the PHP License and are unable to obtain it through the web, please
 * send a note to license@php.net so we can mail you a copy immediately.
-* @package    SquizCMS
-* @package    ADDITIONAL PACKAGE TAG
+* @package		SquizCMS
+* @package		ADDITIONAL PACKAGE TAG
 * @subpackage not_camelcased
-* @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
+* @author		 Antônio Carlos Venâncio Júnior <foreign@character.net>
 * @author
-* @copyright  1997~1994 The PHP Group
-* @license    http://www.php.net/license/3_0.txt
-* @summary    An unknown summary tag
+* @copyright	1997~1994 The PHP Group
+* @license		http://www.php.net/license/3_0.txt
+* @summary		An unknown summary tag
 *
 */
 

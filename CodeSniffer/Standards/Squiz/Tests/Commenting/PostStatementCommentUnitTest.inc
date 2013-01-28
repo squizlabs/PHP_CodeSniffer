@@ -2,9 +2,9 @@
 
 function test()
 {
-    $string = 'hello';
-    $string = 'hello'; // Set string to hello.
-    // Valid comment.
+		$string = 'hello';
+		$string = 'hello'; // Set string to hello.
+		// Valid comment.
 }
 
 function test() // This is a function
@@ -15,7 +15,7 @@ function test() // This is a function
 
 class TestClass
 {
-    public $good = true; // Indeed.
+		public $good = true; // Indeed.
 
 }//end class
 

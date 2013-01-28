@@ -12,7 +12,7 @@
 
  <!-- Include the whole Squiz standard except FunctionComment, which we override -->
  <rule ref="Squiz">
-  <exclude name="Squiz.Commenting.FunctionComment"/>
+	<exclude name="Squiz.Commenting.FunctionComment"/>
  </rule>
 
 </ruleset>

@@ -6,13 +6,13 @@ Require_Once $path;
 
 List($one, $two) = $array;
 if (IsSet($one)) {
-    Echo 'hi';
-    Print('hi');
-    if (Empty($two)) {
-        Break;
-    }
-    Unset($array);
-    Continue;
+		Echo 'hi';
+		Print('hi');
+		if (Empty($two)) {
+				Break;
+		}
+		Unset($array);
+		Continue;
 }
 
 $obj = New MyObj();
@@ -25,8 +25,8 @@ Declare(ticks=1) {
 }
 
 if (Function_Exists('myFunction') === TRUE) {
-    $retval = MyFunction(true);
-    $keys = Array_Keys($array);
+		$retval = MyFunction(true);
+		$keys = Array_Keys($array);
 }
 
 function getType() {}
@@ -38,7 +38,7 @@ $count = $object::Count();
 $count = $object->count();
 $count = $object::count();
 class MyClass {
-    public function Count() {}
+		public function Count() {}
 }
 
 function &Sort() {

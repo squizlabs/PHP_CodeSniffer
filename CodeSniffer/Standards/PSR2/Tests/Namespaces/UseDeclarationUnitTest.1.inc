@@ -15,12 +15,12 @@ class Foo {
 }
 
 $var = new MyClass(
-    function () use ($foo, $bar) {
-        return true;
-    }
+		function () use ($foo, $bar) {
+				return true;
+		}
 );
 
 class Container extends Component implements IContainer
 {
-    use TContainer;
+		use TContainer;
 }

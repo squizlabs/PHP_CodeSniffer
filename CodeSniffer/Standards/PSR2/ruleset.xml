@@ -13,9 +13,9 @@
 
  <!-- All PHP files MUST use the Unix LF (linefeed) line ending. -->
  <rule ref="Generic.Files.LineEndings">
-  <properties>
-   <property name="eolChar" value="\n"/>
-  </properties>
+	<properties>
+	 <property name="eolChar" value="\n"/>
+	</properties>
  </rule>
 
  <!-- All PHP files MUST end with a single blank line. -->
@@ -28,26 +28,26 @@
 
  <!-- The soft limit on line length MUST be 120 characters; automated style checkers MUST warn but MUST NOT error at the soft limit. -->
  <rule ref="Generic.Files.LineLength">
-  <properties>
-   <property name="lineLimit" value="120"/>
-   <property name="absoluteLineLimit" value="0"/>
-  </properties>
+	<properties>
+	 <property name="lineLimit" value="120"/>
+	 <property name="absoluteLineLimit" value="0"/>
+	</properties>
  </rule>
 
  <!-- There MUST NOT be trailing whitespace at the end of non-blank lines. -->
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
-  <properties>
-   <property name="ignoreBlankLines" value="true"/>
-   </properties>
+	<properties>
+	 <property name="ignoreBlankLines" value="true"/>
+	 </properties>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
-  <severity>0</severity>
+	<severity>0</severity>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
-  <severity>0</severity>
+	<severity>0</severity>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
-  <severity>0</severity>
+	<severity>0</severity>
  </rule>
 
  <!-- There MUST NOT be more than one statement per line. -->
@@ -70,8 +70,8 @@
  <!-- checked in Namespaces/NamespaceDeclarationSniff -->
 
  <!-- When present, all use declarations MUST go after the namespace declaration.
-      There MUST be one use keyword per declaration.
-      There MUST be one blank line after the use block. -->
+			There MUST be one use keyword per declaration.
+			There MUST be one blank line after the use block. -->
  <!-- checked in Namespaces/UseDeclarationSniff -->
 
  <!-- 4. Classes, Properties, and Methods -->
@@ -79,16 +79,16 @@
  <!-- 4.1. Extends and Implements -->
 
  <!-- The extends and implements keywords MUST be declared on the same line as the class name.
-      The opening brace for the class go MUST go on its own line; the closing brace for the class MUST go on the next line after the body.
-      Lists of implements MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+			The opening brace for the class go MUST go on its own line; the closing brace for the class MUST go on the next line after the body.
+			Lists of implements MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
  <!-- checked in Classes/ClassDeclarationSniff -->
 
  <!-- 4.2. Properties -->
 
  <!-- Visibility MUST be declared on all properties.
-      The var keyword MUST NOT be used to declare a property.
-      There MUST NOT be more than one property declared per statement.
-      Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+			The var keyword MUST NOT be used to declare a property.
+			There MUST NOT be more than one property declared per statement.
+			Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
  <!-- checked in Classes/PropertyDeclarationSniff -->
 
  <!-- 4.3 Methods -->
@@ -108,9 +108,9 @@
 
  <!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
-  <properties>
-   <property name="equalsSpacing" value="1"/>
-  </properties>
+	<properties>
+	 <property name="equalsSpacing" value="1"/>
+	</properties>
  </rule>
 
  <!-- Method arguments with default values MUST go at the end of the argument list. -->
@@ -122,7 +122,7 @@
  <!-- 4.4. abstract, final, and static -->
 
  <!-- When present, the abstract and final declarations MUST precede the visibility declaration.
-      When present, the static declaration MUST come after the visibility declaration. -->
+			When present, the static declaration MUST come after the visibility declaration. -->
  <!-- checked in Methods/MethodDeclarationSniff -->
 
  <!-- 4.5 Method and Function Calls -->
@@ -131,9 +131,9 @@
  Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
  <rule ref="PEAR.Functions.FunctionCallSignature">
-  <properties>
-   <property name="allowMultipleArguments" value="false"/>
-  </properties>
+	<properties>
+	 <property name="allowMultipleArguments" value="false"/>
+	</properties>
  </rule>
 
  <!-- 5. Control Structures -->
@@ -146,9 +146,9 @@
  The structure body MUST be indented once
  The closing brace MUST be on the next line after the body -->
  <rule ref="Squiz.ControlStructures.ControlSignature">
-  <properties>
-   <property name="ignoreComments" value="true"/>
-  </properties>
+	<properties>
+	 <property name="ignoreComments" value="true"/>
+	</properties>
  </rule>
  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>

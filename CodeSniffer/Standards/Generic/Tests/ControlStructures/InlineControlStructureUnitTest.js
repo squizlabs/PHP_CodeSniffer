@@ -3,11 +3,11 @@
 if ($something) echo 'hello';
 
 if ($something) {
-    echo 'hello';
+		echo 'hello';
 } else echo 'hi';
 
 if ($something) {
-    echo 'hello';
+		echo 'hello';
 } else if ($else) echo 'hi';
 
 for ($i; $i > 0; $i--) echo 'hello';
@@ -15,7 +15,7 @@ for ($i; $i > 0; $i--) echo 'hello';
 while ($something) echo 'hello';
 
 do {
-    $i--;
+		$i--;
 } while ($something);
 
 ?>

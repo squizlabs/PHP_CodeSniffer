@@ -17,25 +17,25 @@ Installation
 
 The easiest way to install PHP\_CodeSniffer is to use the PEAR installer. This will make the `phpcs` command immediately available for use. To install PHP\_CodeSniffer using the PEAR installer, first ensure you have [installed PEAR](http://pear.php.net/manual/en/installation.getting.php) and then run the following command:
 
-    pear install PHP_CodeSniffer
+		pear install PHP_CodeSniffer
 
 If you use [Composer](http://getcomposer.org/), include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
 
-    {
-        "require": {
-            "squizlabs/php_codesniffer": "1.*"
-        }
-    }
+		{
+				"require": {
+						"squizlabs/php_codesniffer": "1.*"
+				}
+		}
 
 You will then be able to run PHP_CodeSniffer from the vendor bin directory:
 
-    ./vendor/bin/phpcs -h
+		./vendor/bin/phpcs -h
 
 You can also download the PHP\_CodeSniffer source and run the `phpcs` command directly from the GIT checkout:
 
-    git clone git://github.com/squizlabs/PHP_CodeSniffer.git
-    cd PHP_CodeSniffer
-    php scripts/phpcs -h
+		git clone git://github.com/squizlabs/PHP_CodeSniffer.git
+		cd PHP_CodeSniffer
+		php scripts/phpcs -h
 
 Documentation
 -------------
@@ -49,12 +49,12 @@ Contributing
 
 If you do contribute code to PHP\_CodeSniffer, please make sure it conforms to the PEAR coding standard and that the PHP\_CodeSniffer unit tests still pass. The easiest way to contribute is to work on a checkout of the repository, or your own fork, rather than an installed PEAR version. If you do this, you can run the following commands to check if everything is ready to submit:
 
-    cd PHP_CodeSniffer
-    php scripts/phpcs --ignore=*/tests/* . -n
+		cd PHP_CodeSniffer
+		php scripts/phpcs --ignore=*/tests/* . -n
 
 Which should give you no output, indicating that there are no PEAR coding standard errors. And then:
 
-    phpunit tests/AllTests.php
+		phpunit tests/AllTests.php
 
 Which should give you no failures or errors. You can ignore any skipped tests as these are for external tools.
 

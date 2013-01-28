@@ -16,17 +16,17 @@
 
  <!-- Lines can be 80 chars long, show errors at 120 chars -->
  <rule ref="Generic.Files.LineLength">
-  <properties>
-   <property name="lineLimit" value="80"/>
-   <property name="absoluteLineLimit" value="120"/>
-  </properties>
+	<properties>
+	 <property name="lineLimit" value="80"/>
+	 <property name="absoluteLineLimit" value="120"/>
+	</properties>
  </rule>
 
  <!-- Use Unix newlines -->
  <rule ref="Generic.Files.LineEndings">
-  <properties>
-   <property name="eolChar" value="\n"/>
-  </properties>
+	<properties>
+	 <property name="eolChar" value="\n"/>
+	</properties>
  </rule>
 
 </ruleset>

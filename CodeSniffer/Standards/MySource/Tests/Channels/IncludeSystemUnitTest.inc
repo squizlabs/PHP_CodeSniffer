@@ -4,21 +4,21 @@ Channels::includeAsset('Page');
 require_once 'libs/FileSystem2.inc';
 
 function one() {
-    Channels::includeSystem('MySystem2');
-    $siteid = MySystem2::getCurrentSiteId();
-    Page::create();
-    PageAssetType::create();
+		Channels::includeSystem('MySystem2');
+		$siteid = MySystem2::getCurrentSiteId();
+		Page::create();
+		PageAssetType::create();
 }
 
 function two() {
-    $siteid = MySystem2::getCurrentSiteId();
-    $parserFiles = FileSystem2::listDirectory();
+		$siteid = MySystem2::getCurrentSiteId();
+		$parserFiles = FileSystem2::listDirectory();
 }
 
 function three() {
-    include 'libs/FileSystem.inc';
-    $siteid = MySystem::getCurrentSiteId();
-    $parserFiles = FileSystem::listDirectory();
+		include 'libs/FileSystem.inc';
+		$siteid = MySystem::getCurrentSiteId();
+		$parserFiles = FileSystem::listDirectory();
 }
 
 $siteid = MySystem2::getCurrentSiteId();
@@ -30,25 +30,25 @@ PageAssetType::create();
 
 class AssetListingAssetType extends AssetAssetType
 {
-    function one() {
-        Channels::includeSystem('MySystem2');
-        $siteid = MySystem2::getCurrentSiteId();
-        Page::create();
-        PageAssetType::create();
-    }
+		function one() {
+				Channels::includeSystem('MySystem2');
+				$siteid = MySystem2::getCurrentSiteId();
+				Page::create();
+				PageAssetType::create();
+		}
 
-    function two() {
-        $siteid = MySystem2::getCurrentSiteId();
-        $parserFiles = FileSystem2::listDirectory();
-        return parent::two();
-    }
+		function two() {
+				$siteid = MySystem2::getCurrentSiteId();
+				$parserFiles = FileSystem2::listDirectory();
+				return parent::two();
+		}
 
-    function three() {
-        include 'libs/FileSystem.inc';
-        $siteid = MySystem::getCurrentSiteId();
-        $parserFiles = FileSystem::listDirectory();
-        echo self::two();
-    }
+		function three() {
+				include 'libs/FileSystem.inc';
+				$siteid = MySystem::getCurrentSiteId();
+				$parserFiles = FileSystem::listDirectory();
+				echo self::two();
+		}
 }
 
 echo Init::ROOT_DIR;
@@ -73,34 +73,34 @@ $res = $zip->open($path, ZipArchive::CREATE);
 
 class AssetListingUnitTest extends AbstractMySourceUnitTest
 {
-    function setUp() {
-        parent::setUp();
-        Channels::includeSystem('MySystem2');
-        include_once 'Libs/FileSystem.inc';
-    }
+		function setUp() {
+				parent::setUp();
+				Channels::includeSystem('MySystem2');
+				include_once 'Libs/FileSystem.inc';
+		}
 
-    function two() {
-        $siteid = MySystem2::getCurrentSiteId();
-        $parserFiles = FileSystem::listDirectory();
-    }
+		function two() {
+				$siteid = MySystem2::getCurrentSiteId();
+				$parserFiles = FileSystem::listDirectory();
+		}
 
-    function three() {
-        $siteid = MySystem3::getCurrentSiteId();
-        $parserFiles = FileSystem::listDirectory();
-    }
+		function three() {
+				$siteid = MySystem3::getCurrentSiteId();
+				$parserFiles = FileSystem::listDirectory();
+		}
 }
 
 if (Channels::systemExists('Log') === TRUE) {
-   Channels::includeSystem('Log');
+	 Channels::includeSystem('Log');
 } else {
-   return;
+	 return;
 }
 
 Log::addProjectLog('metadata.field.update', $msg);
 
 function two() {
-    Widget::includeWidget('CacheAdminScreen');
-    $barChart = CacheAdminScreenWidgetType::constructBarchart($data);
+		Widget::includeWidget('CacheAdminScreen');
+		$barChart = CacheAdminScreenWidgetType::constructBarchart($data);
 }
 
 $adjustDialog->setOrientation(AbstractWidgetWidgetType::CENTER);

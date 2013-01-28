@@ -1,51 +1,51 @@
 <?php
-class ClassName extends ParentClass implements \ArrayAccess,  \Countable
+class ClassName extends ParentClass implements \ArrayAccess,	\Countable
 {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
 class ClassName extends ParentClass,AnotherParentClass implements \ArrayAccess,\Countable {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
 class ClassName
 extends ParentClass
 implements \ArrayAccess, \Countable
 {
-    // constants, properties, methods
-    
-}
-
-class ClassName extends  ParentClass  implements
-   \ArrayAccess,
-        \Foo\Bar\Countable,
-    \Serializable {
-    // constants, properties, methods
+		// constants, properties, methods
 
 }
 
-class ClassName extends ParentClass  implements \ArrayAccess,
-    \Countable,
-    \Serializable
+class ClassName extends	ParentClass	implements
+	 \ArrayAccess,
+				\Foo\Bar\Countable,
+		\Serializable {
+		// constants, properties, methods
+
+}
+
+class ClassName extends ParentClass	implements \ArrayAccess,
+		\Countable,
+		\Serializable
 {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
-class ClassName extends ParentClass  implements
-    \ArrayAccess, \Countable, \Foo\Serializable
+class ClassName extends ParentClass	implements
+		\ArrayAccess, \Countable, \Foo\Serializable
 {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
 // Different indent
 if ($foo) {
-    class ClassName extends ParentClass implements
-        \ArrayAccess,
-    \Countable,
-            \Serializable
-    {
-        // constants, properties, methods
-    }
+		class ClassName extends ParentClass implements
+				\ArrayAccess,
+		\Countable,
+						\Serializable
+		{
+				// constants, properties, methods
+		}
 }
 
 class Foo extends \Foo\Bar\Object
@@ -53,25 +53,25 @@ class Foo extends \Foo\Bar\Object
 }
 
 class ClassName extends ParentClass implements
-    \Foo\Bar\Countable,
-    \Serializable
+		\Foo\Bar\Countable,
+		\Serializable
 {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
 class ClassName extends ParentClass implements
-    \Foo\Bar\Countable ,
-    \Serializable
+		\Foo\Bar\Countable ,
+		\Serializable
 {
-    // constants, properties, methods
+		// constants, properties, methods
 }
 
 class Test
 {
-    public function test() {
-        if (1) 1;
-        1 ? (1 ? 1 : 1) : 1;
-    }
+		public function test() {
+				if (1) 1;
+				1 ? (1 ? 1 : 1) : 1;
+		}
 }
 
 ?>

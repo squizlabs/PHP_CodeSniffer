@@ -23,58 +23,58 @@
 
  <!-- Lines can be 85 chars long, but never show errors -->
  <rule ref="Generic.Files.LineLength">
-  <properties>
-   <property name="lineLimit" value="85"/>
-   <property name="absoluteLineLimit" value="0"/>
-  </properties>
+	<properties>
+	 <property name="lineLimit" value="85"/>
+	 <property name="absoluteLineLimit" value="0"/>
+	</properties>
  </rule>
 
  <!-- Use Unix newlines -->
  <rule ref="Generic.Files.LineEndings">
-  <properties>
-   <property name="eolChar" value="\n"/>
-  </properties>
+	<properties>
+	 <property name="eolChar" value="\n"/>
+	</properties>
  </rule>
 
  <!-- Have 8 chars padding maximum and always show as errors -->
  <rule ref="Generic.Formatting.MultipleStatementAlignment">
-  <properties>
-   <property name="maxPadding" value="8"/>
-   <property name="ignoreMultiLine" value="true"/>
-   <property name="error" value="true"/>
-  </properties>
+	<properties>
+	 <property name="maxPadding" value="8"/>
+	 <property name="ignoreMultiLine" value="true"/>
+	 <property name="error" value="true"/>
+	</properties>
  </rule>
 
  <!-- Tweaks to metrics -->
  <rule ref="Generic.Metrics.CyclomaticComplexity">
-  <properties>
-   <property name="complexity" value="10"/>
-   <property name="absoluteComplexity" value="100"/>
-  </properties>
+	<properties>
+	 <property name="complexity" value="10"/>
+	 <property name="absoluteComplexity" value="100"/>
+	</properties>
  </rule>
  <rule ref="Generic.Metrics.NestingLevel">
-  <properties>
-   <property name="nestingLevel" value="5"/>
-   <property name="absoluteNestingLevel" value="50"/>
-  </properties>
+	<properties>
+	 <property name="nestingLevel" value="5"/>
+	 <property name="absoluteNestingLevel" value="50"/>
+	</properties>
  </rule>
 
  <!-- We don't want gsjlint throwing errors for things we already check -->
  <rule ref="Generic.Debug.ClosureLinter">
-  <properties>
-   <property name="errorCodes" type="array" value="0210"/>
-   <property name="ignoreCodes" type="array" value="0001,0110,0240"/>
-  </properties>
+	<properties>
+	 <property name="errorCodes" type="array" value="0210"/>
+	 <property name="ignoreCodes" type="array" value="0001,0110,0240"/>
+	</properties>
  </rule>
  <rule ref="Generic.Debug.ClosureLinter.ExternalToolError">
-  <message>%2$s</message>
+	<message>%2$s</message>
  </rule>
 
  <!-- Only one argument per line in multi-line function calls -->
  <rule ref="PEAR.Functions.FunctionCallSignature">
-  <properties>
-   <property name="allowMultipleArguments" value="false"/>
-  </properties>
+	<properties>
+	 <property name="allowMultipleArguments" value="false"/>
+	</properties>
  </rule>
 
 </ruleset>

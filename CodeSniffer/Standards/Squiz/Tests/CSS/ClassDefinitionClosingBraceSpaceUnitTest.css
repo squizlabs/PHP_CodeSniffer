@@ -14,12 +14,12 @@
 /* Comment */
 
 .my-style {
-    float: left;
+		float: left;
 
 }
 
 .AssetLineageWidgetType-item {
-    color: #CCC;
+		color: #CCC;
 }
 
 /*.AssetLineageWidgetType-item2 .selected,
@@ -31,15 +31,15 @@
 
 @media screen and (max-device-width: 769px) {
 
-    header #logo img {
-        max-width: 100%;
-    }
+		header #logo img {
+				max-width: 100%;
+		}
 
 }
 
 @media screen and (max-device-width: 769px) {
 
-    header #logo img {
-        max-width: 100%;
-    }
+		header #logo img {
+				max-width: 100%;
+		}
 }

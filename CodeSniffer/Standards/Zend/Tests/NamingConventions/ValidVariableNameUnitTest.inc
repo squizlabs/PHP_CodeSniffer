@@ -1,35 +1,35 @@
 <?php
-$varName  = 'hello';
+$varName	= 'hello';
 $var_name = 'hello';
-$varname  = 'hello';
+$varname	= 'hello';
 $_varName = 'hello';
 $varname2 = 'hello';
 
 class MyClass
 {
-    $varName  = 'hello';
-    $var_name = 'hello';
-    $varname  = 'hello';
-    $_varName = 'hello';
-    $varName2 = 'hello';
+		$varName	= 'hello';
+		$var_name = 'hello';
+		$varname	= 'hello';
+		$_varName = 'hello';
+		$varName2 = 'hello';
 
-    public $varName  = 'hello';
-    public $var_name = 'hello';
-    public $varname  = 'hello';
-    public $_varName = 'hello';
-    public $varName2 = 'hello';
+		public $varName	= 'hello';
+		public $var_name = 'hello';
+		public $varname	= 'hello';
+		public $_varName = 'hello';
+		public $varName2 = 'hello';
 
-    protected $_varName  = 'hello';
-    protected $_var_name = 'hello';
-    protected $_varname  = 'hello';
-    protected $varName   = 'hello';
-    protected $_varName2 = 'hello';
+		protected $_varName	= 'hello';
+		protected $_var_name = 'hello';
+		protected $_varname	= 'hello';
+		protected $varName	 = 'hello';
+		protected $_varName2 = 'hello';
 
-    private $_varName  = 'hello';
-    private $_var_name = 'hello';
-    private $_varname  = 'hello';
-    private $varName   = 'hello';
-    private $_varName2 = 'hello';
+		private $_varName	= 'hello';
+		private $_var_name = 'hello';
+		private $_varname	= 'hello';
+		private $varName	 = 'hello';
+		private $_varName2 = 'hello';
 }
 
 echo $varName;
@@ -87,10 +87,10 @@ echo $_ENV['var_name'];
 echo $_COOKIE['var_name'];
 echo $_COOKIE['var_name2'];
 
-$XML        = 'hello';
-$myXML      = 'hello';
-$XMLParser  = 'hello';
-$xmlParser  = 'hello';
+$XML				= 'hello';
+$myXML			= 'hello';
+$XMLParser	= 'hello';
+$xmlParser	= 'hello';
 $xmlParser2 = 'hello';
 
 echo "{$_SERVER['HOSTNAME']} $var_name";

@@ -4,9 +4,9 @@
  *
  * @return void
  *
- * @api           read
+ * @api					 read
  * @api-privilege asset.read.content
- * @api-mustlock  false
+ * @api-mustlock	false
  */
 private function functionCall() {}
 
@@ -34,8 +34,8 @@ private function functionCall() {}
  * @return void
  *
  * @api-privilege asset.read.content
- * @api           read
- * @api-mustlock  false
+ * @api					 read
+ * @api-mustlock	false
  */
 private function functionCall() {}
 
@@ -44,10 +44,10 @@ private function functionCall() {}
  *
  * @return void
  *
- * @api           read
+ * @api					 read
  *
  * @api-privilege asset.read.content
- * @api-mustlock  false
+ * @api-mustlock	false
  */
 private function functionCall() {}
 
@@ -62,9 +62,9 @@ private function functionCall() {}
 /**
  * Test unknown tags.
  *
- * @return  void
- * @since   read
- * @hello   hello
+ * @return	void
+ * @since	 read
+ * @hello	 hello
  * @package Test
  */
 private function functionCall() {}
@@ -85,7 +85,7 @@ private function functionCall() {}
  *
  * @return void
  *
- * @api          read
+ * @api					read
  * @api-mustlock false
  */
 private function functionCall() {}

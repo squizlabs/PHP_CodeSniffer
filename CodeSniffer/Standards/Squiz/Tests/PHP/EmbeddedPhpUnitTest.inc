@@ -1,6 +1,6 @@
 <?php
-    // Not embedded. Do not check here.
-    echo 'hello';
+		// Not embedded. Do not check here.
+		echo 'hello';
 ?>
 <html>
 <head>
@@ -8,38 +8,38 @@
 <script><?php echo $script; ?></script>
 </head>
 <body>
-    <?php
-        echo $body;
-    ?>
-    hello
-    <?php
-    echo $moreBody;
-    ?>
-    <?php  echo 'hi'; ?>
-    <?php  echo 'hi';   ?>
-    <?php echo 'hi;' ?>
-    <?php echo 'hi'; echo 'hi;'; ?>
-    <?php  echo 'hi'; echo 'hi;';   ?>
+		<?php
+				echo $body;
+		?>
+		hello
+		<?php
+		echo $moreBody;
+		?>
+		<?php	echo 'hi'; ?>
+		<?php	echo 'hi';	 ?>
+		<?php echo 'hi;' ?>
+		<?php echo 'hi'; echo 'hi;'; ?>
+		<?php	echo 'hi'; echo 'hi;';	 ?>
 
-    <?php
-    ?>
-    <?php ?>
+		<?php
+		?>
+		<?php ?>
 
-    <?php
+		<?php
 
-        echo $moreBody;
+				echo $moreBody;
 
-    ?>
-    <?php
+		?>
+		<?php
 
-    echo $moreBody;
+		echo $moreBody;
 
-    ?>
+		?>
 
-    <?php
-    echo $moreBody; ?>
-    <?php echo $moreBody;
-    ?>
+		<?php
+		echo $moreBody; ?>
+		<?php echo $moreBody;
+		?>
 </body>
 </html>
 <?php

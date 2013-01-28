@@ -1,8 +1,8 @@
 <?php
 class myclass extends yourclass implements someint {
-    function myfunc($var) {
-        echo $var;
-    }
+		function myfunc($var) {
+				echo $var;
+		}
 }
 
 $myvar = true;

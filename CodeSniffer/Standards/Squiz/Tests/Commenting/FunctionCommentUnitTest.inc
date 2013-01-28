@@ -2,148 +2,148 @@
 class PHP_CodeSniffer_File
 {
 
-    /**
-     * a simple function comment.
-     *
-     * long desc here
-     *
-     * @param bool   $stackPtr   The position in @ @unknown the stack of the token
-     *                             that opened the scope
-     * @param int    $detph    How many scope levels down we are.
-     * @param string    $index    The index
-     * @return
-     * @throws
-     */
-    private function _functionCall($stackPtr, $depth=1, $index)
-    {
-        return $stackPtr;
+		/**
+		 * a simple function comment.
+		 *
+		 * long desc here
+		 *
+		 * @param bool	 $stackPtr	 The position in @ @unknown the stack of the token
+		 *														 that opened the scope
+		 * @param int		$detph		How many scope levels down we are.
+		 * @param string		$index		The index
+		 * @return
+		 * @throws
+		 */
+		private function _functionCall($stackPtr, $depth=1, $index)
+		{
+				return $stackPtr;
 
-    }//end _functionCall()
+		}//end _functionCall()
 
-    //
-    // Sample function comment
-    //
-    //
-    //
-    public function invalidCommentStyle()
-    {
+		//
+		// Sample function comment
+		//
+		//
+		//
+		public function invalidCommentStyle()
+		{
 
-    }//end invalidCommentStyle()
-
-
-    /**
-     *
-     * A simple function comment
-     * Span multiple line
-     *
-     *
-     * 0Long description with extra blank line before and after
-     *
-     *
-     * @return void
-     */
-    public function extraDescriptionNewlines()
-    {
-        return true;
-    }//end extraDescriptionNewlines()
+		}//end invalidCommentStyle()
 
 
-    /**
-     * -A simple function comment.
-     * @return void
-     */
-    public function missingNewlinesBeforeTags()
-    {
-        return;
-    }//end missingNewlinesBeforeTags()
+		/**
+		 *
+		 * A simple function comment
+		 * Span multiple line
+		 *
+		 *
+		 * 0Long description with extra blank line before and after
+		 *
+		 *
+		 * @return void
+		 */
+		public function extraDescriptionNewlines()
+		{
+				return true;
+		}//end extraDescriptionNewlines()
 
 
-    /**
-     * Access tag should not be treated as a long description.
-     *
-     * @access public
-     * @return void
-     */
-    public function accessTag()
-    {
-
-    }//end accessTag()
-
-    /**
-     * Constructor.
-     *
-     * No return tag
-     */
-    function PHP_CodeSniffer_File()
-    {
-        return;
-    }
+		/**
+		 * -A simple function comment.
+		 * @return void
+		 */
+		public function missingNewlinesBeforeTags()
+		{
+				return;
+		}//end missingNewlinesBeforeTags()
 
 
-    /**
-     * Destructor.
-     *
-     * No return tag too
-     */
-    function _PHP_CodeSniffer_File()
-    {
-        return;
-    }
+		/**
+		 * Access tag should not be treated as a long description.
+		 *
+		 * @access public
+		 * @return void
+		 */
+		public function accessTag()
+		{
+
+		}//end accessTag()
+
+		/**
+		 * Constructor.
+		 *
+		 * No return tag
+		 */
+		function PHP_CodeSniffer_File()
+		{
+				return;
+		}
 
 
-    /**
-     * Destructor PHP5.
-     */
-    function __destruct()
-    {
-        return;
-    }
+		/**
+		 * Destructor.
+		 *
+		 * No return tag too
+		 */
+		function _PHP_CodeSniffer_File()
+		{
+				return;
+		}
 
 
-    function missingComment()
-    {
-        return;
-    }
+		/**
+		 * Destructor PHP5.
+		 */
+		function __destruct()
+		{
+				return;
+		}
 
 
-    /**
-     * no return tag.
-     *
-     */
-    public function noReturn($one)
-    {
-
-    }//end noReturn()
+		function missingComment()
+		{
+				return;
+		}
 
 
-    /**
-     * Param not immediate.
-     *
-     * @return
-     * @param   int   $threeSpaces
-     * @param integer $superfluous
-     * @param miss
-     * @param
-     */
-    public function missingDescription($threeSpaces)
-    {
+		/**
+		 * no return tag.
+		 *
+		 */
+		public function noReturn($one)
+		{
 
-    }//end missingDescroption()
+		}//end noReturn()
 
 
-    /**
-     * Comments not capitalised.
-     *
-     * @param integer  $one    comment
-     * @param array    $two    -comment
-     * @param MyClas   $three  0comment
-     *
-     * @return void
-     */
-    public function oneSpaceAfterLongestVar($one, $two, MyClass $three)
-    {
+		/**
+		 * Param not immediate.
+		 *
+		 * @return
+		 * @param	 int	 $threeSpaces
+		 * @param integer $superfluous
+		 * @param miss
+		 * @param
+		 */
+		public function missingDescription($threeSpaces)
+		{
 
-    }//end oneSpaceAfterLongestVar()
+		}//end missingDescroption()
+
+
+		/**
+		 * Comments not capitalised.
+		 *
+		 * @param integer	$one		comment
+		 * @param array		$two		-comment
+		 * @param MyClas	 $three	0comment
+		 *
+		 * @return void
+		 */
+		public function oneSpaceAfterLongestVar($one, $two, MyClass $three)
+		{
+
+		}//end oneSpaceAfterLongestVar()
 
 
 }//end class
@@ -159,27 +159,27 @@ class PHP_CodeSniffer_File
  */
 public function functionOutsideClass(&$str)
 {
-    return;
+		return;
 }//end functionOutsideClass()
 
 
 function missingCommentOutsideClass()
 {
-    return;
+		return;
 }//end missingCommentOutsideClass()
 
 
 ?><?php
 function tagBeforeComment()
 {
-    return;
+		return;
 }//end tagBeforeComment()
 
 
 /**
  * no return tag.
  *
- * @see    FunctionCommentSniff.php
+ * @see		FunctionCommentSniff.php
  */
 public function noReturnOutsideClass()
 {
@@ -192,10 +192,10 @@ public function noReturnOutsideClass()
  *
  * @param integer $one comment
  *
- * @see     wrong indent
+ * @see		 wrong indent
  * @see
  * @return void
- * @extra  Invalid tag
+ * @extra	Invalid tag
  * @throws UnknownException unknown
  */
 public function missingTwoParamComment($one, $two, $three)
@@ -219,12 +219,12 @@ public function missingReturnType()
 /**
  * Case-sensitive var type check with multiple return type.
  *
- * @param String  $a1 Comment here.
- * @param BoOL    $a2 Comment here.
- * @param INT     $a3 Comment here.
- * @param aRRay   $a4 Comment here.
- * @param real    $a5 Comment here.
- * @param double  $a6 Comment here.
+ * @param String	$a1 Comment here.
+ * @param BoOL		$a2 Comment here.
+ * @param INT		 $a3 Comment here.
+ * @param aRRay	 $a4 Comment here.
+ * @param real		$a5 Comment here.
+ * @param double	$a6 Comment here.
  * @param Myclass $a7 Comment here.
  *
  * @return int|object|double|float|array(int=>MyClass)
@@ -238,8 +238,8 @@ public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
 /**
  * More type hint check for custom type and array.
  *
- * @param array   $a1 Comment here.
- * @param array   $a2 Comment here.
+ * @param array	 $a1 Comment here.
+ * @param array	 $a2 Comment here.
  * @param MyClass $a3 Comment here.
  * @param MyClass $a4 Comment here.
  *
@@ -247,7 +247,7 @@ public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
  */
 public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 {
-    return (3 => 'myclass obj');
+		return (3 => 'myclass obj');
 
 }//end typeHint()
 
@@ -256,15 +256,15 @@ public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
  * Mixed variable type separated by a '|'.
  *
  * @param array|string $a1 Comment here.
- * @param mixed        $a2 Comment here.
+ * @param mixed				$a2 Comment here.
  * @param string|array $a3 Comment here.
- * @param MyClass|int  $a4 Comment here.
+ * @param MyClass|int	$a4 Comment here.
  *
  * @return bool
  */
 public function mixedType($a1, $a2, $a3, $a4)
 {
-    return true;
+		return true;
 
 }//end mixedType()
 
@@ -272,20 +272,20 @@ public function mixedType($a1, $a2, $a3, $a4)
 /**
  * Array type.
  *
- * @param array(MyClass)         $a1 OK.
- * @param array()                $a2 Invalid type.
- * @param array(                 $a3 Typo.
- * @param array(int)             $a4 Use 'array(integer)' instead.
- * @param array(int => integer)  $a5 Use 'array(integer => integer)' instead.
+ * @param array(MyClass)				 $a1 OK.
+ * @param array()								$a2 Invalid type.
+ * @param array(								 $a3 Typo.
+ * @param array(int)						 $a4 Use 'array(integer)' instead.
+ * @param array(int => integer)	$a5 Use 'array(integer => integer)' instead.
  * @param array(integer => bool) $a6 Use 'array(integer => boolean)' instead.
- * @param aRRay                  $a7 Use 'array' instead.
- * @param string                 $a8 String with unknown type hint.
+ * @param aRRay									$a7 Use 'array' instead.
+ * @param string								 $a8 String with unknown type hint.
  *
  * @return int
  */
 public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownTypeHint $a8)
 {
-    return 1;
+		return 1;
 
 }//end mixedArrayType()
 
@@ -320,7 +320,7 @@ function empty3()
  */
 public function missingShortDescriptionInFunctionComment()
 {
-    return true;
+		return true;
 
 }//end missingShortDescriptionInFunctionComment()
 
@@ -328,25 +328,25 @@ public function missingShortDescriptionInFunctionComment()
 class Another_Class
 {
 
-    /**
-     * Destructor should not include a return tag.
-     *
-     * @return void
-     */
-    function __destruct()
-    {
-        return;
-    }
+		/**
+		 * Destructor should not include a return tag.
+		 *
+		 * @return void
+		 */
+		function __destruct()
+		{
+				return;
+		}
 
-    /**
-     * Constructor should not include a return tag.
-     *
-     * @return void
-     */
-    function __construct()
-    {
-        return;
-    }
+		/**
+		 * Constructor should not include a return tag.
+		 *
+		 * @return void
+		 */
+		function __construct()
+		{
+				return;
+		}
 
 }//end class
 
@@ -355,8 +355,8 @@ class Another_Class
  * Comment param alignment test.
  *
  * @param string $varrr1 Comment1..
- * @param string  $vr2    Comment2.
- * @param string  $var3  Comment3..
+ * @param string	$vr2		Comment2.
+ * @param string	$var3	Comment3..
  *
  * @return void
  */
@@ -369,7 +369,7 @@ public static function paramAlign($varrr1, $vr2, $var3)
 /**
  * Comment.
  *
- * @param string $id    Comment.
+ * @param string $id		Comment.
  * @param array $design Comment.
  *
  * @return void
@@ -383,14 +383,14 @@ public static function paint($id, array $design)
 /**
  * Adds specified class name to class attribute of this widget.
  *
- * @since  4.0.0
+ * @since	4.0.0
  * @return string
  */
 public function myFunction()
 {
-    if ($condition === FALSE) {
-        echo 'hi';
-    }
+		if ($condition === FALSE) {
+				echo 'hi';
+		}
 
 }//end myFunction()
 
@@ -402,12 +402,12 @@ public function myFunction()
  */
 public function myFunction()
 {
-    if ($condition === FALSE) {
-        echo 'hi';
-        return;
-    }
+		if ($condition === FALSE) {
+				echo 'hi';
+				return;
+		}
 
-    return 'blah';
+		return 'blah';
 
 }//end myFunction()
 
@@ -419,11 +419,11 @@ public function myFunction()
  */
 public function myFunction()
 {
-    if ($condition === FALSE) {
-        echo 'hi';
-    }
+		if ($condition === FALSE) {
+				echo 'hi';
+		}
 
-    return 'blah';
+		return 'blah';
 
 }//end myFunction()
 
@@ -441,12 +441,12 @@ echo $blah;
 function myFunction($arg1) {}
 
 class MyClass() {
-    /**
-     * An abstract function.
-     *
-     * @return array(string)
-     */
-    abstract final protected function myFunction();
+		/**
+		 * An abstract function.
+		 *
+		 * @return array(string)
+		 */
+		abstract final protected function myFunction();
 }
 
 /**
@@ -458,11 +458,11 @@ class MyClass() {
  */
 function test($test)
 {
-   if ($test === TRUE) {
-       return;
-   }
+	 if ($test === TRUE) {
+			 return;
+	 }
 
-   return $test;
+	 return $test;
 
 }//end test()
 
@@ -486,7 +486,7 @@ function test()
  */
 function test(\other\ns\item $test)
 {
-   return $test;
+	 return $test;
 
 }//end test()
 
@@ -499,7 +499,7 @@ function test(\other\ns\item $test)
  */
 function test(\other\ns\item $test)
 {
-   return $test;
+	 return $test;
 
 }//end test()
 
@@ -512,7 +512,7 @@ function test(\other\ns\item $test)
  */
 function test(\first\ns\item $test = \second\ns::CONSTANT)
 {
-   return $test;
+	 return $test;
 
 }//end test()
 
@@ -525,23 +525,23 @@ function test(\first\ns\item $test = \second\ns::CONSTANT)
  */
 function test(\first\ns\item $test = \second\ns::CONSTANT)
 {
-   return $test;
+	 return $test;
 
 }//end test()
 
 // Closures should be ignored.
 preg_replace_callback(
-    '~-([a-z])~',
-    function ($match) {
-        return strtoupper($match[1]);
-    },
-    'hello-world'
+		'~-([a-z])~',
+		function ($match) {
+				return strtoupper($match[1]);
+		},
+		'hello-world'
 );
 
 $callback = function ($bar) use ($foo)
-            {
-                $bar += $foo;
-            };
+						{
+								$bar += $foo;
+						};
 
 /**
  * Comment should end with '*', not '**' before the slash.
@@ -553,15 +553,15 @@ function test123() {
 /**
  * Variable number of args.
  *
- * @param string $a1     Comment here.
- * @param string $a2     Comment here.
+ * @param string $a1		 Comment here.
+ * @param string $a2		 Comment here.
  * @param string $a2,... Comment here.
  *
  * @return boolean
  */
 public function variableArgs($a1, $a2)
 {
-    return true;
+		return true;
 
 }//end variableArgs()
 

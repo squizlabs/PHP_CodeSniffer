@@ -1,13 +1,13 @@
 .SettingsTabPaneWidgetType-tab-mid {
-   background: transparent url(tab_inact_mid.png) repeat-x;
-   line-height: -25px;
-   cursor: pointer;
-   -moz-user-select: none;
+	 background: transparent url(tab_inact_mid.png) repeat-x;
+	 line-height: -25px;
+	 cursor: pointer;
+	 -moz-user-select: none;
 }
 
 .AssetLineageWidgetType-item {
-    float: left;
-    list-style: none;
-    height: 22px;
-    cursor: pointer;
+		float: left;
+		list-style: none;
+		height: 22px;
+		cursor: pointer;
 }
