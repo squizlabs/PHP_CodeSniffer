@@ -5,13 +5,13 @@ for (i = 0; i < 10; i++) {
 }
 
 while (true) {
-    for (i = 0; i < 10; i++) {
-    }
-    if (something) {
-    }
+		for (i = 0; i < 10; i++) {
+		}
+		if (something) {
+		}
 
-    do {
-    } while (true);
+		do {
+		} while (true);
 
 }
 
@@ -25,62 +25,62 @@ if (one) {
 }
 
 switch (blah) {
-    case 'one':
-        if (blah) {
-            // There are no spaces before break.
-        }
-    break;
+		case 'one':
+				if (blah) {
+						// There are no spaces before break.
+				}
+		break;
 
-    default:
-        if (blah) {
-            // There are no spaces before break.
-        }
-    break;
+		default:
+				if (blah) {
+						// There are no spaces before break.
+				}
+		break;
 }
 
 switch (blah) {
-    case 'one':
-        if (blah) {
-            // There are no spaces before break.
-        }
-    break;
+		case 'one':
+				if (blah) {
+						// There are no spaces before break.
+				}
+		break;
 
-    default:
-        if (blah) {
-            // Code here.
-        }
+		default:
+				if (blah) {
+						// Code here.
+				}
 }
 
 for (i = 0; i < 10; i++) {
-    if (blah) {
-    }
-    break;
+		if (blah) {
+		}
+		break;
 }
 
 while (true) {
-    for (i = 0; i < 10; i++) {
+		for (i = 0; i < 10; i++) {
 
-        if (something) {
-        }
+				if (something) {
+				}
 
-    }
+		}
 
-    do {
+		do {
 
-        alert(i);
-    } while (true);
+				alert(i);
+		} while (true);
 }
 
-for (  i = 0; i < 10; i++  ) {
-    if ( blah   ) {
-    }
+for (	i = 0; i < 10; i++	) {
+		if ( blah	 ) {
+		}
 }
 
 var x = {
-    a: function () {
-        if (blah) {
-        }
+		a: function () {
+				if (blah) {
+				}
 
-    },
+		},
 };
 ?>

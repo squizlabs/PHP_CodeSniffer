@@ -11,17 +11,17 @@ $code = 'hello';
  */
 function test()
 {
-    // Some code goes here.
-    $code = 'hello';
+		// Some code goes here.
+		$code = 'hello';
 
-    # This comment is banned.
-    $code = 'hello';
+		# This comment is banned.
+		$code = 'hello';
 
 }//end test()
 
 /*
-    A longer comment goes here.
-    It spans multiple lines.
+		A longer comment goes here.
+		It spans multiple lines.
 */
 
 # This is a long comment
@@ -41,14 +41,14 @@ $code = 'hello';
  */
 function test()
 {
-    // Some code goes here
+		// Some code goes here
 
 }//end test()
 
 /*
-    A longer comment goes here.
-    It spans multiple lines!!
-    Or does it?
+		A longer comment goes here.
+		It spans multiple lines!!
+		Or does it?
 */
 
 // 0This is a simple multi-line
@@ -58,7 +58,7 @@ $code = 'hello';
 //This is not valid.
 $code = 'hello';
 
-//  Neither is this!
+//	Neither is this!
 $code = 'hello';
 
 //
@@ -69,13 +69,13 @@ $code = 'hello';
 
 class MyClass
 {
-    /**
-     * Represents a left orientation for the widget.
-     *
-     * @var   integer
-     * @since 4.0.0
-     */
-    const LEFT = 1;
+		/**
+		 * Represents a left orientation for the widget.
+		 *
+		 * @var	 integer
+		 * @since 4.0.0
+		 */
+		const LEFT = 1;
 }
 
 /**
@@ -84,23 +84,23 @@ class MyClass
  */
 final class MyClass
 {
-    /**
-     * Comment should be ignored.
-     *
-     */
-    final public function test() {}
+		/**
+		 * Comment should be ignored.
+		 *
+		 */
+		final public function test() {}
 }
 
 // Here is some inline example code:
-//     -> One
-//         -> One.One
-//     -> Two
+//		 -> One
+//				 -> One.One
+//		 -> Two
 
 /*
-    Here is some inline example code:
-        -> One
-            -> One.One
-        -> Two
+		Here is some inline example code:
+				-> One
+						-> One.One
+				-> Two
 */
 
 /**

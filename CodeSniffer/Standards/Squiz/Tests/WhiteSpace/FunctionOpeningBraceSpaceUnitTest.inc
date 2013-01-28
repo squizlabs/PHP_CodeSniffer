@@ -2,33 +2,33 @@
 
 function MyFunction1()
 {
-    // Some code goes here.
-    echo $code;
+		// Some code goes here.
+		echo $code;
 }
 
 function MyFunction2()
 {
 
-    // Some code goes here.
-    echo $code;
+		// Some code goes here.
+		echo $code;
 }
 
 class MyClass
 {
-    function MyFunction1()
-    {
-        // Some code goes here.
-        echo $code;
-    }
+		function MyFunction1()
+		{
+				// Some code goes here.
+				echo $code;
+		}
 
-    function MyFunction2()
-    {
+		function MyFunction2()
+		{
 
-        // Some code goes here.
-        echo $code;
-    }
+				// Some code goes here.
+				echo $code;
+		}
 
-    public function register();
+		public function register();
 }
 
 function emptyFunction()

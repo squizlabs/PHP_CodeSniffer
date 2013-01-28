@@ -51,10 +51,10 @@ for (i = 1 + 2; i < 4 + 5; i++) {
 
 function myFunction()
 {
-    value = (one + 1) + (two + 2) + (myFunction() + 2);
-    value = myFunction() + 2;
-    value = (myFunction(mvar) + myFunction2(mvar));
-    return -1;
+		value = (one + 1) + (two + 2) + (myFunction() + 2);
+		value = myFunction() + 2;
+		value = (myFunction(mvar) + myFunction2(mvar));
+		return -1;
 }
 
 params['mode'] = id.replace(/WidgetType/, '');
@@ -76,8 +76,8 @@ return /MSIE/.test(navigator.userAgent);
 var re = new RegExp(/<\/?(\w+)((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/gim);
 
 var options = {
-    minVal: -1,
-    maxVal: -1
+		minVal: -1,
+		maxVal: -1
 };
 
 stepWidth = Math.round(this.width / 5);
@@ -85,9 +85,9 @@ stepWidth = Math.round(this.width / 5);
 date.setMonth(d[2] - 1);
 
 switch (number % 10) {
-    case -1:
-        suffix = 'st';
-    break;
+		case -1:
+				suffix = 'st';
+		break;
 }
 
 var pathSplit = ipt.value.split(/\/|\\/);
@@ -102,5 +102,5 @@ if (urlValue.search(/[a-zA-z]+:\/\/*/) !== 0) {
 }
 
 if (!value || /^\s*$/.test(value)) {
-    return true;
+		return true;
 }

@@ -52,8 +52,8 @@ if ($good === true && ($var instanceof PHP_CodeSniffer) === false) {
 
 // Without brackets around inline IF condition.
 $var1 === TRUE
-    ? $var2 = 0
-    : $var2 = 1;
+		? $var2 = 0
+		: $var2 = 1;
 
 $var1 === TRUE ? $var2 = 0 : $var2 = 1;
 ?>
@@ -61,13 +61,13 @@ $var1 === TRUE ? $var2 = 0 : $var2 = 1;
 $var1 === TRUE ? $var2 = 0 : $var2 = 1;
 
 if ($var2 === TRUE) {
-    $var1 === TRUE ? $var2 = 0 : $var2 = 1;
+		$var1 === TRUE ? $var2 = 0 : $var2 = 1;
 }
 $var1 === TRUE ? $var2 = 0 : $var2 = 1;
 
 $var1
-    ? $var2 = 0
-    : $var2 = 1;
+		? $var2 = 0
+		: $var2 = 1;
 
 $var1 ? $var2 = 0 : $var2 = 1;
 ?>
@@ -75,7 +75,7 @@ $var1 ? $var2 = 0 : $var2 = 1;
 $var1 ? $var2 = 0 : $var2 = 1;
 
 if ($var2 === TRUE) {
-    $var1 ? $var2 = 0 : $var2 = 1;
+		$var1 ? $var2 = 0 : $var2 = 1;
 }
 $var1 ? $var2 = 0 : $var2 = 1;
 ?>

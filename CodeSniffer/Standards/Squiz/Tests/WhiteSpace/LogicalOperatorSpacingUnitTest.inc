@@ -3,17 +3,17 @@
 if ($foo || $bar) {}
 if ($foo||$bar && $baz) {}
 if ($foo|| $bar&&$baz) {}
-if ($foo  ||   $bar   && $baz) {}
+if ($foo	||	 $bar	 && $baz) {}
 
 if ($foo ||
-    $bar
-    && $baz
+		$bar
+		&& $baz
 ) {
 }
 
 if ($foo||
-    $bar
-    &&$baz
+		$bar
+		&&$baz
 ) {
 }
 

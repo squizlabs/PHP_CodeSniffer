@@ -4,6 +4,6 @@
  */
 if (@in_array($array, $needle))
 {
-    echo '@';
+		echo '@';
 }
 ?>

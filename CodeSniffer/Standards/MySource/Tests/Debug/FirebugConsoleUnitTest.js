@@ -3,6 +3,6 @@ console.warn();
 console.test();
 con.sole();
 var console = {
-    console: 'string';
+		console: 'string';
 };
 function console() {}

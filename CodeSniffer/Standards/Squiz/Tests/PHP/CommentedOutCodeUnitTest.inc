@@ -21,11 +21,11 @@ function myFunction()
 #eval($string);
 
 if ($blah) {
-    // This is a multi-line comment that goes over two indented
-    // lines.
+		// This is a multi-line comment that goes over two indented
+		// lines.
 
-    // If it's null, then there must be no parameters for this
-    // method.
+		// If it's null, then there must be no parameters for this
+		// method.
 }
 
 // short.
@@ -48,14 +48,14 @@ function myFunction()
 }//end myFunction()
 
 // ----------------------------
-// | A comment block           |
+// | A comment block					 |
 // ----------------------------
 
 // =============================
-// | A comment block           |
+// | A comment block					 |
 // =============================
 
 // *****************************
-// | A comment block           |
+// | A comment block					 |
 // *****************************
 ?>

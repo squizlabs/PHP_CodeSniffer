@@ -21,7 +21,7 @@ echo preg_replace_callback('~-([a-z])~', function ($match) { return strtoupper($
 /* @codingStandardsIgnoreStart */
 class MyClass
 {
-    /* @codingStandardsIgnoreEnd */
-    public function __construct() {}
+		/* @codingStandardsIgnoreEnd */
+		public function __construct() {}
 }
 ?>

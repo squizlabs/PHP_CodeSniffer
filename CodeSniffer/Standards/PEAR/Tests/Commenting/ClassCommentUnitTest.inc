@@ -27,13 +27,13 @@ class Invalid_Comment_Style1
  * Long description with extra blank line before and after
  *
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @category	PHP
+ * @package	 PHP_CodeSniffer
+ * @author		Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: 1.0
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license	 https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version	 Release: 1.0
+ * @link			http://pear.php.net/package/PHP_CodeSniffer
  */
 class Extra_Description_Newlines
 {
@@ -43,13 +43,13 @@ class Extra_Description_Newlines
 
 /**
  * Sample class comment
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @category	PHP
+ * @package	 PHP_CodeSniffer
+ * @author		Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license	 https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link			http://pear.php.net/package/PHP_CodeSniffer
  */
 class Missing_Newlines_Before_Tags
 {
@@ -60,31 +60,31 @@ class Missing_Newlines_Before_Tags
 /**
  * Simple class comment
  *
- * @category   _wrong_category
- * @package    PHP_CodeSniffer
- * @package    ADDITIONAL PACKAGE TAG
+ * @category	 _wrong_category
+ * @package		PHP_CodeSniffer
+ * @package		ADDITIONAL PACKAGE TAG
  * @subpackage SUBPACKAGE TAG
- * @author     Original Author <author@example.com>
- * @author       Greg Sherwood gsherwood@squiz.net
- * @author     Mr T <t@squiz.net>
+ * @author		 Original Author <author@example.com>
+ * @author			 Greg Sherwood gsherwood@squiz.net
+ * @author		 Mr T <t@squiz.net>
  * @author
- * @copyright  1997~1994 The PHP Group
- * @license    http://www.php.net/license/3_0.txt
- * @version    INVALID VERSION CONTENT
+ * @copyright	1997~1994 The PHP Group
+ * @license		http://www.php.net/license/3_0.txt
+ * @version		INVALID VERSION CONTENT
  * @see
  * @see
- * @link       sdfsdf
- * @see        Net_Sample::Net_Sample()
- * @see        Net_Other
+ * @link			 sdfsdf
+ * @see				Net_Sample::Net_Sample()
+ * @see				Net_Other
  * @deprecated asd
- * @unknown    Unknown tag
- * @since      Class available since Release 1.2.0
+ * @unknown		Unknown tag
+ * @since			Class available since Release 1.2.0
  */
 class Checking_Tags
 {
-    class Sub_Class {
+		class Sub_Class {
 
-    }//end class
+		}//end class
 
 
 }//end class

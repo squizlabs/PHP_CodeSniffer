@@ -11,7 +11,7 @@ class ExampleClass
 	this is some text
 EOF;
 
-    $correctVar = true;
+		$correctVar = true;
 	$correctVar = false;
 
 ?>

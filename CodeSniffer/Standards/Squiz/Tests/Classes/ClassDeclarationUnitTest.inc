@@ -12,7 +12,7 @@ abstract class CorrectClassDeclarationWithExtends extends correctClassDeclaratio
 
 }
 
-final  class CorrectClassDeclarationWithImplements implements correctClassDeclaration
+final	class CorrectClassDeclarationWithImplements implements correctClassDeclaration
 {
 
 }
@@ -24,10 +24,10 @@ class IncorrectBracePlacementWithExtends extends correctClassDeclaration {}
 class IncorrectBracePlacementWithImplements implements correctClassDeclaration {}
 
 
-    class IncorrectIndentedClass
-    {
+		class IncorrectIndentedClass
+		{
 
-    }//end class
+		}//end class
 
 
 // Incorrect code placement for opening/closing brace.
@@ -47,7 +47,7 @@ class IncorrectCodeBeforeClosingBrace
 
 echo phpinfo(); }
 
-    class IncorrectIndentedClass
+		class IncorrectIndentedClass
 {
 
 }
@@ -56,7 +56,7 @@ class ClassOne implements ClassTwo, ClassThree
 {
 }//end class
 
-class ClassOne implements ClassFour   ,ClassFive,  ClassSix
+class ClassOne implements ClassFour	 ,ClassFive,	ClassSix
 {
 }//end class
 
@@ -66,12 +66,12 @@ class CorrectClassDeclarationWithExtends extends correctClassDeclaration
 
 }
 
-class CorrectClassDeclarationWithExtends   extends correctClassDeclaration
+class CorrectClassDeclarationWithExtends	 extends correctClassDeclaration
 {
 
 }//end class
 
-class   CorrectClassDeclaration
+class	 CorrectClassDeclaration
 {
 
 }//end class
@@ -82,7 +82,7 @@ class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorre
 
 }//end class
 
-class File implements \Zend_Auth_Storage_Interface,\Zend_Auth_Storage,  \Zend_Foo
+class File implements \Zend_Auth_Storage_Interface,\Zend_Auth_Storage,	\Zend_Foo
 {
 }
 

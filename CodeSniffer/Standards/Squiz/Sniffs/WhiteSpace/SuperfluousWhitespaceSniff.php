@@ -4,13 +4,13 @@
  *
  * PHP version 5
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @category	PHP
+ * @package	 PHP_CodeSniffer
+ * @author		Greg Sherwood <gsherwood@squiz.net>
+ * @author		Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license	 https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link			http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
@@ -20,201 +20,201 @@
  * after the last content of the file, resides after content on any line, or
  * are two empty lines in functions.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @category	PHP
+ * @package	 PHP_CodeSniffer
+ * @author		Greg Sherwood <gsherwood@squiz.net>
+ * @author		Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license	 https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version	 Release: @package_version@
+ * @link			http://pear.php.net/package/PHP_CodeSniffer
  */
 class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSniffer_Sniff
 {
 
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+		/**
+		 * A list of tokenizers this sniff supports.
+		 *
+		 * @var array
+		 */
+		public $supportedTokenizers = array(
+																	 'PHP',
+																	 'JS',
+																	 'CSS',
+																	);
 
-    /**
-     * If TRUE, whitespace rules are not checked for blank lines.
-     *
-     * Blank lines are those that contain only whitespace.
-     *
-     * @var boolean
-     */
-    public $ignoreBlankLines = false;
-
-
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
-    {
-        return array(
-                T_OPEN_TAG,
-                T_CLOSE_TAG,
-                T_WHITESPACE,
-                T_COMMENT,
-               );
-
-    }//end register()
+		/**
+		 * If TRUE, whitespace rules are not checked for blank lines.
+		 *
+		 * Blank lines are those that contain only whitespace.
+		 *
+		 * @var boolean
+		 */
+		public $ignoreBlankLines = false;
 
 
-    /**
-     * Processes this sniff, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens = $phpcsFile->getTokens();
+		/**
+		 * Returns an array of tokens this test wants to listen for.
+		 *
+		 * @return array
+		 */
+		public function register()
+		{
+				return array(
+								T_OPEN_TAG,
+								T_CLOSE_TAG,
+								T_WHITESPACE,
+								T_COMMENT,
+							 );
 
-        if ($tokens[$stackPtr]['code'] === T_OPEN_TAG) {
+		}//end register()
 
-            /*
-                Check for start of file whitespace.
-            */
 
-            if ($phpcsFile->tokenizerType !== 'PHP') {
-                // The first token is always the open tag inserted when tokenizsed
-                // and the second token is always the first piece of content in
-                // the file. If the second token is whitespace, there was
-                // whitespace at the start of the file.
-                if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-                    return;
-                }
-            } else {
-                // If its the first token, then there is no space.
-                if ($stackPtr === 0) {
-                    return;
-                }
+		/**
+		 * Processes this sniff, when one of its tokens is encountered.
+		 *
+		 * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+		 * @param int									$stackPtr	The position of the current token in the
+		 *																				stack passed in $tokens.
+		 *
+		 * @return void
+		 */
+		public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+		{
+				$tokens = $phpcsFile->getTokens();
 
-                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-                    // If we find something that isn't inline html then there is something previous in the file.
-                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
-                        return;
-                    }
+				if ($tokens[$stackPtr]['code'] === T_OPEN_TAG) {
 
-                    // If we have ended up with inline html make sure it isn't just whitespace.
-                    $tokenContent = trim($tokens[$i]['content']);
-                    if ($tokenContent !== '') {
-                        return;
-                    }
-                }
-            }//end if
+						/*
+								Check for start of file whitespace.
+						*/
 
-            $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
+						if ($phpcsFile->tokenizerType !== 'PHP') {
+								// The first token is always the open tag inserted when tokenizsed
+								// and the second token is always the first piece of content in
+								// the file. If the second token is whitespace, there was
+								// whitespace at the start of the file.
+								if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+										return;
+								}
+						} else {
+								// If its the first token, then there is no space.
+								if ($stackPtr === 0) {
+										return;
+								}
 
-        } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
+								for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+										// If we find something that isn't inline html then there is something previous in the file.
+										if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+												return;
+										}
 
-            /*
-                Check for end of file whitespace.
-            */
+										// If we have ended up with inline html make sure it isn't just whitespace.
+										$tokenContent = trim($tokens[$i]['content']);
+										if ($tokenContent !== '') {
+												return;
+										}
+								}
+						}//end if
 
-            if ($phpcsFile->tokenizerType === 'JS') {
-                // The last token is always the close tag inserted when tokenized
-                // and the second last token is always the last piece of content in
-                // the file. If the second last token is whitespace, there was
-                // whitespace at the end of the file.
-                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-                    return;
-                }
-            } else if ($phpcsFile->tokenizerType === 'CSS') {
-                // The last two tokens are always the close tag and whitespace
-                // inserted when tokenizsed and the third last token is always the
-                // last piece of content in the file. If the third last token is
-                // whitespace, there was whitespace at the end of the file.
-                if ($tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
-                    return;
-                }
+						$phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
 
-                // Adjust the pointer to give the correct line number for the error.
-                $stackPtr -= 2;
-            } else {
-                if (isset($tokens[($stackPtr + 1)]) === false) {
-                    // The close PHP token is the last in the file.
-                    return;
-                }
+				} else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
 
-                for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-                    // If we find something that isn't inline html then there
-                    // is more to the file.
-                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
-                        return;
-                    }
+						/*
+								Check for end of file whitespace.
+						*/
 
-                    // If we have ended up with inline html make sure it
-                    // isn't just whitespace.
-                    $tokenContent = trim($tokens[$i]['content']);
-                    if (empty($tokenContent) === false) {
-                        return;
-                    }
-                }
-            }
+						if ($phpcsFile->tokenizerType === 'JS') {
+								// The last token is always the close tag inserted when tokenized
+								// and the second last token is always the last piece of content in
+								// the file. If the second last token is whitespace, there was
+								// whitespace at the end of the file.
+								if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+										return;
+								}
+						} else if ($phpcsFile->tokenizerType === 'CSS') {
+								// The last two tokens are always the close tag and whitespace
+								// inserted when tokenizsed and the third last token is always the
+								// last piece of content in the file. If the third last token is
+								// whitespace, there was whitespace at the end of the file.
+								if ($tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
+										return;
+								}
 
-            $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
+								// Adjust the pointer to give the correct line number for the error.
+								$stackPtr -= 2;
+						} else {
+								if (isset($tokens[($stackPtr + 1)]) === false) {
+										// The close PHP token is the last in the file.
+										return;
+								}
 
-        } else {
+								for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+										// If we find something that isn't inline html then there
+										// is more to the file.
+										if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
+												return;
+										}
 
-            /*
-                Check for end of line whitespace.
-            */
+										// If we have ended up with inline html make sure it
+										// isn't just whitespace.
+										$tokenContent = trim($tokens[$i]['content']);
+										if (empty($tokenContent) === false) {
+												return;
+										}
+								}
+						}
 
-            // Ignore whitespace that is not at the end of a line.
-            if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
-                return;
-            }
+						$phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
 
-            // Ignore blank lines if required.
-            if ($this->ignoreBlankLines === true
-                && $tokens[($stackPtr - 1)]['line'] !== $tokens[$stackPtr]['line']
-            ) {
-                return;
-            }
+				} else {
 
-            $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
-            if (empty($tokenContent) === false) {
-                if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
-                    $phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
-                }
-            }
+						/*
+								Check for end of line whitespace.
+						*/
 
-            /*
-                Check for multiple blanks lines in a function.
-            */
+						// Ignore whitespace that is not at the end of a line.
+						if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
+								return;
+						}
 
-            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
-                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line'] && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']) {
-                    // This is an empty line and the line before this one is not
-                    //  empty, so this could be the start of a multiple empty
-                    // line block.
-                    $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
-                    $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
-                    if ($lines > 1) {
-                        $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
-                        $data  = array($lines);
-                        $phpcsFile->addError($error, $stackPtr, 'EmptyLines', $data);
-                    }
-                }
-            }
+						// Ignore blank lines if required.
+						if ($this->ignoreBlankLines === true
+								&& $tokens[($stackPtr - 1)]['line'] !== $tokens[$stackPtr]['line']
+						) {
+								return;
+						}
 
-        }//end if
+						$tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
+						if (empty($tokenContent) === false) {
+								if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
+										$phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
+								}
+						}
 
-    }//end process()
+						/*
+								Check for multiple blanks lines in a function.
+						*/
+
+						if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
+								if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line'] && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']) {
+										// This is an empty line and the line before this one is not
+										//	empty, so this could be the start of a multiple empty
+										// line block.
+										$next	= $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+										$lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
+										if ($lines > 1) {
+												$error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
+												$data	= array($lines);
+												$phpcsFile->addError($error, $stackPtr, 'EmptyLines', $data);
+										}
+								}
+						}
+
+				}//end if
+
+		}//end process()
 
 
 }//end class

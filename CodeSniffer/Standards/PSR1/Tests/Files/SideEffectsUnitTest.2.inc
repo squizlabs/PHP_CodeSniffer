@@ -5,7 +5,7 @@ const CONSTANT1 = 1;
 const CONSTANT2 = 2;
 
 if ($something) {
-    echo 'hi';
+		echo 'hi';
 }
 
 $var = myFunction();

@@ -1,6 +1,6 @@
 <?php
 function myFunction($variable) {
-    // $variable is unused.
-    echo 'hi';
+		// $variable is unused.
+		echo 'hi';
 }
 ?>

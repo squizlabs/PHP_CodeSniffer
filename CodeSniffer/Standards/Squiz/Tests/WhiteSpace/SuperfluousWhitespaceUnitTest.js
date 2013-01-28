@@ -1,34 +1,33 @@
-
 alert('hi');
-alert('hello');   
-    
-if (something) {  
-    
+alert('hello');
+
+if (something) {
+
 }
 
 
 function myFunction()
 {
-    alert('code here');
+		alert('code here');
 
-    alert('code here');
+		alert('code here');
 
 
-    // Hello.
+		// Hello.
 
-    /*
-        HI
-    */
+		/*
+				HI
+		*/
 
 
 }
 
 function myFunction2()
 {
-    alert('code here');
+		alert('code here');
 
 
-    alert('code here');
+		alert('code here');
 
 }
 
@@ -36,10 +35,10 @@ function myFunction2()
 
 function myFunction2()
 {
-    alert('code here');
-    
-    alert('code here');
-    
+		alert('code here');
+
+		alert('code here');
+
 }
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false

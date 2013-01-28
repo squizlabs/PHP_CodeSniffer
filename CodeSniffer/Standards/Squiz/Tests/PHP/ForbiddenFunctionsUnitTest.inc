@@ -7,6 +7,6 @@ if (is_null($blah) === TRUE) {
 
 class Test
 {
-    const DELETE = 'delete';
+		const DELETE = 'delete';
 }
 ?>

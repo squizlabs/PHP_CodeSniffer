@@ -1,8 +1,8 @@
 function test(id, buttons) // cool function
 {
-    alert('hello');
-    alert('hello again'); // And again.
-    // Valid comment.
+		alert('hello');
+		alert('hello again'); // And again.
+		// Valid comment.
 
 }//end test()
 
@@ -10,21 +10,21 @@ var good = true; // Indeed.
 
 mig.Gallery.prototype = {
 
-    init: function(cb)
-    {
+		init: function(cb)
+		{
 
-    },//end init()
+		},//end init()
 
-    imageClicked: function(id)
-    {
+		imageClicked: function(id)
+		{
 
-    }//end imageClicked()
+		}//end imageClicked()
 
 };
 
 dfx.getIframeDocument = function(iframe)
 {
 
-    return doc;
+		return doc;
 
 };//end dfx.getIframeDocument()

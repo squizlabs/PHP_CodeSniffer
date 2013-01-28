@@ -5,29 +5,29 @@ Channels::includeAsset('Page2');
 Channels::includeAsset('Folder');
 
 function one() {
-    Channels::includeSystem('MySystem');
-    $siteid = MySystem2::getCurrentSiteId();
-    Page::create();
-    PageAssetType::create();
+		Channels::includeSystem('MySystem');
+		$siteid = MySystem2::getCurrentSiteId();
+		Page::create();
+		PageAssetType::create();
 }
 
 function two() {
-    Page2AssetType::create();
-    Folder::getFolder();
+		Page2AssetType::create();
+		Folder::getFolder();
 }
 
 Channels::includeAsset('Asset');
 class AssetListingAssetType extends AssetAssetType
 {
-    function one() {
-        Channels::includeSystem('MySystem2');
-        Channels::includeSystem('Page2');
-        $siteid = MySystem2::getCurrentSiteId();
-    }
+		function one() {
+				Channels::includeSystem('MySystem2');
+				Channels::includeSystem('Page2');
+				$siteid = MySystem2::getCurrentSiteId();
+		}
 
-    function two() {
-        $siteid = Page2::getCurrentSiteId();
-    }
+		function two() {
+				$siteid = Page2::getCurrentSiteId();
+		}
 }
 
 Channels::includeSystem('Log');
@@ -43,11 +43,11 @@ Channels::includeSystem('Log3');
 class MyLog implements Log3 {}
 
 if (self::systemExists($systemName) === FALSE) {
-    return $actions;
+		return $actions;
 } else {
-    // Shouldnt throw an error because we dont know the system name.
-    self::includeSystem($systemName);
-    self::includeSystem($systemNames['log']);
+		// Shouldnt throw an error because we dont know the system name.
+		self::includeSystem($systemName);
+		self::includeSystem($systemNames['log']);
 }
 
 Channels::includeSystem('Widget');
@@ -56,12 +56,12 @@ class MyOtherWidget extends BookWidgetType {}
 
 function myFunction()
 {
-    if (Channels::systemExists('Log5') === TRUE) {
-       Channels::includeSystem('Log5');
-    } else {
-       return;
-    }
+		if (Channels::systemExists('Log5') === TRUE) {
+			 Channels::includeSystem('Log5');
+		} else {
+			 return;
+		}
 
-    Log5::addProjectLog('metadata.field.update', $msg);
+		Log5::addProjectLog('metadata.field.update', $msg);
 }
 ?>

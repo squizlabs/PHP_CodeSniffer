@@ -1,7 +1,7 @@
 <html>
 <?php
 function printHead() {
-    echo '<head></head>';
+		echo '<head></head>';
 }
 
 printHead();

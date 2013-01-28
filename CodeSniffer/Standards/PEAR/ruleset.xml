@@ -11,29 +11,29 @@
 
  <!-- Lines can be 85 chars long, but never show errors -->
  <rule ref="Generic.Files.LineLength">
-  <properties>
-   <property name="lineLimit" value="85"/>
-   <property name="absoluteLineLimit" value="0"/>
-  </properties>
+	<properties>
+	 <property name="lineLimit" value="85"/>
+	 <property name="absoluteLineLimit" value="0"/>
+	</properties>
  </rule>
 
  <!-- Use Unix newlines -->
  <rule ref="Generic.Files.LineEndings">
-  <properties>
-   <property name="eolChar" value="\n"/>
-  </properties>
+	<properties>
+	 <property name="eolChar" value="\n"/>
+	</properties>
  </rule>
 
  <!-- This message is not required as spaces are allowed for alignment -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
-  <severity>0</severity>
+	<severity>0</severity>
  </rule>
 
  <!-- Use warnings for inline control structures -->
  <rule ref="Generic.ControlStructures.InlineControlStructure">
-  <properties>
-   <property name="error" value="false"/>
-  </properties>
+	<properties>
+	 <property name="error" value="false"/>
+	</properties>
  </rule>
 
 </ruleset>

@@ -5,7 +5,7 @@ Interface MyInterface {}
 
 class MyClass
 {
-    Var $myVar = null;
-    Const myConst = true;
+		Var $myVar = null;
+		Const myConst = true;
 }
 ?>

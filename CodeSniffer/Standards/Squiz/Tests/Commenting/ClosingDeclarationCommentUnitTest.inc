@@ -18,39 +18,39 @@ function yourFunction()
 
 class TestClass
 {
-    function __construct()
-    {
-    }//end __construct()
+		function __construct()
+		{
+		}//end __construct()
 
-    function myFunction()
-    {
-    }//end myFunction()
+		function myFunction()
+		{
+		}//end myFunction()
 
-    function yourFunction()
-    {
-    }//end myFunction()
+		function yourFunction()
+		{
+		}//end myFunction()
 
 }//end class
 
 abstract class TestClass
 {
-    abstract function myFunction();
+		abstract function myFunction();
 
-    function ourFunction()
-    {
-    }//end myFunction()
+		function ourFunction()
+		{
+		}//end myFunction()
 
-    function yourFunction()
-    {
-    }//end yourFunction()
+		function yourFunction()
+		{
+		}//end yourFunction()
 
 }//end class
 
 interface TestClass
 {
-    function myFunction();
-    function ourFunction();
-    function yourFunction();
+		function myFunction();
+		function ourFunction();
+		function yourFunction();
 
 }//end interface
 
@@ -68,7 +68,7 @@ interface TestClass
 
 class MyClass
 {
-    public function myFunction();
+		public function myFunction();
 }//end class
 
 // Closures don't need end comments.

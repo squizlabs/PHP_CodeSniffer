@@ -10,15 +10,15 @@
  */
 function test()
 {
-    // Some code goes here.
+		// Some code goes here.
 
-    # This comment is banned.
+		# This comment is banned.
 
 }//end test()
 
 /*
-    A longer comment goes here.
-    It spans multiple lines.
+		A longer comment goes here.
+		It spans multiple lines.
 */
 
 # This is a long comment

@@ -11,8 +11,8 @@ code = 'hello';
  */
 function testFunction()
 {
-    // Callback methods which are added by external objects.
-    this.callbacks = {};
+		// Callback methods which are added by external objects.
+		this.callbacks = {};
 
 }//end testFunction()
 
@@ -22,23 +22,23 @@ function testFunction()
  */
 myClass.prototype = {
 
-    /**
-     * This is the first line of a method comment.
-     * This is the second line.
-     */
-    load: function(url, callback)
-    {
-        // Some code here.
+		/**
+		 * This is the first line of a method comment.
+		 * This is the second line.
+		 */
+		load: function(url, callback)
+		{
+				// Some code here.
 
-    }
+		}
 };
 
 // some code goes here!
 
 /*
-    A longer comment goes here.
-    It spans multiple lines!!
-    Or does it?
+		A longer comment goes here.
+		It spans multiple lines!!
+		Or does it?
 */
 
 // 0This is a simple multi-line
@@ -48,7 +48,7 @@ code = 'hello';
 //This is not valid.
 code = 'hello';
 
-//  Neither is this!
+//	Neither is this!
 code = 'hello';
 
 //
@@ -80,32 +80,32 @@ myClass.myFunction = function() {
 
 dfx.getIframeDocument = function(iframe)
 {
-    return doc;
+		return doc;
 
 };//end dfx.getIframeDocument()
 
 mig.Gallery.prototype = {
 
-    init: function(cb)
-    {
+		init: function(cb)
+		{
 
-    },//end init()
+		},//end init()
 
-    imageClicked: function(id)
-    {
+		imageClicked: function(id)
+		{
 
-    }//end imageClicked()
+		}//end imageClicked()
 
 };
 
 // Here is some inline example code:
-//     -> One
-//         -> One.One
-//     -> Two
+//		 -> One
+//				 -> One.One
+//		 -> Two
 
 /*
-    Here is some inline example code:
-        -> One
-            -> One.One
-        -> Two
+		Here is some inline example code:
+				-> One
+						-> One.One
+				-> Two
 */

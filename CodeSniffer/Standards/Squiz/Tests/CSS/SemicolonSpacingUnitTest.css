@@ -1,20 +1,20 @@
 .HelpWidgetType-new-bug-title {
-    width: 308px
-    float: left;
+		width: 308px
+		float: left;
 }
 
 #MetadataAdminScreen-addField-add {
-    float: left ;
+		float: left ;
 }
 
 .TableWidgetType .recover:hover {
-    background-color: #FFF;
+		background-color: #FFF;
 }
 
 #clearCache-settings:rootNodes-list_0 {
-    border-top: none;
+		border-top: none;
 }
 
 .HelpWidgetType-list {
-    list-style-image: url();
+		list-style-image: url();
 }
