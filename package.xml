@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19772 : PSR2_Sniffs_Namespaces_UseDeclarationSniff does not properly recognize last use
   - Fixed bug #19775 : False positive in NonExecutableCode sniff when not using curly braces
   - Fixed bug #19782 : Invalid found size functions in loop when using object operator
+  - Fixed bug #19799 : config folder is not created automatically
  </notes>
  <contents>
   <dir name="/">
@@ -54,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
+   <file baseinstalldir="PHP" name="CodeSniffer.conf.dist" role="data" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
