@@ -481,14 +481,26 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                         if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
                             // We've found something larger that matches
-                            // so we can ignore this char.
-                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                $type = $this->tokenValues[strtolower($charBuffer)];
-                                echo "\t\t* look ahead found more specific token ($type), ignoring $i *".PHP_EOL;
-                            }
+                            // so we can ignore this char. Except for 1 very specific
+                            // case where a comment like /**/ needs to tokenize as
+                            // T_COMMENT and not T_DOC_COMMENT.
+                            $oldType = $this->tokenValues[strtolower($buffer)];
+                            $newType = $this->tokenValues[strtolower($charBuffer)];
+                            if ($oldType === 'T_COMMENT'
+                                && $newType === 'T_DOC_COMMENT'
+                                && $chars[($i + $x + 1)] === '/'
+                            ) {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* look ahead ignored T_DOC_COMMENT, continuing *".PHP_EOL;
+                                }
+                            } else {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* look ahead found more specific token ($newType), ignoring $i *".PHP_EOL;
+                                }
 
-                            $matchedToken = true;
-                            break;
+                                $matchedToken = true;
+                                break;
+                            }
                         }
                     }//end for
                 }//end if

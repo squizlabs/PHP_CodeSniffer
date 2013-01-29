@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19775 : False positive in NonExecutableCode sniff when not using curly braces
   - Fixed bug #19782 : Invalid found size functions in loop when using object operator
   - Fixed bug #19799 : config folder is not created automatically
+  - Fixed bug #19804 : JS Tokenizer wrong /**/ parsing
  </notes>
  <contents>
   <dir name="/">
