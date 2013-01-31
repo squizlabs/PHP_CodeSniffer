@@ -34,7 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
     -- Fixes bug #19732 : PSR2: some control structures errors not reported
   - Squiz commenting sniffs now support non-English characters when checking for capital letters
-    -- Thanks to Roman Levishchenko for the contribution
+    -- Thanks to Roman Levishchenko for the patch
+  - Generic EndFileNewlineSniff now supports JS and CSS files
+    -- Thanks to Denis Ryabkov for the patch
   - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
   - Notifysend report now supports notify-send versions before 0.7.3
     -- Thanks to Ken Guest for the patch
@@ -516,8 +518,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ByteOrderMarkUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />

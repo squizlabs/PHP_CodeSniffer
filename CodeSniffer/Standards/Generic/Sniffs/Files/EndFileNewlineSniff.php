@@ -29,6 +29,18 @@ class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                   'CSS',
+    );
+
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return array
@@ -62,10 +74,16 @@ class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
+        if ($phpcsFile->tokenizerType === 'JS') {
+            $stackPtr--;
+        } else if ($phpcsFile->tokenizerType === 'CSS') {
+            $stackPtr -= 2;
+        }
+
         $eolCharLen = strlen($phpcsFile->eolChar);
         $lastChars  = substr($tokens[$stackPtr]['content'], ($eolCharLen * -1));
         if ($lastChars !== $phpcsFile->eolChar) {
-            $error = 'All PHP files must end with a newline character';
+            $error = 'File must end with a newline character';
             $phpcsFile->addError($error, $stackPtr, 'NotFound');
         }
 
