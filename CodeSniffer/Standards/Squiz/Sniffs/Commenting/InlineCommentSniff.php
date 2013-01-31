@@ -224,7 +224,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        if (preg_match('|[A-Z]|', $commentText[0]) === 0) {
+        if (preg_match('|\p{Lu}|u', $commentText[0]) === 0) {
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $topComment, 'NotCapital');
         }
