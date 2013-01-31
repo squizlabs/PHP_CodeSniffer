@@ -91,7 +91,7 @@ final class MyClass
     final public function test() {}
 }
 
-// Here is some inline example code:
+// 这是一条测试评论
 //     -> One
 //         -> One.One
 //     -> Two

@@ -173,4 +173,9 @@ switch ($var) {
 trait MyTrait {
 
 }
+
+/*
+    这是一条测试评论.
+*/
+
 ?>

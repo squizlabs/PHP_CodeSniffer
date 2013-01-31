@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Roman Levishchenko for the contribution
   - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
     -- Fixes bug #19732 : PSR2: some control structures errors not reported
+  - Squiz commenting sniffs now support non-English characters when checking for capital letters
+    -- Thanks to Roman Levishchenko for the contribution
   - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
   - Notifysend report now supports notify-send versions before 0.7.3
     -- Thanks to Ken Guest for the patch

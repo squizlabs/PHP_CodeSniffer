@@ -123,7 +123,7 @@ class Start_Tag_Incorrect
 }//end class
 
 /**
- * Sample class comment.
+ * 这是一条测试评论.
  *
  */
 class Space_At_end

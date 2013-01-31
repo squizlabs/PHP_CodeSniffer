@@ -565,4 +565,14 @@ public function variableArgs($a1, $a2)
 
 }//end variableArgs()
 
+/**
+ * 这是一条测试评论.
+ *
+ * @return void
+ */
+public function test()
+{
+
+}//end variableArgs()
+
 ?>
