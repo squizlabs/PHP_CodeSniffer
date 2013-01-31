@@ -188,7 +188,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $newlineCount += $newlineBetween;
 
             $testLong = trim($long);
-            if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+            if (preg_match('|\p{Lu}|u', $testLong[0]) === 0) {
                 $error = 'Class comment long description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
             }
@@ -216,8 +216,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'Class comment short description must be on a single line';
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
         }
-
-        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+        if (preg_match('|\p{Lu}|u', $testShort[0]) === 0) {
             $error = 'Class comment short description must start with a capital letter';
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
         }

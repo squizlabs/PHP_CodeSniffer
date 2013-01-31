@@ -249,7 +249,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $newlineCount += $newlineBetween;
 
             $testLong = trim($long);
-            if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+            if (preg_match('|\p{Lu}|u', $testLong[0]) === 0) {
                 $error = 'Function comment long description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
             }
@@ -278,7 +278,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
         }
 
-        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+        if (preg_match('|\p{Lu}|u', $testShort[0]) === 0) {
             $error = 'Function comment short description must start with a capital letter';
             $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
         }
@@ -735,7 +735,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     // Param comments must start with a capital letter and
                     // end with the full stop.
                     $firstChar = $paramComment{0};
-                    if (preg_match('|[A-Z]|', $firstChar) === 0) {
+                    if (preg_match('|\p{Lu}|u', $firstChar) === 0) {
                         $error = 'Param comment must start with a capital letter';
                         $this->currentFile->addError($error, $errorPos, 'ParamCommentNotCapital');
                     }
