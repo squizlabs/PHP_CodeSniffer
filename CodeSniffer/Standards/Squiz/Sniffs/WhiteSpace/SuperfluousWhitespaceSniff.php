@@ -130,21 +130,16 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 // and the second last token is always the last piece of content in
                 // the file. If the second last token is whitespace, there was
                 // whitespace at the end of the file.
-                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-                    return;
-                }
+                $stackPtr--;
             } else if ($phpcsFile->tokenizerType === 'CSS') {
                 // The last two tokens are always the close tag and whitespace
                 // inserted when tokenizsed and the third last token is always the
                 // last piece of content in the file. If the third last token is
                 // whitespace, there was whitespace at the end of the file.
-                if ($tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
-                    return;
-                }
-
-                // Adjust the pointer to give the correct line number for the error.
                 $stackPtr -= 2;
-            } else {
+            }
+
+            if ($phpcsFile->tokenizerType === 'PHP') {
                 if (isset($tokens[($stackPtr + 1)]) === false) {
                     // The close PHP token is the last in the file.
                     return;
@@ -164,6 +159,20 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                         return;
                     }
                 }
+            } else {
+                // The pointer is now looking at the last content in the file and
+                // not the fake PHP end tag the tokenizer inserted.
+                if ($tokens[$stackPtr]['code'] !== T_WHITESPACE) {
+                    return;
+                }
+
+                // Allow a single newline at the end of the last line in the file.
+                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
+                    && $tokens[$stackPtr]['content'] === $phpcsFile->eolChar
+                ) {
+                    return;
+                }
+
             }
 
             $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
