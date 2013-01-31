@@ -138,7 +138,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 // inserted when tokenizsed and the third last token is always the
                 // last piece of content in the file. If the third last token is
                 // whitespace, there was whitespace at the end of the file.
-                if ($tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
+                if ($tokens[($stackPtr - 2)]['code'] !== T_WHITESPACE || $tokens[($stackPtr - 3)]['code'] !== T_WHITESPACE) {
                     return;
                 }
 
