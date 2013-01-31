@@ -675,10 +675,11 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }//end foreach
 
-        // Trim the last newline off the end of the buffer before
-        // adding it's contents to the token stack.
-        // This is so we don't count the very final newline of a file.
-        $buffer = substr($buffer, 0, -1);
+        $tokens[] = array(
+                'code'    => T_CLOSE_TAG,
+                'type'    => 'T_CLOSE_TAG',
+                'content' => '',
+        );
 
         if (empty($buffer) === false) {
             // Buffer contains whitespace from the end of the file, and not
@@ -694,12 +695,6 @@ class PHP_CodeSniffer_Tokenizers_JS
                 echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
             }
         }
-
-        $tokens[] = array(
-                     'code'    => T_CLOSE_TAG,
-                     'type'    => 'T_CLOSE_TAG',
-                     'content' => '',
-                    );
 
         /*
             Now that we have done some basic tokenizing, we need to
