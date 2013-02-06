@@ -209,6 +209,11 @@ switch ($foo) {
         return $bar;
 }
 
+function foo()
+{
+    return $bar->{$action . 'JsonAction'}();
+}
+
 exit();
 
 
