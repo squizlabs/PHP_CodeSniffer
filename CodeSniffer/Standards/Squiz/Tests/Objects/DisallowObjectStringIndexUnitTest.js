@@ -4,7 +4,7 @@ function test(id)
     this.id = id;
 
 }
-
+/**/
 test.prototype = {
     init: function()
     {

@@ -104,6 +104,11 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
 
                     $functionName = 'object.'.$functionName;
                 } else {
+                    // Make sure it isn't a member var.
+                    if ($tokens[($i - 1)]['code'] === T_OBJECT_OPERATOR) {
+                        continue;
+                    }
+
                     $functionName .= '()';
                 }
 

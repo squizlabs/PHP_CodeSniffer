@@ -49,4 +49,10 @@ for ($i = 0; $i < strlen($this->string); $i++) {
 for ($i = sizeof($array); $i > 0; $i--) {
 }
 
+do {
+    echo $a->count;
+    $a->count--;
+} while($a->count);
+
+for ($i = 0; $i < $a->count; $i++) {}
 ?>

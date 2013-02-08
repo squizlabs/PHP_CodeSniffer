@@ -481,14 +481,26 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                         if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
                             // We've found something larger that matches
-                            // so we can ignore this char.
-                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                $type = $this->tokenValues[strtolower($charBuffer)];
-                                echo "\t\t* look ahead found more specific token ($type), ignoring $i *".PHP_EOL;
-                            }
+                            // so we can ignore this char. Except for 1 very specific
+                            // case where a comment like /**/ needs to tokenize as
+                            // T_COMMENT and not T_DOC_COMMENT.
+                            $oldType = $this->tokenValues[strtolower($buffer)];
+                            $newType = $this->tokenValues[strtolower($charBuffer)];
+                            if ($oldType === 'T_COMMENT'
+                                && $newType === 'T_DOC_COMMENT'
+                                && $chars[($i + $x + 1)] === '/'
+                            ) {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* look ahead ignored T_DOC_COMMENT, continuing *".PHP_EOL;
+                                }
+                            } else {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* look ahead found more specific token ($newType), ignoring $i *".PHP_EOL;
+                                }
 
-                            $matchedToken = true;
-                            break;
+                                $matchedToken = true;
+                                break;
+                            }
                         }
                     }//end for
                 }//end if
@@ -663,14 +675,8 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }//end foreach
 
-        // Trim the last newline off the end of the buffer before
-        // adding it's contents to the token stack.
-        // This is so we don't count the very final newline of a file.
-        $buffer = substr($buffer, 0, -1);
-
         if (empty($buffer) === false) {
-            // Buffer contains whitespace from the end of the file, and not
-            // just the final newline.
+            // Buffer contains whitespace from the end of the file.
             $tokens[] = array(
                          'code'    => T_WHITESPACE,
                          'type'    => 'T_WHITESPACE',
@@ -687,7 +693,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                      'code'    => T_CLOSE_TAG,
                      'type'    => 'T_CLOSE_TAG',
                      'content' => '',
-                    );
+        );
 
         /*
             Now that we have done some basic tokenizing, we need to

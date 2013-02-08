@@ -223,7 +223,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($tokens[$start]['code'] === T_OPEN_CURLY_BRACKET) {
-                $start = $tokens[$start]['scope_closer'];
+                $start = $tokens[$start]['bracket_closer'];
                 continue;
             }
 

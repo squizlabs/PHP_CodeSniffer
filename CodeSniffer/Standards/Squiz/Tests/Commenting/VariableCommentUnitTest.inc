@@ -184,6 +184,13 @@ class VariableCommentUnitTest2
      */
      private $_varCaseTypeCheck;
 
+     /**
+      * 这是一条测试评论.
+      *
+      * @var string
+      */
+     public $foo;
+
 }//end class
 
 ?>

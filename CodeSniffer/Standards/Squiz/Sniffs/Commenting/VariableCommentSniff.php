@@ -148,7 +148,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $newlineCount += $newlineBetween;
 
                 $testLong = trim($long);
-                if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
+                if (preg_match('|\p{Lu}|u', $testLong[0]) === 0) {
                     $error = 'Variable comment long description must start with a capital letter';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount), 'LongNotCapital');
                 }
@@ -162,7 +162,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
             }
 
-            if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
+            if (preg_match('|\p{Lu}|u', $testShort[0]) === 0) {
                 $error = 'Variable comment short description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + 1), 'ShortNotCapital');
             }

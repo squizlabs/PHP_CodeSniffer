@@ -1497,7 +1497,7 @@ class PHP_CodeSniffer_File
                     echo "=> Found semicolon before scope opener for $stackPtr (T_IF), bailing".PHP_EOL;
                 }
 
-                return $stackPtr;
+                return $i;
             }
 
             // Is this an opening condition ?

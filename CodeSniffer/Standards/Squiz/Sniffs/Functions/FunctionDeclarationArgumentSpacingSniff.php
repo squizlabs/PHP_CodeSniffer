@@ -125,7 +125,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
                 $spacesAfter = 0;
                 if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
-                    $spacesAfter = strlen($tokens[($nextParam + 1)]['content']);
+                    $spacesAfter = strlen($tokens[($nextToken + 1)]['content']);
                 }
 
                 if ($spacesAfter !== $this->equalsSpacing) {
