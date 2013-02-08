@@ -21,8 +21,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <api>1.5.0RC1</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>beta</release>
+  <api>beta</api>
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
@@ -1988,8 +1988,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>1.5.0RC1</api>
    </version>
    <stability>
-    <release>stable</release>
-    <api>stable</api>
+    <release>beta</release>
+    <api>beta</api>
    </stability>
    <date>2013-02-08</date>
    <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
