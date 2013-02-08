@@ -2098,6 +2098,26 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>1.5.0RC1</release>
+    <api>1.5.0RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-02-08</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Reports have been completely rewritten to consume far less memory
+      -- Each report is incrementally written to the file system during a run and then printed out when the run ends
+      -- There is no longer a need to keep the list of errors and warnings in memory during a run
+    - Multi-file sniff support has been removed because they are too memory intensive
+      -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
+      -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+   </notes>
+  </release>
+  <release>
+   <version>
     <release>1.4.4</release>
     <api>1.4.4</api>
    </version>
