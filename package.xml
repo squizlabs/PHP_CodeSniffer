@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2012-12-04</date>
- <time>14:12:00</time>
+ <date>2013-02-07</date>
+ <time>10:10:00</time>
  <version>
   <release>1.4.4</release>
   <api>1.4.4</api>
@@ -2096,6 +2096,69 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.5.0RC1</release>
+    <api>1.5.0RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-02-08</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Reports have been completely rewritten to consume far less memory
+      -- Each report is incrementally written to the file system during a run and then printed out when the run ends
+      -- There is no longer a need to keep the list of errors and warnings in memory during a run
+    - Multi-file sniff support has been removed because they are too memory intensive
+      -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
+      -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.4.4</release>
+    <api>1.4.4</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-02-07</date>
+   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <notes>
+    - Ignored lines no longer cause the summary report to show incorrect error and warning counts
+      -- Thanks to Bert Van Hauwaert for the patch
+    - Added Generic CSSLintSniff to run CSSLint over a CSS file and report warnings
+      -- Set full command to run CSSLint using phpcs --config-set csslint_path /path/to/csslint
+      -- Thanks to Roman Levishchenko for the contribution
+    - Added PSR2 ControlStructureSpacingSniff to ensure there are no spaces before and after parenthesis in control structures
+      -- Fixes bug #19732 : PSR2: some control structures errors not reported
+    - Squiz commenting sniffs now support non-English characters when checking for capital letters
+      -- Thanks to Roman Levishchenko for the patch
+    - Generic EndFileNewlineSniff now supports JS and CSS files
+      -- Thanks to Denis Ryabkov for the patch
+    - PSR1 SideEffectsSniff no longer reports constant declarations as side effects
+    - Notifysend report now supports notify-send versions before 0.7.3
+      -- Thanks to Ken Guest for the patch
+    - PEAR and Squiz FunctionCommentSniffs no longer report errors for misaligned argument comments when they are blank
+      -- Thanks to Thomas Peterson for the patch
+    - Squiz FunctionDeclarationArgumentSpacingSniff now works correctly for equalsSpacing values greater than 0
+      -- Thanks to Klaus Purer for the patch
+    - Squiz SuperfluousWhitespaceSniff no longer throws errors for CSS files with no newline at the end
+    - Squiz SuperfluousWhitespaceSniff now allows a single newline at the end of JS and CSS files
+    - Fixed bug #19755 : Token of T_CLASS type has no scope_opener and scope_closer keys
+    - Fixed bug #19759 : Squiz.PHP.NonExecutableCode fails for return function()...
+    - Fixed bug #19763 : Use statements for traits not recognised correctly for PSR2 code style
+    - Fixed bug #19764 : Instead of for traits throws uppercase constant name errors
+    - Fixed bug #19772 : PSR2_Sniffs_Namespaces_UseDeclarationSniff does not properly recognize last use
+    - Fixed bug #19775 : False positive in NonExecutableCode sniff when not using curly braces
+    - Fixed bug #19782 : Invalid found size functions in loop when using object operator
+    - Fixed bug #19799 : config folder is not created automatically
+    - Fixed bug #19804 : JS Tokenizer wrong /**/ parsing
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.3</release>
