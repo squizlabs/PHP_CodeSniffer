@@ -233,6 +233,7 @@ class PHP_CodeSniffer
         $this->cli = new PHP_CodeSniffer_CLI();
         $this->cli->errorSeverity   = PHPCS_DEFAULT_ERROR_SEV;
         $this->cli->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
+        $this->cli->dieOnUnknownArg = false;
 
     }//end __construct()
 
