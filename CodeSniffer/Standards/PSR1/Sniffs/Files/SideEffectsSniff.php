@@ -135,7 +135,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             ) {
                 $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
                 if ($semicolon !== false) {
-                  $i = $semicolon;
+                    $i = $semicolon;
                 }
 
                 continue;
