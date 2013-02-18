@@ -28,13 +28,13 @@
 class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
 
-
     /**
     * The number of spaces code should be indented.
     *
     * @var int
     */
     public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -94,7 +94,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
-                $error = strtoupper($type).' keyword must be indented ' . $this->indent . ' spaces from SWITCH keyword';
+                $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
                 $phpcsFile->addError($error, $nextCase, $type.'Indent');
             }
 
