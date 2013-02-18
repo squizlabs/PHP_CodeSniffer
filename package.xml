@@ -17,8 +17,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2013-02-08</date>
  <time>14:08:00</time>
  <version>
-  <release>1.5.0RC1</release>
-  <api>1.5.0RC1</api>
+  <release>1.5.0RC2</release>
+  <api>1.5.0RC2</api>
+  <release>1.4.5</release>
+  <api>1.4.5</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,12 +28,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Reports have been completely rewritten to consume far less memory
-    -- Each report is incrementally written to the file system during a run and then printed out when the run ends
-    -- There is no longer a need to keep the list of errors and warnings in memory during a run
-  - Multi-file sniff support has been removed because they are too memory intensive
-    -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
-    -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+  - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the indent setting in a ruleset.xml file to change
+    -- Thanks to Asher Snyder for the patch
+  - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
+    -- This allows you to create wrapper scripts for PHPCS more easily
+  - Fixed bug #19819 : Freeze with syntax error in use statement
+  - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
  </notes>
  <contents>
   <dir name="/">

@@ -53,6 +53,16 @@ class PHP_CodeSniffer_CLI
      */
     public $warningSeverity = 0;
 
+    /**
+     * Whether or not to kill the process when an unknown command line arg is found.
+     *
+     * If FALSE, arguments that are not command line options or file/directory paths
+     * will be ignored and execution will continue.
+     *
+     * @var bool
+     */
+    public $dieOnUnknownArg = true;
+
 
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
@@ -471,6 +481,10 @@ class PHP_CodeSniffer_CLI
     {
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
+            if ($this->dieOnUnknownArg === false) {
+                return $values;
+            }
+
             echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
@@ -478,6 +492,10 @@ class PHP_CodeSniffer_CLI
 
         $file = realpath($arg);
         if (file_exists($file) === false) {
+            if ($this->dieOnUnknownArg === false) {
+                return $values;
+            }
+
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);

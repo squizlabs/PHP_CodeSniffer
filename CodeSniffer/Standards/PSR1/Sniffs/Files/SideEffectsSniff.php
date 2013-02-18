@@ -133,7 +133,11 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             } else if ($tokens[$i]['code'] === T_USE
                 || $tokens[$i]['code'] === T_CONST
             ) {
-                $i = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                if ($semicolon !== false) {
+                    $i = $semicolon;
+                }
+
                 continue;
             }
 
