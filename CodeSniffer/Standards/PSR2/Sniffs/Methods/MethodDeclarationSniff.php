@@ -62,7 +62,7 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
             return;
         }
 
-        if ($methodName[0] === '_' && $methodName[1] !== '_') {
+        if ($methodName[0] === '_' && isset($methodName[1]) && $methodName[1] !== '_') {
             $error = 'Method name "%s" should not be prefixed with an underscore to indicate visibility';
             $data  = array($methodName);
             $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
