@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Eloy Lafuente for the patch
   - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
     -- This allows you to create wrapper scripts for PHPCS more easily
+  - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
+    -- Thanks to Bart S for the patch
   - Fixed bug #19819 : Freeze with syntax error in use statement
   - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
  </notes>
