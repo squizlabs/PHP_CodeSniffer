@@ -860,6 +860,11 @@ class PHP_CodeSniffer
                     // We are referencing sniffs local to this ruleset.xml file.
                     $path = realpath(dirname($rulesetPath).'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
+                if ($path === false && class_exists($parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff', true)) {
+                    $className = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
+                    $reflection = new ReflectionClass($className);
+                    $path = $reflection->getFilename();
+                }
             }
         }//end if
 
