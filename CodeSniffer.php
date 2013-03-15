@@ -763,11 +763,11 @@ class PHP_CodeSniffer
             }
 
             foreach ($ruleset->rule as $rule) {
-                $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rule['ref']));
+                $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rulesetPath, $rule['ref']));
 
                 if (isset($rule->exclude) === true) {
                     foreach ($rule->exclude as $exclude) {
-                        $excludedSniffs = array_merge($excludedSniffs, $this->_expandRulesetReference($exclude['name']));
+                        $excludedSniffs = array_merge($excludedSniffs, $this->_expandRulesetReference($rulesetPath, $exclude['name']));
                     }
                 }
             }//end foreach
@@ -795,12 +795,13 @@ class PHP_CodeSniffer
     /**
      * Expand a ruleset sniff reference into a list of sniff files.
      *
-     * @param string $sniff The sniff reference from the rulset.xml file.
+     * @param string $rulesetPath The ruleset.xml file
+     * @param string $sniff       The sniff reference from the ruleset.xml file.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception If the sniff reference is invalid.
      */
-    private function _expandRulesetReference($sniff)
+    private function _expandRulesetReference($rulesetPath, $sniff)
     {
         $referencedSniffs = array();
 
@@ -854,6 +855,10 @@ class PHP_CodeSniffer
                     // looking directly in the passed standard dir to see if it is
                     // installed in there.
                     $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                }
+                if ($path === false && basename(dirname($rulesetPath)) === $parts[0]) {
+                    // We are referencing sniffs local to this ruleset.xml file.
+                    $path = realpath(dirname($rulesetPath).'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
             }
         }//end if
