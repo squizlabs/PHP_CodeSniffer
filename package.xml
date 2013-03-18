@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Bart S for the patch
   - Fixed bug #19819 : Freeze with syntax error in use statement
   - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+  - Fixed bug #19859 : CodeSniffer::setIgnorePatterns API changed
  </notes>
  <contents>
   <dir name="/">

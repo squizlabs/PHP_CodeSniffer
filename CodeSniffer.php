@@ -321,7 +321,10 @@ class PHP_CodeSniffer
      *
      * Patterns are not case sensitive.
      *
-     * @param array $patterns An array of ignore patterns.
+     * @param array $patterns An array of ignore patterns. The pattern is the key
+     *                        and the value is either "absolute" or "relative",
+     *                        depending on how the pattern should be applied to a
+     *                        file path.
      *
      * @return void
      */
@@ -1219,6 +1222,13 @@ class PHP_CodeSniffer
             if (is_array($pattern) === true) {
                 // A sniff specific ignore pattern.
                 continue;
+            }
+
+            // Maintains backwards compatibility in case the ignore pattern does
+            // not have a relative/absolute value.
+            if (is_int($pattern) === true) {
+                $pattern = $type;
+                $type    = 'absolute';
             }
 
             $replacements = array(
