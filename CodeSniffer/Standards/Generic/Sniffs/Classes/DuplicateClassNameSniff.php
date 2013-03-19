@@ -60,7 +60,14 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
         $tokens = $phpcsFile->getTokens();
 
         $namespace = '';
-        $stackPtr  = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), 0);
+
+	$endBlockPtr = $phpcsFile->findNext( array( T_CLOSE_TAG ), $stackPtr );
+	if(  $endBlockPtr === false   ){
+		$endBlockPtr = null;
+	}
+
+        $stackPtr  = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), $stackPtr, $endBlockPtr );
+
         while ($stackPtr !== false) {
             // Keep track of what namespace we are in.
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
@@ -101,7 +108,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                 }
             }
 
-            $stackPtr = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), ($stackPtr + 1));
+            $stackPtr = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), ($stackPtr + 1), $endBlockPtr );
         }//end while
 
     }//end process()
