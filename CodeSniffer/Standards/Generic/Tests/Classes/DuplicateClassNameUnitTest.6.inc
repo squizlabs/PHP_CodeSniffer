@@ -6,3 +6,7 @@ class Test{
     <?php 
    }
 }
+
+class Test{
+
+}
