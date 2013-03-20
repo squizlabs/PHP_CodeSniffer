@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
   - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Asher Snyder for the patch
