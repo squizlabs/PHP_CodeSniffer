@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
+    -- The PSR2 and Squiz standards now use this sniff
+  - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
+    -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
   - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
   - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
