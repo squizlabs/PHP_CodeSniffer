@@ -44,13 +44,19 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                                   );
 
     /**
-     * If TRUE, whitespace rules are not checked for blank lines.
-     *
-     * Blank lines are those that contain only whitespace.
+     * If TRUE, whitespaces are not checked on blank lines.
      *
      * @var boolean
      */
-    public $ignoreBlankLines = false;
+    public $ignoreWhitespaceOnBlankLines = false;
+
+
+    /**
+     * If TRUE, multiple blank lines in a function are not checked
+     *
+     * @var boolean
+     */
+    public $ignoreMultipleBlanklines = false;
 
 
     /**
@@ -189,7 +195,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
             // Ignore blank lines if required.
-            if ($this->ignoreBlankLines === true
+            if ($this->ignoreWhitespaceOnBlankLines === true
                 && $tokens[($stackPtr - 1)]['line'] !== $tokens[$stackPtr]['line']
             ) {
                 return;
@@ -206,7 +212,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for multiple blanks lines in a function.
             */
 
-            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
+            if (!$this->ignoreMultipleBlanklines && $phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
                 if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line'] && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']) {
                     // This is an empty line and the line before this one is not
                     //  empty, so this could be the start of a multiple empty

@@ -22,7 +22,7 @@ function myFunction()
 
 
 }
-
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreMultipleBlanklines true
 function myFunction2()
 {
     alert('code here');
@@ -31,8 +31,9 @@ function myFunction2()
     alert('code here');
 
 }
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreMultipleBlanklines false
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreWhitespaceOnBlankLines true
 
 function myFunction2()
 {
@@ -42,6 +43,6 @@ function myFunction2()
     
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreWhitespaceOnBlankLines false
 
 

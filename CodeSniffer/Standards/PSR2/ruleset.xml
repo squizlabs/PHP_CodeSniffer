@@ -37,7 +37,7 @@
  <!-- There MUST NOT be trailing whitespace at the end of non-blank lines. -->
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
   <properties>
-   <property name="ignoreBlankLines" value="true"/>
+   <property name="ignoreWhitespaceOnBlankLines" value="true"/>
    </properties>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
