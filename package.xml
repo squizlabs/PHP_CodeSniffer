@@ -407,6 +407,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowerCaseKeywordSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="NoSilencedErrorsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -625,6 +628,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="LowerCaseKeywordUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowerCaseKeywordUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.inc" role="test" />
