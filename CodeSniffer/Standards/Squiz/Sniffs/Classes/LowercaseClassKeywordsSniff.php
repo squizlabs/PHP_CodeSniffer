@@ -41,6 +41,7 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
         return array(
                 T_CLASS,
                 T_INTERFACE,
+                T_TRAIT,
                 T_EXTENDS,
                 T_IMPLEMENTS,
                 T_ABSTRACT,
