@@ -61,6 +61,9 @@
 
  <!-- 2.5 Keywords and True/False/Null -->
 
+ <!-- PHP keywords MUST be in lower case. -->
+ <rule ref="Generic.PHP.LowerCaseKeyword"/>
+
  <!-- The PHP constants true, false, and null MUST be in lower case. -->
  <rule ref="Generic.PHP.LowerCaseConstant"/>
 
