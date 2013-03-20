@@ -66,6 +66,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_EXIT,
                 T_EXTENDS,
                 T_FINAL,
+                T_FINALLY,
                 T_FOR,
                 T_FOREACH,
                 T_FUNCTION,
