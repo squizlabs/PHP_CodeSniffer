@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ScopeIndentSniff now has a setting to specify a list of tokens that should be ignored
     -- The first token on the line is checked and the whole line is ignored if the token is in the array
     -- Thanks to Eloy Lafuente for the patch
+  - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
+    -- Thanks to Anthon Pang for the patch
   - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
     -- This allows you to create wrapper scripts for PHPCS more easily
   - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
