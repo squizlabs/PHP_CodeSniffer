@@ -44,9 +44,19 @@ class Generic_Tests_Files_EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'EndFileNoNewlineUnitTest.1.inc':
+        case 'EndFileNoNewlineUnitTest.1.css':
+        case 'EndFileNoNewlineUnitTest.1.js':
         case 'EndFileNoNewlineUnitTest.2.inc':
             return array(
                     3 => 1,
+                   );
+            break;
+        
+        
+        case 'EndFileNoNewlineUnitTest.2.css':
+        case 'EndFileNoNewlineUnitTest.2.js':
+            return array(
+                    2 => 1,
                    );
             break;
         default:

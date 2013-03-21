@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
     -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
   - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
+  - Generic EndFileNoNewlineSniff now supports checking of CSS and JS files
   - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Asher Snyder for the patch
@@ -525,8 +526,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
