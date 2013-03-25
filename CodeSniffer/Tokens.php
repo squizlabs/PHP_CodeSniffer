@@ -90,9 +90,13 @@ if (defined('T_INSTEADOF') === false) {
     define('T_INSTEADOF', 1056);
 }
 
+if (defined('T_CALLABLE') === false) {
+    define('T_CALLABLE', 1057);
+}
+
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1057);
+    define('T_FINALLY', 1058);
 }
 
 /**

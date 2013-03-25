@@ -59,9 +59,22 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
     {
         $tokens = $phpcsFile->getTokens();
 
-        $namespace = '';
-        $stackPtr  = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), 0);
+        $namespace  = '';
+        $findTokens = array(
+                       T_CLASS,
+                       T_INTERFACE,
+                       T_NAMESPACE,
+                       T_CLOSE_TAG,
+                      );
+
+        $stackPtr = $phpcsFile->findNext($findTokens, ($stackPtr + 1));
         while ($stackPtr !== false) {
+            if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
+                // We can stop here. The sniff will continue from the next open
+                // tag when PHPCS reaches that token, if there is one.
+                return;
+            }
+
             // Keep track of what namespace we are in.
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
                 $nsEnd = $phpcsFile->findNext(
@@ -101,7 +114,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                 }
             }
 
-            $stackPtr = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_NAMESPACE), ($stackPtr + 1));
+            $stackPtr = $phpcsFile->findNext($findTokens, ($stackPtr + 1));
         }//end while
 
     }//end process()

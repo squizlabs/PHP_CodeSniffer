@@ -50,6 +50,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     public $exact = false;
 
     /**
+     * List of tokens not needing to be checked for indentation.
+     *
+     * Useful to allow Sniffs based on this to easily ignore/skip some
+     * tokens from verification. For example, inline html sections
+     * or php open/close tags can escape from here and have their own
+     * rules elsewhere.
+     *
+     * @var array
+     */
+    public $ignoreIndentationTokens = array();
+
+    /**
      * Any scope openers that should not cause an indent.
      *
      * @var array(int)
@@ -223,6 +235,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $firstToken = $i;
 
                 $column = $tokens[$firstToken]['column'];
+
+                // Ignore the token for indentation if it's in the ignore list.
+                if (in_array($tokens[$firstToken]['code'], $this->ignoreIndentationTokens)) {
+                    continue;
+                }
 
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {

@@ -76,6 +76,11 @@ class Generic_Tests_Classes_DuplicateClassNameUnitTest extends AbstractSniffUnit
                     7 => 1,
                    );
             break;
+        case 'DuplicateClassNameUnitTest.6.inc':
+            return array(
+                    10 => 1,
+                   );
+            break;
         default:
             return array();
             break;

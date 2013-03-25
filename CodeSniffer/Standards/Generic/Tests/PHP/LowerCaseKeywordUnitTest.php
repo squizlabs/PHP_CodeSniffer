@@ -1,20 +1,19 @@
 <?php
 /**
- * Unit test class for the FunctionSpacing sniff.
+ * Unit test class for the LowerCaseKeyword sniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for the FunctionSpacing sniff.
+ * Unit test class for the LowerCaseKeyword sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -22,13 +21,12 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_PHP_LowerCaseKeywordUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -43,26 +41,12 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                2   => 1,
-                9   => 1,
-                18  => 1,
-                25  => 1,
-                29  => 1,
-                35  => 1,
-                38  => 1,
-                40  => 1,
-                55  => 1,
-                74  => 1,
-                85  => 1,
-                87  => 1,
-                93  => 2,
-                115 => 1,
-                134 => 1,
-                147 => 2,
-                164 => 1,
-                198 => 1,
-                213 => 1,
-                232 => 1,
+                10 => 3,
+                11 => 4,
+                12 => 1,
+                13 => 3,
+                14 => 7,
+                15 => 1,
                );
 
     }//end getErrorList()

@@ -28,13 +28,34 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
+    -- The PSR2 and Squiz standards now use this sniff
+  - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
+  - Squiz FunctionSpacingSniff now has a setting to specify how many lines there should between functions (request #19843)
+    -- Default remains at 2
+    -- Override the "spacing" setting in a ruleset.xml file to change
+  - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
+    -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
+  - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
+  - Generic EndFileNoNewlineSniff now supports checking of CSS and JS files
   - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Asher Snyder for the patch
+  - Generic ScopeIndentSniff now has a setting to specify a list of tokens that should be ignored
+    -- The first token on the line is checked and the whole line is ignored if the token is in the array
+    -- Thanks to Eloy Lafuente for the patch
+  - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
+    -- Thanks to Anthon Pang for the patch
+  - Improved support for including rulesets inside other rulesets using relative paths
   - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
     -- This allows you to create wrapper scripts for PHPCS more easily
+  - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
+    -- Thanks to Bart S for the patch
+  - Generic DuplicateClassNameSniff no longer reports an invalid error if multiple PHP open tags exist in a file
+  - Generic DuplicateClassNameSniff no longer reports duplicate errors if multiple PHP open tags exist in a file
   - Fixed bug #19819 : Freeze with syntax error in use statement
   - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+  - Fixed bug #19859 : CodeSniffer::setIgnorePatterns API changed
  </notes>
  <contents>
   <dir name="/">
@@ -343,7 +364,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowerCaseKeywordSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="NoSilencedErrorsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SAPIUsageSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
@@ -379,6 +406,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -453,8 +481,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.css" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
@@ -562,8 +596,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LowerCaseConstantUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="LowerCaseKeywordUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LowerCaseKeywordUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SAPIUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SAPIUsageUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />

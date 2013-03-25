@@ -13,6 +13,7 @@
  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
  <rule ref="Generic.PHP.DeprecatedFunctions"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+ <rule ref="Generic.PHP.LowerCaseKeyword"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Generic.WhiteSpace.ScopeIndent"/>

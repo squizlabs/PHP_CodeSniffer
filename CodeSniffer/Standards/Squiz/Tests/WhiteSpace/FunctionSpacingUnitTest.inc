@@ -185,6 +185,57 @@ class MyClass
 
 }//end class
 
+// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 1
+
+interface MyInterface
+{
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1();
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func2();
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func3();
+
+
+}//end interface
+
+class MyClass
+{
+
+    protected $tag = '';
+
+    protected $tag = '';
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {
+
+    }//end func1()
+
+
+}//end class
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 2
+
 // Closures should be ignored.
 preg_replace_callback(
     '~-([a-z])~',

@@ -30,6 +30,13 @@
 class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of blank lines between functions.
+     *
+     * @var int
+     */
+    public $spacing = 2;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -44,7 +51,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
 
     /**
-     * Processes this sniff, when one of its tokens is encountered.
+     * Processes this sniff when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
@@ -54,7 +61,8 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
+        $tokens        = $phpcsFile->getTokens();
+        $this->spacing = (int) $this->spacing;
 
         /*
             Check the number of blank lines
@@ -68,7 +76,6 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $closer = $tokens[$stackPtr]['scope_closer'];
         }
 
-        // There needs to be 2 blank lines after the closer.
         $nextLineToken = null;
         for ($i = $closer; $i < $phpcsFile->numTokens; $i++) {
             if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
@@ -93,9 +100,17 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             }
         }
 
-        if ($foundLines !== 2) {
-            $error = 'Expected 2 blank lines after function; %s found';
-            $data  = array($foundLines);
+        if ($foundLines !== $this->spacing) {
+            $error = 'Expected %s blank line';
+            if ($this->spacing !== 1) {
+                $error .= 's';
+            }
+
+            $error .= ' after function; %s found';
+            $data   = array(
+                       $this->spacing,
+                       $foundLines
+                      );
             $phpcsFile->addError($error, $closer, 'After', $data);
         }
 
@@ -156,9 +171,17 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             }//end while
         }//end if
 
-        if ($foundLines !== 2) {
-            $error = 'Expected 2 blank lines before function; %s found';
-            $data  = array($foundLines);
+        if ($foundLines !== $this->spacing) {
+            $error = 'Expected %s blank line';
+            if ($this->spacing !== 1) {
+                $error .= 's';
+            }
+
+            $error .= ' before function; %s found';
+            $data   = array(
+                       $this->spacing,
+                       $foundLines
+                      );
             $phpcsFile->addError($error, $stackPtr, 'Before', $data);
         }
 

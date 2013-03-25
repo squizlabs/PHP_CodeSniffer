@@ -1,33 +1,31 @@
 <?php
 /**
- * Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff.
+ * Generic_Sniffs_PHP_SAPIUsageSniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff.
+ * Generic_Sniffs_PHP_SAPIUsageSniff.
  *
- * Ensures all class keywords are lowercase.
+ * Ensures the PHP_SAPI constant is used instead of php_sapi_name().
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
 {
 
 
@@ -38,17 +36,7 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-                T_EXTENDS,
-                T_IMPLEMENTS,
-                T_ABSTRACT,
-                T_FINAL,
-                T_VAR,
-                T_CONST,
-               );
+        return array(T_STRING);
 
     }//end register()
 
@@ -66,15 +54,23 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
-            $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
-            $data  = array(
-                      strtoupper($content),
-                      strtolower($content),
-                      $content,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
+        $ignore = array(
+                   T_DOUBLE_COLON,
+                   T_OBJECT_OPERATOR,
+                   T_FUNCTION,
+                   T_CONST,
+                  );
+
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
+            // Not a call to a PHP function.
+            return;
+        }
+
+        $function = strtolower($tokens[$stackPtr]['content']);
+        if ($function === 'php_sapi_name') {
+            $error = 'Use the PHP_SAPI constant instead of calling php_sapi_name()';
+            $phpcsFile->addError($error, $stackPtr, 'FunctionFound');
         }
 
     }//end process()
