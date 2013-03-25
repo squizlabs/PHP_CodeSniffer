@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Eloy Lafuente for the patch
   - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
     -- Thanks to Anthon Pang for the patch
+  - Improved support for including rulesets inside other rulesets using relative paths
   - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
     -- This allows you to create wrapper scripts for PHPCS more easily
   - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
