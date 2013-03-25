@@ -31,7 +31,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 {
 
     /**
-     * The limit that the length of a line should not exceed.
+     * The number of blank lines between functions.
      *
      * @var int
      */
@@ -51,7 +51,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
 
     /**
-     * Processes this sniff, when one of its tokens is encountered.
+     * Processes this sniff when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
