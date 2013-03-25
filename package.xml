@@ -28,6 +28,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
     -- The PSR2 and Squiz standards now use this sniff
+  - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
+  - Squiz FunctionSpacingSniff now has a setting to specify how many lines there should between functions (request #19843)
+    -- Default remains at 2
+    -- Override the "spacing" setting in a ruleset.xml file to change
   - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
     -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
   - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
@@ -421,6 +425,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="NoSilencedErrorsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SAPIUsageSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -650,6 +657,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="NoSilencedErrorsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SAPIUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SAPIUsageUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />
