@@ -540,17 +540,7 @@ class PHP_CodeSniffer
         $includedSniffs = array();
         $excludedSniffs = array();
 
-        $rulesetDir = dirname($rulesetPath);
-        if (in_array($rulesetDir, self::$rulesetDirs) === true) {
-            // We've already processed this ruleset.
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t* ruleset already processed; skipping *".PHP_EOL;
-            }
-
-            return array();
-        }
-
+        $rulesetDir          = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.'/Sniffs') === true) {
@@ -732,19 +722,35 @@ class PHP_CodeSniffer
             } else {
                 // Work out the sniff path.
                 $parts = explode('.', $ref);
-                if (count($parts) < 3) {
-                    $error = "Referenced sniff $ref does not exist";
-                    throw new PHP_CodeSniffer_Exception($error);
+
+                if (count($parts) === 1) {
+                    // A whole standard?
+                    $path = '';
+                } else if (count($parts) === 2) {
+                    // A directory of sniffs?
+                    $path = '/Sniffs/'.$parts[1];
+                } else {
+                    // A single sniff?
+                    $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 }
 
-                $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
-                $ref  = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+                $ref = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$parts[0].$path);
                 if ($ref === false) {
                     // The sniff is not locally installed, so check if it is being
-                    // referenced as a remote sniff outside the install. We do this by
-                    // looking directly in the passed standard dir to see if it is
-                    // installed in there.
-                    $ref = realpath($rulesetDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                    // referenced as a remote sniff outside the install. We do this
+                    // by looking through all directories where we have found ruleset
+                    // files before, looking for ones for this particular standard,
+                    // and seeing if it is in there.
+                    foreach (self::$rulesetDirs as $dir) {
+                        if (basename($dir) !== $parts[0]) {
+                            continue;
+                        }
+
+                        $ref = realpath($dir.$path);
+                        if ($ref !== false) {
+                            break;
+                        }
+                    }
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -776,7 +782,7 @@ class PHP_CodeSniffer
             }
         } else {
             if (is_file($ref) === false) {
-                $error = "Referenced sniff $ref does not exist";
+                $error = "Referenced sniff \"$ref\" does not exist";
                 throw new PHP_CodeSniffer_Exception($error);
             }
 

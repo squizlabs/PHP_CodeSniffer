@@ -31,8 +31,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- May mean that sniffs that were previously ignored are now being included when importing external rulesets
     -- Ruleset processing output can be seen by using the -vv command line argument
     -- Internal sniff registering functions have all changed, so please review custom scripts
-  - You can now pass multiple coding standards on the command line, comma separated
+  - You can now pass multiple coding standards on the command line, comma separated (request #19144)
     -- Works with built-in or custom standards and rulesets, or a mix of both
+  - You can now exclude directories or whole standards in a ruleset XML file (request #19731)
+    -- e.g., exclude "Generic.Commenting" or just "Generic"
+    -- You can also pass in a path to a directory instead, if you know it
   - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
     -- The PSR2 and Squiz standards now use this sniff
   - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
