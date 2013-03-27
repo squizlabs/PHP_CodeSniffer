@@ -84,7 +84,7 @@ class PHP_CodeSniffer
     private static $_resolveTokenCache = array();
 
     /**
-     * The directory to search for sniffs in.
+     * The directories that the processed rulesets are in.
      *
      * This is declared static because it is also used in the
      * autoloader to look for sniffs outside the PHPCS install.
@@ -399,7 +399,10 @@ class PHP_CodeSniffer
 
         $sniffs = array();
         foreach ($standards as $standard) {
-            $standard = $this->getInstalledStandardPath($standard);
+            $installed = $this->getInstalledStandardPath($standard);
+            if ($installed !== null) {
+                $standard = $installed;
+            }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
                 $ruleset = simplexml_load_file($standard);
