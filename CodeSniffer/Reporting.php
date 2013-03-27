@@ -137,7 +137,7 @@ class PHP_CodeSniffer_Reporting
                 }
 
                 if ($output === null) {
-                    $output = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+                    $output = getcwd().'/phpcs-'.$report.'.tmp';
                 }
 
                 file_put_contents($output, $generatedReport, $flags);
@@ -181,7 +181,7 @@ class PHP_CodeSniffer_Reporting
             $toScreen = false;
             ob_start();
         } else {
-            $filename = PHPCS_CWD.'/phpcs-'.$report.'.tmp';
+            $filename = getcwd().'/phpcs-'.$report.'.tmp';
             $toScreen = true;
         }
 

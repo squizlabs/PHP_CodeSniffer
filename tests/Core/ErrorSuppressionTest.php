@@ -37,8 +37,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressError()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('PEAR', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
-        $phpcs->populateTokenListeners();
+        $phpcs->process(array(), 'PEAR', array('generic_sniffs_php_lowercaseconstantsniff'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
@@ -69,8 +68,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressSomeErrors()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('PEAR', array('Generic_Sniffs_PHP_LowerCaseConstantSniff'));
-        $phpcs->populateTokenListeners();
+        $phpcs->process(array(), 'Generic', array('generic_sniffs_php_lowercaseconstantsniff'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
@@ -101,8 +99,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressWarning()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Squiz', array('Generic_Sniffs_Commenting_TodoSniff'));
-        $phpcs->populateTokenListeners();
+        $phpcs->process(array(), 'Generic', array('generic_sniffs_commenting_todosniff'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
@@ -133,8 +130,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressFile()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Squiz', array('Squiz_Sniffs_Commenting_FileCommentSniff'));
-        $phpcs->populateTokenListeners();
+        $phpcs->process(array(), 'Squiz', array('squiz_sniffs_commenting_filecommentsniff'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';

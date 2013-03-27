@@ -118,7 +118,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // Get them in order.
         sort($testFiles);
 
-        self::$phpcs->process(array(), $standardName, array($sniffClass));
+        self::$phpcs->process(array(), $standardName, array(strtolower($sniffClass)));
         self::$phpcs->setIgnorePatterns(array());
 
         $failureMessages = array();

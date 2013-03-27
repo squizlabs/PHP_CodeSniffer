@@ -336,8 +336,8 @@ class PHP_CodeSniffer_CLI
 
                 // Convert the sniffs to class names.
                 foreach ($sniffs as $sniff) {
-                    $parts = explode('.', $sniff);
-                    $values['sniffs'][] = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
+                    $parts = explode('.', strtolower($sniff));
+                    $values['sniffs'][] = $parts[0].'_sniffs_'.$parts[1].'_'.$parts[2].'sniff';
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $values['reportFile'] = realpath(substr($arg, 12));
@@ -427,7 +427,7 @@ class PHP_CodeSniffer_CLI
 
                 $values['reports'][$report] = $output;
             } else if (substr($arg, 0, 9) === 'standard=') {
-                $values['standard'] = substr($arg, 9);
+                $values['standard'] = explode(',', substr($arg, 9));
             } else if (substr($arg, 0, 11) === 'extensions=') {
                 $values['extensions'] = explode(',', substr($arg, 11));
             } else if (substr($arg, 0, 9) === 'severity=') {
@@ -524,25 +524,35 @@ class PHP_CodeSniffer_CLI
 
         if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
-            $phpcs->generateDocs(
-                $values['standard'],
-                $values['files'],
-                $values['generator']
-            );
+            foreach ($values['standard'] as $standard) {
+                $phpcs->generateDocs(
+                    $standard,
+                    $values['files'],
+                    $values['generator']
+                );
+            }
             exit(0);
         }
 
-        $values['standard'] = $this->validateStandard($values['standard']);
-        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
-            // They didn't select a valid coding standard, so help them
-            // out by letting them know which standards are installed.
-            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
-            $this->printInstalledStandards();
-            exit(2);
+        // If no standard is supplied, get the default.
+        if ($values['standard'] === null) {
+            $values['standard'] = $this->validateStandard(null);
+        } else {
+            foreach ($values['standard'] as $standard) {
+                if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
+                    // They didn't select a valid coding standard, so help them
+                    // out by letting them know which standards are installed.
+                    echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+                    $this->printInstalledStandards();
+                    exit(2);
+                }
+            }
         }
 
         if ($values['explain'] === true) {
-            $this->explainStandard($values['standard']);
+            foreach ($values['standard'] as $standard) {
+                $this->explainStandard($standard);
+            }
             exit(0);
         }
 

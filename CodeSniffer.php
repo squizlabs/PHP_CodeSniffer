@@ -224,14 +224,6 @@ class PHP_CodeSniffer
             define('PHPCS_DEFAULT_WARN_SEV', 5);
         }
 
-        // Change into a directory that we know about to stop any
-        // relative path conflicts.
-        if (defined('PHPCS_CWD') === false) {
-            define('PHPCS_CWD', getcwd());
-        }
-
-#chdir(dirname(__FILE__).'/CodeSniffer/');
-
         // Set default CLI object in case someone is running us
         // without using the command line script.
         $this->cli = new PHP_CodeSniffer_CLI();
@@ -242,21 +234,6 @@ class PHP_CodeSniffer
         $this->reporting = new PHP_CodeSniffer_Reporting();
 
     }//end __construct()
-
-
-    /**
-     * Destructs a PHP_CodeSniffer object.
-     *
-     * Restores the current working directory to what it
-     * was before we started our run.
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        chdir(PHPCS_CWD);
-
-    }//end __destruct()
 
 
     /**
@@ -387,30 +364,26 @@ class PHP_CodeSniffer
     /**
      * Processes the files/directories that PHP_CodeSniffer was constructed with.
      *
-     * @param string|array $files    The files and directories to process. For
-     *                               directories, each sub directory will also
-     *                               be traversed for source files.
-     * @param string       $standard The set of code sniffs we are testing
-     *                               against.
-     * @param array        $sniffs   The sniff names to restrict the allowed
-     *                               listeners to.
-     * @param boolean      $local    If true, don't recurse into directories.
+     * @param string|array $files        The files and directories to process. For
+     *                                   directories, each sub directory will also
+     *                                   be traversed for source files.
+     * @param string|array $standards    The set of code sniffs we are testing
+     *                                   against.
+     * @param array        $restrictions The sniff names to restrict the allowed
+     *                                   listeners to.
+     * @param boolean      $local        If true, don't recurse into directories.
      *
      * @return void
      * @throws PHP_CodeSniffer_Exception If files or standard are invalid.
      */
-    public function process($files, $standard, array $sniffs=array(), $local=false)
+    public function process($files, $standards, array $restrictions=array(), $local=false)
     {
         if (is_array($files) === false) {
-            if (is_string($files) === false || $files === null) {
-                throw new PHP_CodeSniffer_Exception('$file must be a string');
-            }
-
             $files = array($files);
         }
 
-        if (is_string($standard) === false || $standard === null) {
-            throw new PHP_CodeSniffer_Exception('$standard must be a string');
+        if (is_array($standards) === false) {
+            $standards = array($standards);
         }
 
         // Reset the members.
@@ -418,30 +391,32 @@ class PHP_CodeSniffer
         $this->sniffs          = array();
         $this->ruleset         = array();
         $this->_tokenListeners = array();
+        self::$rulesetDirs     = array();
 
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
         ini_set('auto_detect_line_endings', true);
 
-        $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml');
-        if (is_file($path) === true) {
-            $standard = $path;
-        }
+        $sniffs = array();
+        foreach ($standards as $standard) {
+            $standard = $this->getInstalledStandardPath($standard);
 
-        if (PHP_CODESNIFFER_VERBOSITY === 1) {
-            $ruleset = simplexml_load_file($standard);
-            if ($ruleset !== false) {
-                $standardName = (string) $ruleset['name'];
+            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+                $ruleset = simplexml_load_file($standard);
+                if ($ruleset !== false) {
+                    $standardName = (string) $ruleset['name'];
+                }
+
+                echo "Registering sniffs in the $standardName standard... ";
+                if (count($standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
+                    echo PHP_EOL;
+                }
             }
 
-            echo "Registering sniffs in the $standardName standard... ";
-            if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                echo PHP_EOL;
-            }
-        }
+            $sniffs = array_merge($sniffs, $this->processRuleset($standard));
+        }//end foreach
 
-        $sniffs = $this->processRuleset($standard);
-        $this->registerSniffs($sniffs);
+        $this->registerSniffs($sniffs, $restrictions);
         $this->populateTokenListeners();
 
         if (PHP_CODESNIFFER_VERBOSITY === 1) {
@@ -532,11 +507,19 @@ class PHP_CodeSniffer
     }//end process()
 
 
-
-
-
-
-
+    /**
+     * Processes a single ruleset and returns a list of the sniffs it represents.
+     *
+     * Rules founds within the ruleset are processed immediately, but sniff classes
+     * are not registered by this method.
+     *
+     * @param string $rulesetPath The path to a ruleset XML file.
+     * @param int    $depth       How many nested processing steps we are in. This
+     *                            is only used for debug output.
+     *
+     * @return array
+     * @throws PHP_CodeSniffer_Exception If the ruleset path is invalid.
+     */
     public function processRuleset($rulesetPath, $depth=0)
     {
         $rulesetPath = realpath($rulesetPath);
@@ -555,6 +538,16 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         $rulesetDir = dirname($rulesetPath);
+        if (in_array($rulesetDir, self::$rulesetDirs) === true) {
+            // We've already processed this ruleset.
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t* ruleset already processed; skipping *".PHP_EOL;
+            }
+
+            return array();
+        }
+
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.'/Sniffs') === true) {
@@ -563,35 +556,8 @@ class PHP_CodeSniffer
                 echo "\tAdding sniff files from \".../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
             }
 
-            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($rulesetDir.'/Sniffs'));
-            foreach ($di as $file) {
-                $fileName = $file->getFilename();
-
-                // Skip hidden files.
-                if (substr($fileName, 0, 1) === '.') {
-                    continue;
-                }
-
-                // We are only interested in PHP and sniff files.
-                $fileParts = explode('.', $fileName);
-                if (array_pop($fileParts) !== 'php') {
-                    continue;
-                }
-
-                $basename = basename($fileName, '.php');
-                if (substr($basename, -5) !== 'Sniff') {
-                    continue;
-                }
-
-                $path = $file->getPathname();
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> $path".PHP_EOL;
-                }
-
-                $ownSniffs[] = $path;
-            }//end foreach
-        }//end if
+            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.'/Sniffs', $depth);
+        }
 
         foreach ($ruleset->rule as $rule) {
             if (isset($rule['ref']) === false) {
@@ -622,7 +588,7 @@ class PHP_CodeSniffer
                 }
             }
 
-            $this->populateCustomRules($rule, $depth);
+            $this->_processRule($rule, $depth);
         }//end foreach
 
         // Process custom ignore pattern rules.
@@ -664,19 +630,64 @@ class PHP_CodeSniffer
     }//end processRuleset()
 
 
+    /**
+     * Expands a directory into a list of sniff files within.
+     *
+     * @param string $directory The path to a directory.
+     * @param int    $depth     How many nested processing steps we are in. This
+     *                          is only used for debug output.
+     *
+     * @return array
+     */
+    private function _expandSniffDirectory($directory, $depth=0)
+    {
+        $sniffs = array();
 
+        $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+        foreach ($di as $file) {
+            $fileName = $file->getFilename();
 
+            // Skip hidden files.
+            if (substr($fileName, 0, 1) === '.') {
+                continue;
+            }
 
+            // We are only interested in PHP and sniff files.
+            $fileParts = explode('.', $fileName);
+            if (array_pop($fileParts) !== 'php') {
+                continue;
+            }
+
+            $basename = basename($fileName, '.php');
+            if (substr($basename, -5) !== 'Sniff') {
+                continue;
+            }
+
+            $path = $file->getPathname();
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t\t=> $path".PHP_EOL;
+            }
+
+            $sniffs[] = $path;
+        }//end foreach
+
+        return $sniffs;
+
+    }//end _expandSniffDirectory()
 
 
     /**
-     * Expand a ruleset sniff reference into a list of sniff files.
+     * Expands a ruleset reference into a list of sniff files.
      *
-     * @param string $sniff      The sniff reference from the ruleset.xml file.
-     * @param string $rulesetDir The directory of the ruleset.xml file.
+     * @param string $ref        The reference from the ruleset XML file.
+     * @param string $rulesetDir The directory of the ruleset XML file, used to
+     *                           evaluate relative paths.
+     * @param int    $depth      How many nested processing steps we are in. This
+     *                           is only used for debug output.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the sniff reference is invalid.
+     * @throws PHP_CodeSniffer_Exception If the reference is invalid.
      */
     private function _expandRulesetReference($ref, $rulesetDir, $depth=0)
     {
@@ -754,9 +765,11 @@ class PHP_CodeSniffer
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a directory of sniffs *".PHP_EOL;
+                    echo str_repeat("\t", $depth);
+                    echo "\t\tAdding sniff files from directory".PHP_EOL;
                 }
 
-//$referencedSniffs = $this->getSniffFiles($path);
+                return $this->_expandSniffDirectory($ref, ($depth + 1));
             }
         } else {
             if (is_file($ref) === false) {
@@ -778,80 +791,19 @@ class PHP_CodeSniffer
             }
         }//end if
 
-        return array();
-
     }//end _expandRulesetReference()
 
 
     /**
-     * Sets installed sniffs in the coding standard being used.
+     * Processes a rule from a ruleset XML file, overriding built-in defaults.
      *
-     * @param string $standard The name of the coding standard we are checking.
-     *                         Can also be a path to a custom ruleset.xml file.
-     *
-     * @return void
-     */
-    public function registerSniffs($files)
-    {
-        $listeners = array();
-
-        foreach ($files as $file) {
-            // Work out where the position of /StandardName/Sniffs/... is
-            // so we can determine what the class will be called.
-            $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
-            if ($sniffPos === false) {
-                continue;
-            }
-
-            $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
-            if ($slashPos === false) {
-                continue;
-            }
-
-            $className = substr($file, ($slashPos + 1));
-            $className = substr($className, 0, -4);
-            $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
-
-            include_once $file;
-
-            // Support the use of PHP namespaces. If the class name we included
-            // contains namespace separators instead of underscores, use this as the
-            // class name from now on.
-            $classNameNS = str_replace('_', '\\', $className);
-            if (class_exists($classNameNS, false) === true) {
-                $className = $classNameNS;
-            }
-
-// If they have specified a list of sniffs to restrict to, check
-// to see if this sniff is allowed.
-#$allowed = in_array(strtolower($className), $sniffs);
-#if (empty($sniffs) === false && $allowed === false) {
-#    continue;
-#}
-
-            $listeners[$className] = $className;
-
-            if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                echo "Registered $className".PHP_EOL;
-            }
-        }//end foreach
-
-        $this->sniffs = $listeners;
-
-    }//end registerSniffs()
-
-
-
-
-    /**
-     * Sets installed sniffs in the coding standard being used.
-     *
-     * @param string $standard The name of the coding standard we are checking.
-     *                         Can also be a path to a custom ruleset.xml file.
+     * @param SimpleXMLElement $rule  The rule object from a ruleset XML file.
+     * @param int              $depth How many nested processing steps we are in.
+     *                                This is only used for debug output.
      *
      * @return void
      */
-    public function populateCustomRules($rule, $depth=0)
+    private function _processRule($rule, $depth=0)
     {
         $code = (string) $rule['ref'];
 
@@ -942,7 +894,67 @@ class PHP_CodeSniffer
             }
         }
 
-    }//end populateCustomRules()
+    }//end _processRule()
+
+
+    /**
+     * Loads and stores sniffs objects used for sniffing files.
+     *
+     * @param array $files        Paths to the sniff files to register.
+     * @param array $restrictions The sniff class names to restrict the allowed
+     *                            listeners to.
+     *
+     * @return void
+     */
+    public function registerSniffs($files, $restrictions)
+    {
+        $listeners = array();
+
+        foreach ($files as $file) {
+            // Work out where the position of /StandardName/Sniffs/... is
+            // so we can determine what the class will be called.
+            $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
+            if ($sniffPos === false) {
+                continue;
+            }
+
+            $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
+            if ($slashPos === false) {
+                continue;
+            }
+
+            $className = substr($file, ($slashPos + 1));
+            $className = substr($className, 0, -4);
+            $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
+
+            include_once $file;
+
+            // Support the use of PHP namespaces. If the class name we included
+            // contains namespace separators instead of underscores, use this as the
+            // class name from now on.
+            $classNameNS = str_replace('_', '\\', $className);
+            if (class_exists($classNameNS, false) === true) {
+                $className = $classNameNS;
+            }
+
+            // If they have specified a list of sniffs to restrict to, check
+            // to see if this sniff is allowed.
+            if (empty($restrictions) === false
+                && in_array(strtolower($className), $restrictions) === false
+            ) {
+                continue;
+            }
+
+            $listeners[$className] = $className;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                echo "Registered $className".PHP_EOL;
+            }
+        }//end foreach
+
+        $this->sniffs = $listeners;
+
+    }//end registerSniffs()
 
 
     /**
@@ -1888,9 +1900,8 @@ class PHP_CodeSniffer
      */
     public static function isInstalledStandard($standard)
     {
-        $standardDir  = dirname(__FILE__);
-        $standardDir .= '/CodeSniffer/Standards/'.$standard;
-        if (is_file($standardDir.'/ruleset.xml') === true) {
+        $path = self::getInstalledStandardPath($standard);
+        if ($path !== null) {
             return true;
         } else {
             // This could be a custom standard, installed outside our
@@ -1912,6 +1923,29 @@ class PHP_CodeSniffer
         return false;
 
     }//end isInstalledStandard()
+
+
+    /**
+     * Return the path of an installed coding standard.
+     *
+     * Coding standards are directories located in the
+     * CodeSniffer/Standards directory. Valid coding standards
+     * include a Sniffs subdirectory.
+     *
+     * @param string $standard The name of the coding standard.
+     *
+     * @return string|null
+     */
+    public static function getInstalledStandardPath($standard)
+    {
+        $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml');
+        if (is_file($path) === true) {
+            return $path;
+        }
+
+        return null;
+
+    }//end getInstalledStandardPath()
 
 
     /**
