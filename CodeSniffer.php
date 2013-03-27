@@ -734,8 +734,8 @@ class PHP_CodeSniffer
                     $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 }
 
-                $ref = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$parts[0].$path);
-                if ($ref === false) {
+                $newRef = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$parts[0].$path);
+                if ($newRef === false) {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this
                     // by looking through all directories where we have found ruleset
@@ -746,11 +746,14 @@ class PHP_CodeSniffer
                             continue;
                         }
 
-                        $ref = realpath($dir.$path);
-                        if ($ref !== false) {
-                            break;
+                        $newRef = realpath($dir.$path);
+                        
+                        if ($newRef !== false) {
+                            $ref = $newRef;
                         }
                     }
+                } else {
+                    $ref = $newRef;
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
