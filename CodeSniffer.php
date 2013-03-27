@@ -608,7 +608,7 @@ class PHP_CodeSniffer
 
             if (basename($standard) === 'ruleset.xml') {
                 // The ruleset uses the generic name, so this may actually
-                // be a complete standard with it's own sniffs. By setting
+                // be a complete standard with it's own sniffs. By setting the
                 // the standardDir to be the directory, we will process both
                 // the directory (for custom sniffs) and the ruleset.xml file
                 // (as it uses the generic name) in getSniffFiles.
@@ -715,7 +715,7 @@ class PHP_CodeSniffer
      * Sniffs are found by recursing the standard directory and also by
      * asking the standard for included sniffs.
      *
-     * @param string $dir      The directory in which to look for the files.
+     * @param string $dir      The directory where to look for the files.
      * @param string $standard The name of the coding standard. If NULL, no
      *                         included sniffs will be checked for.
      *
@@ -758,9 +758,6 @@ class PHP_CodeSniffer
             $rulesetPath = $dir;
             if (is_dir($rulesetPath) === true) {
                 $rulesetPath .= '/ruleset.xml';
-                $rulesetDir   = $dir;
-            } else {
-                $rulesetDir = dirname($dir);
             }
 
             $ruleset = simplexml_load_file($rulesetPath);
@@ -769,14 +766,14 @@ class PHP_CodeSniffer
             }
 
             foreach ($ruleset->rule as $rule) {
-                $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rule['ref'], $rulesetDir));
+                $includedSniffs = array_merge($includedSniffs, $this->_expandRulesetReference($rule['ref']));
 
                 if (isset($rule->exclude) === true) {
                     foreach ($rule->exclude as $exclude) {
-                        $excludedSniffs = array_merge($excludedSniffs, $this->_expandRulesetReference($exclude['name'], $rulesetDir));
+                        $excludedSniffs = array_merge($excludedSniffs, $this->_expandRulesetReference($exclude['name']));
                     }
                 }
-            }
+            }//end foreach
         }//end if
 
         $includedSniffs = array_unique($includedSniffs);
@@ -801,13 +798,12 @@ class PHP_CodeSniffer
     /**
      * Expand a ruleset sniff reference into a list of sniff files.
      *
-     * @param string $sniff      The sniff reference from the ruleset.xml file.
-     * @param string $rulesetDir The directory of the ruleset.xml file.
+     * @param string $sniff The sniff reference from the rulset.xml file.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception If the sniff reference is invalid.
      */
-    private function _expandRulesetReference($sniff, $rulesetDir)
+    private function _expandRulesetReference($sniff)
     {
         $referencedSniffs = array();
 
@@ -822,7 +818,12 @@ class PHP_CodeSniffer
         // to absolute paths. If this fails, let the sniff path run through
         // the normal checks and have it fail as normal.
         if (substr($sniff, 0, 1) === '.') {
-            $realpath   = realpath($rulesetDir.'/'.$sniff);
+            $standardDir = self::$standardDir;
+            if (substr(self::$standardDir, -4) === '.xml') {
+                $standardDir = dirname($standardDir);
+            }
+
+            $realpath = realpath($standardDir.'/'.$sniff);
             if ($realpath !== false) {
                 $sniff = $realpath;
             }
@@ -850,12 +851,12 @@ class PHP_CodeSniffer
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
-                if ($path === false && $rulesetDir !== '') {
+                if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
                     // looking directly in the passed standard dir to see if it is
                     // installed in there.
-                    $path = realpath($rulesetDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                    $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
             }
         }//end if
