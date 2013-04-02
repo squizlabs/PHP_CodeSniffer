@@ -114,6 +114,12 @@ class PHP_CodeSniffer_Reporting
      */
     public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
     {
+        if (isset($cliValues['reports']) === false) {
+            // This happens during unit testing, or any time someone just wants
+            // the error data and not the printed report.
+            return;
+        }
+
         $reportData  = $this->prepareFileReport($phpcsFile);
         $errorsShown = false;
 

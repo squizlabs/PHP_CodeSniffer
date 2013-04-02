@@ -466,9 +466,6 @@ class PHP_CodeSniffer
             $phpcsFile = $this->processFile($file);
             $numProcessed++;
 
-            // Cache the report data for this file so we can unset it to save memory.
-            $this->reporting->cacheFileReport($phpcsFile, $cliValues);
-
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || PHP_CODESNIFFER_INTERACTIVE === true
                 || $showProgress === false
@@ -1308,7 +1305,11 @@ class PHP_CodeSniffer
             $phpcsFile->addError($error, null);
         }//end try
 
+        $cliValues = $this->cli->getCommandLineValues();
+
         if (PHP_CODESNIFFER_INTERACTIVE === false) {
+            // Cache the report data for this file so we can unset it to save memory.
+            $this->reporting->cacheFileReport($phpcsFile, $cliValues);
             return $phpcsFile;
         }
 
@@ -1316,8 +1317,6 @@ class PHP_CodeSniffer
             Running interactively.
             Print the error report for the current file and then wait for user input.
         */
-
-        $cliValues = $this->cli->getCommandLineValues();
 
         // Get current violations and then clear the list to make sure
         // we only print violations for a single file each time.
