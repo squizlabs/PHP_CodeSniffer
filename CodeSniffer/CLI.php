@@ -535,17 +535,14 @@ class PHP_CodeSniffer_CLI
         }
 
         // If no standard is supplied, get the default.
-        if ($values['standard'] === null) {
-            $values['standard'] = $this->validateStandard(null);
-        } else {
-            foreach ($values['standard'] as $standard) {
-                if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
-                    // They didn't select a valid coding standard, so help them
-                    // out by letting them know which standards are installed.
-                    echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
-                    $this->printInstalledStandards();
-                    exit(2);
-                }
+        $values['standard'] = $this->validateStandard($values['standard']);
+        foreach ($values['standard'] as $standard) {
+            if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
+                // They didn't select a valid coding standard, so help them
+                // out by letting them know which standards are installed.
+                echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+                $this->printInstalledStandards();
+                exit(2);
             }
         }
 
@@ -553,6 +550,7 @@ class PHP_CodeSniffer_CLI
             foreach ($values['standard'] as $standard) {
                 $this->explainStandard($standard);
             }
+
             exit(0);
         }
 
@@ -707,38 +705,44 @@ class PHP_CodeSniffer_CLI
 
 
     /**
-     * Convert the passed standard into a valid standard.
+     * Convert the passed standards into valid standards.
      *
      * Checks things like default values and case.
      *
-     * @param string $standard The standard to validate.
+     * @param array $standards The standards to validate.
      *
-     * @return string
+     * @return array
      */
-    public function validateStandard($standard)
+    public function validateStandard($standards)
     {
-        if ($standard === null) {
+        if ($standards === null) {
             // They did not supply a standard to use.
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
             if ($standard === null) {
+                // Product default standard.
                 $standard = 'PEAR';
             }
+
+            return array($standard);
         }
 
-        // Check if the standard name is valid. If not, check that the case
-        // was not entered incorrectly.
-        if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
-            $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+        $cleaned = array();
+
+        // Check if the standard name is valid, or if the case is invalid.
+        $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+        foreach ($standards as $standard) {
             foreach ($installedStandards as $validStandard) {
                 if (strtolower($standard) === strtolower($validStandard)) {
                     $standard = $validStandard;
                     break;
                 }
             }
+
+            $cleaned[] = $standard;
         }
 
-        return $standard;
+        return $cleaned;
 
     }//end validateStandard()
 
@@ -753,7 +757,7 @@ class PHP_CodeSniffer_CLI
     public function explainStandard($standard)
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners($standard);
+        $phpcs->process(array(), $standard);
         $sniffs = $phpcs->getSniffs();
         $sniffs = array_keys($sniffs);
         sort($sniffs);
