@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows you to create wrapper scripts for PHPCS more easily
   - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
     -- Thanks to Bart S for the patch
+  - Squiz BlockCommentSniff no longer reports that a blank line between a scope closer and block comment is invalid
   - Generic DuplicateClassNameSniff no longer reports an invalid error if multiple PHP open tags exist in a file
   - Generic DuplicateClassNameSniff no longer reports duplicate errors if multiple PHP open tags exist in a file
   - Fixed bug #19819 : Freeze with syntax error in use statement
