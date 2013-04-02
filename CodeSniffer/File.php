@@ -2848,12 +2848,21 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        $stringIndex = $this->findNext(T_STRING, $extendsIndex, $classCloserIndex);
-        if (false === $stringIndex) {
+        $find = array(
+                 T_NS_SEPARATOR,
+                 T_STRING,
+                 T_WHITESPACE,
+                );
+
+        $end  = $this->findNext($find, ($extendsIndex + 1), $classCloserIndex, true);
+        $name = $this->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));
+        $name = trim($name);
+
+        if ($name === '') {
             return false;
         }
 
-        return $this->_tokens[$stringIndex]['content'];
+        return $name;
 
     }//end findExtendedClassName()
 
