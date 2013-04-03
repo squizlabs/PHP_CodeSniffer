@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2013-02-07</date>
- <time>10:10:00</time>
+ <date>2013-04-04</date>
+ <time>10:13:00</time>
  <version>
   <release>1.4.5</release>
   <api>1.4.5</api>
@@ -2128,7 +2128,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2013-02-08</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Reports have been completely rewritten to consume far less memory
       -- Each report is incrementally written to the file system during a run and then printed out when the run ends
@@ -2136,6 +2136,50 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Multi-file sniff support has been removed because they are too memory intensive
       -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
       -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.4.5</release>
+    <api>1.4.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-04-04</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
+      -- The PSR2 and Squiz standards now use this sniff
+    - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
+    - Squiz FunctionSpacingSniff now has a setting to specify how many lines there should between functions (request #19843)
+      -- Default remains at 2
+      -- Override the "spacing" setting in a ruleset.xml file to change
+    - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
+      -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
+    - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
+    - Generic EndFileNoNewlineSniff now supports checking of CSS and JS files
+    - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the indent setting in a ruleset.xml file to change
+      -- Thanks to Asher Snyder for the patch
+    - Generic ScopeIndentSniff now has a setting to specify a list of tokens that should be ignored
+      -- The first token on the line is checked and the whole line is ignored if the token is in the array
+      -- Thanks to Eloy Lafuente for the patch
+    - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
+      -- Thanks to Anthon Pang for the patch
+    - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
+      -- This allows you to create wrapper scripts for PHPCS more easily
+    - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
+      -- Thanks to Bart S for the patch
+    - Squiz BlockCommentSniff no longer reports that a blank line between a scope closer and block comment is invalid
+    - Generic DuplicateClassNameSniff no longer reports an invalid error if multiple PHP open tags exist in a file
+    - Generic DuplicateClassNameSniff no longer reports duplicate errors if multiple PHP open tags exist in a file
+    - Fixed bug #19819 : Freeze with syntax error in use statement
+    - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+    - Fixed bug #19859 : CodeSniffer::setIgnorePatterns API changed
+    - Fixed bug #19871 : findExtendedClassName doesn't return FQCN on namespaced classes
+    - Fixed bug #19879 : bitwise and operator interpreted as reference by value
    </notes>
   </release>
   <release>
@@ -2148,7 +2192,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2013-02-07</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Ignored lines no longer cause the summary report to show incorrect error and warning counts
       -- Thanks to Bert Van Hauwaert for the patch
@@ -2191,7 +2235,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-12-04</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added support for the PHP 5.5 T_FINALLY token to detect try/catch/finally statements
     - Added empty CodeSniffer.conf to enable config settings for Composer installs
@@ -2220,7 +2264,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-11-09</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - PHP_CodeSniffer can now be installed using Composer
       -- Require squizlabs/php_codesniffer in your composer.json file
@@ -2254,7 +2298,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-11-02</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - All ignore patterns have been reverted to being checked against the absolute path of a file
       -- Patterns can be specified to be relative in a rulset.xml file, but nowhere else
@@ -2309,7 +2353,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-09-26</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added PSR1 and PSR2 coding standards that can be used to check your code against these guidelines
     - PHP 5.4 short array syntax is now detected and tokens are assigned to the open and close characters
@@ -2348,7 +2392,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-08-08</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Memory usage has been dramatically reduced when using the summary report
       -- Reduced memory is only available when displaying a single summary report to the screen
@@ -2388,7 +2432,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-07-12</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added Generic CamelCapsFunctionNameSniff to just check if function and method names use camel caps
       -- Does not allow underscore prefixes for private/protected methods
@@ -2431,7 +2475,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-05-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added missing package.xml entries for new Generic FixmeSniff
       -- Thanks to Jaroslav Hanslík for the patch
@@ -2488,7 +2532,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2012-02-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added new Generic FixmeSniff that shows error messages for all FIXME comments left in your code
       -- Thanks to Sam Graham for the contribution
@@ -2526,7 +2570,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2011-12-01</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added Generic JSHintSniff to run jshint.js over a JS file and report warnings
       -- Set jshint path using phpcs --config-set jshint_path /path/to/jshint-rhino.js
@@ -2560,7 +2604,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2011-11-03</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - All report file command line arguments now work with relative paths (request #17240)
     - The extensions command line argument now supports multi-part file extensions (request #17227)
@@ -2636,7 +2680,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2011-03-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Add a new token T_CLOSURE that replaces T_FUNCTION if the function keyword is anonymous
     - Many Squiz sniffs no longer report errors when checking closures; they are now ignored
@@ -2665,7 +2709,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2011-01-14</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - You can now print multiple reports for each run and print each to the screen or a file (request #12434)
       -- Format is --report-[report][=file] (e.g., --report-xml=out.xml)
@@ -2742,7 +2786,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2010-09-03</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added exclude pattern support to ruleset.xml file so you can specify ignore patterns in a standard (request #17683)
       -- Use new exclude-pattern tags to include the ignore rules into your ruleset.xml file
@@ -2783,7 +2827,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2010-07-15</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - All CodingStandard.php files have been replaced by ruleset.xml files
       -- Custom standards will need to be converted over to this new format to continue working
@@ -2837,7 +2881,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2010-01-27</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - The core PHP_CodeSniffer_File methods now understand the concept of closures (feature request #16866)
       -- Thanks to Christian Kaps for the sample code
@@ -2914,7 +2958,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2009-11-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added a new report type --report=svnblame to show how many errors and warnings were committed by each author
       -- Also shows the percentage of their code that are errors and warnings
@@ -2978,7 +3022,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2009-08-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Installed standards are now favoured over custom standards when using the cmd line arg with relative paths
     - Unit tests now use a lot less memory while running
@@ -3001,7 +3045,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2009-07-07</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - You can now use @codingStandardsIgnoreStart and @...End comments to suppress messages (feature request #14002)
     - A warning is now included for files without any code when short_open_tag is set to Off (feature request #12952)
@@ -3021,7 +3065,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2009-05-25</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Test suite can now be run using the full path to AllTests.php (feature request #16179)
     - Fixed bug #15980 : PHP_CodeSniffer change php current directory
@@ -3043,7 +3087,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2009-03-09</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Reports that are output to a file now include a trailing newline at the end of the file
     - Fixed sniff names not shown in -vvv token processing output
@@ -3077,7 +3121,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2008-12-18</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - PHP_CodeSniffer now has a CSS tokenizer for checking CSS files
     - Added support for a new multi-file sniff that sniffs all processed files at once
@@ -3196,7 +3240,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2008-07-14</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
       -- Thanks to Jeff Hodsdon for the patch
@@ -3221,7 +3265,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2008-07-03</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - PEAR FileCommentSniff now allows tag orders to be overridden in child classes
       -- Thanks to Jeff Hodsdon for the patch
@@ -3246,7 +3290,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2008-06-13</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Permission denied errors now stop script execution but still display current errors (feature request #14076)
     - Added Squiz ValidArrayIndexNameSniff to ensure array indexes do not use camel case
@@ -3269,7 +3313,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2008-05-13</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added support for multiple tokenizers so PHP_CodeSniffer can check more than just PHP files
       -- PHP_CodeSniffer now has a JS tokenizer for checking JavaScript files
@@ -3342,7 +3386,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2008-04-21</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Fixed error in PEAR ValidClassNameSniff when checking class names with double underscores
     - Moved Squiz InlineControlStructureSniff into Generic standard
@@ -3368,7 +3412,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2008-02-04</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Squiz ArrayDeclarationSniff now throws error if the array keyword is followed by a space
     - Squiz ArrayDeclarationSniff now throws error for empty multi-line arrays
@@ -3406,7 +3450,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>stable</api>
    </stability>
    <date>2007-12-21</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - You can now specify the full path to a coding standard on the command line (feature request #11886)
       -- This allows you to use standards that are stored outside of PHP_CodeSniffer's own Standard dir
@@ -3445,7 +3489,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-11-30</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added new command line argument --tab-width that will convert tabs to spaces before testing
       -- This allows you to use the existing sniffs that check for spaces even when you use tabs
@@ -3482,7 +3526,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-11-14</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added a new Checkstyle report format
       -- Like the current XML format but modified to look like Checkstyle output
@@ -3522,7 +3566,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-11-01</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Main phpcs script can now be run from a CVS checkout without installing the package
     - Added a new CSV report format
@@ -3580,7 +3624,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-09-24</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added a config system for setting config data across phpcs runs
     - You can now change the default coding standard from PEAR to something else
@@ -3602,7 +3646,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-08-08</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added new XML report format; --report=xml (feature request #11535)
       -- Thanks to Brett Bieber for the patch
@@ -3636,7 +3680,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-07-02</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - BC BREAK: EOL character is now auto-detected and used instead of hard-coded \n
       -- Pattern sniffs must now specify "EOL" instead of "\n" or "\r\n" to use auto-detection
@@ -3692,7 +3736,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-05-15</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - The number of errors and warnings found is now shown for each file while checking the file if verbosity is enabled
     - Now using PHP_EOL instead of hard-coded \n so output looks good on Windows (feature request #10761)
@@ -3718,7 +3762,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-04-17</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - BC BREAK: Coding standards now require a class to be added so PHP_CodeSniffer can get information from them
       - Please read the end user docs for info about the new class required for all coding standards
@@ -3758,7 +3802,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-02-19</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Standard name specified with --standard command line argument is no longer case sensitive
     - Long error and warning messages are now wrapped to 80 characters in the full error report (thanks Endre Czirbesz)
@@ -3784,7 +3828,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>beta</api>
    </stability>
    <date>2007-01-11</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Updated package.xml to version 2
     - Specifying coding standard on command line is now optional, even if you have multiple standards installed
@@ -3818,7 +3862,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-11-09</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Fixed bug #9274 : nested_parenthesis element not set for open and close parenthesis tokens
    </notes>
@@ -3833,7 +3877,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-10-13</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added a generic standards package that will contain generic sniffs to be used in specific coding standards
       - thanks to Frederic Poeydomenge for the idea
@@ -3867,7 +3911,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-09-25</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added unit tests for all PEAR sniffs
     - Exception class now extends from PEAR_Exception
@@ -3884,7 +3928,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-09-19</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Reorganised package contents to conform to PEAR standards
     - Changed version numbering to conform to PEAR standards
@@ -3901,7 +3945,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-09-18</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Fixed .bat file for situation where php.ini cannot be found so include_path is not set
    </notes>
@@ -3916,7 +3960,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-08-28</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added .bat file for easier running of PHP_CodeSniffer on Windows
     - Sniff that checks method names now works for PHP4 style code where there is no scope keyword
@@ -3945,7 +3989,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-08-22</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added sniff to check for invalid class and interface names
     - Added sniff to check for invalid function and method names
@@ -3965,7 +4009,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-07-25</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Removed the including of checked files to stop errors caused by parsing them
     - Removed the use of reflection so checked files do not have to be included
@@ -3993,7 +4037,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <api>alpha</api>
    </stability>
    <date>2006-07-19</date>
-   <license uri="http://matrix.squiz.net/developer/tools/php_cs/licence">BSD License</license>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>Initial preview release.</notes>
   </release>
  </changelog>
