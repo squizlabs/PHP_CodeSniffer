@@ -126,6 +126,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
                 switch ($tokens[$tokenBefore]['code']) {
                 case T_VARIABLE:
                 case T_CLOSE_PARENTHESIS:
+                case T_LNUMBER:
                     // In these cases T_BITWISE_AND represents
                     // the bitwise and operator.
                     continue;
