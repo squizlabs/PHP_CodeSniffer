@@ -46,7 +46,7 @@
             "CodeSniffer/Standards/Zend/Sniffs/"
         ]
     },
-    "suggests": {
+    "suggest": {
         "phpunit/php-timer": "dev-master"
     },
     "require": {
