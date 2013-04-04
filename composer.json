@@ -1,5 +1,5 @@
 {
-    "name": "squizlabs/php_codesniffer",
+    "name": "php-migrations/php_codesniffer",
     "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
     "type": "library",
     "keywords": [
@@ -46,11 +46,14 @@
             "CodeSniffer/Standards/Zend/Sniffs/"
         ]
     },
-    "suggests": {
+    "suggest": {
         "phpunit/php-timer": "dev-master"
     },
     "require": {
         "php": ">=5.1.2"
+    },
+    "replace": {
+        "squizlabs/php_codesniffer": "*"
     },
     "bin": [
         "scripts/phpcs"
