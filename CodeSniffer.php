@@ -691,7 +691,7 @@ class PHP_CodeSniffer
 
             // Support the use of PHP namespaces.
             $classNameNS = str_replace('_', '\\', $className);
-            $listeners[$className] = class_exists($classNameNS, false) ? $classNameNS : $className;
+            $listeners[$className] = class_exists($classNameNS, false) === true ? $classNameNS : $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
