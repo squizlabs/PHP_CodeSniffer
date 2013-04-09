@@ -36,7 +36,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
      */
     public function register()
     {
-        return array(T_STRING);
+        return array(T_STRING, T_VARIABLE);
 
     }//end register()
 
