@@ -689,7 +689,7 @@ class PHP_CodeSniffer
             }
 
             if (class_exists($className, false) === false
-                && !class_exists($classNameNS, false) === false
+                && class_exists($classNameNS, false) === false
             ) {
                 include_once $file;
             }
