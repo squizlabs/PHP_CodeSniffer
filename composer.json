@@ -1,5 +1,5 @@
 {
-    "name": "php-migrations/php_codesniffer",
+    "name": "foobugs-standards/php_codesniffer",
     "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
     "type": "library",
     "keywords": [
@@ -29,7 +29,6 @@
             "CodeSniffer/Report.php",
             "CodeSniffer/Reporting.php",
             "CodeSniffer/Sniff.php",
-            "CodeSniffer/Tokens.php",
             "CodeSniffer/Reports/",
             "CodeSniffer/CommentParser/",
             "CodeSniffer/Tokenizers/",
@@ -51,7 +50,7 @@
         "phpunit/php-timer": "dev-master"
     },
     "require": {
-        "php": ">=5.1.2",
+        "php": ">=5.3.0",
         "ext-tokenizer": "*"
     },
     "replace": {
