@@ -47,6 +47,7 @@ class Generic_Tests_Functions_CallTimePassByReferenceUnitTest extends AbstractSn
                 12 => 1,
                 15 => 1,
                 18 => 2,
+                23 => 1,
                );
 
     }//end getErrorList()

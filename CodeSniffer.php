@@ -724,11 +724,7 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         if (is_dir($dir) === true) {
-            if (version_compare(PHP_VERSION, '5.2.11') >= 0) {
-                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
-            } else {
-                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
-            }
+            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
             foreach ($di as $file) {
                 $fileName = $file->getFilename();
 
