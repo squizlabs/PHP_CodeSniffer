@@ -58,5 +58,10 @@
     },
     "bin": [
         "scripts/phpcs"
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.99.x-dev"
+        }
+    }
 }
