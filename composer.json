@@ -19,6 +19,7 @@
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
     "autoload": {
+        "files": ["CodeSniffer/Tokens.php"],
         "classmap": [
             "CodeSniffer.php",
             "CodeSniffer/CLI.php",
