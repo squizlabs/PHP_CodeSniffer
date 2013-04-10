@@ -54,7 +54,7 @@ If you do contribute code to PHP\_CodeSniffer, please make sure it conforms to t
 
 Which should give you no output, indicating that there are no PEAR coding standard errors. And then:
 
-    phpunit tests/AllTests.php
+    phpunit
 
 Which should give you no failures or errors. You can ignore any skipped tests as these are for external tools.
 
