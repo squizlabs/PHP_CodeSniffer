@@ -463,7 +463,7 @@ class PHP_CodeSniffer_File
                 }
 
                 // If the file path matches one of our ignore patterns, skip it.
-                $parts = explode('_', $class);
+                $parts = explode('_', str_replace('\\', '_', $class));
                 if (isset($parts[3]) === true) {
                     $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
                     $patterns = $this->phpcs->getIgnorePatterns($source);
@@ -730,7 +730,7 @@ class PHP_CodeSniffer_File
             // Any internal message.
             $sniff = $code;
         } else {
-            $parts = explode('_', $this->_activeListener);
+            $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
                 $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
@@ -851,7 +851,7 @@ class PHP_CodeSniffer_File
             // Any internal message.
             $sniff = $code;
         } else {
-            $parts = explode('_', $this->_activeListener);
+            $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
                 $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
