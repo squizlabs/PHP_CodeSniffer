@@ -679,8 +679,7 @@ class PHP_CodeSniffer
             $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
-
-            include_once $file;
+            $classNameNS = str_replace('_', '\\', $className);
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
@@ -689,8 +688,11 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            // Support the use of PHP namespaces.
-            $classNameNS = str_replace('_', '\\', $className);
+            if (class_exists($className, false) === false
+                && class_exists($classNameNS, false) === false
+            ) {
+                include_once $file;
+            }
             $listeners[$className] = class_exists($classNameNS, false) === true ? $classNameNS : $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
