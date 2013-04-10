@@ -679,16 +679,7 @@ class PHP_CodeSniffer
             $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
-
-            include_once $file;
-
-            // Support the use of PHP namespaces. If the class name we included
-            // contains namespace separators instead of underscores, use this as the
-            // class name from now on.
             $classNameNS = str_replace('_', '\\', $className);
-            if (class_exists($classNameNS, false) === true) {
-                $className = $classNameNS;
-            }
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
@@ -697,7 +688,12 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $listeners[$className] = $className;
+            if (class_exists($className, false) === false
+                && !class_exists($classNameNS, false) === false
+            ) {
+                include_once $file;
+            }
+            $listeners[$className] = class_exists($classNameNS, false) === true ? $classNameNS : $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
@@ -1077,7 +1073,7 @@ class PHP_CodeSniffer
      *
      * @return void
      */
-    public function setSniffProperty($listenerClass, $name, $value) 
+    public function setSniffProperty($listenerClass, $name, $value)
     {
         // Setting a property for a sniff we are not using.
         if (isset($this->listeners[$listenerClass]) === false) {
