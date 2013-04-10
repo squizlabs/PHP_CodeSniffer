@@ -1005,24 +1005,18 @@ class PHP_CodeSniffer
                                   'multifile' => array(),
                                  );
 
-        foreach ($this->listeners as $listenerClass) {
-            // Work out the internal code for this sniff. Detect usage of namespace
-            // separators instead of underscores to support PHP namespaces.
-            if (strstr($listenerClass, '\\') === false) {
-                $parts = explode('_', $listenerClass);
-            } else {
-                $parts = explode('\\', $listenerClass);
-            }
+        foreach ($this->listeners as $listenerId => $listenerClass) {
+            $parts = explode('_', $listenerId);
 
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
-            $this->listeners[$listenerClass] = new $listenerClass();
+            $this->listeners[$listenerId] = new $listenerClass();
 
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
                 foreach ($this->ruleset[$code]['properties'] as $name => $value) {
-                    $this->setSniffProperty($listenerClass, $name, $value);
+                    $this->setSniffProperty($listenerId, $name, $value);
                 }
             }
 
@@ -1032,8 +1026,8 @@ class PHP_CodeSniffer
                 $tokenizers = $vars['supportedTokenizers'];
             }
 
-            if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $this->listeners[$listenerClass]->register();
+            if (($this->listeners[$listenerId] instanceof PHP_CodeSniffer_Sniff) === true) {
+                $tokens = $this->listeners[$listenerId]->register();
                 if (is_array($tokens) === false) {
                     $msg = "Sniff $listenerClass register() method must return an array";
                     throw new PHP_CodeSniffer_Exception($msg);
@@ -1044,17 +1038,17 @@ class PHP_CodeSniffer
                         $this->_tokenListeners['file'][$token] = array();
                     }
 
-                    if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
+                    if (in_array($this->listeners[$listenerId], $this->_tokenListeners['file'][$token], true) === false) {
                         $this->_tokenListeners['file'][$token][] = array(
-                                                                    'listener'   => $this->listeners[$listenerClass],
+                                                                    'listener'   => $this->listeners[$listenerId],
                                                                     'class'      => $listenerClass,
                                                                     'tokenizers' => $tokenizers,
                                                                    );
                     }
                 }
-            } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
+            } else if (($this->listeners[$listenerId] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
                 $this->_tokenListeners['multifile'][] = array(
-                                                         'listener'   => $this->listeners[$listenerClass],
+                                                         'listener'   => $this->listeners[$listenerId],
                                                          'class'      => $listenerClass,
                                                          'tokenizers' => $tokenizers,
                                                         );
