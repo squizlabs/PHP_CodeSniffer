@@ -6,17 +6,21 @@
         "phpcs",
         "standards"
     ],
-    "homepage": "http://www.squizlabs.com/php-codesniffer",
+    "homepage": "https://github.com/foobugs-standards/PHP_CodeSniffer",
     "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Greg Sherwood",
-            "role": "lead"
+            "role": "upstream"
+        },
+        {
+            "name": "Maik Penz",
+            "role": "fork"
         }
     ],
     "support": {
-        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
-        "source": "https://github.com/squizlabs/PHP_CodeSniffer"
+        "issues": "https://github.com/foobugs-standards/PHP_CodeSniffer/issues",
+        "source": "https://github.com/foobugs-standards/PHP_CodeSniffer"
     },
     "autoload": {
         "files": ["CodeSniffer/Tokens.php"],
@@ -54,7 +58,7 @@
         "ext-tokenizer": "*"
     },
     "replace": {
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "1.*"
     },
     "bin": [
         "scripts/phpcs"
