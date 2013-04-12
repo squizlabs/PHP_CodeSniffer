@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensures that self is not used to call public method in action classes.
+ * Ensures that self and static are not used to call public methods in action classes.
  *
  * PHP version 5
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Ensures that self is not used to call public method in action classes.
+ * Ensures that self and static are not used to call public methods in action classes.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer_MySource
@@ -84,7 +84,9 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             }
 
             $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
-            if ($tokens[$prevToken]['content'] !== 'self') {
+            if ($tokens[$prevToken]['content'] !== 'self'
+                && $tokens[$prevToken]['content'] !== 'static'
+            ) {
                 continue;
             }
 
@@ -103,23 +105,27 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                 continue;
             }
 
-            $foundCalls[$i] = $funcName;
+            $foundCalls[$i] = array(
+                               'name' => $funcName,
+                               'type' => strtolower($tokens[$prevToken]['content']),
+                              );
         }//end for
 
         $errorClassName = substr($className, 0, -7);
 
-        foreach ($foundCalls as $token => $funcName) {
-            if (isset($foundFunctions[$funcName]) === false) {
+        foreach ($foundCalls as $token => $funcData) {
+            if (isset($foundFunctions[$funcData['name']]) === false) {
                 // Function was not in this class, might have come from the parent.
                 // Either way, we can't really check this.
                 continue;
-            } else if ($foundFunctions[$funcName] === 'public') {
-                $error = 'Static calls to public methods in Action classes must not use the self keyword; use %s::%s() instead';
+            } else if ($foundFunctions[$funcData['name']] === 'public') {
+                $type  = $funcData['type'];
+                $error = "Static calls to public methods in Action classes must not use the $type keyword; use %s::%s() instead";
                 $data  = array(
                           $errorClassName,
                           $funcName,
                          );
-                $phpcsFile->addError($error, $token, 'Found', $data);
+                $phpcsFile->addError($error, $token, 'Found'.ucfirst($funcData['type']), $data);
             }
         }
 
