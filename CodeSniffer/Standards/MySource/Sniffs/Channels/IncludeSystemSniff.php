@@ -38,6 +38,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      */
     private $_ignore = array(
                         'self',
+                        'static',
                         'parent',
                         'channels',
                         'basesystem',
