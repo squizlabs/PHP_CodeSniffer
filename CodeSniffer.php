@@ -679,16 +679,7 @@ class PHP_CodeSniffer
             $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
-
-            include_once $file;
-
-            // Support the use of PHP namespaces. If the class name we included
-            // contains namespace separators instead of underscores, use this as the
-            // class name from now on.
             $classNameNS = str_replace('_', '\\', $className);
-            if (class_exists($classNameNS, false) === true) {
-                $className = $classNameNS;
-            }
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
@@ -697,7 +688,12 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $listeners[$className] = $className;
+            if (class_exists($className, false) === false
+                && class_exists($classNameNS, false) === false
+            ) {
+                include_once $file;
+            }
+            $listeners[$className] = class_exists($classNameNS, false) === true ? $classNameNS : $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 echo "\tRegistered $className".PHP_EOL;
@@ -730,7 +726,11 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         if (is_dir($dir) === true) {
-            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+            if (version_compare(PHP_VERSION, '5.2.11') >= 0) {
+                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
+            } else {
+                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+            }
             foreach ($di as $file) {
                 $fileName = $file->getFilename();
 
@@ -1009,24 +1009,18 @@ class PHP_CodeSniffer
                                   'multifile' => array(),
                                  );
 
-        foreach ($this->listeners as $listenerClass) {
-            // Work out the internal code for this sniff. Detect usage of namespace
-            // separators instead of underscores to support PHP namespaces.
-            if (strstr($listenerClass, '\\') === false) {
-                $parts = explode('_', $listenerClass);
-            } else {
-                $parts = explode('\\', $listenerClass);
-            }
+        foreach ($this->listeners as $listenerId => $listenerClass) {
+            $parts = explode('_', $listenerId);
 
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
-            $this->listeners[$listenerClass] = new $listenerClass();
+            $this->listeners[$listenerId] = new $listenerClass();
 
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {
                 foreach ($this->ruleset[$code]['properties'] as $name => $value) {
-                    $this->setSniffProperty($listenerClass, $name, $value);
+                    $this->setSniffProperty($listenerId, $name, $value);
                 }
             }
 
@@ -1036,8 +1030,8 @@ class PHP_CodeSniffer
                 $tokenizers = $vars['supportedTokenizers'];
             }
 
-            if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_Sniff) === true) {
-                $tokens = $this->listeners[$listenerClass]->register();
+            if (($this->listeners[$listenerId] instanceof PHP_CodeSniffer_Sniff) === true) {
+                $tokens = $this->listeners[$listenerId]->register();
                 if (is_array($tokens) === false) {
                     $msg = "Sniff $listenerClass register() method must return an array";
                     throw new PHP_CodeSniffer_Exception($msg);
@@ -1048,17 +1042,17 @@ class PHP_CodeSniffer
                         $this->_tokenListeners['file'][$token] = array();
                     }
 
-                    if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
+                    if (in_array($this->listeners[$listenerId], $this->_tokenListeners['file'][$token], true) === false) {
                         $this->_tokenListeners['file'][$token][] = array(
-                                                                    'listener'   => $this->listeners[$listenerClass],
+                                                                    'listener'   => $this->listeners[$listenerId],
                                                                     'class'      => $listenerClass,
                                                                     'tokenizers' => $tokenizers,
                                                                    );
                     }
                 }
-            } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
+            } else if (($this->listeners[$listenerId] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
                 $this->_tokenListeners['multifile'][] = array(
-                                                         'listener'   => $this->listeners[$listenerClass],
+                                                         'listener'   => $this->listeners[$listenerId],
                                                          'class'      => $listenerClass,
                                                          'tokenizers' => $tokenizers,
                                                         );
@@ -1077,7 +1071,7 @@ class PHP_CodeSniffer
      *
      * @return void
      */
-    public function setSniffProperty($listenerClass, $name, $value) 
+    public function setSniffProperty($listenerClass, $name, $value)
     {
         // Setting a property for a sniff we are not using.
         if (isset($this->listeners[$listenerClass]) === false) {
