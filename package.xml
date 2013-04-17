@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2013-04-04</date>
  <time>10:19:00</time>
  <version>
-  <release>1.5.0RC2</release>
-  <api>1.5.0RC2</api>
+  <release>1.5.0RC3</release>
+  <api>1.5.0RC3</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,46 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Ruleset processing has been rewritten to be more predictable
-    -- Provides much better support for relative paths inside ruleset files
-    -- May mean that sniffs that were previously ignored are now being included when importing external rulesets
-    -- Ruleset processing output can be seen by using the -vv command line argument
-    -- Internal sniff registering functions have all changed, so please review custom scripts
-  - You can now pass multiple coding standards on the command line, comma separated (request #19144)
-    -- Works with built-in or custom standards and rulesets, or a mix of both
-  - You can now exclude directories or whole standards in a ruleset XML file (request #19731)
-    -- e.g., exclude "Generic.Commenting" or just "Generic"
-    -- You can also pass in a path to a directory instead, if you know it
-  - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
-    -- The PSR2 and Squiz standards now use this sniff
-  - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
-  - Squiz FunctionSpacingSniff now has a setting to specify how many lines there should between functions (request #19843)
-    -- Default remains at 2
-    -- Override the "spacing" setting in a ruleset.xml file to change
-  - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
-    -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
-  - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
-  - Generic EndFileNoNewlineSniff now supports checking of CSS and JS files
-  - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the indent setting in a ruleset.xml file to change
-    -- Thanks to Asher Snyder for the patch
-  - Generic ScopeIndentSniff now has a setting to specify a list of tokens that should be ignored
-    -- The first token on the line is checked and the whole line is ignored if the token is in the array
-    -- Thanks to Eloy Lafuente for the patch
-  - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
-    -- Thanks to Anthon Pang for the patch
-  - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
-    -- This allows you to create wrapper scripts for PHPCS more easily
-  - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
-    -- Thanks to Bart S for the patch
-  - Squiz BlockCommentSniff no longer reports that a blank line between a scope closer and block comment is invalid
-  - Generic DuplicateClassNameSniff no longer reports an invalid error if multiple PHP open tags exist in a file
-  - Generic DuplicateClassNameSniff no longer reports duplicate errors if multiple PHP open tags exist in a file
-  - Fixed bug #19819 : Freeze with syntax error in use statement
-  - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
-  - Fixed bug #19859 : CodeSniffer::setIgnorePatterns API changed
-  - Fixed bug #19871 : findExtendedClassName doesn't return FQCN on namespaced classes
-  - Fixed bug #19879 : bitwise and operator interpreted as reference by value
+  - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string is the strict flag is FALSE
+    -- acronyms are defined as at least 2 uppercase characters in a row
+    -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
  </notes>
  <contents>
   <dir name="/">

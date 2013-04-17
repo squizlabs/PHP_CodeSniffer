@@ -1688,16 +1688,23 @@ class PHP_CodeSniffer
     ) {
         // Check the first character first.
         if ($classFormat === false) {
+            $legalFirstChar = '';
             if ($public === false) {
-                $legalFirstChar = '[_][a-z]';
+                $legalFirstChar = '[_]';
+            }
+
+            if ($strict === false) {
+                // Can either start with a lowercase letter, or multiple uppercase
+                // in a row, representing an acronym.
+                $legalFirstChar .= '([A-Z]{2,}|[a-z])';
             } else {
-                $legalFirstChar = '[a-z]';
+                $legalFirstChar .= '[a-z]';
             }
         } else {
             $legalFirstChar = '[A-Z]';
         }
 
-        if (preg_match("|^$legalFirstChar|", $string) === 0) {
+        if (preg_match("/^$legalFirstChar/", $string) === 0) {
             return false;
         }
 
