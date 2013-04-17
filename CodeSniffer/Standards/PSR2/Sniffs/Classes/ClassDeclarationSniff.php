@@ -274,10 +274,26 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         // Check that the closing brace comes right after the code body.
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
         $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
-        if ($tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)) {
-            $error = 'The closing brace for the %s must go on the next line after the body';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'CloseBraceAfterBody', $data);
+
+        $backSearch = $phpcsFile->findPrevious(array(T_SEMICOLON, T_CLOSE_CURLY_BRACKET), ($closeBrace - 1), null, false);
+        $classDef = $phpcsFile->findNext(T_CLASS, 0, null, true);
+
+
+        // Find class declaration line number
+        $tokens[$classDef]['line'];
+
+        // Find class closing brace line number
+        // Find backwards semicolon or closed curly brace, from the last closed curly brace
+        $tokens[$backSearch]['line'];
+
+        // The line-number of the backwards search should be greater than the class declaration, for the class
+        // to have a body. If this test succeeds, the next section is not relevant.
+        if ($tokens[$classDef]['line'] > $tokens[$backSearch]['line']) {
+            if ($tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)) {
+                $error = 'The closing brace for the %s must go on the next line after the body';
+                $data  = array($tokens[$stackPtr]['content']);
+                $phpcsFile->addError($error, $closeBrace, 'CloseBraceAfterBody', $data);
+            }
         }
 
         // Check the closing brace is on it's own line, but allow
