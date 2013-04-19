@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignored empty classes when checking the end brace position
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
@@ -316,6 +317,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNoNewlineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="InlineHTMLSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -523,6 +527,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
