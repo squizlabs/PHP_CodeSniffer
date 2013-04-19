@@ -730,11 +730,13 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         if (is_dir($dir) === true) {
-            if (version_compare(PHP_VERSION, '5.2.11') >= 0) {
+            // available since PHP 5.2.11 and 5.3.1
+            if (defined('RecursiveDirectoryIterator::FOLLOW_SYMLINKS')) {
                 $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
             } else {
                 $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
             }
+
             foreach ($di as $file) {
                 $fileName = $file->getFilename();
 
@@ -1081,7 +1083,7 @@ class PHP_CodeSniffer
      *
      * @return void
      */
-    public function setSniffProperty($listenerClass, $name, $value) 
+    public function setSniffProperty($listenerClass, $name, $value)
     {
         // Setting a property for a sniff we are not using.
         if (isset($this->listeners[$listenerClass]) === false) {
