@@ -74,4 +74,24 @@ class Test
     }
 }
 
+class MyClass
+{
+}
+
+class MyClass
+{
+
+}
+
+class MyClass
+{
+    // Foo.
+}
+
+class MyClass
+{
+    // Foo.
+
+}
+
 ?>
