@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
+    -- Only available since PHP 5.2.11 and 5.3.1
+    -- Thanks to Maik Penz for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignored empty classes when checking the end brace position
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
