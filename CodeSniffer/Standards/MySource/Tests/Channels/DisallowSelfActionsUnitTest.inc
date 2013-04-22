@@ -10,9 +10,11 @@ class SomethingActions
     public static function y()
     {
         self::z();
+        static::z();
         SomethingActions::z();
-        self::_x();
+        static::_x();
         self::a();
+        static::a();
     }
 
 
@@ -24,10 +26,10 @@ class SomethingActions
     {
         self::a(); // recursion, yay!
         self::z();
-        self::y();
+        static::y();
         self::b();
         echo self::$_myVar;
-        echo self::$yourVar;
+        echo static::$yourVar;
     }
 }
 

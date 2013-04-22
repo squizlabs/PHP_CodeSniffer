@@ -48,6 +48,7 @@ class AssetListingAssetType extends AssetAssetType
         $siteid = MySystem::getCurrentSiteId();
         $parserFiles = FileSystem::listDirectory();
         echo self::two();
+        echo static::two();
     }
 }
 

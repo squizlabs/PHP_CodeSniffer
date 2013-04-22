@@ -46,11 +46,12 @@
             "CodeSniffer/Standards/Zend/Sniffs/"
         ]
     },
-    "suggests": {
+    "suggest": {
         "phpunit/php-timer": "dev-master"
     },
     "require": {
-        "php": ">=5.1.2"
+        "php": ">=5.1.2",
+        "ext-tokenizer": "*"
     },
     "bin": [
         "scripts/phpcs"

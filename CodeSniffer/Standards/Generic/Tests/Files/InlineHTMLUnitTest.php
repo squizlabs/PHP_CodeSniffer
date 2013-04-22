@@ -1,11 +1,11 @@
 <?php
 /**
- * Unit test class for the DisallowSelfActionsUnitTest sniff.
+ * Unit test class for the InlineHTML sniff.
  *
  * PHP version 5
  *
  * @category  PHP
- * @package   PHP_CodeSniffer_MySource
+ * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -13,20 +13,20 @@
  */
 
 /**
- * Unit test class for the DisallowSelfActionsUnitTest sniff.
+ * Unit test class for the InlineHTML sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
  *
  * @category  PHP
- * @package   PHP_CodeSniffer_MySource
+ * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Tests_Channels_DisallowSelfActionsUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Files_InlineHTMLUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -36,16 +36,27 @@ class MySource_Tests_Channels_DisallowSelfActionsUnitTest extends AbstractSniffU
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return array(
-                12 => 1,
-                13 => 1,
-                28 => 1,
-                29 => 1,
-               );
+        switch ($testFile) {
+        case 'InlineHTMLUnitTest.3.inc':
+            return array(
+                    4 => 1,
+                   );
+            break;
+        case 'InlineHTMLUnitTest.4.inc':
+            return array(
+                    1 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 
@@ -56,9 +67,11 @@ class MySource_Tests_Channels_DisallowSelfActionsUnitTest extends AbstractSniffU
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
         return array();
 

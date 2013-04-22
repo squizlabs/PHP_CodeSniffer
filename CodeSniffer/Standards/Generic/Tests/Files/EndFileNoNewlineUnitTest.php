@@ -51,8 +51,6 @@ class Generic_Tests_Files_EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
                     3 => 1,
                    );
             break;
-        
-        
         case 'EndFileNoNewlineUnitTest.2.css':
         case 'EndFileNoNewlineUnitTest.2.js':
             return array(

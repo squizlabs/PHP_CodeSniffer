@@ -26,9 +26,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string is the strict flag is FALSE
+  - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string if the strict flag is FALSE
     -- acronyms are defined as at least 2 uppercase characters in a row
     -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
+  - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
+    -- Only available since PHP 5.2.11 and 5.3.1
+    -- Thanks to Maik Penz for the patch
+  - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
+  - PSR2 ClassDeclarationSniff now ignored empty classes when checking the end brace position
+  - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
+    -- Thanks to Maik Penz for the patch
+  - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
  </notes>
  <contents>
   <dir name="/">
@@ -258,6 +266,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNoNewlineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="InlineHTMLSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -467,6 +478,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineHTMLUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.js" role="test" />
@@ -621,6 +639,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowSelfActionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="IncludeOwnSystemSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="IncludeSystemSniff.php" role="php">

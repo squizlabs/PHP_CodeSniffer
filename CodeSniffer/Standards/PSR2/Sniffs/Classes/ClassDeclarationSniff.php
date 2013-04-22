@@ -272,9 +272,11 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         $tokens = $phpcsFile->getTokens();
 
         // Check that the closing brace comes right after the code body.
-        $closeBrace = $tokens[$stackPtr]['scope_closer'];
+        $closeBrace  = $tokens[$stackPtr]['scope_closer'];
         $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), null, true);
-        if ($tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)) {
+        if ($prevContent !== $tokens[$stackPtr]['scope_opener']
+            && $tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)
+        ) {
             $error = 'The closing brace for the %s must go on the next line after the body';
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addError($error, $closeBrace, 'CloseBraceAfterBody', $data);
