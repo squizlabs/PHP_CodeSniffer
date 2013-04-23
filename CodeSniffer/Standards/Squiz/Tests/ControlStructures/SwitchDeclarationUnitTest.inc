@@ -256,4 +256,16 @@ switch ($something) {
         $case = null;
     return '4';
 }
+
+switch ($something) {
+    case '1':
+        $case = '1';
+    break;
+
+    case '2':
+        throw new Exception('message');
+
+    default:
+    throw new Exception('message');
+}
 ?>

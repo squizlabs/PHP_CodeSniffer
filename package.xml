@@ -29,11 +29,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string if the strict flag is FALSE
     -- acronyms are defined as at least 2 uppercase characters in a row
     -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
+  - The JS tokenizer now has support for the T_THROW token
   - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
     -- Only available since PHP 5.2.11 and 5.3.1
     -- Thanks to Maik Penz for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignored empty classes when checking the end brace position
+  - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error

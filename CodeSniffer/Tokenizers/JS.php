@@ -159,6 +159,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               'try'       => 'T_TRY',
                               'catch'     => 'T_CATCH',
                               'return'    => 'T_RETURN',
+                              'throw'     => 'T_THROW',
                               'break'     => 'T_BREAK',
                               'switch'    => 'T_SWITCH',
                               'continue'  => 'T_CONTINUE',
