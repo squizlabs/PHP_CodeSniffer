@@ -36,7 +36,10 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
      */
     public function register()
     {
-        return array(T_IF);
+        return array(
+                T_IF,
+                T_ELSEIF,
+               );
 
     }//end register()
 
