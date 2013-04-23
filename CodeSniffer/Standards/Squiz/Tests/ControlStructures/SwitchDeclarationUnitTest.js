@@ -256,3 +256,15 @@ switch (something) {
         myvar = null;
     return '4';
 }
+
+switch (something) {
+    case '1':
+        myvar = '1';
+    break;
+
+    case '2':
+        throw 'message';
+
+    default:
+    throw 'message';
+}

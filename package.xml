@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maik Penz for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignored empty classes when checking the end brace position
+  - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
