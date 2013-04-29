@@ -335,7 +335,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($singleValue === false && isset($indices[0]['arrow']) === false) {
                 // A single nested array as a value is fine.
                 if ($tokens[$indices[0]['value']]['code'] !== T_ARRAY) {
-                    $singleValue === true;
+                    $singleValue = true;
                 }
             }
         }
