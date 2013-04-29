@@ -321,22 +321,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if (empty($indices) === true) {
             $singleValue = true;
-        } else if (count($indices) === 1) {
-            if ($lastToken === T_COMMA) {
-                // There may be another array value without a comma.
-                $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
-                $exclude[]   = T_COMMA;
-                $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
-                if ($nextContent === false) {
-                    $singleValue = true;
-                }
-            }
-
-            if ($singleValue === false && isset($indices[0]['arrow']) === false) {
-                // A single nested array as a value is fine.
-                if ($tokens[$indices[0]['value']]['code'] !== T_ARRAY) {
-                    $singleValue = true;
-                }
+        } else if (count($indices) === 1 && $lastToken === T_COMMA) {
+            // There may be another array value without a comma.
+            $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
+            $exclude[]   = T_COMMA;
+            $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
+            if ($nextContent === false) {
+                $singleValue = true;
             }
         }
 
