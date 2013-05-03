@@ -24,6 +24,10 @@ if (class_exists('PHP_CodeSniffer_File', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_File not found');
 }
 
+if (class_exists('PHP_CodeSniffer_Fixer', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Fixer not found');
+}
+
 if (class_exists('PHP_CodeSniffer_Tokens', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Tokens not found');
 }

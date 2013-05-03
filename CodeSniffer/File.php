@@ -139,6 +139,13 @@ class PHP_CodeSniffer_File
     public $phpcs = null;
 
     /**
+     * The Fixer object to control fixing errors.
+     *
+     * @var PHP_CodeSniffer_Fixer
+     */
+    public $fixer = null;
+
+    /**
      * The tokenizer being used for this file.
      *
      * @var object
@@ -287,6 +294,7 @@ class PHP_CodeSniffer_File
         $this->tokenizers = $tokenizers;
         $this->ruleset    = $ruleset;
         $this->phpcs      = $phpcs;
+        $this->fixer      = new PHP_CodeSniffer_Fixer();
 
         $cliValues = $phpcs->cli->getCommandLineValues();
         if (isset($cliValues['showSources']) === true
@@ -396,6 +404,7 @@ class PHP_CodeSniffer_File
     public function start($contents=null)
     {
         $this->_parse($contents);
+        $this->fixer->startFile($this);
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
@@ -565,6 +574,17 @@ class PHP_CodeSniffer_File
 
             echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
+
+        $fixes = $this->fixer->getFixCount();
+        if ($fixes > 0) {
+            $this->_errors = array();
+            $this->_warnings = array();
+            $contents = $this->fixer->getContents();
+            $this->start($contents);
+            return;
+        }
+
+        $this->fixer->endFile();
 
     }//end start()
 
