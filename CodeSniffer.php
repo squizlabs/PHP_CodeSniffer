@@ -651,6 +651,22 @@ class PHP_CodeSniffer
             }
         }//end if
 
+        // Allow standard to use custom bootstrapping (at class scope)
+        // Assume a bootstrap.php at the standard base directory.
+        $bootstrapFn = self::$standardDir . DIRECTORY_SEPARATOR . 'bootstrap.php';
+        // Override with ruleset 'bootstrap' key.
+        if (isset($ruleset) && isset($ruleset['bootstrap'])) {
+            $bootstrapFn = str_replace('/', DIRECTORY_SEPARATOR, $ruleset['bootstrap']);
+            if (substr($bootstrapFn, 0, 1) !== DIRECTORY_SEPARATOR) {
+                $bootstrapFn = self::$standardDir . DIRECTORY_SEPARATOR . $bootstrapFn;
+            }
+        }
+        // load if name is a valid file name
+        $bootstrapFn = realpath($bootstrapFn);
+        if ($bootstrapFn && file_exists($bootstrapFn)) {
+            include_once $bootstrapFn;
+        }
+
         $files = $this->getSniffFiles(self::$standardDir, $standard);
 
         if (empty($sniffs) === false) {
