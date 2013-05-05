@@ -114,10 +114,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             $listenTypes[] = $tokenType;
 
             $patternArray = array(
-                             'listen_pos'   => $pos,
-                             'pattern'      => $parsedPattern,
-                             'pattern_code' => $pattern,
-                            );
+                'listen_pos'   => $pos,
+                'pattern'      => $parsedPattern,
+                'pattern_code' => $pattern,
+            );
 
             if (isset($this->_parsedPatterns[$tokenType]) === false) {
                 $this->_parsedPatterns[$tokenType] = array();
@@ -943,10 +943,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $patterns = array();
         foreach ($tokens as $patternInfo) {
             $patterns[] = array(
-                           'type'  => 'token',
-                           'token' => $patternInfo['code'],
-                           'value' => $patternInfo['content'],
-                          );
+                'type'  => 'token',
+                'token' => $patternInfo['code'],
+                'value' => $patternInfo['content'],
+            );
         }
 
         return $patterns;

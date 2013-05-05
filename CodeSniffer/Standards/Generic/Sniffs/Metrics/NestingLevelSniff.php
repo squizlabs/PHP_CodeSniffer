@@ -93,16 +93,16 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
         if ($nestingLevel > $this->absoluteNestingLevel) {
             $error = 'Function\'s nesting level (%s) exceeds allowed maximum of %s';
             $data  = array(
-                      $nestingLevel,
-                      $this->absoluteNestingLevel,
-                     );
+                $nestingLevel,
+                $this->absoluteNestingLevel,
+            );
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($nestingLevel > $this->nestingLevel) {
             $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';
             $data    = array(
-                        $nestingLevel,
-                        $this->nestingLevel,
-                       );
+                $nestingLevel,
+                $this->nestingLevel,
+            );
             $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 

@@ -106,9 +106,9 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
             }
 
             $foundCalls[$i] = array(
-                               'name' => $funcName,
-                               'type' => strtolower($tokens[$prevToken]['content']),
-                              );
+                'name' => $funcName,
+                'type' => strtolower($tokens[$prevToken]['content']),
+            );
         }//end for
 
         $errorClassName = substr($className, 0, -7);
@@ -122,9 +122,9 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                 $type  = $funcData['type'];
                 $error = "Static calls to public methods in Action classes must not use the $type keyword; use %s::%s() instead";
                 $data  = array(
-                          $errorClassName,
-                          $funcName,
-                         );
+                    $errorClassName,
+                    $funcName,
+                );
                 $phpcsFile->addError($error, $token, 'Found'.ucfirst($funcData['type']), $data);
             }
         }

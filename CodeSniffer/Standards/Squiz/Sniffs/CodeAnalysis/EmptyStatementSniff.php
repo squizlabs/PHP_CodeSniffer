@@ -39,15 +39,15 @@ class Squiz_Sniffs_CodeAnalysis_EmptyStatementSniff extends Generic_Sniffs_CodeA
      * @var array
      */
     protected $checkedTokens = array(
-                                T_DO      => true,
-                                T_ELSE    => true,
-                                T_ELSEIF  => true,
-                                T_FOR     => true,
-                                T_FOREACH => true,
-                                T_IF      => true,
-                                T_SWITCH  => true,
-                                T_WHILE   => true,
-                               );
+        T_DO      => true,
+        T_ELSE    => true,
+        T_ELSEIF  => true,
+        T_FOR     => true,
+        T_FOREACH => true,
+        T_IF      => true,
+        T_SWITCH  => true,
+        T_WHILE   => true,
+    );
 
 }//end class
 

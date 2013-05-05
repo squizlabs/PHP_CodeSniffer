@@ -62,10 +62,10 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
         $tokens = $phpcsFile->getTokens();
 
         $replacements = array(
-                         'and' => '&&',
-                         'or'  => '||',
-                         'xor' => '^',
-                        );
+            'and' => '&&',
+            'or'  => '||',
+            'xor' => '^',
+        );
 
         $operator = strtolower($tokens[$stackPtr]['content']);
         if (isset($replacements[$operator]) === false) {
@@ -74,9 +74,9 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
 
         $error = 'Logical operator "%s" is prohibited; use "%s" instead';
         $data  = array(
-                  $operator,
-                  $replacements[$operator],
-                 );
+            $operator,
+            $replacements[$operator],
+        );
         $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
 
     }//end process()

@@ -66,10 +66,10 @@ class Squiz_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$decName]['content'] !== $fileName) {
             $error = '%s name doesn\'t match filename; expected "%s %s"';
             $data  = array(
-                      ucfirst($tokens[$stackPtr]['content']),
-                      $tokens[$stackPtr]['content'],
-                      $fileName,
-                     );
+                ucfirst($tokens[$stackPtr]['content']),
+                $tokens[$stackPtr]['content'],
+                $fileName,
+            );
             $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
         }
 

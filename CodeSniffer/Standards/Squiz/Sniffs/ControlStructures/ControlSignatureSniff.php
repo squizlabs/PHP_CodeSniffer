@@ -38,10 +38,9 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
-
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns the patterns that this test wishes to verify.
@@ -51,16 +50,16 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
     protected function getPatterns()
     {
         return array(
-                'try {EOL...} catch (...) {EOL',
-                'do {EOL...} while (...);EOL',
-                'while (...) {EOL',
-                'for (...) {EOL',
-                'if (...) {EOL',
-                'foreach (...) {EOL',
-                '} else if (...) {EOL',
-                '} elseif (...) {EOL',
-                '} else {EOL',
-               );
+            'try {EOL...} catch (...) {EOL',
+            'do {EOL...} while (...);EOL',
+            'while (...) {EOL',
+            'for (...) {EOL',
+            'if (...) {EOL',
+            'foreach (...) {EOL',
+            '} else if (...) {EOL',
+            '} elseif (...) {EOL',
+            '} else {EOL',
+        );
 
     }//end getPatterns()
 

@@ -37,117 +37,115 @@ class Core_Reports_AbstractTestCase extends PHPUnit_Framework_TestCase
      * 
      * @var array
      */
-    protected $fixtureReportData
-        = array(
-           'totals' => array(
-                        'warnings' => 2,
-                        'errors'   => 8,
-                       ),
-           'files'  => array(
-                        'bar' => array(
-                                  'errors'   => 4,
-                                  'warnings' => 0,
-                                  'messages' => array(
-                                                 1  => array(
-                                                        1  => array(
-                                                               0 => array(
-                                                                     'message'  => 'First error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    ),
-                                                              ),
-                                                        10 => array(
-                                                               0 => array(
-                                                                     'message'  => 'Second error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode1',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    ),
-                                                               1 => array(
-                                                                     'message'  => 'Third error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    )
-                                                              )
-                                                       ),
-                                                 10 => array(
-                                                        1 => array(
-                                                              0 => array(
-                                                                    'message'  => 'Fourth error message',
-                                                                    'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode1',
-                                                                    'type'     => 'ERROR',
-                                                                    'severity' => 5,
-                                                                   )
-                                                             )
-                                                       )
-                                                )
-                                 ),
-                        'baz' => array(
-                                  'errors'   => 0,
-                                  'warnings' => 0,
-                                  'messages' => array(),
-                                 ),
-                        'foo' => array(
-                                  'errors'   => 4,
-                                  'warnings' => 2,
-                                  'messages' => array(
-                                                 1  => array(
-                                                        1  => array(
-                                                               0 => array(
-                                                                     'message'  => 'First error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    )
-                                                              ),
-                                                        10 => array(
-                                                               0 => array(
-                                                                     'message'  => 'Second error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode1',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    ),
-                                                               1 => array(
-                                                                     'message'  => 'Third error message',
-                                                                     'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
-                                                                     'type'     => 'ERROR',
-                                                                     'severity' => 5,
-                                                                    )
-                                                              )
-                                                       ),
-                                                 5  => array(
-                                                        1 => array(
-                                                              0 => array(
-                                                                    'message'  => 'First warning message',
-                                                                    'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode2',
-                                                                    'type'     => 'WARNING',
-                                                                    'severity' => 5,
-                                                                   )
-                                                             )
-                                                       ),
-                                                 10 => array(
-                                                        1 => array(
-                                                              0 => array(
-                                                                    'message'  => 'Second warning message',
-                                                                    'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode3',
-                                                                    'type'     => 'WARNING',
-                                                                    'severity' => 5,
-                                                                   ),
-                                                              1 => array(
-                                                                    'message'  => 'Fourth error message',
-                                                                    'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode1',
-                                                                    'type'     => 'ERROR',
-                                                                    'severity' => 5,
-                                                                   )
-                                                             )
-                                                       )
-                                                )
-                                 )
-                       )
-          );
-
+    protected $fixtureReportData = array(
+        'totals' => array(
+            'warnings' => 2,
+            'errors'   => 8,
+        ),
+        'files'  => array(
+            'bar' => array(
+                'errors'   => 4,
+                'warnings' => 0,
+                'messages' => array(
+                    1  => array(
+                        1  => array(
+                            0 => array(
+                                'message'  => 'First error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            ),
+                        ),
+                        10 => array(
+                            0 => array(
+                                'message'  => 'Second error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode1',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            ),
+                            1 => array(
+                                'message'  => 'Third error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            )
+                        )
+                    ),
+                    10 => array(
+                        1 => array(
+                            0 => array(
+                                'message'  => 'Fourth error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode1',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            )
+                        )
+                    )
+                )
+            ),
+            'baz' => array(
+                'errors'   => 0,
+                'warnings' => 0,
+                'messages' => array(),
+            ),
+            'foo' => array(
+                'errors'   => 4,
+                'warnings' => 2,
+                'messages' => array(
+                    1  => array(
+                        1  => array(
+                            0 => array(
+                                'message'  => 'First error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            )
+                        ),
+                        10 => array(
+                            0 => array(
+                                'message'  => 'Second error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode1',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            ),
+                            1 => array(
+                                'message'  => 'Third error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode2',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            )
+                        )
+                    ),
+                    5  => array(
+                        1 => array(
+                            0 => array(
+                                'message'  => 'First warning message',
+                                'source'   => 'MyStandard.Mytype.Mysniff2Sniff.Mycode2',
+                                'type'     => 'WARNING',
+                                'severity' => 5,
+                            )
+                        )
+                    ),
+                    10 => array(
+                        1 => array(
+                            0 => array(
+                                'message'  => 'Second warning message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode3',
+                                'type'     => 'WARNING',
+                                'severity' => 5,
+                            ),
+                            1 => array(
+                                'message'  => 'Fourth error message',
+                                'source'   => 'MyStandard.Mytype.Mysniff1Sniff.Mycode1',
+                                'type'     => 'ERROR',
+                                'severity' => 5,
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Returns report standard generation.

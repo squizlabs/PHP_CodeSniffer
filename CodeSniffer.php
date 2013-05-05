@@ -132,9 +132,9 @@ class PHP_CodeSniffer
      * @var array
      */
     private $_tokenListeners = array(
-                                'file'      => array(),
-                                'multifile' => array(),
-                               );
+        'file'      => array(),
+        'multifile' => array(),
+    );
 
     /**
      * An array of patterns to use for skipping files.
@@ -149,11 +149,11 @@ class PHP_CodeSniffer
      * @var array
      */
     public $allowedFileExtensions = array(
-                                     'php' => 'PHP',
-                                     'inc' => 'PHP',
-                                     'js'  => 'JS',
-                                     'css' => 'CSS',
-                                    );
+        'php' => 'PHP',
+        'inc' => 'PHP',
+        'js'  => 'JS',
+        'css' => 'CSS',
+    );
 
     /**
      * An array of variable types for param/var we will check.
@@ -161,14 +161,14 @@ class PHP_CodeSniffer
      * @var array(string)
      */
     public static $allowedTypes = array(
-                                   'array',
-                                   'boolean',
-                                   'float',
-                                   'integer',
-                                   'mixed',
-                                   'object',
-                                   'string',
-                                  );
+        'array',
+        'boolean',
+        'float',
+        'integer',
+        'mixed',
+        'object',
+        'string',
+    );
 
 
     /**
@@ -425,9 +425,9 @@ class PHP_CodeSniffer
         $this->files           = array();
         $this->ruleset         = array();
         $this->_tokenListeners = array(
-                                  'file'      => array(),
-                                  'multifile' => array(),
-                                 );
+            'file'      => array(),
+            'multifile' => array(),
+        );
 
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
@@ -957,8 +957,8 @@ class PHP_CodeSniffer
                 foreach ($rule->properties->property as $prop) {
                     if (isset($this->ruleset[$code]) === false) {
                         $this->ruleset[$code] = array(
-                                                 'properties' => array(),
-                                                );
+                            'properties' => array(),
+                        );
                     } else if (isset($this->ruleset[$code]['properties']) === false) {
                         $this->ruleset[$code]['properties'] = array();
                     }
@@ -1011,9 +1011,9 @@ class PHP_CodeSniffer
     {
         // Construct a list of listeners indexed by token being listened for.
         $this->_tokenListeners = array(
-                                  'file'      => array(),
-                                  'multifile' => array(),
-                                 );
+            'file'      => array(),
+            'multifile' => array(),
+        );
 
         foreach ($this->listeners as $listenerClass) {
             // Work out the internal code for this sniff. Detect usage of namespace
@@ -1056,18 +1056,18 @@ class PHP_CodeSniffer
 
                     if (in_array($this->listeners[$listenerClass], $this->_tokenListeners['file'][$token], true) === false) {
                         $this->_tokenListeners['file'][$token][] = array(
-                                                                    'listener'   => $this->listeners[$listenerClass],
-                                                                    'class'      => $listenerClass,
-                                                                    'tokenizers' => $tokenizers,
-                                                                   );
+                            'listener'   => $this->listeners[$listenerClass],
+                            'class'      => $listenerClass,
+                            'tokenizers' => $tokenizers,
+                        );
                     }
                 }
             } else if (($this->listeners[$listenerClass] instanceof PHP_CodeSniffer_MultiFileSniff) === true) {
                 $this->_tokenListeners['multifile'][] = array(
-                                                         'listener'   => $this->listeners[$listenerClass],
-                                                         'class'      => $listenerClass,
-                                                         'tokenizers' => $tokenizers,
-                                                        );
+                    'listener'   => $this->listeners[$listenerClass],
+                    'class'      => $listenerClass,
+                    'tokenizers' => $tokenizers,
+                );
             }
         }//end foreach
 
@@ -1238,9 +1238,9 @@ class PHP_CodeSniffer
             }
 
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
 
             // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system
@@ -1477,13 +1477,12 @@ class PHP_CodeSniffer
     {
         $files = array();
         foreach ($this->files as $file) {
-            $files[$file->getFilename()]
-                = array(
-                   'warnings'    => $file->getWarnings(),
-                   'errors'      => $file->getErrors(),
-                   'numWarnings' => $file->getWarningCount(),
-                   'numErrors'   => $file->getErrorCount(),
-                  );
+            $files[$file->getFilename()] = array(
+                'warnings'    => $file->getWarnings(),
+                'errors'      => $file->getErrors(),
+                'numWarnings' => $file->getWarningCount(),
+                'numErrors'   => $file->getErrorCount(),
+            );
         }
 
         return $files;
@@ -1583,15 +1582,15 @@ class PHP_CodeSniffer
                 break;
             case T_CURLY_OPEN:
                 $newToken = array(
-                             'code'    => T_OPEN_CURLY_BRACKET,
-                             'type'    => 'T_OPEN_CURLY_BRACKET',
-                            );
+                    'code'    => T_OPEN_CURLY_BRACKET,
+                    'type'    => 'T_OPEN_CURLY_BRACKET',
+                );
                 break;
             default:
                 $newToken = array(
-                             'code'    => $token[0],
-                             'type'    => token_name($token[0]),
-                            );
+                    'code'    => $token[0],
+                    'type'    => token_name($token[0]),
+                );
                 break;
             }//end switch
 

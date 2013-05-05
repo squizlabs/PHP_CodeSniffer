@@ -123,18 +123,18 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
             if ($braceIndent !== ($startColumn + $this->indent)) {
                 $error = 'Case breaking statement indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn + $this->indent - 1),
-                          ($braceIndent - 1),
-                         );
+                    ($startColumn + $this->indent - 1),
+                    ($braceIndent - 1),
+                );
                 $phpcsFile->addError($error, $scopeEnd, 'BreakIdent', $data);
             }
         } else {
             if ($braceIndent !== $startColumn) {
                 $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn - 1),
-                          ($braceIndent - 1),
-                         );
+                    ($startColumn - 1),
+                    ($braceIndent - 1),
+                );
                 $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
         }

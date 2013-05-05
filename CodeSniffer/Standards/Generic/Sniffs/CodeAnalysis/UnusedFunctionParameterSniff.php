@@ -133,12 +133,12 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                 // Tokenize strings that can contain variables.
                 // Make sure the string is re-joined if it occurs over multiple lines.
                 $validTokens = array(
-                                T_HEREDOC,
-                                T_NOWDOC,
-                                T_END_HEREDOC,
-                                T_END_NOWDOC,
-                                T_DOUBLE_QUOTED_STRING,
-                               );
+                    T_HEREDOC,
+                    T_NOWDOC,
+                    T_END_HEREDOC,
+                    T_END_NOWDOC,
+                    T_DOUBLE_QUOTED_STRING,
+                );
                 $validTokens = array_merge($validTokens, PHP_CodeSniffer_Tokens::$emptyTokens);
 
                 $content = $token['content'];

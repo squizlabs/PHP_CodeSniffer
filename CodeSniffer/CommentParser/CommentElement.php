@@ -103,9 +103,9 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
     {
         $found      = false;
         $whiteSpace = array(
-                       ' ',
-                       "\t",
-                      );
+            ' ',
+            "\t",
+        );
 
         foreach ($this->tokens as $pos => $token) {
             $token = str_replace($whiteSpace, '', $token);

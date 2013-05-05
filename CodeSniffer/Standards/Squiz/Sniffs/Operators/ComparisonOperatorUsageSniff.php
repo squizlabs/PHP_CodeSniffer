@@ -55,9 +55,9 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * A list of valid comparison operators.
@@ -65,14 +65,14 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
      * @var array
      */
     private static $_validOps = array(
-                                 T_IS_IDENTICAL,
-                                 T_IS_NOT_IDENTICAL,
-                                 T_LESS_THAN,
-                                 T_GREATER_THAN,
-                                 T_IS_GREATER_OR_EQUAL,
-                                 T_IS_SMALLER_OR_EQUAL,
-                                 T_INSTANCEOF,
-                                );
+        T_IS_IDENTICAL,
+        T_IS_NOT_IDENTICAL,
+        T_LESS_THAN,
+        T_GREATER_THAN,
+        T_IS_GREATER_OR_EQUAL,
+        T_IS_SMALLER_OR_EQUAL,
+        T_INSTANCEOF,
+    );
 
     /**
      * A list of invalid operators with their alternatives.
@@ -80,16 +80,16 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
      * @var array(int => string)
      */
     private static $_invalidOps = array(
-                                   'PHP' => array(
-                                             T_IS_EQUAL     => '===',
-                                             T_IS_NOT_EQUAL => '!==',
-                                             T_BOOLEAN_NOT  => '=== FALSE',
-                                            ),
-                                   'JS'  => array(
-                                             T_IS_EQUAL     => '===',
-                                             T_IS_NOT_EQUAL => '!==',
-                                            ),
-                                  );
+        'PHP' => array(
+            T_IS_EQUAL     => '===',
+            T_IS_NOT_EQUAL => '!==',
+            T_BOOLEAN_NOT  => '=== FALSE',
+        ),
+        'JS'  => array(
+            T_IS_EQUAL     => '===',
+            T_IS_NOT_EQUAL => '!==',
+        ),
+    );
 
 
     /**
@@ -166,9 +166,9 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
             if (in_array($type, array_keys(self::$_invalidOps[$tokenizer])) === true) {
                 $error = 'Operator %s prohibited; use %s instead';
                 $data  = array(
-                          $tokens[$i]['content'],
-                          self::$_invalidOps[$tokenizer][$type],
-                         );
+                    $tokens[$i]['content'],
+                    self::$_invalidOps[$tokenizer][$type],
+                );
                 $phpcsFile->addError($error, $i, 'NotAllowed', $data);
                 $foundOps++;
             } else if (in_array($type, self::$_validOps) === true) {

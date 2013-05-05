@@ -65,62 +65,62 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     protected $tags = array(
-                       'category'   => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'precedes @package',
-                                       ),
-                       'package'    => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @category',
-                                       ),
-                       'subpackage' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @package',
-                                       ),
-                       'author'     => array(
-                                        'required'       => true,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'follows @subpackage (if used) or @package',
-                                       ),
-                       'copyright'  => array(
-                                        'required'       => false,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'follows @author',
-                                       ),
-                       'license'    => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @copyright (if used) or @author',
-                                       ),
-                       'version'    => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @license',
-                                       ),
-                       'link'       => array(
-                                        'required'       => true,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'follows @version',
-                                       ),
-                       'see'        => array(
-                                        'required'       => false,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'follows @link',
-                                       ),
-                       'since'      => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @see (if used) or @link',
-                                       ),
-                       'deprecated' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @since (if used) or @see (if used) or @link',
-                                       ),
-                );
+        'category'   => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'precedes @package',
+        ),
+        'package'    => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @category',
+        ),
+        'subpackage' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @package',
+        ),
+        'author'     => array(
+            'required'       => true,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @subpackage (if used) or @package',
+        ),
+        'copyright'  => array(
+            'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @author',
+        ),
+        'license'    => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @copyright (if used) or @author',
+        ),
+        'version'    => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @license',
+        ),
+        'link'       => array(
+            'required'       => true,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @version',
+        ),
+        'see'        => array(
+            'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @link',
+        ),
+        'since'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see (if used) or @link',
+        ),
+        'deprecated' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since (if used) or @see (if used) or @link',
+        ),
+    );
 
 
     /**
@@ -212,11 +212,11 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // Check if there is only 1 doc comment between the
             // open tag and class token.
             $nextToken   = array(
-                            T_ABSTRACT,
-                            T_CLASS,
-                            T_FUNCTION,
-                            T_DOC_COMMENT,
-                           );
+                T_ABSTRACT,
+                T_CLASS,
+                T_FUNCTION,
+                T_DOC_COMMENT,
+            );
 
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
             if ($commentNext !== false
@@ -363,9 +363,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
                 $error = 'Missing @%s tag in %s comment';
                 $data  = array(
-                              $tag,
-                              $docBlock,
-                             );
+                    $tag,
+                    $docBlock,
+                );
                 $this->currentFile->addError($error, $commentEnd, 'MissingTag', $data);
                 continue;
             }
@@ -395,9 +395,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if ($info['allow_multiple'] === false) {
                     $error = 'Only 1 @%s tag is allowed in a %s comment';
                     $data  = array(
-                              $tag,
-                              $docBlock,
-                             );
+                        $tag,
+                        $docBlock,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'DuplicateTag', $data);
                 } else {
                     // Make sure same tags are grouped together.
@@ -428,9 +428,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'The @%s tag is in the wrong order; the tag %s';
                 $data  = array(
-                          $tag,
-                          $info['order_text'],
-                         );
+                    $tag,
+                    $info['order_text'],
+                );
                 $this->currentFile->addError($error, $errorPos, 'WrongTagOrder', $data);
             }
 
@@ -443,16 +443,16 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if (is_array($tagElement) === true) {
                 foreach ($tagElement as $key => $element) {
                     $indentation[] = array(
-                                      'tag'   => $tag,
-                                      'space' => $this->getIndentation($tag, $element),
-                                      'line'  => $element->getLine(),
-                                     );
+                        'tag'   => $tag,
+                        'space' => $this->getIndentation($tag, $element),
+                        'line'  => $element->getLine(),
+                    );
                 }
             } else {
                 $indentation[] = array(
-                                  'tag'   => $tag,
-                                  'space' => $this->getIndentation($tag, $tagElement),
-                                 );
+                    'tag'   => $tag,
+                    'space' => $this->getIndentation($tag, $tagElement),
+                );
             }
 
             $method = 'process'.$tagName;
@@ -486,10 +486,10 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $space    = ($indentInfo['space'] - strlen($indentInfo['tag']));
                 $error    = '@%s tag comment indented incorrectly; expected %s spaces but found %s';
                 $data     = array(
-                             $indentInfo['tag'],
-                             $expected,
-                             $space,
-                            );
+                    $indentInfo['tag'],
+                    $expected,
+                    $space,
+                );
 
                 $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
 
@@ -560,9 +560,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $error     = 'Category name "%s" is not valid; consider "%s" instead';
                     $validName = trim($newName, '_');
                     $data      = array(
-                                  $content,
-                                  $validName,
-                                 );
+                        $content,
+                        $validName,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'InvalidCategory', $data);
                 }
             } else {
@@ -611,9 +611,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $error     = 'Package name "%s" is not valid; consider "%s" instead';
         $validName = trim($newName, '_');
         $data      = array(
-                      $content,
-                      $validName,
-                     );
+            $content,
+            $validName,
+        );
         $this->currentFile->addError($error, $errorPos, 'InvalidPackage', $data);
 
     }//end processPackage()
@@ -644,9 +644,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $error     = 'Subpackage name "%s" is not valid; consider "%s" instead';
                     $validName = trim($newName, '_');
                     $data      = array(
-                                  $content,
-                                  $validName,
-                                 );
+                        $content,
+                        $validName,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'InvalidSubpackage', $data);
                 }
             } else {

@@ -38,12 +38,11 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
      * @var array(int)
      */
     private static $_conditions = array(
-                                   T_IF,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_SWITCH,
-                                  );
-
+        T_IF,
+        T_ELSE,
+        T_ELSEIF,
+        T_SWITCH,
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.

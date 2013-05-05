@@ -70,10 +70,10 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
             $nextVar = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
             $error   = 'Short PHP opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $data = array(
-                     $nextVar['content'],
-                     $openTag['content'],
-                     $nextVar['content'],
-                    );
+                $nextVar['content'],
+                $openTag['content'],
+                $nextVar['content'],
+            );
             $phpcsFile->addError($error, $stackPtr, 'EchoFound', $data);
         }
 

@@ -116,10 +116,10 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                     if ($found !== $expected) {
                         $error = '@%s tag indented incorrectly; expected %s spaces but found %s';
                         $data  = array(
-                                  $errorTag['tag'],
-                                  $expected,
-                                  $found,
-                                 );
+                            $errorTag['tag'],
+                            $expected,
+                            $found,
+                        );
                         $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiTagIndent', $data);
                     }
                 }

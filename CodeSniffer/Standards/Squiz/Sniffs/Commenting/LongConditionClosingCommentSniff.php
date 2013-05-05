@@ -34,9 +34,9 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * The openers that we are interested in.
@@ -44,14 +44,14 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
      * @var array(int)
      */
     private static $_openers = array(
-                                T_SWITCH,
-                                T_IF,
-                                T_FOR,
-                                T_FOREACH,
-                                T_WHILE,
-                                T_TRY,
-                                T_CASE,
-                               );
+        T_SWITCH,
+        T_IF,
+        T_FOR,
+        T_FOREACH,
+        T_WHILE,
+        T_TRY,
+        T_CASE,
+    );
 
     /**
      * The length that a code block must be before
@@ -175,9 +175,9 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
             $found = trim($tokens[$comment]['content']);
             $error = 'Incorrect closing comment; expected "%s" but found "%s"';
             $data  = array(
-                      $expected,
-                      $found,
-                     );
+                $expected,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Invalid', $data);
             return;
         }

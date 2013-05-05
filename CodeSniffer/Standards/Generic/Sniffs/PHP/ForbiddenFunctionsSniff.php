@@ -40,9 +40,9 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      * @var array(string => string|null)
      */
     protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
-                                    );
+        'sizeof' => 'count',
+        'delete' => 'unset',
+    );
 
     /**
      * A cache of forbidden function names, for faster lookups.
@@ -102,11 +102,11 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-                   T_DOUBLE_COLON,
-                   T_OBJECT_OPERATOR,
-                   T_FUNCTION,
-                   T_CONST,
-                  );
+            T_DOUBLE_COLON,
+            T_OBJECT_OPERATOR,
+            T_FUNCTION,
+            T_CONST,
+        );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if (in_array($tokens[$prevToken]['code'], $ignore) === true) {

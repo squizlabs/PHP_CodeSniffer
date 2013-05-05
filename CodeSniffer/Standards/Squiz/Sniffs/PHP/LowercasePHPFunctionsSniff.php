@@ -101,9 +101,9 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         if ($content !== strtolower($content)) {
             $error = 'Calls to inbuilt PHP functions must be lowercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtolower($content),
-                      $content,
-                     );
+                strtolower($content),
+                $content,
+            );
             $phpcsFile->addError($error, $stackPtr, 'CallUppercase', $data);
         }
 

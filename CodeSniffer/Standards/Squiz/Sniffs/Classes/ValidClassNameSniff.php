@@ -80,9 +80,9 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
             $type  = ucfirst($tokens[$stackPtr]['content']);
             $error = '%s name "%s" is not in camel caps format';
             $data  = array(
-                      $type,
-                      $name,
-                     );
+                $type,
+                $name,
+            );
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 

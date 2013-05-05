@@ -100,9 +100,9 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         if ($foundIndent !== $expectedIndent) {
             $error = 'Multi-line assignment not indented correctly; expected %s spaces but found %s';
             $data  = array(
-                      $expectedIndent,
-                      $foundIndent,
-                     );
+                $expectedIndent,
+                $foundIndent,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Indent', $data);
         }
 

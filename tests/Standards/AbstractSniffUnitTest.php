@@ -189,11 +189,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             foreach ($lineErrors as $column => $errors) {
                 if (isset($allProblems[$line]) === false) {
                     $allProblems[$line] = array(
-                                           'expected_errors'   => 0,
-                                           'expected_warnings' => 0,
-                                           'found_errors'      => array(),
-                                           'found_warnings'    => array(),
-                                          );
+                        'expected_errors'   => 0,
+                        'expected_warnings' => 0,
+                        'found_errors'      => array(),
+                        'found_warnings'    => array(),
+                    );
                 }
 
                 $foundErrorsTemp = array();
@@ -221,11 +221,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         foreach ($expectedErrors as $line => $numErrors) {
             if (isset($allProblems[$line]) === false) {
                 $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
+                    'expected_errors'   => 0,
+                    'expected_warnings' => 0,
+                    'found_errors'      => array(),
+                    'found_warnings'    => array(),
+                );
             }
 
             $allProblems[$line]['expected_errors'] = $numErrors;
@@ -235,11 +235,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             foreach ($lineWarnings as $column => $warnings) {
                 if (isset($allProblems[$line]) === false) {
                     $allProblems[$line] = array(
-                                           'expected_errors'   => 0,
-                                           'expected_warnings' => 0,
-                                           'found_errors'      => array(),
-                                           'found_warnings'    => array(),
-                                          );
+                        'expected_errors'   => 0,
+                        'expected_warnings' => 0,
+                        'found_errors'      => array(),
+                        'found_warnings'    => array(),
+                    );
                 }
 
                 $foundWarningsTemp = array();
@@ -267,11 +267,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         foreach ($expectedWarnings as $line => $numWarnings) {
             if (isset($allProblems[$line]) === false) {
                 $allProblems[$line] = array(
-                                       'expected_errors'   => 0,
-                                       'expected_warnings' => 0,
-                                       'found_errors'      => array(),
-                                       'found_warnings'    => array(),
-                                      );
+                    'expected_errors'   => 0,
+                    'expected_warnings' => 0,
+                    'found_errors'      => array(),
+                    'found_warnings'    => array(),
+                );
             }
 
             $allProblems[$line]['expected_warnings'] = $numWarnings;

@@ -38,9 +38,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -205,11 +205,10 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $maxAssignmentLength = strlen($tokens[$assignment]['content']);
             }
 
-            $assignmentData[$assignment]
-                = array(
-                   'variable_length'   => $endColumn,
-                   'assignment_length' => strlen($tokens[$assignment]['content']),
-                  );
+            $assignmentData[$assignment] = array(
+                'variable_length'   => $endColumn,
+                'assignment_length' => strlen($tokens[$assignment]['content']),
+            );
         }//end foreach
 
         foreach ($assignmentData as $assignment => $data) {
@@ -284,9 +283,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
 
                 $errorData = array(
-                              $expected,
-                              $found,
-                             );
+                    $expected,
+                    $found,
+                );
 
                 if ($this->error === true) {
                     $phpcsFile->addError($error, $assignment, $type, $errorData);

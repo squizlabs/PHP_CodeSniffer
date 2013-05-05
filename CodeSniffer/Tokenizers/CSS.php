@@ -117,10 +117,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             if ($token['code'] === T_FUNCTION) {
                 // There are no functions in CSS, so convert this to a string.
                 $finalTokens[$newStackPtr] = array(
-                                              'type'    => 'T_STRING',
-                                              'code'    => T_STRING,
-                                              'content' => $token['content'],
-                                             );
+                    'type'    => 'T_STRING',
+                    'code'    => T_STRING,
+                    'content' => $token['content'],
+                );
 
                 $newStackPtr++;
                 continue;
@@ -169,23 +169,23 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         // Work out what we trimmed off above and remember to re-add it.
                         $trimmed = substr($token['content'], 0, (strlen($token['content']) - strlen($content)));
                         $finalTokens[$newStackPtr] = array(
-                                                      'type'    => 'T_COLOUR',
-                                                      'code'    => T_COLOUR,
-                                                      'content' => $trimmed.$firstContent,
-                                                     );
+                            'type'    => 'T_COLOUR',
+                            'code'    => T_COLOUR,
+                            'content' => $trimmed.$firstContent,
+                        );
                     } else {
                         $finalTokens[$newStackPtr] = array(
-                                                      'type'    => 'T_HASH',
-                                                      'code'    => T_HASH,
-                                                      'content' => '#',
-                                                     );
+                            'type'    => 'T_HASH',
+                            'code'    => T_HASH,
+                            'content' => '#',
+                        );
                     }
                 } else {
                     $finalTokens[$newStackPtr] = array(
-                                                  'type'    => 'T_STRING',
-                                                  'code'    => T_STRING,
-                                                  'content' => '//',
-                                                 );
+                        'type'    => 'T_STRING',
+                        'code'    => T_STRING,
+                        'content' => '//',
+                    );
                 }//end if
 
                 $newStackPtr++;

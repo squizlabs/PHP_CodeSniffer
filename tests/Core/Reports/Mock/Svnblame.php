@@ -47,17 +47,17 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      * @var array
      */
     protected $fooBlames = array(
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '    10   devel3        * @return void',
-                            '    10   devel3        * @return void',
-                           );
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '    10   devel3        * @return void',
+        '    10   devel3        * @return void',
+    );
 
     /**
      * Example svnblame output.
@@ -65,17 +65,17 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      * @var array
      */
     protected $barBlames = array(
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '    10   devel3        * @return void',
-                            '    10   devel3        * @return void',
-                           );
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '    10   devel3        * @return void',
+        '    10   devel3        * @return void',
+    );
 
     /**
      * Example svnblame output.
@@ -83,17 +83,17 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      * @var array
      */
     protected $bazBlames = array(
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '     4   devel1        * @return void',
-                            '     5   devel2        * @return void',
-                            '     5   devel2        * @return void',
-                            '     4   devel1        * @return void',
-                            '    10   devel3        * @return void',
-                            '    10   devel3        * @return void',
-                           );
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '     4   devel1        * @return void',
+        '     5   devel2        * @return void',
+        '     5   devel2        * @return void',
+        '     4   devel1        * @return void',
+        '    10   devel3        * @return void',
+        '    10   devel3        * @return void',
+    );
 
     /**
      * Example svnblame output with long revision numbers.
@@ -101,18 +101,17 @@ class PHP_CodeSniffer_Reports_Mock_Svnblame extends PHP_CodeSniffer_Reports_Svnb
      * @var array
      */
     protected $bigRevisionNumberBlames = array(
-                                          '123456   devel1        * @return void',
-                                          '123456   devel1        * @return void',
-                                          '251897   devel3        * @return void',
-                                          '251897   devel3        * @return void',
-                                          ' 12345   devel1        * @return void',
-                                          '220123   devel2        * @return void',
-                                          '220123   devel2        * @return void',
-                                          '220123   devel2        * @return void',
-                                          '219571   devel1        * @return void',
-                                          '219571   devel1        * @return void',
-                                         );
-
+        '123456   devel1        * @return void',
+        '123456   devel1        * @return void',
+        '251897   devel3        * @return void',
+        '251897   devel3        * @return void',
+        ' 12345   devel1        * @return void',
+        '220123   devel2        * @return void',
+        '220123   devel2        * @return void',
+        '220123   devel2        * @return void',
+        '219571   devel1        * @return void',
+        '219571   devel1        * @return void',
+    );
 
     /**
      * Mocks the svnblame command.

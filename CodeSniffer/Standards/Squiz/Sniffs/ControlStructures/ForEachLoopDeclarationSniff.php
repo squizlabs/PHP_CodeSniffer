@@ -75,9 +75,9 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             $expected = strtolower($content);
             $error    = 'AS keyword must be lowercase; expected "%s" but found "%s"';
             $data     = array(
-                         $expected,
-                         $content,
-                        );
+                $expected,
+                $content,
+            );
             $phpcsFile->addError($error, $stackPtr, 'AsNotLower', $data);
         }
 

@@ -51,9 +51,9 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * The header comment parser for the current file.
@@ -128,10 +128,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Check if there is only 1 doc comment between the open tag and class token.
         $nextToken   = array(
-                        T_ABSTRACT,
-                        T_CLASS,
-                        T_DOC_COMMENT,
-                       );
+            T_ABSTRACT,
+            T_CLASS,
+            T_DOC_COMMENT,
+        );
 
         $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
         if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
@@ -306,12 +306,12 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     {
         // Required tags in correct order.
         $tags = array(
-                 'package'    => 'precedes @subpackage',
-                 'subpackage' => 'follows @package',
-                 'author'     => 'follows @subpackage',
-                 'copyright'  => 'follows @author',
-                 'license'    => 'follows @copyright',
-                );
+            'package'    => 'precedes @subpackage',
+            'subpackage' => 'follows @package',
+            'author'     => 'follows @subpackage',
+            'copyright'  => 'follows @author',
+            'license'    => 'follows @copyright',
+        );
 
         $foundTags   = $this->commentParser->getTagOrders();
         $errorPos    = 0;
@@ -360,9 +360,9 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } else {
                 $error = 'The @%s tag is in the wrong order; the tag %s';
                 $data  = array(
-                          $tag,
-                          $orderText,
-                         );
+                    $tag,
+                    $orderText,
+                );
                 $this->currentFile->addError($error, $errorPos, ucfirst($tag).'TagOrder', $data);
             }
 
@@ -373,10 +373,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $indentation[] = array(
-                              'tag'      => $tag,
-                              'errorPos' => $errorPos,
-                              'space'    => $this->getIndentation($tag, $tagElement),
-                             );
+                'tag'      => $tag,
+                'errorPos' => $errorPos,
+                'space'    => $this->getIndentation($tag, $tagElement),
+            );
 
             $method = 'process'.$tagName;
             if (method_exists($this, $method) === true) {
@@ -399,10 +399,10 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $space    = ($indentInfo['space'] - strlen($indentInfo['tag']));
                 $error    = '@%s tag comment indented incorrectly; expected %s spaces but found %s';
                 $data     = array(
-                             $indentInfo['tag'],
-                             $expected,
-                             $space,
-                            );
+                    $indentInfo['tag'],
+                    $expected,
+                    $space,
+                );
                 $this->currentFile->addError($error, $indentInfo['errorPos'], ucfirst($indentInfo['tag']).'TagIndent', $data);
             }
         }
@@ -461,18 +461,18 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'Package name "%s" is not valid; consider "%s" instead';
                 $data  = array(
-                          $content,
-                          trim($newName, '_'),
-                         );
+                    $content,
+                    trim($newName, '_'),
+                );
                 $this->currentFile->addError($error, $errorPos, 'IncorrectPackage', $data);
             } else if (strpos($content, 'Squiz') === 0) {
                 // Package name must not start with Squiz.
                 $newName = substr($content, 5);
                 $error   = 'Package name "%s" is not valid; consider "%s" instead';
                 $data    = array(
-                            $content,
-                            $newName,
-                           );
+                    $content,
+                    $newName,
+                );
                 $this->currentFile->addError($error, $errorPos, 'SquizPackage', $data);
             }
         }
@@ -506,9 +506,9 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'Subpackage name "%s" is not valid; consider "%s" instead';
                 $data  = array(
-                          $content,
-                          trim($newName, '_'),
-                         );
+                    $content,
+                    trim($newName, '_'),
+                );
                 $this->currentFile->addError($error, $errorPos, 'IncorrectSubpackage', $data);
             }
         }

@@ -45,13 +45,12 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
      * @var array
      */
     protected $specificStylesheets = array(
-                                      'moz',
-                                      'ie',
-                                      'ie7',
-                                      'ie8',
-                                      'webkit',
-                                     );
-
+        'moz',
+        'ie',
+        'ie7',
+        'ie8',
+        'webkit',
+    );
 
     /**
      * Returns the token types that this sniff is interested in.

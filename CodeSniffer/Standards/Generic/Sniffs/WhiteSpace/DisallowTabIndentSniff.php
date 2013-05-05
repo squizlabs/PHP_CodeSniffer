@@ -36,11 +36,10 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
-
+        'PHP',
+        'JS',
+        'CSS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.

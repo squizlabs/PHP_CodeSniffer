@@ -37,184 +37,184 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * @var array
      */
     public $scopeOpeners = array(
-                            T_IF            => array(
-                                                'start'  => array(
-                                                             T_OPEN_CURLY_BRACKET,
-                                                             T_COLON,
-                                                            ),
-                                                'end'    => array(
-                                                             T_CLOSE_CURLY_BRACKET,
-                                                             T_ENDIF,
-                                                            ),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_TRY           => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_CATCH         => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_FINALLY       => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_ELSE          => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_ELSEIF        => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_FOR           => array(
-                                                'start'  => array(
-                                                             T_OPEN_CURLY_BRACKET,
-                                                             T_COLON,
-                                                            ),
-                                                'end'    => array(
-                                                             T_CLOSE_CURLY_BRACKET,
-                                                             T_ENDFOR,
-                                                            ),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_FOREACH       => array(
-                                                'start'  => array(
-                                                             T_OPEN_CURLY_BRACKET,
-                                                             T_COLON,
-                                                            ),
-                                                'end'    => array(
-                                                             T_CLOSE_CURLY_BRACKET,
-                                                             T_ENDFOREACH,
-                                                            ),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_INTERFACE     => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_FUNCTION      => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_CLASS         => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_TRAIT         => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_NAMESPACE     => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_WHILE         => array(
-                                                'start'  => array(
-                                                             T_OPEN_CURLY_BRACKET,
-                                                             T_COLON,
-                                                            ),
-                                                'end'    => array(
-                                                             T_CLOSE_CURLY_BRACKET,
-                                                             T_ENDWHILE,
-                                                            ),
-                                                'strict' => false,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_DO            => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_SWITCH        => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                            T_CASE          => array(
-                                                'start'  => array(
-                                                             T_COLON,
-                                                             T_SEMICOLON,
-                                                            ),
-                                                'end'    => array(
-                                                             T_BREAK,
-                                                             T_RETURN,
-                                                             T_CONTINUE,
-                                                             T_THROW,
-                                                            ),
-                                                'strict' => true,
-                                                'shared' => true,
-                                                'with'   => array(
-                                                             T_DEFAULT,
-                                                             T_CASE,
-                                                             T_SWITCH,
-                                                            ),
-                                               ),
-                            T_DEFAULT       => array(
-                                                'start'  => array(T_COLON),
-                                                'end'    => array(
-                                                             T_BREAK,
-                                                             T_RETURN,
-                                                             T_CONTINUE,
-                                                             T_THROW,
-                                                            ),
-                                                'strict' => true,
-                                                'shared' => true,
-                                                'with'   => array(
-                                                             T_CASE,
-                                                             T_SWITCH,
-                                                            ),
-                                               ),
-                            T_START_HEREDOC => array(
-                                                'start'  => array(T_START_HEREDOC),
-                                                'end'    => array(T_END_HEREDOC),
-                                                'strict' => true,
-                                                'shared' => false,
-                                                'with'   => array(),
-                                               ),
-                           );
+        T_IF            => array(
+            'start'  => array(
+                T_OPEN_CURLY_BRACKET,
+                T_COLON,
+            ),
+            'end'    => array(
+                T_CLOSE_CURLY_BRACKET,
+                T_ENDIF,
+            ),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_TRY           => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_CATCH         => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_FINALLY       => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_ELSE          => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_ELSEIF        => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_FOR           => array(
+            'start'  => array(
+                T_OPEN_CURLY_BRACKET,
+                T_COLON,
+            ),
+            'end'    => array(
+                T_CLOSE_CURLY_BRACKET,
+                T_ENDFOR,
+            ),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_FOREACH       => array(
+            'start'  => array(
+                T_OPEN_CURLY_BRACKET,
+                T_COLON,
+            ),
+            'end'    => array(
+                T_CLOSE_CURLY_BRACKET,
+                T_ENDFOREACH,
+            ),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_INTERFACE     => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_FUNCTION      => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_CLASS         => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_TRAIT         => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_NAMESPACE     => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_WHILE         => array(
+            'start'  => array(
+                T_OPEN_CURLY_BRACKET,
+                T_COLON,
+            ),
+            'end'    => array(
+                T_CLOSE_CURLY_BRACKET,
+                T_ENDWHILE,
+            ),
+            'strict' => false,
+            'shared' => false,
+            'with'   => array(),
+            ),
+        T_DO            => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_SWITCH        => array(
+            'start'  => array(T_OPEN_CURLY_BRACKET),
+            'end'    => array(T_CLOSE_CURLY_BRACKET),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+        T_CASE          => array(
+            'start'  => array(
+                T_COLON,
+                T_SEMICOLON,
+            ),
+            'end'    => array(
+                T_BREAK,
+                T_RETURN,
+                T_CONTINUE,
+                T_THROW,
+            ),
+            'strict' => true,
+            'shared' => true,
+            'with'   => array(
+                T_DEFAULT,
+                T_CASE,
+                T_SWITCH,
+            ),
+        ),
+        T_DEFAULT       => array(
+            'start'  => array(T_COLON),
+            'end'    => array(
+                T_BREAK,
+                T_RETURN,
+                T_CONTINUE,
+                T_THROW,
+            ),
+            'strict' => true,
+            'shared' => true,
+            'with'   => array(
+                T_CASE,
+                T_SWITCH,
+            ),
+        ),
+        T_START_HEREDOC => array(
+            'start'  => array(T_START_HEREDOC),
+            'end'    => array(T_END_HEREDOC),
+            'strict' => true,
+            'shared' => false,
+            'with'   => array(),
+        ),
+    );
 
     /**
      * A list of tokens that end the scope.
@@ -226,11 +226,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * @var array
      */
     public $endScopeTokens = array(
-                              T_CLOSE_CURLY_BRACKET,
-                              T_BREAK,
-                              T_END_HEREDOC,
-                             );
-
+        T_CLOSE_CURLY_BRACKET,
+        T_BREAK,
+        T_END_HEREDOC,
+    );
 
     /**
      * Creates an array of tokens when given some PHP code.
@@ -565,11 +564,11 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 $allowed = array(
-                            T_CLOSE_SQUARE_BRACKET,
-                            T_CLOSE_PARENTHESIS,
-                            T_VARIABLE,
-                            T_STRING,
-                           );
+                    T_CLOSE_SQUARE_BRACKET,
+                    T_CLOSE_PARENTHESIS,
+                    T_VARIABLE,
+                    T_STRING,
+                );
 
                 if (in_array($tokens[$x]['code'], $allowed) === false) {
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;

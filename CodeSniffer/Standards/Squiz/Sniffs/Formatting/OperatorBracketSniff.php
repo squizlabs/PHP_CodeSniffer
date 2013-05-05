@@ -36,10 +36,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
-
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -126,17 +125,17 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                     // We allow very simple operations to not be bracketed.
                     // For example, ceil($one / $two).
                     $allowed = array(
-                                T_VARIABLE,
-                                T_LNUMBER,
-                                T_DNUMBER,
-                                T_STRING,
-                                T_WHITESPACE,
-                                T_THIS,
-                                T_OBJECT_OPERATOR,
-                                T_OPEN_SQUARE_BRACKET,
-                                T_CLOSE_SQUARE_BRACKET,
-                                T_MODULUS,
-                               );
+                        T_VARIABLE,
+                        T_LNUMBER,
+                        T_DNUMBER,
+                        T_STRING,
+                        T_WHITESPACE,
+                        T_THIS,
+                        T_OBJECT_OPERATOR,
+                        T_OPEN_SQUARE_BRACKET,
+                        T_CLOSE_SQUARE_BRACKET,
+                        T_MODULUS,
+                    );
 
                     for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
                         if (in_array($tokens[$prev]['code'], $allowed) === true) {
@@ -200,12 +199,12 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 // A list of tokens that indicate that the token is not
                 // part of an arithmetic operation.
                 $invalidTokens = array(
-                                  T_COMMA,
-                                  T_COLON,
-                                  T_OPEN_PARENTHESIS,
-                                  T_OPEN_SQUARE_BRACKET,
-                                  T_CASE,
-                                 );
+                    T_COMMA,
+                    T_COLON,
+                    T_OPEN_PARENTHESIS,
+                    T_OPEN_SQUARE_BRACKET,
+                    T_CASE,
+                );
 
                 if (in_array($tokens[$previousToken]['code'], $invalidTokens) === false) {
                     $error = 'Arithmetic operation must be bracketed';
@@ -224,9 +223,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             // check is that we are not also enclosed in square brackets
             // like this: ($array[$index + 1]), which is invalid.
             $brackets = array(
-                         T_OPEN_SQUARE_BRACKET,
-                         T_CLOSE_SQUARE_BRACKET,
-                        );
+                T_OPEN_SQUARE_BRACKET,
+                T_CLOSE_SQUARE_BRACKET,
+            );
 
             $squareBracket = $phpcsFile->findPrevious($brackets, ($stackPtr - 1), $lastBracket);
             if ($squareBracket !== false && $tokens[$squareBracket]['code'] === T_OPEN_SQUARE_BRACKET) {

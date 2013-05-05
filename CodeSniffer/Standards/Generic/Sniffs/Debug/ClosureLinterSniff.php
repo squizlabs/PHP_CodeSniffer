@@ -120,9 +120,9 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
             if ($lineToken !== null) {
                 $message = 'gjslint says: (%s) %s';
                 $data    = array(
-                            $code,
-                            $error,
-                           );
+                    $code,
+                    $error,
+                );
                 if (in_array($code, $this->errorCodes) === true) {
                     $phpcsFile->addError($message, $lineToken, 'ExternalToolError', $data);
                 } else {

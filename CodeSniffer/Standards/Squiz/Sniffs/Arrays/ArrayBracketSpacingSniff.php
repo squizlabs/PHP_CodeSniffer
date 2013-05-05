@@ -81,9 +81,9 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).$tokens[$stackPtr]['content'];
             $error    = 'Space found before square bracket; expected "%s" but found "%s"';
             $data     = array(
-                         $expected,
-                         $found,
-                        );
+                $expected,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeBracket', $data);
         }
 
@@ -96,9 +96,9 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
                 $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace - $stackPtr + 1));
                 $error    = 'Space found after square bracket; expected "%s" but found "%s"';
                 $data     = array(
-                             $expected,
-                             $found,
-                            );
+                    $expected,
+                    $found,
+                );
                 $phpcsFile->addError($error, $stackPtr, 'SpaceAfterBracket', $data);
             }
         }

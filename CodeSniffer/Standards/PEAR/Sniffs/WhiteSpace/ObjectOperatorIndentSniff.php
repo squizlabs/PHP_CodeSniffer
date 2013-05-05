@@ -134,9 +134,9 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                     if ($foundIndent !== $requiredIndent) {
                         $error = 'Object operator not indented correctly; expected %s spaces but found %s';
                         $data  = array(
-                                  $requiredIndent,
-                                  $foundIndent,
-                                 );
+                            $requiredIndent,
+                            $foundIndent,
+                        );
                         $phpcsFile->addError($error, $next, 'Incorrect', $data);
                     }
                 }

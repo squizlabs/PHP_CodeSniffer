@@ -82,9 +82,9 @@ class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeS
         } else {
             $error = 'Language constructs must be followed by a single space; expected "%s" but found "%s"';
             $data  = array(
-                      $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
-                      $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
-                     );
+                $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
+                $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
+            );
             $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 

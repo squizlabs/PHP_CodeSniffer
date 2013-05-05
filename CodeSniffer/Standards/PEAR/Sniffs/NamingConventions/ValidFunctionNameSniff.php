@@ -41,22 +41,22 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      * @var array
      */
     protected $magicMethods = array(
-                               'construct',
-                               'destruct',
-                               'call',
-                               'callstatic',
-                               'get',
-                               'set',
-                               'isset',
-                               'unset',
-                               'sleep',
-                               'wakeup',
-                               'tostring',
-                               'set_state',
-                               'clone',
-                               'invoke',
-                               'call',
-                              );
+        'construct',
+        'destruct',
+        'call',
+        'callstatic',
+        'get',
+        'set',
+        'isset',
+        'unset',
+        'sleep',
+        'wakeup',
+        'tostring',
+        'set_state',
+        'clone',
+        'invoke',
+        'call',
+    );
 
     /**
      * A list of all PHP magic functions.
@@ -134,9 +134,9 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         if ($isPublic === true && $scopeSpecified === true && $methodName{0} === '_') {
             $error = '%s method name "%s" must not be prefixed with an underscore';
             $data  = array(
-                      ucfirst($scope),
-                      $errorData[0],
-                     );
+                ucfirst($scope),
+                $errorData[0],
+            );
             $phpcsFile->addError($error, $stackPtr, 'PublicUnderscore', $data);
             return;
         }
@@ -155,9 +155,9 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             if ($scopeSpecified === true) {
                 $error = '%s method name "%s" is not in camel caps format';
                 $data  = array(
-                          ucfirst($scope),
-                          $errorData[0],
-                         );
+                    ucfirst($scope),
+                    $errorData[0],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'ScopeNotCamelCaps', $data);
             } else {
                 $error = 'Method name "%s" is not in camel caps format';

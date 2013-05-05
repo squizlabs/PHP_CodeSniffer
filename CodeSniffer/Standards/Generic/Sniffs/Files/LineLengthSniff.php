@@ -139,17 +139,17 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             && $lineLength > $this->absoluteLineLimit
         ) {
             $data = array(
-                     $this->absoluteLineLimit,
-                     $lineLength,
-                    );
+                $this->absoluteLineLimit,
+                $lineLength,
+            );
 
             $error = 'Line exceeds maximum limit of %s characters; contains %s characters';
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($lineLength > $this->lineLimit) {
             $data = array(
-                     $this->lineLimit,
-                     $lineLength,
-                    );
+                $this->lineLimit,
+                $lineLength,
+            );
 
             $warning = 'Line exceeds %s characters; contains %s characters';
             $phpcsFile->addWarning($warning, $stackPtr, 'TooLong', $data);

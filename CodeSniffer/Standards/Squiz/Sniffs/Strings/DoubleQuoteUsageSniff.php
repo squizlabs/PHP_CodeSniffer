@@ -107,15 +107,15 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
         }
 
         $allowedChars = array(
-                         '\0',
-                         '\n',
-                         '\r',
-                         '\f',
-                         '\t',
-                         '\v',
-                         '\x',
-                         '\'',
-                        );
+            '\0',
+            '\n',
+            '\r',
+            '\f',
+            '\t',
+            '\v',
+            '\x',
+            '\'',
+        );
 
         foreach ($allowedChars as $testChar) {
             if (strpos($workingString, $testChar) !== false) {

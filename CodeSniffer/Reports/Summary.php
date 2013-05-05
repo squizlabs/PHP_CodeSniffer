@@ -67,9 +67,9 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
                 || $numWarnings > 0
             ) {
                 $errorFiles[$filename] = array(
-                                          'warnings' => $numWarnings,
-                                          'errors'   => $numErrors,
-                                         );
+                    'warnings' => $numWarnings,
+                    'errors'   => $numErrors,
+                );
             }//end if
         }//end foreach
 

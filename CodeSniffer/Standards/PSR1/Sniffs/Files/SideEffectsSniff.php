@@ -65,9 +65,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
         if ($result['symbol'] !== null && $result['effect'] !== null) {
             $error = 'A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line %s and the first side effect is on line %s.';
             $data  = array(
-                      $tokens[$result['symbol']]['line'],
-                      $tokens[$result['effect']]['line'],
-                     );
+                $tokens[$result['symbol']]['line'],
+                $tokens[$result['effect']]['line'],
+            );
             $phpcsFile->addWarning($error, 0, 'FoundWithSymbols', $data);
         }
 
@@ -92,17 +92,17 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
     private function _searchForConflict(PHP_CodeSniffer_File $phpcsFile, $start, $end, $tokens)
     {
         $symbols = array(
-                    T_CLASS,
-                    T_INTERFACE,
-                    T_TRAIT,
-                    T_FUNCTION,
-                   );
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+            T_FUNCTION,
+        );
 
         $conditions = array(
-                      T_IF,
-                      T_ELSE,
-                      T_ELSEIF,
-                     );
+            T_IF,
+            T_ELSE,
+            T_ELSEIF,
+        );
 
         $firstSymbol = null;
         $firstEffect = null;

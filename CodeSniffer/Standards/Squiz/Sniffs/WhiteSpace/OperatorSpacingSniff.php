@@ -36,10 +36,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
-
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -158,15 +157,15 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // A list of tokens that indicate that the token is not
             // part of an arithmetic operation.
             $invalidTokens = array(
-                              T_COMMA,
-                              T_OPEN_PARENTHESIS,
-                              T_OPEN_SQUARE_BRACKET,
-                              T_DOUBLE_ARROW,
-                              T_COLON,
-                              T_INLINE_THEN,
-                              T_INLINE_ELSE,
-                              T_CASE,
-                             );
+                T_COMMA,
+                T_OPEN_PARENTHESIS,
+                T_OPEN_SQUARE_BRACKET,
+                T_DOUBLE_ARROW,
+                T_COLON,
+                T_INLINE_THEN,
+                T_INLINE_ELSE,
+                T_CASE,
+            );
 
             if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
                 // Just trying to use a negative value; eg. myFunction($var, -2).
@@ -186,9 +185,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 $found = strlen($tokens[($stackPtr - 1)]['content']);
                 $error = 'Expected 1 space before "%s"; %s found';
                 $data  = array(
-                          $operator,
-                          $found,
-                         );
+                    $operator,
+                    $found,
+                );
                 $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
             }
         }
@@ -200,9 +199,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             $found = strlen($tokens[($stackPtr + 1)]['content']);
             $error = 'Expected 1 space after "%s"; %s found';
             $data  = array(
-                      $operator,
-                      $found,
-                     );
+                $operator,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
         }
 

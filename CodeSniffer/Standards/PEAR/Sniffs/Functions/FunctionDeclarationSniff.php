@@ -262,9 +262,9 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 if ($expectedIndent !== $foundIndent) {
                     $error = 'Multi-line function declaration not indented correctly; expected %s spaces but found %s';
                     $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
+                        $expectedIndent,
+                        $foundIndent,
+                    );
                     $phpcsFile->addError($error, $i, 'Indent', $data);
                 }
 

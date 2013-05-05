@@ -61,9 +61,9 @@ class Generic_Sniffs_Files_LowercasedFilenameSniff implements PHP_CodeSniffer_Sn
         $lowercaseFileName = strtolower($fileName);
         if ($fileName !== $lowercaseFileName) {
             $data  = array(
-                      $fileName,
-                      $lowercaseFileName,
-                     );
+                $fileName,
+                $lowercaseFileName,
+            );
             $error = 'Filename "%s" doesn\'t match the expected filename "%s"';
             $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
         }

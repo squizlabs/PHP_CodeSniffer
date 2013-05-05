@@ -151,9 +151,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if ($exact === true || $tokens[$firstToken]['column'] < $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($expectedIndent - 1),
-                          ($tokens[$firstToken]['column'] - 1),
-                         );
+                    ($expectedIndent - 1),
+                    ($tokens[$firstToken]['column'] - 1),
+                );
                 $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
             }
         }//end if
@@ -319,9 +319,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                         $error .= '%s spaces, found %s';
                         $data = array(
-                                  ($indent - 1),
-                                  ($column - 1),
-                                );
+                            ($indent - 1),
+                            ($column - 1),
+                        );
                         $phpcsFile->addError($error, $firstToken, $type, $data);
                     }
                 }//end if

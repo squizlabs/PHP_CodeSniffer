@@ -59,15 +59,15 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         // We are only interested in function/class/interface doc block comments.
         $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         $ignore    = array(
-                      T_CLASS,
-                      T_INTERFACE,
-                      T_FUNCTION,
-                      T_PUBLIC,
-                      T_PRIVATE,
-                      T_PROTECTED,
-                      T_STATIC,
-                      T_ABSTRACT,
-                     );
+            T_CLASS,
+            T_INTERFACE,
+            T_FUNCTION,
+            T_PUBLIC,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_STATIC,
+            T_ABSTRACT,
+        );
 
         if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
             // Could be a file comment.
@@ -137,9 +137,9 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
             $error = 'Expected %s space(s) before asterisk; %s found';
             $data  = array(
-                     ($requiredColumn - 1),
-                     ($currentColumn - 1),
-                    );
+                ($requiredColumn - 1),
+                ($currentColumn - 1),
+            );
             $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeAsterisk', $data);
         }//end foreach
 
