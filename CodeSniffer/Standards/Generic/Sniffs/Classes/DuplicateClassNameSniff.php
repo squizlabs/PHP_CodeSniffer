@@ -61,11 +61,11 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
 
         $namespace  = '';
         $findTokens = array(
-                       T_CLASS,
-                       T_INTERFACE,
-                       T_NAMESPACE,
-                       T_CLOSE_TAG,
-                      );
+            T_CLASS,
+            T_INTERFACE,
+            T_NAMESPACE,
+            T_CLOSE_TAG,
+        );
 
         $stackPtr = $phpcsFile->findNext($findTokens, ($stackPtr + 1));
         while ($stackPtr !== false) {
@@ -100,17 +100,17 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                     $line  = $this->foundClasses[$compareName]['line'];
                     $error = 'Duplicate %s name "%s" found; first defined in %s on line %s';
                     $data  = array(
-                              $type,
-                              $name,
-                              $file,
-                              $line,
-                             );
+                        $type,
+                        $name,
+                        $file,
+                        $line,
+                    );
                     $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
                 } else {
                     $this->foundClasses[$compareName] = array(
-                                                        'file' => $phpcsFile->getFilename(),
-                                                        'line' => $tokens[$stackPtr]['line'],
-                                                       );
+                        'file' => $phpcsFile->getFilename(),
+                        'line' => $tokens[$stackPtr]['line'],
+                    );
                 }
             }
 

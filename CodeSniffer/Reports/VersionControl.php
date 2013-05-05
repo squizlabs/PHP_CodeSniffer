@@ -73,9 +73,9 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
                 if (isset($authors[$author]) === false) {
                     $authors[$author] = 0;
                     $praise[$author]  = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
+                        'good' => 0,
+                        'bad'  => 0,
+                    );
                 }
 
                 $praise[$author]['bad']++;
@@ -115,9 +115,9 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
                     $authors[$author] = 0;
                     $praise[$author]  = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
+                        'good' => 0,
+                        'bad'  => 0,
+                    );
                 }
 
                 $praise[$author]['good']++;

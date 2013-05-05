@@ -80,10 +80,10 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
                     $error       = 'Expected 1 space between %s and %s keywords; %s found';
                     $data        = array(
-                                    $prevContent,
-                                    $type,
-                                    $spaces,
-                                   );
+                        $prevContent,
+                        $type,
+                        $spaces,
+                    );
                     $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
                 }
             }
@@ -107,10 +107,10 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $found = strlen($gap);
             $error = 'Expected 1 space between %s keyword and %s name; %s found';
             $data  = array(
-                      $classOrInterface,
-                      $classOrInterface,
-                      $found,
-                     );
+                $classOrInterface,
+                $classOrInterface,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'SpaceAfterKeyword', $data);
         }
 
@@ -120,9 +120,9 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $found = strlen($gap);
             $error = 'Expected 1 space after %s name; %s found';
             $data  = array(
-                      $classOrInterface,
-                      $found,
-                     );
+                $classOrInterface,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'SpaceAfterName', $data);
         }
 
@@ -199,9 +199,9 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     if ($found !== $expected) {
                         $error = 'Expected %s spaces before interface name; %s found';
                         $data  = array(
-                                  $expected,
-                                  $found
-                                 );
+                            $expected,
+                            $found
+                        );
                         $phpcsFile->addError($error, $className, 'InterfaceWrongIndent', $data);
                     }
                 }
@@ -225,9 +225,9 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     if ($spaceBefore !== 1) {
                         $error = 'Expected 1 space before "%s"; %s found';
                         $data  = array(
-                                  $tokens[$className]['content'],
-                                  $spaceBefore,
-                                 );
+                            $tokens[$className]['content'],
+                            $spaceBefore,
+                        );
                         $phpcsFile->addError($error, $className, 'SpaceBeforeName', $data);
                     }
                 }//end if
@@ -242,9 +242,9 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     if ($tokens[($className + 2)]['code'] !== T_IMPLEMENTS) {
                         $error = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data  = array(
-                                  $tokens[$className]['content'],
-                                  strlen($tokens[($className + 1)]['content']),
-                                 );
+                            $tokens[$className]['content'],
+                            strlen($tokens[($className + 1)]['content']),
+                        );
                         $phpcsFile->addError($error, $className, 'SpaceBeforeComma', $data);
                     }
                 }

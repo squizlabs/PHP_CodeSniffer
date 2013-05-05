@@ -34,9 +34,9 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * An array of functions we don't want in the condition of loops.
@@ -44,16 +44,15 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
      * @return array
      */
     protected $forbiddenFunctions = array(
-                                     'PHP' => array(
-                                               'sizeof',
-                                               'strlen',
-                                               'count',
-                                              ),
-                                     'JS'  => array(
-                                               'length',
-                                              ),
-                                    );
-
+        'PHP' => array(
+            'sizeof',
+            'strlen',
+            'count',
+        ),
+        'JS'  => array(
+            'length',
+        ),
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.

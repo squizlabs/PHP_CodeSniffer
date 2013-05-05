@@ -82,10 +82,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $type      = strtolower($tokens[$stackPtr]['content']);
         $errorData = array($type);
         $find      = array(
-                      T_ABSTRACT,
-                      T_WHITESPACE,
-                      T_FINAL,
-                     );
+            T_ABSTRACT,
+            T_WHITESPACE,
+            T_FINAL,
+        );
 
         // Extract the class comment docblock.
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);

@@ -125,10 +125,10 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         $validParameterTypes = array(
-                                T_VARIABLE,
-                                T_LNUMBER,
-                                T_CONSTANT_ENCAPSED_STRING,
-                               );
+            T_VARIABLE,
+            T_LNUMBER,
+            T_CONSTANT_ENCAPSED_STRING,
+        );
 
         $parameters       = array('');
         $parenthesisCount = 1;

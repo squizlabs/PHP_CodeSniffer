@@ -53,18 +53,17 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      * @var array
      */
     protected $checkedTokens = array(
-                                T_CATCH   => false,
-                                T_DO      => true,
-                                T_ELSE    => true,
-                                T_ELSEIF  => true,
-                                T_FOR     => true,
-                                T_FOREACH => true,
-                                T_IF      => true,
-                                T_SWITCH  => true,
-                                T_TRY     => true,
-                                T_WHILE   => true,
-                               );
-
+        T_CATCH   => false,
+        T_DO      => true,
+        T_ELSE    => true,
+        T_ELSEIF  => true,
+        T_FOR     => true,
+        T_FOREACH => true,
+        T_IF      => true,
+        T_SWITCH  => true,
+        T_TRY     => true,
+        T_WHILE   => true,
+    );
 
     /**
      * Registers the tokens that this sniff wants to listen for.

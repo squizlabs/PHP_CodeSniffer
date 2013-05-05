@@ -109,9 +109,9 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             } else if ($foundIndent !== $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          $expectedIndent,
-                          $foundIndent,
-                         );
+                    $expectedIndent,
+                    $foundIndent,
+                );
                 $phpcsFile->addError($error, $i, 'Incorrect', $data);
             }
 

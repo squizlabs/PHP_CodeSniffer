@@ -36,9 +36,9 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -92,9 +92,9 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
         if (strtolower($keyword) !== $keyword) {
             $error = 'TRUE, FALSE and NULL must be lowercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtolower($keyword),
-                      $keyword,
-                     );
+                strtolower($keyword),
+                $keyword,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 

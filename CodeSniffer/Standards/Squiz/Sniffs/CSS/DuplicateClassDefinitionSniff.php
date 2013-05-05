@@ -70,10 +70,10 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
         }
 
         $find = array(
-                 T_CLOSE_CURLY_BRACKET,
-                 T_COMMENT,
-                 T_OPEN_TAG,
-                );
+            T_CLOSE_CURLY_BRACKET,
+            T_COMMENT,
+            T_OPEN_TAG,
+        );
 
         while ($next !== false) {
             $prev = $phpcsFile->findPrevious($find, ($next - 1));

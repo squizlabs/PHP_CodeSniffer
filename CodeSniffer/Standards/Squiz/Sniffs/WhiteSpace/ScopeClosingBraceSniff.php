@@ -95,9 +95,9 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
             if ($braceIndent !== $startColumn) {
                 $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn - 1),
-                          ($braceIndent - 1),
-                         );
+                    ($startColumn - 1),
+                    ($braceIndent - 1),
+                );
                 $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
         }

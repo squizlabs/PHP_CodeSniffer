@@ -36,9 +36,9 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * If true, an error will be thrown; otherwise a warning.

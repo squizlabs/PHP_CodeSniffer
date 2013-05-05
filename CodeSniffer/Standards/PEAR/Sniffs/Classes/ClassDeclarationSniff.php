@@ -84,10 +84,10 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         } else if ($braceLine > ($classLine + 1)) {
             $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
             $data  = array(
-                      $tokens[$stackPtr]['content'],
-                      $tokens[$stackPtr]['content'],
-                      ($braceLine - $classLine - 1),
-                     );
+                $tokens[$stackPtr]['content'],
+                $tokens[$stackPtr]['content'],
+                ($braceLine - $classLine - 1),
+            );
             $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
             return;
         }
@@ -110,9 +110,9 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($spaces !== $expected) {
                 $error = 'Expected %s spaces before opening brace; %s found';
                 $data  = array(
-                          $expected,
-                          $spaces,
-                         );
+                    $expected,
+                    $spaces,
+                );
                 $phpcsFile->addError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
             }
         }

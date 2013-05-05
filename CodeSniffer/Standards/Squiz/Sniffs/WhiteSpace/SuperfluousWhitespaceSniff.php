@@ -38,10 +38,10 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+        'PHP',
+        'JS',
+        'CSS',
+    );
 
     /**
      * If TRUE, whitespace rules are not checked for blank lines.

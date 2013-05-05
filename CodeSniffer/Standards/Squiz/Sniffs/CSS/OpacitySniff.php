@@ -67,9 +67,9 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
 
         $next    = $phpcsFile->findNext(array(T_COLON, T_WHITESPACE), ($stackPtr + 1), null, true);
         $numbers = array(
-                    T_DNUMBER,
-                    T_LNUMBER,
-                   );
+            T_DNUMBER,
+            T_LNUMBER,
+        );
 
         if ($next === false || in_array($tokens[$next]['code'], $numbers) === false) {
             return;

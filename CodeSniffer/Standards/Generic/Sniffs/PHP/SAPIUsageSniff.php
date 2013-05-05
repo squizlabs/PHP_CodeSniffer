@@ -55,11 +55,11 @@ class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-                   T_DOUBLE_COLON,
-                   T_OBJECT_OPERATOR,
-                   T_FUNCTION,
-                   T_CONST,
-                  );
+            T_DOUBLE_COLON,
+            T_OBJECT_OPERATOR,
+            T_FUNCTION,
+            T_CONST,
+        );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if (in_array($tokens[$prevToken]['code'], $ignore) === true) {

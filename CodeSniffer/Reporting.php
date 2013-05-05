@@ -136,12 +136,12 @@ class PHP_CodeSniffer_Reporting
     public function prepare(array $filesViolations)
     {
         $report = array(
-                   'totals' => array(
-                                'warnings' => 0,
-                                'errors'   => 0,
-                               ),
-                   'files'  => array(),
-                  );
+            'totals' => array(
+                'warnings' => 0,
+                'errors'   => 0,
+            ),
+            'files'  => array(),
+        );
 
         foreach ($filesViolations as $filename => $fileViolations) {
             $warnings    = $fileViolations['warnings'];
@@ -150,10 +150,10 @@ class PHP_CodeSniffer_Reporting
             $numErrors   = $fileViolations['numErrors'];
 
             $report['files'][$filename] = array(
-                                           'errors'   => 0,
-                                           'warnings' => 0,
-                                           'messages' => array(),
-                                          );
+                'errors'   => 0,
+                'warnings' => 0,
+                'messages' => array(),
+            );
 
             if ($numErrors === 0 && $numWarnings === 0) {
                 // Prefect score!
@@ -172,11 +172,11 @@ class PHP_CodeSniffer_Reporting
                     $newErrors = array();
                     foreach ($colErrors as $data) {
                         $newErrors[] = array(
-                                        'message'  => $data['message'],
-                                        'source'   => $data['source'],
-                                        'severity' => $data['severity'],
-                                        'type'     => 'ERROR',
-                                       );
+                            'message'  => $data['message'],
+                            'source'   => $data['source'],
+                            'severity' => $data['severity'],
+                            'type'     => 'ERROR',
+                        );
                     }//end foreach
 
                     $errors[$line][$column] = $newErrors;
@@ -190,11 +190,11 @@ class PHP_CodeSniffer_Reporting
                     $newWarnings = array();
                     foreach ($colWarnings as $data) {
                         $newWarnings[] = array(
-                                          'message'  => $data['message'],
-                                          'source'   => $data['source'],
-                                          'severity' => $data['severity'],
-                                          'type'     => 'WARNING',
-                                         );
+                            'message'  => $data['message'],
+                            'source'   => $data['source'],
+                            'severity' => $data['severity'],
+                            'type'     => 'WARNING',
+                        );
                     }//end foreach
 
                     if (isset($errors[$line]) === false) {

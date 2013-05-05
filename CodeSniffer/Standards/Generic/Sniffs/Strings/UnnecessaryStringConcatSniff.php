@@ -35,9 +35,9 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * If true, an error will be thrown; otherwise a warning.

@@ -83,9 +83,9 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
         if (strtoupper($keyword) !== $keyword) {
             $error = 'TRUE, FALSE and NULL must be uppercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtoupper($keyword),
-                      $keyword,
-                     );
+                strtoupper($keyword),
+                $keyword,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 

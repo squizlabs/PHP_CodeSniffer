@@ -36,9 +36,9 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -80,20 +80,20 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             );
 
             $ignore = array(
-                       T_CLASS,
-                       T_INTERFACE,
-                       T_TRAIT,
-                       T_FUNCTION,
-                       T_PUBLIC,
-                       T_PRIVATE,
-                       T_PROTECTED,
-                       T_FINAL,
-                       T_STATIC,
-                       T_ABSTRACT,
-                       T_CONST,
-                       T_OBJECT,
-                       T_PROPERTY,
-                      );
+                T_CLASS,
+                T_INTERFACE,
+                T_TRAIT,
+                T_FUNCTION,
+                T_PUBLIC,
+                T_PRIVATE,
+                T_PROTECTED,
+                T_FINAL,
+                T_STATIC,
+                T_ABSTRACT,
+                T_CONST,
+                T_OBJECT,
+                T_PROPERTY,
+            );
 
             if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
                 return;
@@ -173,19 +173,19 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         if ($spaceCount === 0) {
             $error = 'No space before comment text; expected "// %s" but found "%s"';
             $data  = array(
-                      substr($comment, 2),
-                      $comment,
-                     );
+                substr($comment, 2),
+                $comment,
+            );
             $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore', $data);
         }
 
         if ($spaceCount > 1) {
             $error = '%s spaces found before inline comment line; use block comment if you need indentation';
             $data  = array(
-                      $spaceCount,
-                      substr($comment, (2 + $spaceCount)),
-                      $comment,
-                     );
+                $spaceCount,
+                substr($comment, (2 + $spaceCount)),
+                $comment,
+            );
             $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
         }
 
@@ -231,10 +231,10 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         $commentCloser   = $commentText[(strlen($commentText) - 1)];
         $acceptedClosers = array(
-                            'full-stops'        => '.',
-                            'exclamation marks' => '!',
-                            'or question marks' => '?',
-                           );
+            'full-stops'        => '.',
+            'exclamation marks' => '!',
+            'or question marks' => '?',
+        );
 
         if (in_array($commentCloser, $acceptedClosers) === false) {
             $error = 'Inline comments must end in %s';

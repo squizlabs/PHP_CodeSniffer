@@ -149,10 +149,10 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         if (isset($tokens[$prev]['parenthesis_owner']) === true) {
             $owner  = $tokens[$prev]['parenthesis_owner'];
             $ignore = array(
-                       T_IF,
-                       T_ELSE,
-                       T_ELSEIF,
-                      );
+                T_IF,
+                T_ELSE,
+                T_ELSEIF,
+            );
             if (in_array($tokens[$owner]['code'], $ignore) === true) {
                 return;
             }

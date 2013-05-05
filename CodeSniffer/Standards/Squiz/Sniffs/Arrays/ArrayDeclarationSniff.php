@@ -117,9 +117,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $content = $tokens[($nextArrow - 2)]['content'];
                         $error   = 'Expected 1 space between "%s" and double arrow; %s found';
                         $data    = array(
-                                    $content,
-                                    $spaceLength,
-                                   );
+                            $content,
+                            $spaceLength,
+                        );
                         $phpcsFile->addError($error, $nextArrow, 'SpaceBeforeDoubleArrow', $data);
                     }
                 }
@@ -135,9 +135,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $content = $tokens[($nextArrow + 2)]['content'];
                         $error   = 'Expected 1 space between double arrow and "%s"; %s found';
                         $data    = array(
-                                    $content,
-                                    $spaceLength,
-                                   );
+                            $content,
+                            $spaceLength,
+                        );
                         $phpcsFile->addError($error, $nextArrow, 'SpaceAfterDoubleArrow', $data);
                     }
                 }
@@ -166,9 +166,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                             $content = $tokens[($comma + 2)]['content'];
                             $error   = 'Expected 1 space between comma and "%s"; %s found';
                             $data    = array(
-                                        $content,
-                                        $spaceLength,
-                                       );
+                                $content,
+                                $spaceLength,
+                            );
                             $phpcsFile->addError($error, $comma, 'SpaceAfterComma', $data);
                         }
                     }
@@ -178,9 +178,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $spaceLength = strlen($tokens[($comma - 1)]['content']);
                         $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data        = array(
-                                        $content,
-                                        $spaceLength,
-                                       );
+                            $content,
+                            $spaceLength,
+                        );
                         $phpcsFile->addError($error, $comma, 'SpaceBeforeComma', $data);
                     }
                 }//end foreach
@@ -200,9 +200,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $found    = $tokens[$arrayEnd]['column'];
             $error    = 'Closing parenthesis not aligned correctly; expected %s space(s) but found %s';
             $data     = array(
-                         $expected,
-                         $found,
-                        );
+                $expected,
+                $found,
+            );
             $phpcsFile->addError($error, $arrayEnd, 'CloseBraceNotAligned', $data);
         }
 
@@ -221,8 +221,8 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
                 $indices[] = array(
-                              'value' => $nextToken,
-                             );
+                    'value' => $nextToken,
+                );
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
                 continue;
             }
@@ -252,9 +252,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $spaceLength = strlen($tokens[($nextToken - 1)]['content']);
                         $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data        = array(
-                                        $content,
-                                        $spaceLength,
-                                       );
+                            $content,
+                            $spaceLength,
+                        );
                         $phpcsFile->addError($error, $nextToken, 'SpaceBeforeComma', $data);
                     }
 
@@ -374,9 +374,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
                         $error = 'Array value not aligned correctly; expected %s spaces but found %s';
                         $data  = array(
-                                  ($keywordStart + 1),
-                                  $tokens[$value['value']]['column'],
-                                 );
+                            ($keywordStart + 1),
+                            $tokens[$value['value']]['column'],
+                        );
                         $phpcsFile->addError($error, $value['value'], 'ValueNotAligned', $data);
                     }
                 }
@@ -429,9 +429,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$index['index']]['column'] !== $indicesStart) {
                 $error = 'Array key not aligned correctly; expected %s spaces but found %s';
                 $data  = array(
-                          ($indicesStart - 1),
-                          ($tokens[$index['index']]['column'] - 1),
-                         );
+                    ($indicesStart - 1),
+                    ($tokens[$index['index']]['column'] - 1),
+                );
                 $phpcsFile->addError($error, $index['index'], 'KeyNotAligned', $data);
                 continue;
             }
@@ -442,9 +442,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'Array double arrow not aligned correctly; expected %s space(s) but found %s';
                 $data  = array(
-                          $expected,
-                          $found,
-                         );
+                    $expected,
+                    $found,
+                );
                 $phpcsFile->addError($error, $index['arrow'], 'DoubleArrowNotAligned', $data);
                 continue;
             }
@@ -455,9 +455,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'Array value not aligned correctly; expected %s space(s) but found %s';
                 $data  = array(
-                          $expected,
-                          $found,
-                         );
+                    $expected,
+                    $found,
+                );
                 $phpcsFile->addError($error, $index['arrow'], 'ValueNotAligned', $data);
             }
 
@@ -488,9 +488,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $spaceLength = strlen($tokens[($nextComma - 1)]['content']);
                     $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                     $data        = array(
-                                    $content,
-                                    $spaceLength,
-                                   );
+                        $content,
+                        $spaceLength,
+                    );
                     $phpcsFile->addError($error, $nextComma, 'SpaceBeforeComma', $data);
                 }
             }

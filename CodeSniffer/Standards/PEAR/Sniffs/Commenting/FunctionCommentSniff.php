@@ -107,12 +107,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_CLASS,
+            T_FUNCTION,
+            T_OPEN_TAG,
+        );
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
@@ -373,22 +373,22 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     if ($param->alignsVariableWith($previousParam) === false) {
                         $error = 'The variable names for parameters %s (%s) and %s (%s) do not align';
                         $data  = array(
-                                  $previousName,
-                                  ($pos - 1),
-                                  $paramName,
-                                  $pos,
-                                 );
+                            $previousName,
+                            ($pos - 1),
+                            $paramName,
+                            $pos,
+                        );
                         $this->currentFile->addError($error, $errorPos, 'ParameterNamesNotAligned', $data);
                     }
 
                     if ($param->alignsCommentWith($previousParam) === false) {
                         $error = 'The comments for parameters %s (%s) and %s (%s) do not align';
                         $data  = array(
-                                  $previousName,
-                                  ($pos - 1),
-                                  $paramName,
-                                  $pos,
-                                 );
+                            $previousName,
+                            ($pos - 1),
+                            $paramName,
+                            $pos,
+                        );
                         $this->currentFile->addError($error, $errorPos, 'ParameterCommentsNotAligned', $data);
                     }
                 }//end if
@@ -407,10 +407,10 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     if ($realName !== $paramName) {
                         $code = 'ParamNameNoMatch';
                         $data = array(
-                                    $paramName,
-                                    $realName,
-                                    $pos,
-                                );
+                            $paramName,
+                            $realName,
+                            $pos,
+                        );
 
                         $error  = 'Doc comment for var %s does not match ';
                         if (strtolower($paramName) === strtolower($realName)) {
@@ -441,9 +441,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 if ($paramComment === '') {
                     $error = 'Missing comment for param "%s" at position %s';
                     $data  = array(
-                              $paramName,
-                              $pos,
-                             );
+                        $paramName,
+                        $pos,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'MissingParamComment', $data);
                 }
 

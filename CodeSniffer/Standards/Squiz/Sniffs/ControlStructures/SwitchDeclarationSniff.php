@@ -37,10 +37,9 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
-
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -99,9 +98,9 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 $expected = strtolower($tokens[$nextCase]['content']);
                 $error    = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
                 $data     = array(
-                             $expected,
-                             $tokens[$nextCase]['content'],
-                            );
+                    $expected,
+                    $tokens[$nextCase]['content'],
+                );
                 $phpcsFile->addError($error, $nextCase, $type.'NotLower', $data);
             }
 

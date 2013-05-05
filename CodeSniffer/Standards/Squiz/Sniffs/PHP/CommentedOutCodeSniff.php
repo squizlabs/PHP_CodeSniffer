@@ -36,9 +36,9 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'CSS',
-                                  );
+        'PHP',
+        'CSS',
+    );
 
     /**
      * If a comment is more than $maxPercentage% code, a warning will be shown.
@@ -140,12 +140,12 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
 
         $emptyTokens = array(
-                        T_WHITESPACE,
-                        T_STRING,
-                        T_STRING_CONCAT,
-                        T_ENCAPSED_AND_WHITESPACE,
-                        T_NONE,
-                       );
+            T_WHITESPACE,
+            T_STRING,
+            T_STRING_CONCAT,
+            T_ENCAPSED_AND_WHITESPACE,
+            T_NONE,
+        );
 
         $numTokens = count($stringTokens);
 

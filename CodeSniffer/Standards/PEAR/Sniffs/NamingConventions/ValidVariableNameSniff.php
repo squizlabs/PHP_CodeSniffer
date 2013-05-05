@@ -69,9 +69,9 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
         if ($isPublic === true && $scopeSpecified === true && $memberName{0} === '_') {
             $error = '%s member variable "%s" must not be prefixed with an underscore';
             $data  = array(
-                      ucfirst($scope),
-                      $memberName,
-                     );
+                ucfirst($scope),
+                $memberName,
+            );
             $phpcsFile->addError($error, $stackPtr, 'PublicUnderscore', $data);
             return;
         }

@@ -36,9 +36,9 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+        'PHP',
+        'JS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -72,9 +72,9 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
             $error    = 'Space found before semicolon; expected "%s" but found "%s"';
             $data     = array(
-                         $expected,
-                         $found,
-                        );
+                $expected,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
         }
 

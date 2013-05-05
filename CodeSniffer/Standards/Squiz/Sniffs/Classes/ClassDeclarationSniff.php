@@ -89,9 +89,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                         $type  = strtolower($tokens[$stackPtr]['content']);
                         $error = 'Expected 0 spaces before %s keyword; %s found';
                         $data  = array(
-                                  $type,
-                                  $spaces,
-                                 );
+                            $type,
+                            $spaces,
+                        );
                         $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
                     }
                 }
@@ -152,9 +152,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                 $difference = ($nextLine - $braceLine - 1);
                 $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
                 $data       = array(
-                               $tokens[$stackPtr]['content'],
-                               $difference,
-                              );
+                    $tokens[$stackPtr]['content'],
+                    $difference,
+                );
                 $phpcsFile->addError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
             }
         }//end if

@@ -107,9 +107,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         if ($braceIndent !== $startColumn) {
             $error = 'Opening brace indented incorrectly; expected %s spaces, found %s';
             $data  = array(
-                      ($startColumn - 1),
-                      ($braceIndent - 1),
-                     );
+                ($startColumn - 1),
+                ($braceIndent - 1),
+            );
             $phpcsFile->addError($error, $openingBrace, 'BraceIndent', $data);
         }
 

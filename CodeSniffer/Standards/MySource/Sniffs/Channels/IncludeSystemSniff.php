@@ -37,24 +37,23 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      * @var array(string)
      */
     private $_ignore = array(
-                        'self',
-                        'static',
-                        'parent',
-                        'channels',
-                        'basesystem',
-                        'dal',
-                        'init',
-                        'pdo',
-                        'util',
-                        'ziparchive',
-                        'phpunit_framework_assert',
-                        'abstractmysourceunittest',
-                        'abstractdatacleanunittest',
-                        'exception',
-                        'abstractwidgetwidgettype',
-                        'domdocument',
-                       );
-
+        'self',
+        'static',
+        'parent',
+        'channels',
+        'basesystem',
+        'dal',
+        'init',
+        'pdo',
+        'util',
+        'ziparchive',
+        'phpunit_framework_assert',
+        'abstractmysourceunittest',
+        'abstractdatacleanunittest',
+        'exception',
+        'abstractwidgetwidgettype',
+        'domdocument',
+    );
 
     /**
      * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
@@ -251,10 +250,10 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             // into their scopes when including this file, although
             // we have a chance of getting into IF's, WHILE's etc.
             $ignoreTokens = array(
-                             T_CLASS,
-                             T_INTERFACE,
-                             T_FUNCTION,
-                            );
+                T_CLASS,
+                T_INTERFACE,
+                T_FUNCTION,
+            );
 
             if (in_array($tokens[$i]['code'], $ignoreTokens) === true
                 && isset($tokens[$i]['scope_closer']) === true

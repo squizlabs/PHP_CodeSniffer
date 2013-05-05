@@ -38,10 +38,9 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      * @var array
      */
     protected $properties = array(
-                             'svn:keywords'  => 'Author Id Revision',
-                             'svn:eol-style' => 'native',
-                            );
-
+        'svn:keywords'  => 'Author Id Revision',
+        'svn:eol-style' => 'native',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -89,9 +88,9 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             ) {
                 $error = 'Unexpected Subversion property "%s" = "%s"';
                 $data  = array(
-                          $key,
-                          $properties[$key],
-                         );
+                    $key,
+                    $properties[$key],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'Unexpected', $data);
                 continue;
             }
@@ -101,9 +100,9 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             ) {
                 $error = 'Missing Subversion property "%s" = "%s"';
                 $data  = array(
-                          $key,
-                          $this->properties[$key],
-                         );
+                    $key,
+                    $this->properties[$key],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
                 continue;
             }
@@ -113,10 +112,10 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             ) {
                 $error = 'Subversion property "%s" = "%s" does not match "%s"';
                 $data  = array(
-                          $key,
-                          $properties[$key],
-                          $this->properties[$key],
-                         );
+                    $key,
+                    $properties[$key],
+                    $this->properties[$key],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
             }
         }//end foreach

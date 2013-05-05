@@ -68,9 +68,9 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $this->currentFile = $phpcsFile;
         $tokens            = $phpcsFile->getTokens();
         $commentToken      = array(
-                              T_COMMENT,
-                              T_DOC_COMMENT,
-                             );
+            T_COMMENT,
+            T_DOC_COMMENT,
+        );
 
         // Extract the var comment docblock.
         $commentEnd = $phpcsFile->findPrevious($commentToken, ($stackPtr - 3));
@@ -254,9 +254,9 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 if ($content !== $suggestedType) {
                     $error = 'Expected "%s"; found "%s" for @var tag in variable comment';
                     $data  = array(
-                              $suggestedType,
-                              $content,
-                             );
+                        $suggestedType,
+                        $content,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'IncorrectVarType', $data);
                 }
             }

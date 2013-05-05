@@ -43,18 +43,18 @@ class Generic_Tests_NamingConventions_UpperCaseConstantNameUnitTest extends Abst
     public function getErrorList()
     {
         $errors = array(
-                   8   => 1,
-                   10  => 1,
-                   15  => 1,
-                   25  => 1,
-                   26  => 1,
-                   27  => 1,
-                   28  => 1,
-                   29  => 1,
-                   32  => 1,
-                   35  => 1,
-                   100 => 1,
-                  );
+            8   => 1,
+            10  => 1,
+            15  => 1,
+            25  => 1,
+            26  => 1,
+            27  => 1,
+            28  => 1,
+            29  => 1,
+            32  => 1,
+            35  => 1,
+            100 => 1,
+        );
 
         // The trait insteadof test will only work in PHP version where traits exist
         // and will throw errors in earlier versions.

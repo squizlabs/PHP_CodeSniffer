@@ -85,16 +85,16 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
 
         // Predicate nodes for PHP.
         $find = array(
-                 'T_CASE',
-                 'T_DEFAULT',
-                 'T_CATCH',
-                 'T_IF',
-                 'T_FOR',
-                 'T_FOREACH',
-                 'T_WHILE',
-                 'T_DO',
-                 'T_ELSEIF',
-                );
+            'T_CASE',
+            'T_DEFAULT',
+            'T_CATCH',
+            'T_IF',
+            'T_FOR',
+            'T_FOREACH',
+            'T_WHILE',
+            'T_DO',
+            'T_ELSEIF',
+        );
 
         $complexity = 1;
 
@@ -108,16 +108,16 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
         if ($complexity > $this->absoluteComplexity) {
             $error = 'Function\'s cyclomatic complexity (%s) exceeds allowed maximum of %s';
             $data  = array(
-                      $complexity,
-                      $this->absoluteComplexity,
-                     );
+                $complexity,
+                $this->absoluteComplexity,
+            );
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($complexity > $this->complexity) {
             $warning = 'Function\'s cyclomatic complexity (%s) exceeds %s; consider refactoring the function';
             $data    = array(
-                        $complexity,
-                        $this->complexity,
-                       );
+                $complexity,
+                $this->complexity,
+            );
             $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 

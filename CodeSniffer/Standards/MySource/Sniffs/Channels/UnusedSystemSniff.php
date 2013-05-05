@@ -101,10 +101,10 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
             }//end if
 
             $validTokens = array(
-                            T_DOUBLE_COLON,
-                            T_EXTENDS,
-                            T_IMPLEMENTS,
-                           );
+                T_DOUBLE_COLON,
+                T_EXTENDS,
+                T_IMPLEMENTS,
+            );
 
             if (in_array($tokens[$i]['code'], $validTokens) === false) {
                 continue;

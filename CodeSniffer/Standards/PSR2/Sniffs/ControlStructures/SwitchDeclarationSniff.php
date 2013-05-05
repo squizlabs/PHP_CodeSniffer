@@ -87,9 +87,9 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $expected = strtolower($tokens[$nextCase]['content']);
                 $error    = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
                 $data     = array(
-                             $expected,
-                             $tokens[$nextCase]['content'],
-                            );
+                    $expected,
+                    $tokens[$nextCase]['content'],
+                );
                 $phpcsFile->addError($error, $nextCase, $type.'NotLower', $data);
             }
 

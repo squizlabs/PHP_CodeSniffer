@@ -105,9 +105,9 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 if ($expectedIndent !== $foundIndent) {
                     $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found %s';
                     $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
+                        $expectedIndent,
+                        $foundIndent,
+                    );
                     $phpcsFile->addError($error, $i, 'Alignment', $data);
                 }
 

@@ -123,9 +123,9 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
         if (strtolower($keyword) !== $keyword) {
             $error = 'PHP keywords must be lowercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtolower($keyword),
-                      $keyword,
-                     );
+                strtolower($keyword),
+                $keyword,
+            );
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 

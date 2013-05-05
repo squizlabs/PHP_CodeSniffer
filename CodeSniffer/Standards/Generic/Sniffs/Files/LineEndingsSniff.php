@@ -36,10 +36,10 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+        'PHP',
+        'JS',
+        'CSS',
+    );
 
     /**
      * The valid EOL character.
@@ -101,9 +101,9 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
             $expected = str_replace("\n", '\n', $expected);
             $expected = str_replace("\r", '\r', $expected);
             $data     = array(
-                         $expected,
-                         $found,
-                        );
+                $expected,
+                $found,
+            );
             $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
         }
 

@@ -259,9 +259,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 if ($expectedIndent !== $foundIndent) {
                     $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
                     $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
+                        $expectedIndent,
+                        $foundIndent,
+                    );
                     $phpcsFile->addError($error, $i, 'Indent', $data);
                 }
             }//end if

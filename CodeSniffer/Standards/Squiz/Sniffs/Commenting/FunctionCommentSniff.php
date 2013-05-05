@@ -121,12 +121,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $tokens = $phpcsFile->getTokens();
 
         $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_CLASS,
+            T_FUNCTION,
+            T_OPEN_TAG,
+        );
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
@@ -602,22 +602,22 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     if ($param->alignsVariableWith($previousParam) === false) {
                         $error = 'The variable names for parameters %s (%s) and %s (%s) do not align';
                         $data  = array(
-                                  $previousName,
-                                  ($pos - 1),
-                                  $paramName,
-                                  $pos,
-                                 );
+                            $previousName,
+                            ($pos - 1),
+                            $paramName,
+                            $pos,
+                        );
                         $this->currentFile->addError($error, $errorPos, 'ParameterNamesNotAligned', $data);
                     }
 
                     if ($param->alignsCommentWith($previousParam) === false) {
                         $error = 'The comments for parameters %s (%s) and %s (%s) do not align';
                         $data  = array(
-                                  $previousName,
-                                  ($pos - 1),
-                                  $paramName,
-                                  $pos,
-                                 );
+                            $previousName,
+                            ($pos - 1),
+                            $paramName,
+                            $pos,
+                        );
                         $this->currentFile->addError($error, $errorPos, 'ParameterCommentsNotAligned', $data);
                     }
                 }
@@ -629,11 +629,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     if ($typeName !== $suggestedName) {
                         $error = 'Expected "%s"; found "%s" for %s at position %s';
                         $data  = array(
-                                  $suggestedName,
-                                  $typeName,
-                                  $paramName,
-                                  $pos,
-                                 );
+                            $suggestedName,
+                            $typeName,
+                            $paramName,
+                            $pos,
+                        );
                         $this->currentFile->addError($error, $errorPos, 'IncorrectParamVarName', $data);
                     } else if (count($typeNames) === 1) {
                         // Check type hint for array and custom type.
@@ -649,19 +649,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                             if ($typeHint === '') {
                                 $error = 'Type hint "%s" missing for %s at position %s';
                                 $data  = array(
-                                          $suggestedTypeHint,
-                                          $paramName,
-                                          $pos,
-                                         );
+                                    $suggestedTypeHint,
+                                    $paramName,
+                                    $pos,
+                                );
                                 $this->currentFile->addError($error, ($commentEnd + 2), 'TypeHintMissing', $data);
                             } else if ($typeHint !== $suggestedTypeHint) {
                                 $error = 'Expected type hint "%s"; found "%s" for %s at position %s';
                                 $data  = array(
-                                          $suggestedTypeHint,
-                                          $typeHint,
-                                          $paramName,
-                                          $pos,
-                                         );
+                                    $suggestedTypeHint,
+                                    $typeHint,
+                                    $paramName,
+                                    $pos,
+                                );
                                 $this->currentFile->addError($error, ($commentEnd + 2), 'IncorrectTypeHint', $data);
                             }
                         } else if ($suggestedTypeHint === '' && isset($realParams[($pos - 1)]) === true) {
@@ -669,10 +669,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                             if ($typeHint !== '') {
                                 $error = 'Unknown type hint "%s" found for %s at position %s';
                                 $data  = array(
-                                          $typeHint,
-                                          $paramName,
-                                          $pos,
-                                         );
+                                    $typeHint,
+                                    $paramName,
+                                    $pos,
+                                );
                                 $this->currentFile->addError($error, ($commentEnd + 2), 'InvalidTypeHint', $data);
                             }
                         }
@@ -693,10 +693,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     if ($realName !== $paramName) {
                         $code = 'ParamNameNoMatch';
                         $data = array(
-                                    $paramName,
-                                    $realName,
-                                    $pos,
-                                );
+                            $paramName,
+                            $realName,
+                            $pos,
+                        );
 
                         $error  = 'Doc comment for var %s does not match ';
                         if (strtolower($paramName) === strtolower($realName)) {
@@ -727,9 +727,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 if ($paramComment === '') {
                     $error = 'Missing comment for param "%s" at position %s';
                     $data  = array(
-                              $paramName,
-                              $pos,
-                             );
+                        $paramName,
+                        $pos,
+                    );
                     $this->currentFile->addError($error, $errorPos, 'MissingParamComment', $data);
                 } else {
                     // Param comments must start with a capital letter and

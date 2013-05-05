@@ -471,9 +471,9 @@ class PHP_CodeSniffer_File
                         // While there is support for a type of each pattern
                         // (absolute or relative) we don't actually support it here.
                         $replacements = array(
-                                         '\\,' => ',',
-                                         '*'   => '.*',
-                                        );
+                            '\\,' => ',',
+                            '*'   => '.*',
+                        );
 
                         $pattern = strtr($pattern, $replacements);
                         if (preg_match("|{$pattern}|i", $this->_file) === 1) {
@@ -771,9 +771,9 @@ class PHP_CodeSniffer_File
             // While there is support for a type of each pattern
             // (absolute or relative) we don't actually support it here.
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
@@ -818,10 +818,10 @@ class PHP_CodeSniffer_File
         }
 
         $this->_errors[$lineNum][$column][] = array(
-                                               'message'  => $message,
-                                               'source'   => $sniff,
-                                               'severity' => $severity,
-                                              );
+            'message'  => $message,
+            'source'   => $sniff,
+            'severity' => $severity,
+        );
 
     }//end addError()
 
@@ -892,9 +892,9 @@ class PHP_CodeSniffer_File
             // While there is support for a type of each pattern
             // (absolute or relative) we don't actually support it here.
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                 '\\,' => ',',
+                 '*'   => '.*',
+            );
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
@@ -939,10 +939,10 @@ class PHP_CodeSniffer_File
         }
 
         $this->_warnings[$lineNum][$column][] = array(
-                                                 'message'  => $message,
-                                                 'source'   => $sniff,
-                                                 'severity' => $severity,
-                                                );
+            'message'  => $message,
+            'source'   => $sniff,
+            'severity' => $severity,
+        );
 
     }//end addWarning()
 
@@ -2223,16 +2223,16 @@ class PHP_CodeSniffer_File
         }
 
         $valid = array(
-                  T_PUBLIC,
-                  T_PRIVATE,
-                  T_PROTECTED,
-                  T_STATIC,
-                  T_FINAL,
-                  T_ABSTRACT,
-                  T_WHITESPACE,
-                  T_COMMENT,
-                  T_DOC_COMMENT,
-                 );
+            T_PUBLIC,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_STATIC,
+            T_FINAL,
+            T_ABSTRACT,
+            T_WHITESPACE,
+            T_COMMENT,
+            T_DOC_COMMENT,
+        );
 
         $scope          = 'public';
         $scopeSpecified = false;
@@ -2335,16 +2335,16 @@ class PHP_CodeSniffer_File
         }
 
         $valid = array(
-                  T_PUBLIC,
-                  T_PRIVATE,
-                  T_PROTECTED,
-                  T_STATIC,
-                  T_WHITESPACE,
-                  T_COMMENT,
-                  T_DOC_COMMENT,
-                  T_VARIABLE,
-                  T_COMMA,
-                 );
+            T_PUBLIC,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_STATIC,
+            T_WHITESPACE,
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_VARIABLE,
+            T_COMMA,
+        );
 
         $scope          = 'public';
         $scopeSpecified = false;
@@ -2408,12 +2408,12 @@ class PHP_CodeSniffer_File
         }
 
         $valid = array(
-                  T_FINAL,
-                  T_ABSTRACT,
-                  T_WHITESPACE,
-                  T_COMMENT,
-                  T_DOC_COMMENT,
-                 );
+            T_FINAL,
+            T_ABSTRACT,
+            T_WHITESPACE,
+            T_COMMENT,
+            T_DOC_COMMENT,
+        );
 
         $isAbstract = false;
         $isFinal    = false;
@@ -2850,10 +2850,10 @@ class PHP_CodeSniffer_File
         }
 
         $find = array(
-                 T_NS_SEPARATOR,
-                 T_STRING,
-                 T_WHITESPACE,
-                );
+            T_NS_SEPARATOR,
+            T_STRING,
+            T_WHITESPACE,
+        );
 
         $end  = $this->findNext($find, ($extendsIndex + 1), $classCloserIndex, true);
         $name = $this->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));

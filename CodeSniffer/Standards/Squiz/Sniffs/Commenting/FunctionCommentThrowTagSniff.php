@@ -69,12 +69,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         $tokens = $phpcsFile->getTokens();
 
         $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_CLASS,
+            T_FUNCTION,
+            T_OPEN_TAG,
+        );
 
         $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1));
 
@@ -187,9 +187,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
             if ($tokenCount !== $tagCount) {
                 $error = 'Expected %s @throws tag(s) in function comment; %s found';
                 $data  = array(
-                          $tokenCount,
-                          $tagCount,
-                         );
+                    $tokenCount,
+                    $tagCount,
+                );
                 $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
                 return;
             } else {
@@ -199,9 +199,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
                         $error = 'Expected "%s" but found "%s" for @throws tag exception';
                         $data  = array(
-                                  $throwTokens[$i],
-                                  $throwTag,
-                                 );
+                            $throwTokens[$i],
+                            $throwTag,
+                        );
                         $phpcsFile->addError($error, $errorPos, 'WrongType', $data);
                     }
                 }

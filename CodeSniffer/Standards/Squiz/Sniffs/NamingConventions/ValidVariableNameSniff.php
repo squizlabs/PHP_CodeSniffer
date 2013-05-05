@@ -40,10 +40,9 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
      * @var array
      */
     private $_ignore = array(
-                        T_WHITESPACE,
-                        T_COMMENT,
-                       );
-
+        T_WHITESPACE,
+        T_COMMENT,
+    );
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -60,16 +59,16 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
 
         $phpReservedVars = array(
-                            '_SERVER',
-                            '_GET',
-                            '_POST',
-                            '_REQUEST',
-                            '_SESSION',
-                            '_ENV',
-                            '_COOKIE',
-                            '_FILES',
-                            'GLOBALS',
-                           );
+            '_SERVER',
+            '_GET',
+            '_POST',
+            '_REQUEST',
+            '_SESSION',
+            '_ENV',
+            '_COOKIE',
+            '_FILES',
+            'GLOBALS',
+        );
 
         // If it's a php reserved var, then its ok.
         if (in_array($varName, $phpReservedVars) === true) {
@@ -160,9 +159,9 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             if (substr($varName, 0, 1) === '_') {
                 $error = '%s member variable "%s" must not contain a leading underscore';
                 $data  = array(
-                          ucfirst($memberProps['scope']),
-                          $errorData[0],
-                         );
+                    ucfirst($memberProps['scope']),
+                    $errorData[0],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'PublicHasUnderscore', $data);
                 return;
             }
@@ -196,16 +195,16 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
 
         $phpReservedVars = array(
-                            '_SERVER',
-                            '_GET',
-                            '_POST',
-                            '_REQUEST',
-                            '_SESSION',
-                            '_ENV',
-                            '_COOKIE',
-                            '_FILES',
-                            'GLOBALS',
-                           );
+            '_SERVER',
+            '_GET',
+            '_POST',
+            '_REQUEST',
+            '_SESSION',
+            '_ENV',
+            '_COOKIE',
+            '_FILES',
+            'GLOBALS',
+        );
         if (preg_match_all('|[^\\\]\${?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.

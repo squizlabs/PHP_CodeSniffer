@@ -158,11 +158,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @var array(string)
      */
     private static $_tags = array(
-                             'see'        => false,
-                             'link'       => false,
-                             'deprecated' => true,
-                             'since'      => true,
-                            );
+        'see'        => false,
+        'link'       => false,
+        'deprecated' => true,
+        'since'      => true,
+    );
 
     /**
      * An array of unknown tags.
@@ -293,10 +293,10 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 }
 
                 $this->foundTags[] = array(
-                                      'tag'  => $tag,
-                                      'line' => $this->getLine($wordPos),
-                                      'pos'  => $wordPos,
-                                     );
+                    'tag'  => $tag,
+                    'line' => $this->getLine($wordPos),
+                    'pos'  => $wordPos,
+                );
 
                 if ($prevTagPos !== false) {
                     // There was a tag before this so let's process it.
@@ -315,28 +315,28 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                     // see if it is a tag we know about. If we don't know about it,
                     // we add it to a list of unknown tags.
                     $knownTags = array(
-                                  'abstract',
-                                  'access',
-                                  'example',
-                                  'filesource',
-                                  'global',
-                                  'ignore',
-                                  'internal',
-                                  'name',
-                                  'static',
-                                  'staticvar',
-                                  'todo',
-                                  'tutorial',
-                                  'uses',
-                                  'package_version@',
-                                 );
+                        'abstract',
+                        'access',
+                        'example',
+                        'filesource',
+                        'global',
+                        'ignore',
+                        'internal',
+                        'name',
+                        'static',
+                        'staticvar',
+                        'todo',
+                        'tutorial',
+                        'uses',
+                        'package_version@',
+                    );
 
                     if (in_array($tag, $knownTags) === false) {
                         $this->unknown[] = array(
-                                            'tag'  => $tag,
-                                            'line' => $this->getLine($wordPos),
-                                            'pos'  => $wordPos,
-                                           );
+                            'tag'  => $tag,
+                            'line' => $this->getLine($wordPos),
+                            'pos'  => $wordPos,
+                        );
                     }
                 }//end if
             }//end if

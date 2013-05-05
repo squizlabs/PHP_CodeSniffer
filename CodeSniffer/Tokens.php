@@ -124,71 +124,71 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int => int)
      */
     public static $weightings = array(
-                                 T_CLASS               => 1000,
-                                 T_INTERFACE           => 1000,
-                                 T_TRAIT               => 1000,
-                                 T_NAMESPACE           => 1000,
-                                 T_FUNCTION            => 100,
-                                 T_CLOSURE             => 100,
+        T_CLASS               => 1000,
+        T_INTERFACE           => 1000,
+        T_TRAIT               => 1000,
+        T_NAMESPACE           => 1000,
+        T_FUNCTION            => 100,
+        T_CLOSURE             => 100,
 
-                                 /*
-                                     Conditions.
-                                 */
+        /*
+         Conditions.
+        */
 
-                                 T_WHILE               => 50,
-                                 T_FOR                 => 50,
-                                 T_FOREACH             => 50,
-                                 T_IF                  => 50,
-                                 T_ELSE                => 50,
-                                 T_ELSEIF              => 50,
-                                 T_WHILE               => 50,
-                                 T_DO                  => 50,
-                                 T_TRY                 => 50,
-                                 T_CATCH               => 50,
-                                 T_SWITCH              => 50,
+        T_WHILE               => 50,
+        T_FOR                 => 50,
+        T_FOREACH             => 50,
+        T_IF                  => 50,
+        T_ELSE                => 50,
+        T_ELSEIF              => 50,
+        T_WHILE               => 50,
+        T_DO                  => 50,
+        T_TRY                 => 50,
+        T_CATCH               => 50,
+        T_SWITCH              => 50,
 
-                                 T_SELF                => 25,
-                                 T_PARENT              => 25,
+        T_SELF                => 25,
+        T_PARENT              => 25,
 
-                                 /*
-                                     Operators and arithmetic.
-                                 */
+        /*
+         Operators and arithmetic.
+        */
 
-                                 T_BITWISE_AND         => 8,
-                                 T_BITWISE_OR          => 8,
+        T_BITWISE_AND         => 8,
+        T_BITWISE_OR          => 8,
 
-                                 T_MULTIPLY            => 5,
-                                 T_DIVIDE              => 5,
-                                 T_PLUS                => 5,
-                                 T_MINUS               => 5,
-                                 T_MODULUS             => 5,
-                                 T_POWER               => 5,
+        T_MULTIPLY            => 5,
+        T_DIVIDE              => 5,
+        T_PLUS                => 5,
+        T_MINUS               => 5,
+        T_MODULUS             => 5,
+        T_POWER               => 5,
 
-                                 T_EQUAL               => 5,
-                                 T_AND_EQUAL           => 5,
-                                 T_CONCAT_EQUAL        => 5,
-                                 T_DIV_EQUAL           => 5,
-                                 T_MINUS_EQUAL         => 5,
-                                 T_MOD_EQUAL           => 5,
-                                 T_MUL_EQUAL           => 5,
-                                 T_OR_EQUAL            => 5,
-                                 T_PLUS_EQUAL          => 5,
-                                 T_XOR_EQUAL           => 5,
+        T_EQUAL               => 5,
+        T_AND_EQUAL           => 5,
+        T_CONCAT_EQUAL        => 5,
+        T_DIV_EQUAL           => 5,
+        T_MINUS_EQUAL         => 5,
+        T_MOD_EQUAL           => 5,
+        T_MUL_EQUAL           => 5,
+        T_OR_EQUAL            => 5,
+        T_PLUS_EQUAL          => 5,
+        T_XOR_EQUAL           => 5,
 
-                                 T_BOOLEAN_AND         => 5,
-                                 T_BOOLEAN_OR          => 5,
+        T_BOOLEAN_AND         => 5,
+        T_BOOLEAN_OR          => 5,
 
-                                 /*
-                                     Equality.
-                                 */
+        /*
+         Equality.
+        */
 
-                                 T_IS_EQUAL            => 5,
-                                 T_IS_NOT_EQUAL        => 5,
-                                 T_IS_IDENTICAL        => 5,
-                                 T_IS_NOT_IDENTICAL    => 5,
-                                 T_IS_SMALLER_OR_EQUAL => 5,
-                                 T_IS_GREATER_OR_EQUAL => 5,
-                                );
+        T_IS_EQUAL            => 5,
+        T_IS_NOT_EQUAL        => 5,
+        T_IS_IDENTICAL        => 5,
+        T_IS_NOT_IDENTICAL    => 5,
+        T_IS_SMALLER_OR_EQUAL => 5,
+        T_IS_GREATER_OR_EQUAL => 5,
+    );
 
     /**
      * Tokens that represent assignments.
@@ -196,17 +196,17 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $assignmentTokens = array(
-                                       T_EQUAL,
-                                       T_AND_EQUAL,
-                                       T_CONCAT_EQUAL,
-                                       T_DIV_EQUAL,
-                                       T_MINUS_EQUAL,
-                                       T_MOD_EQUAL,
-                                       T_MUL_EQUAL,
-                                       T_PLUS_EQUAL,
-                                       T_XOR_EQUAL,
-                                       T_DOUBLE_ARROW,
-                                      );
+        T_EQUAL,
+        T_AND_EQUAL,
+        T_CONCAT_EQUAL,
+        T_DIV_EQUAL,
+        T_MINUS_EQUAL,
+        T_MOD_EQUAL,
+        T_MUL_EQUAL,
+        T_PLUS_EQUAL,
+        T_XOR_EQUAL,
+        T_DOUBLE_ARROW,
+    );
 
     /**
      * Tokens that represent equality comparisons.
@@ -214,13 +214,13 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $equalityTokens = array(
-                                     T_IS_EQUAL,
-                                     T_IS_NOT_EQUAL,
-                                     T_IS_IDENTICAL,
-                                     T_IS_NOT_IDENTICAL,
-                                     T_IS_SMALLER_OR_EQUAL,
-                                     T_IS_GREATER_OR_EQUAL,
-                                    );
+        T_IS_EQUAL,
+        T_IS_NOT_EQUAL,
+        T_IS_IDENTICAL,
+        T_IS_NOT_IDENTICAL,
+        T_IS_SMALLER_OR_EQUAL,
+        T_IS_GREATER_OR_EQUAL,
+    );
 
     /**
      * Tokens that represent comparison operator.
@@ -228,15 +228,15 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $comparisonTokens = array(
-                                       T_IS_EQUAL,
-                                       T_IS_IDENTICAL,
-                                       T_IS_NOT_EQUAL,
-                                       T_IS_NOT_IDENTICAL,
-                                       T_LESS_THAN,
-                                       T_GREATER_THAN,
-                                       T_IS_SMALLER_OR_EQUAL,
-                                       T_IS_GREATER_OR_EQUAL,
-                                      );
+        T_IS_EQUAL,
+        T_IS_IDENTICAL,
+        T_IS_NOT_EQUAL,
+        T_IS_NOT_IDENTICAL,
+        T_LESS_THAN,
+        T_GREATER_THAN,
+        T_IS_SMALLER_OR_EQUAL,
+        T_IS_GREATER_OR_EQUAL,
+    );
 
     /**
      * Tokens that represent arithmetic operators.
@@ -244,12 +244,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $arithmeticTokens = array(
-                                       T_PLUS,
-                                       T_MINUS,
-                                       T_MULTIPLY,
-                                       T_DIVIDE,
-                                       T_MODULUS,
-                                      );
+        T_PLUS,
+        T_MINUS,
+        T_MULTIPLY,
+        T_DIVIDE,
+        T_MODULUS,
+    );
 
     /**
      * Tokens that represent casting.
@@ -257,14 +257,14 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $castTokens = array(
-                                 T_INT_CAST,
-                                 T_STRING_CAST,
-                                 T_DOUBLE_CAST,
-                                 T_ARRAY_CAST,
-                                 T_BOOL_CAST,
-                                 T_OBJECT_CAST,
-                                 T_UNSET_CAST,
-                                );
+        T_INT_CAST,
+        T_STRING_CAST,
+        T_DOUBLE_CAST,
+        T_ARRAY_CAST,
+        T_BOOL_CAST,
+        T_OBJECT_CAST,
+        T_UNSET_CAST,
+    );
 
     /**
      * Token types that open parenthesis.
@@ -272,17 +272,17 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $parenthesisOpeners = array(
-                                         T_ARRAY,
-                                         T_FUNCTION,
-                                         T_CLOSURE,
-                                         T_WHILE,
-                                         T_FOR,
-                                         T_FOREACH,
-                                         T_SWITCH,
-                                         T_IF,
-                                         T_ELSEIF,
-                                         T_CATCH,
-                                        );
+        T_ARRAY,
+        T_FUNCTION,
+        T_CLOSURE,
+        T_WHILE,
+        T_FOR,
+        T_FOREACH,
+        T_SWITCH,
+        T_IF,
+        T_ELSEIF,
+        T_CATCH,
+    );
 
     /**
      * Tokens that are allowed to open scopes.
@@ -290,25 +290,25 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $scopeOpeners = array(
-                                   T_CLASS,
-                                   T_INTERFACE,
-                                   T_TRAIT,
-                                   T_NAMESPACE,
-                                   T_FUNCTION,
-                                   T_CLOSURE,
-                                   T_IF,
-                                   T_SWITCH,
-                                   T_CASE,
-                                   T_DEFAULT,
-                                   T_WHILE,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_FOR,
-                                   T_FOREACH,
-                                   T_DO,
-                                   T_TRY,
-                                   T_CATCH,
-                                  );
+        T_CLASS,
+        T_INTERFACE,
+        T_TRAIT,
+        T_NAMESPACE,
+        T_FUNCTION,
+        T_CLOSURE,
+        T_IF,
+        T_SWITCH,
+        T_CASE,
+        T_DEFAULT,
+        T_WHILE,
+        T_ELSE,
+        T_ELSEIF,
+        T_FOR,
+        T_FOREACH,
+        T_DO,
+        T_TRY,
+        T_CATCH,
+    );
 
     /**
      * Tokens that represent scope modifiers.
@@ -316,10 +316,10 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $scopeModifiers = array(
-                                     T_PRIVATE,
-                                     T_PUBLIC,
-                                     T_PROTECTED,
-                                    );
+        T_PRIVATE,
+        T_PUBLIC,
+        T_PROTECTED,
+    );
 
     /**
      * Tokens that can prefix a method name
@@ -327,13 +327,13 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $methodPrefixes = array(
-                                     T_PRIVATE,
-                                     T_PUBLIC,
-                                     T_PROTECTED,
-                                     T_ABSTRACT,
-                                     T_STATIC,
-                                     T_FINAL,
-                                    );
+        T_PRIVATE,
+        T_PUBLIC,
+        T_PROTECTED,
+        T_ABSTRACT,
+        T_STATIC,
+        T_FINAL,
+    );
 
     /**
      * Tokens that perform operations.
@@ -341,15 +341,15 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $operators = array(
-                                T_MINUS,
-                                T_PLUS,
-                                T_MULTIPLY,
-                                T_DIVIDE,
-                                T_MODULUS,
-                                T_POWER,
-                                T_BITWISE_AND,
-                                T_BITWISE_OR,
-                               );
+        T_MINUS,
+        T_PLUS,
+        T_MULTIPLY,
+        T_DIVIDE,
+        T_MODULUS,
+        T_POWER,
+        T_BITWISE_AND,
+        T_BITWISE_OR,
+    );
 
     /**
      * Tokens that perform boolean operations.
@@ -357,12 +357,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $booleanOperators = array(
-                                       T_BOOLEAN_AND,
-                                       T_BOOLEAN_OR,
-                                       T_LOGICAL_AND,
-                                       T_LOGICAL_OR,
-                                       T_LOGICAL_XOR,
-                                      );
+        T_BOOLEAN_AND,
+        T_BOOLEAN_OR,
+        T_LOGICAL_AND,
+        T_LOGICAL_OR,
+        T_LOGICAL_XOR,
+    );
 
     /**
      * Tokens that open code blocks.
@@ -370,10 +370,10 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $blockOpeners = array(
-                                   T_OPEN_CURLY_BRACKET,
-                                   T_OPEN_SQUARE_BRACKET,
-                                   T_OPEN_PARENTHESIS,
-                                  );
+        T_OPEN_CURLY_BRACKET,
+        T_OPEN_SQUARE_BRACKET,
+        T_OPEN_PARENTHESIS,
+    );
 
     /**
      * Tokens that don't represent code.
@@ -381,10 +381,10 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $emptyTokens = array(
-                                  T_WHITESPACE,
-                                  T_COMMENT,
-                                  T_DOC_COMMENT,
-                                 );
+        T_WHITESPACE,
+        T_COMMENT,
+        T_DOC_COMMENT,
+    );
 
     /**
      * Tokens that are comments.
@@ -392,9 +392,9 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $commentTokens = array(
-                                    T_COMMENT,
-                                    T_DOC_COMMENT,
-                                   );
+        T_COMMENT,
+        T_DOC_COMMENT,
+    );
 
     /**
      * Tokens that represent strings.
@@ -404,9 +404,9 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $stringTokens = array(
-                                   T_CONSTANT_ENCAPSED_STRING,
-                                   T_DOUBLE_QUOTED_STRING,
-                                  );
+        T_CONSTANT_ENCAPSED_STRING,
+        T_DOUBLE_QUOTED_STRING,
+    );
 
     /**
      * Tokens that represent brackets and parenthesis.
@@ -414,13 +414,13 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $bracketTokens = array(
-                                    T_OPEN_CURLY_BRACKET,
-                                    T_CLOSE_CURLY_BRACKET,
-                                    T_OPEN_SQUARE_BRACKET,
-                                    T_CLOSE_SQUARE_BRACKET,
-                                    T_OPEN_PARENTHESIS,
-                                    T_CLOSE_PARENTHESIS,
-                                  );
+        T_OPEN_CURLY_BRACKET,
+        T_CLOSE_CURLY_BRACKET,
+        T_OPEN_SQUARE_BRACKET,
+        T_CLOSE_SQUARE_BRACKET,
+        T_OPEN_PARENTHESIS,
+        T_CLOSE_PARENTHESIS,
+    );
 
     /**
      * Tokens that include files.
@@ -428,11 +428,11 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $includeTokens = array(
-                                    T_REQUIRE_ONCE,
-                                    T_REQUIRE,
-                                    T_INCLUDE_ONCE,
-                                    T_INCLUDE,
-                                   );
+        T_REQUIRE_ONCE,
+        T_REQUIRE,
+        T_INCLUDE_ONCE,
+        T_INCLUDE,
+    );
 
     /**
      * Tokens that make up a heredoc string.
@@ -440,11 +440,10 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $heredocTokens = array(
-                                    T_START_HEREDOC,
-                                    T_END_HEREDOC,
-                                    T_HEREDOC,
-                                   );
-
+        T_START_HEREDOC,
+        T_END_HEREDOC,
+        T_HEREDOC,
+    );
 
     /**
      * A PHP_CodeSniffer_Tokens class cannot be constructed.

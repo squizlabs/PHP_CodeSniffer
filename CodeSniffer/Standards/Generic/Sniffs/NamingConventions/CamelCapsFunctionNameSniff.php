@@ -41,22 +41,22 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      * @var array
      */
     protected $magicMethods = array(
-                               'construct',
-                               'destruct',
-                               'call',
-                               'callstatic',
-                               'get',
-                               'set',
-                               'isset',
-                               'unset',
-                               'sleep',
-                               'wakeup',
-                               'tostring',
-                               'set_state',
-                               'clone',
-                               'invoke',
-                               'call',
-                              );
+        'construct',
+        'destruct',
+        'call',
+        'callstatic',
+        'get',
+        'set',
+        'isset',
+        'unset',
+        'sleep',
+        'wakeup',
+        'tostring',
+        'set_state',
+        'clone',
+        'invoke',
+        'call',
+    );
 
     /**
      * A list of all PHP non-magic methods starting with a double underscore.
@@ -66,18 +66,18 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      * @var array
      */
     protected $methodsDoubleUnderscore = array(
-                                          'soapcall',
-                                          'getlastrequest',
-                                          'getlastresponse',
-                                          'getlastrequestheaders',
-                                          'getlastresponseheaders',
-                                          'getfunctions',
-                                          'gettypes',
-                                          'dorequest',
-                                          'setcookie',
-                                          'setlocation',
-                                          'setsoapheaders',
-                                         );
+        'soapcall',
+        'getlastrequest',
+        'getlastresponse',
+        'getlastrequestheaders',
+        'getlastresponseheaders',
+        'getfunctions',
+        'gettypes',
+        'dorequest',
+        'setcookie',
+        'setlocation',
+        'setsoapheaders',
+    );
 
     /**
      * A list of all PHP magic functions.
@@ -151,9 +151,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
             if ($methodProps['scope_specified'] === true) {
                 $error = '%s method name "%s" is not in camel caps format';
                 $data  = array(
-                          ucfirst($methodProps['scope']),
-                          $errorData[0],
-                         );
+                    ucfirst($methodProps['scope']),
+                    $errorData[0],
+                );
                 $phpcsFile->addError($error, $stackPtr, 'ScopeNotCamelCaps', $data);
             } else {
                 $error = 'Method name "%s" is not in camel caps format';

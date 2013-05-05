@@ -139,9 +139,9 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         if ($contentColumn !== $startColumn) {
             $error = 'First line of embedded PHP code must be indented %s spaces; %s found';
             $data  = array(
-                      $startColumn,
-                      $contentColumn,
-                     );
+                $startColumn,
+                $contentColumn,
+            );
             $phpcsFile->addError($error, $firstContent, 'Indent', $data);
         }
 

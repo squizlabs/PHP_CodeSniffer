@@ -86,10 +86,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var',
-                        'pass_by_reference' => true,
-                        'type_hint'         => '',
-                       );
+            'name'              => '$var',
+            'pass_by_reference' => true,
+            'type_hint'         => '',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
@@ -115,10 +115,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var',
-                        'pass_by_reference' => false,
-                        'type_hint'         => 'array',
-                       );
+            'name'              => '$var',
+            'pass_by_reference' => false,
+            'type_hint'         => 'array',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
@@ -144,16 +144,16 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var1',
-                        'pass_by_reference' => false,
-                        'type_hint'         => 'foo',
-                       );
+            'name'              => '$var1',
+            'pass_by_reference' => false,
+            'type_hint'         => 'foo',
+        );
 
         $expected[1] = array(
-                        'name'              => '$var2',
-                        'pass_by_reference' => false,
-                        'type_hint'         => 'bar',
-                       );
+            'name'              => '$var2',
+            'pass_by_reference' => false,
+            'type_hint'         => 'bar',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
@@ -179,10 +179,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var',
-                        'pass_by_reference' => false,
-                        'type_hint'         => '',
-                       );
+            'name'              => '$var',
+            'pass_by_reference' => false,
+            'type_hint'         => '',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
@@ -208,11 +208,11 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var1',
-                        'default'           => 'self::CONSTANT',
-                        'pass_by_reference' => false,
-                        'type_hint'         => '',
-                       );
+            'name'              => '$var1',
+            'default'           => 'self::CONSTANT',
+            'pass_by_reference' => false,
+            'type_hint'         => '',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
@@ -238,17 +238,17 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'name'              => '$var1',
-                        'default'           => '1',
-                        'pass_by_reference' => false,
-                        'type_hint'         => '',
-                       );
+            'name'              => '$var1',
+            'default'           => '1',
+            'pass_by_reference' => false,
+            'type_hint'         => '',
+        );
         $expected[1] = array(
-                        'name'              => '$var2',
-                        'default'           => "'value'",
-                        'pass_by_reference' => false,
-                        'type_hint'         => '',
-                       );
+            'name'              => '$var2',
+            'default'           => "'value'",
+            'pass_by_reference' => false,
+            'type_hint'         => '',
+        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
         $function = $this->_phpcsFile->findPrevious(
