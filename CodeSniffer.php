@@ -1016,6 +1016,12 @@ class PHP_CodeSniffer
                                  );
 
         foreach ($this->listeners as $listenerClass) {
+            // Account for a second run through this method, which happens
+            // in interactive mode.
+            if (is_object($listenerClass) === true) {
+                $listenerClass = get_class($listenerClass);
+            }
+
             // Work out the internal code for this sniff. Detect usage of namespace
             // separators instead of underscores to support PHP namespaces.
             if (strstr($listenerClass, '\\') === false) {
