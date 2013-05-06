@@ -24,7 +24,6 @@
             "CodeSniffer/CLI.php",
             "CodeSniffer/Exception.php",
             "CodeSniffer/File.php",
-            "CodeSniffer/MultiFileSniff.php",
             "CodeSniffer/Report.php",
             "CodeSniffer/Reporting.php",
             "CodeSniffer/Sniff.php",
