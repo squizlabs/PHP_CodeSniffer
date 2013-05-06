@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maik Penz for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
+  - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the indent setting in a ruleset.xml file to change
+    -- Thanks to Andrey Mindubaev for the patch
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
