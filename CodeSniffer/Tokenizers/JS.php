@@ -694,7 +694,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                      'code'    => T_CLOSE_TAG,
                      'type'    => 'T_CLOSE_TAG',
                      'content' => '',
-        );
+                    );
 
         /*
             Now that we have done some basic tokenizing, we need to
@@ -855,13 +855,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                         );
 
         $afterTokens = array(
-                         ',',
-                         ')',
-                         ';',
-                         ' ',
-                         '.',
-                         $eolChar,
-                        );
+                        ',',
+                        ')',
+                        ';',
+                        ' ',
+                        '.',
+                        $eolChar,
+                       );
 
         // Find the last non-whitespace token that was added
         // to the tokens array.

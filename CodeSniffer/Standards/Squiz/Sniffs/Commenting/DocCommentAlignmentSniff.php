@@ -137,9 +137,9 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
             $error = 'Expected %s space(s) before asterisk; %s found';
             $data  = array(
-                     ($requiredColumn - 1),
-                     ($currentColumn - 1),
-                    );
+                      ($requiredColumn - 1),
+                      ($currentColumn - 1),
+                     );
             $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeAsterisk', $data);
         }//end foreach
 

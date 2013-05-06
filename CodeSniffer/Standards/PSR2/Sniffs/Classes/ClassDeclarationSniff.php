@@ -161,8 +161,12 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             }
         }
 
+        $find = array(
+                 T_STRING,
+                 T_IMPLEMENTS,
+                );
+
         $classNames = array();
-        $find       = array(T_STRING, T_IMPLEMENTS);
         $nextClass  = $phpcsFile->findNext($find, ($className + 2), ($openingBrace - 1));
         while ($nextClass !== false) {
             $classNames[] = $nextClass;
@@ -183,7 +187,10 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 || $tokens[($className - 2)]['code'] !== T_STRING)
             ) {
                 $prev = $phpcsFile->findPrevious(
-                    array(T_NS_SEPARATOR, T_WHITESPACE),
+                    array(
+                     T_NS_SEPARATOR,
+                     T_WHITESPACE,
+                    ),
                     ($className - 1),
                     $implements,
                     true
@@ -200,7 +207,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                         $error = 'Expected %s spaces before interface name; %s found';
                         $data  = array(
                                   $expected,
-                                  $found
+                                  $found,
                                  );
                         $phpcsFile->addError($error, $className, 'InterfaceWrongIndent', $data);
                     }

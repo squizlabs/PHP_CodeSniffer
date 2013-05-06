@@ -109,7 +109,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $error .= ' after function; %s found';
             $data   = array(
                        $this->spacing,
-                       $foundLines
+                       $foundLines,
                       );
             $phpcsFile->addError($error, $closer, 'After', $data);
         }
@@ -180,7 +180,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $error .= ' before function; %s found';
             $data   = array(
                        $this->spacing,
-                       $foundLines
+                       $foundLines,
                       );
             $phpcsFile->addError($error, $stackPtr, 'Before', $data);
         }

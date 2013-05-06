@@ -72,7 +72,13 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
         $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             $functionKeyword = $phpcsFile->findPrevious(
-                array(T_WHITESPACE, T_COMMA, T_COMMENT, T_STRING, T_NS_SEPARATOR),
+                array(
+                 T_WHITESPACE,
+                 T_COMMA,
+                 T_COMMENT,
+                 T_STRING,
+                 T_NS_SEPARATOR,
+                ),
                 ($stackPtr - 1),
                 null,
                 true
