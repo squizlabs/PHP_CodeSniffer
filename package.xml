@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
   - Fixed bug #19913 : Running phpcs in interactive mode causes warnings
     -- Thanks to Harald Franndorfer for the patch
+  - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
+    -- Thanks to Christian Weiske for the patch
  </notes>
  <contents>
   <dir name="/">
