@@ -444,8 +444,8 @@ class PHP_CodeSniffer
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
-            } else if (is_file(realpath(PHPCS_CWD.'/'.$standard)) === true) {
-                $ruleset = simplexml_load_file(realpath(PHPCS_CWD.'/'.$standard));
+            } else if (is_file(PHPCS_CWD.'/'.$standard) === true) {
+                $ruleset = simplexml_load_file(PHPCS_CWD.'/'.$standard);
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -623,11 +623,11 @@ class PHP_CodeSniffer
 
             $standard = (string) $ruleset['name'];
         } else {
-            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            self::$standardDir = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard;
             if (is_dir(self::$standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
-                $path = realpath(PHPCS_CWD.'/'.$standard);
+                $path = PHPCS_CWD.'/'.$standard;
                 if (is_dir($path) === true) {
                     // This is a relative path to a custom standard.
                     self::$standardDir = $path;
@@ -792,7 +792,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = realpath($sniff);
+                $files[] = $sniff;
             }
         }
 
@@ -829,9 +829,9 @@ class PHP_CodeSniffer
                 $standardDir = dirname($standardDir);
             }
 
-            $realpath = realpath($standardDir.'/'.$sniff);
-            if ($realpath !== false) {
-                $sniff = $realpath;
+            $path = $standardDir.'/'.$sniff;
+            if (file_exists($path)) {
+                $sniff = $path;
             }
         }
 
@@ -844,7 +844,7 @@ class PHP_CodeSniffer
             $sniff = basename($path);
         } else if (is_file($sniff) === false) {
             // See if this is a whole standard being referenced.
-            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
+            $path = dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff;
             if (is_dir($path) === true) {
                 $isDir = true;
             } else {
@@ -856,13 +856,13 @@ class PHP_CodeSniffer
                 }
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
-                $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+                $path = dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
                 if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
                     // looking directly in the passed standard dir to see if it is
                     // installed in there.
-                    $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                    $path = self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
                 }
             }
         }//end if
@@ -1140,12 +1140,11 @@ class PHP_CodeSniffer
 
                 foreach ($di as $file) {
                     // Check if the file exists after all symlinks are resolved.
-                    $filePath = realpath($file->getPathname());
-                    if ($filePath === false) {
+                    if (file_exists($file->getPathname())) {
                         continue;
                     }
 
-                    if (is_dir($filePath) === true) {
+                    if (is_dir($file->getPathname()) === true) {
                         continue;
                     }
 
@@ -1294,17 +1293,12 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
-        $filePath = realpath($file);
-        if ($filePath === false) {
-            $filePath = $file;
-        }
-
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
         $firstContent = $contents;
-        if ($contents === null && is_readable($filePath) === true) {
-            $handle = fopen($filePath, 'r');
+        if ($contents === null && is_readable($file) === true) {
+            $handle = fopen($file, 'r');
             if ($handle !== false) {
                 $firstContent  = fgets($handle);
                 $firstContent .= fgets($handle);
@@ -1315,7 +1309,7 @@ class PHP_CodeSniffer
         if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
             // We are ignoring the whole file.
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Ignoring '.basename($filePath).PHP_EOL;
+                echo 'Ignoring '.basename($file).PHP_EOL;
             }
 
             return null;
