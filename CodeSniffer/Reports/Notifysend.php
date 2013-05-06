@@ -205,6 +205,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     {
         $cmd  = escapeshellcmd($this->path);
         $cmd .= ' --category dev.validate';
+        $cmd .= ' -h int:transient:1';
         $cmd .= ' -t '.(int) $this->timeout;
         if (version_compare($this->version, '0.7.3', '>=') === true) {
             $cmd .= ' -a phpcs';
