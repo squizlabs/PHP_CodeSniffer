@@ -143,7 +143,11 @@ class PHP_CodeSniffer_Reporting
                 }
 
                 if ($output === null) {
-                    $output = getcwd().'/phpcs-'.$report.'.tmp';
+                    if ($cliValues['reportFile'] !== null) {
+                        $output = $cliValues['reportFile'];
+                    } else {
+                        $output = getcwd().'/phpcs-'.$report.'.tmp';
+                    }
                 }
 
                 file_put_contents($output, $generatedReport, $flags);

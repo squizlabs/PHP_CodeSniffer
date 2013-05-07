@@ -120,7 +120,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @since (if used) or @see (if used) or @link',
                                        ),
-                );
+                      );
 
 
     /**
@@ -363,9 +363,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
                 $error = 'Missing @%s tag in %s comment';
                 $data  = array(
-                              $tag,
-                              $docBlock,
-                             );
+                          $tag,
+                          $docBlock,
+                         );
                 $this->currentFile->addError($error, $commentEnd, 'MissingTag', $data);
                 continue;
             }

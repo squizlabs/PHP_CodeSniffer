@@ -220,9 +220,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
-                $indices[] = array(
-                              'value' => $nextToken,
-                             );
+                $indices[] = array('value' => $nextToken);
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
                 continue;
             }

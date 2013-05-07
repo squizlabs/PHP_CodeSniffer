@@ -420,7 +420,7 @@ final class PHP_CodeSniffer_Tokens
                                     T_CLOSE_SQUARE_BRACKET,
                                     T_OPEN_PARENTHESIS,
                                     T_CLOSE_PARENTHESIS,
-                                  );
+                                   );
 
     /**
      * Tokens that include files.

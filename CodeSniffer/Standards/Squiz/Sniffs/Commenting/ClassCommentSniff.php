@@ -70,7 +70,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         $this->currentFile = $phpcsFile;
 
         $tokens = $phpcsFile->getTokens();
-        $find   = array (
+        $find   = array(
                    T_ABSTRACT,
                    T_WHITESPACE,
                    T_FINAL,

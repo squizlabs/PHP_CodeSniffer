@@ -319,8 +319,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                         $error .= '%s spaces, found %s';
                         $data = array(
-                                  ($indent - 1),
-                                  ($column - 1),
+                                 ($indent - 1),
+                                 ($column - 1),
                                 );
                         $phpcsFile->addError($error, $firstToken, $type, $data);
                     }

@@ -78,7 +78,11 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
             // Keep track of what namespace we are in.
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
                 $nsEnd = $phpcsFile->findNext(
-                    array(T_NS_SEPARATOR, T_STRING, T_WHITESPACE),
+                    array(
+                     T_NS_SEPARATOR,
+                     T_STRING,
+                     T_WHITESPACE,
+                    ),
                     ($stackPtr + 1),
                     null,
                     true
@@ -108,9 +112,9 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                     $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
                 } else {
                     $this->foundClasses[$compareName] = array(
-                                                        'file' => $phpcsFile->getFilename(),
-                                                        'line' => $tokens[$stackPtr]['line'],
-                                                       );
+                                                         'file' => $phpcsFile->getFilename(),
+                                                         'line' => $tokens[$stackPtr]['line'],
+                                                        );
                 }
             }
 

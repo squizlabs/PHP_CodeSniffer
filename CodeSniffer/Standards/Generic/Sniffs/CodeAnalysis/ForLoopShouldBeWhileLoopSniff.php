@@ -75,7 +75,11 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
         $next = ++$token['parenthesis_opener'];
         $end  = --$token['parenthesis_closer'];
 
-        $parts = array(0, 0, 0);
+        $parts = array(
+                  0,
+                  0,
+                  0,
+                 );
         $index = 0;
 
         for (; $next <= $end; ++$next) {

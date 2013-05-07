@@ -261,9 +261,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     } else if ($multiLine === false) {
                         $error = 'Expected 0 spaces between opening bracket and argument "%s"; %s found';
                         $data  = array(
-                                      $arg,
-                                      $gap,
-                                     );
+                                  $arg,
+                                  $gap,
+                                 );
                         $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
                     }
                 }//end if
