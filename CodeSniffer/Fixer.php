@@ -35,9 +35,8 @@ class PHP_CodeSniffer_Fixer
 
     public function startFile($file)
     {
-
         $this->_currentFile = $file;
-        $this->_numFixes = 0;
+        $this->_numFixes    = 0;
         $this->_fixedTokens = array();
 
         $tokens = $file->getTokens();
@@ -49,6 +48,13 @@ class PHP_CodeSniffer_Fixer
 
     public function endFile()
     {
+        $diff     = $this->generateDiff();
+        $diffFile = getcwd().'/phpcs-fixed.diff';
+        file_put_contents($diffFile, $diff, FILE_APPEND);
+    }
+
+    public function generateDiff()
+    {
         $contents  = $this->getContents();
         $filename  = $this->_currentFile->getFilename();
         $fixedFile = getcwd().'/phpcs-fixed.tmp';
@@ -59,10 +65,12 @@ class PHP_CodeSniffer_Fixer
         $msg = exec($cmd, $output, $retval);
         unlink($fixedFile);
 
-        $diff     = implode(PHP_EOL, $output).PHP_EOL;
-        $diffFile = getcwd().'/phpcs-fixed.diff';
+        $diff = implode(PHP_EOL, $output).PHP_EOL;
+        if (trim($diff) === '') {
+            return '';
+        }
 
-        file_put_contents($diffFile, $diff, FILE_APPEND);
+        return $diff;
     }
 
     public function getFixCount()

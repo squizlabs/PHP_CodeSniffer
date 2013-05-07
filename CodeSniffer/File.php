@@ -403,6 +403,11 @@ class PHP_CodeSniffer_File
      */
     public function start($contents=null)
     {
+        $this->_errors       = array();
+        $this->_warnings     = array();
+        $this->_errorCount   = 0;
+        $this->_warningCount = 0;
+
         $this->_parse($contents);
         $this->fixer->startFile($this);
 
@@ -574,20 +579,6 @@ class PHP_CodeSniffer_File
 
             echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
-
-        $fixes = $this->fixer->getFixCount();
-        if ($fixes > 0) {
-            $this->_errors       = array();
-            $this->_warnings     = array();
-            $this->_errorCount   = 0;
-            $this->_warningCount = 0;
-
-            $contents = $this->fixer->getContents();
-            $this->start($contents);
-            return;
-        }
-
-        $this->fixer->endFile();
 
     }//end start()
 

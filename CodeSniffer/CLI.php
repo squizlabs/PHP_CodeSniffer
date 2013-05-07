@@ -411,6 +411,7 @@ class PHP_CodeSniffer_CLI
                                      'xml',
                                      'checkstyle',
                                      'csv',
+                                     'diff',
                                      'emacs',
                                      'notifysend',
                                      'source',
@@ -811,7 +812,7 @@ class PHP_CodeSniffer_CLI
     public function printUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
-        echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
+        echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
@@ -842,10 +843,10 @@ class PHP_CodeSniffer_CLI
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "emacs"'.PHP_EOL;
-        echo '                      "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
+        echo '                      "source", "summary", "diff", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
         echo '                      "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
-        echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
+        echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
 
     }//end printUsage()
