@@ -57,6 +57,10 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
         if ($tokens[$next]['code'] === T_IF) {
             $error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
             $phpcsFile->addWarning($error, $stackPtr, 'NotAllowed');
+            $phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
+            for ($i = ($stackPtr + 1); $i <= $next; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
         }
 
     }//end process()

@@ -91,6 +91,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                              $tokens[$nextCase]['content'],
                             );
                 $phpcsFile->addError($error, $nextCase, $type.'NotLower', $data);
+                $phpcsFile->fixer->replaceToken($nextCase, $expected);
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
@@ -130,9 +131,15 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 // Only need to check some things once, even if the
                 // closer is shared between multiple case statements, or even
                 // the default case.
-                if ($tokens[$nextCloser]['column'] !== ($caseAlignment + $this->indent)) {
+                $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
+                if ($diff !== 0) {
                     $error = 'Terminating statement must be indented to the same level as the CASE body';
                     $phpcsFile->addError($error, $nextCloser, 'BreakIndent');
+                    if ($diff > 0) {
+                        $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
+                    } else {
+                        $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
+                    }
                 }
             }
 

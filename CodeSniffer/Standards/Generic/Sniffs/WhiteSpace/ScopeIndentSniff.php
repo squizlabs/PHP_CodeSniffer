@@ -128,6 +128,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
         }
 
+        $scopeOpener = $tokens[$stackPtr]['scope_opener'];
+        $scopeCloser = $tokens[$stackPtr]['scope_closer'];
+
         // Based on the conditions that surround this token, determine the
         // indent that we expect this current content to be.
         $expectedIndent = $this->calculateExpectedIndent($tokens, $firstToken);
@@ -155,11 +158,29 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                           ($tokens[$firstToken]['column'] - 1),
                          );
                 $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+
+                $diff = ($expectedIndent - $tokens[$firstToken]['column']);
+                if ($diff > 0) {
+                    $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', $diff));
+                } else {
+                    // We need to remove some padding, but we'll do it for all lines
+                    // until the end of this code block if the exact flag is not on
+                    // or else the rest of the block will look out of place, but
+                    // not cause any errors to be generated. But do not change the
+                    // indent of the closing brace as other sniffs check this.
+                    $phpcsFile->fixer->substrToken(($firstToken - 1), 0, $diff);
+                    if ($this->exact === false) {
+                        for ($i = $firstToken; $i < ($scopeCloser - 1); $i++) {
+                            if ($tokens[$i]['code'] === T_WHITESPACE
+                                && $tokens[$i]['column'] === 1
+                            ) {
+                                $phpcsFile->fixer->substrToken($i, 0, $diff);
+                            }
+                        }
+                    }
+                }
             }
         }//end if
-
-        $scopeOpener = $tokens[$stackPtr]['scope_opener'];
-        $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
         // Some scopes are expected not to have indents.
         if (in_array($tokens[$firstToken]['code'], $this->nonIndentingScopes) === false) {
@@ -308,22 +329,23 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // The token at the start of the line, needs to have its' column
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
-                if ($column !== $indent) {
-                    if ($this->exact === true || $column < $indent) {
-                        $type  = 'IncorrectExact';
-                        $error = 'Line indented incorrectly; expected ';
-                        if ($this->exact === false) {
-                            $error .= 'at least ';
-                            $type   = 'Incorrect';
-                        }
-
-                        $error .= '%s spaces, found %s';
-                        $data = array(
-                                 ($indent - 1),
-                                 ($column - 1),
-                                );
-                        $phpcsFile->addError($error, $firstToken, $type, $data);
+                if ($column !== $indent
+                    && ($this->exact === true || $column < $indent)
+                ) {
+                    $type  = 'IncorrectExact';
+                    $error = 'Line indented incorrectly; expected ';
+                    if ($this->exact === false) {
+                        $error .= 'at least ';
+                        $type   = 'Incorrect';
                     }
+
+                    $error .= '%s spaces, found %s';
+                    $data = array(
+                             ($indent - 1),
+                             ($column - 1),
+                            );
+                    $phpcsFile->addError($error, $firstToken, $type, $data);
+                    $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
                 }//end if
             }//end if
         }//end for

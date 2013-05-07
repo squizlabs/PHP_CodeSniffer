@@ -199,8 +199,8 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
-            $phpcsFile->fixer->addNewline(($closeBracket - 1));
-            $phpcsFile->fixer->addContent(($closeBracket - 1), str_repeat(' ', ($functionIndent + $this->indent)));
+            $phpcsFile->fixer->addNewlineBefore($closeBracket);
+            $phpcsFile->fixer->addContentBefore($closeBracket, str_repeat(' ', ($functionIndent + $this->indent)));
         }
 
         // Each line between the parenthesis should be indented n spaces.
@@ -282,7 +282,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
                     $padding = str_repeat(' ', $expectedIndent);
                     if ($foundIndent === 0) {
-                        $phpcsFile->fixer->addContent(($i - 1), $padding);
+                        $phpcsFile->fixer->addContentBefore($i, $padding);
                     } else {
                         $phpcsFile->fixer->replaceToken($i, $padding);
                     }
