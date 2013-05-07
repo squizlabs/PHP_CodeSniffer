@@ -577,8 +577,11 @@ class PHP_CodeSniffer_File
 
         $fixes = $this->fixer->getFixCount();
         if ($fixes > 0) {
-            $this->_errors = array();
-            $this->_warnings = array();
+            $this->_errors       = array();
+            $this->_warnings     = array();
+            $this->_errorCount   = 0;
+            $this->_warningCount = 0;
+
             $contents = $this->fixer->getContents();
             $this->start($contents);
             return;
