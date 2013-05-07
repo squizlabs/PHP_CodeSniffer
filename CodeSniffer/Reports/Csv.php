@@ -40,16 +40,18 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        PHP_CodeSniffer_File $phpcsFile
     ) {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.

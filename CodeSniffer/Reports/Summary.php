@@ -36,20 +36,22 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
     /**
      * Generate a partial report for a single processed file.
      *
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
         $showSources=false,
-        $width=80
+        $width=80,
+        PHP_CodeSniffer_File $phpcsFile
     ) {
         if (PHP_CODESNIFFER_VERBOSITY === 0
             && $report['errors'] === 0
