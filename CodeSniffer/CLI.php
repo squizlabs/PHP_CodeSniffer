@@ -340,12 +340,7 @@ class PHP_CodeSniffer_CLI
                     $values['sniffs'][] = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
-                $values['reportFile'] = realpath(substr($arg, 12));
-
-                // It may not exist and return false instead.
-                if ($values['reportFile'] === false) {
-                    $values['reportFile'] = substr($arg, 12);
-                }
+                $values['reportFile'] = substr($arg, 12);
 
                 if (is_dir($values['reportFile']) === true) {
                     echo 'ERROR: The specified report file path "'.$values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
@@ -467,8 +462,7 @@ class PHP_CodeSniffer_CLI
             exit(2);
         }
 
-        $file = realpath($arg);
-        if (file_exists($file) === false) {
+        if (file_exists($arg) === false) {
             if ($this->dieOnUnknownArg === false) {
                 return $values;
             }
@@ -477,7 +471,7 @@ class PHP_CodeSniffer_CLI
             $this->printUsage();
             exit(2);
         } else {
-            $values['files'][] = $file;
+            $values['files'][] = $arg;
         }
 
         return $values;
