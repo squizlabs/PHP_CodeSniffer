@@ -114,7 +114,11 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 // so any code between this token and the next CASE, DEFAULT or
                 // end of SWITCH token will not be executable.
                 $next = $phpcsFile->findNext(
-                    array(T_CASE, T_DEFAULT, T_CLOSE_CURLY_BRACKET),
+                    array(
+                     T_CASE,
+                     T_DEFAULT,
+                     T_CLOSE_CURLY_BRACKET,
+                    ),
                     ($stackPtr + 1)
                 );
 

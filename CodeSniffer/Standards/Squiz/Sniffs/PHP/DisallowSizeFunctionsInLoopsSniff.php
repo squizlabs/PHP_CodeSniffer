@@ -49,9 +49,7 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
                                                'strlen',
                                                'count',
                                               ),
-                                     'JS'  => array(
-                                               'length',
-                                              ),
+                                     'JS'  => array('length'),
                                     );
 
 
@@ -62,7 +60,10 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
      */
     public function register()
     {
-        return array(T_WHILE, T_FOR);
+        return array(
+                T_WHILE,
+                T_FOR,
+               );
 
     }//end register()
 

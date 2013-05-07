@@ -29,6 +29,13 @@
 class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -89,7 +96,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
             $requiredIndent = strlen($tokens[$i]['content']);
         }
 
-        $requiredIndent += 4;
+        $requiredIndent += $this->indent;
 
         // Determine the scope of the original object operator.
         $origBrackets = null;

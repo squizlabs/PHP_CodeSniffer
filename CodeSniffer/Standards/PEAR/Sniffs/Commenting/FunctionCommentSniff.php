@@ -407,9 +407,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     if ($realName !== $paramName) {
                         $code = 'ParamNameNoMatch';
                         $data = array(
-                                    $paramName,
-                                    $realName,
-                                    $pos,
+                                 $paramName,
+                                 $realName,
+                                 $pos,
                                 );
 
                         $error  = 'Doc comment for var %s does not match ';

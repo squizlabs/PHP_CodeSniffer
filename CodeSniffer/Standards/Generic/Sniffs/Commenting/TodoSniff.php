@@ -65,7 +65,7 @@ class Generic_Sniffs_Commenting_TodoSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         $content = $tokens[$stackPtr]['content'];
-        $matches = Array();
+        $matches = array();
         if (preg_match('|[^a-z]+todo[^a-z]+(.*)|i', $content, $matches) !== 0) {
             // Clear whitespace and some common characters not required at
             // the end of a to-do message to make the warning more informative.

@@ -1491,14 +1491,14 @@ class PHP_CodeSniffer
                 break;
             case T_CURLY_OPEN:
                 $newToken = array(
-                             'code'    => T_OPEN_CURLY_BRACKET,
-                             'type'    => 'T_OPEN_CURLY_BRACKET',
+                             'code' => T_OPEN_CURLY_BRACKET,
+                             'type' => 'T_OPEN_CURLY_BRACKET',
                             );
                 break;
             default:
                 $newToken = array(
-                             'code'    => $token[0],
-                             'type'    => token_name($token[0]),
+                             'code' => $token[0],
+                             'type' => token_name($token[0]),
                             );
                 break;
             }//end switch

@@ -38,9 +38,7 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(
-                T_OPEN_TAG,
-               );
+        return array(T_OPEN_TAG);
 
     }//end register()
 

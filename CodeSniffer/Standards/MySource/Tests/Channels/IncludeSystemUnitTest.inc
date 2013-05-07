@@ -105,4 +105,8 @@ function two() {
 }
 
 $adjustDialog->setOrientation(AbstractWidgetWidgetType::CENTER);
+
+$className = 'SquizPerspective'.ucfirst($property['type']).'PropertyType';
+Channels::includeSystem($className);
+$className::setValue($assetid, $propertyid, $perspectives, $value, (array) $property['settings']);
 ?>

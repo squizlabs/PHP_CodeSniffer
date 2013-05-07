@@ -99,10 +99,10 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                    );
 
         $conditions = array(
-                      T_IF,
-                      T_ELSE,
-                      T_ELSEIF,
-                     );
+                       T_IF,
+                       T_ELSE,
+                       T_ELSEIF,
+                      );
 
         $firstSymbol = null;
         $firstEffect = null;

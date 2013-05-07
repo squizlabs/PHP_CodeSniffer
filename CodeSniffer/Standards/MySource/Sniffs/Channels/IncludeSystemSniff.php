@@ -91,6 +91,12 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             true
         );
 
+        // Don't process class names represented by variables as this can be
+        // an inexact science.
+        if ($tokens[$classNameToken]['code'] === T_VARIABLE) {
+            return;
+        }
+
         $className = $tokens[$classNameToken]['content'];
         if (in_array(strtolower($className), $this->_ignore) === true) {
             return;
@@ -155,7 +161,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             if ($name !== false) {
                 $includedClasses[] = $name;
             }
-        }//end for
+        }
 
         // If we are in a testing class, we might have also included
         // some systems and classes in our setUp() method.
@@ -223,9 +229,14 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $className      = $tokens[$classNameToken]['content'];
         } else {
             // Determine the name of the class that the static function
-            // is being called on.
+            // is being called on. But don't process class names represented by
+            // variables as this can be an inexact science.
             $classNameToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-            $className      = $tokens[$classNameToken]['content'];
+            if ($tokens[$classNameToken]['code'] === T_VARIABLE) {
+                return;
+            }
+
+            $className = $tokens[$classNameToken]['content'];
         }
 
         // Some systems are always available.
