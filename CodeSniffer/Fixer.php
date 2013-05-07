@@ -30,6 +30,7 @@ class PHP_CodeSniffer_Fixer
 {
     private $_currentFile = null;
     private $_tokens = array();
+    private $_fixedTokens = array();
     private $_numFixes = 0;
 
     public function startFile($file)
@@ -37,6 +38,7 @@ class PHP_CodeSniffer_Fixer
 
         $this->_currentFile = $file;
         $this->_numFixes = 0;
+        $this->_fixedTokens = array();
 
         $tokens = $file->getTokens();
         $this->_tokens = array();
@@ -61,8 +63,6 @@ class PHP_CodeSniffer_Fixer
         $diffFile = getcwd().'/phpcs-fixed.diff';
 
         file_put_contents($diffFile, $diff, FILE_APPEND);
-
-
     }
 
     public function getFixCount()
@@ -79,20 +79,59 @@ class PHP_CodeSniffer_Fixer
 
     public function replaceToken($stackPtr, $content)
     {
+        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+            return;
+        }
+
+        #echo "replace token $stackPtr with \"$content\"\n";
         $this->_tokens[$stackPtr] = $content;
         $this->_numFixes++;
+        $this->_fixedTokens[] = $stackPtr;
+    }
+
+    public function substrToken($stackPtr, $start, $length=null)
+    {
+        if ($length === null) {
+            $newContent = substr($this->_tokens[$stackPtr], $start);
+        } else {
+            $newContent = substr($this->_tokens[$stackPtr], $start, $length);
+        }
+
+        $this->replaceToken($stackPtr, $newContent);
     }
 
     public function addNewline($stackPtr)
     {
+        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+            return;
+        }
+
+        #echo "add newline after $stackPtr\n";
         $this->_tokens[$stackPtr] .= $this->_currentFile->eolChar;
         $this->_numFixes++;
+        $this->_fixedTokens[] = $stackPtr;
+    }
+
+    public function addNewlineBefore($stackPtr)
+    {
+        $this->addNewline($stackPtr - 1);
     }
 
     public function addContent($stackPtr, $content)
     {
+        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+            return;
+        }
+
+        #echo "add content \"$content\" after $stackPtr\n";
         $this->_tokens[$stackPtr] .= $content;
         $this->_numFixes++;
+        $this->_fixedTokens[] = $stackPtr;
+    }
+
+    public function addContentBefore($stackPtr, $content)
+    {
+        $this->addContent(($stackPtr - 1), $content);
     }
 
 }//end class
