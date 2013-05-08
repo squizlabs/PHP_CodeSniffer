@@ -46,13 +46,6 @@ class PHP_CodeSniffer_Fixer
         }
     }
 
-    public function endFile()
-    {
-        $diff     = $this->generateDiff();
-        $diffFile = getcwd().'/phpcs-fixed.diff';
-        file_put_contents($diffFile, $diff, FILE_APPEND);
-    }
-
     public function generateDiff()
     {
         $contents  = $this->getContents();
@@ -61,14 +54,11 @@ class PHP_CodeSniffer_Fixer
 
         file_put_contents($fixedFile, $contents);
 
-        $cmd = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$fixedFile\"";
-        $msg = exec($cmd, $output, $retval);
+        // We must use something like shell_exec() because whitespace at the end
+        // of lines is critical to diff files.
+        $cmd  = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$fixedFile\"";
+        $diff = shell_exec($cmd);
         unlink($fixedFile);
-
-        $diff = implode(PHP_EOL, $output).PHP_EOL;
-        if (trim($diff) === '') {
-            return '';
-        }
 
         return $diff;
     }
