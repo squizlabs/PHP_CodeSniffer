@@ -219,7 +219,6 @@ class PHP_CodeSniffer_Reporting
                 echo $generatedReport;
             }
 
-            $generatedReport = trim($generatedReport);
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
         } else if (file_exists($filename) === true) {
             unlink($filename);
