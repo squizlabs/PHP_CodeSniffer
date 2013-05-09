@@ -190,8 +190,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
-            $phpcsFile->fixer->addNewline($openBracket);
-            $phpcsFile->fixer->addContent($openBracket, str_repeat(' ', ($functionIndent + $this->indent)));
+            $phpcsFile->fixer->addContent($openBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
         }
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
@@ -199,15 +198,18 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
-            $phpcsFile->fixer->addNewlineBefore($closeBracket);
-            $phpcsFile->fixer->addContentBefore($closeBracket, str_repeat(' ', ($functionIndent + $this->indent)));
+            $phpcsFile->fixer->addContentBefore($closeBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
         }
 
         // Each line between the parenthesis should be indented n spaces.
         $lastLine = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             // Skip nested function calls.
-            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS
+                && (isset($tokens[$i]['parenthesis_owner']) === false
+                || $tokens[$tokens[$i]['parenthesis_owner']]['code'] !== T_ARRAY)
+            ) {
+
                 $i        = $tokens[$i]['parenthesis_closer'];
                 $lastLine = $tokens[$i]['line'];
                 continue;
