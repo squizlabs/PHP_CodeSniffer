@@ -521,6 +521,8 @@ class PHP_CodeSniffer_CLI
     {
         if (empty($values) === true) {
             $values = $this->getCommandLineValues();
+        } else {
+            $this->values = $values;
         }
 
         if ($values['generator'] !== '') {
@@ -602,7 +604,8 @@ class PHP_CodeSniffer_CLI
         }
 
         if (empty($values['reports']) === true) {
-            $this->values['reports']['full'] = $values['reportFile'];
+            $values['reports']['full'] = $values['reportFile'];
+            $this->values['reports']   = $values['reports'];
         }
 
         $phpcs->setCli($this);
