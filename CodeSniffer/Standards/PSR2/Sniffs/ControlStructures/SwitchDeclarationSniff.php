@@ -94,11 +94,6 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $phpcsFile->fixer->replaceToken($nextCase, $expected);
             }
 
-            if ($tokens[$nextCase]['column'] !== $caseAlignment) {
-                $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
-                $phpcsFile->addError($error, $nextCase, $type.'Indent');
-            }
-
             $prevCode   = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCase - 1), $stackPtr, true);
             $blankLines = ($tokens[$nextCase]['line'] - $tokens[$prevCode]['line'] - 1);
             if ($blankLines !== 0) {
