@@ -177,8 +177,8 @@ foo(
     array(
         'this',
         'is',
-        'an',
-        'array'
+'an',
+'array'
     ),
     array(
         'this',
@@ -188,7 +188,9 @@ foo(
      ),
     function($x)
     {
-         return trim($x);
+        echo 'wee';
+
+        return trim($x);
    }
 );
 
