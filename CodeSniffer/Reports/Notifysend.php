@@ -114,17 +114,17 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      * its data should be counted in the grand totals.
      *
      * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      * @param boolean              $showSources Show sources?
      * @param int                  $width       Maximum allowed line width.
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
-        $width=80,
-        PHP_CodeSniffer_File $phpcsFile
+        $width=80
     ) {
         // We don't need to print anything, but we want this file counted
         // in the total number of checked files even if it has no errors.

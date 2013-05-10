@@ -41,17 +41,17 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
      * its data should be counted in the grand totals.
      *
      * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      * @param boolean              $showSources Show sources?
      * @param int                  $width       Maximum allowed line width.
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
-        $width=80,
-        PHP_CodeSniffer_File $phpcsFile
+        $width=80
     ) {
         $out = new XMLWriter;
         $out->openMemory();
