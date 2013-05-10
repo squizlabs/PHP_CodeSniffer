@@ -43,7 +43,6 @@ class PSR2_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSni
         return array(
                 20 => 1,
                 23 => 2,
-                26 => 1,
                 29 => 1,
                 31 => 1,
                 33 => 1,
