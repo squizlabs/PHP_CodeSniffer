@@ -71,7 +71,6 @@ class PHP_CodeSniffer_Fixer
     public function getContents()
     {
         $contents = implode($this->_tokens);
-        #echo $contents."\n\n";
         return $contents;
     }
 
@@ -81,14 +80,20 @@ class PHP_CodeSniffer_Fixer
             return;
         }
 
-        #$bt    = debug_backtrace();
-        #$sniff = $bt[1]['class'];
-        #$line  = $bt[0]['line'];
-        #echo "$sniff (line $line): replace token $stackPtr with \"$content\"\n";
-
         $this->_tokens[$stackPtr] = $content;
         $this->_numFixes++;
         $this->_fixedTokens[] = $stackPtr;
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $bt      = debug_backtrace();
+            $sniff   = $bt[1]['class'];
+            $line    = $bt[0]['line'];
+
+            $tokens  = $this->_currentFile->getTokens();
+            $type    = $tokens[$stackPtr]['type'];
+            $content = str_replace($this->_currentFile->eolChar, '\n', $content);
+            echo "\t$sniff (line $line) replaced token $stackPtr: $type => $content".PHP_EOL;
+        }
     }
 
     public function substrToken($stackPtr, $start, $length=null)
@@ -112,6 +117,17 @@ class PHP_CodeSniffer_Fixer
         $this->_tokens[$stackPtr] .= $this->_currentFile->eolChar;
         $this->_numFixes++;
         $this->_fixedTokens[] = $stackPtr;
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $bt      = debug_backtrace();
+            $sniff   = $bt[1]['class'];
+            $line    = $bt[0]['line'];
+
+            $tokens  = $this->_currentFile->getTokens();
+            $type    = $tokens[$stackPtr]['type'];
+            $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
+            echo "\t$sniff (line $line) added newline after token $stackPtr: $type => $content".PHP_EOL;
+        }
     }
 
     public function addNewlineBefore($stackPtr)
@@ -125,10 +141,20 @@ class PHP_CodeSniffer_Fixer
             return;
         }
 
-        #echo "add content \"$content\" after $stackPtr\n";
         $this->_tokens[$stackPtr] .= $content;
         $this->_numFixes++;
         $this->_fixedTokens[] = $stackPtr;
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $bt      = debug_backtrace();
+            $sniff   = $bt[1]['class'];
+            $line    = $bt[0]['line'];
+
+            $tokens  = $this->_currentFile->getTokens();
+            $type    = $tokens[$stackPtr]['type'];
+            $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
+            echo "\t$sniff (line $line) added content after token $stackPtr: $type => $content".PHP_EOL;
+        }
     }
 
     public function addContentBefore($stackPtr, $content)
