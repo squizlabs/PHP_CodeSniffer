@@ -28,10 +28,42 @@
  */
 class PHP_CodeSniffer_Fixer
 {
+
+    /**
+     * The file being fixed.
+     *
+     * @var PHP_CodeSniffer_File
+     */
     private $_currentFile = null;
+
+    /**
+     * The list of tokens that make up the file contents.
+     *
+     * This is a simplified list which just contains the token content and nothing
+     * else. This is the array that is updated as fixes are made, not the file's
+     * token array. Imploding this array will give you the file content back.
+     *
+     * @var array(int => string)
+     */
     private $_tokens = array();
+
+    /**
+     * A list of tokens that have already been fixed.
+     *
+     * We don't allow the same token to be fixed more than once each time
+     * through a file as this can easily cause conflicts between sniffs.
+     *
+     * @var array(int)
+     */
     private $_fixedTokens = array();
+
+    /**
+     * The number of fixes that have been performed.
+     *
+     * @var int
+     */
     private $_numFixes = 0;
+
 
     public function startFile($file)
     {
@@ -44,7 +76,7 @@ class PHP_CodeSniffer_Fixer
         foreach ($tokens as $index => $token) {
             $this->_tokens[$index] = $token['content'];
         }
-    }
+    }//end startFile()
 
     public function generateDiff()
     {
@@ -61,18 +93,20 @@ class PHP_CodeSniffer_Fixer
         unlink($fixedFile);
 
         return $diff;
-    }
+    }//end generateDiff()
 
     public function getFixCount()
     {
         return $this->_numFixes;
-    }
+
+    }//end getFixCount()
 
     public function getContents()
     {
         $contents = implode($this->_tokens);
         return $contents;
-    }
+
+    }//end getContents()
 
     public function replaceToken($stackPtr, $content)
     {
@@ -94,7 +128,8 @@ class PHP_CodeSniffer_Fixer
             $content = str_replace($this->_currentFile->eolChar, '\n', $content);
             echo "\t$sniff (line $line) replaced token $stackPtr: $type => $content".PHP_EOL;
         }
-    }
+
+    }//end replaceToken()
 
     public function substrToken($stackPtr, $start, $length=null)
     {
@@ -105,7 +140,7 @@ class PHP_CodeSniffer_Fixer
         }
 
         $this->replaceToken($stackPtr, $newContent);
-    }
+    }//end substrToken()
 
     public function addNewline($stackPtr)
     {
@@ -113,7 +148,6 @@ class PHP_CodeSniffer_Fixer
             return;
         }
 
-        #echo "add newline after $stackPtr\n";
         $this->_tokens[$stackPtr] .= $this->_currentFile->eolChar;
         $this->_numFixes++;
         $this->_fixedTokens[] = $stackPtr;
@@ -128,12 +162,12 @@ class PHP_CodeSniffer_Fixer
             $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
             echo "\t$sniff (line $line) added newline after token $stackPtr: $type => $content".PHP_EOL;
         }
-    }
+    }//end addNewline()
 
     public function addNewlineBefore($stackPtr)
     {
         $this->addNewline($stackPtr - 1);
-    }
+    }//end addNewlineBefore()
 
     public function addContent($stackPtr, $content)
     {
@@ -155,12 +189,12 @@ class PHP_CodeSniffer_Fixer
             $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
             echo "\t$sniff (line $line) added content after token $stackPtr: $type => $content".PHP_EOL;
         }
-    }
+    }//end addContent()
 
     public function addContentBefore($stackPtr, $content)
     {
         $this->addContent(($stackPtr - 1), $content);
-    }
+    }//end addContentBefore()
 
 }//end class
 
