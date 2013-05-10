@@ -1,0 +1,82 @@
+#!/usr/bin/env php
+<?php
+/**
+ * PHP Code Beautifier and Fixer
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+error_reporting(E_ALL | E_STRICT);
+
+// Optionally use PHP_Timer to print time/memory stats for the run.
+@include_once 'PHP/Timer.php';
+if (class_exists('PHP_Timer', false) === true) {
+    PHP_Timer::start();
+}
+
+if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
+} else {
+    include_once 'PHP/CodeSniffer/CLI.php';
+}
+
+$phpcs = new PHP_CodeSniffer_CLI();
+$phpcs->checkRequirements();
+$cliValues = $phpcs->getCommandLineValues();
+
+
+// Override some of the command line settings that might be used and stop us
+// gettting a diff file.
+$diffFile = getcwd().'/phpcbf-fixed.diff';
+
+$cliValues['generator'] = '';
+$cliValues['explain']   = false;
+$cliValues['reports']   = array('diff' => $diffFile);
+
+if (file_exists($diffFile) === true) {
+    unlink($diffFile);
+}
+
+$numErrors = $phpcs->process($cliValues);
+if (file_exists($diffFile) === false) {
+    // Nothing to fix.
+    if ($numErrors === 0) {
+        // And no errors reported.
+        $exit = 0;
+    } else {
+        // Errors we can't fix.
+        $exit = 2;
+    }
+} else {
+    $cmd    = "patch -p0 -ui \"$diffFile\"";
+    $output = array();
+    $retVal = null;
+    exec($cmd, $output, $retVal);
+    #unlink($diffFile);
+
+    if ($retVal === 0) {
+        // Everything went well.
+        $filesPatched = count($output);
+        echo "Patched $filesPatched files\n";
+        $exit = 1;
+    } else {
+        print_r($output);
+        echo "Returned: $retVal\n";
+        $exit = 3;
+    }
+}
+
+if (class_exists('PHP_Timer', false) === true) {
+    echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+}
+
+exit($exit);
+
+?>
