@@ -77,14 +77,18 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 
         // Go looking for the last non-empty line.
         $lastLine = $tokens[$lastToken]['line'];
-        $lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
+        if ($tokens[$lastToken]['code'] === T_WHITESPACE) {
+            $lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
+        } else {
+            $lastCode = $lastToken;
+        }
 
         $lastCodeLine = $tokens[$lastCode]['line'];
         $blankLines   = ($lastLine - $lastCodeLine);
         if ($blankLines > 0) {
             $error = 'Expected 1 blank line at end of file; %s found';
             $data  = array($blankLines + 1);
-            $phpcsFile->addError($error, $lastCode, 'TooMany', $data);
+            $phpcsFile->addFixableError($error, $lastCode, 'TooMany', $data);
 
             for ($i = ($lastCode + 1); $i < $lastToken; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');

@@ -157,7 +157,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                           ($expectedIndent - 1),
                           ($tokens[$firstToken]['column'] - 1),
                          );
-                $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+                $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
 
                 $diff = ($expectedIndent - $tokens[$firstToken]['column']);
                 if ($diff > 0) {
@@ -344,7 +344,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                              ($indent - 1),
                              ($column - 1),
                             );
-                    $phpcsFile->addError($error, $firstToken, $type, $data);
+                    $phpcsFile->addFixableError($error, $firstToken, $type, $data);
                     $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
                 }//end if
             }//end if

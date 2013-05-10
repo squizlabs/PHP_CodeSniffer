@@ -189,7 +189,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
+            $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
             $phpcsFile->fixer->addContent($openBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
         }
 
@@ -197,7 +197,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         $prev         = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
-            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+            $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');
             $phpcsFile->fixer->addContentBefore($closeBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
         }
 
@@ -237,7 +237,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), ($closeBracket + 1), true);
                     if ($tokens[$nextCode]['line'] !== $lastLine) {
                         $error = 'Empty lines are not allowed in multi-line function calls';
-                        $phpcsFile->addError($error, $i, 'EmptyLine');
+                        $phpcsFile->addFixableError($error, $i, 'EmptyLine');
                         $phpcsFile->fixer->replaceToken($i, '');
                         continue;
                     }
@@ -280,7 +280,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                               $expectedIndent,
                               $foundIndent,
                              );
-                    $phpcsFile->addError($error, $i, 'Indent', $data);
+                    $phpcsFile->addFixableError($error, $i, 'Indent', $data);
 
                     $padding = str_repeat(' ', $expectedIndent);
                     if ($foundIndent === 0) {

@@ -91,6 +91,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -102,6 +103,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -163,9 +165,22 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.($totalErrors + $totalWarnings).' SNIFF VIOLATION(S) ';
-        echo 'WERE FOUND IN '.count($this->_sourceCache).' SOURCE(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo 'A TOTAL OF '.($totalErrors + $totalWarnings).' SNIFF VIOLATION';
+        if (($totalErrors + $totalWarnings) > 1) {
+            echo 'S';
+        }
+
+        echo ' WERE FOUND IN '.count($this->_sourceCache).' SOURCE';
+        if (count($this->_sourceCache) > 1) {
+            echo 'S';
+        }
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false

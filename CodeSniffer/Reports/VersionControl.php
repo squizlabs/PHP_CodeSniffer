@@ -82,9 +82,13 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $blames = $this->getBlameContent($report['filename']);
 
         foreach ($report['messages'] as $line => $lineErrors) {
-            $author = $this->getAuthor($blames[($line - 1)]);
-            if ($author === false) {
-                continue;
+            if (isset($blames[($line - 1)]) === true) {
+                $author = $this->getAuthor($blames[($line - 1)]);
+                if ($author === false) {
+                    $author = 'Unknown author';
+                }
+            } else {
+                $author = 'Unknown author';
             }
 
             if (isset($this->_authorCache[$author]) === false) {
@@ -152,6 +156,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -163,6 +168,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -220,9 +226,22 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION(S) ';
-        echo 'WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION';
+        if ($errorsShown > 1) {
+            echo 'S';
+        }
+
+        echo ' WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR';
+        if (count($this->_authorCache) > 1) {
+            echo 'S';
+        }
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false

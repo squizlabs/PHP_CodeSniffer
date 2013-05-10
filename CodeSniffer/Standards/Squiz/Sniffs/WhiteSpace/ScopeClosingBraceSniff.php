@@ -99,7 +99,7 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
                       ($startColumn - 1),
                       ($braceIndent - 1),
                      );
-            $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
+            $phpcsFile->addFixableError($error, $scopeEnd, 'Indent', $data);
 
             $diff = ($startColumn - $braceIndent);
             if ($diff > 0) {

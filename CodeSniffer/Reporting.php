@@ -58,6 +58,13 @@ class PHP_CodeSniffer_Reporting
     public $totalWarnings = 0;
 
     /**
+     * Total number of errors/warnings that can be fixed.
+     *
+     * @var int
+     */
+    public $totalFixable = 0;
+
+    /**
      * A list of reports that have written partial report output.
      *
      * @var array
@@ -158,6 +165,7 @@ class PHP_CodeSniffer_Reporting
             $this->totalFiles++;
             $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];
+            $this->totalFixable  += $reportData['fixable'];
         }
 
     }//end cacheFileReport()
@@ -206,6 +214,7 @@ class PHP_CodeSniffer_Reporting
             $this->totalFiles,
             $this->totalErrors,
             $this->totalWarnings,
+            $this->totalFixable,
             $showSources,
             $reportWidth,
             $toScreen
@@ -244,6 +253,7 @@ class PHP_CodeSniffer_Reporting
                    'filename' => $phpcsFile->getFilename(),
                    'errors'   => $phpcsFile->getErrorCount(),
                    'warnings' => $phpcsFile->getWarningCount(),
+                   'fixable'  => $phpcsFile->getFixableCount(),
                    'messages' => array(),
                   );
 
@@ -263,9 +273,10 @@ class PHP_CodeSniffer_Reporting
                                     'message'  => $data['message'],
                                     'source'   => $data['source'],
                                     'severity' => $data['severity'],
+                                    'fixable'  => $data['fixable'],
                                     'type'     => 'ERROR',
                                    );
-                }
+                }//end foreach
 
                 $errors[$line][$column] = $newErrors;
             }//end foreach
@@ -281,9 +292,10 @@ class PHP_CodeSniffer_Reporting
                                       'message'  => $data['message'],
                                       'source'   => $data['source'],
                                       'severity' => $data['severity'],
+                                      'fixable'  => $data['fixable'],
                                       'type'     => 'WARNING',
                                      );
-                }
+                }//end foreach
 
                 if (isset($errors[$line]) === false) {
                     $errors[$line] = array();

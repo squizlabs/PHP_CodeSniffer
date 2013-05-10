@@ -81,7 +81,11 @@ class PHP_CodeSniffer_Fixer
             return;
         }
 
-        #echo "replace token $stackPtr with \"$content\"\n";
+        #$bt    = debug_backtrace();
+        #$sniff = $bt[1]['class'];
+        #$line  = $bt[0]['line'];
+        #echo "$sniff (line $line): replace token $stackPtr with \"$content\"\n";
+
         $this->_tokens[$stackPtr] = $content;
         $this->_numFixes++;
         $this->_fixedTokens[] = $stackPtr;

@@ -71,12 +71,24 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         echo PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        echo 'FOUND '.$report['errors'].' ERROR(S) ';
-        if ($report['warnings'] > 0) {
-            echo 'AND '.$report['warnings'].' WARNING(S) ';
+        echo 'FOUND '.$report['errors'].' ERROR';
+        if ($report['errors'] > 1) {
+            echo 'S';
         }
 
-        echo 'AFFECTING '.count($report['messages']).' LINE(S)'.PHP_EOL;
+        if ($report['warnings'] > 0) {
+            echo ' AND '.$report['warnings'].' WARNING';
+            if ($report['warnings'] > 1) {
+                echo 'S';
+            }
+        }
+
+        echo ' AFFECTING '.count($report['messages']).' LINE';
+        if (count($report['messages']) > 1) {
+            echo 'S';
+        }
+
+        echo PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
         // Work out the max line number for formatting.
@@ -134,7 +146,13 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             }//end foreach
         }//end foreach
 
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL;
+        if ($report['fixable'] > 0) {
+            echo 'PHPCBF CAN FIX '.$report['fixable'].' OF THESE SNIFF VIOLATIONS AUTOMATICALLY'.PHP_EOL;
+            echo str_repeat('-', $width).PHP_EOL;
+        }
+
+        echo PHP_EOL;
         return true;
 
     }//end generateFileReport()
@@ -148,6 +166,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -159,6 +178,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true

@@ -89,6 +89,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -100,6 +101,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -112,11 +114,27 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         echo $cachedData;
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$totalErrors.' ERROR(S) ';
-        echo 'AND '.$totalWarnings.' WARNING(S) ';
+        echo 'A TOTAL OF '.$totalErrors.' ERROR';
+        if ($totalErrors > 1) {
+            echo 'S';
+        }
 
-        echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo ' AND '.$totalWarnings.' WARNING';
+        if ($totalWarnings > 1) {
+            echo 'S';
+        }
+
+        echo ' WERE FOUND IN '.$totalFiles.' FILE';
+        if ($totalFiles > 1) {
+            echo 'S';
+        }
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
