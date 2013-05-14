@@ -409,7 +409,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             // This may just be an indent that comes after a newline
                             // so check the token before to make sure. If it is a newline, we
                             // can ignore the error here.
-                            if ($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar) {
+                            if (($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar)
+                                && ($this->ignoreComments === true && in_array($tokens[($stackPtr - 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === false)
+                            ) {
                                 $hasError = true;
                             } else {
                                 $stackPtr--;
