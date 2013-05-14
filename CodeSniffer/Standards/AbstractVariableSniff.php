@@ -47,7 +47,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     private $_endFunction = -1;
 
     /**
-     * true if a function is currently open.
+     * TRUE if a function is currently open.
      *
      * @var boolean
      */
