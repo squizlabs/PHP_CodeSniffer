@@ -64,6 +64,7 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
 
             $contents = $phpcsFile->fixer->getContents();
             ob_start();
+            $phpcsFile->refreshTokenListeners();
             $phpcsFile->start($contents);
             ob_end_clean();
             $fixes = $phpcsFile->fixer->getFixCount();

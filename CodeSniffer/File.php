@@ -389,6 +389,19 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Rebuilds the list of listeners to ensure their state is cleared.
+     *
+     * @return void
+     */
+    public function refreshTokenListeners()
+    {
+        $this->phpcs->populateTokenListeners();
+        $this->_listeners = $this->phpcs->getTokenSniffs();
+
+    }//end refreshTokenListeners()
+
+
+    /**
      * Returns the token stack for this file.
      *
      * @return array()
