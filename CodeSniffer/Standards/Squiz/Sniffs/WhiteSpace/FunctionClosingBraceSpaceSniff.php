@@ -113,7 +113,12 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
 
                     $phpcsFile->fixer->replaceToken($i, $phpcsFile->eolChar);
                 } else {
-                    $phpcsFile->fixer->addNewlineBefore($closeBrace - 1);
+                    // Try and maintain indentation.
+                    if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->addNewlineBefore($closeBrace - 1);
+                    } else {
+                        $phpcsFile->fixer->addNewlineBefore($closeBrace);
+                    }
                 }
             }
         }//end if
