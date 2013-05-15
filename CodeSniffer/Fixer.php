@@ -65,19 +65,33 @@ class PHP_CodeSniffer_Fixer
     private $_numFixes = 0;
 
 
-    public function startFile($file)
+    /**
+     * Starts fixing a new file.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being fixed.
+     *
+     * @return void
+     */
+    public function startFile($phpcsFile)
     {
-        $this->_currentFile = $file;
+        $this->_currentFile = $phpcsFile;
         $this->_numFixes    = 0;
         $this->_fixedTokens = array();
 
-        $tokens = $file->getTokens();
+        $tokens = $phpcsFile->getTokens();
         $this->_tokens = array();
         foreach ($tokens as $index => $token) {
             $this->_tokens[$index] = $token['content'];
         }
+
     }//end startFile()
 
+
+    /**
+     * Generates a text diff of the original file and the new content.
+     *
+     * @return string
+     */
     public function generateDiff()
     {
         $contents  = $this->getContents();
@@ -93,14 +107,30 @@ class PHP_CodeSniffer_Fixer
         unlink($fixedFile);
 
         return $diff;
+
     }//end generateDiff()
 
+
+    /**
+     * Get a count of fixes that have been performed on the file.
+     *
+     * This value is reset every time a new file is started, or an existing
+     * file is restarted.
+     *
+     * @return int
+     */
     public function getFixCount()
     {
         return $this->_numFixes;
 
     }//end getFixCount()
 
+
+    /**
+     * Get the current content of the file, as a string.
+     *
+     * @return string
+     */
     public function getContents()
     {
         $contents = implode($this->_tokens);
@@ -108,6 +138,15 @@ class PHP_CodeSniffer_Fixer
 
     }//end getContents()
 
+
+    /**
+     * Replace the entire contents of a token.
+     *
+     * @param int    $stackPtr The position of the token in the token stack.
+     * @param string $content  The new content of the token.
+     *
+     * @return void
+     */
     public function replaceToken($stackPtr, $content)
     {
         if (in_array($stackPtr, $this->_fixedTokens) === true) {
@@ -119,18 +158,38 @@ class PHP_CodeSniffer_Fixer
         $this->_fixedTokens[] = $stackPtr;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt      = debug_backtrace();
-            $sniff   = $bt[1]['class'];
-            $line    = $bt[0]['line'];
+            $bt = debug_backtrace();
+            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                $sniff = $bt[2]['class'];
+                $line  = $bt[1]['line'];
+            } else {
+                $sniff = $bt[1]['class'];
+                $line  = $bt[0]['line'];
+            }
 
-            $tokens  = $this->_currentFile->getTokens();
-            $type    = $tokens[$stackPtr]['type'];
-            $content = str_replace($this->_currentFile->eolChar, '\n', $content);
-            echo "\t$sniff (line $line) replaced token $stackPtr: $type => $content".PHP_EOL;
+            $tokens     = $this->_currentFile->getTokens();
+            $type       = $tokens[$stackPtr]['type'];
+            $oldContent = str_replace($this->_currentFile->eolChar, '\n', $tokens[$stackPtr]['content']);
+            $newContent = str_replace($this->_currentFile->eolChar, '\n', $content);
+            ob_end_clean();
+            echo "\t$sniff (line $line) replaced token $stackPtr: $type => \"$newContent\"".PHP_EOL;
+            echo "\t\t=> old content was: \"$oldContent\"".PHP_EOL;
+            ob_start();
         }
 
     }//end replaceToken()
 
+
+    /**
+     * Replace the content of a token with a part of its current content.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     * @param int $start    The first character to keep.
+     * @param int $length   The number of chacters to keep. If NULL, the content of
+     *                      the token from $start to the end of the content is kept.
+     *
+     * @return void
+     */
     public function substrToken($stackPtr, $start, $length=null)
     {
         if ($length === null) {
@@ -140,8 +199,17 @@ class PHP_CodeSniffer_Fixer
         }
 
         $this->replaceToken($stackPtr, $newContent);
+
     }//end substrToken()
 
+
+    /**
+     * Adds a newline to end of a token's content.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     *
+     * @return void
+     */
     public function addNewline($stackPtr)
     {
         if (in_array($stackPtr, $this->_fixedTokens) === true) {
@@ -153,22 +221,50 @@ class PHP_CodeSniffer_Fixer
         $this->_fixedTokens[] = $stackPtr;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt      = debug_backtrace();
-            $sniff   = $bt[1]['class'];
-            $line    = $bt[0]['line'];
+            $bt = debug_backtrace();
+            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                $sniff = $bt[2]['class'];
+                $line  = $bt[1]['line'];
+            } else {
+                $sniff = $bt[1]['class'];
+                $line  = $bt[0]['line'];
+            }
 
             $tokens  = $this->_currentFile->getTokens();
             $type    = $tokens[$stackPtr]['type'];
             $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
+            ob_end_clean();
             echo "\t$sniff (line $line) added newline after token $stackPtr: $type => $content".PHP_EOL;
+            ob_start();
         }
+
     }//end addNewline()
 
+
+    /**
+     * Adds a newline to the start of a token's content.
+     *
+     * The token before the one passed is modified rather than the passed token.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     *
+     * @return void
+     */
     public function addNewlineBefore($stackPtr)
     {
         $this->addNewline($stackPtr - 1);
+
     }//end addNewlineBefore()
 
+
+    /**
+     * Adds content to the end of a token's current content.
+     *
+     * @param int    $stackPtr The position of the token in the token stack.
+     * @param string $content  The content to add.
+     *
+     * @return void
+     */
     public function addContent($stackPtr, $content)
     {
         if (in_array($stackPtr, $this->_fixedTokens) === true) {
@@ -180,21 +276,44 @@ class PHP_CodeSniffer_Fixer
         $this->_fixedTokens[] = $stackPtr;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt      = debug_backtrace();
-            $sniff   = $bt[1]['class'];
-            $line    = $bt[0]['line'];
+            $bt = debug_backtrace();
+            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                $sniff = $bt[2]['class'];
+                $line  = $bt[1]['line'];
+            } else {
+                $sniff = $bt[1]['class'];
+                $line  = $bt[0]['line'];
+            }
 
-            $tokens  = $this->_currentFile->getTokens();
-            $type    = $tokens[$stackPtr]['type'];
-            $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
-            echo "\t$sniff (line $line) added content after token $stackPtr: $type => $content".PHP_EOL;
+            $tokens     = $this->_currentFile->getTokens();
+            $type       = $tokens[$stackPtr]['type'];
+            $oldContent = str_replace($this->_currentFile->eolChar, '\n', $tokens[$stackPtr]['content']);
+            $newContent = str_replace($this->_currentFile->eolChar, '\n', $content);
+            ob_end_clean();
+            echo "\t$sniff (line $line) added content after token $stackPtr: $type => \"$oldContent\"".PHP_EOL;
+            echo "\t\t=> additional content is: \"$newContent\"".PHP_EOL;
+            ob_start();
         }
+
     }//end addContent()
 
+
+    /**
+     * Adds content to the start of a token's current content.
+     *
+     * The token before the one passed is modified rather than the passed token.
+     *
+     * @param int    $stackPtr The position of the token in the token stack.
+     * @param string $content  The content to add.
+     *
+     * @return void
+     */
     public function addContentBefore($stackPtr, $content)
     {
         $this->addContent(($stackPtr - 1), $content);
+
     }//end addContentBefore()
+
 
 }//end class
 

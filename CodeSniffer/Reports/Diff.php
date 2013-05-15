@@ -63,10 +63,19 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
             }
 
             $contents = $phpcsFile->fixer->getContents();
+            //print_r(str_replace("\n", '\n', $contents)."\n\n");
             ob_start();
             $phpcsFile->refreshTokenListeners();
             $phpcsFile->start($contents);
             ob_end_clean();
+            /*
+            Possibly useful as a fail-safe, but may mask problems with the actual
+            fixes being performed.
+            $newContents = $phpcsFile->fixer->getContents();
+            if ($newContents === $contents) {
+                break;
+            }
+            */
             $fixes = $phpcsFile->fixer->getFixCount();
         }
 
