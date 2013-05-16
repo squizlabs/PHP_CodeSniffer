@@ -22,6 +22,8 @@ td {
 }
 */
 
+.GUITextBox.container:after {}
+
 @media screen and (max-device-width: 769px) {
 
     header #logo img {
