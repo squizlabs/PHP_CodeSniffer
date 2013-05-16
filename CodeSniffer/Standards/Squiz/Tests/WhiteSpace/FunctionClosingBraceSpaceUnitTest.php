@@ -49,6 +49,9 @@ class Squiz_Tests_WhiteSpace_FunctionClosingBraceSpaceUnitTest extends AbstractS
             return array(
                     10 => 1,
                     21 => 1,
+                    28 => 1,
+                    29 => 1,
+                    31 => 1,
                    );
             break;
         case 'FunctionClosingBraceSpaceUnitTest.js':

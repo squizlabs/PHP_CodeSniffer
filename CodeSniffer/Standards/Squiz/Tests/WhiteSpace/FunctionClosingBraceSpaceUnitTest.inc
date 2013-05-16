@@ -24,4 +24,9 @@ class MyClass
 }
 
 public function register();
+
+function foo() { }
+function foo() {}
+function foo() {
+}
 ?>
