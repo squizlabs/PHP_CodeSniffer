@@ -133,6 +133,10 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                 echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
             } else {
                 $parts = explode('.', $source);
+                if ($parts[0] === 'Internal') {
+                    $parts[2] = $parts[1];
+                    $parts[1] = '';
+                }
 
                 if (strlen($parts[0]) > 8) {
                     $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) - 8) * -1));
@@ -201,6 +205,10 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      */
     public function makeFriendlyName($name)
     {
+        if (trim($name) === '') {
+            return '';
+        }
+
         $friendlyName = '';
         $length       = strlen($name);
 
