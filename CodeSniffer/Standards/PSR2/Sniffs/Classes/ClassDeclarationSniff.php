@@ -292,7 +292,9 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 $phpcsFile->fixer->replaceToken($i, '');
             }
 
-            $phpcsFile->fixer->replaceToken($closeBrace, $phpcsFile->eolChar.$tokens[$closeBrace]['content']);
+            if (strpos($tokens[$prevContent]['content'], $phpcsFile->eolChar) === false) {
+                $phpcsFile->fixer->replaceToken($closeBrace, $phpcsFile->eolChar.$tokens[$closeBrace]['content']);
+            }
         }
 
         // Check the closing brace is on it's own line, but allow
