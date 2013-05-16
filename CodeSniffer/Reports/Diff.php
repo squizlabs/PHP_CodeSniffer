@@ -54,31 +54,7 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
             echo "\t*** START ADDITIONAL FIXING ***".PHP_EOL;
         }
 
-        // We've gone through the file trying to fix things once, but we often
-        // need multiple passes to create a proper diff.
-        $fixes = $phpcsFile->fixer->getFixCount();
-        while ($fixes > 0) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\tFixed $fixes violations, starting over".PHP_EOL;
-            }
-
-            $contents = $phpcsFile->fixer->getContents();
-            //print_r(str_replace("\n", '\n', $contents)."\n\n");
-            ob_start();
-            $phpcsFile->refreshTokenListeners();
-            $phpcsFile->start($contents);
-            ob_end_clean();
-            /*
-            Possibly useful as a fail-safe, but may mask problems with the actual
-            fixes being performed.
-            $newContents = $phpcsFile->fixer->getContents();
-            if ($newContents === $contents) {
-                break;
-            }
-            */
-            $fixes = $phpcsFile->fixer->getFixCount();
-        }
-
+        $phpcsFile->fixer->fixFile();
         $diff = $phpcsFile->fixer->generateDiff();
         if ($diff === '') {
             // Nothing to print.

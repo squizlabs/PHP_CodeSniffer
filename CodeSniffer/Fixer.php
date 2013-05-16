@@ -88,6 +88,43 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
+     * Attempt to fix the file by processing it until no fixes are made.
+     *
+     * @return void
+     */
+    public function fixFile()
+    {
+        $loops = 0;
+        while ($this->_numFixes > 0 && $loops < 20) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
+            }
+
+            $contents = $this->getContents();
+            //print_r(str_replace("\n", '\n', $contents)."\n\n");
+            ob_start();
+            $this->_currentFile->refreshTokenListeners();
+            $this->_currentFile->start($contents);
+            ob_end_clean();
+            /*
+            Possibly useful as a fail-safe, but may mask problems with the actual
+            fixes being performed.
+            $newContents = $this->getContents();
+            if ($newContents === $contents) {
+                break;
+            }
+            */
+            $loops++;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1 && $this->_numFixes > 0) {
+            echo "\tReached maximum number of loops with $this->_numFixes violations left unfixed".PHP_EOL;
+        }
+
+    }//end fixFile()
+
+
+    /**
      * Generates a text diff of the original file and the new content.
      *
      * @return string
