@@ -101,6 +101,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
     {
         return array(
                 T_IF,
+                T_ELSEIF,
                 T_INLINE_THEN,
                );
 
