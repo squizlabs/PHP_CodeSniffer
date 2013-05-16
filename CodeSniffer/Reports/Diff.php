@@ -54,7 +54,11 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
             echo "\t*** START ADDITIONAL FIXING ***".PHP_EOL;
         }
 
-        $phpcsFile->fixer->fixFile();
+        $fixed = $phpcsFile->fixer->fixFile();
+        if ($fixed === false) {
+            return false;
+        }
+
         $diff = $phpcsFile->fixer->generateDiff();
         if ($diff === '') {
             // Nothing to print.

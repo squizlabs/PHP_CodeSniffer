@@ -94,8 +94,12 @@ class PHP_CodeSniffer_Fixer
      */
     public function fixFile()
     {
+        if ($this->_numFixes === 0) {
+            return false;
+        }
+
         $loops = 0;
-        while ($this->_numFixes > 0 && $loops < 20) {
+        while ($this->_numFixes > 0 && $loops < 50) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
             }
@@ -117,9 +121,15 @@ class PHP_CodeSniffer_Fixer
             $loops++;
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1 && $this->_numFixes > 0) {
-            echo "\tReached maximum number of loops with $this->_numFixes violations left unfixed".PHP_EOL;
+        if ($this->_numFixes > 0) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\tReached maximum number of loops with $this->_numFixes violations left unfixed".PHP_EOL;
+            }
+
+            return false;
         }
+
+        return true;
 
     }//end fixFile()
 
