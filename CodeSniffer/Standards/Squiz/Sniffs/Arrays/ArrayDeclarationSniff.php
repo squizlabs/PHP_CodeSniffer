@@ -58,7 +58,8 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         if (strtolower($tokens[$stackPtr]['content']) !== $tokens[$stackPtr]['content']) {
             $error = 'Array keyword should be lower case; expected "array" but found "%s"';
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $stackPtr, 'NotLowerCase', $data);
+            $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
+            $phpcsFile->fixer->replaceToken($stackPtr, 'array');
         }
 
         $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
@@ -67,7 +68,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if ($arrayStart != ($stackPtr + 1)) {
             $error = 'There must be no space between the Array keyword and the opening parenthesis';
-            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterKeyword');
+            $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
+
+            for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
         }
 
         // Check for empty arrays.
@@ -76,7 +81,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             // Empty array, but if the brackets aren't together, there's a problem.
             if (($arrayEnd - $arrayStart) !== 1) {
                 $error = 'Empty array declaration must have no space between the parentheses';
-                $phpcsFile->addError($error, $stackPtr, 'SpaceInEmptyArray');
+                $phpcsFile->addFixableError($error, $stackPtr, 'SpaceInEmptyArray');
+
+                for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
 
                 // We can return here because there is nothing else to check. All code
                 // below can assume that the array is not empty.

@@ -72,7 +72,8 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
                               $expected,
                               $tokens[$i]['content'],
                              );
-                    $phpcsFile->addError($error, $i, 'FoundUpper', $data);
+                    $phpcsFile->addFixableError($error, $i, 'FoundUpper', $data);
+                    $phpcsFile->fixer->replaceToken($i, $expected);
                 }
             }
         }
