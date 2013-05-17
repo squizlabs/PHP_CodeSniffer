@@ -53,13 +53,19 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $string .= $eolChar;
         }
 
-        $tokens      = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
-        $finalTokens = array();
+        $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
 
-        $newStackPtr      = 0;
+        $finalTokens    = array();
+        $finalTokens[0] = array(
+                        'code'    => T_OPEN_TAG,
+                        'type'    => 'T_OPEN_TAG',
+                        'content' => '',
+                       );
+
+        $newStackPtr      = 1;
         $numTokens        = count($tokens);
         $multiLineComment = false;
-        for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
+        for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -340,6 +346,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 break;
             }//end switch
         }//end for
+
+        // Blank out the content of the end tag.
+        $finalTokens[($numTokens - 1)]['content'] = '';
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** END CSS TOKENIZING ***".PHP_EOL;
