@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Harald Franndorfer for the patch
   - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
     -- Thanks to Christian Weiske for the patch
+  - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
  </notes>
  <contents>
   <dir name="/">

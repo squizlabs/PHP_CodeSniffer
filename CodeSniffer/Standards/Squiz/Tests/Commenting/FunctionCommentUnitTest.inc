@@ -566,6 +566,19 @@ public function variableArgs($a1, $a2)
 }//end variableArgs()
 
 /**
+ * Contains closure.
+ *
+ * @return void
+ */
+public function containsClosure()
+{
+    function ($e) {
+        return new Event($e);
+    },
+
+}//end containsClosure()
+
+/**
  * 这是一条测试评论.
  *
  * @return void

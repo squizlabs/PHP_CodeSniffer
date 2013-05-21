@@ -420,9 +420,21 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     // no return statement in the function.
                     if ($content === 'void') {
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
-                            $endToken    = $tokens[$this->_functionToken]['scope_closer'];
-                            $returnToken = $this->currentFile->findNext(T_RETURN, $this->_functionToken, $endToken);
-                            if ($returnToken !== false) {
+                            $endToken = $tokens[$this->_functionToken]['scope_closer'];
+
+                            $tokens = $this->currentFile->getTokens();
+                            for ($returnToken = $this->_functionToken; $returnToken < $endToken; $returnToken++) {
+                                if ($tokens[$returnToken]['code'] === T_CLOSURE) {
+                                    $returnToken = $tokens[$returnToken]['scope_closer'];
+                                    continue;
+                                }
+
+                                if ($tokens[$returnToken]['code'] === T_RETURN) {
+                                    break;
+                                }
+                            }
+
+                            if ($returnToken !== $endToken) {
                                 // If the function is not returning anything, just
                                 // exiting, then there is no problem.
                                 $semicolon = $this->currentFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
