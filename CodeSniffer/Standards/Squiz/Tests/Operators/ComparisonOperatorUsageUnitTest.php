@@ -64,8 +64,8 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
                     75 => 1,
                     78 => 1,
                     80 => 1,
+                    82 => 1,
                     83 => 1,
-                    84 => 1,
                    );
             break;
         case 'ComparisonOperatorUsageUnitTest.js':

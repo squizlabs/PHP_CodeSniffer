@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
+  - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
+    -- Thanks to Arnout Boks for the patch
   - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
     -- Thanks to Erik Wiffin for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error

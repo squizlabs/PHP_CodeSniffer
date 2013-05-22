@@ -70,16 +70,15 @@ $var1
     : $var2 = 1;
 
 $var1 ? $var2 = 0 : $var2 = 1;
-?>
-<?php
+
+
 $var1 ? $var2 = 0 : $var2 = 1;
 
 if ($var2 === TRUE) {
     $var1 ? $var2 = 0 : $var2 = 1;
 }
 $var1 ? $var2 = 0 : $var2 = 1;
-?>
-<?php
+
 if ($value) {
 } elseif (!$value) {
 }
