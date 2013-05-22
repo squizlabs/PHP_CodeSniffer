@@ -51,3 +51,6 @@ switch (result) {
 	case -1:
 		break;
 }
+
+result = x?y:z;
+result = x ? y : z;
