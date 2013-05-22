@@ -1069,6 +1069,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                 // Make sure this is not part of an inline IF statement.
                 for ($x = ($i - 1); $x >= 0; $x--) {
                     if ($tokens[$x]['code'] === T_INLINE_THEN) {
+                        $tokens[$i]['code'] = T_INLINE_ELSE;
+                        $tokens[$i]['type'] = 'T_INLINE_ELSE';
                         continue(2);
                     } else if ($tokens[$x]['line'] < $tokens[$i]['line']) {
                         break;
