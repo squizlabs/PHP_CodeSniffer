@@ -1071,6 +1071,12 @@ class PHP_CodeSniffer_Tokenizers_JS
                     if ($tokens[$x]['code'] === T_INLINE_THEN) {
                         $tokens[$i]['code'] = T_INLINE_ELSE;
                         $tokens[$i]['type'] = 'T_INLINE_ELSE';
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", count($classStack));
+                            echo "\t* token $i converted from T_COLON to T_INLINE_THEN *".PHP_EOL;
+                        }
+
                         continue(2);
                     } else if ($tokens[$x]['line'] < $tokens[$i]['line']) {
                         break;

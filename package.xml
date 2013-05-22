@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
     -- Only available since PHP 5.2.11 and 5.3.1
     -- Thanks to Maik Penz for the patch
+  - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
+    -- Thanks to Arnout Boks for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
   - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
@@ -39,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
   - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
+    -- Thanks to Arnout Boks for the patch
+  - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens
     -- Thanks to Arnout Boks for the patch
   - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
     -- Thanks to Erik Wiffin for the patch
