@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="phpcs">
+	<property name="build.version" value="1.5.0-RC2" />
+	<property name="build.state" value="RC" />
+
+	<property name="pharFilename" value="phpcs-${build.version}.phar" />
+	<property name="buildDir" value="build" />
+	<property name="pharBuildDir" value="${buildDir}/phar-archive" />
+
+	<target name="clean">
+	      <delete dir="${buildDir}"/>
+	</target>
+	<target name="phar">
+		<copy todir="${pharBuildDir}">
+			<fileset dir="." includes="CodeSniffer/**"/>
+			<fileset dir="." includes="CodeSniffer.php"/>
+            		<filterchain>
+                		<replacestring from="@package_version@" to="${build.version}" />
+				<replacestring from="@package_state@" to="${build.state}" />
+            		</filterchain>
+        	</copy>
+		
+		<copy file="phar_bootstrap.stub" tofile="${pharBuildDir}/CodeSnifferBootstrap.php"/>
+		        
+		<exec executable="php" failonerror="true">
+		    <arg value="-d" />
+		    <arg value="phar.readonly=0" />
+		    <arg value="phar.phar" />
+		    <arg value="pack" />
+		    <arg value="-f" />
+		    <arg value="${buildDir}/${pharFilename}" />
+		    <arg value="-c" />
+		    <arg value="bz2" />
+		    <arg value="-h" />
+		    <arg value="sha512" />
+		    <arg value="-s" />
+		    <arg value="${pharBuildDir}/CodeSnifferBootstrap.php" />
+		    <arg value="${pharBuildDir}" />
+		</exec>
+
+		<chmod file="${buildDir}/${pharFilename}" perm="755" />
+	</target>
+</project>

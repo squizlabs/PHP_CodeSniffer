@@ -226,7 +226,10 @@ class PHP_CodeSniffer
             define('PHPCS_CWD', getcwd());
         }
 
-        chdir(dirname(__FILE__).'/CodeSniffer/');
+        if (!$this->startsWith(dirname(__FILE__), "phar://")) {
+            // chdir doesn't work when packaged as PHAR
+            chdir(dirname(__FILE__).'/CodeSniffer/');
+        }
 
         // Set default CLI object in case someone is running us
         // without using the command line script.
@@ -792,13 +795,19 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = realpath($sniff);
+                // realpath doesn't work when packaged as PHAR
+                $files[] = $this->startsWith($sniff, 'phar://') ? $sniff : realpath($sniff);
             }
         }
 
         return array_unique($files);
 
     }//end getSniffFiles()
+
+    private function startsWith($haystack, $needle)
+    {
+        return !strncmp($haystack, $needle, strlen($needle));
+    }
 
 
     /**
@@ -856,7 +865,14 @@ class PHP_CodeSniffer
                 }
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
-                $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+
+                $path = dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+                
+                if (!$this->startsWith($path, 'phar://')) {
+                    // realpath doesn't work when packaged as PHAR
+                    $path = realpath($path);
+                }
+
                 if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
