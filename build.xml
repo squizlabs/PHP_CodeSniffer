@@ -4,6 +4,7 @@
 	<property name="build.state" value="RC" />
 
 	<property name="pharFilename" value="phpcs-${build.version}.phar" />
+	<property name="pharCompressedFilename" value="phpcs-${build.version}-compressed.phar" />
 	<property name="buildDir" value="build" />
 	<property name="pharBuildDir" value="${buildDir}/phar-archive" />
 
@@ -29,8 +30,6 @@
 		    <arg value="pack" />
 		    <arg value="-f" />
 		    <arg value="${buildDir}/${pharFilename}" />
-		    <arg value="-c" />
-		    <arg value="bz2" />
 		    <arg value="-h" />
 		    <arg value="sha512" />
 		    <arg value="-s" />
@@ -39,5 +38,19 @@
 		</exec>
 
 		<chmod file="${buildDir}/${pharFilename}" perm="755" />
+		
+		<copy file="${buildDir}/${pharFilename}" tofile="${buildDir}/${pharCompressedFilename}"/>
+		<chmod file="${buildDir}/${pharCompressedFilename}" perm="755"/>
+		
+		<exec executable="php" failonerror="true">
+		    <arg value="-d" />
+		    <arg value="phar.readonly=0" />
+		    <arg value="phar.phar" />
+		    <arg value="compress" />
+		    <arg value="-f" />
+		    <arg value="${buildDir}/${pharCompressedFilename}" />
+		    <arg value="-c" />
+		    <arg value="bzip2" />
+		</exec>
 	</target>
 </project>
