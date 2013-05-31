@@ -447,8 +447,8 @@ class PHP_CodeSniffer
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
-            } else if (is_file(realpath(PHPCS_CWD.'/'.$standard)) === true) {
-                $ruleset = simplexml_load_file(realpath(PHPCS_CWD.'/'.$standard));
+            } else if (is_file($this->realpath(PHPCS_CWD.'/'.$standard)) === true) {
+                $ruleset = simplexml_load_file($this->realpath(PHPCS_CWD.'/'.$standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -626,11 +626,11 @@ class PHP_CodeSniffer
 
             $standard = (string) $ruleset['name'];
         } else {
-            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            self::$standardDir =  $this->realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
             if (is_dir(self::$standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
-                $path = realpath(PHPCS_CWD.'/'.$standard);
+                $path =  $this->realpath(PHPCS_CWD.'/'.$standard);
                 if (is_dir($path) === true) {
                     // This is a relative path to a custom standard.
                     self::$standardDir = $path;
@@ -667,21 +667,22 @@ class PHP_CodeSniffer
         $listeners = array();
 
         foreach ($files as $file) {
+            $dirSeparator = $this->directorySeparator($file);
             // Work out where the position of /StandardName/Sniffs/... is
             // so we can determine what the class will be called.
-            $sniffPos = strrpos($file, DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR);
+            $sniffPos = strrpos($file, $dirSeparator.'Sniffs'.$dirSeparator);
             if ($sniffPos === false) {
                 continue;
             }
 
-            $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
+            $slashPos = strrpos(substr($file, 0, $sniffPos), $dirSeparator);
             if ($slashPos === false) {
                 continue;
             }
 
             $className = substr($file, ($slashPos + 1));
             $className = substr($className, 0, -4);
-            $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
+            $className = str_replace($dirSeparator, '_', $className);
 
             include_once $file;
 
@@ -711,7 +712,33 @@ class PHP_CodeSniffer
 
     }//end setTokenListeners()
 
+    /**
+     * Return the directory separator for the given file. Directory separator is platform
+     * dependent, except when $path is in a PHAR because in this situation $path is a URL
+     * and directory separator is alway '/'.
+     */
+    private function directorySeparator($path) {
+        if ($this->startsWith($path, 'phar://')) {
+            return '/';
+        }
+        else {
+            return DIRECTORY_SEPARATOR;
+        }
+    }
 
+    /**
+     * Return the realpath except when path is inside a PHAR
+     * because in this case the realpath command doesn't work
+     */
+    private function realpath($path) {
+        if ($this->startsWith($path, 'phar://')) {
+            return $path;
+        }
+        else {
+            return realpath($path);
+        }
+    }
+    
     /**
      * Return a list of sniffs that a coding standard has defined.
      *
@@ -739,6 +766,7 @@ class PHP_CodeSniffer
             } else {
                 $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
             }
+            
 
             foreach ($di as $file) {
                 $fileName = $file->getFilename();
@@ -795,8 +823,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                // realpath doesn't work when packaged as PHAR
-                $files[] = $this->startsWith($sniff, 'phar://') ? $sniff : realpath($sniff);
+                $files[] = $this->realpath($sniff);
             }
         }
 
@@ -838,9 +865,10 @@ class PHP_CodeSniffer
                 $standardDir = dirname($standardDir);
             }
 
-            $realpath = realpath($standardDir.'/'.$sniff);
-            if ($realpath !== false) {
-                $sniff = $realpath;
+            $finalpath =  $this->realpath($standardDir.'/'.$sniff);
+            
+            if ($finalpath !== false) {
+                $sniff = $finalpath;
             }
         }
 
@@ -853,7 +881,7 @@ class PHP_CodeSniffer
             $sniff = basename($path);
         } else if (is_file($sniff) === false) {
             // See if this is a whole standard being referenced.
-            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
+            $path =  $this->realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
             if (is_dir($path) === true) {
                 $isDir = true;
             } else {
@@ -866,19 +894,14 @@ class PHP_CodeSniffer
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
 
-                $path = dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
-                
-                if (!$this->startsWith($path, 'phar://')) {
-                    // realpath doesn't work when packaged as PHAR
-                    $path = realpath($path);
-                }
+                $path =  $this->realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
 
                 if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
                     // looking directly in the passed standard dir to see if it is
                     // installed in there.
-                    $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                    $path =  $this->realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
             }
         }//end if
