@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<ruleset name="Symfony2">
+    <description>The Symfony2 coding standard.</description>
+
+    <!-- There should not be any code in the bundle Resources directory. -->
+    <exclude-pattern>*/Resources/*</exclude-pattern>
+
+    <!--
+
+    See the [documented coding standard](http://symfony.com/doc/current/contributing/code/standards.html)
+
+    This CodeSniffer standard does not yet enforce the following:
+
+    # Structure
+
+    * Declare class properties before methods;
+    * Declare public methods first, then protected ones and finally private ones.
+    * Use namespaces for all classes;
+    * Add PHPDoc blocks for all classes, methods, and functions;
+    * The @package and @subpackage annotations are not used.
+    * Use uppercase strings for constants with words separated with underscores
+
+    # Naming Conventions
+
+    * Use underscores for option, argument, parameter names;
+
+    -->
+
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.Functions.CallTimePassByReference"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+    <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+
+    <!-- We provide our own subclass of PEAR's ClassComment and FunctionComment sniff, but these will do: -->
+    <rule ref="PEAR.Commenting.InlineComment"/>
+
+    <!-- Import Zend coding standard (which in turn imports PEAR) -->
+    <rule ref="Zend">
+        <!-- but exclude their code analyzer -->
+        <exclude name="Zend.Debug.CodeAnalyzer"/>
+
+        <!-- covered by Squiz ControlSignature, which enforces try/catch as well -->
+        <exclude name="PEAR.ControlStructures.ControlSignature"/>
+
+        <exclude name="PEAR.Commenting.FunctionComment.SpacingBeforeTags"/>
+
+        <!-- do not check line length -->
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <!-- Don't enforce Zend's private member underscores -->
+    <rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Ignore variables that contains numbers -->
+    <rule ref="Zend.NamingConventions.ValidVariableName.ContainsNumbers">
+        <severity>0</severity>
+    </rule>
+
+    <!-- In practice, Symfony2 spaces multiline function calls differently than Zend -->
+    <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.FunctionComment.MissingParamComment">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.FunctionComment.SpacingBeforeTags">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="Symfony2.Commenting.ClassComment.SpacingBeforeTags">
+        <message>There should always be a description, followed by a blank line, before the tags of a class comment.</message>
+    </rule>
+</ruleset>
