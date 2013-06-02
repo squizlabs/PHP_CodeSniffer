@@ -94,4 +94,10 @@ class MyClass
 
 }
 
+abstract class Test implements
+    TestInterface1,
+    TestInterface2
+{
+}
+
 ?>

@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
     -- Thanks to Christian Weiske for the patch
   - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
+  - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
  </notes>
  <contents>
   <dir name="/">
