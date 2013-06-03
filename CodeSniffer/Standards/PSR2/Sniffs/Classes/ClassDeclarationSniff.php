@@ -89,10 +89,19 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             }
         }//end if
 
-        // We'll need the indent of the class/interface keyword for later.
+        // We'll need the indent of the class/interface declaration for later.
         $classIndent = 0;
-        if (strpos($tokens[($stackPtr - 1)]['content'], $phpcsFile->eolChar) === false) {
-            $classIndent = strlen($tokens[($stackPtr - 1)]['content']);
+        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
+                continue;
+            }
+
+            // We changed lines.
+            if ($tokens[($i + 1)]['code'] === T_WHITESPACE) {
+                $classIndent = strlen($tokens[($i + 1)]['content']);
+            }
+
+            break;
         }
 
         $keyword      = $stackPtr;

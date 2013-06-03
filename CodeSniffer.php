@@ -172,6 +172,7 @@ class PHP_CodeSniffer
                                    'mixed',
                                    'object',
                                    'string',
+                                   'resource',
                                   );
 
 

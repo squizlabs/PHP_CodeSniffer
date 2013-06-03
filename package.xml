@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
     -- Only available since PHP 5.2.11 and 5.3.1
     -- Thanks to Maik Penz for the patch
+  - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
+    -- Thanks to Arnout Boks for the patch
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
   - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
@@ -41,11 +43,21 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
+  - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
+    -- Thanks to Arnout Boks for the patch
+  - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens
+    -- Thanks to Arnout Boks for the patch
+  - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
+    -- Thanks to Erik Wiffin for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
   - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
   - Fixed bug #19930 : option --report-file generate an empty file
   - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
     -- Thanks to Christian Weiske for the patch
+  - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
+  - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
+  - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
+  - Fixed bug #19957 : Does not understand trait method aliasing
  </notes>
  <contents>
   <dir name="/">

@@ -51,8 +51,14 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         $comparison = PHP_CodeSniffer_Tokens::$comparisonTokens;
         $operators  = PHP_CodeSniffer_Tokens::$operators;
         $assignment = PHP_CodeSniffer_Tokens::$assignmentTokens;
+        $inlineIf   = array(
+                       T_INLINE_THEN,
+                       T_INLINE_ELSE,
+                      );
 
-        return array_unique(array_merge($comparison, $operators, $assignment));
+        return array_unique(
+            array_merge($comparison, $operators, $assignment, $inlineIf)
+        );
 
     }//end register()
 
