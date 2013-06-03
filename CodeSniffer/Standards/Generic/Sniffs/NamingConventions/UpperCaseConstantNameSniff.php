@@ -135,6 +135,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 return;
             }
 
+            // Is this an as name?
+            if ($tokens[$nextPtr]['code'] === T_AS) {
+                return;
+            }
+
             // Is this a type hint?
             if ($tokens[$nextPtr]['code'] === T_VARIABLE
                 || $phpcsFile->isReference($nextPtr) === true

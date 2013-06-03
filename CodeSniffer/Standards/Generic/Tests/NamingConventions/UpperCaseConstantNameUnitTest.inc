@@ -130,5 +130,10 @@ class Object implements IObject
     use TReflected {
         TReflected::reflect insteadof TProperties;
     }
+    use ListenerAggregateTrait, PreLoadUserTrait, PreLoadCompanyTrait {
+        PreloadUserTrait::PreLoadUser as loadUser;
+        PreloadCompanyTrait::PreLoadCompany as loadCompany;
+    }
 }
+
 ?>

@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
   - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
   - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
+  - Fixed bug #19957 : Does not understand trait method aliasing
  </notes>
  <contents>
   <dir name="/">
