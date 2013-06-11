@@ -6,10 +6,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Jeffrey Fisher <jeffslofish@gmail.com>
- * @copyright 2009 SQLI <www.sqli.com>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -22,10 +20,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Jeffrey Fisher <jeffslofish@gmail.com>
- * @copyright 2009 SQLI <www.sqli.com>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
@@ -51,34 +47,32 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $reportArr = array();
         $errorsShown = 0;
+        $newReport   = array(
+                        'totals' => $report['totals'],
+                        'files'  => array(),
+                       );
+
         foreach ($report['files'] as $filename => $file) {
+            $newReport['files'][$filename] = array(
+                                              'errors'   => $file['errors'],
+                                              'warnings' => $file['warnings'],
+                                              'messages' => array(),
+                                             );
+
             foreach ($file['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
-                        $filename = str_replace('"', '\"', $filename);
-                        $message  = str_replace('"', '\"', $error['message']);
-                        $type     = strtolower($error['type']);
-                        $source   = $error['source'];
-                        $severity = $error['severity'];
-                        
-                        $reportItem = array("line" => $line,
-                                            "column" => $column,
-                                            "filename" => $filename, 
-                                            "message" => $message,
-                                            "type" => $type,
-                                            "source" => $source,
-                                            "severity" => $severity);
-                        $reportArr[] = $reportItem;
+                        $error['line']   = $line;
+                        $error['column'] = $column;
+                        $newReport['files'][$filename]['messages'][] = $error;
                         $errorsShown++;
                     }
                 }
-            }//end foreach
-        }//end foreach
+            }
+        }//end foreac
 
-        
-        echo json_encode(array("reportList" => $reportArr));
+        echo json_encode($newReport);
         return $errorsShown;
 
     }//end generate()
