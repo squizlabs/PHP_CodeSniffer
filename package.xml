@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  -  Added report type --report=json to show the error list and total counts for all checked files
+  - Added report type --report=json to show the error list and total counts for all checked files
     -- Thanks to Jeffrey Fisher for the contribution
   - The JS tokenizer now has support for the T_THROW token
   - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
