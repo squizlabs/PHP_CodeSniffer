@@ -406,19 +406,20 @@ class PHP_CodeSniffer_CLI
                     $output = null;
                 }
 
-                $validReports     = array(
-                                     'full',
-                                     'xml',
-                                     'checkstyle',
-                                     'csv',
-                                     'emacs',
-                                     'notifysend',
-                                     'source',
-                                     'summary',
-                                     'svnblame',
-                                     'gitblame',
-                                     'hgblame',
-                                    );
+                $validReports = array(
+                                 'full',
+                                 'xml',
+                                 'json',
+                                 'checkstyle',
+                                 'csv',
+                                 'emacs',
+                                 'notifysend',
+                                 'source',
+                                 'summary',
+                                 'svnblame',
+                                 'gitblame',
+                                 'hgblame',
+                                );
 
                 if (in_array($report, $validReports) === false) {
                     echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
@@ -841,8 +842,8 @@ class PHP_CodeSniffer_CLI
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
-        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "emacs"'.PHP_EOL;
-        echo '                      "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
+        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "json"'.PHP_EOL;
+        echo '                      "emacs", "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
         echo '                      "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
