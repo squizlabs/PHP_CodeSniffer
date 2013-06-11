@@ -70,7 +70,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
                     }
                 }
             }
-        }//end foreac
+        }//end foreach
 
         echo json_encode($newReport);
         return $errorsShown;
