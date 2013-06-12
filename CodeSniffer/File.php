@@ -730,12 +730,7 @@ class PHP_CodeSniffer_File
             // Any internal message.
             $sniff = $code;
         } else {
-            $parts = explode('_', $this->_activeListener);
-            if (isset($parts[3]) === false) {
-                // Might be using namespaces.
-                $parts = explode('\\', $this->_activeListener);
-            }
-
+            $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
                 $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
@@ -856,12 +851,7 @@ class PHP_CodeSniffer_File
             // Any internal message.
             $sniff = $code;
         } else {
-            $parts = explode('_', $this->_activeListener);
-            if (isset($parts[3]) === false) {
-                // Might be using namespaces.
-                $parts = explode('\\', $this->_activeListener);
-            }
-
+            $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
                 $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
