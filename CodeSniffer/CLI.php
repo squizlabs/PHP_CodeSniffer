@@ -732,6 +732,11 @@ class PHP_CodeSniffer_CLI
 
         foreach ($sniffs as $sniff) {
             $parts = explode('_', $sniff);
+            if (isset($parts[3]) === false) {
+                // Might be using namespaces.
+                $parts = explode('\\', $sniff);
+            }
+
             if ($lastStandard === '') {
                 $lastStandard = $parts[0];
             }
