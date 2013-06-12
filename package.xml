@@ -60,6 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
   - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
   - Fixed bug #19957 : Does not understand trait method aliasing
+  - Fixed bug #19969 : Sniffs with namespace not recognized in reports
  </notes>
  <contents>
   <dir name="/">
