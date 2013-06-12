@@ -15,7 +15,7 @@
 /**
  * Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff.
  *
- * Throws errors if tabs are used for indentation.
+ * Throws errors if spaces are used for indentation.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
