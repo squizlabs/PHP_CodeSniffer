@@ -463,7 +463,7 @@ class PHP_CodeSniffer_File
                 }
 
                 // If the file path matches one of our ignore patterns, skip it.
-                $parts = explode('_', $class);
+                $parts = explode('_', str_replace('\\', '_', $class));
                 if (isset($parts[3]) === true) {
                     $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
                     $patterns = $this->phpcs->getIgnorePatterns($source);

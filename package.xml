@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
     -- Thanks to Arnout Boks for the patch
   - Explaining a standard (phpcs -e) that uses namespaces now works correctly
+  - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
+    -- Thanks to Maik Penz for the patch
   - Many more docs added for Generic sniffs, as well as a few from other standards
     -- Thanks to Spencer Rinehart for the contribution
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
