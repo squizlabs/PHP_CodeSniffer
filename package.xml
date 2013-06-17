@@ -261,8 +261,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Standards">
      <dir name="Generic">
       <dir name="Docs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="DuplicateClassNameStandard.xml" role="php" />
+       </dir>
        <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FixmeStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="TodoStandard.xml" role="php" />
+       </dir>
+       <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP" name="JumbledIncrementerStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="UnusedFunctionParameterStandard.xml" role="php" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP" name="InlineControlStructureStandard.xml" role="php" />
@@ -276,6 +284,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="UselessOverridingMethodStandard.xml" role="php" />
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ByteOrderMarkStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="EndFileNewlineStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="InlineHTMLStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineEndingsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineLengthStandard.xml" role="php" />
        </dir>
@@ -1077,6 +1089,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="PSR1">
+      <dir name="Docs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
@@ -1109,6 +1126,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="PSR2">
+      <dir name="Docs">
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ElseIfDeclarationStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
