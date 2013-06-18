@@ -95,6 +95,12 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
         }
 
         $endStatement = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        if ($tokens[$stackPtr]['conditions'] !== $tokens[$endStatement]['conditions']) {
+            // This statement doesn't end with a semicolon, which is the case for
+            // the last expression in a for loop.
+            return;
+        }
+
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
                 $error = 'The value of a comparison must not be assigned to a variable';

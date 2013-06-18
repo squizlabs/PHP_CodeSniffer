@@ -178,4 +178,11 @@ $listItems[$aliasPath] = array('itemContent' => implode('<br/>', $aliases));
 $listItems[$aliasPath] = array(
                           'itemContent' => implode('<br/>', $aliases)
                          );
+
+$test = array(
+         'test' => TestFunction::blah(
+             $value1,
+             $value2
+         ),
+        );
 ?>
