@@ -138,6 +138,9 @@
    <property name="allowMultipleArguments" value="false"/>
   </properties>
  </rule>
+ <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
+  <severity>0</severity>
+ </rule>
 
  <!-- 5. Control Structures -->
 
