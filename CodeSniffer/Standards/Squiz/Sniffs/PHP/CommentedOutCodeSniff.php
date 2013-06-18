@@ -172,13 +172,20 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $numComment = 0;
-        $numCode    = 0;
+        $numComment  = 0;
+        $numPossible = 0;
+        $numCode     = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (in_array($stringTokens[$i]['code'], $emptyTokens) === true) {
                 // Looks like comment.
                 $numComment++;
+            } else if (in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens)
+                || in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens)
+            ) {
+                // Commented out HTML/XML and other docs contain a lot of these
+                // characters, so it is best to not use them directly.
+                $numPossible++;
             } else {
                 // Looks like code.
                 $numCode++;

@@ -190,4 +190,11 @@ $x = array
       $x,
       $y,
      );
+
+$test = array(
+         'test' => TestFunction::blah(
+             $value1,
+             $value2
+         ),
+        );
 ?>
