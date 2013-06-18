@@ -94,14 +94,6 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $phpcsFile->fixer->replaceToken($nextCase, $expected);
             }
 
-            $prevCode   = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCase - 1), $stackPtr, true);
-            $blankLines = ($tokens[$nextCase]['line'] - $tokens[$prevCode]['line'] - 1);
-            if ($blankLines !== 0) {
-                $error = 'Blank lines are not allowed between case statements; found %s';
-                $data  = array($blankLines);
-                $phpcsFile->addError($error, $nextCase, 'SpaceBetweenCase', $data);
-            }
-
             if ($type === 'case'
                 && ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE
                 || $tokens[($nextCase + 1)]['content'] !== ' ')

@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added report type --report=json to show the error list and total counts for all checked files
+    -- Thanks to Jeffrey Fisher for the contribution
   - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string if the strict flag is FALSE
     -- acronyms are defined as at least 2 uppercase characters in a row
     -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
@@ -35,8 +37,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maik Penz for the patch
   - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
     -- Thanks to Arnout Boks for the patch
+  - Explaining a standard (phpcs -e) that uses namespaces now works correctly
+  - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
+    -- Thanks to Maik Penz for the patch
+  - Many more docs added for Generic sniffs, as well as a few from other standards
+    -- Thanks to Spencer Rinehart for the contribution
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
+  - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
+  - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
   - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Andrey Mindubaev for the patch
@@ -58,6 +67,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
   - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
   - Fixed bug #19957 : Does not understand trait method aliasing
+  - Fixed bug #19969 : Sniffs with namespace not recognized in reports
  </notes>
  <contents>
   <dir name="/">
@@ -205,23 +215,65 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Standards">
      <dir name="Generic">
       <dir name="Docs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="DuplicateClassNameStandard.xml" role="php" />
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="FixmeStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="TodoStandard.xml" role="php" />
+       </dir>
+       <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP" name="JumbledIncrementerStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="UnusedFunctionParameterStandard.xml" role="php" />
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="InlineControlStructureStandard.xml" role="php" />
+       </dir>
+       <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP" name="EmptyStatementStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ForLoopShouldBeWhileLoopStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ForLoopWithTestFunctionCallStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="UnconditionalIfStatementStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="UnnecessaryFinalModifierStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="UselessOverridingMethodStandard.xml" role="php" />
+       </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ByteOrderMarkStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="EndFileNewlineStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="InlineHTMLStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LineEndingsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineLengthStandard.xml" role="php" />
        </dir>
        <dir name="Formatting">
+        <file baseinstalldir="PHP" name="DisallowMultipleStatementsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="NoSpaceAfterCastStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
+        <file baseinstalldir="PHP" name="CallTimePassByReferenceStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieStandard.xml" role="php" />
        </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ConstructorNameStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="DeprecatedFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseConstantStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="NoSilencedErrorsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantStandard.xml" role="php" />
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="UnnecessaryStringConcatStandard.xml" role="php" />
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowTabIndentStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ScopeIndentStandard.xml" role="php" />
        </dir>
       </dir>
       <dir name="Sniffs">
@@ -804,6 +856,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </dir>
      <dir name="PEAR">
       <dir name="Docs">
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="InlineCommentStandard.xml" role="php" />
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="IncludingFileStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineLengthStandard.xml" role="php" />
@@ -815,6 +870,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="NamingConventions">
         <file baseinstalldir="PHP" name="ValidClassNameStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ValidFunctionNameStandard.xml" role="php" />
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="ScopeClosingBraceStandard.xml" role="php" />
        </dir>
       </dir>
       <dir name="Sniffs">
@@ -985,6 +1043,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="PSR1">
+      <dir name="Docs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="ClassDeclarationStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
@@ -1017,6 +1080,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="PSR2">
+      <dir name="Docs">
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ElseIfDeclarationStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="ClassDeclarationSniff.php" role="php">
@@ -1115,7 +1183,39 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Squiz">
       <dir name="Docs">
        <dir name="Arrays">
+        <file baseinstalldir="PHP" name="ArrayBracketSpacingStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ArrayDeclarationStandard.xml" role="php" />
+       </dir>
+       <dir name="Classes">
+        <file baseinstalldir="PHP" name="LowercaseClassKeywordsStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="SelfMemberReferenceStandard.xml" role="php" />
+       </dir>
+       <dir name="Commenting">
+        <file baseinstalldir="PHP" name="DocCommentAlignmentStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="FunctionCommentThrowTagStandard.xml" role="php" />
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP" name="ForEachLoopDeclarationStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ForLoopDeclarationStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LowercaseDeclarationStandard.xml" role="php" />
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP" name="FunctionDuplicateArgumentStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LowercaseFunctionKeywordsStandard.xml" role="php" />
+       </dir>
+       <dir name="Scope">
+        <file baseinstalldir="PHP" name="StaticThisUsageStandard.xml" role="php" />
+       </dir>
+       <dir name="Strings">
+        <file baseinstalldir="PHP" name="EchoedStringsStandard.xml" role="php" />
+       </dir>
+       <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="CastSpacingStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="FunctionOpeningBraceStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ObjectOperatorSpacingStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ScopeKeywordSpacingStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="SemicolonSpacingStandard.xml" role="php" />
        </dir>
       </dir>
       <dir name="Sniffs">
@@ -1904,6 +2004,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP" name="ruleset.xml" role="php" />
      </dir>
      <dir name="Zend">
+      <dir name="Docs">
+       <dir name="Files">
+        <file baseinstalldir="PHP" name="ClosingTagStandard.xml" role="php" />
+       </dir>
+       <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="ValidVariableNameStandard.xml" role="php" />
+       </dir>
+      </dir>
       <dir name="Sniffs">
        <dir name="Debug">
         <file baseinstalldir="PHP" name="CodeAnalyzerSniff.php" role="php">
