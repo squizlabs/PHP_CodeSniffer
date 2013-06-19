@@ -51,8 +51,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andrey Mindubaev for the patch
   - Squiz ArrayDeclarationSniff no longer reports errors for no comma at the end of a line that contains a function call
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
-  - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML and XML
+  - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
   - Squiz DisallowComparisonAssignmentSniff no longer throws errors for the third expression in a FOR statement
+  - Squiz ColourDefinitionSniff no longer throws errors for some CSS class names
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
   - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements

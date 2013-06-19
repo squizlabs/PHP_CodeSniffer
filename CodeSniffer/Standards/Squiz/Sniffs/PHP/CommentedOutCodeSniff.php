@@ -137,7 +137,12 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // to frame comments and licence headers.
         $content = preg_replace('/[-=*]+/', '-', $content);
 
+        // Because we are not really parsing code, the tokenizer can throw all sorts
+        // of errors that don't mean anything, so ignore them.
+        $oldErrors = ini_get('error_reporting');
+        ini_set('error_reporting', 0);
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
                         T_WHITESPACE,
@@ -161,8 +166,10 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // Last token is always the closing PHP tag.
-        if ($stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG) {
+        // Last token is always the closing PHP tag, unless something went wrong.
+        if (isset($stringTokens[($numTokens - 1)]) === false
+            || $stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG
+        ) {
             return;
         }
 

@@ -75,4 +75,8 @@ function myFunction()
  *
  * @return void
  */
+
+/*
+    [^\'"]
+*/
 ?>
