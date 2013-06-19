@@ -37,7 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Explaining a standard (phpcs -e) that uses namespaces now works correctly
   - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
     -- Thanks to Maik Penz for the patch
-  - Many more docs added for Generic sniffs, as well as a few from other standards
+  - Docs added for the entire Generic Standard, and many other docs added for the other standards
     -- Thanks to Spencer Rinehart for the contribution
   - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
@@ -276,6 +276,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="DuplicateClassNameStandard.xml" role="php" />
        </dir>
+       <dir name="Debug">
+        <file baseinstalldir="PHP" name="CSSLintStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ClosureLinterStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="JSHintStandard.xml" role="php" />
+       </dir>
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="FixmeStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="TodoStandard.xml" role="php" />
@@ -318,24 +323,35 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieStandard.xml" role="php" />
        </dir>
+       <dir name="Metrics">
+        <file baseinstalldir="PHP" name="CyclomaticComplexityStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="NestingLevelStandard.xml" role="php" />
+       </dir>
        <dir name="NamingConventions">
+        <file baseinstalldir="PHP" name="CamelCapsFunctionNameStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ConstructorNameStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="ClosingPHPTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DeprecatedFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseConstantStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseKeywordStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="NoSilencedErrorsStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="SAPIUsageStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantStandard.xml" role="php" />
        </dir>
        <dir name="Strings">
         <file baseinstalldir="PHP" name="UnnecessaryStringConcatStandard.xml" role="php" />
        </dir>
+       <dir name="VersionControl">
+        <file baseinstalldir="PHP" name="SubversionPropertiesStandard.xml" role="php" />
+       </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP" name="DisallowSpaceIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DisallowTabIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ScopeIndentStandard.xml" role="php" />
        </dir>
