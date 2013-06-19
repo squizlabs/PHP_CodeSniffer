@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maik Penz for the patch
   - Many more docs added for Generic sniffs, as well as a few from other standards
     -- Thanks to Spencer Rinehart for the contribution
+  - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
