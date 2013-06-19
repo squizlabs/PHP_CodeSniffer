@@ -300,11 +300,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="InlineHTMLStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineEndingsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LineLengthStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LowercasedFilenameStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="OneClassPerFileStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="OneInterfacePerFileStandard.xml" role="php" />
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="DisallowMultipleStatementsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="MultipleStatementAlignmentStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="NoSpaceAfterCastStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="SpaceAfterCastStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="CallTimePassByReferenceStandard.xml" role="php" />
@@ -317,10 +321,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DeprecatedFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseConstantStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="LowerCaseKeywordStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="NoSilencedErrorsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="UpperCaseConstantStandard.xml" role="php" />
        </dir>
