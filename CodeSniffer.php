@@ -635,11 +635,12 @@ class PHP_CodeSniffer
         $sniffs = array();
 
         if (defined('RecursiveDirectoryIterator::FOLLOW_SYMLINKS') === true) {
-            // Available since PHP 5.2.11 and 5.3.1.
-            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
+            $rdi = new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         } else {
-            $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+            $rdi = new RecursiveDirectoryIterator($directory);
         }
+
+        $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
         foreach ($di as $file) {
             $fileName = $file->getFilename();
@@ -1090,7 +1091,11 @@ class PHP_CodeSniffer
                 if ($local === true) {
                     $di = new DirectoryIterator($path);
                 } else {
-                    $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+                    $di = new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($path),
+                        0,
+                        RecursiveIteratorIterator::CATCH_GET_CHILD
+                    );
                 }
 
                 foreach ($di as $file) {
