@@ -163,16 +163,14 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             }
         }
 
-        if ($tokens[$trailingContent]['code'] === T_BREAK) {
-            // If this BREAK is closing a CASE, we don't need the
-            // blank line after this control structure.
-            if (isset($tokens[$trailingContent]['scope_condition']) === true) {
-                $condition = $tokens[$trailingContent]['scope_condition'];
-                if ($tokens[$condition]['code'] === T_CASE
-                    || $tokens[$condition]['code'] === T_DEFAULT
-                ) {
-                    return;
-                }
+        // If this token is closing a CASE or DEFAULT, we don't need the
+        // blank line after this control structure.
+        if (isset($tokens[$trailingContent]['scope_condition']) === true) {
+            $condition = $tokens[$trailingContent]['scope_condition'];
+            if ($tokens[$condition]['code'] === T_CASE
+                || $tokens[$condition]['code'] === T_DEFAULT
+            ) {
+                return;
             }
         }
 

@@ -122,4 +122,18 @@ if (
 ) {
     $settingsUpdated = FALSE;
 }
+
+$moo = 'blar';
+switch ($moo)
+{
+    case 'blar':
+        if ($moo === 'blar2') {
+            $moo = 'blar'
+        }
+    return $moo;
+
+    default:
+        $moo = 'moo';
+    break;
+}
 ?>
