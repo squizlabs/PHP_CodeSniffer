@@ -37,7 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Explaining a standard (phpcs -e) that uses namespaces now works correctly
   - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
     -- Thanks to Maik Penz for the patch
-  - Docs added for the entire Generic Standard, and many other docs added for the other standards
+  - Docs added for the entire Generic standard, and many sniffs from other standards are now documented as well
     -- Thanks to Spencer Rinehart for the contribution
   - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
