@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
   - Squiz DisallowComparisonAssignmentSniff no longer throws errors for the third expression in a FOR statement
   - Squiz ColourDefinitionSniff no longer throws errors for some CSS class names
+  - Squiz ControlStructureSpacingSniff now supports all types of CASE/DEFAULT breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
   - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
