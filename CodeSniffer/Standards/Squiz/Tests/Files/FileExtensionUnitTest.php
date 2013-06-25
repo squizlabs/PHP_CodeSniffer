@@ -38,13 +38,27 @@ class Squiz_Tests_Files_FileExtensionUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return array(
-                1 => 1,
-               );
+        switch ($testFile) {
+        case 'FileExtensionUnitTest.1.inc':
+            return array(
+                    1 => 1,
+                   );
+        case 'FileExtensionUnitTest.4.inc':
+            if (version_compare(PHP_VERSION, '5.4.0', '<') === true) {
+                // Traits are available from PHP 5.4.0.
+                return array(
+                        1 => 1,
+                       );
+            }
+        default:
+            return array();
+        }
 
     }//end getErrorList()
 

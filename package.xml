@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Andrey Mindubaev for the patch
+  - Squiz FileExtensionSniff now supports traits
+    -- Thanks to Lucas Green for the patch
   - Squiz ArrayDeclarationSniff no longer reports errors for no comma at the end of a line that contains a function call
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
@@ -1851,7 +1853,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
-        <file baseinstalldir="PHP" name="FileExtensionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="FileExtensionUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
