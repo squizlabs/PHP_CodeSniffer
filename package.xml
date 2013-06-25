@@ -64,6 +64,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
     -- Thanks to Erik Wiffin for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
+  - Fixed bug #19897 : Indenting warnings in templates not consistent
   - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
   - Fixed bug #19913 : Running phpcs in interactive mode causes warnings
     -- Thanks to Harald Franndorfer for the patch
