@@ -57,6 +57,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now supports all types of CASE/DEFAULT breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
+  - Generic ConstructorNameSniff no longer throws a notice for abstract constructors inside abstract classes
+    -- Thanks to Spencer Rinehart for the patch
   - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
     -- Thanks to Arnout Boks for the patch
   - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens

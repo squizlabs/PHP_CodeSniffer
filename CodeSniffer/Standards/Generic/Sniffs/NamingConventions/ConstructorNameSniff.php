@@ -80,8 +80,8 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
             return;
         }
 
-        // Don't continue if the constructor doesn't have a body, like when it is abstract.
-        if (!array_key_exists('scope_closer', $tokens[$stackPtr])) {
+        // Stop if the constructor doesn't have a body, like when it is abstract.
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
             return;
         }
 
