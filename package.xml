@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string if the strict flag is FALSE
     -- acronyms are defined as at least 2 uppercase characters in a row
     -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
+  - The PHP tokenizer now tokenizes goto labels as T_GOTO_LABEL instead of T_STRING followed by T_COLON
   - The JS tokenizer now has support for the T_THROW token
   - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
     -- Only available since PHP 5.2.11 and 5.3.1
