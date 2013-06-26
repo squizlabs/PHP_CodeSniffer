@@ -78,6 +78,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19957 : Does not understand trait method aliasing
   - Fixed bug #19968 : Permission denied on excluded directory
   - Fixed bug #19969 : Sniffs with namespace not recognized in reports
+  - Fixed bug #19997 : Class names incorrectly detected as constants
  </notes>
  <contents>
   <dir name="/">

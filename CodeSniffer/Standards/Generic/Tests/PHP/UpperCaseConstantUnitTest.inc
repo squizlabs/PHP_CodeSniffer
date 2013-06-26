@@ -55,4 +55,13 @@ new \Zend\Log\Writer\Null()
 
 class True extends Null implements False {}
 
+use Something\True;
+class MyClass
+{
+    public function myFunction()
+    {
+        $var = array('foo' => new True());
+    }
+}
+
 ?>
