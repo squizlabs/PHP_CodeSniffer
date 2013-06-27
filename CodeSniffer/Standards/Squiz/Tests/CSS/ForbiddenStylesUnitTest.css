@@ -1,0 +1,18 @@
+#add-new-comment {
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+
+    -moz-border-radius-topleft: 1px;
+    -moz-border-radius-topright: 1px;
+    -moz-border-radius-bottomright: 1px;
+    -moz-border-radius-bottomleft: 1px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+    border-bottom-left-radius: 1px;
+
+    -moz-box-shadow: 1px;
+    -webkit-box-shadow: 1px;
+    box-shadow: 1px;
+}
