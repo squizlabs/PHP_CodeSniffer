@@ -672,12 +672,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $slashPos = strrpos(substr($file, 0, $sniffPos), DIRECTORY_SEPARATOR);
-            if ($slashPos === false) {
-                continue;
-            }
-
-            $className = substr($file, ($slashPos + 1));
+            $className = $standard.substr($file, $sniffPos);
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
