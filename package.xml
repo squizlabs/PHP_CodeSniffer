@@ -45,12 +45,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Spencer Rinehart for the contribution
   - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
+  - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
   - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
   - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
   - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the indent setting in a ruleset.xml file to change
     -- Thanks to Andrey Mindubaev for the patch
+  - Squiz FileExtensionSniff now supports traits
+    -- Thanks to Lucas Green for the patch
   - Squiz ArrayDeclarationSniff no longer reports errors for no comma at the end of a line that contains a function call
   - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
   - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
@@ -59,6 +62,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff now supports all types of CASE/DEFAULT breaking statements
   - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
     -- Thanks to Maik Penz for the patch
+  - Generic ConstructorNameSniff no longer throws a notice for abstract constructors inside abstract classes
+    -- Thanks to Spencer Rinehart for the patch
   - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
     -- Thanks to Arnout Boks for the patch
   - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens
@@ -66,6 +71,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
     -- Thanks to Erik Wiffin for the patch
   - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
+  - Fixed bug #19897 : Indenting warnings in templates not consistent
   - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
   - Fixed bug #19930 : option --report-file generate an empty file
   - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
@@ -76,6 +82,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #19957 : Does not understand trait method aliasing
   - Fixed bug #19968 : Permission denied on excluded directory
   - Fixed bug #19969 : Sniffs with namespace not recognized in reports
+  - Fixed bug #19997 : Class names incorrectly detected as constants
  </notes>
  <contents>
   <dir name="/">
@@ -1405,6 +1412,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SemicolonSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ShorthandSizeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="JavaScriptLintSniff.php" role="php">
@@ -1785,6 +1795,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ShorthandSizeUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="ShorthandSizeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="JavaScriptLintUnitTest.js" role="test" />
@@ -1797,7 +1811,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
-        <file baseinstalldir="PHP" name="FileExtensionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileExtensionUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="FileExtensionUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

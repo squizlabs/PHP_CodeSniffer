@@ -36,4 +36,9 @@ class MyClass extends \MyNamespace\SomeClass
     }
 
 }
+
+abstract class MyAbstractClass extends \MyNamespace\SomeClass
+{
+    abstract public function __construct();
+}
 ?>
