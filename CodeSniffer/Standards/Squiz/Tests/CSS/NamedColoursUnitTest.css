@@ -1,0 +1,13 @@
+#red {
+    background-color: red;
+}
+
+.red {
+    border-bottom: 1px dotted black;
+    border-top: 1px dotted gray;
+}
+
+#red.yellow {
+    background: yellow url(diag_lines_bg.gif) top left;
+    text-shadow: 0 1px 0 white;
+}

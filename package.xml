@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
   - Added Squiz ForbiddenStylesSniff to ban the use of some deprecated browser-specific styles
+  - Added Squiz NamedColoursSniff to ban the use of colour names
   - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
   - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
@@ -1464,6 +1465,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="MissingColonSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="NamedColoursSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="OpacitySniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1847,6 +1851,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="MissingColonUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="MissingColonUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="NamedColoursUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="NamedColoursUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OpacityUnitTest.css" role="test" />
