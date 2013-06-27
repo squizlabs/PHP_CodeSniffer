@@ -1,0 +1,26 @@
+#add-new-comment {
+    background-color: #333333;
+    padding: 10px;
+    border-bottom: 1px dotted #F0F0F0;
+    border-top: 1px dotted #FF00FF;
+    background: #8fb7db url(diag_lines_bg.gif) top left;
+    page-break-inside: 1;
+    margin: 8px 8px 8px 8px;
+    margin: 8px 8px;
+    margin: 0 0 0 0;
+    margin: 0 8px 0 8px;
+    margin: 8px 4px 8px 4px;
+    margin: 8px 4% 8px 4%;
+    margin: 6px 2px 9px 2px;
+    margin: 6px 2px 9px;
+    border-radius: 2px 2px 2px 2px !important;
+    border-width: 2px               2px   2px       2px;
+    border-width: 1px 2px 2px 4px;
+    margin: 97px auto 0 auto;
+    text-shadow: 0 1px 0 #fff;
+
+    /* These are black-listed style names. */
+    background-position: 0 0;
+    box-shadow: 2px 2px 2px 2px;
+    transform-origin: 0 110% 0;
+}

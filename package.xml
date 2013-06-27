@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Spencer Rinehart for the contribution
   - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
+  - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
   - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
   - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
   - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
@@ -1465,6 +1466,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SemicolonSpacingSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="ShorthandSizeSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="JavaScriptLintSniff.php" role="php">
@@ -1843,6 +1847,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ShorthandSizeUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="ShorthandSizeUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
