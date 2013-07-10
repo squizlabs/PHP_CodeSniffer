@@ -281,7 +281,7 @@ class PHP_CodeSniffer
             && is_file(dirname(self::$standardDir).'/'.$path) === true
         ) {
             // Check standard file locations based on the passed standard directory.
-            include dirname(self::$standardDir).'/'.$path;
+            include_once dirname(self::$standardDir).'/'.$path;
         } else {
             // Everything else.
             @include $path;

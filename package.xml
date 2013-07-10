@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maik Penz for the patch
   - Docs added for the entire Generic standard, and many sniffs from other standards are now documented as well
     -- Thanks to Spencer Rinehart for the contribution
+  - Clearer error message for when the sniff class name does not match the directory structure
   - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
   - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
   - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
