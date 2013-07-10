@@ -994,8 +994,8 @@ class PHP_CodeSniffer
                 $parts = explode('\\', $listenerClass);
             }
 
-            $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
-            $code  = substr($code, 0, -5);
+            $code = $parts[0].'.'.$parts[2].'.'.$parts[3];
+            $code = substr($code, 0, -5);
 
             $this->listeners[$listenerClass] = new $listenerClass();
 
