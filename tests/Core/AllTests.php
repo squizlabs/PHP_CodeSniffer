@@ -27,6 +27,7 @@ require_once 'Reports/SourceTest.php';
 require_once 'Reports/SvnblameTest.php';
 require_once 'Reports/GitblameTest.php';
 require_once 'Reports/HgblameTest.php';
+require_once 'Reports/JunitTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -88,6 +89,7 @@ class PHP_CodeSniffer_Core_AllTests
         $suite->addTestSuite('Core_Reports_SvnblameTest');
         $suite->addTestSuite('Core_Reports_GitblameTest');
         $suite->addTestSuite('Core_Reports_HgblameTest');
+        $suite->addTestSuite('Core_Reports_JunitTest');
         return $suite;
 
     }//end suite()
