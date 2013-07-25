@@ -23,6 +23,7 @@ require_once 'Reports/SummaryTest.php';
 require_once 'Reports/XmlTest.php';
 require_once 'Reports/CsvTest.php';
 require_once 'Reports/EmacsTest.php';
+require_once 'Reports/JsonTest.php';
 require_once 'Reports/SourceTest.php';
 require_once 'Reports/SvnblameTest.php';
 require_once 'Reports/GitblameTest.php';
@@ -84,6 +85,7 @@ class PHP_CodeSniffer_Core_AllTests
         $suite->addTestSuite('Core_Reports_XmlTest');
         $suite->addTestSuite('Core_Reports_CsvTest');
         $suite->addTestSuite('Core_Reports_EmacsTest');
+        $suite->addTestSuite('Core_Reports_JsonTest');
         $suite->addTestSuite('Core_Reports_SourceTest');
         $suite->addTestSuite('Core_Reports_SvnblameTest');
         $suite->addTestSuite('Core_Reports_GitblameTest');

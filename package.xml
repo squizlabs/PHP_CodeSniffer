@@ -155,6 +155,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="HgblameTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="" name="JsonTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="" name="SourceTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
@@ -260,6 +263,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Hgblame.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Json.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Notifysend.php" role="php">
@@ -2296,6 +2302,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
    <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
    <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
+   <install as="CodeSniffer/Core/Reports/JsonTest.php" name="tests/Core/Reports/JsonTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
@@ -2326,6 +2333,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
    <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
    <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
+   <install as="CodeSniffer/Core/Reports/JsonTest.php" name="tests/Core/Reports/JsonTest.php" />
    <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
    <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
    <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
