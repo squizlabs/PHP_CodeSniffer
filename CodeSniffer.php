@@ -260,7 +260,7 @@ class PHP_CodeSniffer
             // Check standard file locations based on the loaded rulesets.
             foreach (self::$rulesetDirs as $rulesetDir) {
                 if (is_file(dirname($rulesetDir).'/'.$path) === true) {
-                    include dirname($rulesetDir).'/'.$path;
+                    include_once dirname($rulesetDir).'/'.$path;
                     return;
                 }
             }
