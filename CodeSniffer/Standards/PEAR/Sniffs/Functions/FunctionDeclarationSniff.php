@@ -29,11 +29,11 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 {
 
     /**
-     * The number of whitespaces the multi-line function parameters should be indented.
+     * The number of whitespaces code should be indented.
      *
      * @var int
      */
-    public $multilineParamIndent = 4;
+    public $indent = 4;
 
 
     /**
@@ -256,7 +256,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                     // as the function.
                     $expectedIndent = $functionIndent;
                 } else {
-                    $expectedIndent = ($functionIndent + $this->multilineParamIndent);
+                    $expectedIndent = ($functionIndent + $this->indent);
                 }
 
                 // We changed lines, so this should be a whitespace indent token.
