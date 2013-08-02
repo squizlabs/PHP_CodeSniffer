@@ -134,6 +134,10 @@ class Object implements IObject
         PreloadUserTrait::PreLoadUser as loadUser;
         PreloadCompanyTrait::PreLoadCompany as loadCompany;
     }
+    use TraitIdentifier {
+        method as protected method;
+        methodTwo as public methodTwo;
+    }
 }
 
 ?>

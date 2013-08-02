@@ -178,6 +178,14 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                     return;
                 }
             }
+            
+            // Is this a trait method rename, with visibility modification?
+            $prevPtrAs = $phpcsFile->findPrevious(T_WHITESPACE, ($prevPtr - 1), null, true);
+            if ($tokens[$prevPtrAs]['code'] === T_AS) {
+                if (in_array($tokens[$prevPtr]['code'], array(T_PRIVATE, T_PROTECTED, T_PUBLIC))) {
+                    return;
+                }
+            }
 
             // This is a real constant.
             if (strtoupper($constName) !== $constName) {
