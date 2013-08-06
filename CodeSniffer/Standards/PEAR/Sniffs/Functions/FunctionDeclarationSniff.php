@@ -29,7 +29,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 {
 
     /**
-     * The number of whitespaces code should be indented.
+     * The number of spaces code should be indented.
      *
      * @var int
      */
