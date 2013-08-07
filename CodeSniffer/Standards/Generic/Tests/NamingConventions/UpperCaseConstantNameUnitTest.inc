@@ -136,4 +136,10 @@ class Object implements IObject
     }
 }
 
+class MyClass {
+    use Something {
+        delete as protected blah;
+    }
+}
+
 ?>

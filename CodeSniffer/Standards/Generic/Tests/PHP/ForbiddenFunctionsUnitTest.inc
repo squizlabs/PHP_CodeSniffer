@@ -19,4 +19,30 @@ function delete() {}
 function unset() {}
 function sizeof() {}
 function count() {}
+
+trait DelProvider {
+  public function delete() {
+    //irrelevant
+  }
+}
+
+class LeftSideTest {
+    use DelProvider {
+        delete as protected unsetter;
+    }
+}
+
+class RightSideTest {
+    use DelProvider {
+        delete as delete;
+    }
+}
+
+class RightSideVisTest {
+    use DelProvider {
+        delete as protected delete;
+        delete insteadof delete;
+    }
+}
+
 ?>

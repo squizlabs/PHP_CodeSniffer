@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2013-07-25</date>
  <time>13:47:00</time>
  <version>
-  <release>1.4.6</release>
-  <api>1.4.6</api>
+  <release>1.4.7</release>
+  <api>1.4.7</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,63 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added report type --report=json to show the error list and total counts for all checked files
-    -- Thanks to Jeffrey Fisher for the contribution
-  - The JS tokenizer now has support for the T_THROW token
-  - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
-    -- Only available since PHP 5.2.11 and 5.3.1
-    -- Thanks to Maik Penz for the patch
-  - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
-    -- Thanks to Arnout Boks for the patch
-  - Explaining a standard (phpcs -e) that uses namespaces now works correctly
-  - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
-    -- Thanks to Maik Penz for the patch
-  - Docs added for the entire Generic standard, and many sniffs from other standards are now documented as well
-    -- Thanks to Spencer Rinehart for the contribution
-  - Clearer error message for when the sniff class name does not match the directory structure
-  - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
-  - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
-  - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
-  - Added Squiz ForbiddenStylesSniff to ban the use of some deprecated browser-specific styles
-  - Added Squiz NamedColoursSniff to ban the use of colour names
-  - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
-  - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
-  - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
-  - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the indent setting in a ruleset.xml file to change
-    -- Thanks to Andrey Mindubaev for the patch
-  - Squiz FileExtensionSniff now supports traits
-    -- Thanks to Lucas Green for the patch
-  - Squiz ArrayDeclarationSniff no longer reports errors for no comma at the end of a line that contains a function call
-  - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
-  - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
-  - Squiz DisallowComparisonAssignmentSniff no longer throws errors for the third expression in a FOR statement
-  - Squiz ColourDefinitionSniff no longer throws errors for some CSS class names
-  - Squiz ControlStructureSpacingSniff now supports all types of CASE/DEFAULT breaking statements
-  - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
-    -- Thanks to Maik Penz for the patch
-  - Generic ConstructorNameSniff no longer throws a notice for abstract constructors inside abstract classes
-    -- Thanks to Spencer Rinehart for the patch
-  - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
-    -- Thanks to Arnout Boks for the patch
-  - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens
-    -- Thanks to Arnout Boks for the patch
-  - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
-    -- Thanks to Erik Wiffin for the patch
-  - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
-  - Fixed bug #19897 : Indenting warnings in templates not consistent
-  - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
-  - Fixed bug #19913 : Running phpcs in interactive mode causes warnings
-    -- Thanks to Harald Franndorfer for the patch
-  - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
-    -- Thanks to Christian Weiske for the patch
-  - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
-  - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
-  - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
-  - Fixed bug #19957 : Does not understand trait method aliasing
-  - Fixed bug #19968 : Permission denied on excluded directory
-  - Fixed bug #19969 : Sniffs with namespace not recognized in reports
-  - Fixed bug #19997 : Class names incorrectly detected as constants
+  - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
  </notes>
  <contents>
   <dir name="/">
