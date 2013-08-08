@@ -113,7 +113,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
-                $error = strtoupper($type).' keyword must be indented 4 spaces from SWITCH keyword';
+                $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
                 $phpcsFile->addError($error, $nextCase, $type.'Indent');
             }
 
@@ -142,7 +142,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     // break is shared between multiple case statements, or even
                     // the default case.
                     if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
-                        $error = 'Case breaking statement must be indented 4 spaces from SWITCH keyword';
+                        $error = 'Case breaking statement must be indented '.$this->indent.' spaces from SWITCH keyword';
                         $phpcsFile->addError($error, $nextBreak, 'BreakIndent');
                     }
 
