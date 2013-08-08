@@ -41,6 +41,13 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                                    'JS',
                                   );
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -76,7 +83,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
-        $caseAlignment = ($switch['column'] + 4);
+        $caseAlignment = ($switch['column'] + $this->indent);
         $caseCount     = 0;
         $foundDefault  = false;
 
