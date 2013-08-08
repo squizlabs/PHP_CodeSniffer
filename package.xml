@@ -27,6 +27,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Added support for the PHP 5.4 callable type hint
+  - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+    -- Thanks to Szabolcs Sulik for the patch
+  - PEAR MultiLineAssignmentSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+    -- Thanks to Szabolcs Sulik for the patch
+  - PEAR FunctionDeclarationSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+    -- Thanks to Szabolcs Sulik for the patch
+  - Squiz SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+    -- Thanks to Szabolcs Sulik for the patch
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
     -- Adds new error message for single-line arrays that end with a comma
   - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
