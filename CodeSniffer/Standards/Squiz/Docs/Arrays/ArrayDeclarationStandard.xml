@@ -23,6 +23,152 @@ $array = <em>A</em>rray('val1', 'val2');
     </code_comparison>
     <standard>
     <![CDATA[
+    There must be no space between the <em>array</em> keyword and the opening parenthesis
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no whitespace between the array keyword and the opening parenthesis">
+        <![CDATA[
+$array = array<em></em>('val1', 'val2');
+        ]]>
+        </code>
+        <code title="Invalid: whitespace between the array keyword and the opening parenthesis">
+        <![CDATA[
+$array = array<em> </em>('val1', 'val2');
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    Empty array declaration must have no space between the parentheses
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no whitespace between parenthesis">
+        <![CDATA[
+$array = array(<em></em>);
+        ]]>
+        </code>
+        <code title="Invalid: whitespace between parenthesis">
+        <![CDATA[
+$array = array(<em> </em>);
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    There must be no whitspace before and after a double arrow
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: double arrow surrounding by whitespaces">
+        <![CDATA[
+$array = array(
+          'key1<em> </em>=><em> </em>'value1',
+         );
+        ]]>
+        </code>
+        <code title="Invalid: double arrow without whitespace at all">
+        <![CDATA[
+$array = array(
+          'key1<em></em>=><em></em>'value1',
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    Multiple value array that is inside a condition or function must have no whitespace before the comma and one whitespace after the comma
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no whitespace before the comma; one whitespace after the comma">
+        <![CDATA[
+if (in_array('1', array('1',<em> </em>'2',<em> </em>'3')) === TRUE) {
+    $value = in_array('1', array('1'<em></em>,<em> </em>'2',<em> </em>'3'));
+}
+        ]]>
+        </code>
+        <code title="Invalid: variations with no or multiple whitespaces after the comma and whitespace before the comma">
+        <![CDATA[
+if (in_array('1', array('1',<em></em>'2',<em></em>'3')) === TRUE) {
+    $value = in_array('1', array('1'<em>  </em>,<em>   </em>'2',<em>     </em>'3'));
+}
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    Closing parenthesis of array declaration must be on a new line
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: closing parenthesis of array declaration on a new line">
+        <![CDATA[
+$array = array(
+          'key1' => 'value1',
+          'key2' => 'value2',
+         <em>)</em>;
+        ]]>
+        </code>
+        <code title="Invalid: closing parenthesis of array declaration on the same line like the last array element">
+        <![CDATA[
+$array = array(
+          'key1' => 'value1',
+          'key2' => 'value2',<em>)</em>;
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    There need to specify a key for array entry
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: closing parenthesis of array declaration on a new line">
+        <![CDATA[
+$array = array(
+          '1' => TRUE,
+          <em>'2' =></em> FALSE,
+          '3' => 'aaa',
+         );
+        ]]>
+        </code>
+        <code title="Invalid: No key specified for array entry; first entry specifies key">
+        <![CDATA[
+$array = array(
+          '1' => TRUE,
+          <em></em>FALSE,
+          '3' => 'aaa',
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    The closing parenthesis must be aligned with the start of the <em>array</em> keyword.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: aligned correctly">
+        <![CDATA[
+$array = array(
+          'key1' => 'value1',
+          'key2' => 'value2',
+         <em>)</em>;
+        ]]>
+        </code>
+        <code title="Invalid: Parenthesis aligned incorrectly">
+        <![CDATA[
+$array = array(
+         'key1' => 'value1',
+         'key2' => 'value2',
+<em>)</em>;
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
     The first array key must begin on the line after the <em>array</em> keyword.
     ]]>
     </standard>
@@ -45,7 +191,179 @@ $array = array(<em>'key1'</em> => 'value1',
     </code_comparison>
     <standard>
     <![CDATA[
-    All array keys must be indented to one space after the start of the <em>array</em> keyword. The closing parenthesis must be aligned with the start of the <em>array</em> keyword.
+There must be no whitespace beween a array value and the comma.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no whitespace after the value and the comma">
+        <![CDATA[
+$array = array(1,
+          2<em></em>,
+          3<em></em>,
+         );
+        ]]>
+        </code>
+        <code title="Invalid: whitespace after the value and the comma">
+        <![CDATA[
+$array = array(1,
+          2<em> </em>,
+          3<em> </em>,
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: comma on same line like the latest value">
+        <![CDATA[
+$array = array(1,<em></em>
+2);
+        ]]>
+        </code>
+        <code title="Invalid: comma are the very beginning character of a new line">
+        <![CDATA[
+$array = array(1
+<em>,</em> 2
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    Either all elements of an array have to be a key/value pair or no one.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: all elements have a key and an value">
+        <![CDATA[
+$array = array(
+          <em>'0' => </em>TRUE,
+          <em>'1' => </em>FALSE,
+         );
+        ]]>
+        </code>
+        <code title="Invalid: the first element have no key but the second have one">
+        <![CDATA[
+$array = array(
+          <em></em>TRUE,
+          <em>'1' => </em>FALSE,
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: no elements have a key/value pairs at all">
+        <![CDATA[
+$array = array(
+          <em></em>TRUE,
+          <em></em>FALSE,
+         );
+        ]]>
+        </code>
+        <code title="Invalid: the first element have no key but the second have one">
+        <![CDATA[
+$array = array(
+          <em></em>TRUE,
+          <em>'1' => </em>FALSE,
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    Arrays with only one element should be written as a single line array
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: the array contains only one element and is written in a single line">
+        <![CDATA[
+$array = array('a' => 1);
+<em></em>
+        ]]>
+        </code>
+        <code title="Invalid: the array contains only one element and is written in multi lines.">
+        <![CDATA[
+$array = array(
+          <em>'a' => 1,
+         );</em>
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    All array values must be followed by a comma, including the final value.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: comma after each value">
+        <![CDATA[
+$array = array(
+          'key1' => 'value1',
+          'key2' => 'value2',
+          'key3' => 'value3'<em>,</em>
+         );
+        ]]>
+        </code>
+        <code title="Invalid: no comma after last value">
+        <![CDATA[
+$array = array(
+          'key1' => 'value1',
+          'key2' => 'value2',
+          'key3' => 'value3'<em> </em>
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    The first value in a multi-value array must be on a new line
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: The first element is on a new line">
+        <![CDATA[
+$array = array(
+          <em>1,</em>
+          2,
+          3,
+         );
+        ]]>
+        </code>
+        <code title="Invalid: The first element is on the same line like the array keyword">
+        <![CDATA[
+$array = array(<em>1,</em>
+          2,
+          3,
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    The first index in a multi-value array must be on a new line
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: the first index is on a new line">
+        <![CDATA[
+$array = array(
+          <em>1 => $one,</em>
+          2 => $two,
+          3 => $three,
+         );
+        ]]>
+        </code>
+        <code title="Invalid: the first index is on the same line like the array keyword">
+        <![CDATA[
+$array = array(<em>1 => $one,</em>
+          2 => $two,
+          3 => $three,
+         );
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    All array keys must be indented to one space after the start of the <em>array</em> keyword.
     ]]>
     </standard>
     <code_comparison>
@@ -62,7 +380,7 @@ $array = array(
 $array = array(
          <em>'</em>key1' => 'value1',
          <em>'</em>key2' => 'value2',
-);
+         );
         ]]>
         </code>
     </code_comparison>
@@ -89,27 +407,20 @@ $array = array(
         ]]>
         </code>
     </code_comparison>
-    <standard>
-    <![CDATA[
-    All array values must be followed by a comma, including the final value.
-    ]]>
-    </standard>
     <code_comparison>
-        <code title="Valid: comma after each value">
+        <code title="Valid: keys and values aligned">
         <![CDATA[
 $array = array(
-          'key1' => 'value1',
-          'key2' => 'value2',
-          'key3' => 'value3'<em>,</em>
+          'keyTen'    =><em> </em>'ValueTen',
+          'keyTwenty' =><em> </em>'ValueTwenty',
          );
         ]]>
         </code>
-        <code title="Invalid: no comma after last value">
+        <code title="Invalid: alignment incorrect">
         <![CDATA[
 $array = array(
-          'key1' => 'value1',
-          'key2' => 'value2',
-          'key3' => 'value3'<em> </em>
+          'keyTen'    =><em>    </em>'ValueTen',
+          'keyTwenty' =><em>  </em>'ValueTwenty',
          );
         ]]>
         </code>
