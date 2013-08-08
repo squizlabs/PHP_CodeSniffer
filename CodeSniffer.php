@@ -169,6 +169,7 @@ class PHP_CodeSniffer
                                    'object',
                                    'string',
                                    'resource',
+                                   'callable',
                                   );
 
 
