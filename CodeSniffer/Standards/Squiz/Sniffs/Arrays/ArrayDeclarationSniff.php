@@ -98,8 +98,17 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 if ($tokens[$i]['code'] === T_COMMA) {
-                    $valueCount++;
-                    $commas[] = $i;
+                    // Before counting this comma, make sure we are not
+                    // at the end of the array.
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), $arrayEnd, TRUE);
+                    if ($next !== false) {
+                        $valueCount++;
+                        $commas[] = $i;
+                    } else {
+                        // There is a comma at the end of a single line array.
+                        $error = 'Comma not allowed after last value in single-line array declaration';
+                        $phpcsFile->addError($error, $i, 'CommaAfterLast');
+                    }
                 }
             }
 
