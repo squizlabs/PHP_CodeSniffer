@@ -601,4 +601,15 @@ public function test()
 
 }//end variableArgs()
 
+/**
+ * Uses callable.
+ *
+ * @param callable $cb Test parameter.
+ *
+ * @return void
+ */
+public function usesCallable(callable $cb) {
+    $cb();
+}
+
 ?>

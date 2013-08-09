@@ -42,10 +42,18 @@ class Generic_Tests_PHP_ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2 => 1,
-                4 => 1,
-               );
+        $errors = array(
+                   2 => 1,
+                   4 => 1,
+                  );
+
+        // The trait insteadof test will only work in PHP versions where traits exist
+        // and will throw errors in earlier versions.
+        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+            $errors[44] = 2;
+        }
+
+        return $errors;
 
     }//end getErrorList()
 
