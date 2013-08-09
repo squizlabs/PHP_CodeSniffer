@@ -7,15 +7,16 @@
     <code_comparison>
         <code title="Valid: A for loop that determines its end condition before the loop starts.">
         <![CDATA[
-for ($i = 0, <em>$end = count($array)</em>; $i < $end; $i++) {
-    echo "{$i}: {$array[$i]}\n";
+<em>$end = count($foo);</em>
+for ($i = 0; $i < $end; $i++) {
+    echo $foo[$i]."\n";
 }
         ]]>
         </code>
         <code title="Invalid: A for loop that unnecessarily computes the same value on every iteration.">
         <![CDATA[
-for ($i = 0; $i &lt; <em>count($array)</em>; $i++) {
-    echo "{$i}: {$array[$i]}\n";
+for ($i = 0; $i < <em>count($foo)</em>; $i++) {
+    echo $foo[$i]."\n";
 }
         ]]>
         </code>
