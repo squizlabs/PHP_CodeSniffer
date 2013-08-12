@@ -166,15 +166,20 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
         }
 
         if ($this->forbiddenStyles[$pattern] !== null) {
-            $type  .= 'WithAlternative';
             $data[] = $this->forbiddenStyles[$pattern];
-            $error .= '; use %s instead';
-        }
+            if ($this->error === true) {
+                $phpcsFile->addFixableError($error.'; use %s instead', $stackPtr, $type.'WithAlternative', $data);
+            } else {
+                $phpcsFile->addFixableWarning($error.'; use %s instead', $stackPtr, $type.'WithAlternative', $data);
+            }
 
-        if ($this->error === true) {
-            $phpcsFile->addError($error, $stackPtr, $type, $data);
+            $phpcsFile->fixer->replaceToken($stackPtr, $this->forbiddenStyles[$pattern]);
         } else {
-            $phpcsFile->addWarning($error, $stackPtr, $type, $data);
+            if ($this->error === true) {
+                $phpcsFile->addError($error, $stackPtr, $type, $data);
+            } else {
+                $phpcsFile->addWarning($error, $stackPtr, $type, $data);
+            }
         }
 
     }//end addError()

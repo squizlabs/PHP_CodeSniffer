@@ -74,7 +74,8 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space after colon in style definition; 0 found';
-            $phpcsFile->addError($error, $stackPtr, 'NoneAfter');
+            $phpcsFile->addFixableError($error, $stackPtr, 'NoneAfter');
+            $phpcsFile->fixer->addContent($stackPtr, ' ');
         } else {
             $content = $tokens[($stackPtr + 1)]['content'];
             if (strpos($content, $phpcsFile->eolChar) === false) {
