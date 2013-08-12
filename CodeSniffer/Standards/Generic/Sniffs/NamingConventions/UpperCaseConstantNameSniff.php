@@ -98,6 +98,9 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_AS,
                              T_GOTO,
                              T_INSTEADOF,
+                             T_PUBLIC,
+                             T_PRIVATE,
+                             T_PROTECTED,
                             );
 
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {

@@ -1,58 +1,68 @@
 <?php
 /**
- * Generic_Sniffs_PHP_ForbiddenFunctionsSniff.
+ * Squiz_Sniffs_CSS_ForbiddenStylesSniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Generic_Sniffs_PHP_ForbiddenFunctionsSniff.
+ * Squiz_Sniffs_CSS_ForbiddenStylesSniff.
  *
- * Discourages the use of alias functions that are kept in PHP for compatibility
- * with older versions. Can be used to forbid the use of any function.
+ * Bans the use of some styles, such as deprecated or browser-specific styles.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
+class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
-     * A list of forbidden functions with their alternatives.
+     * A list of tokenizers this sniff supports.
      *
-     * The value is NULL if no alternative exists. IE, the
+     * @var array
+     */
+    public $supportedTokenizers = array('CSS');
+
+    /**
+     * A list of forbidden styles with their alternatives.
+     *
+     * The value is NULL if no alternative exists. i.e., the
      * function should just not be used.
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
+    protected $forbiddenStyles = array(
+                                     '-moz-border-radius'             => 'border-radius',
+                                     '-webkit-border-radius'          => 'border-radius',
+                                     '-moz-border-radius-topleft'     => 'border-top-left-radius',
+                                     '-moz-border-radius-topright'    => 'border-top-right-radius',
+                                     '-moz-border-radius-bottomright' => 'border-bottom-right-radius',
+                                     '-moz-border-radius-bottomleft'  => 'border-bottom-left-radius',
+                                     '-moz-box-shadow'                => 'box-shadow',
+                                     '-webkit-box-shadow'             => 'box-shadow',
                                     );
 
     /**
-     * A cache of forbidden function names, for faster lookups.
+     * A cache of forbidden style names, for faster lookups.
      *
      * @var array(string)
      */
-    protected $forbiddenFunctionNames = array();
+    protected $forbiddenStyleNames = array();
 
     /**
-     * If true, forbidden functions will be considered regular expressions.
+     * If true, forbidden styles will be considered regular expressions.
      *
      * @var bool
      */
@@ -73,17 +83,15 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
-        // Everyone has had a chance to figure out what forbidden functions
-        // they want to check for, so now we can cache out the list.
-        $this->forbiddenFunctionNames = array_keys($this->forbiddenFunctions);
+        $this->forbiddenStyleNames = array_keys($this->forbiddenStyles);
 
         if ($this->patternMatch === true) {
-            foreach ($this->forbiddenFunctionNames as $i => $name) {
-                $this->forbiddenFunctionNames[$i] = '/'.$name.'/i';
+            foreach ($this->forbiddenStyleNames as $i => $name) {
+                $this->forbiddenStyleNames[$i] = '/'.$name.'/i';
             }
         }
 
-        return array(T_STRING);
+        return array(T_STYLE);
 
     }//end register()
 
@@ -99,41 +107,16 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $ignore = array(
-                   T_DOUBLE_COLON,
-                   T_OBJECT_OPERATOR,
-                   T_FUNCTION,
-                   T_CONST,
-                   T_PUBLIC,
-                   T_PRIVATE,
-                   T_PROTECTED,
-                   T_AS,
-                   T_INSTEADOF,
-                  );
-
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
-            // Not a call to a PHP function.
-            return;
-        }
-
-        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
-            // Not a call to a PHP function.
-            return;
-        }
-
-        $function = strtolower($tokens[$stackPtr]['content']);
-        $pattern  = null;
+        $tokens  = $phpcsFile->getTokens();
+        $style   = strtolower($tokens[$stackPtr]['content']);
+        $pattern = null;
 
         if ($this->patternMatch === true) {
             $count   = 0;
             $pattern = preg_replace(
-                $this->forbiddenFunctionNames,
-                $this->forbiddenFunctionNames,
-                $function,
+                $this->forbiddenStyleNames,
+                $this->forbiddenStyleNames,
+                $style,
                 1,
                 $count
             );
@@ -145,12 +128,12 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             // Remove the pattern delimiters and modifier.
             $pattern = substr($pattern, 1, -2);
         } else {
-            if (in_array($function, $this->forbiddenFunctionNames) === false) {
+            if (in_array($style, $this->forbiddenStyleNames) === false) {
                 return;
             }
         }
 
-        $this->addError($phpcsFile, $stackPtr, $function, $pattern);
+        $this->addError($phpcsFile, $stackPtr, $style, $pattern);
 
     }//end process()
 
@@ -159,17 +142,17 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      * Generates the error or warning for this sniff.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the forbidden function
+     * @param int                  $stackPtr  The position of the forbidden style
      *                                        in the token array.
-     * @param string               $function  The name of the forbidden function.
+     * @param string               $style     The name of the forbidden style.
      * @param string               $pattern   The pattern used for the match.
      *
      * @return void
      */
-    protected function addError($phpcsFile, $stackPtr, $function, $pattern=null)
+    protected function addError($phpcsFile, $stackPtr, $style, $pattern=null)
     {
-        $data  = array($function);
-        $error = 'The use of function %s() is ';
+        $data  = array($style);
+        $error = 'The use of style %s is ';
         if ($this->error === true) {
             $type   = 'Found';
             $error .= 'forbidden';
@@ -179,13 +162,13 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($pattern === null) {
-            $pattern = $function;
+            $pattern = $style;
         }
 
-        if ($this->forbiddenFunctions[$pattern] !== null) {
+        if ($this->forbiddenStyles[$pattern] !== null) {
             $type  .= 'WithAlternative';
-            $data[] = $this->forbiddenFunctions[$pattern];
-            $error .= '; use %s() instead';
+            $data[] = $this->forbiddenStyles[$pattern];
+            $error .= '; use %s instead';
         }
 
         if ($this->error === true) {

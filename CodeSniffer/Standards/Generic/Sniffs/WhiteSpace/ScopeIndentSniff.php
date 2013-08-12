@@ -68,6 +68,17 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     protected $nonIndentingScopes = array();
 
+    /**
+     * Stores the indent of the last PHP open tag we found.
+     *
+     * This value is used to calculate the expected indent of top level structures
+     * so we don't assume they are always at column 1. If PHP code is embedded inside
+     * HTML (etc.) code, then the starting column for that code may not be column 1.
+     *
+     * @var int
+     */
+    private $_openTagIndent = 0;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -76,7 +87,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$scopeOpeners;
+        $tokens   = PHP_CodeSniffer_Tokens::$scopeOpeners;
+        $tokens[] = T_OPEN_TAG;
+        return $tokens;
 
     }//end register()
 
@@ -93,6 +106,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // We only want to record the indent of open tags, not process them.
+        if ($tokens[$stackPtr]['code'] == T_OPEN_TAG) {
+            if (empty($tokens[$stackPtr]['conditions']) === true) {
+                // Only record top-level PHP tags.
+                $this->_openTagIndent = ($tokens[$stackPtr]['column'] - 1);
+            }
+
+            return;
+        }
 
         // If this is an inline condition (ie. there is no scope opener), then
         // return, as this is not a new scope.
@@ -385,7 +408,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // carefully in another sniff.
                 return $tokens[$stackPtr]['column'];
             } else {
-                return 1;
+                return ($this->_openTagIndent + 1);
             }
         }
 

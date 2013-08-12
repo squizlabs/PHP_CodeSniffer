@@ -437,3 +437,25 @@ class AnonymousFn
     }
 }
 ?>
+
+<div>
+    <?php
+    if ($myvar == 'test') {
+        echo 'something';
+    }
+    ?>
+<div>
+<div>
+    <?php
+        if ($myvar == 'test') {
+            echo 'something';
+        }
+    ?>
+<div>
+<div>
+    <?php
+if ($myvar == 'test') {
+    echo 'something';
+}
+    ?>
+<div>

@@ -2249,6 +2249,7 @@ class PHP_CodeSniffer_File
                 $currVar = $i;
                 break;
             case T_ARRAY_HINT:
+            case T_CALLABLE:
                 $typeHint = $this->_tokens[$i]['content'];
                 break;
             case T_STRING:

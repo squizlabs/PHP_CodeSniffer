@@ -95,6 +95,7 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 179 => 1,
                 182 => 1,
                 188 => 1,
+                201 => 1,
                );
 
     }//end getErrorList()

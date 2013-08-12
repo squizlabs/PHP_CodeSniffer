@@ -197,4 +197,7 @@ $test = array(
              $value2
          ),
         );
+
+$c = array('a' => 1,);
+
 ?>

@@ -652,6 +652,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $suggestedTypeHint = '';
                         if (strpos($suggestedName, 'array') !== false) {
                             $suggestedTypeHint = 'array';
+                        } else if (strpos($suggestedName, 'callable') !== false) {
+                            $suggestedTypeHint = 'callable';
                         } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                             $suggestedTypeHint = $suggestedName;
                         }

@@ -65,7 +65,7 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
 
         $fileName  = $phpcsFile->getFileName();
         $extension = substr($fileName, strrpos($fileName, '.'));
-        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), $stackPtr);
+        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), $stackPtr);
 
         if ($extension === '.php') {
             if ($nextClass !== false) {

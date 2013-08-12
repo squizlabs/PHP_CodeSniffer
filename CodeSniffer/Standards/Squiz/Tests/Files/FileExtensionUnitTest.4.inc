@@ -1,0 +1,3 @@
+<?php
+trait MyTrait {}
+?>
