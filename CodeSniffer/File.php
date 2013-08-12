@@ -476,6 +476,7 @@ class PHP_CodeSniffer_File
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
                 $content = str_replace($this->eolChar, '\n', $token['content']);
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -1529,7 +1530,8 @@ class PHP_CodeSniffer_File
             if (isset($tokenizer->scopeOpeners[$tokens[$i]['code']]) === true) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type    = $tokens[$i]['type'];
-                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                     echo "\tStart scope map at $i: $type => $content".PHP_EOL;
                 }
 
@@ -1593,7 +1595,8 @@ class PHP_CodeSniffer_File
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
-                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 echo str_repeat("\t", $depth);
                 echo "Process token $i [";
                 if ($opener !== null) {
@@ -1903,7 +1906,8 @@ class PHP_CodeSniffer_File
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
                 $line    = $tokens[$i]['line'];
-                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 echo str_repeat("\t", ($level + 1));
                 echo "Process token $i on line $line [lvl:$level;";
                 if (empty($conditions) !== true) {
