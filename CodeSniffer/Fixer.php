@@ -105,6 +105,7 @@ class PHP_CodeSniffer_Fixer
             }
 
             $contents = $this->getContents();
+            //ob_end_clean();
             //print_r(str_replace("\n", '\n', $contents)."\n\n");
             ob_start();
             $this->_currentFile->refreshTokenListeners();
@@ -174,6 +175,24 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
+     * Determine if a given token has been already been fixed.
+     *
+     * Tokens can only be fixed once per cycle, so some sniffs may need to
+     * abort a series of fixes if one cannot be applied due to the token
+     * content already being modified.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     *
+     * @return void
+     */
+    public function isTokenFixed($stackPtr)
+    {
+        return in_array($stackPtr, $this->_fixedTokens);
+
+    }//end isTokenFixed()
+
+
+    /**
      * Get the current content of the file, as a string.
      *
      * @return string
@@ -196,7 +215,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function replaceToken($stackPtr, $content)
     {
-        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+        if ($this->isTokenFixed($stackPtr) === true) {
             return;
         }
 
@@ -259,7 +278,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addNewline($stackPtr)
     {
-        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+        if ($this->isTokenFixed($stackPtr) === true) {
             return;
         }
 
@@ -314,7 +333,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addContent($stackPtr, $content)
     {
-        if (in_array($stackPtr, $this->_fixedTokens) === true) {
+        if ($this->isTokenFixed($stackPtr) === true) {
             return;
         }
 
