@@ -70,7 +70,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $token['type'];
-                $content = str_replace($eolChar, '\n', $token['content']);
+                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token['content']);
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -99,7 +100,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t\t=> Found premature closing tag at $stackPtr".PHP_EOL;
-                    $cleanContent = str_replace($eolChar, '\n', $content);
+                    $cleanContent = str_replace($eolChar, "\033[30;1m\\n\033[0m", $content);
+                    $cleanContent = str_replace(' ', "\033[30;1m·\033[0m", $cleanContent);
                     echo "\t\tcontent: $cleanContent".PHP_EOL;
                     $oldNumTokens = $numTokens;
                 }
@@ -108,7 +110,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $moreTokens = parent::tokenizeString($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
-                array_pop($moreTokens);
+                $lastSpace = array_pop($moreTokens);
+                if ($lastSpace['content'] !== ' ') {
+                    // The space we added before the closing tag was not the only
+                    // space at the end of the content, so add the whitespace back,
+                    // minus our single space.
+                    $lastSpace['content'] = substr($lastSpace['content'], 0, -1);
+                    $moreTokens[] = $lastSpace;
+                }
 
                 // Rebuild the tokens array.
                 array_splice($tokens, ($stackPtr + 1), ($x - $stackPtr), $moreTokens);
