@@ -116,10 +116,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     } else {
                         // There is a comma at the end of a single line array.
                         $error = 'Comma not allowed after last value in single-line array declaration';
-                        $phpcsFile->addError($error, $i, 'CommaAfterLast');
+                        $phpcsFile->addFixableError($error, $i, 'CommaAfterLast');
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
                 }
-            }
+            }//end for
 
             // Now check each of the double arrows (if any).
             $nextArrow = $arrayStart;
