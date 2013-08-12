@@ -80,14 +80,16 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $keyword = $tokens[$stackPtr]['content'];
-        if (strtoupper($keyword) !== $keyword) {
+        $keyword  = $tokens[$stackPtr]['content'];
+        $expected = strtoupper($keyword);
+        if ($keyword !== $expected) {
             $error = 'TRUE, FALSE and NULL must be uppercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtoupper($keyword),
+                      $expected,
                       $keyword,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+            $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+            $phpcsFile->fixer->replaceToken($stackPtr, $expected);
         }
 
     }//end process()
