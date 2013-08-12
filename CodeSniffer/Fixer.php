@@ -105,8 +105,13 @@ class PHP_CodeSniffer_Fixer
             }
 
             $contents = $this->getContents();
-            //ob_end_clean();
-            //print_r(str_replace("\n", '\n', $contents)."\n\n");
+            /*
+            ob_end_clean();
+            $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
+            $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $contents);
+            $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
+            echo $debugContent;
+            */
             ob_start();
             $this->_currentFile->refreshTokenListeners();
             $this->_currentFile->start($contents);
