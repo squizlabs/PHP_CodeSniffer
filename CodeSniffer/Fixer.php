@@ -118,12 +118,13 @@ class PHP_CodeSniffer_Fixer
         $loops = 0;
         while ($this->_numFixes > 0 && $loops < 50) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                @ob_end_clean();
                 echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
             }
 
             $contents = $this->getContents();
             /*
-            ob_end_clean();
+            @ob_end_clean();
             $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
             $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $contents);
             $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
@@ -146,7 +147,9 @@ class PHP_CodeSniffer_Fixer
 
         if ($this->_numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                @ob_end_clean();
                 echo "\tReached maximum number of loops with $this->_numFixes violations left unfixed".PHP_EOL;
+                ob_start();
             }
 
             return false;
@@ -239,7 +242,7 @@ class PHP_CodeSniffer_Fixer
             $sniff = $bt[1]['class'];
             $line  = $bt[0]['line'];
 
-            ob_end_clean();
+            @ob_end_clean();
             echo "\t=> Changeset started by $sniff (line $line)".PHP_EOL;
             ob_start();
         }
@@ -265,7 +268,7 @@ class PHP_CodeSniffer_Fixer
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $fixes = count($this->_changeset);
                 $fails = count($errors);
-                ob_end_clean();
+                @ob_end_clean();
                 echo "\t=> Changeset could not be applied: $fails of $fixes changes would not apply".PHP_EOL;
                 ob_start();
             }
@@ -280,7 +283,7 @@ class PHP_CodeSniffer_Fixer
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $fixes = count($this->_changeset);
-            ob_end_clean();
+            @ob_end_clean();
             echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
             ob_start();
         }
@@ -328,7 +331,7 @@ class PHP_CodeSniffer_Fixer
             $this->_changeset[$stackPtr] = $content;
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                ob_end_clean();
+                @ob_end_clean();
                 echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
                 ob_start();
             }
@@ -345,7 +348,7 @@ class PHP_CodeSniffer_Fixer
                 $indent .= "\tA: ";
             }
 
-            ob_end_clean();
+            @ob_end_clean();
             echo "$indent$sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
             ob_start();
         }
