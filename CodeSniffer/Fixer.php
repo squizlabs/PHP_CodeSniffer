@@ -58,6 +58,23 @@ class PHP_CodeSniffer_Fixer
     private $_fixedTokens = array();
 
     /**
+     * A list of tokens that have been fixed during a changeset.
+     *
+     * All changes in changeset must be able to be applied, or else
+     * the entire changeset is rejected.
+     *
+     * @var array()
+     */
+    private $_changeset = array();
+
+    /**
+     * Is there an open changeset.
+     *
+     * @var boolean
+     */
+    private $_inChangeset = false;
+
+    /**
      * The number of fixes that have been performed.
      *
      * @var int
@@ -211,6 +228,69 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
+     * Start recording actions for a changeset.
+     *
+     * @return void
+     */
+    public function beginChangeset()
+    {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $bt = debug_backtrace();
+            $sniff = $bt[1]['class'];
+            $line  = $bt[0]['line'];
+
+            ob_end_clean();
+            echo "\t=> Changeset started by $sniff (line $line)".PHP_EOL;
+            ob_start();
+        }
+
+        $this->_changeset   = array();
+        $this->_inChangeset = true;
+
+    }//end beginChangeset()
+
+
+    /**
+     * Stop recording actions for a changeset, and apply logged changes.
+     *
+     * @return boolean
+     */
+    public function endChangeset()
+    {
+        $this->_inChangeset = false;
+
+        $errors = array_intersect(array_keys($this->_changeset), $this->_fixedTokens);
+        if (empty($errors) === false) {
+            // At least one change cannot be applied.
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $fixes = count($this->_changeset);
+                $fails = count($errors);
+                ob_end_clean();
+                echo "\t=> Changeset could not be applied: $fails of $fixes changes would not apply".PHP_EOL;
+                ob_start();
+            }
+
+            $this->_changeset = array();
+            return false;
+        }
+
+        foreach ($this->_changeset as $stackPtr => $content) {
+            $this->replaceToken($stackPtr, $content);
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $fixes = count($this->_changeset);
+            ob_end_clean();
+            echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
+            ob_start();
+        }
+
+        $this->_changeset = array();
+
+    }//end endChangeset()
+
+
+    /**
      * Replace the entire contents of a token.
      *
      * @param int    $stackPtr The position of the token in the token stack.
@@ -220,13 +300,11 @@ class PHP_CodeSniffer_Fixer
      */
     public function replaceToken($stackPtr, $content)
     {
-        if ($this->isTokenFixed($stackPtr) === true) {
+        if ($this->_inChangeset === false
+            && $this->isTokenFixed($stackPtr) === true
+        ) {
             return;
         }
-
-        $this->_tokens[$stackPtr] = $content;
-        $this->_numFixes++;
-        $this->_fixedTokens[] = $stackPtr;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $bt = debug_backtrace();
@@ -240,11 +318,35 @@ class PHP_CodeSniffer_Fixer
 
             $tokens     = $this->_currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = str_replace($this->_currentFile->eolChar, '\n', $tokens[$stackPtr]['content']);
-            $newContent = str_replace($this->_currentFile->eolChar, '\n', $content);
+            $oldContent = str_replace($this->_currentFile->eolChar, "\033[30;1m\\n\033[0m", $tokens[$stackPtr]['content']);
+            $newContent = str_replace($this->_currentFile->eolChar, "\033[30;1m\\n\033[0m", $content);
+            $oldContent = str_replace(' ', "\033[30;1m·\033[0m", $oldContent);
+            $newContent = str_replace(' ', "\033[30;1m·\033[0m", $newContent);
+        }
+
+        if ($this->_inChangeset === true) {
+            $this->_changeset[$stackPtr] = $content;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                ob_end_clean();
+                echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
+                ob_start();
+            }
+            return;
+        }
+
+        $this->_tokens[$stackPtr] = $content;
+        $this->_numFixes++;
+        $this->_fixedTokens[] = $stackPtr;
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $indent = "\t";
+            if (empty($this->_changeset) === false) {
+                $indent .= "\tA: ";
+            }
+
             ob_end_clean();
-            echo "\t$sniff (line $line) replaced token $stackPtr: $type => \"$newContent\"".PHP_EOL;
-            echo "\t\t=> old content was: \"$oldContent\"".PHP_EOL;
+            echo "$indent$sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
             ob_start();
         }
 
@@ -283,31 +385,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addNewline($stackPtr)
     {
-        if ($this->isTokenFixed($stackPtr) === true) {
-            return;
-        }
-
-        $this->_tokens[$stackPtr] .= $this->_currentFile->eolChar;
-        $this->_numFixes++;
-        $this->_fixedTokens[] = $stackPtr;
-
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
-                $sniff = $bt[2]['class'];
-                $line  = $bt[1]['line'];
-            } else {
-                $sniff = $bt[1]['class'];
-                $line  = $bt[0]['line'];
-            }
-
-            $tokens  = $this->_currentFile->getTokens();
-            $type    = $tokens[$stackPtr]['type'];
-            $content = str_replace($this->_currentFile->eolChar, '\n', $this->_tokens[$stackPtr]);
-            ob_end_clean();
-            echo "\t$sniff (line $line) added newline after token $stackPtr: $type => $content".PHP_EOL;
-            ob_start();
-        }
+        $this->replaceToken($stackPtr, $this->_tokens[$stackPtr].$this->_currentFile->eolChar);
 
     }//end addNewline()
 
@@ -323,7 +401,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addNewlineBefore($stackPtr)
     {
-        $this->addNewline($stackPtr - 1);
+        $this->replaceToken(($stackPtr - 1), $this->_tokens[($stackPtr - 1)].$this->_currentFile->eolChar);
 
     }//end addNewlineBefore()
 
@@ -338,33 +416,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addContent($stackPtr, $content)
     {
-        if ($this->isTokenFixed($stackPtr) === true) {
-            return;
-        }
-
-        $this->_tokens[$stackPtr] .= $content;
-        $this->_numFixes++;
-        $this->_fixedTokens[] = $stackPtr;
-
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
-                $sniff = $bt[2]['class'];
-                $line  = $bt[1]['line'];
-            } else {
-                $sniff = $bt[1]['class'];
-                $line  = $bt[0]['line'];
-            }
-
-            $tokens     = $this->_currentFile->getTokens();
-            $type       = $tokens[$stackPtr]['type'];
-            $oldContent = str_replace($this->_currentFile->eolChar, '\n', $tokens[$stackPtr]['content']);
-            $newContent = str_replace($this->_currentFile->eolChar, '\n', $content);
-            ob_end_clean();
-            echo "\t$sniff (line $line) added content after token $stackPtr: $type => \"$oldContent\"".PHP_EOL;
-            echo "\t\t=> additional content is: \"$newContent\"".PHP_EOL;
-            ob_start();
-        }
+        $this->replaceToken($stackPtr, $this->_tokens[$stackPtr].$content);
 
     }//end addContent()
 
