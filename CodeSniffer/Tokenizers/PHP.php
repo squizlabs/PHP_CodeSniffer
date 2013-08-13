@@ -270,7 +270,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $type     = $newToken['type'];
                     $content  = $token;
                 }
-                
+
                 $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
