@@ -325,12 +325,10 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
         // Can only fix this error if both tokens are available for fixing.
         // Adding one bracket without the other will create parse errors.
-        if ($phpcsFile->fixer->isTokenFixed($before) === false
-            && $phpcsFile->fixer->isTokenFixed($after) === false
-        ) {
-            $phpcsFile->fixer->replaceToken($before, '('.$tokens[$before]['content']);
-            $phpcsFile->fixer->replaceToken($after, $tokens[$after]['content'].')');
-        }
+        $phpcsFile->fixer->beginChangeset();
+        $phpcsFile->fixer->replaceToken($before, '('.$tokens[$before]['content']);
+        $phpcsFile->fixer->replaceToken($after, $tokens[$after]['content'].')');
+        $phpcsFile->fixer->endChangeset();
 
     }//end addMissingBracketsError()
 

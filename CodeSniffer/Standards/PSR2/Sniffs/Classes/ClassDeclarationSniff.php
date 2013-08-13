@@ -297,6 +297,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceAfterBody', $data);
 
+            $phpcsFile->fixer->beginChangeset();
             for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');
             }
@@ -304,6 +305,8 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             if (strpos($tokens[$prevContent]['content'], $phpcsFile->eolChar) === false) {
                 $phpcsFile->fixer->replaceToken($closeBrace, $phpcsFile->eolChar.$tokens[$closeBrace]['content']);
             }
+
+            $phpcsFile->fixer->endChangeset();
         }
 
         // Check the closing brace is on it's own line, but allow

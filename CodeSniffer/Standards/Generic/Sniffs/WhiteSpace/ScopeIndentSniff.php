@@ -191,6 +191,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     // or else the rest of the block will look out of place, but
                     // not cause any errors to be generated. But do not change the
                     // indent of the closing brace as other sniffs check this.
+                    $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->substrToken(($firstToken - 1), 0, $diff);
                     if ($this->exact === false) {
                         for ($i = $firstToken; $i < ($scopeCloser - 1); $i++) {
@@ -201,8 +202,10 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             }
                         }
                     }
-                }
-            }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
         }//end if
 
         // Some scopes are expected not to have indents.

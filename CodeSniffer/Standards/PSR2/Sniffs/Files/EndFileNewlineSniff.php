@@ -90,12 +90,14 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
             $data  = array($blankLines + 1);
             $phpcsFile->addFixableError($error, $lastCode, 'TooMany', $data);
 
+            $phpcsFile->fixer->beginChangeset();
             $phpcsFile->fixer->replaceToken($lastCode, rtrim($tokens[$lastCode]['content']));
             for ($i = ($lastCode + 1); $i < $lastToken; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');
             }
 
             $phpcsFile->fixer->replaceToken($lastToken, $phpcsFile->eolChar);
+            $phpcsFile->fixer->endChangeset();
         }//end if
 
     }//end process()

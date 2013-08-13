@@ -139,11 +139,13 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                     $spacing--;
                 }
 
+                $phpcsFile->fixer->beginChangeset();
                 for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
                 $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $spacing));
+                $phpcsFile->fixer->endChangeset();
             }
         }//end if
 
@@ -232,11 +234,13 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 $phpcsFile->fixer->addContent($nextSpace, $padding);
             } else {
                 $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
+                $phpcsFile->fixer->beginChangeset();
                 for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
                 $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing));
+                $phpcsFile->fixer->endChangeset();
             }
         }//end if
 

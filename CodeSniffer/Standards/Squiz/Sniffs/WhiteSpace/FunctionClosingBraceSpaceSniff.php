@@ -107,11 +107,13 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                 $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
 
                 if ($found > 1) {
+                    $phpcsFile->fixer->beginChangeset();
                     for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
                     $phpcsFile->fixer->replaceToken($i, $phpcsFile->eolChar);
+                    $phpcsFile->fixer->endChangeset();
                 } else {
                     // Try and maintain indentation.
                     if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {

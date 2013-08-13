@@ -70,9 +70,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $error = 'There must be no space between the Array keyword and the opening parenthesis';
             $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
 
+            $phpcsFile->fixer->beginChangeset();
             for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');
             }
+
+            $phpcsFile->fixer->endChangeset();
         }
 
         // Check for empty arrays.
@@ -83,9 +86,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Empty array declaration must have no space between the parentheses';
                 $phpcsFile->addFixableError($error, $stackPtr, 'SpaceInEmptyArray');
 
+                $phpcsFile->fixer->beginChangeset();
                 for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
+
+                $phpcsFile->fixer->endChangeset();
 
                 // We can return here because there is nothing else to check. All code
                 // below can assume that the array is not empty.
