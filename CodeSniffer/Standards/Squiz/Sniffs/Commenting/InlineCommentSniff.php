@@ -243,7 +243,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                 $ender .= ' '.$closerName.',';
             }
 
-            $ender = rtrim($ender, ',');
+            $ender = trim($ender, ' ,');
             $data  = array($ender);
             $phpcsFile->addError($error, $stackPtr, 'InvalidEndChar', $data);
         }
