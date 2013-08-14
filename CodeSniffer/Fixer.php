@@ -200,24 +200,6 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
-     * Determine if a given token has been already been fixed.
-     *
-     * Tokens can only be fixed once per cycle, so some sniffs may need to
-     * abort a series of fixes if one cannot be applied due to the token
-     * content already being modified.
-     *
-     * @param int $stackPtr The position of the token in the token stack.
-     *
-     * @return void
-     */
-    public function isTokenFixed($stackPtr)
-    {
-        return in_array($stackPtr, $this->_fixedTokens);
-
-    }//end isTokenFixed()
-
-
-    /**
      * Get the current content of the file, as a string.
      *
      * @return string
@@ -304,7 +286,7 @@ class PHP_CodeSniffer_Fixer
     public function replaceToken($stackPtr, $content)
     {
         if ($this->_inChangeset === false
-            && $this->isTokenFixed($stackPtr) === true
+            && in_array($stackPtr, $this->_fixedTokens) === true
         ) {
             return;
         }
