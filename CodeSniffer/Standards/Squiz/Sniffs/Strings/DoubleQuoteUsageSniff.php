@@ -119,15 +119,17 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
         $data  = array(str_replace("\n", '\n', $workingString));
         $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
 
-        $phpcsFile->fixer->beginChangeset();
-        $innerContent = trim($workingString, '"');
-        $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
-        while ($lastStringToken !== $stackPtr) {
-            $phpcsFile->fixer->replaceToken($lastStringToken, '');
-            $lastStringToken--;
-        }
+        if ($phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            $innerContent = trim($workingString, '"');
+            $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
+            while ($lastStringToken !== $stackPtr) {
+                $phpcsFile->fixer->replaceToken($lastStringToken, '');
+                $lastStringToken--;
+            }
 
-        $phpcsFile->fixer->endChangeset();
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end process()
 

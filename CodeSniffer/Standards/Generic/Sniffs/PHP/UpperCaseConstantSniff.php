@@ -89,7 +89,9 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
                       $keyword,
                      );
             $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
-            $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            }
         }
 
     }//end process()

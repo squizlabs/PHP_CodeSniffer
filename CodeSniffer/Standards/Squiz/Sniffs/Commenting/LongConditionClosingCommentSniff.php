@@ -166,7 +166,9 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                     $expected .= $phpcsFile->eolChar;
                 }
 
-                $phpcsFile->fixer->addContent($stackPtr, $expected);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContent($stackPtr, $expected);
+                }
             }
 
             return;
@@ -186,7 +188,10 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                       $found,
                      );
             $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
-            $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            }
+
             return;
         }
 

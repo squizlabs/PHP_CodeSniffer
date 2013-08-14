@@ -117,13 +117,15 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 }
             }//end if
 
-            $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
-            $phpcsFile->fixer->beginChangeset();
-            for ($i = 0; $i < $stackPtr; $i++) {
-                $phpcsFile->fixer->replaceToken($i, '');
-            }
+            $phpcsFile->addFixableError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = 0; $i < $stackPtr; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
 
-            $phpcsFile->fixer->endChangeset();
+                $phpcsFile->fixer->endChangeset();
+            }
 
         } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
 
@@ -182,13 +184,14 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
             $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
-            $phpcsFile->fixer->beginChangeset();
-            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-                $phpcsFile->fixer->replaceToken($i, '');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
-
-            $phpcsFile->fixer->endChangeset();
-
         } else {
 
             /*
@@ -211,7 +214,9 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             if (empty($tokenContent) === false) {
                 if ($tokenContent !== rtrim($tokenContent)) {
                     $phpcsFile->addFixableError('Whitespace found at end of line', $stackPtr, 'EndLine');
-                    $phpcsFile->fixer->replaceToken($stackPtr, rtrim($tokenContent).$phpcsFile->eolChar);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken($stackPtr, rtrim($tokenContent).$phpcsFile->eolChar);
+                    }
                 }
             }
 
@@ -233,15 +238,17 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                         $data  = array($lines);
                         $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
 
-                        $phpcsFile->fixer->beginChangeset();
-                        $i = $stackPtr;
-                        while ($tokens[$i]['line'] !== $tokens[$next]['line']) {
-                            $phpcsFile->fixer->replaceToken($i, '');
-                            $i++;
-                        }
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            $i = $stackPtr;
+                            while ($tokens[$i]['line'] !== $tokens[$next]['line']) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                                $i++;
+                            }
 
-                        $phpcsFile->fixer->addNewlineBefore($next);
-                        $phpcsFile->fixer->endChangeset();
+                            $phpcsFile->fixer->addNewlineBefore($next);
+                            $phpcsFile->fixer->endChangeset();
+                        }
                     }
                 }//end if
             }//end if

@@ -101,11 +101,13 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
                      );
             $phpcsFile->addFixableError($error, $scopeEnd, 'Indent', $data);
 
-            $diff = ($startColumn - $braceIndent);
-            if ($diff > 0) {
-                $phpcsFile->fixer->addContentBefore($scopeEnd, str_repeat(' ', $diff));
-            } else {
-                $phpcsFile->fixer->substrToken(($scopeEnd - 1), 0, $diff);
+            if ($phpcsFile->fixer->enabled === true) {
+                $diff = ($startColumn - $braceIndent);
+                if ($diff > 0) {
+                  $phpcsFile->fixer->addContentBefore($scopeEnd, str_repeat(' ', $diff));
+                } else {
+                  $phpcsFile->fixer->substrToken(($scopeEnd - 1), 0, $diff);
+                }
             }
         }//end if
 

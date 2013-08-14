@@ -190,7 +190,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
-            $phpcsFile->fixer->addContent($openBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addContent(
+                    $openBracket,
+                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                );
+            }
         }
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
@@ -198,7 +203,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');
-            $phpcsFile->fixer->addContentBefore($closeBracket, $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent)));
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addContentBefore(
+                    $closeBracket,
+                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                );
+            }
         }
 
         // Each line between the parenthesis should be indented n spaces.
@@ -234,7 +244,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         if ($exact === true) {
                             $error = 'Empty lines are not allowed in multi-line function calls';
                             $phpcsFile->addFixableError($error, $i, 'EmptyLine');
-                            $phpcsFile->fixer->replaceToken($i, '');
+                            if ($phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
                         }
 
                         continue;
@@ -283,13 +295,15 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                              );
                     $phpcsFile->addFixableError($error, $i, 'Indent', $data);
 
-                    $padding = str_repeat(' ', $expectedIndent);
-                    if ($foundIndent === 0) {
-                        $phpcsFile->fixer->addContentBefore($i, $padding);
-                    } else {
-                        $phpcsFile->fixer->replaceToken($i, $padding);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $padding = str_repeat(' ', $expectedIndent);
+                        if ($foundIndent === 0) {
+                            $phpcsFile->fixer->addContentBefore($i, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken($i, $padding);
+                        }
                     }
-                }
+                }//end if
             }//end if
 
             // Turn off exact indent matching for some structures that typically

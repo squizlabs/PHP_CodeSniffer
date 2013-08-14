@@ -126,18 +126,21 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
             $data  = array($expected);
             $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
 
-            $phpcsFile->fixer->beginChangeset();
-            if (substr($origContent, -10) === '!important') {
-                $expected .= ' !important';
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                if (substr($origContent, -10) === '!important') {
+                    $expected .= ' !important';
+                }
+
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
+                $phpcsFile->fixer->replaceToken($next, $expected);
+                for ($next++; $next < $end; $next++) {
+                    $phpcsFile->fixer->replaceToken($next, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
 
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
-            $phpcsFile->fixer->replaceToken($next, $expected);
-            for ($next++; $next < $end; $next++) {
-                $phpcsFile->fixer->replaceToken($next, '');
-            }
-
-            $phpcsFile->fixer->endChangeset();
             return;
         }
 
@@ -168,18 +171,20 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
 
         $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
 
-        $phpcsFile->fixer->beginChangeset();
-        if (substr($origContent, -10) === '!important') {
-            $expected .= ' !important';
-        }
+        if ($phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            if (substr($origContent, -10) === '!important') {
+                $expected .= ' !important';
+            }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
-        $phpcsFile->fixer->replaceToken($next, $expected);
-        for ($next++; $next < $end; $next++) {
-            $phpcsFile->fixer->replaceToken($next, '');
-        }
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
+            $phpcsFile->fixer->replaceToken($next, $expected);
+            for ($next++; $next < $end; $next++) {
+                $phpcsFile->fixer->replaceToken($next, '');
+            }
 
-        $phpcsFile->fixer->endChangeset();
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end process()
 

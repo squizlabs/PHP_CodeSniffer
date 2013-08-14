@@ -111,13 +111,19 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
         $error = 'Expected '.$comment;
         if (isset($tokens[($closingBracket + 1)]) === false || $tokens[($closingBracket + 1)]['code'] !== T_COMMENT) {
             $phpcsFile->addFixableError($error, $closingBracket, 'Missing');
-            $phpcsFile->fixer->replaceToken($closingBracket, '}'.$comment.$phpcsFile->eolChar);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($closingBracket, '}'.$comment.$phpcsFile->eolChar);
+            }
+
             return;
         }
 
         if (rtrim($tokens[($closingBracket + 1)]['content']) !== $comment) {
             $phpcsFile->addFixableError($error, $closingBracket, 'Incorrect');
-            $phpcsFile->fixer->replaceToken(($closingBracket + 1), $comment.$phpcsFile->eolChar);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($closingBracket + 1), $comment.$phpcsFile->eolChar);
+            }
+
             return;
         }
 

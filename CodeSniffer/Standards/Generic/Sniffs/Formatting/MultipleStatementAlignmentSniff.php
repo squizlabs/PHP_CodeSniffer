@@ -297,7 +297,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
                 }
 
-                if ($found !== null) {
+                if ($phpcsFile->fixer->enabled === true && $found !== null) {
                     $newContent = str_repeat(' ', $expected);
                     if ($found === 0) {
                         $phpcsFile->fixer->addContentBefore($assignment, $newContent);

@@ -173,7 +173,9 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addFixableWarning($error.'; use %s instead', $stackPtr, $type.'WithAlternative', $data);
             }
 
-            $phpcsFile->fixer->replaceToken($stackPtr, $this->forbiddenStyles[$pattern]);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $this->forbiddenStyles[$pattern]);
+            }
         } else {
             if ($this->error === true) {
                 $phpcsFile->addError($error, $stackPtr, $type, $data);

@@ -110,22 +110,25 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                              $tokens[$nextCase]['content'],
                             );
                 $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
-                $phpcsFile->fixer->replaceToken($nextCase, $expected);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken($nextCase, $expected);
+                }
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
                 $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
                 $phpcsFile->addFixableError($error, $nextCase, $type.'Indent');
 
-                $padding = str_repeat(' ', ($caseAlignment - 1));
-                if ($tokens[$nextCase]['column'] === 1
-                    || $tokens[($nextCase - 1)]['code'] !== T_WHITESPACE
-                ) {
-                    $phpcsFile->fixer->addContentBefore($nextCase, $padding);
-                } else {
-                    $phpcsFile->fixer->replaceToken(($nextCase - 1), $padding);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $padding = str_repeat(' ', ($caseAlignment - 1));
+                    if ($tokens[$nextCase]['column'] === 1
+                        || $tokens[($nextCase - 1)]['code'] !== T_WHITESPACE
+                    ) {
+                        $phpcsFile->fixer->addContentBefore($nextCase, $padding);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($nextCase - 1), $padding);
+                    }
                 }
-
             }
 
             if ($type === 'Case'
@@ -134,10 +137,12 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             ) {
                 $error = 'CASE keyword must be followed by a single space';
                 $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
-                if ($tokens[($nextCase + 1)]['type'] !== 'T_WHITESPACE') {
-                    $phpcsFile->fixer->addContent($nextCase, ' ');
-                } else {
-                    $phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
+                if ($phpcsFile->fixer->enabled === true) {
+                    if ($tokens[($nextCase + 1)]['type'] !== 'T_WHITESPACE') {
+                        $phpcsFile->fixer->addContent($nextCase, ' ');
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
+                    }
                 }
             }
 
@@ -145,7 +150,9 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             if ($tokens[($opener - 1)]['type'] === 'T_WHITESPACE') {
                 $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
                 $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.$type);
-                $phpcsFile->fixer->replaceToken(($opener - 1), '');
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($opener - 1), '');
+                }
             }
 
             $nextBreak = $tokens[$nextCase]['scope_closer'];
@@ -162,13 +169,15 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                         $error = 'Case breaking statement must be indented '.$this->indent.' spaces from SWITCH keyword';
                         $phpcsFile->addFixableError($error, $nextBreak, 'BreakIndent');
 
-                        $padding = str_repeat(' ', ($caseAlignment - 1));
-                        if ($tokens[$nextBreak]['column'] === 1
-                            || $tokens[($nextBreak - 1)]['code'] !== T_WHITESPACE
-                        ) {
-                            $phpcsFile->fixer->addContentBefore($nextBreak, $padding);
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($nextBreak - 1), $padding);
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $padding = str_repeat(' ', ($caseAlignment - 1));
+                            if ($tokens[$nextBreak]['column'] === 1
+                                || $tokens[($nextBreak - 1)]['code'] !== T_WHITESPACE
+                            ) {
+                                $phpcsFile->fixer->addContentBefore($nextBreak, $padding);
+                            } else {
+                                $phpcsFile->fixer->replaceToken(($nextBreak - 1), $padding);
+                            }
                         }
                     }
 

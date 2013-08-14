@@ -106,23 +106,25 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                 $data  = array($found);
                 $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
 
-                if ($found > 1) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
+                if ($phpcsFile->fixer->enabled === true) {
+                    if ($found > 1) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
 
-                    $phpcsFile->fixer->replaceToken($i, $phpcsFile->eolChar);
-                    $phpcsFile->fixer->endChangeset();
-                } else {
-                    // Try and maintain indentation.
-                    if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
-                        $phpcsFile->fixer->addNewlineBefore($closeBrace - 1);
+                        $phpcsFile->fixer->replaceToken($i, $phpcsFile->eolChar);
+                        $phpcsFile->fixer->endChangeset();
                     } else {
-                        $phpcsFile->fixer->addNewlineBefore($closeBrace);
+                        // Try and maintain indentation.
+                        if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
+                            $phpcsFile->fixer->addNewlineBefore($closeBrace - 1);
+                        } else {
+                            $phpcsFile->fixer->addNewlineBefore($closeBrace);
+                        }
                     }
                 }
-            }
+            }//end if
         }//end if
 
     }//end process()

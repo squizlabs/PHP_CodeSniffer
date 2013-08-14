@@ -30,6 +30,17 @@ class PHP_CodeSniffer_Fixer
 {
 
     /**
+     * Is the fixer enabled and fixing a file?
+     *
+     * Sniffs should check this value to ensure they are not
+     * doing extra processing to prepare for a fix when fixing is
+     * not required.
+     *
+     * @var boolean
+     */
+    public $enabled = false;
+
+    /**
      * The file being fixed.
      *
      * @var PHP_CodeSniffer_File
@@ -111,17 +122,10 @@ class PHP_CodeSniffer_Fixer
      */
     public function fixFile()
     {
-        if ($this->_numFixes === 0) {
-            return false;
-        }
+        $this->enabled = true;
 
         $loops = 0;
-        while ($this->_numFixes > 0 && $loops < 50) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
-            }
-
+        while ($loops < 50) {
             $contents = $this->getContents();
             /*
             @ob_end_clean();
@@ -143,7 +147,15 @@ class PHP_CodeSniffer_Fixer
             }
             */
             $loops++;
-        }
+
+            if ($this->_numFixes === 0) {
+                // Nothing left to do.
+                $this->enabled = false;
+                break;
+            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
+            }
+        }//end while
 
         if ($this->_numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {

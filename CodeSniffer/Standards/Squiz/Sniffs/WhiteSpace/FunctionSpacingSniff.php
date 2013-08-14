@@ -115,38 +115,40 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                       );
             $phpcsFile->addFixableError($error, $closer, 'After', $data);
 
-            $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1));
-            if ($foundLines < $this->spacing) {
-                if ($nextSpace === false || $foundLines === 0) {
-                    // Account for a comment after the closing brace.
-                    $nextSpace = $closer;
-                    if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
-                        $nextSpace++;
+            if ($phpcsFile->fixer->enabled === true) {
+                $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1));
+                if ($foundLines < $this->spacing) {
+                    if ($nextSpace === false || $foundLines === 0) {
+                        // Account for a comment after the closing brace.
+                        $nextSpace = $closer;
+                        if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
+                            $nextSpace++;
+                        }
                     }
-                }
 
-                $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
-                $phpcsFile->fixer->addContent($nextSpace, $padding);
-            } else {
-                $spacing = $this->spacing;
-                if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
-                    // Account for a comment after the closing brace.
-                    $nextSpace++;
-                    $spacing--;
-                }
+                    $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
+                    $phpcsFile->fixer->addContent($nextSpace, $padding);
+                } else {
+                    $spacing = $this->spacing;
+                    if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
+                        // Account for a comment after the closing brace.
+                        $nextSpace++;
+                        $spacing--;
+                    }
 
-                if ($nextContent === ($phpcsFile->numTokens - 1)) {
-                    $spacing--;
-                }
+                    if ($nextContent === ($phpcsFile->numTokens - 1)) {
+                        $spacing--;
+                    }
 
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
 
-                $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $spacing));
-                $phpcsFile->fixer->endChangeset();
-            }
+                    $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $spacing));
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
         }//end if
 
         /*
@@ -220,28 +222,30 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                       );
             $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
 
-            if ($prevContent === 0) {
-                $nextSpace = 0;
-            } else {
-                $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($prevContent + 1), $stackPtr);
-                if ($nextSpace === false) {
-                    $nextSpace = ($stackPtr - 1);
-                }
-            }
-
-            if ($foundLines < $this->spacing) {
-                $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
-                $phpcsFile->fixer->addContent($nextSpace, $padding);
-            } else {
-                $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
+            if ($phpcsFile->fixer->enabled === true) {
+                if ($prevContent === 0) {
+                    $nextSpace = 0;
+                } else {
+                    $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($prevContent + 1), $stackPtr);
+                    if ($nextSpace === false) {
+                        $nextSpace = ($stackPtr - 1);
+                    }
                 }
 
-                $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing));
-                $phpcsFile->fixer->endChangeset();
-            }
+                if ($foundLines < $this->spacing) {
+                    $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
+                    $phpcsFile->fixer->addContent($nextSpace, $padding);
+                } else {
+                    $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing));
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }//end if
         }//end if
 
     }//end process()

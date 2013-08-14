@@ -91,7 +91,9 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                              $tokens[$nextCase]['content'],
                             );
                 $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
-                $phpcsFile->fixer->replaceToken($nextCase, $expected);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken($nextCase, $expected);
+                }
             }
 
             if ($type === 'case'
@@ -122,10 +124,12 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 if ($diff !== 0) {
                     $error = 'Terminating statement must be indented to the same level as the CASE body';
                     $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
-                    if ($diff > 0) {
-                        $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
-                    } else {
-                        $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        if ($diff > 0) {
+                            $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
+                        } else {
+                            $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
+                        }
                     }
                 }
             }

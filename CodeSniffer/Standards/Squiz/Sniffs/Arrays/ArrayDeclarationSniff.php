@@ -59,7 +59,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $error = 'Array keyword should be lower case; expected "array" but found "%s"';
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
-            $phpcsFile->fixer->replaceToken($stackPtr, 'array');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, 'array');
+            }
         }
 
         $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
@@ -70,12 +72,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $error = 'There must be no space between the Array keyword and the opening parenthesis';
             $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
 
-            $phpcsFile->fixer->beginChangeset();
-            for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
-                $phpcsFile->fixer->replaceToken($i, '');
-            }
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
 
-            $phpcsFile->fixer->endChangeset();
+                $phpcsFile->fixer->endChangeset();
+            }
         }
 
         // Check for empty arrays.
@@ -86,12 +90,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Empty array declaration must have no space between the parentheses';
                 $phpcsFile->addFixableError($error, $stackPtr, 'SpaceInEmptyArray');
 
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
 
-                $phpcsFile->fixer->endChangeset();
+                    $phpcsFile->fixer->endChangeset();
+                }
 
                 // We can return here because there is nothing else to check. All code
                 // below can assume that the array is not empty.
@@ -123,7 +129,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         // There is a comma at the end of a single line array.
                         $error = 'Comma not allowed after last value in single-line array declaration';
                         $phpcsFile->addFixableError($error, $i, 'CommaAfterLast');
-                        $phpcsFile->fixer->replaceToken($i, '');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
                     }
                 }
             }//end for
@@ -136,7 +144,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $error   = 'Expected 1 space between "%s" and double arrow; 0 found';
                     $data    = array($content);
                     $phpcsFile->addFixableError($error, $nextArrow, 'NoSpaceBeforeDoubleArrow', $data);
-                    $phpcsFile->fixer->addContentBefore($nextArrow, ' ');
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->addContentBefore($nextArrow, ' ');
+                    }
                 } else {
                     $spaceLength = strlen($tokens[($nextArrow - 1)]['content']);
                     if ($spaceLength !== 1) {
@@ -147,7 +157,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                     $spaceLength,
                                    );
                         $phpcsFile->addFixableError($error, $nextArrow, 'SpaceBeforeDoubleArrow', $data);
-                        $phpcsFile->fixer->replaceToken(($nextArrow - 1), ' ');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken(($nextArrow - 1), ' ');
+                        }
                     }
                 }
 
@@ -156,7 +168,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $error   = 'Expected 1 space between double arrow and "%s"; 0 found';
                     $data    = array($content);
                     $phpcsFile->addFixableError($error, $nextArrow, 'NoSpaceAfterDoubleArrow', $data);
-                    $phpcsFile->fixer->addContent($nextArrow, ' ');
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->addContent($nextArrow, ' ');
+                    }
                 } else {
                     $spaceLength = strlen($tokens[($nextArrow + 1)]['content']);
                     if ($spaceLength !== 1) {
@@ -167,7 +181,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                     $spaceLength,
                                    );
                         $phpcsFile->addFixableError($error, $nextArrow, 'SpaceAfterDoubleArrow', $data);
-                        $phpcsFile->fixer->replaceToken(($nextArrow + 1), ' ');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken(($nextArrow + 1), ' ');
+                        }
                     }
                 }
             }//end while
@@ -178,10 +194,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 if (($conditionCheck === false) || ($tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line'])) {
                     $error = 'Array with multiple values cannot be declared on a single line';
                     $phpcsFile->addFixableError($error, $stackPtr, 'SingleLineNotAllowed');
-                    $phpcsFile->fixer->beginChangeset();
-                    $phpcsFile->fixer->addNewline($arrayStart);
-                    $phpcsFile->fixer->addNewlineBefore($arrayEnd);
-                    $phpcsFile->fixer->endChangeset();
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->addNewline($arrayStart);
+                        $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+                        $phpcsFile->fixer->endChangeset();
+                    }
                     return;
                 }
 
@@ -193,7 +211,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $error   = 'Expected 1 space between comma and "%s"; 0 found';
                         $data    = array($content);
                         $phpcsFile->addFixableError($error, $comma, 'NoSpaceAfterComma', $data);
-                        $phpcsFile->fixer->addContent($comma, ' ');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->addContent($comma, ' ');
+                        }
                     } else {
                         $spaceLength = strlen($tokens[($comma + 1)]['content']);
                         if ($spaceLength !== 1) {
@@ -204,7 +224,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                         $spaceLength,
                                        );
                             $phpcsFile->addFixableError($error, $comma, 'SpaceAfterComma', $data);
-                            $phpcsFile->fixer->replaceToken(($comma + 1), ' ');
+                            if ($phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken(($comma + 1), ' ');
+                            }
                         }
                     }
 
@@ -217,7 +239,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                         $spaceLength,
                                        );
                         $phpcsFile->addFixableError($error, $comma, 'SpaceBeforeComma', $data);
-                        $phpcsFile->fixer->replaceToken(($comma - 1), '');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken(($comma - 1), '');
+                        }
                     }
                 }//end foreach
             }//end if
@@ -230,7 +254,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$lastContent]['line'] !== ($tokens[$arrayEnd]['line'] - 1)) {
             $error = 'Closing parenthesis of array declaration must be on a new line';
             $phpcsFile->addFixableError($error, $arrayEnd, 'CloseBraceNewLine');
-            $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+            }
         } else if ($tokens[$arrayEnd]['column'] !== $keywordStart) {
             // Check the closing bracket is lined up under the a in array.
             $expected = ($keywordStart - 1);
@@ -241,10 +267,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                          $found,
                         );
             $phpcsFile->addFixableError($error, $arrayEnd, 'CloseBraceNotAligned', $data);
-            if ($found === 0) {
-                $phpcsFile->fixer->addContent(($arrayEnd - 1), str_repeat(' ', $expected));
-            } else {
-                $phpcsFile->fixer->replaceToken(($arrayEnd - 1), str_repeat(' ', $expected));
+            if ($phpcsFile->fixer->enabled === true) {
+                if ($found === 0) {
+                    $phpcsFile->fixer->addContent(($arrayEnd - 1), str_repeat(' ', $expected));
+                } else {
+                    $phpcsFile->fixer->replaceToken(($arrayEnd - 1), str_repeat(' ', $expected));
+                }
             }
         }
 
@@ -296,7 +324,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                         $spaceLength,
                                        );
                         $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
-                        $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                        if ($phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                        }
                     }
 
                     // Find the value, which will be the first token on the line,
@@ -378,24 +408,27 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $error = 'Multi-line array contains a single value; use single-line array instead';
             $phpcsFile->addFixableError($error, $stackPtr, 'MultiLineNotAllowed');
 
-            $phpcsFile->fixer->beginChangeset();
-            for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    break;
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $phpcsFile->fixer->replaceToken($i, '');
-            }
+                for ($i = ($arrayEnd - 1); $i > $arrayStart; $i--) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        break;
+                    }
 
-            for ($i = ($arrayEnd - 1); $i > $arrayStart; $i--) {
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    break;
+                    $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $phpcsFile->fixer->replaceToken($i, '');
+                $phpcsFile->fixer->endChangeset();
             }
 
-            $phpcsFile->fixer->endChangeset();
             return;
         }//end if
 
@@ -418,7 +451,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$trailingContent]['code'] !== T_COMMA) {
                 $error = 'Comma required after last value in array declaration';
                 $phpcsFile->addFixableError($error, $trailingContent, 'NoCommaAfterLast');
-                $phpcsFile->fixer->addContent($trailingContent, ',');
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContent($trailingContent, ',');
+                }
             }
 
             foreach ($indices as $value) {
@@ -441,13 +476,15 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                   $found,
                                  );
                         $phpcsFile->addFixableError($error, $value['value'], 'ValueNotAligned', $data);
-                        if ($found === 0) {
-                            $phpcsFile->fixer->addContent(($value['value'] - 1), str_repeat(' ', $expected));
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($value['value'] - 1), str_repeat(' ', $expected));
+                        if ($phpcsFile->fixer->enabled === true) {
+                            if ($found === 0) {
+                                $phpcsFile->fixer->addContent(($value['value'] - 1), str_repeat(' ', $expected));
+                            } else {
+                                $phpcsFile->fixer->replaceToken(($value['value'] - 1), str_repeat(' ', $expected));
+                            }
                         }
                     }
-                }
+                }//end if
             }//end foreach
         }//end if
 
@@ -485,7 +522,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 if (($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
                     $error = 'The first value in a multi-value array must be on a new line';
                     $phpcsFile->addFixableError($error, $stackPtr, 'FirstValueNoNewline');
-                    $phpcsFile->fixer->addNewlineBefore($index['value']);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->addNewlineBefore($index['value']);
+                    }
                 }
 
                 continue;
@@ -497,14 +536,20 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($indexLine === $tokens[$stackPtr]['line']) {
                 $error = 'The first index in a multi-value array must be on a new line';
                 $phpcsFile->addFixableError($error, $index['index'], 'FirstIndexNoNewline');
-                $phpcsFile->fixer->addNewlineBefore($index['index']);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addNewlineBefore($index['index']);
+                }
+
                 continue;
             }
 
             if ($indexLine === $lastIndexLine) {
                 $error = 'Each index in a multi-line array must be on a new line';
                 $phpcsFile->addFixableError($error, $index['index'], 'IndexNoNewline');
-                $phpcsFile->fixer->addNewlineBefore($index['index']);
+                if ($phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addNewlineBefore($index['index']);
+                }
+
                 continue;
             }
 
@@ -518,10 +563,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                           $found,
                          );
                 $phpcsFile->addFixableError($error, $index['index'], 'KeyNotAligned', $data);
-                if ($found === 0) {
-                    $phpcsFile->fixer->addContent(($index['index'] - 1), str_repeat(' ', $expected));
-                } else {
-                    $phpcsFile->fixer->replaceToken(($index['index'] - 1), str_repeat(' ', $expected));
+                if ($phpcsFile->fixer->enabled === true) {
+                    if ($found === 0) {
+                        $phpcsFile->fixer->addContent(($index['index'] - 1), str_repeat(' ', $expected));
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($index['index'] - 1), str_repeat(' ', $expected));
+                    }
                 }
 
                 continue;
@@ -537,10 +584,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                           $found,
                          );
                 $phpcsFile->addFixableError($error, $index['arrow'], 'DoubleArrowNotAligned', $data);
-                if ($found === 0) {
-                    $phpcsFile->fixer->addContent(($index['arrow'] - 1), str_repeat(' ', $expected));
-                } else {
-                    $phpcsFile->fixer->replaceToken(($index['arrow'] - 1), str_repeat(' ', $expected));
+                if ($phpcsFile->fixer->enabled === true) {
+                    if ($found === 0) {
+                        $phpcsFile->fixer->addContent(($index['arrow'] - 1), str_repeat(' ', $expected));
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($index['arrow'] - 1), str_repeat(' ', $expected));
+                    }
                 }
 
                 continue;
@@ -556,10 +605,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                           $found,
                          );
                 $phpcsFile->addFixableError($error, $index['arrow'], 'ValueNotAligned', $data);
-                if ($found === 0) {
-                    $phpcsFile->fixer->addContent(($index['value'] - 1), str_repeat(' ', $expected));
-                } else {
-                    $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
+                if ($phpcsFile->fixer->enabled === true) {
+                    if ($found === 0) {
+                        $phpcsFile->fixer->addContent(($index['value'] - 1), str_repeat(' ', $expected));
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
+                    }
                 }
             }
 
@@ -585,14 +636,16 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $error = 'Each line in an array declaration must end in a comma';
                     $phpcsFile->addFixableError($error, $index['value'], 'NoComma');
 
-                    // Find the end of the line and put a comma there.
-                    for ($i = ($index['value'] + 1); $i < $phpcsFile->numTokens; $i++) {
-                        if ($tokens[$i]['line'] > $tokens[$index['value']]['line']) {
-                            break;
+                    if ($phpcsFile->fixer->enabled === true) {
+                        // Find the end of the line and put a comma there.
+                        for ($i = ($index['value'] + 1); $i < $phpcsFile->numTokens; $i++) {
+                            if ($tokens[$i]['line'] > $tokens[$index['value']]['line']) {
+                                break;
+                            }
                         }
-                    }
 
-                    $phpcsFile->fixer->addContentBefore(($i - 1), ',');
+                        $phpcsFile->fixer->addContentBefore(($i - 1), ',');
+                    }
                 }
 
                 // Check that there is no space before the comma.
@@ -605,7 +658,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                                     $spaceLength,
                                    );
                     $phpcsFile->addFixableError($error, $nextComma, 'SpaceBeforeComma', $data);
-                    $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
+                    if ($phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
+                    }
                 }
             }
         }//end foreach
