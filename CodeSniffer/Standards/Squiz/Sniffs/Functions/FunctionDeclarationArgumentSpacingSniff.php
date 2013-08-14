@@ -125,9 +125,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     if ($phpcsFile->fixer->enabled === true) {
                         $padding = str_repeat(' ', $this->equalsSpacing);
                         if ($spacesBefore === 0) {
-                          $phpcsFile->fixer->addContentBefore($nextToken, $padding);
+                            $phpcsFile->fixer->addContentBefore($nextToken, $padding);
                         } else {
-                          $phpcsFile->fixer->replaceToken(($nextToken - 1), $padding);
+                            $phpcsFile->fixer->replaceToken(($nextToken - 1), $padding);
                         }
                     }
                 }//end if
@@ -148,9 +148,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     if ($phpcsFile->fixer->enabled === true) {
                         $padding = str_repeat(' ', $this->equalsSpacing);
                         if ($spacesAfter === 0) {
-                          $phpcsFile->fixer->addContent($nextToken, $padding);
+                            $phpcsFile->fixer->addContent($nextToken, $padding);
                         } else {
-                          $phpcsFile->fixer->replaceToken(($nextToken + 1), $padding);
+                            $phpcsFile->fixer->replaceToken(($nextToken + 1), $padding);
                         }
                     }
                 }//end if

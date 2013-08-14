@@ -104,9 +104,9 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
             if ($phpcsFile->fixer->enabled === true) {
                 $diff = ($startColumn - $braceIndent);
                 if ($diff > 0) {
-                  $phpcsFile->fixer->addContentBefore($scopeEnd, str_repeat(' ', $diff));
+                    $phpcsFile->fixer->addContentBefore($scopeEnd, str_repeat(' ', $diff));
                 } else {
-                  $phpcsFile->fixer->substrToken(($scopeEnd - 1), 0, $diff);
+                    $phpcsFile->fixer->substrToken(($scopeEnd - 1), 0, $diff);
                 }
             }
         }//end if
