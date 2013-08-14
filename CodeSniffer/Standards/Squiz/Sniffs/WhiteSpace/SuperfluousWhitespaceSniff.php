@@ -98,7 +98,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     return;
                 }
             } else {
-                // If its the first token, then there is no space.
+                // If it's the first token, then there is no space.
                 if ($stackPtr === 0) {
                     return;
                 }
@@ -118,6 +118,12 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }//end if
 
             $phpcsFile->addError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
+            $phpcsFile->fixer->beginChangeset();
+            for ($i = 0; $i < $stackPtr; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
+
+            $phpcsFile->fixer->endChangeset();
 
         } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
 
@@ -175,7 +181,13 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
             }
 
-            $phpcsFile->addError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
+            $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
+            $phpcsFile->fixer->beginChangeset();
+            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
+
+            $phpcsFile->fixer->endChangeset();
 
         } else {
 
@@ -197,8 +209,9 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
             $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
             if (empty($tokenContent) === false) {
-                if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
-                    $phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
+                if ($tokenContent !== rtrim($tokenContent)) {
+                    $phpcsFile->addFixableError('Whitespace found at end of line', $stackPtr, 'EndLine');
+                    $phpcsFile->fixer->replaceToken($stackPtr, rtrim($tokenContent).$phpcsFile->eolChar);
                 }
             }
 
@@ -207,19 +220,31 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             */
 
             if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
-                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line'] && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']) {
+                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
+                    && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
+                ) {
                     // This is an empty line and the line before this one is not
-                    //  empty, so this could be the start of a multiple empty
+                    // empty, so this could be the start of a multiple empty
                     // line block.
                     $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
                     $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
                     if ($lines > 1) {
                         $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
                         $data  = array($lines);
-                        $phpcsFile->addError($error, $stackPtr, 'EmptyLines', $data);
+                        $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
+
+                        $phpcsFile->fixer->beginChangeset();
+                        $i = $stackPtr;
+                        while ($tokens[$i]['line'] !== $tokens[$next]['line']) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                            $i++;
+                        }
+
+                        $phpcsFile->fixer->addNewlineBefore($next);
+                        $phpcsFile->fixer->endChangeset();
                     }
-                }
-            }
+                }//end if
+            }//end if
 
         }//end if
 
