@@ -396,15 +396,13 @@ class PHP_CodeSniffer_Fixer
     /**
      * Adds a newline to the start of a token's content.
      *
-     * The token before the one passed is modified rather than the passed token.
-     *
      * @param int $stackPtr The position of the token in the token stack.
      *
      * @return void
      */
     public function addNewlineBefore($stackPtr)
     {
-        $this->replaceToken(($stackPtr - 1), $this->_tokens[($stackPtr - 1)].$this->_currentFile->eolChar);
+        $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$this->_tokens[$stackPtr]);
 
     }//end addNewlineBefore()
 
@@ -427,8 +425,6 @@ class PHP_CodeSniffer_Fixer
     /**
      * Adds content to the start of a token's current content.
      *
-     * The token before the one passed is modified rather than the passed token.
-     *
      * @param int    $stackPtr The position of the token in the token stack.
      * @param string $content  The content to add.
      *
@@ -436,7 +432,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function addContentBefore($stackPtr, $content)
     {
-        $this->addContent(($stackPtr - 1), $content);
+        $this->replaceToken($stackPtr, $content.$this->_tokens[$stackPtr]);
 
     }//end addContentBefore()
 
