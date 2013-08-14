@@ -109,12 +109,23 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                              $expected,
                              $tokens[$nextCase]['content'],
                             );
-                $phpcsFile->addError($error, $nextCase, $type.'NotLower', $data);
+                $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
+                $phpcsFile->fixer->replaceToken($nextCase, $expected);
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
                 $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
-                $phpcsFile->addError($error, $nextCase, $type.'Indent');
+                $phpcsFile->addFixableError($error, $nextCase, $type.'Indent');
+
+                $padding = str_repeat(' ', ($caseAlignment - 1));
+                if ($tokens[$nextCase]['column'] === 1
+                    || $tokens[($nextCase - 1)]['code'] !== T_WHITESPACE
+                ) {
+                    $phpcsFile->fixer->addContentBefore($nextCase, $padding);
+                } else {
+                    $phpcsFile->fixer->replaceToken(($nextCase - 1), $padding);
+                }
+
             }
 
             if ($type === 'Case'
@@ -122,13 +133,19 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 || $tokens[($nextCase + 1)]['content'] !== ' ')
             ) {
                 $error = 'CASE keyword must be followed by a single space';
-                $phpcsFile->addError($error, $nextCase, 'SpacingAfterCase');
+                $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
+                if ($tokens[($nextCase + 1)]['type'] !== 'T_WHITESPACE') {
+                    $phpcsFile->fixer->addContent($nextCase, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
+                }
             }
 
             $opener = $tokens[$nextCase]['scope_opener'];
             if ($tokens[($opener - 1)]['type'] === 'T_WHITESPACE') {
                 $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
-                $phpcsFile->addError($error, $nextCase, 'SpaceBeforeColon'.$type);
+                $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.$type);
+                $phpcsFile->fixer->replaceToken(($opener - 1), '');
             }
 
             $nextBreak = $tokens[$nextCase]['scope_closer'];
@@ -143,19 +160,20 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     // the default case.
                     if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
                         $error = 'Case breaking statement must be indented '.$this->indent.' spaces from SWITCH keyword';
-                        $phpcsFile->addError($error, $nextBreak, 'BreakIndent');
-                    }
+                        $phpcsFile->addFixableError($error, $nextBreak, 'BreakIndent');
 
-                    $breakLine = $tokens[$nextBreak]['line'];
-                    $prevLine  = 0;
-                    for ($i = ($nextBreak - 1); $i > $stackPtr; $i--) {
-                        if ($tokens[$i]['type'] !== 'T_WHITESPACE') {
-                            $prevLine = $tokens[$i]['line'];
-                            break;
+                        $padding = str_repeat(' ', ($caseAlignment - 1));
+                        if ($tokens[$nextBreak]['column'] === 1
+                            || $tokens[($nextBreak - 1)]['code'] !== T_WHITESPACE
+                        ) {
+                            $phpcsFile->fixer->addContentBefore($nextBreak, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($nextBreak - 1), $padding);
                         }
                     }
 
-                    if ($prevLine !== ($breakLine - 1)) {
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($nextBreak - 1), $stackPtr, true);
+                    if ($tokens[$prev]['line'] !== ($tokens[$nextBreak]['line'] - 1)) {
                         $error = 'Blank lines are not allowed before case breaking statements';
                         $phpcsFile->addError($error, $nextBreak, 'SpacingBeforeBreak');
                     }
