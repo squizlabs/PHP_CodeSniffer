@@ -51,7 +51,7 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
     ) {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             ob_end_clean();
-            echo "\t*** START ADDITIONAL FIXING ***".PHP_EOL;
+            echo "\t*** START FILE FIXING ***".PHP_EOL;
         }
 
         $fixed = $phpcsFile->fixer->fixFile();
@@ -66,7 +66,7 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** END ADDITIONAL FIXING ***".PHP_EOL;
+            echo "\t*** END FILE FIXING ***".PHP_EOL;
             ob_start();
         }
 
