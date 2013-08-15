@@ -121,7 +121,9 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                     if ($nextSpace === false || $foundLines === 0) {
                         // Account for a comment after the closing brace.
                         $nextSpace = $closer;
-                        if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
+                        if (isset($tokens[($closer + 1)]) === true
+                            && $tokens[($closer + 1)]['code'] === T_COMMENT
+                        ) {
                             $nextSpace++;
                         }
                     }
