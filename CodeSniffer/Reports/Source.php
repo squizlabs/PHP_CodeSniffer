@@ -175,7 +175,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         }
 
         echo ' WERE FOUND IN '.count($this->_sourceCache).' SOURCE';
-        if (count($this->_sourceCache) > 1) {
+        if (count($this->_sourceCache) !== 1) {
             echo 'S';
         }
 

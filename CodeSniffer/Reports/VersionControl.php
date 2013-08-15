@@ -227,12 +227,12 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
         echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION';
-        if ($errorsShown > 1) {
+        if ($errorsShown !== 1) {
             echo 'S';
         }
 
         echo ' WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR';
-        if (count($this->_authorCache) > 1) {
+        if (count($this->_authorCache) !== 1) {
             echo 'S';
         }
 

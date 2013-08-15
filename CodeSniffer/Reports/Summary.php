@@ -115,17 +115,17 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
         echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.$totalErrors.' ERROR';
-        if ($totalErrors > 1) {
+        if ($totalErrors !== 1) {
             echo 'S';
         }
 
         echo ' AND '.$totalWarnings.' WARNING';
-        if ($totalWarnings > 1) {
+        if ($totalWarnings !== 1) {
             echo 'S';
         }
 
         echo ' WERE FOUND IN '.$totalFiles.' FILE';
-        if ($totalFiles > 1) {
+        if ($totalFiles !== 1) {
             echo 'S';
         }
 
