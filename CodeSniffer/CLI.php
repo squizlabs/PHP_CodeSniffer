@@ -413,6 +413,7 @@ class PHP_CodeSniffer_CLI
                                  'checkstyle',
                                  'csv',
                                  'diff',
+                                 'fix',
                                  'emacs',
                                  'notifysend',
                                  'source',
