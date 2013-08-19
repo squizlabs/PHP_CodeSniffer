@@ -281,7 +281,13 @@ class PHP_CodeSniffer_CLI
             $values['warningSeverity'] = null;
             break;
         default:
-            $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
+            if ($this->dieOnUnknownArg === false) {
+                $values[$arg] = $arg;
+            } else {
+                echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            }
         }//end switch
 
         return $values;
@@ -456,7 +462,20 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $values['tabWidth'] = (int) substr($arg, 10);
             } else {
-                $values = $this->processUnknownArgument('--'.$arg, $pos, $values);
+                if ($this->dieOnUnknownArg === false) {
+                    $eqPos = strpos($arg, '=');
+                    if ($eqPos === false) {
+                        $values[$arg] = $arg;
+                    } else {
+                        $value = substr($arg, ($eqPos + 1));
+                        $arg   = substr($arg, 0, $eqPos);
+                        $values[$arg] = $value;
+                    }
+                } else {
+                    echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
             }//end if
 
             break;
@@ -481,17 +500,6 @@ class PHP_CodeSniffer_CLI
      */
     public function processUnknownArgument($arg, $pos, $values)
     {
-        // We don't know about any additional switches; just files.
-        if ($arg{0} === '-') {
-            if ($this->dieOnUnknownArg === false) {
-                return $values;
-            }
-
-            echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
-            $this->printUsage();
-            exit(2);
-        }
-
         $file = realpath($arg);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
