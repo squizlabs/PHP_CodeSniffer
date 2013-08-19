@@ -32,44 +32,65 @@ $phpcs->checkRequirements();
 $cliValues = $phpcs->getCommandLineValues();
 
 
-// Override some of the command line settings that might be used and stop us
-// gettting a diff file.
-$diffFile = getcwd().'/phpcbf-fixed.diff';
-
+// Override some of the command line settings that might break the fixes.
 $cliValues['generator'] = '';
 $cliValues['explain']   = false;
-$cliValues['reports']   = array('diff' => $diffFile);
 
-if (file_exists($diffFile) === true) {
-    unlink($diffFile);
+$suffix     = '';
+$allowPatch = true;
+
+if ($suffix === '' && $allowPatch === true) {
+    // Using the diff/patch tools.
+    $diffFile = getcwd().'/phpcbf-fixed.diff';
+    $cliValues['reports'] = array('diff' => $diffFile);
+    if (file_exists($diffFile) === true) {
+        unlink($diffFile);
+    }
+} else {
+    // Replace the file without the patch command
+    // or writing to a file with a new suffix.
+    $cliValues['reports']       = array('cbf' => null);
+    $cliValues['phpcbf-suffix'] = $suffix;
 }
 
 $numErrors = $phpcs->process($cliValues);
-if (file_exists($diffFile) === false) {
-    // Nothing to fix.
+
+
+if ($suffix === '' && $allowPatch === true) {
+    if (file_exists($diffFile) === false) {
+        // Nothing to fix.
+        if ($numErrors === 0) {
+            // And no errors reported.
+            $exit = 0;
+        } else {
+            // Errors we can't fix.
+            $exit = 2;
+        }
+    } else {
+        $cmd    = "patch -p0 -ui \"$diffFile\"";
+        $output = array();
+        $retVal = null;
+        exec($cmd, $output, $retVal);
+        unlink($diffFile);
+
+        if ($retVal === 0) {
+            // Everything went well.
+            $filesPatched = count($output);
+            echo "Patched $filesPatched files\n";
+            $exit = 1;
+        } else {
+            print_r($output);
+            echo "Returned: $retVal\n";
+            $exit = 3;
+        }
+    }
+} else {
     if ($numErrors === 0) {
-        // And no errors reported.
+        // No errors left unfixed.
         $exit = 0;
     } else {
         // Errors we can't fix.
         $exit = 2;
-    }
-} else {
-    $cmd    = "patch -p0 -ui \"$diffFile\"";
-    $output = array();
-    $retVal = null;
-    exec($cmd, $output, $retVal);
-    #unlink($diffFile);
-
-    if ($retVal === 0) {
-        // Everything went well.
-        $filesPatched = count($output);
-        echo "Patched $filesPatched files\n";
-        $exit = 1;
-    } else {
-        print_r($output);
-        echo "Returned: $retVal\n";
-        $exit = 3;
     }
 }
 

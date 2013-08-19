@@ -147,6 +147,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </file>
     </dir>
     <dir name="Reports">
+     <file baseinstalldir="PHP" name="Cbf.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="PHP" name="Checkstyle.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
