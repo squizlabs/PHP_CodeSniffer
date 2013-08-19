@@ -29,15 +29,22 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
 
 $phpcs = new PHP_CodeSniffer_CLI();
 $phpcs->checkRequirements();
-$cliValues = $phpcs->getCommandLineValues();
-
+$phpcs->dieOnUnknownArg = false;
 
 // Override some of the command line settings that might break the fixes.
+$cliValues = $phpcs->getCommandLineValues();
 $cliValues['generator'] = '';
 $cliValues['explain']   = false;
 
-$suffix     = '';
+$suffix = '';
+if (isset($cliValues['suffix']) === true) {
+    $suffix = $cliValues['suffix'];
+}
+
 $allowPatch = true;
+if (isset($cliValues['no-patch']) === true) {
+    $allowPatch = false;
+}
 
 if ($suffix === '' && $allowPatch === true) {
     // Using the diff/patch tools.
