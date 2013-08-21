@@ -47,20 +47,22 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
         }
 
-        // If the content doesn't have an EOl char on the end, add one so
+        // If the content doesn't have an EOL char on the end, add one so
         // the open and close tags we add are parsed correctly.
+        $eolAdded = false;
         if (substr($string, 0, (strlen($eolChar) * -1)) !== $eolChar) {
-            $string .= $eolChar;
+            $string  .= $eolChar;
+            $eolAdded = true;
         }
 
         $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
 
         $finalTokens    = array();
         $finalTokens[0] = array(
-                        'code'    => T_OPEN_TAG,
-                        'type'    => 'T_OPEN_TAG',
-                        'content' => '',
-                       );
+                           'code'    => T_OPEN_TAG,
+                           'type'    => 'T_OPEN_TAG',
+                           'content' => '',
+                          );
 
         $newStackPtr      = 1;
         $numTokens        = count($tokens);
@@ -378,6 +380,15 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
         // Blank out the content of the end tag.
         $finalTokens[($numTokens - 1)]['content'] = '';
+
+        if ($eolAdded === true) {
+            // Strip off the extra EOL char we added for tokenizing.
+            $finalTokens[($numTokens - 2)]['content'] = substr(
+                $finalTokens[($numTokens - 2)]['content'],
+                0,
+                (strlen($eolChar) * -1)
+            );
+        }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** END CSS TOKENIZING ***".PHP_EOL;
