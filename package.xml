@@ -40,9 +40,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
+  - Squiz and MySource File and Function comment sniffs now allow all tags and don't require a particular licence
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
     -- Adds new error message for single-line arrays that end with a comma
   - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
+  - Fixed bug #20044 : PSR1 camelCase check does not ignore leading underscores
  </notes>
  <contents>
   <dir name="/">
@@ -1082,6 +1084,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
+       <dir name="Methods">
+        <file baseinstalldir="PHP" name="CamelCapsMethodNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Classes">
@@ -1096,6 +1103,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
+       <dir name="Methods">
+        <file baseinstalldir="PHP" name="CamelCapsMethodNameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="CamelCapsMethodNameUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>

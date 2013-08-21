@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for FunctionCommentSniff.
+ * Unit test class for the CamelCapsMethodName sniff.
  *
  * PHP version 5
  *
@@ -13,7 +13,10 @@
  */
 
 /**
- * Unit test class for FunctionCommentSniff.
+ * Unit test class for the CamelCapsMethodName sniff.
+ *
+ * A sniff unit test checks a .inc file for expected violations of a single
+ * coding standard. Expected errors and warnings are stored in this class.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -23,7 +26,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTest
+class PSR1_Tests_Methods_CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -38,14 +41,15 @@ class MySource_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUni
     public function getErrorList()
     {
         return array(
-                28 => 1,
-                36 => 1,
-                37 => 2,
-                49 => 1,
-                58 => 1,
-                65 => 1,
-                77 => 1,
-                79 => 1,
+                6  => 1,
+                7  => 1,
+                11 => 1,
+                12 => 1,
+                13 => 1,
+                17 => 1,
+                21 => 1,
+                25 => 1,
+                45 => 1,
                );
 
     }//end getErrorList()
