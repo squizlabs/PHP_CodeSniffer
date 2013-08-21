@@ -558,46 +558,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     }//end processCopyrights()
 
 
-    /**
-     * License tag must be 'http://matrix.squiz.net/licence Squiz.Net Open Source Licence'.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processLicense($errorPos)
-    {
-        $license = $this->commentParser->getLicense();
-        if ($license !== null) {
-            $url     = $license->getValue();
-            $content = $license->getComment();
-            if (empty($url) === true && empty($content) === true) {
-                $error = 'Content missing for @license tag in file comment';
-                $this->currentFile->addError($error, $errorPos, 'MissingLicense');
-            } else {
-                // Check for license URL.
-                if (empty($url) === true) {
-                    $error = 'License URL missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseURL');
-                } else if ($url !== 'http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt') {
-                    $error = 'Expected "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" for license URL';
-                    $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseURL');
-                }
-
-                // Check for license name.
-                if (empty($content) === true) {
-                    $error = 'License name missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseName');
-                } else if ($content !== 'GPLv2') {
-                    $error = 'Expected "GPLv2" for license name';
-                    $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseName');
-                }
-            }//end if
-        }//end if
-
-    }//end processLicense()
-
-
 }//end class
 
 
