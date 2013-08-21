@@ -40,9 +40,6 @@
  <!-- 4.3. Methods -->
 
  <!-- Method names MUST be declared in camelCase(). -->
- <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
-  <properties>
-   <property name="strict" value="false"/>
-  </properties>
- </rule>
+ <!-- checked in Methods/CamelCaseMethodNameSniff -->
+
 </ruleset>

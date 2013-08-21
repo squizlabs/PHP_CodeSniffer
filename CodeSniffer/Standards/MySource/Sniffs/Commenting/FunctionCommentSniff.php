@@ -88,10 +88,6 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
                     $data  = array($errorTag['tag']);
                     $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiTagSpacing', $data);
                 }
-            } else {
-                $error = '@%s tag is not allowed in function comment';
-                $data  = array($errorTag['tag']);
-                $this->currentFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
             }//end if
         }//end foreach
 
