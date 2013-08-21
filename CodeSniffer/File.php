@@ -629,6 +629,11 @@ class PHP_CodeSniffer_File
      */
     private function _parse($contents=null)
     {
+        if ($contents === null && empty($this->_tokens) === false) {
+            // File has already been parsed.
+            return;
+        }
+
         try {
             $this->eolChar = self::detectLineEndings($this->_file, $contents);
         } catch (PHP_CodeSniffer_Exception $e) {

@@ -126,16 +126,23 @@ class PHP_CodeSniffer_Fixer
 
         $loops = 0;
         while ($loops < 50) {
-            $contents = $this->getContents();
-            /*
-            @ob_end_clean();
-            $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
-            $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $contents);
-            $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
-            echo $debugContent;
-            */
             ob_start();
-            $this->_currentFile->refreshTokenListeners();
+            if ($loops > 0) {
+                // Only needed once file content has changed.
+                $contents = $this->getContents();
+                $this->_currentFile->refreshTokenListeners();
+                /*
+                @ob_end_clean();
+                $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
+                $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $debugContent);
+                $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
+                echo $debugContent;
+                */
+            } else {
+                // Signal to not reparse the file, saving time.
+                $contents = null;
+            }
+
             $this->_currentFile->start($contents);
             ob_end_clean();
             /*
