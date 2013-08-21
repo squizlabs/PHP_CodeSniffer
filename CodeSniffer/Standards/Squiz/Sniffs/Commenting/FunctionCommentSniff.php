@@ -809,12 +809,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
      */
     protected function processUnknownTags($commentStart, $commentEnd)
     {
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            $error = '@%s tag is not allowed in function comment';
-            $data  = array($errorTag['tag']);
-            $this->currentFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
-        }
 
     }//end processUnknownTags
 

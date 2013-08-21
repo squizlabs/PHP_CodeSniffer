@@ -266,15 +266,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            // Unknown tags are not parsed, do not process further.
-            $error = '@%s tag is not allowed in file comment';
-            $data  = array($errorTag['tag']);
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
-        }
-
         // Check each tag.
         $this->processTags($commentStart, $commentEnd);
 
@@ -310,7 +301,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                  'subpackage' => 'follows @package',
                  'author'     => 'follows @subpackage',
                  'copyright'  => 'follows @author',
-                 'license'    => 'follows @copyright',
                 );
 
         $foundTags   = $this->commentParser->getTagOrders();
@@ -559,8 +549,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Content missing for @copyright tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'MissingCopyright');
 
-            } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ACN 084 670 600\))$/', $content) === 0) {
-                $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ACN 084 670 600)" for copyright declaration';
+            } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $content) === 0) {
+                $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
                 $this->currentFile->addError($error, $errorPos, 'IncorrectCopyright');
             }
         }
