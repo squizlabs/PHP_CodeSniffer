@@ -35,6 +35,15 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 {
 
     /**
+     * Enable or disable the backup and restoration of the $GLOBALS array.
+     * Overwrite this attribute in a child class of TestCase.
+     * Setting this attribute in setUp() has no effect!
+     *
+     * @var boolean
+     */
+    protected $backupGlobals = false;
+
+    /**
      * The PHP_CodeSniffer object used for testing.
      *
      * @var PHP_CodeSniffer
@@ -147,8 +156,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             $this->fail(implode(PHP_EOL, $failureMessages));
         }
 
-
-    }//end testSniff()
+    }//end runTest()
 
 
     /**
@@ -205,10 +213,21 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 $errorsTemp = array();
                 foreach ($errors as $foundError) {
                     $errorsTemp[] = $foundError['message'];
+
+                    $source = $foundError['source'];
+                    if (in_array($source, $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']) === false) {
+                        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES'][] = $source;
+                    }
+
+                    if ($foundError['fixable'] === true
+                        && in_array($source, $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']) === false
+                    ) {
+                        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'][] = $source;
+                    }
                 }
 
                 $allProblems[$line]['found_errors'] = array_merge($foundErrorsTemp, $errorsTemp);
-            }
+            }//end foreach
 
             if (isset($expectedErrors[$line]) === true) {
                 $allProblems[$line]['expected_errors'] = $expectedErrors[$line];
