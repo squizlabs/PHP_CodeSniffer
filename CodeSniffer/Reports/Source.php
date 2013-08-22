@@ -139,8 +139,11 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
         echo str_repeat('-', $width).PHP_EOL;
 
-
         $fixableSources = 0;
+        $maxSniffWidth  = 37;
+        if ($totalFixable > 0) {
+            $maxSniffWidth += 4;
+        }
 
         foreach ($this->_sourceCache as $source => $sourceData) {
             if ($totalFixable > 0) {
@@ -156,7 +159,12 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             }
 
             if ($showSources === true) {
-                echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
+                echo $source;
+                if ($totalFixable > 0) {
+                    echo str_repeat(' ', ($width - 9 - strlen($source)));
+                } else {
+                    echo str_repeat(' ', ($width - 5 - strlen($source)));
+                }
             } else {
                 $parts = explode('.', $source);
                 if ($parts[0] === 'Internal') {
@@ -184,11 +192,15 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                     $sniff  .= ' '.$name;
                 }
 
-                if (strlen($sniff) > ($width - 37)) {
-                    $sniff = substr($sniff, 0, ($width - 37 - strlen($sniff)));
+                if (strlen($sniff) > ($width - $maxSniffWidth)) {
+                    $sniff = substr($sniff, 0, ($width - $maxSniffWidth - strlen($sniff)));
                 }
 
-                echo $sniff.str_repeat(' ', ($width - 35 - strlen($sniff)));
+                if ($totalFixable > 0) {
+                    echo $sniff.str_repeat(' ', ($width - 39 - strlen($sniff)));
+                } else {
+                    echo $sniff.str_repeat(' ', ($width - 35 - strlen($sniff)));
+                }
             }//end if
 
             echo $sourceData['count'].PHP_EOL;
