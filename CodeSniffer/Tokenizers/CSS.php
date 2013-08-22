@@ -50,7 +50,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         // If the content doesn't have an EOL char on the end, add one so
         // the open and close tags we add are parsed correctly.
         $eolAdded = false;
-        if (substr($string, 0, (strlen($eolChar) * -1)) !== $eolChar) {
+        if (substr($string, (strlen($eolChar) * -1)) !== $eolChar) {
             $string  .= $eolChar;
             $eolAdded = true;
         }
@@ -388,6 +388,12 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 0,
                 (strlen($eolChar) * -1)
             );
+
+            if ($finalTokens[($numTokens - 2)]['content'] === '') {
+                unset($finalTokens[($numTokens - 2)]);
+                $finalTokens = array_values($finalTokens);
+                $numTokens   = count($finalTokens);
+            }
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
