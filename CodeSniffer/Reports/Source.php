@@ -124,25 +124,36 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
         if ($showSources === true) {
-            echo '    SOURCE'.str_repeat(' ', ($width - 15)).'COUNT'.PHP_EOL;
-            echo str_repeat('-', $width).PHP_EOL;
+            if ($totalFixable > 0) {
+                echo '    SOURCE'.str_repeat(' ', ($width - 15)).'COUNT'.PHP_EOL;
+            } else {
+                echo 'SOURCE'.str_repeat(' ', ($width - 11)).'COUNT'.PHP_EOL;
+            }
         } else {
-            echo '    STANDARD  CATEGORY            SNIFF'.str_repeat(' ', ($width - 44)).'COUNT'.PHP_EOL;
-            echo str_repeat('-', $width).PHP_EOL;
+            if ($totalFixable > 0) {
+                echo '    STANDARD  CATEGORY            SNIFF'.str_repeat(' ', ($width - 44)).'COUNT'.PHP_EOL;
+            } else {
+                echo 'STANDARD  CATEGORY            SNIFF'.str_repeat(' ', ($width - 40)).'COUNT'.PHP_EOL;
+            }
         }
+
+        echo str_repeat('-', $width).PHP_EOL;
+
 
         $fixableSources = 0;
 
         foreach ($this->_sourceCache as $source => $sourceData) {
-            echo '[';
-            if ($sourceData['fixable'] === true) {
-                echo 'x';
-                $fixableSources++;
-            } else {
-                echo ' ';
-            }
+            if ($totalFixable > 0) {
+                echo '[';
+                if ($sourceData['fixable'] === true) {
+                    echo 'x';
+                    $fixableSources++;
+                } else {
+                    echo ' ';
+                }
 
-            echo '] ';
+                echo '] ';
+            }
 
             if ($showSources === true) {
                 echo $source.str_repeat(' ', ($width - 5 - strlen($source)));
