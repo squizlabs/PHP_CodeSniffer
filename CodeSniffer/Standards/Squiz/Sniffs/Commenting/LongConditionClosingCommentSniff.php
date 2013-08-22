@@ -189,7 +189,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                      );
             $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
             if ($phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+                $phpcsFile->fixer->replaceToken($comment, $expected);
             }
 
             return;

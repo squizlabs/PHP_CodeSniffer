@@ -97,6 +97,10 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                     return;
                 }
+
+                if ($phpcsFile->fixer->enabled === true) {
+                    $stackPtr = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                }
             } else {
                 // If it's the first token, then there is no space.
                 if ($stackPtr === 0) {
@@ -133,20 +137,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for end of file whitespace.
             */
 
-            if ($phpcsFile->tokenizerType === 'JS') {
-                // The last token is always the close tag inserted when tokenized
-                // and the second last token is always the last piece of content in
-                // the file. If the second last token is whitespace, there was
-                // whitespace at the end of the file.
-                $stackPtr--;
-            } else if ($phpcsFile->tokenizerType === 'CSS') {
-                // The last two tokens are always the close tag and whitespace
-                // inserted when tokenizsed and the third last token is always the
-                // last piece of content in the file. If the third last token is
-                // whitespace, there was whitespace at the end of the file.
-                $stackPtr -= 2;
-            }
-
             if ($phpcsFile->tokenizerType === 'PHP') {
                 if (isset($tokens[($stackPtr + 1)]) === false) {
                     // The close PHP token is the last in the file.
@@ -154,7 +144,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 }
 
                 for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-                    // If we find something that isn't inline html then there
+                    // If we find something that isn't inline HTML then there
                     // is more to the file.
                     if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
                         return;
@@ -168,6 +158,12 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     }
                 }
             } else {
+                // The last token is always the close tag inserted when tokenized
+                // and the second last token is always the last piece of content in
+                // the file. If the second last token is whitespace, there was
+                // whitespace at the end of the file.
+                $stackPtr--;
+
                 // The pointer is now looking at the last content in the file and
                 // not the fake PHP end tag the tokenizer inserted.
                 if ($tokens[$stackPtr]['code'] !== T_WHITESPACE) {
@@ -181,7 +177,12 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     return;
                 }
 
-            }
+                if ($phpcsFile->fixer->enabled === true) {
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+                    $stackPtr = ($prev + 1);
+                }
+
+            }//end if
 
             $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
             if ($phpcsFile->fixer->enabled === true) {

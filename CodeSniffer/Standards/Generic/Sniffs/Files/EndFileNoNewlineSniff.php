@@ -74,10 +74,8 @@ class Generic_Sniffs_Files_EndFileNoNewlineSniff implements PHP_CodeSniffer_Snif
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
-        if ($phpcsFile->tokenizerType === 'JS') {
+        if ($phpcsFile->tokenizerType !== 'PHP') {
             $stackPtr--;
-        } else if ($phpcsFile->tokenizerType === 'CSS') {
-            $stackPtr -= 2;
         }
 
         $eolCharLen = strlen($phpcsFile->eolChar);

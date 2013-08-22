@@ -175,7 +175,9 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
-        if (in_array($stringTokens[($numTokens - 2)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+        if ($phpcsFile->tokenizerType === 'PHP'
+            && in_array($stringTokens[($numTokens - 2)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false
+        ) {
             return;
         }
 
