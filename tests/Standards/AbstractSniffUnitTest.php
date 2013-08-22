@@ -131,18 +131,20 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
             $failures        = $this->generateFailureMessages($phpcsFile);
             $failureMessages = array_merge($failureMessages, $failures);
-        }
+
+            if ($phpcsFile->getFixableCount() > 0) {
+                // Attempt to fix the errors.
+                $phpcsFile->fixer->fixFile();
+                $fixable = $phpcsFile->getFixableCount();
+                if ($fixable > 0) {
+                    $filename = basename($testFile);
+                    $failureMessages[] = "Failed to fix $fixable fixable violations in $filename";
+                }
+            }
+        }//end foreach()
 
         if (empty($failureMessages) === false) {
             $this->fail(implode(PHP_EOL, $failureMessages));
-        }
-
-        // Attempt to fix the errors.
-        $phpcsFile->fixer->fixFile();
-        $fixable = $phpcsFile->getFixableCount();
-        if ($fixable > 0) {
-            $filename = basename($testFile);
-            $this->fail("Failed to fix $fixable fixable violations in $filename");
         }
 
 
