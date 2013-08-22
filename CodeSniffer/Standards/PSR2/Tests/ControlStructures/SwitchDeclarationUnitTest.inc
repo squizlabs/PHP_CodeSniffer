@@ -67,4 +67,10 @@ switch (0) {
         }
         break;
 }
+
+switch ($foo) {
+    case Foo::ONE:
+    case Foo::TWO:
+        break;
+}
 ?>
