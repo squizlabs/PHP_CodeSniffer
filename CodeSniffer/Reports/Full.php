@@ -113,7 +113,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         $paddingLine2  = str_repeat(' ', ($maxLineLength + 1));
         $paddingLine2 .= ' | ';
         $paddingLine2 .= str_repeat(' ', $typeLength);
-        $paddingLine2 .= ' | ';
+        $paddingLine2 .= ' |     ';
 
         // The maximum amount of space an error message can use.
         $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
@@ -141,14 +141,21 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                         }
                     }
 
-                    echo ' | '.$errorMsg.PHP_EOL;
+                    echo ' | [';
+                    if ($error['fixable'] === true) {
+                        echo 'x';
+                    } else {
+                        echo ' ';
+                    }
+
+                    echo '] '.$errorMsg.PHP_EOL;
                 }//end foreach
             }//end foreach
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
         if ($report['fixable'] > 0) {
-            echo 'PHPCBF CAN FIX '.$report['fixable'].' OF THESE SNIFF VIOLATIONS AUTOMATICALLY'.PHP_EOL;
+            echo 'PHPCBF CAN FIX THE '.$report['fixable'].' MARKED SNIFF VIOLATIONS AUTOMATICALLY'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
 
