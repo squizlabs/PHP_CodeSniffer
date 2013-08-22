@@ -127,10 +127,12 @@ class PHP_CodeSniffer_Fixer
         $loops = 0;
         while ($loops < 50) {
             ob_start();
-            if ($loops > 0) {
+            if ($loops === 0) {
+                // First time through, don't reparse the file, saving time.
+                $contents = null;
+            } else {
                 // Only needed once file content has changed.
                 $contents = $this->getContents();
-                $this->_currentFile->refreshTokenListeners();
                 /*
                 @ob_end_clean();
                 $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
@@ -138,11 +140,9 @@ class PHP_CodeSniffer_Fixer
                 $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
                 echo $debugContent;
                 */
-            } else {
-                // Signal to not reparse the file, saving time.
-                $contents = null;
             }
 
+            $this->_currentFile->refreshTokenListeners();
             $this->_currentFile->start($contents);
             ob_end_clean();
             /*
@@ -157,12 +157,13 @@ class PHP_CodeSniffer_Fixer
 
             if ($this->_numFixes === 0) {
                 // Nothing left to do.
-                $this->enabled = false;
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
             }
         }//end while
+
+        $this->enabled = false;
 
         if ($this->_numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -336,6 +337,7 @@ class PHP_CodeSniffer_Fixer
                 echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
                 ob_start();
             }
+
             return;
         }
 
