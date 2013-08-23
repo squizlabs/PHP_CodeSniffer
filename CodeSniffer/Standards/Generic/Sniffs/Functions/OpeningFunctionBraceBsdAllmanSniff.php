@@ -73,14 +73,36 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
 
         if ($lineDifference === 0) {
             $error = 'Opening brace should be on a new line';
-            $phpcsFile->addError($error, $openingBrace, 'BraceOnSameLine');
+            $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $indent = $phpcsFile->findFirstOnLine(T_WHITESPACE, $openingBrace);
+                if ($indent !== false) {
+                    $phpcsFile->fixer->addContentBefore($openingBrace, $tokens[$indent]['content']);
+                }
+
+                $phpcsFile->fixer->addNewlineBefore($openingBrace);
+                $phpcsFile->fixer->endChangeset();
+            }
+
             return;
         }
 
         if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
             $data  = array(($lineDifference - 1));
-            $phpcsFile->addError($error, $openingBrace, 'BraceSpacing', $data);
+            $phpcsFile->addFixableError($error, $openingBrace, 'BraceSpacing', $data);
+            if ($phpcsFile->fixer->enabled === true) {
+                for ($i = ($tokens[$stackPtr]['parenthesis_closer'] + 1); $i < $openingBrace; $i++) {
+                    if ($tokens[$i]['line'] === $braceLine) {
+                        $phpcsFile->fixer->addNewLineBefore($i);
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+            }
+
             return;
         }
 

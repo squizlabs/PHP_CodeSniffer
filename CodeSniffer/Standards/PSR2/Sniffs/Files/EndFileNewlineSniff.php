@@ -71,7 +71,11 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         // PSR-2 enforces the use of unix style newlines.
         if (substr($tokens[$lastToken]['content'], -1) !== "\n") {
             $error = 'Expected 1 newline at end of file; 0 found';
-            $phpcsFile->addError($error, $lastToken, 'NoneFound');
+            $phpcsFile->addFixableError($error, $lastToken, 'NoneFound');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewline($lastToken);
+            }
+
             return;
         }
 
