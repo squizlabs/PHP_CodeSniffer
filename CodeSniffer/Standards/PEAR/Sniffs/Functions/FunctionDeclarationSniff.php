@@ -250,7 +250,8 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             if ($tokens[$i]['line'] !== $lastLine) {
                 if ($i === $tokens[$stackPtr]['parenthesis_closer']
                     || ($tokens[$i]['code'] === T_WHITESPACE
-                    && ($i + 1) === $tokens[$stackPtr]['parenthesis_closer'])
+                    && (($i + 1) === $closeBracket
+                    || ($i + 1) === $tokens[$stackPtr]['parenthesis_closer']))
                 ) {
                     // Closing braces need to be indented to the same level
                     // as the function.
