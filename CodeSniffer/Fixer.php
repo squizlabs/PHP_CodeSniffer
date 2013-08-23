@@ -233,6 +233,29 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
+     * Get the current fixed content of a token.
+     *
+     * This function takes changesets into account so should be used
+     * instead of directly accessing the token array.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     *
+     * @return string
+     */
+    public function getTokenContent($stackPtr)
+    {
+        if ($this->_inChangeset === true
+            && isset($this->_changeset[$stackPtr]) === true
+        ) {
+            return $this->_changeset[$stackPtr];
+        } else {
+            return $this->_tokens[$stackPtr];
+        }
+
+    }//end getTokenContent()
+
+
+    /**
      * Start recording actions for a changeset.
      *
      * @return void
@@ -371,10 +394,12 @@ class PHP_CodeSniffer_Fixer
      */
     public function substrToken($stackPtr, $start, $length=null)
     {
+        $current = $this->getTokenContent($stackPtr);
+
         if ($length === null) {
-            $newContent = substr($this->_tokens[$stackPtr], $start);
+            $newContent = substr($current, $start);
         } else {
-            $newContent = substr($this->_tokens[$stackPtr], $start, $length);
+            $newContent = substr($current, $start, $length);
         }
 
         $this->replaceToken($stackPtr, $newContent);
@@ -391,7 +416,8 @@ class PHP_CodeSniffer_Fixer
      */
     public function addNewline($stackPtr)
     {
-        $this->replaceToken($stackPtr, $this->_tokens[$stackPtr].$this->_currentFile->eolChar);
+        $current = $this->getTokenContent($stackPtr);
+        $this->replaceToken($stackPtr, $current.$this->_currentFile->eolChar);
 
     }//end addNewline()
 
@@ -405,7 +431,8 @@ class PHP_CodeSniffer_Fixer
      */
     public function addNewlineBefore($stackPtr)
     {
-        $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$this->_tokens[$stackPtr]);
+        $current = $this->getTokenContent($stackPtr);
+        $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$current);
 
     }//end addNewlineBefore()
 
@@ -420,7 +447,8 @@ class PHP_CodeSniffer_Fixer
      */
     public function addContent($stackPtr, $content)
     {
-        $this->replaceToken($stackPtr, $this->_tokens[$stackPtr].$content);
+        $current = $this->getTokenContent($stackPtr);
+        $this->replaceToken($stackPtr, $current.$content);
 
     }//end addContent()
 
@@ -435,7 +463,8 @@ class PHP_CodeSniffer_Fixer
      */
     public function addContentBefore($stackPtr, $content)
     {
-        $this->replaceToken($stackPtr, $content.$this->_tokens[$stackPtr]);
+        $current = $this->getTokenContent($stackPtr);
+        $this->replaceToken($stackPtr, $content.$current);
 
     }//end addContentBefore()
 
