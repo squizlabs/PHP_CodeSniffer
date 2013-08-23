@@ -462,6 +462,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             if ($tokenIsArray === true
                 && $token[0] === T_STRING
                 && $tokens[($stackPtr + 1)] === ':'
+                && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
             ) {
                 for ($x = ($newStackPtr - 2); $x > 0; $x--) {
                     if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {

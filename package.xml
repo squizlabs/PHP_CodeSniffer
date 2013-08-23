@@ -45,6 +45,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Adds new error message for single-line arrays that end with a comma
   - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
   - Fixed bug #20044 : PSR1 camelCase check does not ignore leading underscores
+  - Fixed bug #20045 : Errors about indentation for closures with multi-line 'use' in functions
+  - Fixed bug #20051 : Undefined index: scope_opener / scope_closer
+    -- Thanks to Anthon Pang for the patch
  </notes>
  <contents>
   <dir name="/">
