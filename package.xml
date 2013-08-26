@@ -57,9 +57,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </file>
    <file baseinstalldir="PHP" name="CodeSniffer.conf.dist" role="data" />
    <dir name="scripts">
+    <file baseinstalldir="" name="phpcbf" role="script">
+     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
+    </file>
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
@@ -2208,6 +2210,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </os>
   </installconditions>
   <filelist>
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
    <install as="AllTests.php" name="tests/AllTests.php" />
@@ -2222,6 +2225,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </phprelease>
  <phprelease>
   <filelist>
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
