@@ -57,13 +57,19 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
-        ob_start();
-        $diff    = $phpcsFile->phpcs->reporting->factory('diff');
-        $changed = $diff->generateFileReport($report, $phpcsFile);
-        ob_end_clean();
+        $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
+        $changed   = $phpcsFile->fixer->fixFile();
+
+        if ($report['filename'] === 'STDIN') {
+            // Replacing STDIN, so output current file to STDOUT
+            // even if nothing was fixed. Exit here because we
+            // can't process any more than 1 file in this setup.
+            echo $phpcsFile->fixer->getContents();
+            ob_end_flush();
+            exit(1);
+        }
 
         if ($changed === true) {
-            $cliValues   = $phpcsFile->phpcs->cli->getCommandLineValues();
             $newFilename = $report['filename'].$cliValues['phpcbf-suffix'];
             $newContent  = $phpcsFile->fixer->getContents();
             file_put_contents($newFilename, $newContent);

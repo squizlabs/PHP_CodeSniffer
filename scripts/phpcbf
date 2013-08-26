@@ -51,7 +51,9 @@ if (isset($cliValues['suffix']) === true) {
 }
 
 $allowPatch = true;
-if (isset($cliValues['no-patch']) === true) {
+if (isset($cliValues['no-patch']) === true || empty($cliValues['files']) === true) {
+    // They either asked for this,
+    // or they are using STDIN, which can't use diff.
     $allowPatch = false;
 }
 
