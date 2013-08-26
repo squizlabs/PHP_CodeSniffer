@@ -24,6 +24,7 @@
             "CodeSniffer/CLI.php",
             "CodeSniffer/Exception.php",
             "CodeSniffer/File.php",
+            "CodeSniffer/Fixer.php",
             "CodeSniffer/Report.php",
             "CodeSniffer/Reporting.php",
             "CodeSniffer/Sniff.php",
@@ -54,5 +55,6 @@
     },
     "bin": [
         "scripts/phpcs"
+        "scripts/phpcbf"
     ]
 }
