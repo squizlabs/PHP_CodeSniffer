@@ -54,7 +54,7 @@
         "ext-tokenizer": "*"
     },
     "bin": [
-        "scripts/phpcs"
+        "scripts/phpcs",
         "scripts/phpcbf"
     ]
 }
