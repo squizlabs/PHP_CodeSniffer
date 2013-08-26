@@ -21,6 +21,10 @@ if (class_exists('PHP_Timer', false) === true) {
     PHP_Timer::start();
 }
 
+if (defined('PHP_CODESNIFFER_CBF') === false) {
+    define('PHP_CODESNIFFER_CBF', true);
+}
+
 if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
 } else {
@@ -33,8 +37,13 @@ $phpcs->dieOnUnknownArg = false;
 
 // Override some of the command line settings that might break the fixes.
 $cliValues = $phpcs->getCommandLineValues();
-$cliValues['generator'] = '';
-$cliValues['explain']   = false;
+$cliValues['generator']   = '';
+$cliValues['explain']     = false;
+$cliValues['interactive'] = false;
+$cliValues['showSources'] = false;
+$cliValues['reportFile']  = null;
+$cliValues['generator']   = '';
+$cliValues['reports']     = array();
 
 $suffix = '';
 if (isset($cliValues['suffix']) === true) {

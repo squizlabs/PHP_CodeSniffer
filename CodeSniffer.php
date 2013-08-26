@@ -226,6 +226,10 @@ class PHP_CodeSniffer
             define('PHPCS_DEFAULT_WARN_SEV', 5);
         }
 
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+
         // Set default CLI object in case someone is running us
         // without using the command line script.
         $this->cli = new PHP_CodeSniffer_CLI();
