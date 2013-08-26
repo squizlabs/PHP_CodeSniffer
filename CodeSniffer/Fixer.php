@@ -118,10 +118,16 @@ class PHP_CodeSniffer_Fixer
     /**
      * Attempt to fix the file by processing it until no fixes are made.
      *
-     * @return void
+     * @return boolean
      */
     public function fixFile()
     {
+        $fixable = $this->_currentFile->getFixableCount();
+        if ($fixable === 0) {
+            // Nothing to fix.
+            return false;
+        }
+
         $this->enabled = true;
 
         $loops = 0;
