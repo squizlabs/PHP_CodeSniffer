@@ -100,4 +100,9 @@ abstract class Test implements
 {
 }
 
+abstract
+class Test
+{
+}
+
 ?>

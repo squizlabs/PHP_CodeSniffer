@@ -85,7 +85,11 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
         $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE), ($scopeEnd - 1), $scopeStart, true);
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
-            $phpcsFile->addError($error, $scopeEnd, 'ContentBefore');
+            $phpcsFile->addFixableError($error, $scopeEnd, 'ContentBefore');
+            if ($phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewlineBefore($scopeEnd);
+            }
+
             return;
         }
 
