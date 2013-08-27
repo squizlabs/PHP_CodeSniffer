@@ -22,10 +22,10 @@
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 
- <!-- Lines can be 85 chars long, but never show errors -->
+ <!-- Lines can be 120 chars long, but never show errors -->
  <rule ref="Generic.Files.LineLength">
   <properties>
-   <property name="lineLimit" value="85"/>
+   <property name="lineLimit" value="120"/>
    <property name="absoluteLineLimit" value="0"/>
   </properties>
  </rule>
