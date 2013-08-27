@@ -13,8 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-
 /**
  * Tests for the PHP_CodeSniffer:isCamelCaps method.
  *
