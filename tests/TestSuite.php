@@ -13,7 +13,9 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+if (class_exists('PHPUnit_Framework_TestSuite', false) === false) {
+    require_once 'PHPUnit/Framework/TestSuite.php';
+}
 
 /**
  * A PHP_CodeSniffer specific test suite for PHPUnit.
