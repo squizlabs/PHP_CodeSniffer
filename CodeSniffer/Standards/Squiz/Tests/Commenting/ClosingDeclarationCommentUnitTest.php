@@ -50,6 +50,7 @@ class Squiz_Tests_Commenting_ClosingDeclarationCommentUnitTest extends AbstractS
                 59 => 1,
                 63 => 1,
                 67 => 1,
+                79 => 1,
                );
 
     }//end getErrorList()
