@@ -13,7 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
 require_once dirname(__FILE__).'/AbstractTestCase.php';
 require_once dirname(__FILE__).'/Mock/Gitblame.php';
 
