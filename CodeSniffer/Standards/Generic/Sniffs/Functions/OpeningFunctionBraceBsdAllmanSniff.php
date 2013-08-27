@@ -127,13 +127,25 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         $braceIndent = $tokens[$openingBrace]['column'];
 
         if ($braceIndent !== $startColumn) {
+            $expected = ($startColumn - 1);
+            $found    = ($braceIndent - 1);
+
             $error = 'Opening brace indented incorrectly; expected %s spaces, found %s';
             $data  = array(
-                      ($startColumn - 1),
-                      ($braceIndent - 1),
+                      $expected,
+                      $found,
                      );
-            $phpcsFile->addError($error, $openingBrace, 'BraceIndent', $data);
-        }
+            $phpcsFile->addFixableError($error, $openingBrace, 'BraceIndent', $data);
+
+            if ($phpcsFile->fixer->enabled === true) {
+                $indent = str_repeat(' ', $expected);
+                if ($found === 0) {
+                    $phpcsFile->fixer->addContentBefore($openingBrace, $indent);
+                } else {
+                    $phpcsFile->fixer->replaceToken(($openingBrace - 1), $indent);
+                }
+            }
+        }//end if
 
     }//end process()
 
