@@ -100,9 +100,8 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
 
             if ($nestedFunction === true) {
                 if ($lineDifference > 0) {
-                    $error = 'Expected 0 blank lines before opening brace of nested function; %s found';
-                    $data  = array($found);
-                    $phpcsFile->addError($error, $openBrace, 'SpacingAfterNested', $data);
+                    $error = 'Opening brace should be on the same line as the function keyword';
+                    $phpcsFile->addError($error, $openBrace, 'SpacingAfterNested');
                 }
             } else {
                 if ($lineDifference === 0) {
