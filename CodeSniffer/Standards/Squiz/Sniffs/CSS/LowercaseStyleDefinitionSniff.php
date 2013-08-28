@@ -59,12 +59,30 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        $start  = ($stackPtr + 1);
-        $end    = ($tokens[$stackPtr]['bracket_closer'] - 1);
+        $tokens  = $phpcsFile->getTokens();
+        $start   = ($stackPtr + 1);
+        $end     = ($tokens[$stackPtr]['bracket_closer'] - 1);
+        $inStyle = false;
 
         for ($i = $start; $i <= $end; $i++) {
-            if ($tokens[$i]['code'] === T_STRING || $tokens[$i]['code'] === T_STYLE) {
+            // Skip nested definitions as they are checked individually.
+            if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
+                $i = $tokens[$i]['bracket_closer'];
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_STYLE) {
+                $inStyle = true;
+            }
+
+            if ($tokens[$i]['code'] === T_SEMICOLON) {
+                $inStyle = false;
+            }
+
+            if ($tokens[$i]['code'] === T_STYLE
+                || ($inStyle === true
+                && $tokens[$i]['code'] === T_STRING)
+            ) {
                 $expected = strtolower($tokens[$i]['content']);
                 if ($expected !== $tokens[$i]['content']) {
                     $error = 'Style definitions must be lowercase; expected %s but found %s';
@@ -75,7 +93,7 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
                     $phpcsFile->addError($error, $i, 'FoundUpper', $data);
                 }
             }
-        }
+        }//end for
 
     }//end process()
 
