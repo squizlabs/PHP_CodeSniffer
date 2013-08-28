@@ -1321,6 +1321,7 @@ class PHP_CodeSniffer
                 $this->_tokenListeners,
                 $this->allowedFileExtensions,
                 $this->ruleset,
+                $restrictions,
                 $this
             );
 
