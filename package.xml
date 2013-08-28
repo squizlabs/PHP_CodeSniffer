@@ -26,7 +26,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - You can now restrict violations to individual sniff codes using the --sniffs command line argument
+   -- Previously, this only restricted violations to an entire sniff and not individual messages
+   -- If you have scripts calling PHP_CodeSniffer::process() or creating PHP_CodeSniffer_File objects, you must update your code
+   -- The array of restrictions passed to PHP_CodeSniffer::process() must now be an array of sniff codes instead of class names
+   -- The PHP_CodeSniffer_File::__construct() method now requires an array of restrictions to be passed
   - Doc generation is now working again
+  - Progress information now shows the percentage complete at the end of each line
   - Added support for the PHP 5.4 callable type hint
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
