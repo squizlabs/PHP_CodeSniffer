@@ -334,7 +334,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         // We found the other end of the double quoted string.
                         break;
                     }
-                }
+                }//end for
 
                 $stackPtr = $i;
 
@@ -433,7 +433,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
-                }
+                }//end for
 
                 // Add the end heredoc token to the final array.
                 $finalTokens[$newStackPtr]
@@ -764,9 +764,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
 
                         break;
-                    }
-                }
-            }
+                    }//end if
+                }//end foreach
+            }//end for
         }//end for
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {

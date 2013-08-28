@@ -205,7 +205,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                         $phpcsFile->addError($error, $errorPos, 'WrongType', $data);
                     }
                 }
-            }
+            }//end if
         }//end if
 
     }//end processTokenWithinScope()

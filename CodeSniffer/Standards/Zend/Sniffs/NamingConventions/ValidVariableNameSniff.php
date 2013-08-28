@@ -241,7 +241,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                     $data    = array($originalVarName);
                     $phpcsFile->addWarning($warning, $stackPtr, 'StringVarContainsNumbers', $data);
                 }
-            }
+            }//end foreach
         }//end if
 
     }//end processVariableInString()

@@ -248,7 +248,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     if ($nextToken !== false) {
                         $i = $nextToken;
                     }
-                }
+                }//end if
 
                 $newline = false;
                 continue;
@@ -450,7 +450,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 $indent = ($tokens[$lastContent]['column'] - 1);
-            }
+            }//end if
 
             $indent += $this->indent;
         }//end foreach

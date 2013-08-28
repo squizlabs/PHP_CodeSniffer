@@ -100,7 +100,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                      );
             $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
             return;
-        }
+        }//end if
 
         if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening %s brace must be on a line by itself';

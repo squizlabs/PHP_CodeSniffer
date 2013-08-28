@@ -148,7 +148,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             if (in_array($function, $this->forbiddenFunctionNames) === false) {
                 return;
             }
-        }
+        }//end if
 
         $this->addError($phpcsFile, $stackPtr, $function, $pattern);
 

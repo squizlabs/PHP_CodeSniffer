@@ -781,7 +781,7 @@ class PHP_CodeSniffer
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> $ref".PHP_EOL;
                 }
-            }
+            }//end if
         }//end if
 
         if (is_dir($ref) === true) {

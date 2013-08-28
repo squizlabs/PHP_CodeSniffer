@@ -163,7 +163,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
 
         return $namespace;
 
-    }//end getNamespaceOfScope
+    }//end getNamespaceOfScope()
 
 
 }//end class

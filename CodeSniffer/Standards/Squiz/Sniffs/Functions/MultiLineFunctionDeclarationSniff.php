@@ -130,7 +130,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
 
                 $lastCommaLine = $tokens[$i]['line'];
             }
-        }
+        }//end for
 
     }//end processBracket()
 

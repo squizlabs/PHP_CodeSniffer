@@ -143,7 +143,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
                 // That's all we have to check for these types of statements.
                 return;
-            }
+            }//end if
         }//end if
 
         // This token may be part of an inline condition.

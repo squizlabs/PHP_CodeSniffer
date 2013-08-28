@@ -302,7 +302,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
-                }
+                }//end if
 
                 break;
             case T_COLON:

@@ -155,7 +155,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             }
 
             $phpcsFile->fixer->endChangeset();
-        }
+        }//end if
 
     }//end process()
 

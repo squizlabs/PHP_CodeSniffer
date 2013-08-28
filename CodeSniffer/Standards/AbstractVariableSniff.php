@@ -133,7 +133,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
             }
-        }
+        }//end if
 
         if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
             || $tokens[$stackPtr]['code'] === T_HEREDOC

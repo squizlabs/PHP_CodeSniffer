@@ -422,7 +422,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     } else {
                         $found    = $tokens[$stackPtr]['content'].$found;
                         $hasError = true;
-                    }
+                    }//end if
 
                     if ($hasError === false && $pattern[($i - 1)]['type'] !== 'newline') {
                         // Make sure they only have 1 newline.
@@ -479,7 +479,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                             $lastAddedStackPtr = $stackPtr;
                             $stackPtr          = $next;
-                        }
+                        }//end if
 
                         if ($stackPtr !== $lastAddedStackPtr) {
                             $found .= $tokenContent;
@@ -819,7 +819,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
                 $i              = ($i + 2);
-            }
+            }//end if
 
             if ($specialPattern !== false || $isLastChar === true) {
                 // If we are at the end of the string, don't worry about a limit.
@@ -904,12 +904,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             case ')':
                 $nestedParenthesis++;
                 break;
-            }
+            }//end switch
 
             if (isset($skip['to']) === true) {
                 break;
             }
-        }
+        }//end for
 
         if (isset($skip['to']) === false) {
             $skip['to'] = 'unknown';

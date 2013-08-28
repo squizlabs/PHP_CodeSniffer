@@ -426,7 +426,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     // We must have an extra parameter comment.
                     $error = 'Superfluous doc comment at position '.$pos;
                     $this->currentFile->addError($error, $errorPos, 'ExtraParamComment');
-                }
+                }//end if
 
                 if ($param->getVarName() === '') {
                     $error = 'Missing parameter name at position '.$pos;

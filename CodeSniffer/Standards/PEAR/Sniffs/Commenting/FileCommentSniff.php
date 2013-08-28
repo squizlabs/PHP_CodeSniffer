@@ -415,7 +415,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         $i++;
                         $count++;
                     }
-                }
+                }//end if
             }//end if
 
             // Check tag order.
@@ -501,8 +501,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 $this->currentFile->addError($error, ($commentStart + $line), 'TagIndent', $data);
-            }
-        }
+            }//end if
+        }//end foreach
 
     }//end processTags()
 
@@ -568,8 +568,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } else {
                 $error = '@category tag must contain a name';
                 $this->currentFile->addError($error, $errorPos, 'EmptyCategory');
-            }
-        }
+            }//end if
+        }//end if
 
     }//end processCategory()
 
@@ -652,8 +652,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } else {
                 $error = '@subpackage tag must contain a name';
                 $this->currentFile->addError($error, $errorPos, 'EmptySubpackage');
-            }
-        }
+            }//end if
+        }//end if
 
     }//end processSubpackage()
 
@@ -694,7 +694,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $this->currentFile->addError($error, $errorPos, 'EmptyAuthors', $data);
                 }
             }
-        }
+        }//end if
 
     }//end processAuthors()
 
@@ -736,8 +736,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = '@copyright tag must contain a year and the name of the copyright holder';
                 $this->currentFile->addError($error, $errorPos, 'EmptyCopyright');
             }//end if
-        }//end if
-
+        }//end foreach
     }//end processCopyrights()
 
 

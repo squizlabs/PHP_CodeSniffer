@@ -464,8 +464,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                             $newName,
                            );
                 $this->currentFile->addError($error, $errorPos, 'SquizPackage', $data);
-            }
-        }
+            }//end if
+        }//end if
 
     }//end processPackage()
 
@@ -501,7 +501,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                          );
                 $this->currentFile->addError($error, $errorPos, 'IncorrectSubpackage', $data);
             }
-        }
+        }//end if
 
     }//end processSubpackage()
 

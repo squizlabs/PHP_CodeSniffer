@@ -402,7 +402,7 @@ class PHP_CodeSniffer_CLI
                     // This is a single report.
                     $report = substr($arg, 7);
                     $output = null;
-                }
+                }//end if
 
                 $validReports = array(
                                  'full',

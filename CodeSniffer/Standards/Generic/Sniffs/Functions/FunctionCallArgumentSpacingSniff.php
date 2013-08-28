@@ -122,7 +122,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                             }
                         }
                     }
-                }
+                }//end if
             } else {
                 // Token is a variable.
                 $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextSeparator + 1), $closeBracket, true);

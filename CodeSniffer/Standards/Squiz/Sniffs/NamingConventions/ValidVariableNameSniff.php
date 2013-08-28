@@ -230,7 +230,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     $phpcsFile->addError($error, $stackPtr, 'StringNotCamelCaps', $data);
                     
                 }
-            }
+            }//end foreach
         }//end if
 
     }//end processVariableInString()

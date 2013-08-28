@@ -670,7 +670,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
                     }
                 }
-            }
+            }//end if
         }//end foreach
 
     }//end process()

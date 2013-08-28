@@ -142,7 +142,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
             }
 
             return;
-        }
+        }//end if
 
         if ($num === 2) {
             if ($values[0][0] !== $values[1][0]) {

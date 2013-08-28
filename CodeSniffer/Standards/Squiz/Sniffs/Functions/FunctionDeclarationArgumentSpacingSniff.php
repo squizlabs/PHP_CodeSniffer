@@ -294,7 +294,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                   $gap,
                                  );
                         $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
-                    }
+                    }//end if
                 }//end if
             }//end if
 

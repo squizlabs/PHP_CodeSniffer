@@ -479,8 +479,8 @@ class PHP_CodeSniffer_File
                     $sniffParts    = explode('.', $parts[0]);
                     $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
                     $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
-                }
-            }
+                }//end if
+            }//end if
 
             if ($ignoring === true) {
                 $this->_ignoredLines[$token['line']] = true;
@@ -2677,8 +2677,8 @@ class PHP_CodeSniffer_File
                 if ($prev !== false && $this->_tokens[$prev]['code'] === T_USE) {
                     return true;
                 }
-            }
-        }
+            }//end if
+        }//end if
 
         $tokenAfter = $this->findNext(
             PHP_CodeSniffer_Tokens::$emptyTokens,

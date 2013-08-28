@@ -384,7 +384,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $inString        = '';
                         $stringChar      = null;
                         continue;
-                    }
+                    }//end if
                 } else if ($inString === '') {
                     $inString        = $char;
                     $stringChar      = $i;
@@ -509,7 +509,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 $matchedToken = true;
                                 break;
                             }
-                        }
+                        }//end if
                     }//end for
                 }//end if
 
@@ -648,7 +648,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* looking for end of comment *".PHP_EOL;
                     }
-                }
+                }//end if
             } else if ($inComment !== '') {
                 if ($this->commentTokens[$inComment] === null) {
                     // Comment ends at the next newline.
@@ -688,8 +688,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 $buffer      = '';
                 $cleanBuffer = false;
             }
-        }//end foreach
-
+        }//end for
         if (empty($buffer) === false) {
             // Buffer contains whitespace from the end of the file.
             $tokens[] = array(
@@ -1148,7 +1147,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo str_repeat("\t", count($classStack));
                         echo "\t* token $label converted from T_STRING to T_LABEL *".PHP_EOL;
                     }
-                }
+                }//end if
             }//end if
         }//end for
 

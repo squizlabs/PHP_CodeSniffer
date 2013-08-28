@@ -124,8 +124,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                         }
                     }
                 }
-            }//end foreach
-
+            }//end if
             // Check the alignment of each asterisk.
             $currentColumn  = strpos($content, '*');
             $currentColumn += $tokens[$commentPointer]['column'];

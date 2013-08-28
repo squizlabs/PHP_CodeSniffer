@@ -105,7 +105,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
                          $found,
                         );
             $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
-        }
+        }//end if
 
     }//end process()
 

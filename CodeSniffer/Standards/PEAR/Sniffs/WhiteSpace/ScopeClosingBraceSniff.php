@@ -137,7 +137,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
                          );
                 $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
             }
-        }
+        }//end if
 
     }//end process()
 

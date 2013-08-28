@@ -44,15 +44,15 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
      * @var array(string => string|null)
      */
     protected $forbiddenStyles = array(
-                                     '-moz-border-radius'             => 'border-radius',
-                                     '-webkit-border-radius'          => 'border-radius',
-                                     '-moz-border-radius-topleft'     => 'border-top-left-radius',
-                                     '-moz-border-radius-topright'    => 'border-top-right-radius',
-                                     '-moz-border-radius-bottomright' => 'border-bottom-right-radius',
-                                     '-moz-border-radius-bottomleft'  => 'border-bottom-left-radius',
-                                     '-moz-box-shadow'                => 'box-shadow',
-                                     '-webkit-box-shadow'             => 'box-shadow',
-                                    );
+                                  '-moz-border-radius'             => 'border-radius',
+                                  '-webkit-border-radius'          => 'border-radius',
+                                  '-moz-border-radius-topleft'     => 'border-top-left-radius',
+                                  '-moz-border-radius-topright'    => 'border-top-right-radius',
+                                  '-moz-border-radius-bottomright' => 'border-bottom-right-radius',
+                                  '-moz-border-radius-bottomleft'  => 'border-bottom-left-radius',
+                                  '-moz-box-shadow'                => 'box-shadow',
+                                  '-webkit-box-shadow'             => 'box-shadow',
+                                 );
 
     /**
      * A cache of forbidden style names, for faster lookups.
@@ -131,7 +131,7 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
             if (in_array($style, $this->forbiddenStyleNames) === false) {
                 return;
             }
-        }
+        }//end if
 
         $this->addError($phpcsFile, $stackPtr, $style, $pattern);
 

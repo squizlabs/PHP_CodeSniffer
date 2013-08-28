@@ -137,8 +137,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             }//end if
 
             $currentLine = $tokens[$i]['line'];
-        }//end foreach
-
+        }//end for
     }//end process()
 
 }//end class

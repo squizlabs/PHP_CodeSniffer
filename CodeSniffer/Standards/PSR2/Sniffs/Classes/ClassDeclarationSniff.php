@@ -105,7 +105,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
-            }
+            }//end if
         }//end if
 
         // We'll need the indent of the class/interface declaration for later.
@@ -321,7 +321,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 $nextComma = $phpcsFile->findNext(T_COMMA, $className);
             } else {
                 $nextComma = ($className + 1);
-            }
+            }//end if
         }//end foreach
 
     }//end processOpen()
