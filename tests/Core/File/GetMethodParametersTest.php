@@ -54,6 +54,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             array(),
             array(),
             array(),
+            array(),
             $phpcs
         );
 

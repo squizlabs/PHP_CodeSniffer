@@ -85,8 +85,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // The name of the coding standard we are testing.
         $standardName = substr($basename, 0, strpos($basename, '_'));
 
-        // The class name of the sniff we are testing.
-        $sniffClass = str_replace('_Tests_', '_Sniffs_', $basename).'Sniff';
+        // The code of the sniff we are testing.
+        $parts     = explode('_', $basename);
+        $sniffCode = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
         if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
             // We have not been installed.
@@ -116,7 +117,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // Get them in order.
         sort($testFiles);
 
-        self::$phpcs->process(array(), $standardName, array(strtolower($sniffClass)));
+        self::$phpcs->process(array(), $standardName, array($sniffCode));
         self::$phpcs->setIgnorePatterns(array());
 
         $failureMessages = array();
