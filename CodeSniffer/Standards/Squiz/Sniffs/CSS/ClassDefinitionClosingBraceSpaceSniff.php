@@ -71,9 +71,24 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
             if ($found !== 1) {
                 $error = 'Expected one blank line after closing brace of class definition; %s found';
                 $data  = array($found);
-                $phpcsFile->addError($error, $stackPtr, 'SpacingAfterClose', $data);
-            }
-        }
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterClose', $data);
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($found === 0) {
+                        $phpcsFile->fixer->addNewline($stackPtr);
+                    } else {
+                        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($stackPtr + 1); $i < ($nextContent - 1); $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->addNewline($i);
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+            }//end if
+        }//end if
 
         // Ignore nested style definitions from here on. The spacing before the closing brace
         // (a single blank line) will be enforced by the above check, which ensures there is a
@@ -95,13 +110,9 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
 
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Closing brace of class definition must be on new line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentBeforeClose');
-        } else {
-            $found = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
-            if ($found !== 0) {
-                $error = 'Expected 0 blank lines before closing brace of class definition; %s found';
-                $data  = array($found);
-                $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeClose');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewlineBefore($stackPtr);
             }
         }
 

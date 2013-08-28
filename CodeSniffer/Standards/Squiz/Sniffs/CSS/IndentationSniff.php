@@ -86,8 +86,15 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            if ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET) {
+            if (($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                && $tokens[$i]['line'] !== $tokens[($i - 1)]['line'])
+                || ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET
+                && $tokens[$i]['line'] === $tokens[($i + 1)]['line'])
+            ) {
                 $indentLevel--;
+                if ($indentLevel === 0) {
+                    $nestingLevel = 0;
+                }
             }
 
             if ($tokens[$i]['line'] === $currentLine) {
@@ -103,11 +110,13 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             }
 
             $expectedIndent = ($indentLevel * 4);
-            if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false
-            ) {
+            if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
                 if ($nestingLevel !== $indentLevel) {
                     $error = 'Blank lines are not allowed in class definitions';
-                    $phpcsFile->addError($error, $i, 'BlankLine');
+                    $fix   = $phpcsFile->addFixableError($error, $i, 'BlankLine');
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
                 }
             } else if ($foundIndent !== $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
@@ -115,8 +124,17 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                           $expectedIndent,
                           $foundIndent,
                          );
-                $phpcsFile->addError($error, $i, 'Incorrect', $data);
-            }
+
+                $fix = $phpcsFile->addFixableError($error, $i, 'Incorrect', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $indent = str_repeat(' ', $expectedIndent);
+                    if ($foundIndent === 0) {
+                        $phpcsFile->fixer->addContentBefore($i, $indent);
+                    } else {
+                        $phpcsFile->fixer->replaceToken($i, $indent);
+                    }
+                }
+            }//end if
 
             $currentLine = $tokens[$i]['line'];
         }//end foreach

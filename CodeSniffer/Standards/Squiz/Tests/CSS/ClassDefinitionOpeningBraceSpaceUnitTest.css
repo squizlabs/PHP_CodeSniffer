@@ -30,4 +30,14 @@
 
 }
 
+@media screen and (max-device-width: 769px) {
+
+    
+
+    header #logo img {
+        max-width: 100%;
+    }
+
+}
+
 .GUITextBox.container:after {}
