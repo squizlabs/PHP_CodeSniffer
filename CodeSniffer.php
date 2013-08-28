@@ -732,6 +732,10 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
 
         if (is_dir($dir) === true) {
+            if (empty(self::$standardDir)) {
+                self::$standardDir = $dir;
+            }
+
             // Available since PHP 5.2.11 and 5.3.1.
             if (defined('RecursiveDirectoryIterator::FOLLOW_SYMLINKS') === true) {
                 $rdi = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
