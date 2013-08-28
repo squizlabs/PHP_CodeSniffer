@@ -81,36 +81,81 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            // Ignore the ELSE in ELSE IF. We'll process the IF part later.
-            if (($tokens[$stackPtr]['code'] === T_ELSE) && ($tokens[($stackPtr + 2)]['code'] === T_IF)) {
-                return;
-            }
+        if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+            return;
+        }
 
-            if ($tokens[$stackPtr]['code'] === T_WHILE) {
-                // This could be from a DO WHILE, which doesn't have an opening brace.
-                $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
-                    $brace = $tokens[$lastContent];
-                    if (isset($brace['scope_condition']) === true) {
-                        $condition = $tokens[$brace['scope_condition']];
-                        if ($condition['code'] === T_DO) {
-                            return;
-                        }
+        // Ignore the ELSE in ELSE IF. We'll process the IF part later.
+        if (($tokens[$stackPtr]['code'] === T_ELSE) && ($tokens[($stackPtr + 2)]['code'] === T_IF)) {
+            return;
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_WHILE) {
+            // This could be from a DO WHILE, which doesn't have an opening brace.
+            $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+                $brace = $tokens[$lastContent];
+                if (isset($brace['scope_condition']) === true) {
+                    $condition = $tokens[$brace['scope_condition']];
+                    if ($condition['code'] === T_DO) {
+                        return;
                     }
                 }
             }
+        }
 
-            // This is a control structure without an opening brace,
-            // so it is an inline statement.
-            if ($this->error === true) {
-                $phpcsFile->addError('Inline control structures are not allowed', $stackPtr, 'NotAllowed');
+        // This is a control structure without an opening brace,
+        // so it is an inline statement.
+        if ($this->error === true) {
+            $fix = $phpcsFile->addFixableError('Inline control structures are not allowed', $stackPtr, 'NotAllowed');
+        } else {
+            $fix = $phpcsFile->addFixableWarning('Inline control structures are discouraged', $stackPtr, 'Discouraged');
+        }
+
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
+                $closer = $tokens[$stackPtr]['parenthesis_closer'];
             } else {
-                $phpcsFile->addWarning('Inline control structures are discouraged', $stackPtr, 'Discouraged');
+                $closer = $stackPtr;
             }
 
-            return;
-        }//end if
+            $phpcsFile->fixer->addContent($closer, ' { ');
+
+            $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($closer + 1));
+            $next      = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($semicolon + 1), true);
+
+            // Account for a comment on the end of the line.
+            for ($endLine = $semicolon; $endLine < $phpcsFile->numTokens; $endLine++) {
+                if (isset($tokens[($endLine + 1)]) === false
+                    || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+                ) {
+                    break;
+                }
+            }
+
+            if ($tokens[$endLine]['code'] !== T_COMMENT) {
+                $endLine = $semicolon;
+            }
+
+            if ($next !== $semicolon) {
+                if ($endLine !== $semicolon) {
+                    $phpcsFile->fixer->addContent($endLine, '}');
+                } else {
+                    $phpcsFile->fixer->addContent($semicolon, ' }');
+                }
+            } else {
+                if ($endLine !== $semicolon) {
+                    $phpcsFile->fixer->replaceToken($semicolon, '');
+                    $phpcsFile->fixer->addNewlineBefore($endLine);
+                    $phpcsFile->fixer->addContent($endLine, '}');
+                } else {
+                    $phpcsFile->fixer->replaceToken($semicolon, '}');
+                }
+            }
+
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end process()
 

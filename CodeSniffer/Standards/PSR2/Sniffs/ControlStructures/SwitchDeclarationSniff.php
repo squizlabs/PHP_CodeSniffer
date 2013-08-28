@@ -102,14 +102,20 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 || $tokens[($nextCase + 1)]['content'] !== ' ')
             ) {
                 $error = 'CASE keyword must be followed by a single space';
-                $phpcsFile->addError($error, $nextCase, 'SpacingAfterCase');
+                $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContent($nextCase, ' ');
+                }
             }
 
             $opener = $tokens[$nextCase]['scope_opener'];
             if ($tokens[$opener]['code'] === T_COLON) {
                 if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
                     $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
-                    $phpcsFile->addError($error, $nextCase, 'SpaceBeforeColon'.$type);
+                    $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($opener - 1), '');
+                    }
                 }
             } else {
                 $error = strtoupper($type).' statements must not be defined using curly braces';
