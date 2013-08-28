@@ -335,17 +335,8 @@ class PHP_CodeSniffer_CLI
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
-                $values['sniffs'] = array();
-
                 $sniffs = substr($arg, 7);
-                #$sniffs = explode(',', $sniffs);
                 $values['sniffs'] = explode(',', $sniffs);
-
-                // Convert the sniffs to class names.
-                #foreach ($sniffs as $sniff) {
-                    #$parts = explode('.', strtolower($sniff));
-                    #$values['sniffs'][] = $parts[0].'_sniffs_'.$parts[1].'_'.$parts[2].'sniff';
-                #}
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $values['reportFile'] = realpath(substr($arg, 12));
 
