@@ -292,12 +292,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                              );
 
                 if ($this->error === true) {
-                    $phpcsFile->addFixableError($error, $assignment, $type, $errorData);
+                    $fix = $phpcsFile->addFixableError($error, $assignment, $type, $errorData);
                 } else {
-                    $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
+                    $fix = $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
                 }
 
-                if ($phpcsFile->fixer->enabled === true && $found !== null) {
+                if ($fix === true && $phpcsFile->fixer->enabled === true && $found !== null) {
                     $newContent = str_repeat(' ', $expected);
                     if ($found === 0) {
                         $phpcsFile->fixer->addContentBefore($assignment, $newContent);

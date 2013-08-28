@@ -117,9 +117,9 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
 
         $error = 'String %s does not require double quotes; use single quotes instead';
         $data  = array(str_replace("\n", '\n', $workingString));
-        $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
 
-        if ($phpcsFile->fixer->enabled === true) {
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
             $phpcsFile->fixer->beginChangeset();
             $innerContent = trim($workingString, '"');
             $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");

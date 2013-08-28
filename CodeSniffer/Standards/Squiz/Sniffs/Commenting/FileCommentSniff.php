@@ -527,9 +527,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $this->currentFile->addError($error, $errorPos, 'MissingAuthor');
         } else if ($content !== 'Squiz Pty Ltd <products@squiz.net>') {
             $error = 'Expected "Squiz Pty Ltd <products@squiz.net>" for author tag';
-            $this->currentFile->addFixableError($error, $errorPos, 'IncorrectAuthor');
-
-            if ($this->currentFile->fixer->enabled === true) {
+            $fix   = $this->currentFile->addFixableError($error, $errorPos, 'IncorrectAuthor');
+            if ($fix === true && $this->currentFile->fixer->enabled === true) {
                 $tokens  = $this->currentFile->getTokens();
                 $matches = array();
                 preg_match('/^(\s*\*\s+@author\s+).*$/', $tokens[$errorPos]['content'], $matches);
@@ -564,9 +563,9 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $content) === 0) {
             $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
-            $this->currentFile->addFixableError($error, $errorPos, 'IncorrectCopyright');
+            $fix   = $this->currentFile->addFixableError($error, $errorPos, 'IncorrectCopyright');
 
-            if ($this->currentFile->fixer->enabled === true) {
+            if ($fix === true && $this->currentFile->fixer->enabled === true) {
                 $tokens  = $this->currentFile->getTokens();
                 $matches = array();
                 preg_match('/^(\s*\*\s+@copyright\s+)(([0-9]{4})(-[0-9]{4})?)?.*$/', $tokens[$errorPos]['content'], $matches);

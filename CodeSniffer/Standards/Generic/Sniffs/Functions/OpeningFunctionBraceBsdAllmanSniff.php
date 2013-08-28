@@ -73,8 +73,8 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
 
         if ($lineDifference === 0) {
             $error = 'Opening brace should be on a new line';
-            $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
-            if ($phpcsFile->fixer->enabled === true) {
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $indent = $phpcsFile->findFirstOnLine(T_WHITESPACE, $openingBrace);
                 if ($indent !== false) {
@@ -91,8 +91,8 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
             $data  = array(($lineDifference - 1));
-            $phpcsFile->addFixableError($error, $openingBrace, 'BraceSpacing', $data);
-            if ($phpcsFile->fixer->enabled === true) {
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceSpacing', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 for ($i = ($tokens[$stackPtr]['parenthesis_closer'] + 1); $i < $openingBrace; $i++) {
                     if ($tokens[$i]['line'] === $braceLine) {
                         $phpcsFile->fixer->addNewLineBefore($i);
@@ -135,9 +135,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                       $expected,
                       $found,
                      );
-            $phpcsFile->addFixableError($error, $openingBrace, 'BraceIndent', $data);
 
-            if ($phpcsFile->fixer->enabled === true) {
+            $fix = $phpcsFile->addFixableError($error, $openingBrace, 'BraceIndent', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $indent = str_repeat(' ', $expected);
                 if ($found === 0) {
                     $phpcsFile->fixer->addContentBefore($openingBrace, $indent);

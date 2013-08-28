@@ -69,8 +69,9 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
                       $expected,
                       $colour,
                      );
-            $phpcsFile->addFixableError($error, $stackPtr, 'NotUpper', $data);
-            if ($phpcsFile->fixer->enabled === true) {
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUpper', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
         }
@@ -87,8 +88,9 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
                          $expected,
                          $colour,
                         );
-            $phpcsFile->addFixableError($error, $stackPtr, 'Shorthand', $data);
-            if ($phpcsFile->fixer->enabled === true) {
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Shorthand', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
         }

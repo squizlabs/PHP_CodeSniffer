@@ -124,9 +124,9 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
             $expected = trim($content.' '.$values[1][1].$values[1][2]);
             $error = 'Shorthand syntax not allowed here; use %s instead';
             $data  = array($expected);
-            $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
 
-            if ($phpcsFile->fixer->enabled === true) {
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->beginChangeset();
                 if (substr($origContent, -10) === '!important') {
                     $expected .= ' !important';
@@ -169,9 +169,8 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
                   $content,
                  );
 
-        $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
-
-        if ($phpcsFile->fixer->enabled === true) {
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
             $phpcsFile->fixer->beginChangeset();
             if (substr($origContent, -10) === '!important') {
                 $expected .= ' !important';

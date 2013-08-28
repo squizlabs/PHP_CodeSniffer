@@ -109,17 +109,18 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                              $expected,
                              $tokens[$nextCase]['content'],
                             );
-                $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
-                if ($phpcsFile->fixer->enabled === true) {
+
+                $fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken($nextCase, $expected);
                 }
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
                 $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
-                $phpcsFile->addFixableError($error, $nextCase, $type.'Indent');
+                $fix   = $phpcsFile->addFixableError($error, $nextCase, $type.'Indent');
 
-                if ($phpcsFile->fixer->enabled === true) {
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $padding = str_repeat(' ', ($caseAlignment - 1));
                     if ($tokens[$nextCase]['column'] === 1
                         || $tokens[($nextCase - 1)]['code'] !== T_WHITESPACE
@@ -136,8 +137,8 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 || $tokens[($nextCase + 1)]['content'] !== ' ')
             ) {
                 $error = 'CASE keyword must be followed by a single space';
-                $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
-                if ($phpcsFile->fixer->enabled === true) {
+                $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     if ($tokens[($nextCase + 1)]['type'] !== 'T_WHITESPACE') {
                         $phpcsFile->fixer->addContent($nextCase, ' ');
                     } else {
@@ -149,8 +150,8 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             $opener = $tokens[$nextCase]['scope_opener'];
             if ($tokens[($opener - 1)]['type'] === 'T_WHITESPACE') {
                 $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
-                $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.$type);
-                if ($phpcsFile->fixer->enabled === true) {
+                $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.$type);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($opener - 1), '');
                 }
             }
@@ -167,9 +168,9 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     // the default case.
                     if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
                         $error = 'Case breaking statement must be indented '.$this->indent.' spaces from SWITCH keyword';
-                        $phpcsFile->addFixableError($error, $nextBreak, 'BreakIndent');
+                        $fix   = $phpcsFile->addFixableError($error, $nextBreak, 'BreakIndent');
 
-                        if ($phpcsFile->fixer->enabled === true) {
+                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
                             $padding = str_repeat(' ', ($caseAlignment - 1));
                             if ($tokens[$nextBreak]['column'] === 1
                                 || $tokens[($nextBreak - 1)]['code'] !== T_WHITESPACE

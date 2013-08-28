@@ -770,7 +770,7 @@ class PHP_CodeSniffer_File
      *                          will be converted into the default severity level.
      * @param boolean $fixable  Can the error be fixed by the sniff?
      *
-     * @return void
+     * @return boolean
      */
     public function addError(
         $error,
@@ -783,7 +783,7 @@ class PHP_CodeSniffer_File
         // Don't bother doing any processing if errors are just going to
         // be hidden in the reports anyway.
         if ($this->phpcs->cli->errorSeverity === 0) {
-            return;
+            return false;
         }
 
         // Work out which sniff generated the error.
@@ -813,7 +813,7 @@ class PHP_CodeSniffer_File
             && in_array($sniffCode, $this->restrictions) === false
             && in_array($sniff, $this->restrictions) === false
         ) {
-            return;
+            return false;
         }
 
         // Make sure this message type has not been set to "warning".
@@ -821,8 +821,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'warning'
         ) {
             // Pass this off to the warning handler.
-            $this->addWarning($error, $stackPtr, $code, $data, $severity);
-            return;
+            return $this->addWarning($error, $stackPtr, $code, $data, $severity);
         }
 
         // Make sure we are interested in this severity level.
@@ -833,7 +832,7 @@ class PHP_CodeSniffer_File
         }
 
         if ($this->phpcs->cli->errorSeverity > $severity) {
-            return;
+            return false;
         }
 
         // Make sure we are not ignoring this file.
@@ -848,7 +847,7 @@ class PHP_CodeSniffer_File
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
-                return;
+                return false;
             }
         }
 
@@ -869,8 +868,9 @@ class PHP_CodeSniffer_File
             if (isset($this->_errors[$lineNum]) === false) {
                 $this->_errors[$lineNum] = 0;
             }
+
             $this->_errors[$lineNum]++;
-            return;
+            return true;
         }
 
         // Work out the warning message.
@@ -899,6 +899,8 @@ class PHP_CodeSniffer_File
                                                'fixable'  => $fixable,
                                               );
 
+        return true;
+
     }//end addError()
 
 
@@ -913,7 +915,7 @@ class PHP_CodeSniffer_File
      *                          will be converted into the default severity level.
      * @param boolean $fixable  Can the warning be fixed by the sniff?
      *
-     * @return void
+     * @return boolean
      */
     public function addWarning(
         $warning,
@@ -926,7 +928,7 @@ class PHP_CodeSniffer_File
         // Don't bother doing any processing if warnings are just going to
         // be hidden in the reports anyway.
         if ($this->phpcs->cli->warningSeverity === 0) {
-            return;
+            return false;
         }
 
         // Work out which sniff generated the warning.
@@ -956,7 +958,7 @@ class PHP_CodeSniffer_File
             && in_array($sniffCode, $this->restrictions) === false
             && in_array($sniff, $this->restrictions) === false
         ) {
-            return;
+            return false;
         }
 
         // Make sure this message type has not been set to "error".
@@ -964,8 +966,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'error'
         ) {
             // Pass this off to the error handler.
-            $this->addError($warning, $stackPtr, $code, $data, $severity);
-            return;
+            return $this->addError($warning, $stackPtr, $code, $data, $severity);
         }
 
         // Make sure we are interested in this severity level.
@@ -976,7 +977,7 @@ class PHP_CodeSniffer_File
         }
 
         if ($this->phpcs->cli->warningSeverity > $severity) {
-            return;
+            return false;
         }
 
         // Make sure we are not ignoring this file.
@@ -991,7 +992,7 @@ class PHP_CodeSniffer_File
 
             $pattern = strtr($pattern, $replacements);
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
-                return;
+                return false;
             }
         }
 
@@ -1012,8 +1013,9 @@ class PHP_CodeSniffer_File
             if (isset($this->_warnings[$lineNum]) === false) {
                 $this->_warnings[$lineNum] = 0;
             }
+
             $this->_warnings[$lineNum]++;
-            return;
+            return true;
         }
 
         // Work out the warning message.
@@ -1042,6 +1044,8 @@ class PHP_CodeSniffer_File
                                                  'fixable'  => $fixable,
                                                 );
 
+        return true;
+
     }//end addWarning()
 
 
@@ -1055,7 +1059,7 @@ class PHP_CodeSniffer_File
      * @param int    $severity The severity level for this error. A value of 0
      *                         will be converted into the default severity level.
      *
-     * @return void
+     * @return boolean
      */
     public function addFixableError(
         $error,
@@ -1064,7 +1068,7 @@ class PHP_CodeSniffer_File
         $data=array(),
         $severity=0
     ) {
-        $this->addError($error, $stackPtr, $code, $data, $severity, true);
+        return $this->addError($error, $stackPtr, $code, $data, $severity, true);
 
     }//end addFixableError()
 
@@ -1079,7 +1083,7 @@ class PHP_CodeSniffer_File
      * @param int    $severity The severity level for this warning. A value of 0
      *                         will be converted into the default severity level.
      *
-     * @return void
+     * @return boolean
      */
     public function addFixableWarning(
         $warning,
@@ -1088,7 +1092,7 @@ class PHP_CodeSniffer_File
         $data=array(),
         $severity=0
     ) {
-        $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
+        return $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
 
     }//end addFixableWarning()
 

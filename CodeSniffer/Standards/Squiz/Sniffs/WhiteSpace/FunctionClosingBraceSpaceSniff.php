@@ -104,9 +104,9 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             if ($found !== 1) {
                 $error = 'Expected 1 blank line before closing function brace; %s found';
                 $data  = array($found);
-                $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
+                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
 
-                if ($phpcsFile->fixer->enabled === true) {
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     if ($found > 1) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {

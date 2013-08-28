@@ -159,14 +159,14 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
             if ($lineDifference >= $this->lineLimit) {
                 $error = 'End comment for long condition not found; expected "%s"';
                 $data  = array($expected);
-                $phpcsFile->addFixableError($error, $stackPtr, 'Missing', $data);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Missing', $data);
 
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-                if ($next !== false && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
-                    $expected .= $phpcsFile->eolChar;
-                }
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                    if ($next !== false && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
+                        $expected .= $phpcsFile->eolChar;
+                    }
 
-                if ($phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->addContent($stackPtr, $expected);
                 }
             }
@@ -187,8 +187,9 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                       $expected,
                       $found,
                      );
-            $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
-            if ($phpcsFile->fixer->enabled === true) {
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($comment, $expected);
             }
 
