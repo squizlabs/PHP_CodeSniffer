@@ -272,15 +272,17 @@ class PHP_CodeSniffer_File
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
-     * @param string          $file       The absolute path to the file to process.
-     * @param array(string)   $listeners  The initial listeners listening
-     *                                    to processing of this file.
-     * @param array           $tokenizers An array of extensions mapping
-     *                                    to the tokenizer to use.
-     * @param array           $ruleset    An array of rules from the
-     *                                    ruleset.xml file.
-     * @param PHP_CodeSniffer $phpcs      The PHP_CodeSniffer object controlling
-     *                                    this run.
+     * @param string          $file         The absolute path to the file to process.
+     * @param array(string)   $listeners    The initial listeners listening
+     *                                      to processing of this file.
+     * @param array           $tokenizers   An array of extensions mapping
+     *                                      to the tokenizer to use.
+     * @param array           $ruleset      An array of rules from the
+     *                                      ruleset.xml file.
+     * @param array           $restrictions An array of sniff codes to
+     *                                      restrict violations to.
+     * @param PHP_CodeSniffer $phpcs        The PHP_CodeSniffer object controlling
+     *                                      this run.
      *
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
