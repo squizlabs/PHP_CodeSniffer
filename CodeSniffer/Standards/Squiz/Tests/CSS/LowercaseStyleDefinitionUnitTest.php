@@ -40,9 +40,10 @@ class Squiz_Tests_CSS_LowercaseStyleDefinitionUnitTest extends AbstractSniffUnit
     public function getErrorList()
     {
         return array(
-                2 => 1,
-                3 => 1,
-                5 => 2,
+                2  => 1,
+                3  => 1,
+                5  => 2,
+                11 => 1,
                );
 
     }//end getErrorList()
