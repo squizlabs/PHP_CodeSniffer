@@ -80,7 +80,15 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             // right next to each other.
             if ($tokens[$stackPtr]['scope_closer'] !== ($tokens[$stackPtr]['scope_opener'] + 1)) {
                 $error = 'The opening and closing braces of empty functions must be directly next to each other; e.g., function () {}';
-                $phpcsFile->addError($error, $closeBrace, 'SpacingBetween');
+                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBetween');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($tokens[$stackPtr]['scope_opener'] + 1); $i < $closeBrace; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
 
             return;
@@ -94,11 +102,29 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             // Nested function.
             if ($found < 0) {
                 $error = 'Closing brace of nested function must be on a new line';
-                $phpcsFile->addError($error, $closeBrace, 'ContentBeforeClose');
+                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'ContentBeforeClose');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addNewlineBefore($closeBrace);
+                }
             } else if ($found > 0) {
                 $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
                 $data  = array($found);
-                $phpcsFile->addError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
+                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
+                        // Try and maintain indentation.
+                        if ($tokens[$i]['line'] === $braceLine) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->addNewlineBefore($i);
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
         } else {
             if ($found !== 1) {
