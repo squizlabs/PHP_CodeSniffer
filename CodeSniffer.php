@@ -500,7 +500,8 @@ class PHP_CodeSniffer
             if ($dots === 60) {
                 $padding = ($maxLength - strlen($numProcessed));
                 echo str_repeat(' ', $padding);
-                echo " $numProcessed / $numFiles".PHP_EOL;
+                $percent = round($numProcessed / $numFiles * 100);
+                echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
                 $dots = 0;
             }
         }//end foreach
