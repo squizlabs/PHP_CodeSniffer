@@ -1031,7 +1031,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         || $tokens[$x]['code'] === T_PROTOTYPE
                     ) {
                         // Find the first string in this definition.
-                        // E.g., WantedString.DontWantThis.prototype
+                        // E.g., WantedString.DontWantThis.prototype.
                         for ($x--; $x >= 0; $x--) {
                             $wantedTokens = array(
                                              T_STRING,

@@ -29,10 +29,10 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
 {
 
     /**
-    * The number of spaces code should be indented.
-    *
-    * @var int
-    */
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
     public $indent = 4;
 
 

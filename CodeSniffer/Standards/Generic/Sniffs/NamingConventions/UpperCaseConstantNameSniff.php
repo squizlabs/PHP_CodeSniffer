@@ -169,7 +169,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                 return;
             }
 
-            // Is this an instance of declare()
+            // Is this an instance of declare() ?
             $prevPtrDeclare = $phpcsFile->findPrevious(array(T_WHITESPACE, T_OPEN_PARENTHESIS), ($stackPtr - 1), null, true);
             if ($tokens[$prevPtrDeclare]['code'] === T_DECLARE) {
                 return;
