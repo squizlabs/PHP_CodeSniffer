@@ -427,7 +427,10 @@ class PHP_CodeSniffer_CLI
 
                 $values['reports'][$report] = $output;
             } else if (substr($arg, 0, 9) === 'standard=') {
-                $values['standard'] = explode(',', substr($arg, 9));
+                $standards = trim(substr($arg, 9));
+                if ($standards !== '') {
+                    $values['standard'] = explode(',', $standards);
+                }
             } else if (substr($arg, 0, 11) === 'extensions=') {
                 $values['extensions'] = explode(',', substr($arg, 11));
             } else if (substr($arg, 0, 9) === 'severity=') {
