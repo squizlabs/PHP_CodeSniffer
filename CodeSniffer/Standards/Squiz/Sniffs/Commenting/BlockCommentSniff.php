@@ -135,7 +135,10 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         // Make sure first line isn't blank.
         if (trim($tokens[$commentLines[1]]['content']) === '') {
             $error = 'Empty line not allowed at start of comment';
-            $phpcsFile->addError($error, $commentLines[1], 'HasEmptyLine');
+            $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'HasEmptyLine');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($commentLines[1], '');
+            }
         } else {
             // Check indentation of first line.
             $content      = $tokens[$commentLines[1]]['content'];
@@ -150,7 +153,11 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                              );
 
                 $error = 'First line of comment not aligned correctly; expected %s but found %s';
-                $phpcsFile->addError($error, $commentLines[1], 'FirstLineIndent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'FirstLineIndent', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $newContent = str_repeat(' ', $starColumn).ltrim($content);
+                    $phpcsFile->fixer->replaceToken($commentLines[1], $newContent);
+                }
             }
 
             if (preg_match('|\p{Lu}|u', $commentText[0]) === 0) {
@@ -186,7 +193,11 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                              );
 
                 $error = 'Comment line indented incorrectly; expected at least %s but found %s';
-                $phpcsFile->addError($error, $line, 'LineIndent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $line, 'LineIndent', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $newContent = str_repeat(' ', $starColumn).ltrim($tokens[$line]['content']);
+                    $phpcsFile->fixer->replaceToken($line, $newContent);
+                }
             }
         }//end foreach
 
