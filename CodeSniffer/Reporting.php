@@ -153,7 +153,7 @@ class PHP_CodeSniffer_Reporting
                     if ($cliValues['reportFile'] !== null) {
                         $output = $cliValues['reportFile'];
                     } else {
-                        $output = getcwd().'/phpcs-'.$report.'.tmp';
+                        $output = sys_get_temp_dir().'/phpcs-'.$report.'.tmp';
                     }
                 }
 
@@ -199,7 +199,7 @@ class PHP_CodeSniffer_Reporting
             $toScreen = false;
             ob_start();
         } else {
-            $filename = getcwd().'/phpcs-'.$report.'.tmp';
+            $filename = sys_get_temp_dir().'/phpcs-'.$report.'.tmp';
             $toScreen = true;
         }
 
