@@ -128,23 +128,25 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressFile()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'Squiz', array('Squiz.Commenting.FileComment'));
+        $phpcs->process(array(), 'Generic', array('Generic.Commenting.Todo'));
 
         // Process without suppression.
-        $content = '<?php '.PHP_EOL.'$var = FALSE;';
+        $content = '<?php '.PHP_EOL.'//TODO: write some code';
         $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertEquals(1, count($errors));
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
 
         // Process with suppression.
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'$var = FALSE;';
-        $file    = $phpcs->processFile('suppressionTest.php', $content);
+        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
 
-        // PHP_CodeSniffer should not have even attempted to process the file.
-        $this->assertEquals(null, $file);
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
 
     }//end testSuppressFile()
 
