@@ -818,7 +818,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        if (PHP_CODESNIFFER_CBF === true) {
+        if (defined('PHP_CODESNIFFER_CBF') === true && PHP_CODESNIFFER_CBF === true) {
             $this->printPHPCBFUsage();
         } else {
             $this->printPHPCSUsage();
