@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Doc generation is now working again
   - Progress information now shows the percentage complete at the end of each line
   - Added support for the PHP 5.4 callable type hint
+  - Fixed problem where some file content could be ignored when checking STDIN
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
