@@ -144,6 +144,7 @@ class PHP_CodeSniffer_Reporting
 
         foreach ($cliValues['reports'] as $report => $output) {
             $reportClass = self::factory($report);
+            $report      = get_class($reportClass);
 
             ob_start();
             $result = $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
@@ -205,6 +206,7 @@ class PHP_CodeSniffer_Reporting
         }
 
         $reportClass = self::factory($report);
+        $report      = get_class($reportClass);
 
         if ($reportFile !== null) {
             $filename = $reportFile;
