@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The --report argument now allows for custom reports to be used
+    -- Use the full path to your custom report class as the report name
   - You can now restrict violations to individual sniff codes using the --sniffs command line argument
    -- Previously, this only restricted violations to an entire sniff and not individual messages
    -- If you have scripts calling PHP_CodeSniffer::process() or creating PHP_CodeSniffer_File objects, you must update your code

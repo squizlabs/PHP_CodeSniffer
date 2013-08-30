@@ -89,16 +89,28 @@ class PHP_CodeSniffer_Reporting
      */
     public function factory($type)
     {
-        $type = ucfirst($type);
-        if (isset($this->_reports[$type]) === true) {
-            return $this->_reports[$type];
-        }
+        if (strpos($type, '.') !== false) {
+            // This is a path to a custom report class.
+            $filename = realpath($type);
+            if ($filename === false) {
+                throw new PHP_CodeSniffer_Exception('Custom report "'.$type.'" not found.');
+            }
 
-        $filename        = $type.'.php';
-        $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
-        if (class_exists($reportClassName, true) === false) {
-            throw new PHP_CodeSniffer_Exception('Report type "'.$type.'" not found.');
-        }
+            $reportClassName = 'PHP_CodeSniffer_Reports_'.basename($filename);
+            $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
+            include_once $filename;
+        } else {
+            $type = ucfirst($type);
+            if (isset($this->_reports[$type]) === true) {
+                return $this->_reports[$type];
+            }
+
+            $filename        = $type.'.php';
+            $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
+            if (class_exists($reportClassName, true) === false) {
+                throw new PHP_CodeSniffer_Exception('Report type "'.$type.'" not found.');
+            }
+        }//end if
 
         $reportClass = new $reportClassName();
         if (false === ($reportClass instanceof PHP_CodeSniffer_Report)) {

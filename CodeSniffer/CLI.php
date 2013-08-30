@@ -404,27 +404,6 @@ class PHP_CodeSniffer_CLI
                     $output = null;
                 }//end if
 
-                $validReports = array(
-                                 'full',
-                                 'xml',
-                                 'json',
-                                 'checkstyle',
-                                 'csv',
-                                 'diff',
-                                 'emacs',
-                                 'notifysend',
-                                 'source',
-                                 'summary',
-                                 'svnblame',
-                                 'gitblame',
-                                 'hgblame',
-                                );
-
-                if (in_array($report, $validReports) === false) {
-                    echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
-                    exit(2);
-                }
-
                 $values['reports'][$report] = $output;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
