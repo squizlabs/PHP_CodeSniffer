@@ -1279,17 +1279,17 @@ class PHP_CodeSniffer
                 $firstContent  = fgets($handle);
                 $firstContent .= fgets($handle);
                 fclose($handle);
-            }
-        }
 
-        if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
-            // We are ignoring the whole file.
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Ignoring '.basename($filePath).PHP_EOL;
-            }
+                if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
+                    // We are ignoring the whole file.
+                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                        echo 'Ignoring '.basename($filePath).PHP_EOL;
+                    }
 
-            return null;
-        }
+                    return null;
+                }
+            }
+        }//end if
 
         try {
             $phpcsFile = $this->_processFile($file, $contents, $restrictions);
