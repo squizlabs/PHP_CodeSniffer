@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
     -- Adds new error message for single-line arrays that end with a comma
   - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
+  - Fixed bug #20043 : Mis-interpretation of Foo::class
   - Fixed bug #20044 : PSR1 camelCase check does not ignore leading underscores
   - Fixed bug #20045 : Errors about indentation for closures with multi-line 'use' in functions
  </notes>
