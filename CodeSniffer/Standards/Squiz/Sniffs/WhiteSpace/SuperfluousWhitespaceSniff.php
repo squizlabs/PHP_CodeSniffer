@@ -247,7 +247,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                                 $i++;
                             }
 
-                            $phpcsFile->fixer->addNewlineBefore($next);
+                            $phpcsFile->fixer->addNewlineBefore($i);
                             $phpcsFile->fixer->endChangeset();
                         }
                     }
