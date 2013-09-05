@@ -62,7 +62,7 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
         $tokens  = $phpcsFile->getTokens();
         $start   = ($stackPtr + 1);
         $end     = ($tokens[$stackPtr]['bracket_closer'] - 1);
-        $inStyle = false;
+        $inStyle = null;
 
         for ($i = $start; $i <= $end; $i++) {
             // Skip nested definitions as they are checked individually.
@@ -72,15 +72,20 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
             }
 
             if ($tokens[$i]['code'] === T_STYLE) {
-                $inStyle = true;
+                $inStyle = $tokens[$i]['content'];
             }
 
             if ($tokens[$i]['code'] === T_SEMICOLON) {
-                $inStyle = false;
+                $inStyle = null;
+            }
+
+            if ($inStyle === 'progid') {
+                // Special case for IE filters.
+                continue;
             }
 
             if ($tokens[$i]['code'] === T_STYLE
-                || ($inStyle === true
+                || ($inStyle !== null
                 && $tokens[$i]['code'] === T_STRING)
             ) {
                 $expected = strtolower($tokens[$i]['content']);

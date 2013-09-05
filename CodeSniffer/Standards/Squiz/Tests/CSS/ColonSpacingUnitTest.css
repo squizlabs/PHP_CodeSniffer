@@ -29,4 +29,5 @@ li {
     padding-left:10px;
     margin-bottom:<?php echo $marginBottom; ?>px;
     line-height:13px;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2e62a8, endColorstr=#123363);
 }

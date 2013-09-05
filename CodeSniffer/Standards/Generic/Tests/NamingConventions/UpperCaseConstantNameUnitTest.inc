@@ -142,4 +142,12 @@ class MyClass {
     }
 }
 
+class Foo
+{
+    public function bar()
+    {
+        return Bar::class;
+    }
+}
+
 ?>

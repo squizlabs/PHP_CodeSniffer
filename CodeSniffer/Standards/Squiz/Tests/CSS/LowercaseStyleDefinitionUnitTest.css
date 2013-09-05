@@ -9,5 +9,6 @@
 
     .SettingsTabPaneWidgetType-tab-mid {
         Font-Family: arial;
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2e62a8, endColorstr=#123363);
     }
 }
