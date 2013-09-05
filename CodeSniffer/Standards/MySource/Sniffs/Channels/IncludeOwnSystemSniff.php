@@ -60,7 +60,7 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
         $ownClass = $matches[2];
         $tokens   = $phpcsFile->getTokens();
 
-        $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 2));
+        $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 2), null, false, true);
         $typeName = trim($tokens[$typeName]['content'], " '");
         switch (strtolower($tokens[($stackPtr + 1)]['content'])) {
         case 'includesystem' :
