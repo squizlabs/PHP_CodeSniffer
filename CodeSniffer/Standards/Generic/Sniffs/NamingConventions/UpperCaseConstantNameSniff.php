@@ -62,6 +62,13 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             return;
         }
 
+        // Special case for PHP 5.5 class name resolution.
+        if (strtolower($constName) === 'class'
+            && $tokens[($stackPtr - 1)]['code'] === T_DOUBLE_COLON
+        ) {
+            return;
+        }
+
         // Special case for PHPUnit.
         if ($constName === 'PHPUnit_MAIN_METHOD') {
             return;

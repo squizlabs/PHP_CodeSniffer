@@ -67,6 +67,11 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        if ($tokens[$prev]['content'] === 'progid') {
+            // Special case for IE filters.
+            return;
+        }
+
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $error = 'There must be no space before a colon in a style definition';
             $phpcsFile->addError($error, $stackPtr, 'Before');

@@ -65,6 +65,11 @@ class Squiz_Sniffs_CSS_DisallowMultipleStyleDefinitionsSniff implements PHP_Code
             return;
         }
 
+        if ($tokens[$next]['content'] === 'progid') {
+            // Special case for IE filters.
+            return;
+        }
+
         if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Each style definition must be on a line by itself';
             $phpcsFile->addError($error, $next, 'Found');
