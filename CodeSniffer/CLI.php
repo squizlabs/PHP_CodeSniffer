@@ -307,8 +307,9 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'version':
-            echo 'PHP_CodeSniffer version @package_version@ (@package_state@) ';
-            echo 'by Squiz Pty Ltd. (http://www.squiz.com.au)'.PHP_EOL;
+            $phpcs = new PHP_CodeSniffer();
+            echo 'PHP_CodeSniffer version '.$phpcs::VERSION.' ('.$phpcs::STABILITY.') ';
+            echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
             break;
         case 'config-set':

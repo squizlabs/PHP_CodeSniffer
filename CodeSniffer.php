@@ -69,6 +69,20 @@ class PHP_CodeSniffer
 {
 
     /**
+     * The current version.
+     *
+     * @var string
+     */
+    const VERSION = '1.4.7';
+
+    /**
+     * Package stability; either stable or beta.
+     *
+     * @var string
+     */
+    const STABILITY = 'stable';
+
+    /**
      * The file or directory that is currently being processed.
      *
      * @var string
