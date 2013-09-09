@@ -404,6 +404,7 @@ class PHP_CodeSniffer_CLI
                                  'xml',
                                  'json',
                                  'checkstyle',
+                                 'junit',
                                  'csv',
                                  'emacs',
                                  'notifysend',

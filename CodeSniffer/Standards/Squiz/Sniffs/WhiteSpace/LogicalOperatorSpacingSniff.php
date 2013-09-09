@@ -87,7 +87,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
             $error = 'Expected 1 space after logical operator; 0 found';
             $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfter');
         } else {
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             if ($tokens[$stackPtr]['line'] === $tokens[$next]['line']
                 && strlen($tokens[($stackPtr + 1)]['content']) !== 1
             ) {
