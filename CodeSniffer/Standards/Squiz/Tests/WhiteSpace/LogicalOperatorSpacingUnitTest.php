@@ -46,8 +46,8 @@ class Squiz_Tests_WhiteSpace_LogicalOperatorSpacingUnitTest extends AbstractSnif
                 4  => 2,
                 5  => 3,
                 6  => 3,
-                14 => 1,
-                16 => 1,
+                15 => 1,
+                17 => 1,
                );
 
     }//end getErrorList()
