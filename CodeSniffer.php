@@ -1034,6 +1034,12 @@ class PHP_CodeSniffer
                 $parts = explode('\\', $listenerClass);
             }
 
+            // fix for "Notice: Undefined offset: 3" which gets thrown if a sniff
+            // is placed in the Sniffs main folder and not a subfolder
+            if (!isset($parts[3])) {
+                $parts[3] = '';
+            }
+
             $code  = $parts[0].'.'.$parts[2].'.'.$parts[3];
             $code  = substr($code, 0, -5);
 
