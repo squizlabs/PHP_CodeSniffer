@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added report type --report=junit to show the error list in a JUnit compatible format
+    -- Thanks to Oleg Lobach for the contribution
   - Added support for the PHP 5.4 callable type hint
   - Fixed problem where some file content could be ignored when checking STDIN
   - Version information is now printed when installed via composer or run from a Git clone (request #20050)
@@ -99,6 +101,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <file baseinstalldir="" name="Checkstyle.xsd" role="test">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="" name="Junit.xsd" role="test">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="" name="Xml.xsd" role="test">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
@@ -125,6 +130,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="JsonTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="" name="JunitTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="" name="SourceTest.php" role="test">
@@ -235,6 +243,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Json.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Junit.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Notifysend.php" role="php">

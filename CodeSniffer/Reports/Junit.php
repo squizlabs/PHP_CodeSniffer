@@ -6,10 +6,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Oleg Lobach <oleg@lobach.info>
- * @copyright 2009 SQLI <www.sqli.com>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -22,10 +20,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Oleg Lobach <oleg@lobach.info>
- * @copyright 2009 SQLI <www.sqli.com>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
@@ -54,14 +50,15 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
         $toScreen=true
     ) {
         $errors = 0;
-        $tests = 0;
+        $tests  = 0;
         foreach ($report['files'] as $file) {
             if (count($file['messages']) === 0) {
-                ++$tests;
+                $tests++;
                 continue;
             }
-            $errors += $file['errors'] + $file['warnings'];
-            $tests += $file['errors'] + $file['warnings'];
+
+            $errors += ($file['errors'] + $file['warnings']);
+            $tests  += ($file['errors'] + $file['warnings']);
         }
 
         $out = new XMLWriter;
@@ -69,8 +66,10 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
         $out->setIndent(true);
         $out->startDocument('1.0', 'UTF-8');
 
+        $phpcs = new PHP_CodeSniffer;
+
         $out->startElement('testsuites');
-        $out->writeAttribute('name', 'PHP_CodeSniffer @package_version@');
+        $out->writeAttribute('name', 'PHP_CodeSniffer '.$phpcs::VERSION);
         $out->writeAttribute('tests', $tests);
         $out->writeAttribute('failures', $errors);
 
@@ -91,7 +90,7 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
                 continue;
             }
 
-            $failures = $file['errors'] + $file['warnings'];
+            $failures = ($file['errors'] + $file['warnings']);
             $out->writeAttribute('tests', $failures);
             $out->writeAttribute('failures', $failures);
 
@@ -99,7 +98,7 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
                         $out->startElement('testcase');
-                        $out->writeAttribute('name', $error['source'] . " at $filename ($line:$column)");
+                        $out->writeAttribute('name', $error['source']." at $filename ($line:$column)");
 
                         $error['type'] = strtolower($error['type']);
                         if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
