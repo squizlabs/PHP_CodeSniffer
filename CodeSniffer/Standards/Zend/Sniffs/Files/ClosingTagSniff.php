@@ -14,7 +14,7 @@
  */
 
 /**
- * Zend_Sniffs_Files_LineEndingsSniff.
+ * Zend_Sniffs_Files_ClosingTagSniff.
  *
  * Checks that the file does not end with a closing tag.
  *
