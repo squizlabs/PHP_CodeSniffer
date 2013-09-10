@@ -1,36 +1,41 @@
 <?php
 /**
- * Xml report for PHP_CodeSniffer.
+ * JUnit report for PHP_CodeSniffer.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
+ * @author    Oleg Lobach <oleg@lobach.info>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Xml report for PHP_CodeSniffer.
+ * JUnit report for PHP_CodeSniffer.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
+ * @author    Oleg Lobach <oleg@lobach.info>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
+class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
 {
+
+    /**
+     * A count of tests that have been performed.
+     *
+     * @var int
+     */
+    private $_tests = 0;
 
 
     /**
@@ -53,44 +58,55 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
+        if (count($report['messages']) === 0) {
+            $this->_tests++;
+        } else {
+            $this->_tests += ($report['errors'] + $report['warnings']);
+        }
+
         $out = new XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
 
-        if ($report['errors'] === 0 && $report['warnings'] === 0) {
-            // Nothing to print.
-            return false;
-        }
-
-        $out->startElement('file');
+        $out->startElement('testsuite');
         $out->writeAttribute('name', $report['filename']);
-        $out->writeAttribute('errors', $report['errors']);
-        $out->writeAttribute('warnings', $report['warnings']);
-        $out->writeAttribute('fixable', $report['fixable']);
 
-        foreach ($report['messages'] as $line => $lineErrors) {
-            foreach ($lineErrors as $column => $colErrors) {
-                foreach ($colErrors as $error) {
-                    $error['type'] = strtolower($error['type']);
-                    if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
-                        $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
+        if (count($report['messages']) === 0) {
+            $out->writeAttribute('tests', 1);
+            $out->writeAttribute('failures', 0);
+
+            $out->startElement('testcase');
+            $out->writeAttribute('name', $report['filename']);
+            $out->endElement();
+        } else {
+            $failures = ($report['errors'] + $report['warnings']);
+            $out->writeAttribute('tests', $failures);
+            $out->writeAttribute('failures', $failures);
+
+            foreach ($report['messages'] as $line => $lineErrors) {
+                foreach ($lineErrors as $column => $colErrors) {
+                    foreach ($colErrors as $error) {
+                        $out->startElement('testcase');
+                        $out->writeAttribute('name', $error['source'].' at '.$report['filename']." ($line:$column)");
+
+                        $error['type'] = strtolower($error['type']);
+                        if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
+                            $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
+                        }
+
+                        $out->startElement('failure');
+                        $out->writeAttribute('type', $error['type']);
+                        $out->writeAttribute('message', $error['message']);
+                        $out->endElement();
+
+                        $out->endElement();
                     }
-
-                    $out->startElement($error['type']);
-                    $out->writeAttribute('line', $line);
-                    $out->writeAttribute('column', $column);
-                    $out->writeAttribute('source', $error['source']);
-                    $out->writeAttribute('severity', $error['severity']);
-                    $out->writeAttribute('fixable', (int) $error['fixable']);
-                    $out->text($error['message']);
-                    $out->endElement();
                 }
             }
-        }//end foreach
+        }//end if
 
         $out->endElement();
         echo $out->flush();
-
         return true;
 
     }//end generateFileReport()
@@ -121,11 +137,12 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $phpcs = new PHP_CodeSniffer;
+        $phpcs    = new PHP_CodeSniffer;
+        $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<phpcs version="'.$phpcs::VERSION.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.$phpcs::VERSION.'" tests="'.$this->_tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
-        echo '</phpcs>'.PHP_EOL;
+        echo '</testsuites>'.PHP_EOL;
 
     }//end generate()
 

@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    -- The PHP_CodeSniffer_File::__construct() method now requires an array of restrictions to be passed
   - Doc generation is now working again
   - Progress information now shows the percentage complete at the end of each line
+  - Added report type --report=junit to show the error list in a JUnit compatible format
+    -- Thanks to Oleg Lobach for the contribution
   - Added support for the PHP 5.4 callable type hint
   - Fixed problem where some file content could be ignored when checking STDIN
   - Version information is now printed when installed via composer or run from a Git clone (request #20050)
@@ -55,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LowercaseStyleDefinitionSniff no longer throws errors for class names in nested style definitions
   - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
   - Squiz CSS sniffs no longer generate errors for IE filters
+  - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
     -- Adds new error message for single-line arrays that end with a comma
   - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
@@ -194,6 +197,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Json.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Junit.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Notifysend.php" role="php">
