@@ -70,6 +70,7 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$prevPtr]['code'] === T_CLASS
             || $tokens[$prevPtr]['code'] === T_EXTENDS
             || $tokens[$prevPtr]['code'] === T_IMPLEMENTS
+            || $tokens[$prevPtr]['code'] === T_NEW
         ) {
             return;
         }

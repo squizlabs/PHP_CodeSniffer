@@ -36,4 +36,16 @@ $var = myFunction(
      FALSE,
     );
 );
+
+for ($node = $fieldsTag->nextSibling; $node; $node = $node->nextSibling) {
+    if ($node->nodeType !== XML_ELEMENT_NODE) {
+        continue;
+    }
+
+    for ($node = $fields->nextSibling; $node; $node = $node->nextSibling) {
+        if ($node->nodeType !== XML_ELEMENT_NODE) {
+            continue;
+        }
+    }
+}
 ?>

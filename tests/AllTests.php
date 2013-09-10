@@ -18,7 +18,9 @@ if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
 }
 
 require_once 'TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+if (class_exists('PHPUnit_TextUI_TestRunner', false) === false) {
+    require_once 'PHPUnit/TextUI/TestRunner.php';
+}
 
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
     // We are not installed.

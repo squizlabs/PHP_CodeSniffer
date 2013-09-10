@@ -28,6 +28,13 @@
 class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
+    public $indent = 4;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -95,7 +102,7 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
         // Find the actual indent.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1));
 
-        $expectedIndent = ($assignmentIndent + 4);
+        $expectedIndent = ($assignmentIndent + $this->indent);
         $foundIndent    = strlen($tokens[$prev]['content']);
         if ($foundIndent !== $expectedIndent) {
             $error = 'Multi-line assignment not indented correctly; expected %s spaces but found %s';

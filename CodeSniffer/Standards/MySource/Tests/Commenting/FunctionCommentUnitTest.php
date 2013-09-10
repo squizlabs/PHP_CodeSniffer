@@ -61,10 +61,7 @@ class MySource_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUni
      */
     public function getWarningList()
     {
-        return array(
-                67 => 1,
-                68 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 

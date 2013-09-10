@@ -4,6 +4,6 @@
   'report_format' => 'summary',
   'show_warnings' => '0',
   'show_progress' => '1',
-  'report_wdith' => '120',
+  'report_width' => '120',
 )
 ?>

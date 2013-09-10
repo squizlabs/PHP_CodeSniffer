@@ -69,6 +69,20 @@ class PHP_CodeSniffer
 {
 
     /**
+     * The current version.
+     *
+     * @var string
+     */
+    const VERSION = '1.4.7';
+
+    /**
+     * Package stability; either stable or beta.
+     *
+     * @var string
+     */
+    const STABILITY = 'stable';
+
+    /**
      * The file or directory that is currently being processed.
      *
      * @var string
@@ -168,6 +182,8 @@ class PHP_CodeSniffer
                                    'mixed',
                                    'object',
                                    'string',
+                                   'resource',
+                                   'callable',
                                   );
 
 
@@ -280,7 +296,7 @@ class PHP_CodeSniffer
             && is_file(dirname(self::$standardDir).'/'.$path) === true
         ) {
             // Check standard file locations based on the passed standard directory.
-            include dirname(self::$standardDir).'/'.$path;
+            include_once dirname(self::$standardDir).'/'.$path;
         } else {
             // Everything else.
             @include $path;
@@ -680,6 +696,13 @@ class PHP_CodeSniffer
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
+            // If they have specified a list of sniffs to restrict to, check
+            // to see if this sniff is allowed.
+            $allowed = in_array(strtolower($className), $sniffs);
+            if (empty($sniffs) === false && $allowed === false) {
+                continue;
+            }
+
             include_once $file;
 
             // Support the use of PHP namespaces. If the class name we included
@@ -688,13 +711,6 @@ class PHP_CodeSniffer
             $classNameNS = str_replace('_', '\\', $className);
             if (class_exists($classNameNS, false) === true) {
                 $className = $classNameNS;
-            }
-
-            // If they have specified a list of sniffs to restrict to, check
-            // to see if this sniff is allowed.
-            $allowed = in_array(strtolower($className), $sniffs);
-            if (empty($sniffs) === false && $allowed === false) {
-                continue;
             }
 
             $listeners[$className] = $className;
@@ -732,10 +748,12 @@ class PHP_CodeSniffer
         if (is_dir($dir) === true) {
             // Available since PHP 5.2.11 and 5.3.1.
             if (defined('RecursiveDirectoryIterator::FOLLOW_SYMLINKS') === true) {
-                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS));
+                $rdi = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
             } else {
-                $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+                $rdi = new RecursiveDirectoryIterator($dir);
             }
+
+            $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
             foreach ($di as $file) {
                 $fileName = $file->getFilename();
@@ -1135,7 +1153,11 @@ class PHP_CodeSniffer
                 if ($local === true) {
                     $di = new DirectoryIterator($path);
                 } else {
-                    $di = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+                    $di = new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($path),
+                        0,
+                        RecursiveIteratorIterator::CATCH_GET_CHILD
+                    );
                 }
 
                 foreach ($di as $file) {
@@ -1309,17 +1331,17 @@ class PHP_CodeSniffer
                 $firstContent  = fgets($handle);
                 $firstContent .= fgets($handle);
                 fclose($handle);
-            }
-        }
 
-        if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
-            // We are ignoring the whole file.
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Ignoring '.basename($filePath).PHP_EOL;
-            }
+                if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
+                    // We are ignoring the whole file.
+                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                        echo 'Ignoring '.basename($filePath).PHP_EOL;
+                    }
 
-            return null;
-        }
+                    return null;
+                }
+            }
+        }//end if
 
         try {
             $phpcsFile = $this->_processFile($file, $contents);

@@ -164,7 +164,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // If the first content looks like a colour and not a class
                     // definition, join the tokens together.
-                    if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1) {
+                    if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1
+                        && $commentTokens[1]['content'] !== '-'
+                    ) {
                         array_shift($commentTokens);
                         // Work out what we trimmed off above and remember to re-add it.
                         $trimmed = substr($token['content'], 0, (strlen($token['content']) - strlen($content)));

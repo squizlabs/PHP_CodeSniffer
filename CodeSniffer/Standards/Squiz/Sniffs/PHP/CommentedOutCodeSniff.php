@@ -137,7 +137,12 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // to frame comments and licence headers.
         $content = preg_replace('/[-=*]+/', '-', $content);
 
+        // Because we are not really parsing code, the tokenizer can throw all sorts
+        // of errors that don't mean anything, so ignore them.
+        $oldErrors = ini_get('error_reporting');
+        ini_set('error_reporting', 0);
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
                         T_WHITESPACE,
@@ -161,8 +166,10 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // Last token is always the closing PHP tag.
-        if ($stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG) {
+        // Last token is always the closing PHP tag, unless something went wrong.
+        if (isset($stringTokens[($numTokens - 1)]) === false
+            || $stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG
+        ) {
             return;
         }
 
@@ -172,13 +179,20 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $numComment = 0;
-        $numCode    = 0;
+        $numComment  = 0;
+        $numPossible = 0;
+        $numCode     = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (in_array($stringTokens[$i]['code'], $emptyTokens) === true) {
                 // Looks like comment.
                 $numComment++;
+            } else if (in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens)
+                || in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens)
+            ) {
+                // Commented out HTML/XML and other docs contain a lot of these
+                // characters, so it is best to not use them directly.
+                $numPossible++;
             } else {
                 // Looks like code.
                 $numCode++;

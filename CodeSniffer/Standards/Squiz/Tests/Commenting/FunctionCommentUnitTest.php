@@ -132,9 +132,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
      */
     public function getWarningList()
     {
-        return array(
-                198 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 

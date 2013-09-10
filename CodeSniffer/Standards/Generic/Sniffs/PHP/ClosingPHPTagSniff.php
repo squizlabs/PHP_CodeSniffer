@@ -13,7 +13,7 @@
  */
 
 /**
- * Checks that the file does not end with a closing tag.
+ * Checks that open PHP tags are paired with closing tags.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

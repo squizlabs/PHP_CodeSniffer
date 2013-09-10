@@ -60,7 +60,6 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
                 23 => 1,
                 24 => 2,
                 26 => 1,
-                27 => 2,
                 30 => 2,
                );
 
@@ -77,9 +76,7 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                28 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 

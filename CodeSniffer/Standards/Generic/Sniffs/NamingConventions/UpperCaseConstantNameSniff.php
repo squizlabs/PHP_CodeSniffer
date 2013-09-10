@@ -62,6 +62,13 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             return;
         }
 
+        // Special case for PHP 5.5 class name resolution.
+        if (strtolower($constName) === 'class'
+            && $tokens[($stackPtr - 1)]['code'] === T_DOUBLE_COLON
+        ) {
+            return;
+        }
+
         // Special case for PHPUnit.
         if ($constName === 'PHPUnit_MAIN_METHOD') {
             return;
@@ -98,6 +105,9 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
                              T_AS,
                              T_GOTO,
                              T_INSTEADOF,
+                             T_PUBLIC,
+                             T_PRIVATE,
+                             T_PROTECTED,
                             );
 
             if (in_array($tokens[$functionKeyword]['code'], $declarations) === true) {
@@ -132,6 +142,11 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             // Is this an insteadof name?
             if ($tokens[$nextPtr]['code'] === T_INSTEADOF) {
+                return;
+            }
+
+            // Is this an as name?
+            if ($tokens[$nextPtr]['code'] === T_AS) {
                 return;
             }
 

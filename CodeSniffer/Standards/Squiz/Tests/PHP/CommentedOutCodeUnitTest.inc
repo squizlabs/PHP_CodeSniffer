@@ -58,4 +58,25 @@ function myFunction()
 // *****************************
 // | A comment block           |
 // *****************************
+
+/**
+ * List of panels.
+ *
+ * XML structure:
+ * <panels>
+ *     <panel_one_id>
+ *         <title>Title</title>
+ *         <panelContent>Contents</panelContent>
+ *         <panels>
+ *             <child_panel_id>...</child_panel_id>
+ *         </panels>
+ *     </panel_one_id>
+ * </panels>
+ *
+ * @return void
+ */
+
+/*
+    [^\'"]
+*/
 ?>

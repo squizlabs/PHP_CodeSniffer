@@ -130,5 +130,24 @@ class Object implements IObject
     use TReflected {
         TReflected::reflect insteadof TProperties;
     }
+    use ListenerAggregateTrait, PreLoadUserTrait, PreLoadCompanyTrait {
+        PreloadUserTrait::PreLoadUser as loadUser;
+        PreloadCompanyTrait::PreLoadCompany as loadCompany;
+    }
 }
+
+class MyClass {
+    use Something {
+        delete as protected blah;
+    }
+}
+
+class Foo
+{
+    public function bar()
+    {
+        return Bar::class;
+    }
+}
+
 ?>

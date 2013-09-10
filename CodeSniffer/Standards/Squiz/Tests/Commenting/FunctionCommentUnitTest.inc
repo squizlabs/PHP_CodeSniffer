@@ -551,6 +551,19 @@ function test123() {
 }
 
 /**
+ * Cant use resource for type hint.
+ *
+ * @param resource $test An argument.
+ *
+ * @return mixed
+ */
+function test($test)
+{
+   return $test;
+
+}//end test()
+
+/**
  * Variable number of args.
  *
  * @param string $a1     Comment here.
@@ -587,5 +600,16 @@ public function test()
 {
 
 }//end variableArgs()
+
+/**
+ * Uses callable.
+ *
+ * @param callable $cb Test parameter.
+ *
+ * @return void
+ */
+public function usesCallable(callable $cb) {
+    $cb();
+}
 
 ?>

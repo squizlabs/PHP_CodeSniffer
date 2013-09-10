@@ -266,15 +266,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            // Unknown tags are not parsed, do not process further.
-            $error = '@%s tag is not allowed in file comment';
-            $data  = array($errorTag['tag']);
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']), 'TagNotAllowed', $data);
-        }
-
         // Check each tag.
         $this->processTags($commentStart, $commentEnd);
 
@@ -310,7 +301,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                  'subpackage' => 'follows @package',
                  'author'     => 'follows @subpackage',
                  'copyright'  => 'follows @author',
-                 'license'    => 'follows @copyright',
                 );
 
         $foundTags   = $this->commentParser->getTagOrders();
@@ -559,53 +549,13 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Content missing for @copyright tag in file comment';
                 $this->currentFile->addError($error, $errorPos, 'MissingCopyright');
 
-            } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ACN 084 670 600\))$/', $content) === 0) {
-                $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ACN 084 670 600)" for copyright declaration';
+            } else if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $content) === 0) {
+                $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
                 $this->currentFile->addError($error, $errorPos, 'IncorrectCopyright');
             }
         }
 
     }//end processCopyrights()
-
-
-    /**
-     * License tag must be 'http://matrix.squiz.net/licence Squiz.Net Open Source Licence'.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processLicense($errorPos)
-    {
-        $license = $this->commentParser->getLicense();
-        if ($license !== null) {
-            $url     = $license->getValue();
-            $content = $license->getComment();
-            if (empty($url) === true && empty($content) === true) {
-                $error = 'Content missing for @license tag in file comment';
-                $this->currentFile->addError($error, $errorPos, 'MissingLicense');
-            } else {
-                // Check for license URL.
-                if (empty($url) === true) {
-                    $error = 'License URL missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseURL');
-                } else if ($url !== 'http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt') {
-                    $error = 'Expected "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" for license URL';
-                    $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseURL');
-                }
-
-                // Check for license name.
-                if (empty($content) === true) {
-                    $error = 'License name missing for @license tag in file comment';
-                    $this->currentFile->addError($error, $errorPos, 'MissingLicenseName');
-                } else if ($content !== 'GPLv2') {
-                    $error = 'Expected "GPLv2" for license name';
-                    $this->currentFile->addError($error, $errorPos, 'IncorrectLicenseName');
-                }
-            }//end if
-        }//end if
-
-    }//end processLicense()
 
 
 }//end class

@@ -12,8 +12,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
-
 /**
  * Tests for PHP_CodeSniffer error suppression tags.
  *
@@ -151,31 +149,34 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressFile()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->setTokenListeners('Squiz', array('Squiz_Sniffs_Commenting_FileCommentSniff'));
+        $phpcs->setTokenListeners('Squiz', array('Generic_Sniffs_Commenting_TodoSniff'));
         $phpcs->populateTokenListeners();
 
         // Process without suppression.
-        $content = '<?php '.PHP_EOL.'$var = FALSE;';
+        $content = '<?php '.PHP_EOL.'//TODO: write some code';
         $phpcs->processFile('noSuppressionTest.php', $content);
 
         $files = $phpcs->getFiles();
         $file  = $files[0];
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertEquals(1, count($errors));
-        $this->assertEquals(1, count($files));
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
 
         // Process with suppression.
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'$var = FALSE;';
+        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
         $phpcs->processFile('suppressionTest.php', $content);
 
-        // The file shouldn't even be added to the $files array.
         $files = $phpcs->getFiles();
-        $this->assertEquals(1, count($files));
+        $file  = $files[1];
 
-    }//end testSupressError()
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+    }//end testSuppressFile()
 
 
 }//end class
