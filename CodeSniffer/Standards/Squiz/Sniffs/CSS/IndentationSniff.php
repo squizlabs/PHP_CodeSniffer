@@ -47,6 +47,19 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
 
     }//end register()
 
+    /**
+     * If true, an error will be thrown; otherwise a warning.
+     *
+     * @var bool
+     */
+    public $error = true;
+
+    /**
+    * The number of spaces code should be indented.
+    *
+    * @var int
+    */
+    public $indent = 4;
 
     /**
      * Processes the tokens that this sniff is interested in.
@@ -99,7 +112,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 $foundIndent = 0;
             }
 
-            $expectedIndent = ($indentLevel * 4);
+            $expectedIndent = ($indentLevel * $this->indent);
             if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false
             ) {
                 if ($nestingLevel !== $indentLevel) {
@@ -112,7 +125,11 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                           $expectedIndent,
                           $foundIndent,
                          );
-                $phpcsFile->addError($error, $i, 'Incorrect', $data);
+                if ($this->error === true) {
+                    $phpcsFile->addError($error, $i, 'Incorrect', $data);
+                } else {
+                    $phpcsFile->addWarning($error, $i, 'Incorrect', $data);
+                }
             }
 
             $currentLine = $tokens[$i]['line'];
