@@ -50,6 +50,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
+  - Squiz CSS IndentationSniff now has a setting to specify how many spaces code should be indented
+    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+    -- Thanks to Hugo Fonseca for the patch
   - Squiz and MySource File and Function comment sniffs now allow all tags and don't require a particular licence
   - Squiz standard now allows lines to be 120 characters long before warning; up from 85
   - Squiz LowercaseStyleDefinitionSniff no longer throws errors for class names in nested style definitions

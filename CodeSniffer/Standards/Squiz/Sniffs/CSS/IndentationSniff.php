@@ -35,6 +35,13 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
      */
     public $supportedTokenizers = array('CSS');
 
+    /**
+    * The number of spaces code should be indented.
+    *
+    * @var int
+    */
+    public $indent = 4;
+
 
     /**
      * Returns the token types that this sniff is interested in.
@@ -99,8 +106,9 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 $foundIndent = 0;
             }
 
-            $expectedIndent = ($indentLevel * 4);
-            if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false
+            $expectedIndent = ($indentLevel * $this->indent);
+            if ($expectedIndent > 0
+                && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false
             ) {
                 if ($nestingLevel !== $indentLevel) {
                     $error = 'Blank lines are not allowed in class definitions';
