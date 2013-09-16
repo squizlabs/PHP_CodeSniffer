@@ -56,11 +56,22 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE
-            || $tokens[($stackPtr + 1)]['code'] === T_WHITESPACE
+        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
+            && $tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE
         ) {
-            $message = 'Concat operator must not be surrounded by spaces';
-            $phpcsFile->addError($message, $stackPtr, 'Missing');
+            return;
+        }
+
+        $message = 'Concat operator must not be surrounded by spaces';
+        $fix     = $phpcsFile->addFixableError($message, $stackPtr, 'PaddingFound');
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
+
+            if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+            }
         }
 
     }//end process()
