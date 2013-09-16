@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for the PHP 5.4 callable type hint
   - Fixed problem where some file content could be ignored when checking STDIN
   - Version information is now printed when installed via composer or run from a Git clone (request #20050)
+  - Added Squiz DisallowBooleanStatementSniff to ban boolean operators outside of control structure conditions
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
@@ -1525,6 +1526,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowComparisonAssignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1942,6 +1946,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowComparisonAssignmentUnitTest.inc" role="test" />
