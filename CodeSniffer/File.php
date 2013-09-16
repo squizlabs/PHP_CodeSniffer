@@ -408,7 +408,7 @@ class PHP_CodeSniffer_File
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
-            if ($token['code'] === T_COMMENT) {
+            if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
                     $ignoring = true;
                 } else if (strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
