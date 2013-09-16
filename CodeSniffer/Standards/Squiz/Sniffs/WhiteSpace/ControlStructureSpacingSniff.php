@@ -170,11 +170,18 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             true
         );
 
-        if ($tokens[$trailingContent]['code'] === T_ELSE) {
-            if ($tokens[$stackPtr]['code'] === T_IF) {
-                // IF with ELSE.
-                return;
-            }
+        if ($tokens[$trailingContent]['code'] === T_ELSE
+            && $tokens[$stackPtr]['code'] === T_IF
+        ) {
+            // IF with ELSE.
+            return;
+        }
+
+        if ($tokens[$trailingContent]['code'] === T_WHILE
+            && $tokens[$stackPtr]['code'] === T_DO
+        ) {
+            // DO with WHILE.
+            return;
         }
 
         if ($tokens[$trailingContent]['code'] === T_COMMENT) {
@@ -235,13 +242,11 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                     $phpcsFile->fixer->endChangeset();
                 }
             }
-        } else {
-            if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-                $error = 'No blank line found after control structure';
-                $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                    $phpcsFile->fixer->addNewline($scopeCloser);
-                }
+        } else if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
+            $error = 'No blank line found after control structure';
+            $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewline($scopeCloser);
             }
         }//end if
 
