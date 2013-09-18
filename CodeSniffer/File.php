@@ -791,7 +791,8 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff = $code;
+            $sniff     = $code;
+            $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
@@ -936,7 +937,8 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff = $code;
+            $sniff     = $code;
+            $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
             if (isset($parts[3]) === true) {
