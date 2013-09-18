@@ -43,15 +43,16 @@ class Squiz_Tests_WhiteSpace_MemberVarSpacingUnitTest extends AbstractSniffUnitT
     public function getErrorList()
     {
         return array(
-                4  => 1,
-                7  => 1,
-                20 => 1,
-                30 => 1,
-                35 => 1,
-                44 => 1,
-                50 => 1,
-                73 => 1,
-                86 => 1,
+                4   => 1,
+                7   => 1,
+                20  => 1,
+                30  => 1,
+                35  => 1,
+                44  => 1,
+                50  => 1,
+                73  => 1,
+                86  => 1,
+                114 => 1,
                );
 
     }//end getErrorList()
