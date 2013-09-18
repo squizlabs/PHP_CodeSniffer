@@ -102,7 +102,7 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
             } else if ($value{0} !== '0') {
                 $error = 'Opacity values must be between 0 and 1';
                 $phpcsFile->addError($error, $next, 'Invalid');
-            }
+            }//end if
         }//end if
 
     }//end process()
