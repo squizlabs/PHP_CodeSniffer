@@ -107,13 +107,38 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         // Check if this is a single line or multi-line function call.
-        if ($tokens[$openBracket]['line'] === $tokens[$closeBracket]['line']) {
-            $this->processSingleLineCall($phpcsFile, $stackPtr, $openBracket, $tokens);
-        } else {
+        if ($this->isMultiLineCall($phpcsFile, $stackPtr, $openBracket, $tokens) === true) {
             $this->processMultiLineCall($phpcsFile, $stackPtr, $openBracket, $tokens);
+        } else {
+            $this->processSingleLineCall($phpcsFile, $stackPtr, $openBracket, $tokens);
         }
 
     }//end process()
+
+
+    /**
+     * Processes single-line calls.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
+     * @param int                  $stackPtr    The position of the current token
+     *                                          in the stack passed in $tokens.
+     * @param int                  $openBracket The position of the opening bracket
+     *                                          in the stack passed in $tokens.
+     * @param array                $tokens      The stack of tokens that make up
+     *                                          the file.
+     *
+     * @return void
+     */
+    public function isMultiLineCall(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    {
+        $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+        if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
+            return true;
+        }
+
+        return false;
+
+    }//end isMultiLineCall();
 
 
     /**

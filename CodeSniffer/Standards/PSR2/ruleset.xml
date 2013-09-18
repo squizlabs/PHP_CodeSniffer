@@ -115,6 +115,9 @@
    <property name="equalsSpacing" value="1"/>
   </properties>
  </rule>
+ <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+  <severity>0</severity>
+ </rule>
 
  <!-- Method arguments with default values MUST go at the end of the argument list. -->
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
