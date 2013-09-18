@@ -40,7 +40,7 @@ You can also download the PHP\_CodeSniffer source and run the `phpcs` command di
 Documentation
 -------------
 
-The documentation for PHP\_CodeSniffer is available in the [PEAR manual](http://pear.php.net/manual/en/package.php.php-codesniffer.php).
+The documentation for PHP\_CodeSniffer is available on the [Github wiki](https://github.com/squizlabs/PHP_CodeSniffer/wiki).
 
 Information about upcoming features and releases is available on the [Squiz Labs blog](http://www.squizlabs.com/php-codesniffer).
 
