@@ -138,7 +138,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         return false;
 
-    }//end isMultiLineCall();
+    }//end isMultiLineCall()
 
 
     /**
