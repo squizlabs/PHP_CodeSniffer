@@ -73,4 +73,18 @@ switch ($foo) {
     case Foo::TWO:
         break;
 }
+
+switch (true) {
+    case $value instanceof StdClass:
+        return 1;
+    case strpos('_', get_class($value)) !== false:
+        break;
+}
+
+switch (true) {
+    case $value instanceof StdClass:
+        if ($value) {
+            return null;
+        }
+}
 ?>
