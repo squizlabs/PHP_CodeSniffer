@@ -122,7 +122,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
-            // Not using the detault encoding, so take a bit more care.
+            // Not using the default encoding, so take a bit more care.
             $lineLength = iconv_strlen($lineContent, PHP_CODESNIFFER_ENCODING);
             if ($lineLength === false) {
                 // String contained invalid characters, so revert to default.
