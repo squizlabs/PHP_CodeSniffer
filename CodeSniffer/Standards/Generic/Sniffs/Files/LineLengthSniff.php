@@ -114,13 +114,16 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     protected function checkLineLength(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $lineContent)
     {
         // If the content is a CVS or SVN id in a version tag, or it is
-        // a license tag with a name and URL, there is nothing the
-        // developer can do to shorten the line, so don't throw errors.
-        if (preg_match('|@version[^\$]+\$Id|', $lineContent) !== 0) {
-            return;
-        }
-
-        if (preg_match('|@license|', $lineContent) !== 0) {
+        // a license tag with a name and URL, or it is an SVN URL, there
+        // is nothing the developer can do to shorten the line,
+        // so don't throw errors.
+        if (preg_match(
+                array(
+                    '|@version[^\$]+\$Id|',
+                    '|\$(Head)?URL[:$]|',
+                    '|@license|'
+                ),
+                $lineContent) !== 0) {
             return;
         }
 
