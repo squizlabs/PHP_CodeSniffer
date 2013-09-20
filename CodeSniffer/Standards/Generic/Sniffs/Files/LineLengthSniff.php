@@ -117,7 +117,8 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
         // a license tag with a name and URL, or it is an SVN URL, there
         // is nothing the developer can do to shorten the line,
         // so don't throw errors.
-        if (preg_match('~@license|@version[^\$]+\$Id|\$(Head)?URL[:$]~', $lineContent) !== 0) {
+        $regex = '~@license|@version[^\$]+\$Id|\$(Head)?URL[:\$]~';
+        if (preg_match($regex, $lineContent) !== 0) {
             return;
         }
 
