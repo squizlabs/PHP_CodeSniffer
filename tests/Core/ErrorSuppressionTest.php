@@ -176,6 +176,18 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertEquals(0, count($warnings));
 
+        // Process with a Doc Block suppression.
+        $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
+        $phpcs->processFile('suppressionTest.php', $content);
+
+        $files = $phpcs->getFiles();
+        $file  = $files[1];
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
     }//end testSuppressFile()
 
 
