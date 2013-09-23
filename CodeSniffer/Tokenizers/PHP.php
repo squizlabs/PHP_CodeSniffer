@@ -446,8 +446,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 && $tokens[($stackPtr + 1)] === ':'
                 && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
             ) {
+                $stopTokens = array(
+                               T_CASE,
+                               T_SEMICOLON,
+                               T_OPEN_CURLY_BRACKET,
+                              );
+
                 for ($x = ($newStackPtr - 2); $x > 0; $x--) {
-                    if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    if (in_array($finalTokens[$x]['code'], $stopTokens) === true) {
                         break;
                     }
                 }
