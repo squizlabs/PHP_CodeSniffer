@@ -48,6 +48,9 @@ class PSR2_Tests_Methods_MethodDeclarationUnitTest extends AbstractSniffUnitTest
                 13 => 1,
                 15 => 3,
                 17 => 1,
+                18 => 1,
+                19 => 1,
+                20 => 1,
                );
 
     }//end getErrorList()

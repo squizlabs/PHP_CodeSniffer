@@ -15,6 +15,9 @@ class MyClass
     static protected final abstract function myFunction() {}
     public function _() {}
     function myFunction() {}
+    static function myFunction() {}
+    final function myFunction() {}
+    abstract function myFunction() {}
 }
 
 ?>
