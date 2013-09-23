@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed problem where some file content could be ignored when checking STDIN
   - Version information is now printed when installed via composer or run from a Git clone (request #20050)
   - Added Squiz DisallowBooleanStatementSniff to ban boolean operators outside of control structure conditions
+  - Coding standard ignore comments can now appear instead doc blocks as well as inline comments
+    -- Thanks to Stuart Langley for the patch
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
