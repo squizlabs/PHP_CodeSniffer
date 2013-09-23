@@ -132,7 +132,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();
         $numWarnings = $file->getWarningCount();
@@ -141,7 +141,16 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with a Doc Block suppression.
+        $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();
         $numWarnings = $file->getWarningCount();
