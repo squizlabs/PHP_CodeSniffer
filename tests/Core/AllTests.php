@@ -29,6 +29,7 @@ require_once 'Reports/SvnblameTest.php';
 require_once 'Reports/GitblameTest.php';
 require_once 'Reports/HgblameTest.php';
 require_once 'Reports/JunitTest.php';
+require_once 'Tokenizers/CSSTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -76,6 +77,7 @@ class PHP_CodeSniffer_Core_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
+        $suite->addTestSuite('Core_Tokenizers_CSSTest');
         $suite->addTestSuite('Core_IsCamelCapsTest');
         $suite->addTestSuite('Core_ErrorSuppressionTest');
         $suite->addTestSuite('Core_File_GetMethodParametersTest');
