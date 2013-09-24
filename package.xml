@@ -55,6 +55,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
   - Squiz CSS sniffs no longer generate errors for IE filters
   - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
+  - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
+    -- Thanks to Renat Akhmedyanov for the patch
   - The PSR2 standard no longer throws errors for additional spacing after a type hint
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
     -- Adds new error message for single-line arrays that end with a comma
