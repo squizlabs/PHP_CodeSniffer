@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Version information is now printed when installed via composer or run from a Git clone (request #20050)
   - Coding standard ignore comments can now appear instead doc blocks as well as inline comments
     -- Thanks to Stuart Langley for the patch
+  - Generic LineLengthSniff now ignores SVN URL and Head URL comments
+    -- Thanks to Karl DeBisschop for the patch
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
