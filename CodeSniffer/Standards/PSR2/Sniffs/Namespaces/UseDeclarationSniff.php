@@ -98,8 +98,25 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
 
             $error = 'There must be one blank line after the last USE statement; %s found;';
             $data  = array($diff);
-            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterLastUse', $data);
-        }
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($diff === 0) {
+                    $phpcsFile->fixer->addNewline($end);
+                } else {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($end + 1); $i < $next; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$next]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->addNewline($end);
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        }//end if
 
     }//end process()
 
