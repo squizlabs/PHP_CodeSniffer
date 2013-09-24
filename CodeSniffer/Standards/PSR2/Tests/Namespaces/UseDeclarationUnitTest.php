@@ -36,25 +36,34 @@ class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array(int => int)
      */
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
+        case 'UseDeclarationUnitTest.1.inc':
+            // The trait test will only work in PHP versions where traits exist
+            // and will throw errors in earlier versions.
+            if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+                return array(
+                        30  => 2,
+                       );
+            }
+
+            return array();
         case 'UseDeclarationUnitTest.2.inc':
             return array(
                     5  => 1,
                     10 => 2,
                    );
-            break;
         case 'UseDeclarationUnitTest.3.inc':
             return array(
                     5  => 1,
                    );
-            break;
         default:
             return array();
-            break;
         }//end switch
 
     }//end getErrorList()
