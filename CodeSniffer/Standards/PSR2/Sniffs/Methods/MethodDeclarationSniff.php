@@ -95,6 +95,12 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
             }
         }
 
+        if ($visibility === 0) {
+            $error = 'Visibility must be declared on method "%s"';
+            $data  = array($methodName);
+            $phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
+        }
+
         if ($static !== 0 && $static < $visibility) {
             $error = 'The static declaration must come after the visibility declaration';
             $phpcsFile->addError($error, $static, 'StaticBeforeVisibility');
