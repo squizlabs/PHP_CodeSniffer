@@ -91,9 +91,10 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-        $commentLines = array($stackPtr);
-        $nextComment  = $stackPtr;
-        $lastLine     = $tokens[$stackPtr]['line'];
+        $commentLines  = array($stackPtr);
+        $nextComment   = $stackPtr;
+        $lastLine      = $tokens[$stackPtr]['line'];
+        $commentString = $tokens[$stackPtr]['content'];
 
         // Construct the comment into an array.
         while (($nextComment = $phpcsFile->findNext($tokens[$stackPtr]['code'], ($nextComment + 1), null, false)) !== false) {
@@ -104,29 +105,53 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
             $lastLine       = $tokens[$nextComment]['line'];
             $commentLines[] = $nextComment;
+            $commentString .= $tokens[$nextComment]['content'];
         }
 
-        if (count($commentLines) <= 2) {
-            // Small comment. Can't be right.
-            if (count($commentLines) === 1) {
-                $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
-                $phpcsFile->addError($error, $stackPtr, 'SingleLine');
-                return;
+        $commentText = str_replace($phpcsFile->eolChar, '', $commentString);
+        $commentText = trim($commentText, '/* ');
+        if ($commentText === '') {
+            $error = 'Empty block comment not allowed';
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($stackPtr, '');
+                $lastToken = array_pop($commentLines);
+                for ($i = ($stackPtr + 1); $i <= $lastToken; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
 
-            if (trim($tokens[$commentLines[1]]['content']) === '*/') {
-                if (trim($tokens[$stackPtr]['content']) === '/*') {
-                    $error = 'Empty block comment not allowed';
-                    $phpcsFile->addError($error, $stackPtr, 'Empty');
-                    return;
-                }
+            return;
+        }
+
+        if (count($commentLines) === 1) {
+            $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $comment = '// '.$commentText.$phpcsFile->eolChar;
+                $phpcsFile->fixer->replaceToken($stackPtr, $comment);
             }
+
+            return;
         }
 
         $content = trim($tokens[$stackPtr]['content']);
         if ($content !== '/*' && $content !== '/**') {
             $error = 'Block comment text must start on a new line';
-            $phpcsFile->addError($error, $stackPtr, 'NoNewLine');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoNewLine');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $comment = preg_replace(
+                    '/^(\s*\/\*\*?)\s/',
+                    '$1'.$phpcsFile->eolChar.' ',
+                    $tokens[$stackPtr]['content'],
+                    1
+                );
+                $phpcsFile->fixer->replaceToken($stackPtr, $comment);
+            }
+
             return;
         }
 
@@ -222,7 +247,6 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
                 $phpcsFile->addError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
             }
-
         }
 
         // Check that the lines before and after this comment are blank.
