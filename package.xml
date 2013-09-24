@@ -41,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Squiz DisallowBooleanStatementSniff to ban boolean operators outside of control structure conditions
   - Coding standard ignore comments can now appear instead doc blocks as well as inline comments
     -- Thanks to Stuart Langley for the patch
+  - Generic LineLengthSniff now ignores SVN URL and Head URL comments
+    -- Thanks to Karl DeBisschop for the patch
   - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
     -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
     -- Thanks to Szabolcs Sulik for the patch
@@ -62,6 +64,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
   - Squiz CSS sniffs no longer generate errors for IE filters
   - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
+  - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
+    -- Thanks to Renat Akhmedyanov for the patch
   - The PSR2 standard no longer throws errors for additional spacing after a type hint
   - Fixed cases where code was incorrectly assigned the T_GOTO_LABEL token when used in a complex CASE condition
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
