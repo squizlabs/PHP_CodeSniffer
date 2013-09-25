@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
   - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
     -- Thanks to Renat Akhmedyanov for the patch
+  - Added support for the PSR2 multi-line arguments errata
   - The PSR2 standard no longer throws errors for additional spacing after a type hint
   - PSR UseDeclarationSniff no longer throws errors for USE statements inside TRAITs
   - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
