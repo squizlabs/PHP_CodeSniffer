@@ -70,6 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Error code Squiz.Strings.ConcatenationSpacing.Missing has been changed to Squiz.Strings.ConcatenationSpacing.PaddingFound
   - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
     -- Thanks to Renat Akhmedyanov for the patch
+  - Added support for the PSR2 multi-line arguments errata
   - The PSR2 standard no longer throws errors for additional spacing after a type hint
   - PSR UseDeclarationSniff no longer throws errors for USE statements inside TRAITs
   - Fixed cases where code was incorrectly assigned the T_GOTO_LABEL token when used in a complex CASE condition
