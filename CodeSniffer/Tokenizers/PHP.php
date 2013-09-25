@@ -237,8 +237,7 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizers_Tokenize
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string  The string to tokenize.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
@@ -511,9 +510,6 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizers_Tokenize
      * into T_CLOSURE when they are not standard function definitions. It also
      * detects short array syntax and converts those square brackets into new tokens.
      * It also corrects some usage of the static and class keywords.
-     *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */

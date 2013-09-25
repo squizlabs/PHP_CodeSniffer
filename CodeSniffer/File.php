@@ -1024,9 +1024,6 @@ class PHP_CodeSniffer_File
     /**
      * Creates an array of tokens when given some code.
      *
-     * Starts by using token_get_all() but does a lot of extra processing
-     * to insert information about the context of the token.
-     *
      * @param string $string    The string to tokenize.
      * @param object $tokenizer A tokenizer class to use to tokenize the string.
      * @param string $eolChar   The EOL character to use for splitting strings.

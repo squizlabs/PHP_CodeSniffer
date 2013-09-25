@@ -23,7 +23,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Tokenizers_Tokenizer
+abstract class PHP_CodeSniffer_Tokenizers_Tokenizer
 {
     /**
      * A list of tokens that are allowed to open a scope.
@@ -48,36 +48,50 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      */
     public $endScopeTokens;
 
+    /**
+     * The tokens stack map.
+     *
+     * Note that the tokens in this array differ in format to the tokens
+     * produced by token_get_all(). Tokens are initially produced with
+     * token_get_all(), then augmented so that it's easier to process them.
+     *
+     * @var array()
+     * @see Tokens.php
+     */
     public $tokens;
+    
+    /**
+     *
+     * @var string
+     */
     public $eolChar;
 
+    /**
+     * Return all tokens in an array
+     *
+     * @param string $string  The string to tokenize.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return type
+     */
     public function tokenize($string, $eolChar='\n')
     {
         $this->eolChar = $eolChar;
         
         $this->tokenizeString($string);
-
-        $this->_createLineMap();
-
-        $this->_createBracketMap();
-
-        $this->_createParenthesisMap();
-
-        $this->_createParenthesisNestingMap();
-
-        $this->_createScopeMap();
-
+        $this->createLineMap();
+        $this->createBracketMap();
+        $this->createParenthesisMap();
+        $this->createParenthesisNestingMap();
+        $this->createScopeMap();
         // If we know the width of each tab, convert tabs
         // into spaces so sniffs can use one method of checking.
         if (PHP_CODESNIFFER_TAB_WIDTH > 0) {
-            $this->_convertTabs();
+            $this->convertTabs();
         }
-
         // Column map requires the line map to be complete.
-        $this->_createColumnMap();
-
-        $this->_createLevelMap();
-
+        $this->createColumnMap();
+        $this->createLevelMap();
         $this->processAdditional();
 
         return $this->tokens;
@@ -89,16 +103,11 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string  The string to tokenize.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
-    public function tokenizeString($string)
-    {
-        return null;
-    }
-
+    abstract  public function tokenizeString($string);
 
     /**
      * Performs additional processing after main tokenizing.
@@ -109,26 +118,16 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * detects short array syntax and converts those square brackets into new tokens.
      * It also corrects some usage of the static and class keywords.
      *
-     * @param array  &$this->tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    public function processAdditional()
-    {
-        return null;
-    }
+    abstract public function processAdditional();
 
         /**
      * Creates a map of tokens => line numbers for each token.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createLineMap()
+    protected function createLineMap()
     {
         $lineNumber = 1;
         $count      = count($this->tokens);
@@ -151,13 +150,9 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * Each tab can represent between 1 and $width spaces, so
      * this cannot be a straight string replace.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _convertTabs()
+    protected function convertTabs()
     {
         $currColumn = 1;
         $count      = count($this->tokens);
@@ -224,19 +219,15 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
 
         
     }//end _convertTabs()
-   /**
+    /**
      * Creates a column map.
      *
      * The column map indicates where the token started on the line where it
      * exists.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createColumnMap()
+    protected function createColumnMap()
     {
         $currColumn = 1;
         $count      = count($this->tokens);
@@ -261,13 +252,9 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * has a reference to their opening and closing bracket
      * (bracket_opener and bracket_closer).
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createBracketMap()
+    protected function createBracketMap()
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START BRACKET MAP ***".PHP_EOL;
@@ -352,13 +339,9 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * reference to their opening and closing parenthesis (parenthesis_opener
      * and parenthesis_closer).
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createParenthesisMap()
+    protected function createParenthesisMap()
     {
         $openers   = array();
         $numTokens = count($this->tokens);
@@ -404,13 +387,9 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createParenthesisNestingMap()
+    protected function createParenthesisNestingMap()
     {
         $numTokens = count($this->tokens);
         $map       = array();
@@ -447,14 +426,10 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
     /**
      * Creates a scope map of tokens that open scopes.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      * @see _recurseScopeMap()
      */
-    protected function _createScopeMap()
+    protected function createScopeMap()
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
@@ -470,7 +445,7 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
                     echo "\tStart scope map at $i: $type => $content".PHP_EOL;
                 }
 
-                $i = $this->_recurseScopeMap(
+                $i = $this->recurseScopeMap(
                     $numTokens,
                     $i
                 );
@@ -488,18 +463,15 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
     /**
      * Recurses though the scope openers to build a scope map.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param int    $numTokens The size of the tokens array.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     * @param int    $stackPtr  The position in the stack of the token that
+     * @param int $numTokens The size of the tokens array.
+     * @param int $stackPtr  The position in the stack of the token that
      *                          opened the scope (eg. an IF token or FOR token).
-     * @param int    $depth     How many scope levels down we are.
-     * @param int    &$ignore   How many curly braces we are ignoring.
+     * @param int $depth     How many scope levels down we are.
+     * @param int &$ignore   How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
      */
-    protected function _recurseScopeMap(
+    protected function recurseScopeMap(
         $numTokens,
         $stackPtr,
         $depth=1,
@@ -613,7 +585,7 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
                         $ignore    = 0;
                     }
 
-                    $i = $this->_recurseScopeMap(
+                    $i = $this->recurseScopeMap(
                         $numTokens,
                         $i,
                         ($depth + 1),
@@ -800,7 +772,7 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
         return $stackPtr;
 
     }//end _recurseScopeMap()
-   /**
+    /**
      * Constructs the level map.
      *
      * The level map adds a 'level' indice to each token which indicates the
@@ -808,13 +780,9 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
      * 'condition' indice which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
-     * @param array  &$this->tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
      * @return void
      */
-    protected function _createLevelMap()
+    protected function createLevelMap()
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START LEVEL MAP ***".PHP_EOL;
@@ -1042,7 +1010,6 @@ class PHP_CodeSniffer_Tokenizers_Tokenizer
             echo "\t*** END LEVEL MAP ***".PHP_EOL;
         }
 
-        
     }//end _createLevelMap()
 }//end class
 

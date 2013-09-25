@@ -36,8 +36,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      *
      * Uses the PHP tokenizer to do all the tricky work
      *
-     * @param string $string  The string to tokenize.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
@@ -359,9 +358,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      * This additional processing converts T_LIST tokens to T_STRING
      * because there are no list constructs in CSS and list-* styles
      * look like lists to the PHP tokenizer.
-     *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
