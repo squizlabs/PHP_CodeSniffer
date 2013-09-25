@@ -617,7 +617,7 @@ class PHP_CodeSniffer_File
             $contents = file_get_contents($this->_file);
         }
 
-        $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
+        $this->_tokens = $tokenizer->tokenize($contents, $this->eolChar);
 
         $this->numTokens = count($this->_tokens);
 
@@ -1019,131 +1019,6 @@ class PHP_CodeSniffer_File
         return $this->_file;
 
     }//end getFilename()
-
-
-    /**
-     * Creates an array of tokens when given some code.
-     *
-     * @param string $string    The string to tokenize.
-     * @param object $tokenizer A tokenizer class to use to tokenize the string.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return array
-     */
-    public static function tokenizeString($string, $tokenizer, $eolChar='\n')
-    {
-        return $tokenizer->tokenize($string, $eolChar);
-    }//end tokenizeString()
-
-    /**
-     * Converts tabs into spaces.
-     *
-     * Each tab can represent between 1 and $width spaces, so
-     * this cannot be a straight string replace.
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
-    private static function _convertTabs(&$tokens, $tokenizer, $eolChar)
-    {
-        $currColumn = 1;
-        $count      = count($tokens);
-
-        for ($i = 0; $i < $count; $i++) {
-            $tokenContent = $tokens[$i]['content'];
-
-            if (strpos($tokenContent, "\t") === false) {
-                // There are no tabs in this content.
-                $currColumn += strlen($tokenContent);
-            } else {
-                // We need to determine the length of each tab.
-                $tabs = preg_split(
-                    "|(\t)|",
-                    $tokenContent,
-                    -1,
-                    PREG_SPLIT_DELIM_CAPTURE
-                );
-
-                $tabNum       = 0;
-                $newContent   = '';
-
-                foreach ($tabs as $content) {
-                    if ($content === '') {
-                        continue;
-                    }
-
-                    if (strpos($content, "\t") === false) {
-                        // This piece of content is not a tab.
-                        $currColumn += strlen($content);
-                        $newContent .= $content;
-                    } else {
-                        $lastCurrColumn = $currColumn;
-                        $tabNum++;
-
-                        // Move the pointer to the next tab stop.
-                        if (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) === 0) {
-                            // This is the first tab, and we are already at a
-                            // tab stop, so this tab counts as a single space.
-                            $currColumn++;
-                        } else {
-                            $currColumn++;
-                            while (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) != 0) {
-                                $currColumn++;
-                            }
-
-                            $currColumn++;
-                        }
-
-                        $length      = ($currColumn - $lastCurrColumn);
-                        $newContent .= str_repeat(' ', $length);
-                    }//end if
-                }//end foreach
-
-                $tokens[$i]['content'] = $newContent;
-            }//end if
-
-            if (isset($tokens[($i + 1)]['line']) === true
-                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-            ) {
-                $currColumn = 1;
-            }
-        }//end for
-
-    }//end _convertTabs()
-
-
-    /**
-     * Creates a column map.
-     *
-     * The column map indicates where the token started on the line where it
-     * exists.
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
-    private static function _createColumnMap(&$tokens, $tokenizer, $eolChar)
-    {
-        $currColumn = 1;
-        $count      = count($tokens);
-
-        for ($i = 0; $i < $count; $i++) {
-            $tokens[$i]['column'] = $currColumn;
-            if (isset($tokens[($i + 1)]['line']) === true
-                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-            ) {
-                $currColumn = 1;
-            } else {
-                $currColumn += strlen($tokens[$i]['content']);
-            }
-        }
-
-    }//end _createColumnMap()
 
     /**
      * Returns the declaration names for T_CLASS, T_INTERFACE and T_FUNCTION tokens.
