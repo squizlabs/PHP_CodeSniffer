@@ -64,6 +64,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LowercaseStyleDefinitionSniff no longer throws errors for class names in nested style definitions
   - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
   - Squiz CSS sniffs no longer generate errors for IE filters
+  - Squiz CSS IndentationSniff no longer sees comments as blank lines
   - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
   - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
     -- Thanks to Renat Akhmedyanov for the patch
