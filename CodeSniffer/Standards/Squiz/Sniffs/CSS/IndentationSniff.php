@@ -69,7 +69,6 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         $numTokens    = (count($tokens) - 2);
-        $currentLine  = 0;
         $indentLevel  = 0;
         $nestingLevel = 0;
         for ($i = 1; $i < $numTokens; $i++) {
@@ -94,7 +93,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 $indentLevel--;
             }
 
-            if ($tokens[$i]['line'] === $currentLine) {
+            if ($tokens[$i]['column'] !== 1) {
                 continue;
             }
 
@@ -122,10 +121,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                          );
                 $phpcsFile->addError($error, $i, 'Incorrect', $data);
             }
-
-            $currentLine = $tokens[$i]['line'];
         }//end foreach
-
     }//end process()
 
 }//end class
