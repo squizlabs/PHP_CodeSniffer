@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+/**
+ * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * defined set of coding standards.
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+// Map this phar archive
+Phar::mapPhar('phpcs.phar');
+
+// Configure include path to use this phar
+set_include_path('phar://phpcs.phar/' . PATH_SEPARATOR . get_include_path());
+
+// Run command line interface if this is the called file
+if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
+
+   // Load command line utility
+   include_once 'phar://phpcs.phar/CodeSniffer.php';
+
+   $phpcs = new PHP_CodeSniffer_CLI();
+   $phpcs->checkRequirements();
+
+   $numErrors = $phpcs->process();
+
+   if ($numErrors === 0) {
+    exit(0);
+   } else {
+    exit(1);
+   }
+}
+__HALT_COMPILER();

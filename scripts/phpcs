@@ -25,10 +25,10 @@ if (class_exists('PHP_Timer', false) === true) {
     PHP_Timer::start();
 }
 
-if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
-    include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
+if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer.php';
 } else {
-    include_once 'PHP/CodeSniffer/CLI.php';
+    include_once 'PHP/CodeSniffer.php';
 }
 
 $phpcs = new PHP_CodeSniffer_CLI();
