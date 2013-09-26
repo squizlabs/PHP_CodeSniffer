@@ -617,7 +617,7 @@ class PHP_CodeSniffer_File
             $contents = file_get_contents($this->_file);
         }
 
-        $this->_tokens = $tokenizer->tokenize($contents, $this->eolChar);
+        $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
 
         $this->numTokens = count($this->_tokens);
 
@@ -650,7 +650,7 @@ class PHP_CodeSniffer_File
 
     }//end _parse()
 
-
+    
     /**
      * Opens a file and detects the EOL character being used.
      *
@@ -1019,6 +1019,21 @@ class PHP_CodeSniffer_File
         return $this->_file;
 
     }//end getFilename()
+
+    
+    /**
+     * Creates an array of tokens when given some code.
+     *
+     * @param string $string    The string to tokenize.
+     * @param object $tokenizer A tokenizer class to use to tokenize the string.
+     * @param string $eolChar   The EOL character to use for splitting strings.
+     *
+     * @return array
+     */
+    public static function tokenizeString($string, $tokenizer, $eolChar = '\n')
+    {
+        return $tokenizer->tokenize($string, $eolChar);
+    }//end tokenizeString()
 
     /**
      * Returns the declaration names for T_CLASS, T_INTERFACE and T_FUNCTION tokens.
