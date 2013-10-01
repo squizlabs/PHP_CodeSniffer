@@ -133,4 +133,7 @@ $expectedPermission = array(
 
 $value = (int) isset($blah) + 2;
 $value = (int) isset($blah) + (int) isset($foo) + (int) isset($bar);
+
+doSomething(getValue($var, 2)) - $y;
+
 ?>

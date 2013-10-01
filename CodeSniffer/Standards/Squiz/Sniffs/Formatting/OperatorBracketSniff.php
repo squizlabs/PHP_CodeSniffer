@@ -279,6 +279,12 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
         // Find the first token in the expression.
         for ($before = ($stackPtr - 1); $before > 0; $before--) {
+            // Special case for plus operators because we can't tell if they are used
+            // for addition or string contact. So assume string concat to be safe.
+            if ($phpcsFile->tokenizerType === 'JS' && $tokens[$before]['code'] === T_PLUS) {
+                break;
+            }
+
             if (in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
                 || in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$operators) === true
                 || in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$castTokens) === true
@@ -304,6 +310,12 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
 
         // Find the last token in the expression.
         for ($after = ($stackPtr + 1); $after < $phpcsFile->numTokens; $after++) {
+            // Special case for plus operators because we can't tell if they are used
+            // for addition or string contact. So assume string concat to be safe.
+            if ($phpcsFile->tokenizerType === 'JS' && $tokens[$after]['code'] === T_PLUS) {
+                break;
+            }
+
             if (in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
                 || in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$operators) === true
                 || in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$castTokens) === true
