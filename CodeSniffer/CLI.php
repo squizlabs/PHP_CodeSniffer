@@ -65,6 +65,13 @@ class PHP_CodeSniffer_CLI
 
 
     /**
+     * Array containing specific key-value pair settings for the selected standard
+     * 
+     * @var array
+     */
+    public $settingsStandard = array();
+
+    /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
      *
      * @return array
@@ -108,6 +115,7 @@ class PHP_CodeSniffer_CLI
         $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
+        $defaults['settingsStandard'] = array();
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -279,6 +287,12 @@ class PHP_CodeSniffer_CLI
             break;
         case 'w' :
             $values['warningSeverity'] = null;
+            break;
+        case 't' :
+            $settingStandard = explode('=', $_SERVER['argv'][($pos + 1)]);
+            $_SERVER['argv'][($pos + 1)] = '';
+            $values['settingsStandard'][$settingStandard[0]] = $settingStandard[1];
+            
             break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
@@ -571,7 +585,14 @@ class PHP_CodeSniffer_CLI
         } else {
             $this->warningSeverity = $values['warningSeverity'];
         }
-
+        
+        if ($values['settingsStandard'] === null) {
+            $this->settingsStandard = array();
+        } else {
+            $this->settingsStandard = $values['settingsStandard'];
+        }
+        
+        
         $phpcs->setCli($this);
 
         $phpcs->process(
@@ -769,7 +790,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [-t key=value]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -786,6 +807,7 @@ class PHP_CodeSniffer_CLI
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
+        echo '        -t            Set specifc settings for the selected standard'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
