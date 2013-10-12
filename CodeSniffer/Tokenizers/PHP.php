@@ -476,7 +476,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     }
                 }
 
-                if ($finalTokens[$x]['code'] !== T_CASE) {
+                if ($finalTokens[$x]['code'] !== T_CASE && $finalTokens[$x + 1]['code'] !== T_INLINE_THEN) {
                     $finalTokens[$newStackPtr] = array(
                                                   'content' => $token[1].':',
                                                   'code'    => T_GOTO_LABEL,
