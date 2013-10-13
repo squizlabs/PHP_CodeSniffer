@@ -77,8 +77,10 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                   $operator,
                   $replacements[$operator],
                  );
-        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
-
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->replaceToken($stackPtr, $replacements[$operator]);
+        }
     }//end process()
 
 
