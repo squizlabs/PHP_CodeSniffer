@@ -66,7 +66,7 @@ class PHP_CodeSniffer_CLI
 
     /**
      * Array containing specific key-value pair settings for the selected standard
-     * 
+     *
      * @var array
      */
     public $settingsStandard = array();
@@ -292,7 +292,7 @@ class PHP_CodeSniffer_CLI
             $settingStandard = explode('=', $_SERVER['argv'][($pos + 1)]);
             $_SERVER['argv'][($pos + 1)] = '';
             $values['settingsStandard'][$settingStandard[0]] = $settingStandard[1];
-            
+
             break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
@@ -585,14 +585,13 @@ class PHP_CodeSniffer_CLI
         } else {
             $this->warningSeverity = $values['warningSeverity'];
         }
-        
+
         if ($values['settingsStandard'] === null) {
             $this->settingsStandard = array();
         } else {
             $this->settingsStandard = $values['settingsStandard'];
         }
-        
-        
+
         $phpcs->setCli($this);
 
         $phpcs->process(
