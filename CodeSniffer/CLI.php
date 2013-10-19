@@ -280,7 +280,6 @@ class PHP_CodeSniffer_CLI
             } else {
                 ini_set($ini[0], true);
             }
-
             break;
         case 'n' :
             $values['warningSeverity'] = 0;
@@ -292,7 +291,6 @@ class PHP_CodeSniffer_CLI
             $settingStandard = explode('=', $_SERVER['argv'][($pos + 1)]);
             $_SERVER['argv'][($pos + 1)] = '';
             $values['settingsStandard'][$settingStandard[0]] = $settingStandard[1];
-
             break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
