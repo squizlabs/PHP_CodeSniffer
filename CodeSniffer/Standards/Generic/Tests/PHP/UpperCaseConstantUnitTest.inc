@@ -64,4 +64,5 @@ class MyClass
     }
 }
 
+$x = $f?false:TRUE;
 ?>

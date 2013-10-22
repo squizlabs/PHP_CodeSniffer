@@ -63,4 +63,6 @@ class MyClass
         $var = array('foo' => new True());
     }
 }
+
+$x = $f?FALSE:true;
 ?>

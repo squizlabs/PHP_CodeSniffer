@@ -59,6 +59,7 @@ class Generic_Tests_PHP_LowerCaseConstantUnitTest extends AbstractSniffUnitTest
                     42 => 1,
                     47 => 1,
                     48 => 1,
+                    67 => 1,
                    );
         break;
         case 'LowerCaseConstantUnitTest.js':

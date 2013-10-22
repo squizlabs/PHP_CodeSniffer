@@ -445,6 +445,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 && $token[0] === T_STRING
                 && $tokens[($stackPtr + 1)] === ':'
                 && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
+                && $tokens[($stackPtr - 1)] !== '?'
             ) {
                 $stopTokens = array(
                                T_CASE,
