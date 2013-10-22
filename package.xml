@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2013-09-26</date>
  <time>10:09:00</time>
  <version>
-  <release>1.5.0RC4</release>
-  <api>1.5.0RC4</api>
+  <release>1.5.0RC5</release>
+  <api>1.5.0RC5</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,60 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - You can now restrict violations to individual sniff codes using the --sniffs command line argument
-   -- Previously, this only restricted violations to an entire sniff and not individual messages
-   -- If you have scripts calling PHP_CodeSniffer::process() or creating PHP_CodeSniffer_File objects, you must update your code
-   -- The array of restrictions passed to PHP_CodeSniffer::process() must now be an array of sniff codes instead of class names
-   -- The PHP_CodeSniffer_File::__construct() method now requires an array of restrictions to be passed
-  - Doc generation is now working again
-  - Progress information now shows the percentage complete at the end of each line
-  - Added report type --report=junit to show the error list in a JUnit compatible format
-    -- Thanks to Oleg Lobach for the contribution
-  - Added support for the PHP 5.4 callable type hint
-  - Fixed problem where some file content could be ignored when checking STDIN
-  - Version information is now printed when installed via composer or run from a Git clone (request #20050)
-  - Added Squiz DisallowBooleanStatementSniff to ban boolean operators outside of control structure conditions
-  - The CSS tokenizer is now more reliable when encountering 'list' and 'break' strings
-  - Coding standard ignore comments can now appear instead doc blocks as well as inline comments
-    -- Thanks to Stuart Langley for the patch
-  - Generic LineLengthSniff now ignores SVN URL and Head URL comments
-    -- Thanks to Karl DeBisschop for the patch
-  - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
-    -- Thanks to Szabolcs Sulik for the patch
-  - PEAR MultiLineAssignmentSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
-    -- Thanks to Szabolcs Sulik for the patch
-  - PEAR FunctionDeclarationSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
-    -- Thanks to Szabolcs Sulik for the patch
-  - Squiz SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
-    -- Thanks to Szabolcs Sulik for the patch
-  - Squiz CSS IndentationSniff now has a setting to specify how many spaces code should be indented
-    -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
-    -- Thanks to Hugo Fonseca for the patch
-  - Squiz and MySource File and Function comment sniffs now allow all tags and don't require a particular licence
-  - Squiz standard now allows lines to be 120 characters long before warning; up from 85
-  - Squiz LowercaseStyleDefinitionSniff no longer throws errors for class names in nested style definitions
-  - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
-  - Squiz CSS sniffs no longer generate errors for IE filters
-  - Squiz CSS IndentationSniff no longer sees comments as blank lines
-  - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
-  - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
-    -- Thanks to Renat Akhmedyanov for the patch
-  - Added support for the PSR2 multi-line arguments errata
-  - The PSR2 standard no longer throws errors for additional spacing after a type hint
-  - PSR UseDeclarationSniff no longer throws errors for USE statements inside TRAITs
-  - Fixed cases where code was incorrectly assigned the T_GOTO_LABEL token when used in a complex CASE condition
-  - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
-    -- Adds new error message for single-line arrays that end with a comma
-  - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
-  - Fixed bug #20043 : Mis-interpretation of Foo::class
-  - Fixed bug #20044 : PSR1 camelCase check does not ignore leading underscores
-  - Fixed bug #20045 : Errors about indentation for closures with multi-line 'use' in functions
-  - Fixed bug #20051 : Undefined index: scope_opener / scope_closer
-    -- Thanks to Anthon Pang for the patch
+  - Fixed bug #20093 : Bug with ternary operator token
  </notes>
  <contents>
   <dir name="/">
