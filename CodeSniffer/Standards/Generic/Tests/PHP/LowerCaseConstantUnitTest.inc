@@ -65,4 +65,5 @@ class MyClass
 }
 
 $x = $f?FALSE:true;
+$x = $f? FALSE:true;
 ?>

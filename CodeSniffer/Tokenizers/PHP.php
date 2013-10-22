@@ -445,21 +445,23 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 && $token[0] === T_STRING
                 && $tokens[($stackPtr + 1)] === ':'
                 && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
-                && $tokens[($stackPtr - 1)] !== '?'
             ) {
                 $stopTokens = array(
                                T_CASE,
                                T_SEMICOLON,
                                T_OPEN_CURLY_BRACKET,
+                               T_INLINE_THEN,
                               );
 
-                for ($x = ($newStackPtr - 2); $x > 0; $x--) {
+                for ($x = ($newStackPtr - 1); $x > 0; $x--) {
                     if (in_array($finalTokens[$x]['code'], $stopTokens) === true) {
                         break;
                     }
                 }
 
-                if ($finalTokens[$x]['code'] !== T_CASE) {
+                if ($finalTokens[$x]['code'] !== T_CASE
+                    && $finalTokens[$x]['code'] !== T_INLINE_THEN
+                ) {
                     $finalTokens[$newStackPtr] = array(
                                                   'content' => $token[1].':',
                                                   'code'    => T_GOTO_LABEL,
