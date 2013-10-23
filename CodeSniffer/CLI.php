@@ -307,8 +307,7 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'version':
-            $phpcs = new PHP_CodeSniffer();
-            echo 'PHP_CodeSniffer version '.$phpcs::VERSION.' ('.$phpcs::STABILITY.') ';
+            echo 'PHP_CodeSniffer version '.PHP_CodeSniffer::VERSION.' ('.PHP_CodeSniffer::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
             break;

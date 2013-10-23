@@ -66,10 +66,8 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
         $out->setIndent(true);
         $out->startDocument('1.0', 'UTF-8');
 
-        $phpcs = new PHP_CodeSniffer;
-
         $out->startElement('testsuites');
-        $out->writeAttribute('name', 'PHP_CodeSniffer '.$phpcs::VERSION);
+        $out->writeAttribute('name', 'PHP_CodeSniffer '.PHP_CodeSniffer::VERSION);
         $out->writeAttribute('tests', $tests);
         $out->writeAttribute('failures', $errors);
 
