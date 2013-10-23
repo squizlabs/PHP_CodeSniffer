@@ -133,10 +133,9 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $phpcs    = new PHP_CodeSniffer;
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.$phpcs::VERSION.'" tests="'.$this->_tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'" tests="'.$this->_tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 
