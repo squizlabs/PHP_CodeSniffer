@@ -92,7 +92,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $phpcsFile->fixer->addNewline($i);
+                $phpcsFile->fixer->addNewline($prevLineToken);
                 $phpcsFile->fixer->endChangeset();
             }
         }//end if
