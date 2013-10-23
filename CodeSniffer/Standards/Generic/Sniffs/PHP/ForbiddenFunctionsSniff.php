@@ -111,6 +111,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                    T_PROTECTED,
                    T_AS,
                    T_INSTEADOF,
+                   T_NS_SEPARATOR,
                   );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
