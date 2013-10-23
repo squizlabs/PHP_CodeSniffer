@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
+    -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
+    -- Thanks to Mark Scherer for help with this fix
   - Fixed bug #20093 : Bug with ternary operator token
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report

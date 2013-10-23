@@ -104,6 +104,7 @@ class MyClass
      * @var   array
      * @since 4.0.0
      */
+
     protected $actions = array();
     /**
      * The actions that this wizard step requires.

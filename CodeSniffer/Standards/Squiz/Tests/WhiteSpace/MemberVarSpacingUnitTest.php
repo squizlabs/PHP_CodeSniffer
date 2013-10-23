@@ -52,7 +52,8 @@ class Squiz_Tests_WhiteSpace_MemberVarSpacingUnitTest extends AbstractSniffUnitT
                 50  => 1,
                 73  => 1,
                 86  => 1,
-                114 => 1,
+                106 => 1,
+                115 => 1,
                );
 
     }//end getErrorList()

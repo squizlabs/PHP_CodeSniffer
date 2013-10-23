@@ -45,9 +45,41 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
     {
         $tokens = $phpcsFile->getTokens();
 
+        $ignore   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $ignore[] = T_WHITESPACE;
+
+        $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+            // Assume the comment belongs to the member var.
+            // Check the spacing, but then skip it.
+            $foundLines = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
+            if ($foundLines > 0) {
+                $error = 'Expected 0 blank lines after member var comment; %s found';
+                $data  = array($foundLines);
+                $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($prev + 1); $i <= $stackPtr; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->addNewline($prev);
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }//end if
+
+            $start = $prev;
+        } else {
+            $start = $stackPtr;
+        }
+
         // There needs to be 1 blank line before the var, not counting comments.
         $prevLineToken = null;
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+        for ($i = ($start - 1); $i > 0; $i--) {
             if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
                 // Skip comments.
                 continue;
@@ -55,13 +87,6 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
                 // Not the end of the line.
                 continue;
             } else {
-                // If this is a WHITESPACE token, and the token right before
-                // it is a DOC_COMMENT, then it is just the newline after the
-                // member var's comment, and can be skipped.
-                if ($tokens[$i]['code'] === T_WHITESPACE && in_array($tokens[($i - 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
-                    continue;
-                }
-
                 $prevLineToken = $i;
                 break;
             }
@@ -72,7 +97,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
             // there are 0 blank lines before the member var.
             $foundLines = 0;
         } else {
-            $prevContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT), $prevLineToken, null, true);
+            $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
             $foundLines  = ($tokens[$prevLineToken]['line'] - $tokens[$prevContent]['line']);
         }//end if
 
