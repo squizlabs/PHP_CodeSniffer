@@ -45,4 +45,6 @@ class RightSideVisTest {
     }
 }
 
+namespace Something\sizeof;
+
 ?>
