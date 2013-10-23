@@ -121,9 +121,8 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $phpcs = new PHP_CodeSniffer;
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<phpcs version="'.$phpcs::VERSION.'">'.PHP_EOL;
+        echo '<phpcs version="'.PHP_CodeSniffer::VERSION.'">'.PHP_EOL;
         echo $cachedData;
         echo '</phpcs>'.PHP_EOL;
 
