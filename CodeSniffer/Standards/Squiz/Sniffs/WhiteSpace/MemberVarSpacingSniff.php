@@ -75,7 +75,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
             $start = $prev;
         } else {
             $start = $stackPtr;
-        }
+        }//end if
 
         // There needs to be 1 blank line before the var, not counting comments.
         $prevLineToken = null;
