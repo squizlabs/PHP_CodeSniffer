@@ -74,13 +74,36 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
 
         $error = 'Logical operator "%s" is prohibited; use "%s" instead';
         $data  = array(
-                  $operator,
+                  $tokens[$stackPtr]['content'],
                   $replacements[$operator],
                  );
-        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
-            $phpcsFile->fixer->replaceToken($stackPtr, $replacements[$operator]);
+
+        // We can only fix this if there are no operators with higher prececende around it
+        // See http://www.php.net/manual/en/language.operators.precedence.php
+        $problematicOperators = array(T_IS_EQUAL, T_IS_IDENTICAL);
+
+        $fixable = !empty($tokens[$stackPtr]['nested_parenthesis']);
+        if ($fixable) {
+            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $from => $to) {
+                for ($i = ($from + 1); $i < $to; $i++) {
+                    $code = $tokens[$i]['code'];
+                    //print_r($tokens[$i]);
+                    if (in_array($code, $problematicOperators)) {
+                        $fixable = false;
+                        break;
+                    }
+                }
+            }
         }
+        if ($fixable) {
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $replacements[$operator]);
+            }
+        } else {
+            $fix = $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
+        }
+
     }//end process()
 
 
