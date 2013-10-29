@@ -66,8 +66,9 @@ class Squiz_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
                       $expected,
                       $content,
                      );
-            $phpcsFile->addFixableError($error, $stackPtr, 'ContainsWhiteSpace', $data);
-            if ($phpcsFile->fixer->enabled === true) {
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContainsWhiteSpace', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
         }
