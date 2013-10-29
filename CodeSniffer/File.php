@@ -443,6 +443,25 @@ class PHP_CodeSniffer_File
         $this->_warningCount = 0;
         $this->_fixableCount = 0;
 
+        try {
+            $this->eolChar = self::detectLineEndings($this->_file, $contents);
+        } catch (PHP_CodeSniffer_Exception $e) {
+            $this->addWarning($e->getMessage(), null, 'Internal.DetectLineEndings');
+            return;
+        }
+
+        // If this is standard input, see if a filename was passed in as well.
+        // This is done by including: phpcs_input_file: [file path]
+        // as the first line of content.
+        if ($this->_file === 'STDIN' && $contents !== null) {
+            if (substr($contents, 0, 17) === 'phpcs_input_file:') {
+                $eolPos      = strpos($contents, $this->eolChar);
+                $filename    = trim(substr($contents, 17, ($eolPos - 17)));
+                $contents    = substr($contents, ($eolPos + strlen($this->eolChar)));
+                $this->_file = $filename;
+            }
+        }
+
         $this->_parse($contents);
         $this->fixer->startFile($this);
 
@@ -645,13 +664,6 @@ class PHP_CodeSniffer_File
     {
         if ($contents === null && empty($this->_tokens) === false) {
             // File has already been parsed.
-            return;
-        }
-
-        try {
-            $this->eolChar = self::detectLineEndings($this->_file, $contents);
-        } catch (PHP_CodeSniffer_Exception $e) {
-            $this->addWarning($e->getMessage(), null, 'Internal.DetectLineEndings');
             return;
         }
 

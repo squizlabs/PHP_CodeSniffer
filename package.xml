@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
     -- Thanks to Mark Scherer for help with this fix
+  - Content passed via STDIN can now specify the filename to use so that sniffs can run the correct filename checks
+    -- Ensure the first line of the content is: phpcs_input_file: /path/to/file
   - Fixed bug #20093 : Bug with ternary operator token
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
