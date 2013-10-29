@@ -66,21 +66,27 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
         $tokens = $phpcsFile->getTokens();
 
         $prevType = $tokens[($stackPtr - 1)]['code'];
-        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
-            $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
-            $expected = $tokens[$nonSpace]['content'].';';
-            $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
-            $error    = 'Space found before semicolon; expected "%s" but found "%s"';
-            $data     = array(
-                         $expected,
-                         $found,
-                        );
-            $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
-            if ($phpcsFile->fixer->enabled === true) {
-                for ($i = $stackPtr -1; $i > $nonSpace; $i--) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
+        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            return;
+        }
+
+        $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
+        $expected = $tokens[$nonSpace]['content'].';';
+        $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
+        $error    = 'Space found before semicolon; expected "%s" but found "%s"';
+        $data     = array(
+                     $expected,
+                     $found,
+                    );
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            for ($i = ($stackPtr - 1); $i > $nonSpace; $i--) {
+                $phpcsFile->fixer->replaceToken($i, '');
             }
+
+            $phpcsFile->fixer->endChangeset();
         }
 
     }//end process()
