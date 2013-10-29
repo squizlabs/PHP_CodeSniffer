@@ -75,7 +75,12 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
                          $expected,
                          $found,
                         );
-            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+            $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+            if ($phpcsFile->fixer->enabled === true) {
+                for ($i = $stackPtr -1; $i > $nonSpace; $i--) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+            }
         }
 
     }//end process()
