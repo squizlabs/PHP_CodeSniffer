@@ -31,6 +31,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mark Scherer for help with this fix
   - Content passed via STDIN can now specify the filename to use so that sniffs can run the correct filename checks
     -- Ensure the first line of the content is: phpcs_input_file: /path/to/file
+  - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
+    -- E.g., to ignore comments, override a property using:
+    -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
+  - PSR2 standard now ignores comments when checking indentation rules
   - Fixed bug #20093 : Bug with ternary operator token
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report

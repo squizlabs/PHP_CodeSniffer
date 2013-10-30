@@ -287,7 +287,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $column = $tokens[$firstToken]['column'];
 
                 // Ignore the token for indentation if it's in the ignore list.
-                if (in_array($tokens[$firstToken]['code'], $this->ignoreIndentationTokens)) {
+                if (in_array($tokens[$firstToken]['code'], $this->ignoreIndentationTokens)
+                    || in_array($tokens[$firstToken]['type'], $this->ignoreIndentationTokens)
+                ) {
                     continue;
                 }
 
