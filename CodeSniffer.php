@@ -594,12 +594,23 @@ class PHP_CodeSniffer
                         echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
                     }
 
-                    $excludedSniffs = array_merge(
-                        $excludedSniffs,
-                        $this->_expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
-                    );
-                }
-            }
+                    // Check if a single code is being excluded, which is a shortcut
+                    // for setting the severity of the message to 0.
+                    $parts = explode('.', $exclude['name']);
+                    if (count($parts) === 4) {
+                        $this->ruleset[(string) $exclude['name']]['severity'] = 0;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "\t\t=> severity set to 0".PHP_EOL;
+                        }
+                    } else {
+                        $excludedSniffs = array_merge(
+                            $excludedSniffs,
+                            $this->_expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
+                        );
+                    }
+                }//end foreach
+            }//end if
 
             $this->_processRule($rule, $depth);
         }//end foreach
