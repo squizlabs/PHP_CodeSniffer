@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- E.g., to ignore comments, override a property using:
     -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
   - PSR2 standard now ignores comments when checking indentation rules
+  - Generic UpperCaseConstantNameSniff no longer reports errors where constants are used (request #20090)
+    -- It still reports errors where constants are defined
   - Fixed bug #20093 : Bug with ternary operator token
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
