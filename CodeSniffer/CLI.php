@@ -272,11 +272,6 @@ class PHP_CodeSniffer_CLI
                 ini_set($ini[0], true);
             }
             break;
-        case 't' :
-            $sniffSetting = explode('=', $_SERVER['argv'][($pos + 1)]);
-            $_SERVER['argv'][($pos + 1)] = '';
-            PHP_CodeSniffer::setConfigData($sniffSetting[0], $sniffSetting[1], true);
-            break;
         case 'n' :
             $values['warningSeverity'] = 0;
             break;
@@ -330,6 +325,13 @@ class PHP_CodeSniffer_CLI
             $data = PHP_CodeSniffer::getAllConfigData();
             print_r($data);
             exit(0);
+            break;
+        case 'runtime-set':
+            $key   = $_SERVER['argv'][($pos + 1)];
+            $value = $_SERVER['argv'][($pos + 2)];
+            $_SERVER['argv'][($pos + 1)] = '';
+            $_SERVER['argv'][($pos + 2)] = '';
+            PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
@@ -779,6 +781,8 @@ class PHP_CodeSniffer_CLI
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '        --runtime-set key value'.PHP_EOL;
+        echo '                      Set temporary value for this run (as opposed to --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -789,7 +793,6 @@ class PHP_CodeSniffer_CLI
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
-        echo '        -t            Set specifc settings for the selected standard'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
