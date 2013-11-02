@@ -63,14 +63,6 @@ class PHP_CodeSniffer_CLI
      */
     public $dieOnUnknownArg = true;
 
-
-    /**
-     * Array containing specific key-value pair settings for the selected standard
-     *
-     * @var array
-     */
-    public $settingsStandard = array();
-
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
      *
@@ -115,7 +107,6 @@ class PHP_CodeSniffer_CLI
         $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
-        $defaults['settingsStandard'] = array();
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -281,16 +272,16 @@ class PHP_CodeSniffer_CLI
                 ini_set($ini[0], true);
             }
             break;
+        case 't' :
+            $sniffSetting = explode('=', $_SERVER['argv'][($pos + 1)]);
+            $_SERVER['argv'][($pos + 1)] = '';
+            PHP_CodeSniffer::setConfigData($sniffSetting[0], $sniffSetting[1], true);
+            break;
         case 'n' :
             $values['warningSeverity'] = 0;
             break;
         case 'w' :
             $values['warningSeverity'] = null;
-            break;
-        case 't' :
-            $settingStandard = explode('=', $_SERVER['argv'][($pos + 1)]);
-            $_SERVER['argv'][($pos + 1)] = '';
-            $values['settingsStandard'][$settingStandard[0]] = $settingStandard[1];
             break;
         default:
             $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
@@ -582,12 +573,6 @@ class PHP_CodeSniffer_CLI
             $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
         } else {
             $this->warningSeverity = $values['warningSeverity'];
-        }
-
-        if ($values['settingsStandard'] === null) {
-            $this->settingsStandard = array();
-        } else {
-            $this->settingsStandard = $values['settingsStandard'];
         }
 
         $phpcs->setCli($this);
