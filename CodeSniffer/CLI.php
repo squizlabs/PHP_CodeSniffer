@@ -782,7 +782,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
         echo '        --runtime-set key value'.PHP_EOL;
-        echo '                      Set temporary value for this run (as opposed to --config-set) '.PHP_EOL;
+        echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
