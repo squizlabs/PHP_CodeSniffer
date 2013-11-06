@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR2 standard now ignores comments when checking indentation rules
   - Squiz OperatorSpacingSniff no longer throws errors for the ?: short ternary operator
     -- Thanks to Antoine Musso for the patch
+  - Comment parser now supports non-English characters when splitting comment lines into words
+    -- Thanks to Nik Sun for the patch
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
  </notes>
