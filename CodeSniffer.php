@@ -186,6 +186,13 @@ class PHP_CodeSniffer
                                    'callable',
                                   );
 
+    /**
+     * An array containing global properties to apply to every rule
+     *
+     * @var array
+     */
+    private $_globalProperties = array();
+
 
     /**
      * Constructs a PHP_CodeSniffer object.
@@ -936,6 +943,22 @@ class PHP_CodeSniffer
         }
 
         $ruleset = simplexml_load_file($standard);
+
+        // Process custom global settings
+        foreach ($ruleset->{'properties'} as $properties) {
+            foreach ($properties->property as $prop) {
+                $name = (string) $prop['name'];
+                if (isset($prop['type']) === true
+                    && (string) $prop['type'] === 'array'
+                ) {
+                    $value = (string) $prop['value'];
+                    $this->_globalProperties[$name] = explode(',', $value);
+                } else {
+                    $this->_globalProperties[$name] = (string) $prop['value'];
+                }
+            }
+        }
+
         foreach ($ruleset->rule as $rule) {
             if (isset($rule['ref']) === false) {
                 continue;
@@ -968,6 +991,11 @@ class PHP_CodeSniffer
                 }
 
                 $this->ruleset[$code]['message'] = (string) $rule->message;
+            }
+
+            // Global properties
+            foreach ($this->_globalProperties as $propname => $propvalue) {
+                        $this->ruleset[$code]['properties'][$propname] = $propvalue;
             }
 
             // Custom properties.
