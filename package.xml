@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Antoine Musso for the patch
   - Comment parser now supports non-English characters when splitting comment lines into words
     -- Thanks to Nik Sun for the patch
+  - Exit statements are now recognised as valid closers for CASE and DEFAULT blocks
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
  </notes>
