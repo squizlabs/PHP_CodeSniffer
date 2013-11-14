@@ -94,7 +94,9 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
                 $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeFirst');
             }
 
-            if ($tokens[($firstSemicolon + 1)]['code'] !== T_WHITESPACE) {
+            if ($tokens[($firstSemicolon + 1)]['code'] !== T_WHITESPACE
+                && $tokens[($firstSemicolon + 1)]['code'] !== T_SEMICOLON
+            ) {
                 $error = 'Expected 1 space after first semicolon of FOR loop; 0 found';
                 $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterFirst');
             } else {
@@ -109,7 +111,9 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
             $secondSemicolon = $phpcsFile->findNext(T_SEMICOLON, ($firstSemicolon + 1));
 
             if ($secondSemicolon !== false) {
-                if ($tokens[($secondSemicolon - 1)]['code'] === T_WHITESPACE) {
+                if ($tokens[($secondSemicolon - 1)]['code'] === T_WHITESPACE
+                    && $tokens[($firstSemicolon + 1)]['code'] !== T_SEMICOLON
+                ) {
                     $error = 'Space found before second semicolon of FOR loop';
                     $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeSecond');
                 }
