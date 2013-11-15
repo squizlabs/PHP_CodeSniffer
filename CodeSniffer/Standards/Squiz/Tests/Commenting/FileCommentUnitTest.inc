@@ -21,7 +21,7 @@
 * @package    SquizCMS
 * @package    ADDITIONAL PACKAGE TAG
 * @subpackage not_camelcased
-* @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
+* @author     AntÃ´nio Carlos VenÃ¢ncio JÃºnior <foreign@character.net>
 * @author
 * @copyright  1997~1994 The PHP Group
 * @license    http://www.php.net/license/3_0.txt

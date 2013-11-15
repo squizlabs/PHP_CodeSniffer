@@ -239,7 +239,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 // spaces as well as separate tokens.
                 $flags = (PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
                 $words = preg_split(
-                    '|(\s+)|',
+                    '|(\s+)|u',
                     $line.$this->phpcsFile->eolChar,
                     -1,
                     $flags

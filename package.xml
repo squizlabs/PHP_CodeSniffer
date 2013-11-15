@@ -34,9 +34,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- It still reports errors where constants are defined
   - Individual messages can now be excluded in ruleset.xml files using the exclude tag (request #20091)
     -- Setting message severity to 0 continues to be supported
+  - Squiz OperatorSpacingSniff no longer throws errors for the ?: short ternary operator
+    -- Thanks to Antoine Musso for the patch
+  - Comment parser now supports non-English characters when splitting comment lines into words
+    -- Thanks to Nik Sun for the patch
+  - Exit statements are now recognised as valid closers for CASE and DEFAULT blocks
   - Fixed bug #20093 : Bug with ternary operator token
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
+  - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
  </notes>
  <contents>
   <dir name="/">
