@@ -88,4 +88,12 @@ switch ($httpResponseCode) {
 switch($i) {
 case 1: {}
 }
-?>
+
+switch ($httpResponseCode) {
+    case 100:
+    case 101:
+    case 102:
+        exit;
+    default:
+    exit;
+}
