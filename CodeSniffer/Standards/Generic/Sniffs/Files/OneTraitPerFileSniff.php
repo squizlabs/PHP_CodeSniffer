@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic_Sniffs_Files_OneInterfacePerFileSniff.
+ * Generic_Sniffs_Files_OneTraitPerFileSniff.
  *
  * PHP version 5
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Checks that only one interface is declared per file.
+ * Checks that only one trait is declared per file.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -23,7 +23,7 @@
  * @version   Release: 1.5.0RC1
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Files_OneInterfacePerFileSniff extends Generic_Sniffs_Files_OnePerFileSniff
+class Generic_Sniffs_Files_OneTraitPerFileSniff extends Generic_Sniffs_Files_OnePerFileSniff
 {
 
 
@@ -34,7 +34,7 @@ class Generic_Sniffs_Files_OneInterfacePerFileSniff extends Generic_Sniffs_Files
      */
     public function register()
     {
-        return array(T_INTERFACE);
+        return array(T_TRAIT);
 
     }//end register()
 
