@@ -63,11 +63,13 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
         foreach ($report['files'] as $filename => $file) {
             $blames = $this->getBlameContent($filename);
-
             foreach ($file['messages'] as $line => $lineErrors) {
-                $author = $this->getAuthor($blames[($line - 1)]);
-                if ($author === false) {
-                    continue;
+                $author = 'Unknown';
+                if (isset($blames[($line - 1)]) === true) {
+                    $blameAuthor = $this->getAuthor($blames[($line - 1)]);
+                    if ($blameAuthor !== false) {
+                        $author = $blameAuthor;
+                    }
                 }
 
                 if (isset($authors[$author]) === false) {
@@ -104,7 +106,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             foreach ($blames as $line) {
                 $author = $this->getAuthor($line);
                 if (false === $author) {
-                    continue;
+                    $author = 'Unknown';
                 }
 
                 if (isset($authors[$author]) === false) {

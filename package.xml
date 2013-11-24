@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20097 : CLI.php throws error in php 5.2
   - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
+  - Fixed bug #20131 : PHP errors in svnblame report, if there are files not under version control
  </notes>
  <contents>
   <dir name="/">
