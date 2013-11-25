@@ -514,6 +514,9 @@ class PHP_CodeSniffer_CLI
     {
         if (empty($values) === true) {
             $values = $this->getCommandLineValues();
+        } else {
+            $values       = array_merge($this->getDefaults(), $values);
+            $this->values = $values;
         }
 
         if ($values['generator'] !== '') {

@@ -80,9 +80,12 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $blames = $this->getBlameContent($report['filename']);
 
         foreach ($report['messages'] as $line => $lineErrors) {
-            $author = $this->getAuthor($blames[($line - 1)]);
-            if ($author === false) {
-                continue;
+            $author = 'Unknown';
+            if (isset($blames[($line - 1)]) === true) {
+                $blameAuthor = $this->getAuthor($blames[($line - 1)]);
+                if ($blameAuthor !== false) {
+                    $author = $blameAuthor;
+                }
             }
 
             if (isset($this->_authorCache[$author]) === false) {
@@ -117,8 +120,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         // all the lines that do not have errors.
         foreach ($blames as $line) {
             $author = $this->getAuthor($line);
-            if (false === $author) {
-                continue;
+            if ($author === false) {
+                $author = 'Unknown';
             }
 
             if (isset($this->_authorCache[$author]) === false) {
