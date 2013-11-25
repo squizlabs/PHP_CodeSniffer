@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20119 : PHP warning: invalid argument to str_repeat() in SVN blame report with -s
   - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
   - Fixed bug #20131 : PHP errors in svnblame report, if there are files not under version control
+  - Fixed bug #20133 : Allow "HG: hg_id" as value for @version tag
  </notes>
  <contents>
   <dir name="/">

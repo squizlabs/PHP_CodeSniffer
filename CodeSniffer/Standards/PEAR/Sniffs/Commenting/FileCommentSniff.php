@@ -782,8 +782,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             } else if (strstr($content, 'CVS:') === false
                 && strstr($content, 'SVN:') === false
                 && strstr($content, 'GIT:') === false
+                && strstr($content, 'HG:') === false
             ) {
-                $error = 'Invalid version "%s" in file comment; consider "CVS: <cvs_id>" or "SVN: <svn_id>" or "GIT: <git_id>" instead';
+                $error = 'Invalid version "%s" in file comment; consider "CVS: <cvs_id>" or "SVN: <svn_id>" or "GIT: <git_id>" or "HG: <hg_id>" instead';
                 $data  = array($content);
                 $this->currentFile->addWarning($error, $errorPos, 'InvalidVersion', $data);
             }
