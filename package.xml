@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2013-09-26</date>
- <time>09:41:00</time>
+ <date>2013-11-26</date>
+ <time>09:03:00</time>
  <version>
   <release>1.4.8</release>
   <api>1.4.8</api>
@@ -2348,6 +2348,39 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.4.8</release>
+    <api>1.4.8</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-11-26</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
+      -- E.g., to ignore comments, override a property using:
+      -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
+    - PSR2 standard now ignores comments when checking indentation rules
+    - Squiz OperatorSpacingSniff no longer throws errors for the ?: short ternary operator
+      -- Thanks to Antoine Musso for the patch
+    - Comment parser now supports non-English characters when splitting comment lines into words
+      -- Thanks to Nik Sun for the patch
+    - Exit statements are now recognised as valid closers for CASE and DEFAULT blocks
+      -- Thanks to Maksim Kochkin for the patch
+    - PHP_CodeSniffer_CLI::process() can now be passed an incomplete array of CLI values
+      -- Missing values will be set to the CLI defaults
+      -- Thanks to Maksim Kochkin for the patch
+    - Fixed bug #20097 : CLI.php throws error in php 5.2
+    - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
+    - Fixed bug #20119 : PHP warning: invalid argument to str_repeat() in SVN blame report with -s
+    - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
+    - Fixed bug #20131 : PHP errors in svnblame report, if there are files not under version control
+    - Fixed bug #20133 : Allow "HG: hg_id" as value for @version tag
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.7</release>
