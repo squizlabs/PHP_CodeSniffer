@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Doc generation is now working again for installed standards
+    -- Includes a fix for limiting the docs to specific sniffs
   - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
     -- E.g., to ignore comments, override a property using:
     -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
