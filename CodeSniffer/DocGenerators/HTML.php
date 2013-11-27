@@ -186,12 +186,12 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      */
     protected function printFooter()
     {
-        // Turn off strict errors so we don't get timezone warnings if people
+        // Turn off errors so we don't get timezone warnings if people
         // don't have their timezone set.
-        error_reporting(E_ALL);
+        error_reporting(0);
         echo '  <div class="tag-line">';
         echo 'Documentation generated on '.date('r');
-        echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer @package_version@</a>';
+        echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'</a>';
         echo '</div>'.PHP_EOL;
         error_reporting(E_ALL | E_STRICT);
 

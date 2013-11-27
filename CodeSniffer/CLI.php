@@ -505,6 +505,7 @@ class PHP_CodeSniffer_CLI
         if (empty($values) === true) {
             $values = $this->getCommandLineValues();
         } else {
+            $values       = array_merge($this->getDefaults(), $values);
             $this->values = $values;
         }
 
@@ -513,10 +514,11 @@ class PHP_CodeSniffer_CLI
             foreach ($values['standard'] as $standard) {
                 $phpcs->generateDocs(
                     $standard,
-                    $values['files'],
+                    $values['sniffs'],
                     $values['generator']
                 );
             }
+
             exit(0);
         }
 

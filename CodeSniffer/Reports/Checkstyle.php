@@ -118,7 +118,7 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<checkstyle version="@package_version@">'.PHP_EOL;
+        echo '<checkstyle version="'.PHP_CodeSniffer::VERSION.'">'.PHP_EOL;
         echo $cachedData;
         echo '</checkstyle>'.PHP_EOL;
 
