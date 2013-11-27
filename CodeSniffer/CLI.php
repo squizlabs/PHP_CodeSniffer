@@ -524,10 +524,11 @@ class PHP_CodeSniffer_CLI
             foreach ($values['standard'] as $standard) {
                 $phpcs->generateDocs(
                     $standard,
-                    $values['files'],
+                    $values['sniffs'],
                     $values['generator']
                 );
             }
+
             exit(0);
         }
 
