@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Generic ForbiddenFunctionsSniff now ignores object creation
+    -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
  </notes>
  <contents>

@@ -110,6 +110,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                    T_PRIVATE,
                    T_PROTECTED,
                    T_AS,
+                   T_NEW,
                    T_INSTEADOF,
                    T_NS_SEPARATOR,
                   );

@@ -46,5 +46,6 @@ class RightSideVisTest {
 }
 
 namespace Something\sizeof;
+$var = new Sizeof();
 
 ?>
