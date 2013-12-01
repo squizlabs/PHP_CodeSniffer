@@ -242,7 +242,8 @@ class PHP_CodeSniffer
             define('PHPCS_CWD', getcwd());
         }
 
-        chdir(dirname(__FILE__).'/CodeSniffer/');
+        $cwd = dirname(__FILE__);
+        self::chdir($cwd.'/CodeSniffer/');
 
         // Set default CLI object in case someone is running us
         // without using the command line script.
@@ -460,8 +461,9 @@ class PHP_CodeSniffer
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
-            } else if (is_file(realpath(PHPCS_CWD.'/'.$standard)) === true) {
-                $ruleset = simplexml_load_file(realpath(PHPCS_CWD.'/'.$standard));
+            } else if (is_file(self::realpath(PHPCS_CWD.'/'.$standard)) === true) {
+                $rulePath = self::realpath(PHPCS_CWD.'/'.$standard);
+                $ruleset  = simplexml_load_file(file_get_contents($rulePath));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -639,11 +641,11 @@ class PHP_CodeSniffer
 
             $standard = (string) $ruleset['name'];
         } else {
-            self::$standardDir = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
+            self::$standardDir = self::realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard);
             if (is_dir(self::$standardDir) === false) {
                 // This isn't looking good. Let's see if this
                 // is a relative path to a custom standard.
-                $path = realpath(PHPCS_CWD.'/'.$standard);
+                $path = self::realpath(PHPCS_CWD.'/'.$standard);
                 if (is_dir($path) === true) {
                     // This is a relative path to a custom standard.
                     self::$standardDir = $path;
@@ -784,7 +786,7 @@ class PHP_CodeSniffer
                 $rulesetPath .= '/ruleset.xml';
             }
 
-            $ruleset = simplexml_load_file($rulesetPath);
+            $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
             if ($ruleset === false) {
                 throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
             }
@@ -810,7 +812,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = realpath($sniff);
+                $files[] = self::realpath($sniff);
             }
         }
 
@@ -847,7 +849,7 @@ class PHP_CodeSniffer
                 $standardDir = dirname($standardDir);
             }
 
-            $realpath = realpath($standardDir.'/'.$sniff);
+            $realpath = self::realpath($standardDir.'/'.$sniff);
             if ($realpath !== false) {
                 $sniff = $realpath;
             }
@@ -862,7 +864,7 @@ class PHP_CodeSniffer
             $sniff = basename($path);
         } else if (is_file($sniff) === false) {
             // See if this is a whole standard being referenced.
-            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
+            $path = self::realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$sniff);
             if (is_dir($path) === true) {
                 $isDir = true;
             } else {
@@ -874,13 +876,13 @@ class PHP_CodeSniffer
                 }
 
                 $path = $parts[0].'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
-                $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
+                $path = self::realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$path);
                 if ($path === false && self::$standardDir !== '') {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this by
                     // looking directly in the passed standard dir to see if it is
                     // installed in there.
-                    $path = realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
+                    $path = self::realpath(self::$standardDir.'/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php');
                 }
             }
         }//end if
@@ -1149,7 +1151,11 @@ class PHP_CodeSniffer
         $files = array();
 
         foreach ($paths as $path) {
-            if (is_dir($path) === true) {
+            if (is_dir($path) === true || self::isPharFile($path) === true) {
+                if (self::isPharFile($path) === true) {
+                    $path = 'phar://'.$path;
+                }
+
                 if ($local === true) {
                     $di = new DirectoryIterator($path);
                 } else {
@@ -1162,7 +1168,7 @@ class PHP_CodeSniffer
 
                 foreach ($di as $file) {
                     // Check if the file exists after all symlinks are resolved.
-                    $filePath = realpath($file->getPathname());
+                    $filePath = self::realpath($file->getPathname());
                     if ($filePath === false) {
                         continue;
                     }
@@ -1316,7 +1322,7 @@ class PHP_CodeSniffer
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
-        $filePath = realpath($file);
+        $filePath = self::realpath($file);
         if ($filePath === false) {
             $filePath = $file;
         }
@@ -2156,22 +2162,28 @@ class PHP_CodeSniffer
     /**
      * Get all config data in an array.
      *
+     * @param string $file Optional, use this config file.
+     *
      * @return string
      * @see getConfigData()
      */
-    public static function getAllConfigData()
+    public static function getAllConfigData($file=null)
     {
-        if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG_DATA']) === true) {
+        if ($file === null && isset($GLOBALS['PHP_CODESNIFFER_CONFIG_DATA']) === true) {
             return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
         }
 
-        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-        if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-        }
+        if ($file !== null && file_exists($file) === true) {
+            $configFile = $file;
+        } else {
+            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
+            if (is_file($configFile) === false) {
+                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            }
 
-        if (is_file($configFile) === false) {
-            return null;
+            if (is_file($configFile) === false) {
+                return null;
+            }
         }
 
         include $configFile;
@@ -2179,6 +2191,233 @@ class PHP_CodeSniffer
         return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
 
     }//end getAllConfigData()
+
+
+    /**
+     * Get the phar file from the path.
+     *
+     * @param string $path The path to use.
+     *
+     * @return mixed
+     */
+    public static function getPharFile($path)
+    {
+        $pharFile = false;
+        if (self::isPharFile($path) === true) {
+            if (strpos($path, 'phar://') === 0) {
+                $path = substr($path, 7);
+            }
+
+            $endPos   = (strpos($path, '.phar') + 5);
+            $pharFile = substr($path, 0, $endPos);
+        }
+
+        return $pharFile;
+
+    }//end getPharFile()
+
+
+    /**
+     * Return TRUE, if the path is a phar file.
+     *
+     * @param string $path The path to use.
+     *
+     * @return mixed
+     */
+    public static function isPharFile($path)
+    {
+        $isPhar = false;
+        if (strpos($path, '.phar') !== false) {
+            $isPhar = true;
+        }
+
+        return $isPhar;
+
+    }//end isPharFile()
+
+
+    /**
+     * realpath CodeSniffer style.
+     *
+     * @param string $path The path to use.
+     *
+     * @return mixed
+     */
+    public static function realpath($path)
+    {
+        if (self::isPharFile($path) === true) {
+            $phar   = self::getPharFile($path);
+            $extra  = str_replace($phar, '', $path);
+            $prefix = false;
+            if (strpos($path, 'phar://') === 0) {
+                $prefix = true;
+                $extra  = str_replace('phar://', '', $extra);
+            }
+
+            $path = realpath($phar);
+            if ($path !== false) {
+                $path .= $extra;
+                if ($prefix === true) {
+                    $path = 'phar://'.$path;
+                }
+            }
+        } else {
+            $path = realpath($path);
+        }
+
+        return $path;
+
+    }//end realpath()
+
+
+    /**
+     * chdir() CodeSniffer style.
+     *
+     * @param string $path The path to use.
+     *
+     * @return void
+     */
+    public static function chdir($path)
+    {
+        if (self::isPharFile($path) === true) {
+            $phar = self::getPharFile($path);
+            chdir(dirname($phar));
+        } else {
+            chdir($path);
+        }
+
+    }//end chdir()
+
+
+    /**
+     * Build CodeSniffer into a phar file.
+     *
+     * @param string $name    The name of the phar file.
+     * @param string $destDir Where to place the finished product.
+     * @param array  $options The default options.
+     *
+     * @return void
+     */
+    public static function build($name, $destDir, $options)
+    {
+        if (substr(strtolower($name), -5) !== '.phar') {
+            $name .= '.phar';
+        }
+
+        $pharFile = self::realpath($destDir).'/'.$name;
+        $phar     = self::_build($pharFile, dirname(__FILE__));
+
+    }//end build()
+
+
+    /**
+     * Build the phar file from a directory provided.
+     *
+     * @param string $name    The phar filename.
+     * @param string $baseDir The base dir.
+     * @param array  $remove  Remove these file names from the phar.
+     *
+     * @return object
+     */
+    private static function _build($name, $baseDir, $remove=array())
+    {
+        // Force remove itself and git files.
+        $remove[] = '.git';
+        $remove[] = '.gitattributes';
+        $remove[] = '.gitignore';
+        $remove[] = 'tests';
+        $remove[] = 'Tests';
+        $remove[] = basename($name);
+        if (file_exists($name) === true) {
+            unlink($name);
+        }
+
+        $phar = new Phar($name, 0, 'CodeSniffer.phar');
+        self::_buildFromDirectory($phar, $baseDir, $remove);
+        self::_addStub($phar);
+
+        return $phar;
+
+    }//end _build()
+
+
+    /**
+     * Build the phar for a directory.
+     *
+     * @param object &$phar   The Phar class.
+     * @param string $baseDir The directory to build.
+     * @param array  $remove  Files to remove.
+     *
+     * @return void
+     */
+    private static function _buildFromDirectory(&$phar, $baseDir, $remove=array())
+    {
+        $prefix   = 'phar://'.$phar->getPath();
+        $patterns = array(
+                     '/(\/\*(.*?)(\*\/))/ims',
+                     '/^(\n)$/ims',
+                    );
+        $replaces = array(
+                     '',
+                     '',
+                    );
+
+
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseDir, FilesystemIterator::SKIP_DOTS));
+        foreach ($iterator as $file) {
+            $removed = false;
+            foreach ($remove as $r) {
+                if ($r === $file->getFileName() || preg_match('/\/'.$r.'(\/|$)/i', $file->getPath()) > 0) {
+                    $removed = true;
+                    break;
+                }
+            }
+
+            if ($removed === true) {
+                continue;
+            }
+
+            if ($file->isDir() === true) {
+                $path = $file->getPath().'/'.$file->getFileName();
+                $path = str_replace($baseDir, '', $path);
+                $phar->addEmptyDir($path);
+            } else {
+                // Add and clean up whitespace/comments.
+                $fileLoc = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
+                $content = file_get_contents($file->getPath().'/'.$file->getFileName());
+                preg_replace($patterns, $replaces, $content);
+                file_put_contents($prefix.'/'.$fileLoc, $content);
+
+                // Compress.
+                $phar[$fileLoc]->compress(Phar::GZ);
+            }//end if
+        }//end foreach
+
+    }//end _cleanup()
+
+
+    /**
+     * Add the stub file to the phar.
+     *
+     * @param object &$phar The phar class.
+     *
+     * @return void
+     */
+    private static function _addStub(&$phar)
+    {
+        $stub  = '<?php error_reporting(E_ALL | E_STRICT);';
+        $stub .= "@include_once 'PHP/Timer.php';";
+        $stub .= "if (class_exists('PHP_Timer', false) === true) {";
+        $stub .= "    PHP_Timer::start();";
+        $stub .= "}";
+        $stub .= "include_once 'phar://CodeSniffer.phar/CodeSniffer/CLI.php';";
+        $stub .= "\$phpcs = new PHP_CodeSniffer_CLI();";
+        $stub .= "\$phpcs->checkRequirements();";
+        $stub .= "\$numErrors = \$phpcs->process();";
+        $stub .= "__HALT_COMPILER(); ?".">";
+        $phar->setStub($stub);
+
+    }//end _addStub()
 
 
 }//end class

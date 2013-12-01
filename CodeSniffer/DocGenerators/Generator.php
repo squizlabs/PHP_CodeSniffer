@@ -137,7 +137,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
             $standard    = basename($this->_standard);
         } else {
             $standardDir
-                = realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
+                = PHP_CodeSniffer::realpath(dirname(__FILE__).'/../Standards/'.$this->_standard);
 
             $standard = $this->_standard;
         }

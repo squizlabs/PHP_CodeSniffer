@@ -340,7 +340,7 @@ class PHP_CodeSniffer_CLI
                     $values['sniffs'][] = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
-                $values['reportFile'] = realpath(substr($arg, 12));
+                $values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
                 if ($values['reportFile'] === false) {
@@ -469,7 +469,7 @@ class PHP_CodeSniffer_CLI
             exit(2);
         }
 
-        $file = realpath($arg);
+        $file = PHP_CodeSniffer::realpath($arg);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
                 return $values;

@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Build a PHPCS phar.
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Benjamin Pearson <bpearson@squiz.com.au>
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+error_reporting(E_ALL | E_STRICT);
+
+if (ini_get('phar.readonly') === '1') {
+    echo 'Unable to build, phar.readonly in php.ini is set to read only.'."\n";
+    exit(1);
+}
+
+if (isset($argv[1]) === FALSE) {
+    echo 'Usage: '.$argv[0].' <name> <options>'."\n";
+    exit(1);
+}
+
+if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer.php';
+} else {
+    include_once 'PHP/CodeSniffer.php';
+}
+
+if (isset($argv[2]) === FALSE
+    || is_dir($argv[2]) === FALSE
+) {
+    $destDir = dirname(dirname(__FILE__));
+} else {
+    $destDir = $argv[2];
+}
+
+if (isset($argv[3]) === FALSE
+    || is_file($argv[3]) === FALSE
+) {
+    $optionFile = NULL;
+} else {
+    $optionFile = $argv[3];
+}
+
+$options = PHP_CodeSniffer::getAllConfigData($optionFile);
+PHP_CodeSniffer::build($argv[1], $destDir, $options);
