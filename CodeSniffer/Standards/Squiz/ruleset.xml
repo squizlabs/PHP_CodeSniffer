@@ -20,6 +20,9 @@
  <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
  <rule ref="PEAR.Files.IncludingFile"/>
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
+ <rule ref="PEAR.Functions.ValidDefaultValue"/>
+ <rule ref="PSR2.Files.EndFileNewline"/>
+ <rule ref="Zend.Files.ClosingTag"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 
  <!-- Lines can be 120 chars long, but never show errors -->

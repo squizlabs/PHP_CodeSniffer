@@ -135,13 +135,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
 
         // Check that the closing brace has one blank line after it.
         $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
-        if ($nextContent === false) {
-            // No content found, so we reached the end of the file.
-            // That means there was no closing tag either.
-            $error = 'Closing brace of a %s must be followed by a blank line and then a closing PHP tag';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'EndFileAfterCloseBrace', $data);
-        } else {
+        if ($nextContent !== false) {
             $nextLine  = $tokens[$nextContent]['line'];
             $braceLine = $tokens[$closeBrace]['line'];
             if ($braceLine === $nextLine) {

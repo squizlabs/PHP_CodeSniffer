@@ -33,6 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mark Scherer for help with this fix
   - Content passed via STDIN can now specify the filename to use so that sniffs can run the correct filename checks
     -- Ensure the first line of the content is: phpcs_input_file: /path/to/file
+  - Squiz coding standard now enforces no closing PHP tag at the end of a pure PHP file
+  - Squiz coding standard now enforces a single newline character at the end of the file
+  - Squiz ClassDeclarationSniff no longer checks for a PHP ending tag after a class definition
  </notes>
  <contents>
   <dir name="/">
