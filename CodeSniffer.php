@@ -2353,16 +2353,6 @@ class PHP_CodeSniffer
     private static function _buildFromDirectory(&$phar, $baseDir, $remove=array())
     {
         $prefix   = 'phar://'.$phar->getPath();
-        $patterns = array(
-                     '/(\/\*(.*?)(\*\/))/ims',
-                     '/^(\n)$/ims',
-                    );
-        $replaces = array(
-                     '',
-                     '',
-                    );
-
-
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseDir, FilesystemIterator::SKIP_DOTS));
         foreach ($iterator as $file) {
             $removed = false;
@@ -2385,7 +2375,6 @@ class PHP_CodeSniffer
                 // Add and clean up whitespace/comments.
                 $fileLoc = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
                 $content = file_get_contents($file->getPath().'/'.$file->getFileName());
-                preg_replace($patterns, $replaces, $content);
                 file_put_contents($prefix.'/'.$fileLoc, $content);
 
                 // Compress.
