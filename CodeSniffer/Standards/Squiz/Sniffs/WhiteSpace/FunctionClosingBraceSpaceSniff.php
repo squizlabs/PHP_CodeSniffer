@@ -128,6 +128,10 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             }//end if
         } else {
             if ($found !== 1) {
+                if ($found < 0) {
+                    $found = 0;
+                }
+
                 $error = 'Expected 1 blank line before closing function brace; %s found';
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
