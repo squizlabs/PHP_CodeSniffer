@@ -63,7 +63,6 @@ class PHP_CodeSniffer_CLI
      */
     public $dieOnUnknownArg = true;
 
-
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
      *
@@ -272,7 +271,6 @@ class PHP_CodeSniffer_CLI
             } else {
                 ini_set($ini[0], true);
             }
-
             break;
         case 'n' :
             $values['warningSeverity'] = 0;
@@ -326,6 +324,13 @@ class PHP_CodeSniffer_CLI
             $data = PHP_CodeSniffer::getAllConfigData();
             print_r($data);
             exit(0);
+            break;
+        case 'runtime-set':
+            $key   = $_SERVER['argv'][($pos + 1)];
+            $value = $_SERVER['argv'][($pos + 2)];
+            $_SERVER['argv'][($pos + 1)] = '';
+            $_SERVER['argv'][($pos + 2)] = '';
+            PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
@@ -815,6 +820,8 @@ class PHP_CodeSniffer_CLI
         echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '        --runtime-set key value'.PHP_EOL;
+        echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
