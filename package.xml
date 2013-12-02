@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ForbiddenFunctionsSniff now ignores object creation
     -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
+  - Fixed bug #20138 : Protected property underscore and camel caps issue (in trait with Zend)
+    -- Thanks to Gaetan Rousseau for the patch
  </notes>
  <contents>
   <dir name="/">
