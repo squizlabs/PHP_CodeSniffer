@@ -2305,22 +2305,7 @@ class PHP_CodeSniffer
         }
 
         $pharFile = self::realpath($destDir).'/'.$name;
-        $phar     = self::_build($pharFile, dirname(__FILE__));
 
-    }//end build()
-
-
-    /**
-     * Build the phar file from a directory provided.
-     *
-     * @param string $name    The phar filename.
-     * @param string $baseDir The base dir.
-     * @param array  $remove  Remove these file names from the phar.
-     *
-     * @return object
-     */
-    private static function _build($name, $baseDir, $remove=array())
-    {
         // Force remove itself and git files.
         $remove[] = '.git';
         $remove[] = '.gitattributes';
@@ -2332,13 +2317,11 @@ class PHP_CodeSniffer
             unlink($name);
         }
 
-        $phar = new Phar($name, 0, 'CodeSniffer.phar');
-        self::_buildFromDirectory($phar, $baseDir, $remove);
+        $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
+        self::_buildFromDirectory($phar, dirname(__FILE__), $remove);
         self::_addStub($phar);
 
-        return $phar;
-
-    }//end _build()
+    }//end build()
 
 
     /**
@@ -2382,7 +2365,7 @@ class PHP_CodeSniffer
             }//end if
         }//end foreach
 
-    }//end _cleanup()
+    }//end _buildFromDirectory()
 
 
     /**
@@ -2395,15 +2378,15 @@ class PHP_CodeSniffer
     private static function _addStub(&$phar)
     {
         $stub  = '<?php error_reporting(E_ALL | E_STRICT);';
-        $stub .= "@include_once 'PHP/Timer.php';";
-        $stub .= "if (class_exists('PHP_Timer', false) === true) {";
-        $stub .= "    PHP_Timer::start();";
-        $stub .= "}";
-        $stub .= "include_once 'phar://CodeSniffer.phar/CodeSniffer/CLI.php';";
-        $stub .= "\$phpcs = new PHP_CodeSniffer_CLI();";
-        $stub .= "\$phpcs->checkRequirements();";
-        $stub .= "\$numErrors = \$phpcs->process();";
-        $stub .= "__HALT_COMPILER(); ?".">";
+        $stub .= '@include_once "PHP/Timer.php";';
+        $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
+        $stub .= '    PHP_Timer::start();';
+        $stub .= '}';
+        $stub .= 'include_once "phar://CodeSniffer.phar/CodeSniffer/CLI.php";';
+        $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
+        $stub .= '$phpcs->checkRequirements();';
+        $stub .= '$numErrors = $phpcs->process();';
+        $stub .= '__HALT_COMPILER(); ?'.'>';
         $phar->setStub($stub);
 
     }//end _addStub()
