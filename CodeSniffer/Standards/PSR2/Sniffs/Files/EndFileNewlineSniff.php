@@ -110,5 +110,3 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

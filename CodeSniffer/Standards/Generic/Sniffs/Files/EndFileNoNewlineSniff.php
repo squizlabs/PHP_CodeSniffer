@@ -89,5 +89,3 @@ class Generic_Sniffs_Files_EndFileNoNewlineSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

@@ -143,5 +143,3 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
 
 }//end class
-
-?>

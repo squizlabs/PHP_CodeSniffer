@@ -170,5 +170,3 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
 
 
 }//end class
-
-?>

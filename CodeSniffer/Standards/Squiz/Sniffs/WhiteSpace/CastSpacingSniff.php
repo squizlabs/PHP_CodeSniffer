@@ -77,5 +77,3 @@ class Squiz_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

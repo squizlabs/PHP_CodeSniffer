@@ -212,4 +212,3 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
 
 }//end class
-?>

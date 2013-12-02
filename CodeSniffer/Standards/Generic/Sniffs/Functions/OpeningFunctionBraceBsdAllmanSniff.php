@@ -151,5 +151,3 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
 
 
 }//end class
-
-?>

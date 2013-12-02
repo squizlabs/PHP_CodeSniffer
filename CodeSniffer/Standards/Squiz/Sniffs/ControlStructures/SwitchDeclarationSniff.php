@@ -294,5 +294,3 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

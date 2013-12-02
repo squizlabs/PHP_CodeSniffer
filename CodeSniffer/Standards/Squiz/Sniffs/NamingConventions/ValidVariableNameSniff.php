@@ -237,5 +237,3 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 
 
 }//end class
-
-?>

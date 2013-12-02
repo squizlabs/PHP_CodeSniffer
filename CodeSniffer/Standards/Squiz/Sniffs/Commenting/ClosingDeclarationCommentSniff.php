@@ -148,5 +148,3 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
 
 
 }//end class
-
-?>

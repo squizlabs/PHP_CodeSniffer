@@ -157,4 +157,3 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-

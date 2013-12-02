@@ -99,5 +99,3 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

@@ -337,5 +337,3 @@ class PHP_CodeSniffer_CommentParser_ClassCommentParser extends PHP_CodeSniffer_C
 
 
 }//end class
-
-?>

@@ -268,5 +268,3 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

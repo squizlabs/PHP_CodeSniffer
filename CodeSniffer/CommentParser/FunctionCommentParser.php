@@ -208,5 +208,3 @@ class PHP_CodeSniffer_CommentParser_FunctionCommentParser extends PHP_CodeSniffe
 
 
 }//end class
-
-?>

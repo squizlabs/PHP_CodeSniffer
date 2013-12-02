@@ -73,5 +73,3 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
 
 
 }//end class
-
-?>

@@ -74,5 +74,3 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

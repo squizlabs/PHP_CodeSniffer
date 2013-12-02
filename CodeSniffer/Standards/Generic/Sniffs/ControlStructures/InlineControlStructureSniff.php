@@ -161,5 +161,3 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
 
 
 }//end class
-
-?>

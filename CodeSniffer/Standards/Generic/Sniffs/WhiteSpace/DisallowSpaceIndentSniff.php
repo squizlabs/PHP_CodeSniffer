@@ -82,5 +82,3 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
 
 
 }//end class
-
-?>

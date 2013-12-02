@@ -241,5 +241,3 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
 
 
 }//end class
-
-?>

@@ -81,5 +81,3 @@ interface PHP_CodeSniffer_Report
 
 
 }//end interface
-
-?>

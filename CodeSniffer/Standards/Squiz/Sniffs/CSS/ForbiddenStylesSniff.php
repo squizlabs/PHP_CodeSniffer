@@ -188,5 +188,3 @@ class Squiz_Sniffs_CSS_ForbiddenStylesSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

@@ -466,5 +466,3 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

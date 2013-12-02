@@ -290,5 +290,3 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
 
 
 }//end class
-
-?>

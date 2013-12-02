@@ -107,5 +107,3 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
 
 
 }//end class
-
-?>

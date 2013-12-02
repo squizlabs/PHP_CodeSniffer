@@ -199,5 +199,3 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

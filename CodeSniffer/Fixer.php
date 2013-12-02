@@ -471,5 +471,3 @@ class PHP_CodeSniffer_Fixer
 
 
 }//end class
-
-?>

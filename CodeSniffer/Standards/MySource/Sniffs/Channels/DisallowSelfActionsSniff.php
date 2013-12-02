@@ -133,5 +133,3 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
 
 
 }//end class
-
-?>

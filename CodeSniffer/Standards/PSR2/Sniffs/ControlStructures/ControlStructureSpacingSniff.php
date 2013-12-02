@@ -93,5 +93,3 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
 
 
 }//end class
-
-?>

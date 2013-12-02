@@ -92,5 +92,3 @@ class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

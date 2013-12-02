@@ -254,5 +254,3 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
 
 }//end class
-
-?>

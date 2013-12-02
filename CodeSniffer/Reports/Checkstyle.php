@@ -126,5 +126,3 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
 
 
 }//end class
-
-?>

@@ -147,4 +147,3 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-?>

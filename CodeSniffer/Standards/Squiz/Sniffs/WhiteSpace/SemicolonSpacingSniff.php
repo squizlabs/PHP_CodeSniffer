@@ -93,5 +93,3 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
 
 
 }//end class
-
-?>

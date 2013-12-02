@@ -102,5 +102,3 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
 
 }//end class
-
-?>

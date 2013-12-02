@@ -73,5 +73,3 @@ class MySource_Sniffs_Debug_FirebugConsoleSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

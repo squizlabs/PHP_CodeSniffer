@@ -167,5 +167,3 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
 
 
 }//end class
-
-?>

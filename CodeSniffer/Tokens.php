@@ -499,5 +499,3 @@ final class PHP_CodeSniffer_Tokens
 
 
 }//end class
-
-?>

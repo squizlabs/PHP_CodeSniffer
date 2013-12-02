@@ -147,5 +147,3 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

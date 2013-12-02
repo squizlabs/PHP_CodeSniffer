@@ -131,6 +131,3 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
 
 
 }//end class
-
-
-?>

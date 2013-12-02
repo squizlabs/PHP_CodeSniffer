@@ -189,4 +189,3 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-?>

@@ -67,5 +67,3 @@ class Squiz_Sniffs_PHP_ForbiddenFunctionsSniff extends Generic_Sniffs_PHP_Forbid
 
 
 }//end class
-
-?>

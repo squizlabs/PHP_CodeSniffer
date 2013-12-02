@@ -110,6 +110,3 @@ class PEAR_Sniffs_NamingConventions_ValidClassNameSniff implements PHP_CodeSniff
 
 
 }//end class
-
-
-?>

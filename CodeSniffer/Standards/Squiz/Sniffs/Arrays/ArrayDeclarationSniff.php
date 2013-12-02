@@ -677,5 +677,3 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

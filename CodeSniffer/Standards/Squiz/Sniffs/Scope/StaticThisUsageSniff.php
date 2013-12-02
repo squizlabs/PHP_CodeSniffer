@@ -95,5 +95,3 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
 
 
 }//end class
-
-?>

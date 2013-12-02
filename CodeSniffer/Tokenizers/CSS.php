@@ -430,5 +430,3 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
 
 }//end class
-
-?>

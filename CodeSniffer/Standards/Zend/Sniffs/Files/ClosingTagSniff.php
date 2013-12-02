@@ -83,5 +83,3 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

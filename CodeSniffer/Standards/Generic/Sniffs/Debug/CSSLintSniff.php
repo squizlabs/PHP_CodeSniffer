@@ -113,5 +113,3 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

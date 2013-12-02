@@ -183,5 +183,3 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
 
 }//end class
-
-?>

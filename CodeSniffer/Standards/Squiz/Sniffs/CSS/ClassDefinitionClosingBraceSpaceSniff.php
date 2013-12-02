@@ -120,5 +120,3 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
 
 
 }//end class
-
-?>

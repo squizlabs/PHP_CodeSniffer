@@ -230,5 +230,3 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
 
 }//end class
-
-?>

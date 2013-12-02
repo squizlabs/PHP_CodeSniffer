@@ -114,5 +114,3 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

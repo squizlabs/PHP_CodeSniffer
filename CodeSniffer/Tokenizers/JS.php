@@ -1159,5 +1159,3 @@ class PHP_CodeSniffer_Tokenizers_JS
 
 
 }//end class
-
-?>

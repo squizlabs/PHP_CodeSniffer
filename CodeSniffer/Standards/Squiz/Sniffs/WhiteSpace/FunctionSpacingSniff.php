@@ -254,5 +254,3 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
 
 }//end class
-
-?>

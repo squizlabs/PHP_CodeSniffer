@@ -80,5 +80,3 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

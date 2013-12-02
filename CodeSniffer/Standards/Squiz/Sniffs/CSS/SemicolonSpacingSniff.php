@@ -78,4 +78,3 @@ class Squiz_Sniffs_CSS_SemicolonSpacingSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-?>

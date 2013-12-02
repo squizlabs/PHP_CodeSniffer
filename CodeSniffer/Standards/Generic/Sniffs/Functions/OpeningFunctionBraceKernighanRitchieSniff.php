@@ -113,5 +113,3 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
 
 
 }//end class
-
-?>

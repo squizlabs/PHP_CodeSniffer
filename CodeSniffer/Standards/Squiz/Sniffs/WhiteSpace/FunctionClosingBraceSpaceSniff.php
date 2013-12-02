@@ -161,5 +161,3 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
 
 
 }//end class
-
-?>

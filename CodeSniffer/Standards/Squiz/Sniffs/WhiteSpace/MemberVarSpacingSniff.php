@@ -156,5 +156,3 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
 
 
 }//end class
-
-?>

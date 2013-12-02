@@ -78,4 +78,3 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
 
 
 }//end class
-?>

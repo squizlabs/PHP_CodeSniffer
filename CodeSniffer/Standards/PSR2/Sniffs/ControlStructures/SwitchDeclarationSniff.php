@@ -201,5 +201,3 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
 
 
 }//end class
-
-?>

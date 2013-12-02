@@ -336,5 +336,3 @@ class PHP_CodeSniffer_Reporting
 
 
 }//end class
-
-?>

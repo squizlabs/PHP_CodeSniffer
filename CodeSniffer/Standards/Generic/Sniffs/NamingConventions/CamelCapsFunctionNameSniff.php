@@ -206,5 +206,3 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
 
 }//end class
-
-?>

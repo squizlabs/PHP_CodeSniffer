@@ -957,5 +957,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
 
 }//end class
-
-?>

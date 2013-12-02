@@ -200,6 +200,3 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 
 
 }//end class
-
-
-?>

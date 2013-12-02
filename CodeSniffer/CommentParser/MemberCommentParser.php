@@ -87,5 +87,3 @@ class PHP_CodeSniffer_CommentParser_MemberCommentParser extends PHP_CodeSniffer_
 
 
 }//end class
-
-?>

@@ -67,5 +67,3 @@ class PHP_CodeSniffer_CommentParser_ParserException extends Exception
 
 
 }//end class
-
-?>

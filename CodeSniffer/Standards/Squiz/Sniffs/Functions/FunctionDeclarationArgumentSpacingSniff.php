@@ -325,5 +325,3 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
 
 }//end class
-
-?>

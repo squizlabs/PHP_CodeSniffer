@@ -364,4 +364,3 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
 
 }//end class
-?>

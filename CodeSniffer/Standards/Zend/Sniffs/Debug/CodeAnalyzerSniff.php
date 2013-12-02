@@ -122,4 +122,3 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-?>

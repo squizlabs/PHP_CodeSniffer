@@ -241,5 +241,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
 
 }//end class
-
-?>

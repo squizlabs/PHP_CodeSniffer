@@ -60,5 +60,3 @@ class Generic_Sniffs_Files_OneClassPerFileSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>
