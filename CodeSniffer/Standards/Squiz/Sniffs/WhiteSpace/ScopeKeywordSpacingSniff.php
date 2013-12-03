@@ -69,6 +69,11 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
             return;
         }
 
+        if ($tokens[$prevToken]['code'] === T_AS) {
+            // Trait visibilty change, e.g., use HelloWorld { sayHello as private; }
+            return;
+        }
+
         $nextToken = $tokens[($stackPtr + 1)];
         if ($nextToken['code'] !== T_WHITESPACE
             || strlen($nextToken['content']) !== 1

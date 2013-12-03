@@ -624,6 +624,15 @@ class PHP_CodeSniffer
         }//end foreach
 
         // Process custom ignore pattern rules.
+        foreach ($ruleset->{'config'} as $config) {
+            $this->setConfigData((string) $config['name'], (string) $config['value'], true);
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> set config value ".(string) $config['name'].': '.(string) $config['value'].PHP_EOL;
+            }
+        }
+
+        // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
             if (isset($pattern['type']) === false) {
                 $pattern['type'] = 'absolute';
