@@ -102,6 +102,7 @@ class PHP_CodeSniffer_CLI
         $defaults['showSources']     = false;
         $defaults['extensions']      = array();
         $defaults['sniffs']          = array();
+        $defaults['standards-path']  = array();
         $defaults['ignored']         = array();
         $defaults['reportFile']      = null;
         $defaults['generator']       = '';
@@ -243,7 +244,7 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'i' :
-            $this->printInstalledStandards();
+            $this->printInstalledStandards($values['standards-path']);
             exit(0);
             break;
         case 'v' :
@@ -330,7 +331,10 @@ class PHP_CodeSniffer_CLI
             PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
         default:
-            if (substr($arg, 0, 7) === 'sniffs=') {
+            if (substr($arg, 0, 15) === 'standards-path=') {
+                $standardsPath = substr($arg, 15);
+                $values['standards-path'] = explode(',', $standardsPath);
+            }else if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = substr($arg, 7);
                 $values['sniffs'] = explode(',', $sniffs);
             } else if (substr($arg, 0, 12) === 'report-file=') {
@@ -541,7 +545,7 @@ class PHP_CodeSniffer_CLI
                 // They didn't select a valid coding standard, so help them
                 // out by letting them know which standards are installed.
                 echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
-                $this->printInstalledStandards();
+                $this->printInstalledStandards($values['standards-path']);
                 exit(2);
             }
         }
@@ -730,7 +734,7 @@ class PHP_CodeSniffer_CLI
         $cleaned = array();
 
         // Check if the standard name is valid, or if the case is invalid.
-        $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+        $installedStandards = $this->getInstalledStandards();
         foreach ($standards as $standard) {
             foreach ($installedStandards as $validStandard) {
                 if (strtolower($standard) === strtolower($validStandard)) {
@@ -746,6 +750,22 @@ class PHP_CodeSniffer_CLI
 
     }//end validateStandard()
 
+    /**
+     * Internal method used to find default and additional coding standards
+     *
+     * @param array $extraPaths
+     * @return array
+     */
+    protected function getInstalledStandards($extraPaths = array())
+    {
+        $standards = $defaultStandards = PHP_CodeSniffer::getInstalledStandards();
+        foreach($extraPaths as $path){
+            $path = realpath($path);
+            $additionalStandards = PHP_CodeSniffer::getInstalledStandards(false, $path);
+            $standards = array_merge($standards, $additionalStandards);
+        }
+        return $standards;
+    }
 
     /**
      * Prints a report showing the sniffs contained in a standard.
@@ -815,7 +835,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--standards-path=<standards>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -837,6 +857,8 @@ class PHP_CodeSniffer_CLI
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
+        echo '        <standards>   A comma separated list of paths to look for additional standards'.PHP_EOL;
+        echo '                      (default standards are always loaded)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
@@ -855,11 +877,12 @@ class PHP_CodeSniffer_CLI
     /**
      * Prints out a list of installed coding standards.
      *
+     * @param array $extraPaths Additional paths to search for standards
      * @return void
      */
-    public function printInstalledStandards()
+    public function printInstalledStandards($extraPaths = array())
     {
-        $installedStandards = PHP_CodeSniffer::getInstalledStandards();
+        $installedStandards = $this->getInstalledStandards($extraPaths);
         $numStandards       = count($installedStandards);
 
         if ($numStandards === 0) {
