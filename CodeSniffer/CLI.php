@@ -63,6 +63,7 @@ class PHP_CodeSniffer_CLI
      */
     public $dieOnUnknownArg = true;
 
+
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
      *
@@ -271,6 +272,7 @@ class PHP_CodeSniffer_CLI
             } else {
                 ini_set($ini[0], true);
             }
+
             break;
         case 'n' :
             $values['warningSeverity'] = 0;
@@ -303,28 +305,23 @@ class PHP_CodeSniffer_CLI
         case 'help':
             $this->printUsage();
             exit(0);
-            break;
         case 'version':
             echo 'PHP_CodeSniffer version '.PHP_CodeSniffer::VERSION.' ('.PHP_CodeSniffer::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
-            break;
         case 'config-set':
             $key   = $_SERVER['argv'][($pos + 1)];
             $value = $_SERVER['argv'][($pos + 2)];
             PHP_CodeSniffer::setConfigData($key, $value);
             exit(0);
-            break;
         case 'config-delete':
             $key = $_SERVER['argv'][($pos + 1)];
             PHP_CodeSniffer::setConfigData($key, null);
             exit(0);
-            break;
         case 'config-show':
             $data = PHP_CodeSniffer::getAllConfigData();
             print_r($data);
             exit(0);
-            break;
         case 'runtime-set':
             $key   = $_SERVER['argv'][($pos + 1)];
             $value = $_SERVER['argv'][($pos + 2)];
@@ -817,10 +814,9 @@ class PHP_CodeSniffer_CLI
         echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '    [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
+        echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
-        echo '        --runtime-set key value'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
