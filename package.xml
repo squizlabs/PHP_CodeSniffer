@@ -29,6 +29,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Config values can now be set at runtime using the command line argument [--runtime-set key value]
     -- Runtime values are the same as config values, but are not written to the main config file
     -- Thanks to Wim Godden for the patch
+  - Config values can now be set in ruleset files
+    -- e.g., < config name="zend_ca_path" value="/path/to/ZendCodeAnalyzer" />
+    -- Can not be used to set config values that override command line values, such as show_warnings
+    -- Thanks to Jonathan Marcil for helping with the patch
   - Generic ForbiddenFunctionsSniff now ignores object creation
     -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
