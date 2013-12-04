@@ -33,6 +33,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- e.g., config name="zend_ca_path" value="/path/to/ZendCodeAnalyzer"
     -- Can not be used to set config values that override command line values, such as show_warnings
     -- Thanks to Jonathan Marcil for helping with the patch
+  - Added a new installed_paths config value to allow for the setting of directories that contain standards
+    -- By default, standards have to be installed into the CodeSniffer/Standards directory to be considered installed
+    -- New config value allows a list of paths to be set in addition to this internal path
+    -- Installed standards appear when using the -i arg, and can be referenced in rulesets using only their name
+    -- Set paths by running: phpcs --config-set installed_paths /path/one,/path/two,...
   - PSR2 ClassDeclarationSniff now allows a list of extended interfaces to be split across multiple lines
   - Generic ForbiddenFunctionsSniff now ignores object creation
     -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
