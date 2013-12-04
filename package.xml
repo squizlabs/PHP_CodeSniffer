@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- e.g., config name="zend_ca_path" value="/path/to/ZendCodeAnalyzer"
     -- Can not be used to set config values that override command line values, such as show_warnings
     -- Thanks to Jonathan Marcil for helping with the patch
+  - PSR2 ClassDeclarationSniff now allows a list of extended interfaces to be split across multiple lines
   - Generic ForbiddenFunctionsSniff now ignores object creation
     -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
