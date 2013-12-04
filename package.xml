@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
   - Fixed bug #20138 : Protected property underscore and camel caps issue (in trait with Zend)
     -- Thanks to Gaetan Rousseau for the patch
+  - Fixed bug #20139 : No report file generated on success
  </notes>
  <contents>
   <dir name="/">
