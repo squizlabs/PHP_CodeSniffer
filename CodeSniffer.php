@@ -574,7 +574,7 @@ class PHP_CodeSniffer
         if (is_dir($rulesetDir.'/Sniffs') === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
-                echo "\tAdding sniff files from \".../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
+                echo "\tAdding sniff files from \"/.../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
             }
 
             $ownSniffs = $this->_expandSniffDirectory($rulesetDir.'/Sniffs', $depth);
@@ -767,8 +767,8 @@ class PHP_CodeSniffer
 
         if (is_dir($ref) === false && is_file($ref) === false) {
             // See if this is a whole standard being referenced.
-            $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$ref);
-            if (is_dir($path) === true) {
+            $path = $this->getInstalledStandardPath($ref);
+            if ($path !== null) {
                 $ref = $path;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
@@ -776,20 +776,31 @@ class PHP_CodeSniffer
                 }
             } else {
                 // Work out the sniff path.
-                $parts = explode('.', $ref);
-
-                if (count($parts) === 1) {
-                    // A whole standard?
-                    $path = '';
-                } else if (count($parts) === 2) {
-                    // A directory of sniffs?
-                    $path = '/Sniffs/'.$parts[1];
+                $sepPos = strpos($ref, DIRECTORY_SEPARATOR);
+                if ($sepPos !== false) {
+                    $stdName = substr($ref, 0, $sepPos);
+                    $path    = substr($ref, $sepPos);
                 } else {
-                    // A single sniff?
-                    $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
+                    $parts   = explode('.', $ref);
+                    $stdName = $parts[0];
+                    if (count($parts) === 1) {
+                        // A whole standard?
+                        $path = '';
+                    } else if (count($parts) === 2) {
+                        // A directory of sniffs?
+                        $path = '/Sniffs/'.$parts[1];
+                    } else {
+                        // A single sniff?
+                        $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
+                    }
                 }
 
-                $newRef = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$parts[0].$path);
+                $newRef  = false;
+                $stdPath = $this->getInstalledStandardPath($stdName);
+                if ($stdPath !== null && $path !== '') {
+                    $newRef = realpath(dirname($stdPath).$path);
+                }
+
                 if ($newRef === false) {
                     // The sniff is not locally installed, so check if it is being
                     // referenced as a remote sniff outside the install. We do this
@@ -797,7 +808,7 @@ class PHP_CodeSniffer
                     // files before, looking for ones for this particular standard,
                     // and seeing if it is in there.
                     foreach (self::$rulesetDirs as $dir) {
-                        if (basename($dir) !== $parts[0]) {
+                        if (basename($dir) !== $stdName) {
                             continue;
                         }
 
@@ -1933,7 +1944,7 @@ class PHP_CodeSniffer
      *                                if installed.
      * @param string  $standardsDir   A specific directory to look for standards
      *                                in. If not specified, PHP_CodeSniffer will
-     *                                look in its default location.
+     *                                look in its default locations.
      *
      * @return array
      * @see isInstalledStandard()
@@ -1945,27 +1956,35 @@ class PHP_CodeSniffer
         $installedStandards = array();
 
         if ($standardsDir === '') {
-            $standardsDir = dirname(__FILE__).'/CodeSniffer/Standards';
+            $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
+            $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
+            if ($configPaths !== null) {
+                $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
+            }
+        } else {
+            $installedPaths = array($standardsDir);
         }
 
-        $di = new DirectoryIterator($standardsDir);
-        foreach ($di as $file) {
-            if ($file->isDir() === true && $file->isDot() === false) {
-                $filename = $file->getFilename();
+        foreach ($installedPaths as $standardsDir) {
+            $di = new DirectoryIterator($standardsDir);
+            foreach ($di as $file) {
+                if ($file->isDir() === true && $file->isDot() === false) {
+                    $filename = $file->getFilename();
 
-                // Ignore the special "Generic" standard.
-                if ($includeGeneric === false && $filename === 'Generic') {
-                    continue;
-                }
+                    // Ignore the special "Generic" standard.
+                    if ($includeGeneric === false && $filename === 'Generic') {
+                        continue;
+                    }
 
-                // Valid coding standard dirs include a standard class.
-                $csFile = $file->getPathname().'/ruleset.xml';
-                if (is_file($csFile) === true) {
-                    // We found a coding standard directory.
-                    $installedStandards[] = $filename;
+                    // Valid coding standard dirs include a standard class.
+                    $csFile = $file->getPathname().'/ruleset.xml';
+                    if (is_file($csFile) === true) {
+                        // We found a coding standard directory.
+                        $installedStandards[] = $filename;
+                    }
                 }
             }
-        }
+        }//end foreach
 
         return $installedStandards;
 
@@ -1977,7 +1996,7 @@ class PHP_CodeSniffer
      *
      * Coding standards are directories located in the
      * CodeSniffer/Standards directory. Valid coding standards
-     * include a Sniffs subdirectory.
+     * include a ruleset.xml file.
      *
      * @param string $standard The name of the coding standard.
      *
@@ -2016,7 +2035,7 @@ class PHP_CodeSniffer
      *
      * Coding standards are directories located in the
      * CodeSniffer/Standards directory. Valid coding standards
-     * include a Sniffs subdirectory.
+     * include a ruleset.xml file.
      *
      * @param string $standard The name of the coding standard.
      *
@@ -2024,9 +2043,17 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
-        $path = realpath(dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml');
-        if (is_file($path) === true) {
-            return $path;
+        $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
+        $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
+        if ($configPaths !== null) {
+            $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
+        }
+
+        foreach ($installedPaths as $installedPath) {
+            $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
+            if (is_file($path) === true) {
+                return $path;
+            }
         }
 
         return null;
@@ -2042,7 +2069,7 @@ class PHP_CodeSniffer
      *
      * @param string $key The name of the config value.
      *
-     * @return string
+     * @return string|null
      * @see setConfigData()
      * @see getAllConfigData()
      */

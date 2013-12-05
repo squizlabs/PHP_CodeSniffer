@@ -200,11 +200,6 @@ class PHP_CodeSniffer_Reporting
         $reportFile='',
         $reportWidth=80
     ) {
-        if ($this->totalFiles === 0) {
-            // No files generated errors.
-            return 0;
-        }
-
         $reportClass = self::factory($report);
         $report      = get_class($reportClass);
 

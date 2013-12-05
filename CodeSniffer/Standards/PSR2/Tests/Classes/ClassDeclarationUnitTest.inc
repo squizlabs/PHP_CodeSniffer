@@ -100,6 +100,25 @@ abstract class Test implements
 {
 }
 
+interface MyInterface extends LongInterfaceName1, LongInterfaceName2, LongInterfaceName3, LoginInterfaceName4
+{
+}
+
+interface MyInterface extends
+    LongInterfaceName1,
+    LongInterfaceName2,
+    LongInterfaceName3,
+    LoginInterfaceName4
+{
+}
+
+interface MyInterface extends
+ LongInterfaceName1,
+    LongInterfaceName2,
+     LongInterfaceName3,
+{
+}
+
 abstract
 class Test
 {
