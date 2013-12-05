@@ -161,6 +161,10 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
+        if ($cachedData === '') {
+            return;
+        }
+
         echo $cachedData;
 
         if ($toScreen === true
