@@ -211,12 +211,12 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Check if there is only 1 doc comment between the
             // open tag and class token.
-            $nextToken   = array(
-                            T_ABSTRACT,
-                            T_CLASS,
-                            T_FUNCTION,
-                            T_DOC_COMMENT,
-                           );
+            $nextToken = array(
+                          T_ABSTRACT,
+                          T_CLASS,
+                          T_FUNCTION,
+                          T_DOC_COMMENT,
+                         );
 
             $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
             if ($commentNext !== false
@@ -405,10 +405,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $count = $foundIndexes[0];
                     foreach ($foundIndexes as $index) {
                         if ($index !== $count) {
-                            $errorPosIndex
-                                = ($errorPos + $tagElement[$i]->getLine());
+                            $errorPosIndex = ($errorPos + $tagElement[$i]->getLine());
                             $error = '@%s tags must be grouped together';
-                            $data  = array($tag);
+                            $data = array($tag);
                             $this->currentFile->addError($error, $errorPosIndex, 'TagsNotGrouped', $data);
                         }
 

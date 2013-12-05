@@ -178,7 +178,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 }
 
                 if ($phpcsFile->fixer->enabled === true) {
-                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+                    $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                     $stackPtr = ($prev + 1);
                 }
 

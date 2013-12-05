@@ -124,14 +124,14 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
                 // Only error once per comment.
                 if (substr($tokens[$stackPtr]['content'], 0, 3) === '/**') {
-                    $error  = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                    $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
                     $phpcsFile->addError($error, $stackPtr, 'DocBlock');
                 }
             }//end if
         }//end if
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
-            $error  = 'Perl-style comments are not allowed; use "// Comment" instead';
+            $error = 'Perl-style comments are not allowed; use "// Comment" instead';
             $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
         }
 

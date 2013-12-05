@@ -106,7 +106,7 @@ class PHP_CodeSniffer_Fixer
         $this->_numFixes    = 0;
         $this->_fixedTokens = array();
 
-        $tokens = $phpcsFile->getTokens();
+        $tokens        = $phpcsFile->getTokens();
         $this->_tokens = array();
         foreach ($tokens as $index => $token) {
             $this->_tokens[$index] = $token['content'];
@@ -264,7 +264,7 @@ class PHP_CodeSniffer_Fixer
     public function beginChangeset()
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt = debug_backtrace();
+            $bt    = debug_backtrace();
             $sniff = $bt[1]['class'];
             $line  = $bt[0]['line'];
 

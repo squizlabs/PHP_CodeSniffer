@@ -362,7 +362,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         ) {
             $error = 'The closing brace for the %s must go on the next line after the body';
             $data  = array($tokens[$stackPtr]['content']);
-            $fix  = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceAfterBody', $data);
+            $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceAfterBody', $data);
 
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->beginChangeset();

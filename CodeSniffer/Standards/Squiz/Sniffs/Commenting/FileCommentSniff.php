@@ -127,11 +127,11 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
 
         // Check if there is only 1 doc comment between the open tag and class token.
-        $nextToken   = array(
-                        T_ABSTRACT,
-                        T_CLASS,
-                        T_DOC_COMMENT,
-                       );
+        $nextToken = array(
+                      T_ABSTRACT,
+                      T_CLASS,
+                      T_DOC_COMMENT,
+                     );
 
         $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
         if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
@@ -249,7 +249,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'Missing short description in file comment';
             $phpcsFile->addError($error, ($commentStart + 1), 'MissingShort');
         } else {
-            $lastChar  = $testShort[(strlen($testShort) - 1)];
+            $lastChar = $testShort[(strlen($testShort) - 1)];
             if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
                 $error = 'File comment short description must be on a single line';
                 $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');

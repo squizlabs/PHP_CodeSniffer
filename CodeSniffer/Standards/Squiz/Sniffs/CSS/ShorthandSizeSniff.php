@@ -84,7 +84,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Get the whole style content.
-        $end        = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         $origContent = $phpcsFile->getTokensAsString(($stackPtr + 1), ($end - $stackPtr - 1));
         $origContent = trim($origContent, ': ');
 
@@ -122,9 +122,9 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
 
         if ($num === 3) {
             $expected = trim($content.' '.$values[1][1].$values[1][2]);
-            $error = 'Shorthand syntax not allowed here; use %s instead';
-            $data  = array($expected);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+            $error    = 'Shorthand syntax not allowed here; use %s instead';
+            $data     = array($expected);
+            $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
 
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->beginChangeset();

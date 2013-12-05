@@ -448,7 +448,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
 
                     $i = $regex['end'];
-                    $buffer = '';
+                    $buffer      = '';
                     $cleanBuffer = false;
                     continue;
                 }
@@ -757,7 +757,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }//end if
 
                     $stackPtr++;
-                    $newContent  .= $tokenContent;
+                    $newContent .= $tokenContent;
                     if (isset($tokens[$stackPtr]) === false) {
                         break;
                     }

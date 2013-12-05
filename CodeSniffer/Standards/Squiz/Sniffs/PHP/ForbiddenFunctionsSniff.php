@@ -59,7 +59,7 @@ class Squiz_Sniffs_PHP_ForbiddenFunctionsSniff extends Generic_Sniffs_PHP_Forbid
      */
     public function register()
     {
-        $tokens = parent::register();
+        $tokens   = parent::register();
         $tokens[] = T_PRINT;
         return $tokens;
 

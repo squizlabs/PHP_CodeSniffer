@@ -225,8 +225,8 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 
                 if (PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false) {
                     $varName = $matches[0];
-                    $error = 'Variable "%s" is not in valid camel caps format';
-                    $data  = array($originalVarName);
+                    $error   = 'Variable "%s" is not in valid camel caps format';
+                    $data    = array($originalVarName);
                     $phpcsFile->addError($error, $stackPtr, 'StringNotCamelCaps', $data);
                     
                 }

@@ -265,7 +265,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 if ($tokenIsArray === true) {
-                    $type = token_name($token[0]);
+                    $type    = token_name($token[0]);
                     $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
                 } else {
                     $newToken = PHP_CodeSniffer::resolveSimpleToken($token);
@@ -534,7 +534,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 if ($newToken['code'] === T_INLINE_THEN) {
                     $insideInlineIf = true;
                 } else if ($insideInlineIf === true && $newToken['code'] === T_COLON) {
-                    $insideInlineIf = false;
+                    $insideInlineIf   = false;
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
                 }

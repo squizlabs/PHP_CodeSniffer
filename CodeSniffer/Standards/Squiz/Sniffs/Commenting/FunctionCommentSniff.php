@@ -712,7 +712,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                  $pos,
                                 );
 
-                        $error  = 'Doc comment for var %s does not match ';
+                        $error = 'Doc comment for var %s does not match ';
                         if (strtolower($paramName) === strtolower($realName)) {
                             $error .= 'case of ';
                             $code   = 'ParamNameNoCaseMatch';

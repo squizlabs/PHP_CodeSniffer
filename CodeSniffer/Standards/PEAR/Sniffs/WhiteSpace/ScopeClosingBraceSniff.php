@@ -69,8 +69,8 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
             return;
         }
 
-        $scopeStart  = $tokens[$stackPtr]['scope_opener'];
-        $scopeEnd    = $tokens[$stackPtr]['scope_closer'];
+        $scopeStart = $tokens[$stackPtr]['scope_opener'];
+        $scopeEnd   = $tokens[$stackPtr]['scope_closer'];
 
         // If the scope closer doesn't think it belongs to this scope opener
         // then the opener is sharing its closer ith other tokens. We only
@@ -92,7 +92,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         // We found a new line, now go forward and find the first non-whitespace
         // token.
-        $lineStart= $phpcsFile->findNext(
+        $lineStart = $phpcsFile->findNext(
             array(T_WHITESPACE),
             ($lineStart + 1),
             null,
@@ -116,7 +116,7 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
         }
 
         // Check now that the closing brace is lined up correctly.
-        $braceIndent   = $tokens[$scopeEnd]['column'];
+        $braceIndent = $tokens[$scopeEnd]['column'];
         if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === true) {
             // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.

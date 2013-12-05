@@ -484,7 +484,7 @@ class PHP_CodeSniffer
         $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
-            $currDir = dirname($file);
+            $currDir    = dirname($file);
             if ($lastDir !== $currDir) {
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
@@ -755,7 +755,7 @@ class PHP_CodeSniffer
         // to absolute paths. If this fails, let the reference run through
         // the normal checks and have it fail as normal.
         if (substr($ref, 0, 1) === '.') {
-            $realpath   = realpath($rulesetDir.'/'.$ref);
+            $realpath = realpath($rulesetDir.'/'.$ref);
             if ($realpath !== false) {
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {

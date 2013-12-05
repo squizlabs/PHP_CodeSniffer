@@ -86,7 +86,7 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
         } else {
             $content = $tokens[($stackPtr + 1)]['content'];
             if (strpos($content, $phpcsFile->eolChar) === false) {
-                $length  = strlen($content);
+                $length = strlen($content);
                 if ($length !== 1) {
                     $error = 'Expected 1 space after colon in style definition; %s found';
                     $data  = array($length);

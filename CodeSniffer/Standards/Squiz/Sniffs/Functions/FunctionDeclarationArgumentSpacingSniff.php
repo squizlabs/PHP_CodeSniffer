@@ -66,14 +66,14 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
     {
         $this->equalsSpacing = (int) $this->equalsSpacing;
 
-        $tokens       = $phpcsFile->getTokens();
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $tokens      = $phpcsFile->getTokens();
+        $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
         $this->processBracket($phpcsFile, $openBracket);
 
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
             $use = $phpcsFile->findNext(T_USE, ($tokens[$openBracket]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
-                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
+                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
                 $this->processBracket($phpcsFile, $openBracket);
             }
         }

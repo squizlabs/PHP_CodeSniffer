@@ -58,7 +58,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         // Make sure it is an API function. We know this by the doc comment.
         $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr);
         $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true);
-        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart));
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart));
         if (strpos($comment, '* @api') === false) {
             return;
         }
@@ -67,8 +67,8 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         // Find all the vars passed in as we are only interested in comparisons
         // to NULL for these specific variables.
         $foundVars = array();
-        $open  = $tokens[$stackPtr]['parenthesis_opener'];
-        $close = $tokens[$stackPtr]['parenthesis_closer'];
+        $open      = $tokens[$stackPtr]['parenthesis_opener'];
+        $close     = $tokens[$stackPtr]['parenthesis_closer'];
         for ($i = ($open + 1); $i < $close; $i++) {
             if ($tokens[$i]['code'] === T_VARIABLE) {
                 $foundVars[] = $tokens[$i]['content'];

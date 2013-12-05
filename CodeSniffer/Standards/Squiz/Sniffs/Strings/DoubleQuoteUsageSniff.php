@@ -64,7 +64,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $workingString  = $tokens[$stackPtr]['content'];
+        $workingString   = $tokens[$stackPtr]['content'];
         $lastStringToken = $stackPtr;
         $i = ($stackPtr + 1);
         while ($tokens[$i]['code'] === $tokens[$stackPtr]['code']) {

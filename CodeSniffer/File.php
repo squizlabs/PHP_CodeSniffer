@@ -309,13 +309,13 @@ class PHP_CodeSniffer_File
         array $restrictions,
         PHP_CodeSniffer $phpcs
     ) {
-        $this->_file      = trim($file);
-        $this->_listeners = $listeners;
-        $this->tokenizers = $tokenizers;
-        $this->ruleset    = $ruleset;
+        $this->_file        = trim($file);
+        $this->_listeners   = $listeners;
+        $this->tokenizers   = $tokenizers;
+        $this->ruleset      = $ruleset;
         $this->restrictions = $restrictions;
-        $this->phpcs      = $phpcs;
-        $this->fixer      = new PHP_CodeSniffer_Fixer();
+        $this->phpcs        = $phpcs;
+        $this->fixer        = new PHP_CodeSniffer_Fixer();
 
         $cliValues = $phpcs->cli->getCommandLineValues();
         if (isset($cliValues['showSources']) === true
@@ -605,7 +605,7 @@ class PHP_CodeSniffer_File
         }//end foreach
 
         if ($this->_recordErrors === false) {
-            $this->_errors = array();
+            $this->_errors   = array();
             $this->_warnings = array();
         }
 
@@ -868,10 +868,10 @@ class PHP_CodeSniffer_File
 
         if ($stackPtr === null) {
             $lineNum = 1;
-            $column = 1;
+            $column  = 1;
         } else {
             $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
+            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         $this->_errorCount++;
@@ -1014,10 +1014,10 @@ class PHP_CodeSniffer_File
 
         if ($stackPtr === null) {
             $lineNum = 1;
-            $column = 1;
+            $column  = 1;
         } else {
             $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
+            $column  = $this->_tokens[$stackPtr]['column'];
         }
 
         $this->_warningCount++;

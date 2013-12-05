@@ -329,7 +329,7 @@ class PHP_CodeSniffer_CLI
             print_r($data);
             exit(0);
         case 'runtime-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
+            $key = $_SERVER['argv'][($pos + 1)];
             $value = $_SERVER['argv'][($pos + 2)];
             $_SERVER['argv'][($pos + 1)] = '';
             $_SERVER['argv'][($pos + 2)] = '';
@@ -443,8 +443,8 @@ class PHP_CodeSniffer_CLI
                     if ($eqPos === false) {
                         $values[$arg] = $arg;
                     } else {
-                        $value = substr($arg, ($eqPos + 1));
-                        $arg   = substr($arg, 0, $eqPos);
+                        $value        = substr($arg, ($eqPos + 1));
+                        $arg          = substr($arg, 0, $eqPos);
                         $values[$arg] = $value;
                     }
                 } else {
