@@ -106,6 +106,10 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
+        if ($cachedData === '') {
+            return;
+        }
+
         echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
         echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
