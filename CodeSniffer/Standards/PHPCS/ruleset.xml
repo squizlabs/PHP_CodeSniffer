@@ -29,4 +29,14 @@
    <property name="allowMultipleArguments" value="false"/>
   </properties>
  </rule>
-</ruleset>
+
+ <!-- Have 8 chars padding maximum and always show as errors -->
+ <rule ref="Generic.Formatting.MultipleStatementAlignment">
+  <properties>
+   <property name="maxPadding" value="8"/>
+   <property name="ignoreMultiLine" value="true"/>
+   <property name="error" value="true"/>
+  </properties>
+ </rule>
+
+ </ruleset>
