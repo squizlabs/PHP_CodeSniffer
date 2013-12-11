@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Installed standards appear when using the -i arg, and can be referenced in rulesets using only their name
     -- Set paths by running: phpcs --config-set installed_paths /path/one,/path/two,...
   - PSR2 ClassDeclarationSniff now allows a list of extended interfaces to be split across multiple lines
+  - Squiz DoubleQuoteUsageSniff now allows \b in double quoted strings
   - Generic ForbiddenFunctionsSniff now ignores object creation
     -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
   - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
