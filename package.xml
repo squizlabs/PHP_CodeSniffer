@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added the phpcbf script to automatically fix many errors found by the phpcs script
   - Added report type --report=diff to show suggested changes to fix coding standard violations
+  - The --report argument now allows for custom reports to be used
+    -- Use the full path to your custom report class as the report name
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
     -- Thanks to Mark Scherer for help with this fix
