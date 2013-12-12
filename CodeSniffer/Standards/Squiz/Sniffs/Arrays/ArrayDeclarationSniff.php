@@ -605,21 +605,34 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$index['value']]['column'] !== $valueStart) {
                 $expected = ($valueStart - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
                 $found    = ($tokens[$index['value']]['column'] - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
-                $error    = 'Array value not aligned correctly; expected %s space(s) but found %s';
-                $data     = array(
-                             $expected,
-                             $found,
-                            );
+                if ($found < 0) {
+                    $found = 'newline';
+                }
+
+                $error = 'Array value not aligned correctly; expected %s space(s) but found %s';
+                $data  = array(
+                          $expected,
+                          $found,
+                         );
 
                 $fix = $phpcsFile->addFixableError($error, $index['arrow'], 'ValueNotAligned', $data);
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                    if ($found === 0) {
+                    if ($found === 'newline') {
+                        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($index['value'] - 1), null, true);
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($prev + 1); $i < $index['value']; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
+                        $phpcsFile->fixer->endChangeset();
+                    } else if ($found === 0) {
                         $phpcsFile->fixer->addContent(($index['value'] - 1), str_repeat(' ', $expected));
                     } else {
                         $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
                     }
                 }
-            }
+            }//end if
 
             // Check each line ends in a comma.
             if ($tokens[$index['value']]['code'] !== T_ARRAY) {
