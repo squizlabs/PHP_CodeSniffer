@@ -160,7 +160,7 @@ class PHP_CodeSniffer_Fixer
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\tFixed $this->_numFixes violations, starting over".PHP_EOL;
+                echo "\t* fixed $this->_numFixes violations, starting over *".PHP_EOL;
             }
         }//end while
 
@@ -169,7 +169,7 @@ class PHP_CodeSniffer_Fixer
         if ($this->_numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 @ob_end_clean();
-                echo "\tReached maximum number of loops with $this->_numFixes violations left unfixed".PHP_EOL;
+                echo "\t*** Reached maximum number of loops with $this->_numFixes violations left unfixed ***".PHP_EOL;
                 ob_start();
             }
 

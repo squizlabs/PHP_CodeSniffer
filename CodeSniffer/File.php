@@ -914,6 +914,15 @@ class PHP_CodeSniffer_File
                                                'fixable'  => $fixable,
                                               );
 
+        if (PHP_CODESNIFFER_VERBOSITY > 1
+            && $this->fixer->enabled === true
+            && $fixable === true
+        ) {
+            @ob_end_clean();
+            echo "\tE: $message ($sniffCode)".PHP_EOL;
+            ob_start();
+        }
+
         return true;
 
     }//end addError()
@@ -1059,6 +1068,15 @@ class PHP_CodeSniffer_File
                                                  'severity' => $severity,
                                                  'fixable'  => $fixable,
                                                 );
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1
+            && $this->fixer->enabled === true
+            && $fixable === true
+        ) {
+            @ob_end_clean();
+            echo "\tW: $message ($sniffCode)".PHP_EOL;
+            ob_start();
+        }
 
         return true;
 
