@@ -2162,28 +2162,22 @@ class PHP_CodeSniffer
     /**
      * Get all config data in an array.
      *
-     * @param string $file Optional, use this config file.
-     *
      * @return string
      * @see getConfigData()
      */
-    public static function getAllConfigData($file=null)
+    public static function getAllConfigData()
     {
-        if ($file === null && isset($GLOBALS['PHP_CODESNIFFER_CONFIG_DATA']) === true) {
+        if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG_DATA']) === true) {
             return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
         }
 
-        if ($file !== null && file_exists($file) === true) {
-            $configFile = $file;
-        } else {
-            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-            if (is_file($configFile) === false) {
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-            }
+        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
+        if (is_file($configFile) === false) {
+            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+        }
 
-            if (is_file($configFile) === false) {
-                return null;
-            }
+        if (is_file($configFile) === false) {
+            return null;
         }
 
         include $configFile;
@@ -2294,7 +2288,7 @@ class PHP_CodeSniffer
      *
      * @param string $name    The name of the phar file.
      * @param string $destDir Where to place the finished product.
-     * @param array  $options The default options.
+     * @param array  $options The build options.
      *
      * @return void
      */
@@ -2310,15 +2304,42 @@ class PHP_CodeSniffer
         $remove[] = '.git';
         $remove[] = '.gitattributes';
         $remove[] = '.gitignore';
-        $remove[] = 'tests';
-        $remove[] = 'Tests';
         $remove[] = basename($name);
         if (file_exists($name) === true) {
             unlink($name);
         }
 
+        if (array_key_exists('build-full', $options) === false) {
+            $remove[] = 'tests';
+            $remove[] = 'Tests';
+        }//end if
+
+        $whitelist = array();
+        if (array_key_exists('build-only', $options) === true
+            && $options['build-only'] !== true
+        ) {
+            if (self::isInstalledStandard($options['build-only']) === true) {
+                $phpcs       = new PHP_CodeSniffer();
+                $whitelist   = $phpcs->getSniffFiles(dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'], $options['build-only']);
+                foreach ($whitelist as $file) {
+                    self::_findDependencies($file, $whitelist);
+                }
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards';
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractPatternSniff.php';
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractScopeSniff.php';
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractVariableSniff.php';
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/IncorrectPatternException.php';
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'];
+                $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'].'/ruleset.xml';
+                $remove[]    = 'Standards';
+            } else {
+                echo 'Unable to build phar file with non-existing standard: '.$options['build-only']."\n";
+                return;
+            }
+        }
+
         $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
-        self::_buildFromDirectory($phar, dirname(__FILE__), $remove);
+        self::_buildFromDirectory($phar, dirname(__FILE__), $remove, $whitelist);
         self::_addStub($phar);
 
     }//end build()
@@ -2327,20 +2348,24 @@ class PHP_CodeSniffer
     /**
      * Build the phar for a directory.
      *
-     * @param object &$phar   The Phar class.
-     * @param string $baseDir The directory to build.
-     * @param array  $remove  Files to remove.
+     * @param object &$phar     The Phar class.
+     * @param string $baseDir   The directory to build.
+     * @param array  $remove    Files to remove.
+     * @param array  $whitelist The whitelist files to include.
      *
      * @return void
      */
-    private static function _buildFromDirectory(&$phar, $baseDir, $remove=array())
+    private static function _buildFromDirectory(&$phar, $baseDir, $remove=array(), $whitelist=array())
     {
         $prefix   = 'phar://'.$phar->getPath();
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseDir, FilesystemIterator::SKIP_DOTS));
         foreach ($iterator as $file) {
             $removed = false;
             foreach ($remove as $r) {
-                if ($r === $file->getFileName() || preg_match('/\/'.$r.'(\/|$)/i', $file->getPath()) > 0) {
+                if (($r === $file->getFileName()
+                    || preg_match('/\/'.$r.'(\/|$)/i', $file->getPath()) > 0)
+                    && in_array($file->getPath().'/'.$file->getFileName(), $whitelist) === false
+                ) {
                     $removed = true;
                     break;
                 }
@@ -2366,6 +2391,46 @@ class PHP_CodeSniffer
         }//end foreach
 
     }//end _buildFromDirectory()
+
+
+    /**
+     * Find the dependencies for a sniff file.
+     *
+     * @param string $file       The path to the sniff file.
+     * @param array  &$whitelist The current whitelist.
+     *
+     * @return void
+     */
+    private static function _findDependencies($file, array &$whitelist)
+    {
+        include_once $file;
+        $className = str_replace(dirname(__FILE__).'/CodeSniffer/Standards/', '', substr($file, 0, -4));
+        $className = str_replace('/', '_', $className);
+
+        if (class_exists($className) === true) {
+            // Finding any parent sniff classes.
+            $class       = new ReflectionClass($className);
+            $parentClass = $class->getParentClass();
+            if ($parentClass !== false) {
+                $whitelist[] = $parentClass->getFileName();
+                self::_findDependencies($parentClass->getFileName(), $whitelist);
+            }
+
+            // Finding any class created inside the file.
+            preg_match_all('/= new ([a-z0-9_]*)\(\)/ims', file_get_contents($file), $matches);
+            if (isset($matches[1]) === true) {
+                foreach ($matches[1] as $match) {
+                    if (isset($match) === true && strpos($match, '_Sniffs_') !== false) {
+                        $interiorClass = $match;
+                        $intClassFile  = dirname(__FILE__).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
+                        $whitelist[]   = $intClassFile;
+                        self::_findDependencies($intClassFile);
+                    }
+                }
+            }
+        }
+
+    }//end _findDependencies()
 
 
     /**
