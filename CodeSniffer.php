@@ -613,7 +613,7 @@ class PHP_CodeSniffer
      */
     public function setTokenListeners($standard, array $sniffs=array())
     {
-        if (is_dir($standard) === true) {
+        if (is_dir($standard) === true && is_file($standard.'/ruleset.xml') === true) {
             // This is an absolute path to a custom standard.
             self::$standardDir = $standard;
             $standard          = basename($standard);
@@ -2324,6 +2324,7 @@ class PHP_CodeSniffer
                 foreach ($whitelist as $file) {
                     self::_findDependencies($file, $whitelist);
                 }
+
                 $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards';
                 $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractPatternSniff.php';
                 $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractScopeSniff.php';
@@ -2403,9 +2404,15 @@ class PHP_CodeSniffer
      */
     private static function _findDependencies($file, array &$whitelist)
     {
-        include_once $file;
         $className = str_replace(dirname(__FILE__).'/CodeSniffer/Standards/', '', substr($file, 0, -4));
         $className = str_replace('/', '_', $className);
+        if (strpos($className, 'Abstract') === 0) {
+            $className = 'PHP_CodeSniffer_Standards_'.$className;
+        }
+
+        if (class_exists($className) === false) {
+            include_once $file;
+        }
 
         if (class_exists($className) === true) {
             // Finding any parent sniff classes.
@@ -2424,7 +2431,20 @@ class PHP_CodeSniffer
                         $interiorClass = $match;
                         $intClassFile  = dirname(__FILE__).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
                         $whitelist[]   = $intClassFile;
-                        self::_findDependencies($intClassFile);
+                        self::_findDependencies($intClassFile, $whitelist);
+                    }
+                }
+            }
+
+            // Finding class_exist() calls.
+            preg_match_all('/class_exists\(\'(.*?)\'/ims', file_get_contents($file), $matches);
+            if (isset($matches[1]) === true) {
+                foreach ($matches[1] as $match) {
+                    if (isset($match) === true && strpos($match, '_Sniffs_') !== false) {
+                        $interiorClass = $match;
+                        $intClassFile  = dirname(__FILE__).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
+                        $whitelist[]   = $intClassFile;
+                        self::_findDependencies($intClassFile, $whitelist);
                     }
                 }
             }
