@@ -765,7 +765,7 @@ class PHP_CodeSniffer
             }
         }
 
-        if (is_dir($ref) === false && is_file($ref) === false) {
+        if (is_file($ref) === false) {
             // See if this is a whole standard being referenced.
             $path = $this->getInstalledStandardPath($ref);
             if ($path !== null) {
@@ -774,7 +774,7 @@ class PHP_CodeSniffer
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> $ref".PHP_EOL;
                 }
-            } else {
+            } else if (is_dir($ref) === false) {
                 // Work out the sniff path.
                 $sepPos = strpos($ref, DIRECTORY_SEPARATOR);
                 if ($sepPos !== false) {
