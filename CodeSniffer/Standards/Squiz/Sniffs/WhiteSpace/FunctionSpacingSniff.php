@@ -174,7 +174,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $foundLines  = 0;
             $prevContent = 0;
         } else {
-            $prevContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT), $prevLineToken, null, true);
+            $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $prevLineToken, null, true);
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after

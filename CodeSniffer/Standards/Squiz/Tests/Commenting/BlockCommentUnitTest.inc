@@ -71,7 +71,7 @@ $code = 'should not be here';
     either.
 **/
 
-/**
+/*
     no capital
     letter.
 */

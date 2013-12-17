@@ -40,7 +40,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
     {
         return array(
                 T_COMMENT,
-                T_DOC_COMMENT,
+                T_DOC_COMMENT_OPEN_TAG,
                );
 
     }//end register()
@@ -66,7 +66,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
         // If this is a function/class/interface doc block comment, skip it.
         // We are only interested in inline doc block comments.
-        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT) {
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
             $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
             $ignore    = array(
                           T_CLASS,
@@ -89,6 +89,24 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$prevToken]['code'] === T_OPEN_TAG) {
                 return;
             }
+
+            $error = 'Block comments must be started with /*';
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'WrongStart');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, '/*');
+            }
+
+            $end = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+            if ($tokens[$end]['content'] !== '*/') {
+                $error = 'Block comments must be ended with */';
+                $fix   = $phpcsFile->addFixableError($error, $end, 'WrongEnd');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, '*/');
+                }
+            }
+
+            return;
+
         }//end if
 
         $commentLines  = array($stackPtr);

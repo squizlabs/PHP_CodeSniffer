@@ -55,7 +55,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$commentTokens;
+        return array(T_COMMENT);
 
     }//end register()
 

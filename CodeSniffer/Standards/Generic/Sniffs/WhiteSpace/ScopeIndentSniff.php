@@ -277,7 +277,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $newline = true;
             }
 
-            if ($newline === true && $tokens[$i]['code'] !== T_WHITESPACE) {
+            if ($newline === true && $tokens[$i]['code'] !== T_WHITESPACE && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE) {
                 // If we started a newline and we find a token that is not
                 // whitespace, then this must be the first token on the line that
                 // must be indented.
@@ -317,9 +317,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
                 }
 
-                // This is a special condition for T_DOC_COMMENT and C-style
-                // comments, which contain whitespace between each line.
-                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                // This is a special condition for C-style comments, which
+                // contain whitespace between each line.
+                if ($tokens[$firstToken]['code'] === T_COMMENT) {
                     $content = trim($tokens[$firstToken]['content']);
                     if (preg_match('|^/\*|', $content) !== 0) {
                         // Check to see if the end of the comment is on the same line
