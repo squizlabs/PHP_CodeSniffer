@@ -1367,7 +1367,8 @@ class PHP_CodeSniffer
                 $filename = (string) $filename;
             }
 
-            $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+            $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
+            $error = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
