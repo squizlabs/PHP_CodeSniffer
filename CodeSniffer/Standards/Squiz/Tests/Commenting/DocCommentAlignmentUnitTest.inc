@@ -1,6 +1,6 @@
 <?php
 /**
- * Some info about the class here
+* Some info about the class here
  *
  */
 class MyClass

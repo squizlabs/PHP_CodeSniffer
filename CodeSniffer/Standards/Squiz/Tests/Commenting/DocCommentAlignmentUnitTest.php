@@ -43,6 +43,7 @@ class Squiz_Tests_Commenting_DocCommentAlignmentUnitTest extends AbstractSniffUn
     public function getErrorList()
     {
         return array(
+                3  => 1,
                 11 => 1,
                 17 => 2,
                 18 => 1,

@@ -91,13 +91,19 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
             if ($tokens[$i]['code'] === T_DOC_COMMENT_STAR) {
                 if ($tokens[($i + 1)]['code'] !== T_DOC_COMMENT_WHITESPACE) {
                     $error = 'Expected 1 space after asterisk; 0 found';
-                    $phpcsFile->addError($error, $i, 'NoSpaceAfterStar');
+                    $fix   = $phpcsFile->addFixableError($error, $i, 'NoSpaceAfterStar');
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->addContent($i, ' ');
+                    }
                 } else if ($tokens[($i + 1)]['content'] !==  ' '
                     && $tokens[($i + 1)]['content'] !== $phpcsFile->eolChar
                 ) {
                     $error = 'Expected 1 space after asterisk; %s found';
                     $data  = array(strlen($tokens[($i + 1)]['content']));
-                    $phpcsFile->addError($error, $i, 'SpaceAfterStar', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceAfterStar', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($i + 1), ' ');
+                    }
                 }
             }
 
@@ -107,7 +113,15 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                           ($requiredColumn - 1),
                           ($tokens[$i]['column'] - 1),
                          );
-                $phpcsFile->addError($error, $i, 'SpaceBeforeStar', $data);
+                $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceBeforeStar', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $padding = str_repeat(' ', ($requiredColumn - 1));
+                    if ($tokens[$i]['column'] === 1) {
+                        $phpcsFile->fixer->addContentBefore($i, $padding);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($i - 1), $padding);
+                    }
+                }
             }
         }//end for
 
