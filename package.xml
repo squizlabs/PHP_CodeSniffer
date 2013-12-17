@@ -34,6 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
     -- This change requires a significant rewrite of sniffs that use the comment parser
     -- This change requires minor changes to sniffs that listen for T_DOC_COMMENT tokens directly
+  - Squiz DocCommentAlignmentSniff has had its error codes changed
+    -- NoSpaceBeforeTag becomes NoSpaceAfterStar
+    -- SpaceBeforeTag becomes SpaceAfterStar
+    -- SpaceBeforeAsterisk becomes SpaceBeforeStar
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
     -- Thanks to Mark Scherer for help with this fix

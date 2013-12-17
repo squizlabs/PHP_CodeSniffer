@@ -38,7 +38,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(T_DOC_COMMENT);
+        return array(T_DOC_COMMENT_OPEN_TAG);
 
     }//end register()
 
@@ -77,71 +77,39 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
             }
         }
 
-        // We only want to get the first comment in a block. If there is
-        // a comment on the line before this one, return.
-        $docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
-        if ($docComment !== false) {
-            if ($tokens[$docComment]['line'] === ($tokens[$stackPtr]['line'] - 1)) {
-                return;
-            }
-        }
-
-        $comments       = array($stackPtr);
-        $currentComment = $stackPtr;
-        $lastComment    = $stackPtr;
-        while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1))) !== false) {
-            if ($tokens[$lastComment]['line'] === ($tokens[$currentComment]['line'] - 1)) {
-                $comments[]  = $currentComment;
-                $lastComment = $currentComment;
-            } else {
-                break;
-            }
-        }
-
-        // The $comments array now contains pointers to each token in the
-        // comment block.
-        $requiredColumn  = strpos($tokens[$stackPtr]['content'], '*');
-        $requiredColumn += $tokens[$stackPtr]['column'];
-
-        foreach ($comments as $commentPointer) {
-            // Check the spacing after each asterisk.
-            $content   = $tokens[$commentPointer]['content'];
-            $firstChar = substr($content, 0, 1);
-            $lastChar  = substr($content, -1);
-            if ($firstChar !== '/' &&  $lastChar !== '/') {
-                $matches = array();
-                preg_match('|^(\s+)?\*(\s+)?@|', $content, $matches);
-                if (empty($matches) === false) {
-                    if (isset($matches[2]) === false) {
-                        $error = 'Expected 1 space between asterisk and tag; 0 found';
-                        $phpcsFile->addError($error, $commentPointer, 'NoSpaceBeforeTag');
-                    } else {
-                        $length = strlen($matches[2]);
-                        if ($length !== 1) {
-                            $error = 'Expected 1 space between asterisk and tag; %s found';
-                            $data  = array($length);
-                            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeTag', $data);
-                        }
-                    }
-                }
-            }//end if
-
-            // Check the alignment of each asterisk.
-            $currentColumn  = strpos($content, '*');
-            $currentColumn += $tokens[$commentPointer]['column'];
-
-            if ($currentColumn === $requiredColumn) {
-                // Star is aligned correctly.
+        // There must be one space after each star (unless it is an empty comment line)
+        // and all the stars must be aligned correctly.
+        $requiredColumn = ($tokens[$stackPtr]['column'] + 1);
+        $endComment     = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+        for ($i = ($stackPtr + 1); $i <= $endComment; $i++) {
+            if ($tokens[$i]['code'] !== T_DOC_COMMENT_STAR
+                && $tokens[$i]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+            ) {
                 continue;
             }
 
-            $error = 'Expected %s space(s) before asterisk; %s found';
-            $data  = array(
-                      ($requiredColumn - 1),
-                      ($currentColumn - 1),
-                     );
-            $phpcsFile->addError($error, $commentPointer, 'SpaceBeforeAsterisk', $data);
-        }//end foreach
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_STAR) {
+                if ($tokens[($i + 1)]['code'] !== T_DOC_COMMENT_WHITESPACE) {
+                    $error = 'Expected 1 space after asterisk; 0 found';
+                    $phpcsFile->addError($error, $i, 'NoSpaceAfterStar');
+                } else if ($tokens[($i + 1)]['content'] !==  ' '
+                    && $tokens[($i + 1)]['content'] !== $phpcsFile->eolChar
+                ) {
+                    $error = 'Expected 1 space after asterisk; %s found';
+                    $data  = array(strlen($tokens[($i + 1)]['content']));
+                    $phpcsFile->addError($error, $i, 'SpaceAfterStar', $data);
+                }
+            }
+
+            if ($tokens[$i]['column'] !== $requiredColumn) {
+                $error = 'Expected %s space(s) before asterisk; %s found';
+                $data  = array(
+                          ($requiredColumn - 1),
+                          ($tokens[$i]['column'] - 1),
+                         );
+                $phpcsFile->addError($error, $i, 'SpaceBeforeStar', $data);
+            }
+        }//end for
 
     }//end process()
 
