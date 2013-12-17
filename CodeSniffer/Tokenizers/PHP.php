@@ -303,6 +303,21 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
+                Parse doc blocks into something that can be easily iterated over.
+            */
+
+            if ($tokenIsArray === true && $token[0] === T_DOC_COMMENT) {
+                $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
+                $commentTokens = $tokenizer->tokenizeString($token[1], $eolChar);
+                foreach ($commentTokens as $commentToken) {
+                    $finalTokens[$newStackPtr] = $commentToken;
+                    $newStackPtr++;
+                }
+
+                continue;
+            }
+
+            /*
                 If this is a double quoted string, PHP will tokenise the whole
                 thing which causes problems with the scope map when braces are
                 within the string. So we need to merge the tokens together to

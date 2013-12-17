@@ -726,7 +726,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 Look for comments and join the tokens together.
             */
 
-            if (array_key_exists($token['content'], $this->commentTokens) === true) {
+            if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 $newContent   = '';
                 $tokenContent = $token['content'];
                 $endContent   = $this->commentTokens[$tokenContent];
@@ -765,9 +765,20 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $tokenContent = $tokens[$stackPtr]['content'];
                 }//end while
 
-                // Save the new content in the current token so
-                // the code below can chop it up on newlines.
-                $token['content'] = $newContent.$tokenContent;
+                if ($token['code'] === T_DOC_COMMENT) {
+                    $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
+                    $commentTokens = $tokenizer->tokenizeString($newContent.$tokenContent, $eolChar);
+                    foreach ($commentTokens as $commentToken) {
+                        $finalTokens[$newStackPtr] = $commentToken;
+                        $newStackPtr++;
+                    }
+
+                    continue;
+                } else {
+                    // Save the new content in the current token so
+                    // the code below can chop it up on newlines.
+                    $token['content'] = $newContent.$tokenContent;
+                }
             }//end if
 
             /*

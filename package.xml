@@ -30,6 +30,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=diff to show suggested changes to fix coding standard violations
   - The --report argument now allows for custom reports to be used
     -- Use the full path to your custom report class as the report name
+  - Removed the comment parser classes and replaced it with a simple comment tokenier
+    -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
+    -- This change requires a significant rewrite of sniffs that use the comment parser
+    -- This change requires minor changes to sniffs that listen for T_DOC_COMMENT tokens directly
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
     -- Thanks to Mark Scherer for help with this fix
@@ -2163,6 +2167,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </file>
     </dir>
     <dir name="Tokenizers">
+     <file baseinstalldir="PHP" name="Comment.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="PHP" name="CSS.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
