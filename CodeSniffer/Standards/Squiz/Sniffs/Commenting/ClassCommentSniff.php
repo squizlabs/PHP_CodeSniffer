@@ -106,74 +106,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $commentStart, 'SpacingBefore');
         }
 
-        $empty = array(
-                  T_DOC_COMMENT_WHITESPACE,
-                  T_DOC_COMMENT_STAR,
-                 );
-
-        $short = $phpcsFile->findNext($empty, ($commentStart + 1), $commentEnd, true);
-        if ($short === false) {
-            // No content at all.
-            $error = 'Class doc comment is empty';
-            $phpcsFile->addError($error, $commentStart, 'Empty');
-            return;
-        }
-
-        // The first line of the comment should just be the /** code.
-        if ($tokens[$short]['line'] === $tokens[$commentStart]['line']) {
-            $error = 'The open comment tag must be the only content on the line';
-            $phpcsFile->addError($error, $commentStart, 'SpacingAfterOpen');
-        }
-
-        // Check for additional blank lines at the end of the comment.
-        $prev = $phpcsFile->findPrevious($empty, ($commentEnd - 1), $commentStart, true);
-        if ($tokens[$prev]['line'] !== ($tokens[$commentEnd]['line'] - 1)) {
-            $error = 'Additional blank lines found at end of class comment';
-            $this->currentFile->addError($error, $commentEnd, 'SpacingAfter');
-        }
-
-        // Check for a comment description.
-        if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
-            $error = 'Missing short description in class doc comment';
-            $phpcsFile->addError($error, $commentStart, 'MissingShort');
-            return;
-        }
-
-        // No extra newline before short description.
-        if ($tokens[$short]['line'] !== ($tokens[$commentStart]['line'] + 1)) {
-            $error = 'Comment short description must be on the first line in a class comment';
-            $phpcsFile->addError($error, $short, 'SpacingBeforeShort');
-        }
-
-        // Short description must be single line and end with a full stop.
-        if (preg_match('|\p{Lu}|u', $tokens[$short]['content'][0]) === 0) {
-            $error = 'Class comment short description must start with a capital letter';
-            $phpcsFile->addError($error, $short, 'ShortNotCapital');
-        }
-
-        if (substr($tokens[$short]['content'], -1) !== '.') {
-            $error = 'Class comment short description must end with a full stop';
-            $phpcsFile->addError($error, $short, 'ShortFullStop');
-        }
-
-        $long = $phpcsFile->findNext($empty, ($short + 1), ($commentEnd - 1), true);
-        if ($long === false) {
-            return;
-        }
-
-        if ($tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
-            if ($tokens[$long]['line'] !== ($tokens[$short]['line'] + 2)) {
-                $error = 'There must be exactly one blank line between descriptions in a class comment';
-                $phpcsFile->addError($error, $long, 'SpacingBetween');
-            }
-
-            if (preg_match('|\p{Lu}|u', $tokens[$long]['content'][0]) === 0) {
-                $error = 'Class comment long description must start with a capital letter';
-                $phpcsFile->addError($error, $long, 'LongNotCapital');
-            }
-        }
-
-        for ($i = $long; $i < $commentEnd; $i++) {
+        for ($i = $commentStart; $i < $commentEnd; $i++) {
             if ($tokens[$i]['code'] !== T_DOC_COMMENT_TAG) {
                 continue;
             }

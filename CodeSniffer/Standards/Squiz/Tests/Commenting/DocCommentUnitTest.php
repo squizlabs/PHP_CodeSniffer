@@ -1,31 +1,29 @@
 <?php
 /**
- * Unit test class for ClassCommentSniff.
+ * Unit test class for DocCommentSniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for ClassCommentSniff.
+ * Unit test class for DocCommentSniff.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
+class Squiz_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -40,11 +38,13 @@ class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                4   => 1,
-                15  => 1,
-                31  => 1,
-                39  => 1,
-                54  => 1,
+                14 => 2,
+                16 => 1,
+                18 => 1,
+                23 => 2,
+                26 => 1,
+                30 => 1,
+                32 => 1,
                );
 
     }//end getErrorList()
@@ -60,15 +60,11 @@ class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                29 => 1,
-                30 => 1,
-                50 => 1,
-                66 => 1,
-                67 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 
 
 }//end class
+
+?>

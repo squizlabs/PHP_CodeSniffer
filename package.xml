@@ -34,6 +34,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
     -- This change requires a significant rewrite of sniffs that use the comment parser
     -- This change requires minor changes to sniffs that listen for T_DOC_COMMENT tokens directly
+  - Added Squiz DocCommentSniff to check generic doc block formatting
+    -- Removed doc block formatting checks from Squiz ClassCommentSniff
+    -- Removed doc block formatting checks from Squiz FileCommentSniff
+    -- Removed doc block formatting checks from Squiz VariableCommentSniff
   - Squiz DocCommentAlignmentSniff has had its error codes changed
     -- NoSpaceBeforeTag becomes NoSpaceAfterStar
     -- SpaceBeforeTag becomes SpaceAfterStar
@@ -1337,6 +1341,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ClosingDeclarationCommentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DocCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DocCommentAlignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1689,6 +1696,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ClosingDeclarationCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClosingDeclarationCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.inc" role="test" />

@@ -86,124 +86,53 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
         $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
 
-        $empty = array(
-                  T_DOC_COMMENT_WHITESPACE,
-                  T_DOC_COMMENT_STAR,
-                 );
-
-        $short = $phpcsFile->findNext($empty, ($commentStart + 1), $commentEnd, true);
-        if ($short === false) {
-            // No content at all.
-            $error = 'Variable doc comment is empty';
-            $phpcsFile->addError($error, $commentStart, 'Empty');
-            return;
-        }
-
-        // The first line of the comment should just be the /** code.
-        if ($tokens[$short]['line'] === $tokens[$commentStart]['line']) {
-            $error = 'The open comment tag must be the only content on the line';
-            $phpcsFile->addError($error, $commentStart, 'ContentAfterOpen');
-        }
-
-        // Check for additional blank lines at the end of the comment.
-        $prev = $phpcsFile->findPrevious($empty, ($commentEnd - 1), $commentStart, true);
-        if ($tokens[$prev]['line'] !== ($tokens[$commentEnd]['line'] - 1)) {
-            $error = 'Additional blank lines found at end of variable comment';
-            $this->currentFile->addError($error, $commentEnd, 'SpacingAfter');
-        }
-
-        // Check for a comment description.
-        if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
-            $error = 'Missing short description in variable doc comment';
-            $phpcsFile->addError($error, $commentStart, 'MissingShort');
-            return;
-        }
-
-        // No extra newline before short description.
-        if ($tokens[$short]['line'] !== ($tokens[$commentStart]['line'] + 1)) {
-            $error = 'Comment short description must be on the first line in a variable comment';
-            $phpcsFile->addError($error, $short, 'SpacingBeforeShort');
-        }
-
-        // Short description must be single line and end with a full stop.
-        if (preg_match('|\p{Lu}|u', $tokens[$short]['content'][0]) === 0) {
-            $error = 'Variable comment short description must start with a capital letter';
-            $phpcsFile->addError($error, $short, 'ShortNotCapital');
-        }
-
-        if (substr($tokens[$short]['content'], -1) !== '.') {
-            $error = 'Variable comment short description must end with a full stop';
-            $phpcsFile->addError($error, $short, 'ShortFullStop');
-        }
-
-        $long     = $phpcsFile->findNext($empty, ($short + 1), ($commentEnd - 1), true);
         $foundVar = null;
-        if ($long !== false) {
-            if ($tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
-                if ($tokens[$long]['line'] !== ($tokens[$short]['line'] + 2)) {
-                    $error = 'There must be exactly one blank line between descriptions in a variable comment';
-                    $phpcsFile->addError($error, $long, 'SpacingBetween');
+        $firstTag = null;
+        for ($i = $commentStart; $i < $commentEnd; $i++) {
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
+                if ($firstTag === null) {
+                    $firstTag = $i;
                 }
 
-                if (preg_match('|\p{Lu}|u', $tokens[$long]['content'][0]) === 0) {
-                    $error = 'Variable comment long description must start with a capital letter';
-                    $phpcsFile->addError($error, $long, 'LongNotCapital');
-                }
-
-                $firstTag = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($long + 1), ($commentEnd - 1)); 
-            } else {
-                // No long description.
-                $firstTag = $long;
-            }
-
-            $prev = $phpcsFile->findPrevious($empty, ($firstTag - 1), $commentStart, true);
-            if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
-                $error = 'There must be exactly one blank line before the tags in a variable comment';
-                $phpcsFile->addError($error, $firstTag, 'SpacingBeforeTags');
-            }
-
-            for ($i = $long; $i < $commentEnd; $i++) {
-                if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
-                    if ($tokens[$i]['content'] === '@var') {
-                        if ($foundVar !== null) {
-                            $error = 'Only one @var tag is allowed in a variable comment';
-                            $phpcsFile->addError($error, $i, 'DuplicateVar');
-                        } else {
-                            $foundVar = $i;
-                        }
-                    } else if ($tokens[$i]['content'] === '@see') {
-                        // Make sure the tag isn't empty and has the correct padding.
-                        $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, $commentEnd);
-                        if ($string === false || $tokens[$string]['line'] !== $tokens[$i]['line']) {
-                            $error = 'Content missing for @see tag in variable comment';
-                            $phpcsFile->addError($error, $i, 'EmptySees');
-                        } else {
-                            $spacing = strlen($tokens[($i + 1)]['content']);
-                            if ($spacing !== 1) {
-                                $error = '@see tag indented incorrectly; expected 1 space but found %s';
-                                $data  = array($spacing);
-                                $phpcsFile->addError($error, ($i + 1), 'SeesIndent', $data);
-                            }
-                        }
+                if ($tokens[$i]['content'] === '@var') {
+                    if ($foundVar !== null) {
+                        $error = 'Only one @var tag is allowed in a variable comment';
+                        $phpcsFile->addError($error, $i, 'DuplicateVar');
                     } else {
-                        $error = '%s tag is not allowed in variable comment';
-                        $data  = array($tokens[$i]['content']);
-                        $phpcsFile->addWarning($error, $i, 'TagNotAllowed', $data);
-                    }//end if
+                        $foundVar = $i;
+                    }
+                } else if ($tokens[$i]['content'] === '@see') {
+                    // Make sure the tag isn't empty and has the correct padding.
+                    $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, $commentEnd);
+                    if ($string === false || $tokens[$string]['line'] !== $tokens[$i]['line']) {
+                        $error = 'Content missing for @see tag in variable comment';
+                        $phpcsFile->addError($error, $i, 'EmptySees');
+                    } else {
+                        $spacing = strlen($tokens[($i + 1)]['content']);
+                        if ($spacing !== 1) {
+                            $error = '@see tag indented incorrectly; expected 1 space but found %s';
+                            $data  = array($spacing);
+                            $phpcsFile->addError($error, ($i + 1), 'SeesIndent', $data);
+                        }
+                    }
+                } else {
+                    $error = '%s tag is not allowed in variable comment';
+                    $data  = array($tokens[$i]['content']);
+                    $phpcsFile->addWarning($error, $i, 'TagNotAllowed', $data);
                 }//end if
-            }//end for
-
-            if ($foundVar !== null && $tokens[$firstTag]['content'] !== '@var') {
-                $error = 'The @var tag must be the first tag in a variable comment';
-                $phpcsFile->addError($error, $foundVar, 'VarOrder');
-            }
-        }//end if
+            }//end if
+        }//end for
 
         // The @var tag is the only one we require.
         if ($foundVar === null) {
             $error = 'Missing @var tag in variable comment';
             $phpcsFile->addError($error, $commentEnd, 'MissingVar');
             return;
+        }
+
+        if ($foundVar !== null && $tokens[$firstTag]['content'] !== '@var') {
+            $error = 'The @var tag must be the first tag in a variable comment';
+            $phpcsFile->addError($error, $foundVar, 'VarOrder');
         }
 
         // Make sure the tag isn't empty and has the correct padding.
