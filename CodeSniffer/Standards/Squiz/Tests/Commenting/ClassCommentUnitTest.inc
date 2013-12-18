@@ -17,7 +17,6 @@ class Invalid_Comment_Style1
 
 }//end class
 
-
 /**
  *
  *
@@ -30,6 +29,7 @@ class Invalid_Comment_Style1
  * @version   Release: 1.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 class Extra_Description_Newlines
 {
 
@@ -43,7 +43,6 @@ class Missing_Newlines_Before_Tags
 {
 
 }//end class
-
 
 /**
  * Simple class comment
@@ -59,7 +58,6 @@ class Checking_Tags
 
 }//end class
 
-
 /**
  * Simple class comment
  * that spans multiple line
@@ -73,7 +71,6 @@ class Unknown_Hello_Tag
 
 }//end class
 
-
 /**
  *
  *
@@ -84,14 +81,12 @@ class Empty_Class_Doc
 
 }//end class
 
-
 /**
  */
 class Missing_Short_Desc
 {
 
 }//end class
-
 
 /**
  * sample class comment.
@@ -103,7 +98,6 @@ class Incorrect_Case
 
 }//end class
 
-
 /**
  * 0sample class comment.
  *
@@ -113,7 +107,6 @@ class Incorrect_Case2
 {
 
 }//end class
-
 
 /** Sample class comment.
  */
@@ -130,4 +123,3 @@ class Space_At_end
 {
 
 }//end class
-?>
