@@ -156,7 +156,7 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $short, 'ShortFullStop');
         }
 
-        $long = $phpcsFile->findNext($empty, ($short + 1), $commentEnd, true);
+        $long = $phpcsFile->findNext($empty, ($short + 1), ($commentEnd - 1), true);
         if ($long === false) {
             return;
         }
