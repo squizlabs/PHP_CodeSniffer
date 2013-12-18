@@ -188,7 +188,11 @@ class PHP_CodeSniffer_Tokenizers_Comment
             // The content up until the first whitespace is the tag name.
             $tagName = '';
             for ($start; $start < $end; $start++) {
-                if ($string[$start] === ' ' || $string[$start] === "\t") {
+                if ($string[$start] === ' '
+                    || $string[$start] === "\t"
+                    || $string[$start] === "\n"
+                    || $string[$start] === "\r"
+                ) {
                     break;
                 }
 
