@@ -30,3 +30,15 @@
  * @tag1 one
  *
  */
+
+/*
+    This is not a doc block.
+ */
+
+/** Short description.
+ *
+ * @tag one
+ * @tag2 two
+ * @tagThree three
+ * @tagFour  four
+ */

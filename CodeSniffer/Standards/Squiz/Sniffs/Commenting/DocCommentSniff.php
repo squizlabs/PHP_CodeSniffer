@@ -80,7 +80,11 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         // The first line of the comment should just be the /** code.
         if ($tokens[$short]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'The open comment tag must be the only content on the line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpen');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpen');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewline($stackPtr);
+                $phpcsFile->fixer->addContentBefore($short, '* ');
+            }
         }
 
         // Check for additional blank lines at the end of the comment.
@@ -111,7 +115,7 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
 
         if (substr($tokens[$short]['content'], -1) !== '.') {
             $error = 'Doc comment short description must end with a full stop';
-            $phpcsFile->addError($error, $short, 'ShortFullStop');
+            $fix   = $phpcsFile->addError($error, $short, 'ShortFullStop');
         }
 
         $long = $phpcsFile->findNext($empty, ($short + 1), ($commentEnd - 1), true);
@@ -140,6 +144,40 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
             $error = 'There must be exactly one blank line before the tags in a doc comment';
             $phpcsFile->addError($error, $firstTag, 'SpacingBeforeTags');
+        }
+
+        // Check the alignment of tag values.
+        $maxLength = 0;
+        $paddings  = array();
+        for ($i = $firstTag; $i < $commentEnd; $i++) {
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
+                $tagLength = strlen($tokens[$i]['content']);
+                if ($tagLength > $maxLength) {
+                    $maxLength = $tagLength;
+                }
+
+                // Check for a value. No value means no padding needed.
+                $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, $commentEnd);
+                if ($string !== false && $tokens[$string]['line'] === $tokens[$i]['line']) {
+                    $paddings[$i] = strlen($tokens[($i + 1)]['content']);
+                }
+            }
+        }//end for
+
+        foreach ($paddings as $tag => $padding) {
+            $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
+            if ($padding !== $required) {
+                $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
+                $data  = array(
+                          $required,
+                          $padding,
+                         );
+
+                $fix = $phpcsFile->addFixableError($error, ($tag + 1), 'TagValueIndent', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($tag + 1), str_repeat(' ', $required));
+                }
+            }
         }
 
     }//end process()
