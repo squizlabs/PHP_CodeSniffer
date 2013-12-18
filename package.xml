@@ -38,10 +38,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- NoSpaceBeforeTag becomes NoSpaceAfterStar
     -- SpaceBeforeTag becomes SpaceAfterStar
     -- SpaceBeforeAsterisk becomes SpaceBeforeStar
-  - Added error Squiz.ClassComment.SpacingAfter to ensure there are no blank lines after a class comment
+  - Added error Squiz.Commenting.ClassComment.SpacingAfter to ensure there are no blank lines after a class comment
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
     -- Thanks to Mark Scherer for help with this fix
+  - Added error Squiz.Commenting.FunctionCommentThrowTag.Missing to ensure a throw is documented
+  - Removed error Squiz.Commenting.FunctionCommentThrowTag.WrongType
   - Content passed via STDIN can now specify the filename to use so that sniffs can run the correct filename checks
     -- Ensure the first line of the content is: phpcs_input_file: /path/to/file
   - Squiz coding standard now enforces no closing PHP tag at the end of a pure PHP file
