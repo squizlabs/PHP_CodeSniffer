@@ -61,8 +61,9 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $tokens     = $phpcsFile->getTokens();
-        $commentEnd = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+        $tokens       = $phpcsFile->getTokens();
+        $commentEnd   = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
 
         $empty = array(
                   T_DOC_COMMENT_WHITESPACE,
@@ -133,14 +134,15 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Doc comment long description must start with a capital letter';
                 $phpcsFile->addError($error, $long, 'LongNotCapital');
             }
-
-            $firstTag = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($long + 1), ($commentEnd - 1)); 
-        } else {
-            // No long description.
-            $firstTag = $long;
         }
 
-        $prev = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
+        if (empty($tokens[$commentStart]['comment_tags']) === true) {
+            // No tags in the comment.
+            return;
+        }
+
+        $firstTag = $tokens[$commentStart]['comment_tags'][0];
+        $prev     = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
         if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
             $error = 'There must be exactly one blank line before the tags in a doc comment';
             $phpcsFile->addError($error, $firstTag, 'SpacingBeforeTags');
@@ -149,20 +151,18 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         // Check the alignment of tag values.
         $maxLength = 0;
         $paddings  = array();
-        for ($i = $firstTag; $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
-                $tagLength = strlen($tokens[$i]['content']);
-                if ($tagLength > $maxLength) {
-                    $maxLength = $tagLength;
-                }
-
-                // Check for a value. No value means no padding needed.
-                $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, $commentEnd);
-                if ($string !== false && $tokens[$string]['line'] === $tokens[$i]['line']) {
-                    $paddings[$i] = strlen($tokens[($i + 1)]['content']);
-                }
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            $tagLength = strlen($tokens[$tag]['content']);
+            if ($tagLength > $maxLength) {
+                $maxLength = $tagLength;
             }
-        }//end for
+
+            // Check for a value. No value means no padding needed.
+            $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
+            if ($string !== false && $tokens[$string]['line'] === $tokens[$tag]['line']) {
+                $paddings[$tag] = strlen($tokens[($tag + 1)]['content']);
+            }
+        }
 
         foreach ($paddings as $tag => $padding) {
             $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);

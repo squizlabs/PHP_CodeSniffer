@@ -84,42 +84,35 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             }
         }
 
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
 
         $foundVar = null;
-        $firstTag = null;
-        for ($i = $commentStart; $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
-                if ($firstTag === null) {
-                    $firstTag = $i;
-                }
-
-                if ($tokens[$i]['content'] === '@var') {
-                    if ($foundVar !== null) {
-                        $error = 'Only one @var tag is allowed in a variable comment';
-                        $phpcsFile->addError($error, $i, 'DuplicateVar');
-                    } else {
-                        $foundVar = $i;
-                    }
-                } else if ($tokens[$i]['content'] === '@see') {
-                    // Make sure the tag isn't empty and has the correct padding.
-                    $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, $commentEnd);
-                    if ($string === false || $tokens[$string]['line'] !== $tokens[$i]['line']) {
-                        $error = 'Content missing for @see tag in variable comment';
-                        $phpcsFile->addError($error, $i, 'EmptySees');
-                    } else {
-                        $spacing = strlen($tokens[($i + 1)]['content']);
-                        if ($spacing !== 1) {
-                            $error = '@see tag indented incorrectly; expected 1 space but found %s';
-                            $data  = array($spacing);
-                            $phpcsFile->addError($error, ($i + 1), 'SeesIndent', $data);
-                        }
-                    }
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            if ($tokens[$tag]['content'] === '@var') {
+                if ($foundVar !== null) {
+                    $error = 'Only one @var tag is allowed in a variable comment';
+                    $phpcsFile->addError($error, $tag, 'DuplicateVar');
                 } else {
-                    $error = '%s tag is not allowed in variable comment';
-                    $data  = array($tokens[$i]['content']);
-                    $phpcsFile->addWarning($error, $i, 'TagNotAllowed', $data);
-                }//end if
+                    $foundVar = $tag;
+                }
+            } else if ($tokens[$tag]['content'] === '@see') {
+                // Make sure the tag isn't empty and has the correct padding.
+                $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
+                if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
+                    $error = 'Content missing for @see tag in variable comment';
+                    $phpcsFile->addError($error, $tag, 'EmptySees');
+                } else {
+                    $spacing = strlen($tokens[($tag + 1)]['content']);
+                    if ($spacing !== 1) {
+                        $error = '@see tag indented incorrectly; expected 1 space but found %s';
+                        $data  = array($spacing);
+                        $phpcsFile->addError($error, ($tag + 1), 'SeesIndent', $data);
+                    }
+                }
+            } else {
+                $error = '%s tag is not allowed in variable comment';
+                $data  = array($tokens[$tag]['content']);
+                $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
             }//end if
         }//end for
 
@@ -130,6 +123,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             return;
         }
 
+        $firstTag = $tokens[$commentStart]['comment_tags'][0];
         if ($foundVar !== null && $tokens[$firstTag]['content'] !== '@var') {
             $error = 'The @var tag must be the first tag in a variable comment';
             $phpcsFile->addError($error, $foundVar, 'VarOrder');
@@ -141,13 +135,6 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
             $error = 'Content missing for @var tag in variable comment';
             $phpcsFile->addError($error, $foundVar, 'EmptyVar');
             return;
-        }
-
-        $spacing = strlen($tokens[($foundVar + 1)]['content']);
-        if ($spacing !== 1) {
-            $error = '@var tag indented incorrectly; expected 1 space but found %s';
-            $data  = array($spacing);
-            $phpcsFile->addError($error, ($foundVar + 1), 'SeesIndent', $data);
         }
 
         $varType       = $tokens[($foundVar + 2)]['content'];

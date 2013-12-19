@@ -100,20 +100,16 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $commentEnd, 'SpacingAfter');
         }
 
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
         if ($tokens[$prev]['line'] !== ($tokens[$commentStart]['line'] - 2)) {
             $error = 'There must be exactly one blank line before the class comment';
             $phpcsFile->addError($error, $commentStart, 'SpacingBefore');
         }
 
-        for ($i = $commentStart; $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] !== T_DOC_COMMENT_TAG) {
-                continue;
-            }
-
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $error = '%s tag is not allowed in class comment';
-            $data  = array($tokens[$i]['content']);
-            $phpcsFile->addWarning($error, $i, 'TagNotAllowed', $data);
+            $data  = array($tokens[$tag]['content']);
+            $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
         }
 
     }//end process()
