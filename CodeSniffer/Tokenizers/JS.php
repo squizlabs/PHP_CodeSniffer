@@ -767,7 +767,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 if ($token['code'] === T_DOC_COMMENT) {
                     $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
-                    $commentTokens = $tokenizer->tokenizeString($newContent.$tokenContent, $eolChar);
+                    $commentTokens = $tokenizer->tokenizeString($newContent.$tokenContent, $eolChar, $newStackPtr);
                     foreach ($commentTokens as $commentToken) {
                         $finalTokens[$newStackPtr] = $commentToken;
                         $newStackPtr++;
