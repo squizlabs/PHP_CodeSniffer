@@ -90,7 +90,6 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         $tokens       = $phpcsFile->getTokens();
         $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        $commentEnd   = $tokens[$commentStart]['comment_closer'];
 
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a file comment', $commentStart, 'WrongStyle');
@@ -99,6 +98,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
             return;
         }
+
+        $commentEnd = $tokens[$commentStart]['comment_closer'];
 
         // No blank line between the open tag and the file comment.
         if ($tokens[$commentStart]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
