@@ -658,6 +658,30 @@ class PHP_CodeSniffer
             }
         }
 
+        // Process custom file extensions if defined in ruleset and
+        // not overridden on command line.
+        $cliValues = isset($this->cli) ? $this->cli->getCommandLineValues() : array();
+        if (!empty($ruleset->{'extension'}) && empty($cliValues['extensions'])) {
+            $newExtensions = array();
+
+            foreach ($ruleset->{'extension'} as $ext) {
+                if (isset($ext->attributes()->type)) {
+                    $newExtensions[(string) $ext] = (string) $ext->attributes()->type;
+                } else if (isset($this->allowedFileExtensions[(string) $ext]) === true) {
+                    $newExtensions[(string) $ext] = $this->allowedFileExtensions[(string) $ext];
+                } else {
+                    $newExtensions[(string) $ext] = 'PHP';
+                }
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t=> added ".$newExtensions[(string) $ext].' file extension: '.(string) $ext.PHP_EOL;
+                }
+            }
+
+            $this->allowedFileExtensions = $newExtensions;
+        }
+
         return $files;
 
     }//end processRuleset()
