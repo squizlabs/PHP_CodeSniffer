@@ -2342,6 +2342,7 @@ class PHP_CodeSniffer
         $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
         self::_buildFromDirectory($phar, dirname(__FILE__), $remove, $whitelist);
         self::_addStub($phar);
+        self::_addConfigFile($phar, $options);
 
     }//end build()
 
@@ -2381,7 +2382,6 @@ class PHP_CodeSniffer
                 $path = str_replace($baseDir, '', $path);
                 $phar->addEmptyDir($path);
             } else {
-                // Add and clean up whitespace/comments.
                 $fileLoc = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
                 $content = file_get_contents($file->getPath().'/'.$file->getFileName());
                 file_put_contents($prefix.'/'.$fileLoc, $content);
@@ -2475,6 +2475,31 @@ class PHP_CodeSniffer
         $phar->setStub($stub);
 
     }//end _addStub()
+
+
+    /**
+     * Add a config to the phar file.
+     *
+     * @param object &$phar   The phar file.
+     * @param array  $options The options to build with.
+     *
+     * @return void
+     */
+    private static function _addConfigFile(&$phar, $options)
+    {
+        $phpCodeSnifferConfig = self::getAllConfigData();
+        if (isset($options['build-only']) === true) {
+            $phpCodeSnifferConfig['standard'] = $options['build-only'];
+        }
+
+        $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
+        $output .= var_export($phpCodeSnifferConfig, true);
+        $output .= "\n?".'>';
+
+        $phar->addFromString('CodeSniffer.conf', $output);
+        $phar['CodeSniffer.conf']->compress(Phar::GZ);
+
+    }//end _addConfigFile()
 
 
 }//end class
