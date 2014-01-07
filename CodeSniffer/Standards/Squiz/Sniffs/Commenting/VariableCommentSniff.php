@@ -96,25 +96,18 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                     $foundVar = $tag;
                 }
             } else if ($tokens[$tag]['content'] === '@see') {
-                // Make sure the tag isn't empty and has the correct padding.
+                // Make sure the tag isn't empty.
                 $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
                 if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
                     $error = 'Content missing for @see tag in variable comment';
                     $phpcsFile->addError($error, $tag, 'EmptySees');
-                } else {
-                    $spacing = strlen($tokens[($tag + 1)]['content']);
-                    if ($spacing !== 1) {
-                        $error = '@see tag indented incorrectly; expected 1 space but found %s';
-                        $data  = array($spacing);
-                        $phpcsFile->addError($error, ($tag + 1), 'SeesIndent', $data);
-                    }
                 }
             } else {
                 $error = '%s tag is not allowed in variable comment';
                 $data  = array($tokens[$tag]['content']);
                 $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
             }//end if
-        }//end for
+        }//end foreach
 
         // The @var tag is the only one we require.
         if ($foundVar === null) {

@@ -45,7 +45,6 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
                 56  => 1,
                 64  => 1,
                 73  => 1,
-                82  => 1,
                 84  => 1,
                 131 => 1,
                 137 => 1,
