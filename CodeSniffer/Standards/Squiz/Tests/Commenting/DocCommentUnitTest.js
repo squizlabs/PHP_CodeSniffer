@@ -80,3 +80,17 @@
  * @tag one
  * @param
  */
+
+/**
+ * Short description.
+ *
+ * @groupOne one
+ * @groupOne  two
+ *
+ * @group2 one
+ * @group2 two
+ *
+ *
+ * @g3
+ * @g3  two
+ */

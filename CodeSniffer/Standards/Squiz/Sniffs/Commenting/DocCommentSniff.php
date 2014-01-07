@@ -146,81 +146,99 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $firstTag, 'SpacingBeforeTags');
         }
 
-        // Check the alignment of tag values.
-        $maxLength = 0;
-        $paddings  = array();
-        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
-            // Param tags are indented differently.
-            if ($tokens[$tag]['content'] !== '@param') {
-                $tagLength = strlen($tokens[$tag]['content']);
-                if ($tagLength > $maxLength) {
-                    $maxLength = $tagLength;
-                }
-            }
-
-            // Check for a value. No value means no padding needed.
-            $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
-            if ($string !== false && $tokens[$string]['line'] === $tokens[$tag]['line']) {
-                $paddings[$tag] = strlen($tokens[($tag + 1)]['content']);
-            }
-        }
-
-        foreach ($paddings as $tag => $padding) {
-            if ($tokens[$tag]['content'] === '@param') {
-                $required = 1;
-            } else {
-                $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
-            }
-
-            if ($padding !== $required) {
-                $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
-                $data  = array(
-                          $required,
-                          $padding,
-                         );
-
-                $fix = $phpcsFile->addFixableError($error, ($tag + 1), 'TagValueIndent', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                    $phpcsFile->fixer->replaceToken(($tag + 1), str_repeat(' ', $required));
-                }
-            }
-        }
-
-        $firstParam = null;
-        $lastParam  = null;
+        // Break out the tags into groups and check alignment within each.
+        // A tag group is one where there are no blank lines between tags.
+        // The param tag group is special as it requires all @param tags to be inside.
+        $tagGroups    = array();
+        $groupid      = 0;
+        $paramGroupid = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
+            if ($pos > 0) {
+                $prev = $phpcsFile->findPrevious(
+                    T_DOC_COMMENT_STRING,
+                    ($tag - 1),
+                    $tokens[$commentStart]['comment_tags'][($pos - 1)]
+                );
+
+                if ($prev === false) {
+                    $prev = $tokens[$commentStart]['comment_tags'][($pos - 1)];
+                }
+
+                if ($tokens[$prev]['line'] !== ($tokens[$tag]['line'] - 1)) {
+                    $groupid++;
+                }
+            }
+
             if ($tokens[$tag]['content'] === '@param') {
-                if ($lastParam !== null) {
+                if (($paramGroupid === null
+                    && empty($tagGroups[$groupid]) === false)
+                    || ($paramGroupid !== null
+                    && $paramGroupid !== $groupid)
+                ) {
                     $error = 'Paramater tags must be grouped together in a doc commment';
                     $phpcsFile->addError($error, $tag, 'ParamGroup');
                 }
 
-                if ($firstParam === null) {
-                    if ($pos !== 0) {
-                        $error = 'Paramater tags must be defined first in a doc commment';
-                        $phpcsFile->addError($error, $tag, 'ParamNotFirst');
+                if ($paramGroupid === null) {
+                    $paramGroupid = $groupid;
+                }
+            } else if ($groupid === $paramGroupid) {
+                $error = 'Tag cannot be grouped with paramater tags in a doc comment';
+                $phpcsFile->addError($error, $tag, 'NonParamGroup');
+            }//end if
+
+            $tagGroups[$groupid][] = $tag;
+        }//end foreach
+
+        foreach ($tagGroups as $group) {
+            $maxLength = 0;
+            $paddings  = array();
+            foreach ($group as $pos => $tag) {
+                $tagLength = strlen($tokens[$tag]['content']);
+                if ($tagLength > $maxLength) {
+                    $maxLength = $tagLength;
+                }
+
+                // Check for a value. No value means no padding needed.
+                $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
+                if ($string !== false && $tokens[$string]['line'] === $tokens[$tag]['line']) {
+                    $paddings[$tag] = strlen($tokens[($tag + 1)]['content']);
+                }
+            }
+
+            // Check that there was single blank line after the tag block
+            // but account for a multi-line tag comments.
+            $lastTag = $group[$pos];
+            $next    = $phpcsFile->findNext(array(T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING), ($lastTag + 3), $commentEnd);
+            if ($next !== false && $tokens[$next]['line'] !== ($tokens[$lastTag]['line'] + 2)) {
+                $error = 'There must be a single blank line after a tag group';
+                $phpcsFile->addError($error, $lastTag, 'SpacingAfterTagGroup');
+            }
+
+            // Now check paddings.
+            foreach ($paddings as $tag => $padding) {
+                $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
+
+                if ($padding !== $required) {
+                    $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
+                    $data  = array(
+                              $required,
+                              $padding,
+                             );
+
+                    $fix = $phpcsFile->addFixableError($error, ($tag + 1), 'TagValueIndent', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($tag + 1), str_repeat(' ', $required));
                     }
-
-                    $firstParam = $tag;
-                }
-            } else if ($firstParam !== null) {
-                $lastParam = $tokens[$commentStart]['comment_tags'][($pos - 1)];
-
-                // Check that there was a blank line after the param block
-                // but account for a multi-line param.
-                $prev = $phpcsFile->findPrevious(T_DOC_COMMENT_STRING, $tag, $lastParam);
-                if ($prev === false) {
-                    $prev = $lastParam;
-                }
-
-                if ($tokens[$prev]['line'] !== ($tokens[$tag]['line'] - 2)) {
-                    $error = 'There must be a single blank line after the paramater tags';
-                    $phpcsFile->addError($error, $lastParam, 'ParamNotFirst');
                 }
             }
         }//end foreach
 
-        // also check that if params, they come first and have blank line between them and next tags and are grouped together.
+        // If there is a param group, it needs to be first.
+        if ($paramGroupid !== null && $paramGroupid !== 0) {
+            $error = 'Paramater tags must be defined first in a doc commment';
+            $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
+        }
 
     }//end process()
 

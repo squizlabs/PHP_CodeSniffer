@@ -51,10 +51,14 @@ class Squiz_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
                 51 => 1,
                 54 => 1,
                 58 => 1,
-                59 => 1,
+                60 => 2,
                 67 => 1,
-                69 => 1,
+                69 => 2,
+                80 => 1,
                 81 => 1,
+                88 => 1,
+                91 => 1,
+                95 => 1,
                );
 
     }//end getErrorList()
