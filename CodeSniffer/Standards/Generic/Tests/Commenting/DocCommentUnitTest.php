@@ -23,7 +23,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
 {
 
 

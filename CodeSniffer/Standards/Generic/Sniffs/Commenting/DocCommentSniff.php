@@ -23,7 +23,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
