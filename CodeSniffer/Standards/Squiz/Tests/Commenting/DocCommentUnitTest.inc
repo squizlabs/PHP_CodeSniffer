@@ -42,3 +42,41 @@
  * @tagThree three
  * @tagFour  four
  */
+
+/**
+ * Short description.
+ *
+ * @tag one
+ *
+ * @param
+ * @param
+ *
+ */
+
+/**
+ * Short description.
+ * @param
+ * @param
+ * @tag one
+ */
+
+/**
+ * Short description.
+ *
+ *
+ * @param
+ *
+ * @param
+ *
+ *
+ * @tag one
+ */
+
+/**
+ * Short description.
+ *
+ * @param
+ *
+ * @tag one
+ * @param
+ */

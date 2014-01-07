@@ -48,6 +48,13 @@ class Squiz_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
                 38 => 2,
                 40 => 1,
                 41 => 1,
+                51 => 1,
+                54 => 1,
+                58 => 1,
+                59 => 1,
+                67 => 1,
+                69 => 1,
+                81 => 1,
                );
 
     }//end getErrorList()

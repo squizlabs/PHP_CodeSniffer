@@ -23,7 +23,6 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
 class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
@@ -60,7 +59,6 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-
         $tokens       = $phpcsFile->getTokens();
         $commentEnd   = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
         $commentStart = $tokens[$commentEnd]['comment_opener'];
@@ -152,9 +150,12 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         $maxLength = 0;
         $paddings  = array();
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
-            $tagLength = strlen($tokens[$tag]['content']);
-            if ($tagLength > $maxLength) {
-                $maxLength = $tagLength;
+            // Param tags are indented differently.
+            if ($tokens[$tag]['content'] !== '@param') {
+                $tagLength = strlen($tokens[$tag]['content']);
+                if ($tagLength > $maxLength) {
+                    $maxLength = $tagLength;
+                }
             }
 
             // Check for a value. No value means no padding needed.
@@ -165,7 +166,12 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         foreach ($paddings as $tag => $padding) {
-            $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
+            if ($tokens[$tag]['content'] === '@param') {
+                $required = 1;
+            } else {
+                $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
+            }
+
             if ($padding !== $required) {
                 $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
                 $data  = array(
@@ -179,6 +185,42 @@ class Squiz_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
         }
+
+        $firstParam = null;
+        $lastParam  = null;
+        foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
+            if ($tokens[$tag]['content'] === '@param') {
+                if ($lastParam !== null) {
+                    $error = 'Paramater tags must be grouped together in a doc commment';
+                    $phpcsFile->addError($error, $tag, 'ParamGroup');
+                }
+
+                if ($firstParam === null) {
+                    if ($pos !== 0) {
+                        $error = 'Paramater tags must be defined first in a doc commment';
+                        $phpcsFile->addError($error, $tag, 'ParamNotFirst');
+                    }
+
+                    $firstParam = $tag;
+                }
+            } else if ($firstParam !== null) {
+                $lastParam = $tokens[$commentStart]['comment_tags'][($pos - 1)];
+
+                // Check that there was a blank line after the param block
+                // but account for a multi-line param.
+                $prev = $phpcsFile->findPrevious(T_DOC_COMMENT_STRING, $tag, $lastParam);
+                if ($prev === false) {
+                    $prev = $lastParam;
+                }
+
+                if ($tokens[$prev]['line'] !== ($tokens[$tag]['line'] - 2)) {
+                    $error = 'There must be a single blank line after the paramater tags';
+                    $phpcsFile->addError($error, $lastParam, 'ParamNotFirst');
+                }
+            }
+        }//end foreach
+
+        // also check that if params, they come first and have blank line between them and next tags and are grouped together.
 
     }//end process()
 
