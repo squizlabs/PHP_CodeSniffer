@@ -74,7 +74,13 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         // Try and determine if this is a file comment instead of a class comment.
         // We assume that if this is the first comment after the open PHP tag, then
         // it is most likely a file comment instead of a class comment.
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($commentEnd - 1), null, true);
+        if ($tokens[$commentEnd]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            $start = ($tokens[$commentEnd]['comment_opener'] - 1);
+        } else {
+            $start = $phpcsFile->findPrevious(T_COMMENT, ($commentEnd - 1), null, true);
+        }
+
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, $start, null, true);
         if ($tokens[$prev]['code'] === T_OPEN_TAG) {
             $prevOpen = $phpcsFile->findPrevious(T_OPEN_TAG, ($prev - 1));
             if ($prevOpen === false) {
