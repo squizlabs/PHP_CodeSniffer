@@ -251,4 +251,17 @@ class MyClass() {
      */
     abstract final protected function myFunction();
 }
-?>
+
+/**
+ * Creates a map of tokens => line numbers for each token.
+ *
+ * @param array  &$tokens   The array of tokens to process.
+ * @param object $tokenizer The tokenizer being used to process this file.
+ * @param string $eolChar   The EOL character to use for splitting strings.
+ *
+ * @return void
+ */
+public function foo(&$tokens, $tokenizer, $eolChar)
+{
+
+}//end foo()
