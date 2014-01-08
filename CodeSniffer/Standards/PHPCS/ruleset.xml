@@ -10,6 +10,7 @@
  <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
  <rule ref="Squiz.Arrays.ArrayDeclaration" />
  <rule ref="Squiz.Commenting.ClosingDeclarationComment" />
+ <rule ref="Squiz.Commenting.DocCommentAlignment" />
  <rule ref="Squiz.Commenting.LongConditionClosingComment" />
  <rule ref="Squiz.Commenting.PostStatementComment" />
  <rule ref="Generic.Commenting.Todo"/>
