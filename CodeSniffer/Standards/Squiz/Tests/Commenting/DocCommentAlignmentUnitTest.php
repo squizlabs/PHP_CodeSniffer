@@ -45,7 +45,7 @@ class Squiz_Tests_Commenting_DocCommentAlignmentUnitTest extends AbstractSniffUn
         return array(
                 3  => 1,
                 11 => 1,
-                17 => 2,
+                17 => 1,
                 18 => 1,
                 19 => 1,
                 23 => 2,

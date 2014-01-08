@@ -80,31 +80,12 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         // There must be one space after each star (unless it is an empty comment line)
         // and all the stars must be aligned correctly.
         $requiredColumn = ($tokens[$stackPtr]['column'] + 1);
-        $endComment     = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+        $endComment     = $tokens[$stackPtr]['comment_closer'];
         for ($i = ($stackPtr + 1); $i <= $endComment; $i++) {
             if ($tokens[$i]['code'] !== T_DOC_COMMENT_STAR
                 && $tokens[$i]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             ) {
                 continue;
-            }
-
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_STAR) {
-                if ($tokens[($i + 1)]['code'] !== T_DOC_COMMENT_WHITESPACE) {
-                    $error = 'Expected 1 space after asterisk; 0 found';
-                    $fix   = $phpcsFile->addFixableError($error, $i, 'NoSpaceAfterStar');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                        $phpcsFile->fixer->addContent($i, ' ');
-                    }
-                } else if ($tokens[($i + 1)]['content'] !==  ' '
-                    && $tokens[($i + 1)]['content'] !== $phpcsFile->eolChar
-                ) {
-                    $error = 'Expected 1 space after asterisk; %s found';
-                    $data  = array(strlen($tokens[($i + 1)]['content']));
-                    $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceAfterStar', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                        $phpcsFile->fixer->replaceToken(($i + 1), ' ');
-                    }
-                }
             }
 
             if ($tokens[$i]['column'] !== $requiredColumn) {
@@ -121,6 +102,32 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                     } else {
                         $phpcsFile->fixer->replaceToken(($i - 1), $padding);
                     }
+                }
+            }
+
+            if ($tokens[$i]['code'] !== T_DOC_COMMENT_STAR) {
+                continue;
+            }
+
+            if ($tokens[($i + 2)]['line'] !== $tokens[$i]['line']) {
+                // Line is empty.
+                continue;
+            }
+
+            if ($tokens[($i + 1)]['code'] !== T_DOC_COMMENT_WHITESPACE) {
+                $error = 'Expected 1 space after asterisk; 0 found';
+                $fix   = $phpcsFile->addFixableError($error, $i, 'NoSpaceAfterStar');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContent($i, ' ');
+                }
+            } else if ($tokens[($i + 2)]['code'] === T_DOC_COMMENT_TAG
+                && $tokens[($i + 1)]['content'] !== ' '
+            ) {
+                $error = 'Expected 1 space after asterisk; %s found';
+                $data  = array(strlen($tokens[($i + 1)]['content']));
+                $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceAfterStar', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($i + 1), ' ');
                 }
             }
         }//end for
