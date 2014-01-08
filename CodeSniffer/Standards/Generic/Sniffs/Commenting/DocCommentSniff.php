@@ -111,11 +111,13 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         $shortContent = $tokens[$short]['content'];
         $shortEnd     = $short;
         for ($i = ($short + 1); $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING
-                && $tokens[$i]['line'] === ($tokens[$short]['line'] + 1)
-            ) {
-                $shortContent .= $tokens[$i]['content'];
-                $shortEnd      = $i;
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
+                    $shortContent .= $tokens[$i]['content'];
+                    $shortEnd      = $i;
+                } else {
+                    break;
+                }
             }
         }
 
