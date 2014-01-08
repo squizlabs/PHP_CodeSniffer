@@ -36,10 +36,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
     public $supportedTokenizers = array('CSS');
 
     /**
-    * The number of spaces code should be indented.
-    *
-    * @var int
-    */
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
     public $indent = 4;
 
 
