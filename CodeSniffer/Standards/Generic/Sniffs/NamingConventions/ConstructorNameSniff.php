@@ -37,8 +37,6 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
     /**
      * Constructs the test with the tokens it wishes to listen for.
-     *
-     * @return void
      */
     public function __construct()
     {

@@ -39,7 +39,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
      *
      * @return array
      */
-    public function tokenizeString($string, $eolChar='\n', $stackPtr)
+    public function tokenizeString($string, $eolChar, $stackPtr)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t\t*** START COMMENT TOKENIZING ***".PHP_EOL;

@@ -38,8 +38,6 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
 
     /**
      * Constructs the test with the tokens it wishes to listen for.
-     *
-     * @return void
      */
     public function __construct()
     {

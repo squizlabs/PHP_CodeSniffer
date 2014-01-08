@@ -15,7 +15,7 @@
 /**
  * Ensures that values submitted via JS are not compared to NULL.
  *
- * jQuery 1.8 changed the behaviour of ajax requests so that null values are
+ * With jQuery 1.8, the behaviour of ajax requests changed so that null values are
  * submitted as null= instead of null=null.
  *
  * @category  PHP

@@ -77,8 +77,6 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
 
     /**
      * Load configuration data.
-     *
-     * @return void
      */
     public function __construct()
     {
