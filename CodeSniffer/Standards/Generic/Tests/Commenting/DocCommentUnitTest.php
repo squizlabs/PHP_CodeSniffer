@@ -38,10 +38,10 @@ class Generic_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                14 => 2,
+                14 => 1,
                 16 => 1,
                 18 => 1,
-                23 => 2,
+                23 => 1,
                 26 => 1,
                 30 => 1,
                 32 => 1,

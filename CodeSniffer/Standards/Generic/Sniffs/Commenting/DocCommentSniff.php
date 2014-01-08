@@ -124,11 +124,6 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $short, 'ShortNotCapital');
         }
 
-        if (substr($shortContent, -1) !== '.') {
-            $error = 'Doc comment short description must end with a full stop';
-            $fix   = $phpcsFile->addError($error, $short, 'ShortFullStop');
-        }
-
         $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
         if ($long === false) {
             return;
