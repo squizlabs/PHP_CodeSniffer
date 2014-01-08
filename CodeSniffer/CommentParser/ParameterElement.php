@@ -120,7 +120,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * that they appear in the tag.
      *
      * @return array(string)
-     * @see processSubElement()
+     * @see    processSubElement()
      */
     protected function getSubElements()
     {
@@ -142,7 +142,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      *                                 sub element.
      *
      * @return void
-     * @see getSubElements()
+     * @see    getSubElements()
      */
     protected function processSubElement($name, $content, $beforeWhitespace)
     {
@@ -194,8 +194,8 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * Returns the whitespace before the variable type.
      *
      * @return string
-     * @see getWhiteSpaceBeforeVarName()
-     * @see getWhiteSpaceBeforeComment()
+     * @see    getWhiteSpaceBeforeVarName()
+     * @see    getWhiteSpaceBeforeComment()
      */
     public function getWhiteSpaceBeforeType()
     {
@@ -208,8 +208,8 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * Returns the whitespace before the variable name.
      *
      * @return string
-     * @see getWhiteSpaceBeforeComment()
-     * @see getWhiteSpaceBeforeType()
+     * @see    getWhiteSpaceBeforeComment()
+     * @see    getWhiteSpaceBeforeType()
      */
     public function getWhiteSpaceBeforeVarName()
     {
@@ -222,8 +222,8 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * Returns the whitespace before the comment.
      *
      * @return string
-     * @see getWhiteSpaceBeforeVarName()
-     * @see getWhiteSpaceBeforeType()
+     * @see    getWhiteSpaceBeforeVarName()
+     * @see    getWhiteSpaceBeforeType()
      */
     public function getWhiteSpaceBeforeComment()
     {

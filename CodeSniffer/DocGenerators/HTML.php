@@ -41,7 +41,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      * Generates the documentation for a standard.
      *
      * @return void
-     * @see processSniff()
+     * @see    processSniff()
      */
     public function generate()
     {

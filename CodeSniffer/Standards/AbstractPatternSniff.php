@@ -97,7 +97,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * <i>getPatterns()</i> method to register the patterns they wish to test.
      *
      * @return array(int)
-     * @see process()
+     * @see    process()
      */
     public final function register()
     {
@@ -202,7 +202,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *                                        found.
      *
      * @return void
-     * @see register()
+     * @see    register()
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -747,7 +747,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * other pattern tests.
      *
      * @return array(int)
-     * @see processSupplementary()
+     * @see    processSupplementary()
      */
     protected function registerSupplementary()
     {
@@ -765,7 +765,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
       *                                        process.
       *
       * @return void
-      * @see registerSupplementary()
+      * @see    registerSupplementary()
       */
     protected function processSupplementary(
         PHP_CodeSniffer_File $phpcsFile,
@@ -781,8 +781,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $pattern The pattern to parse.
      *
      * @return array The parsed pattern array.
-     * @see _createSkipPattern()
-     * @see _createTokenPattern()
+     * @see    _createSkipPattern()
+     * @see    _createTokenPattern()
      */
     private function _parse($pattern)
     {
@@ -873,8 +873,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $from    The token content that the skip pattern starts from.
      *
      * @return array The pattern step.
-     * @see _createTokenPattern()
-     * @see _parse()
+     * @see    _createTokenPattern()
+     * @see    _parse()
      */
     private function _createSkipPattern($pattern, $from)
     {
@@ -926,8 +926,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $str The tokens string that the pattern should match.
      *
      * @return array The pattern step.
-     * @see _createSkipPattern()
-     * @see _parse()
+     * @see    _createSkipPattern()
+     * @see    _parse()
      */
     private function _createTokenPattern($str)
     {

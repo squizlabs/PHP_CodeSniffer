@@ -335,7 +335,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processPackage(PHP_CodeSniffer_File $phpcsFile, array $tags)
     {
-        $tokens  = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
             if ($tokens[($tag + 2)]['code'] !== T_DOC_COMMENT_STRING) {
                 // No content.

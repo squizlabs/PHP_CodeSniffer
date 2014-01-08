@@ -232,7 +232,7 @@ class PHP_CodeSniffer_CLI
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function processShortArgument($arg, $pos, $values)
     {
@@ -303,7 +303,7 @@ class PHP_CodeSniffer_CLI
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function processLongArgument($arg, $pos, $values)
     {
@@ -472,7 +472,7 @@ class PHP_CodeSniffer_CLI
      * @param array  $values An array of values determined from CLI args.
      *
      * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function processUnknownArgument($arg, $pos, $values)
     {
@@ -500,7 +500,7 @@ class PHP_CodeSniffer_CLI
      * @param array $values An array of values determined from CLI args.
      *
      * @return int The number of error and warning messages shown.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function process($values=array())
     {

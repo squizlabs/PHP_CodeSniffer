@@ -103,7 +103,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      * method should be overridden to output content for each sniff.
      *
      * @return void
-     * @see processSniff()
+     * @see    processSniff()
      */
     public function generate()
     {
@@ -176,7 +176,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      *                     standard file.
      *
      * @return void
-     * @see generate()
+     * @see    generate()
      */
     protected function processSniff(DOMNode $doc)
     {

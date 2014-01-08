@@ -79,7 +79,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      * Returns the short comment description.
      *
      * @return string
-     * @see getLongComment()
+     * @see    getLongComment()
      */
     public function getShortComment()
     {
@@ -97,7 +97,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      * Returns the last token position of the short comment description.
      *
      * @return int The last token position of the short comment description
-     * @see _getLongCommentStartPos()
+     * @see    _getLongCommentStartPos()
      */
     private function _getShortCommentEndPos()
     {
@@ -136,7 +136,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      * Returns the long comment description.
      *
      * @return string
-     * @see getShortComment
+     * @see    getShortComment
      */
     public function getLongComment()
     {
@@ -156,7 +156,7 @@ class PHP_CodeSniffer_CommentParser_CommentElement extends PHP_CodeSniffer_Comme
      * Returns -1 if there is no long comment.
      *
      * @return int The start position of the long comment description.
-     * @see _getShortCommentEndPos()
+     * @see    _getShortCommentEndPos()
      */
     private function _getLongCommentStartPos()
     {

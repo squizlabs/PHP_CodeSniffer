@@ -94,7 +94,7 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
             $phpcsFile->addError($error, $commentEnd, 'ApiNotLast');
         }
 
-    }//end processUnknownTags()
+    }//end process()
 
 
 }//end class

@@ -85,7 +85,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      * that they appear in the tag.
      *
      * @return array(string)
-     * @see processSubElement()
+     * @see    processSubElement()
      */
     protected function getSubElements()
     {
@@ -103,7 +103,7 @@ class PHP_CodeSniffer_CommentParser_SingleElement extends PHP_CodeSniffer_Commen
      *                                 sub element.
      *
      * @return void
-     * @see getSubElements()
+     * @see    getSubElements()
      */
     protected function processSubElement($name, $content, $whitespaceBefore)
     {

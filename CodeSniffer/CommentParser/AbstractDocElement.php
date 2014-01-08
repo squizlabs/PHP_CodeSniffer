@@ -325,7 +325,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * appear in the element.
      *
      * @return array(string)
-     * @see processSubElement()
+     * @see    processSubElement()
      */
     abstract protected function getSubElements();
 
@@ -339,7 +339,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * @param string $whitespaceBefore The whitespace found before this element.
      *
      * @return void
-     * @see getSubElements()
+     * @see    getSubElements()
      */
     abstract protected function processSubElement(
         $name,

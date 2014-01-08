@@ -59,13 +59,13 @@ class PHP_CodeSniffer_Tokenizers_Comment
             }
         }
 
-        $openTag  = substr($string, 0, $c);
+        $openTag = substr($string, 0, $c);
         $tokens[$stackPtr] = array(
-                     'content'        => $openTag,
-                     'code'           => T_DOC_COMMENT_OPEN_TAG,
-                     'type'           => 'T_DOC_COMMENT_OPEN_TAG',
-                     'comment_tags'   => array(),
-                    );
+                              'content'      => $openTag,
+                              'code'         => T_DOC_COMMENT_OPEN_TAG,
+                              'type'         => 'T_DOC_COMMENT_OPEN_TAG',
+                              'comment_tags' => array(),
+                             );
 
         $openPtr = $stackPtr;
         $stackPtr++;
@@ -146,10 +146,10 @@ class PHP_CodeSniffer_Tokenizers_Comment
                 // This is a function or class doc block line.
                 $c++;
                 $tokens[$stackPtr] = array(
-                             'content' => '*',
-                             'code'    => T_DOC_COMMENT_STAR,
-                             'type'    => 'T_DOC_COMMENT_STAR',
-                            );
+                                      'content' => '*',
+                                      'code'    => T_DOC_COMMENT_STAR,
+                                      'type'    => 'T_DOC_COMMENT_STAR',
+                                     );
 
                 $stackPtr++;
 

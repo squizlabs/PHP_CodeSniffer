@@ -41,7 +41,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
      * Returns the whitespace that exists before this element.
      *
      * @return string
-     * @see getWhitespaceAfter()
+     * @see    getWhitespaceAfter()
      */
     public function getWhitespaceBefore();
 
@@ -50,7 +50,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
      * Returns the whitespace that exists after this element.
      *
      * @return string
-     * @see getWhitespaceBefore()
+     * @see    getWhitespaceBefore()
      */
     public function getWhitespaceAfter();
 
@@ -69,7 +69,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
      * Returns the element that appears before this element.
      *
      * @return PHP_CodeSniffer_CommentParser_DocElement
-     * @see getNextElement()
+     * @see    getNextElement()
      */
     public function getPreviousElement();
 
@@ -78,7 +78,7 @@ interface PHP_CodeSniffer_CommentParser_DocElement
      * Returns the element that appears after this element.
      *
      * @return PHP_CodeSniffer_CommentParser_DocElement
-     * @see getPreviousElement()
+     * @see    getPreviousElement()
      */
     public function getNextElement();
 

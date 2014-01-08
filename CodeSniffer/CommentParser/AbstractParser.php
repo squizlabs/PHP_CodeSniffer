@@ -216,7 +216,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * @param string $comment The doc comment to parse.
      *
      * @return void
-     * @see _parseWords()
+     * @see    _parseWords()
      */
     private function _parse($comment)
     {
@@ -258,7 +258,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
      * Parses each word within the doc comment.
      *
      * @return void
-     * @see _parse()
+     * @see    _parse()
      * @throws PHP_CodeSniffer_CommentParser_ParserException If more than the allowed
      *                                                       number of occurences of
      *                                                       a tag is found.

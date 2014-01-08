@@ -276,7 +276,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 } else {
                     $error = 'Missing parameter name';
                     $phpcsFile->addError($error, $tag, 'MissingParamName');
-                }
+                }//end if
             } else {
                 $error = 'Missing parameter type';
                 $phpcsFile->addError($error, $tag, 'MissingParamType');

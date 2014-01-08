@@ -1591,7 +1591,7 @@ class PHP_CodeSniffer_File
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
      * @return void
-     * @see _recurseScopeMap()
+     * @see    _recurseScopeMap()
      */
     private static function _createScopeMap(&$tokens, $tokenizer, $eolChar)
     {
@@ -2780,8 +2780,8 @@ class PHP_CodeSniffer_File
      *                           will not be checked. IE. checking will stop
      *                           at the next semi-colon found.
      *
-     * @return int | bool
-     * @see findNext()
+     * @return int|bool
+     * @see    findNext()
      */
     public function findPrevious(
         $types,
@@ -2847,8 +2847,8 @@ class PHP_CodeSniffer_File
      *                           will not be checked. i.e., checking will stop
      *                           at the next semi-colon found.
      *
-     * @return int | bool
-     * @see findPrevious()
+     * @return int|bool
+     * @see    findPrevious()
      */
     public function findNext(
         $types,

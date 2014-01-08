@@ -363,7 +363,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 } else {
                     $error = 'Missing parameter name';
                     $phpcsFile->addError($error, $tag, 'MissingParamName');
-                }
+                }//end if
             } else {
                 $error = 'Missing parameter type';
                 $phpcsFile->addError($error, $tag, 'MissingParamType');
@@ -398,6 +398,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                               $suggestedName,
                               $typeName,
                              );
+
                     $fix = $phpcsFile->addFixableError($error, $param['tag'], 'IncorrectParamVarName', $data);
                     if ($fix === true && $phpcsFile->fixer->enabled === true) {
                         $content  = $suggestedName;
