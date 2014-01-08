@@ -143,7 +143,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
                 $error = 'Content missing for %s tag in file comment';
                 $data  = array($name);
-                $phpcsFile->addError($error, $tag, 'EmptyVar', $data);
+                $phpcsFile->addError($error, $tag, 'Empty'.ucfirst($name).'Tag', $data);
                 continue;
             }
 
