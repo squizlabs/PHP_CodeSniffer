@@ -1948,7 +1948,7 @@ class PHP_CodeSniffer
      *                                look in its default locations.
      *
      * @return array
-     * @see isInstalledStandard()
+     * @see    isInstalledStandard()
      */
     public static function getInstalledStandards(
         $includeGeneric=false,
@@ -2002,7 +2002,7 @@ class PHP_CodeSniffer
      * @param string $standard The name of the coding standard.
      *
      * @return boolean
-     * @see getInstalledStandards()
+     * @see    getInstalledStandards()
      */
     public static function isInstalledStandard($standard)
     {
@@ -2071,8 +2071,8 @@ class PHP_CodeSniffer
      * @param string $key The name of the config value.
      *
      * @return string|null
-     * @see setConfigData()
-     * @see getAllConfigData()
+     * @see    setConfigData()
+     * @see    getAllConfigData()
      */
     public static function getConfigData($key)
     {
@@ -2106,7 +2106,7 @@ class PHP_CodeSniffer
      *                           data to the config file.
      *
      * @return boolean
-     * @see getConfigData()
+     * @see    getConfigData()
      * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
@@ -2160,7 +2160,7 @@ class PHP_CodeSniffer
      * Get all config data in an array.
      *
      * @return string
-     * @see getConfigData()
+     * @see    getConfigData()
      */
     public static function getAllConfigData()
     {
