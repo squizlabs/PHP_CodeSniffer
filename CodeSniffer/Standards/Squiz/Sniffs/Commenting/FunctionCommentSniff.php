@@ -13,11 +13,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) === false) {
-    $error = 'Class PHP_CodeSniffer_CommentParser_FunctionCommentParser not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
-
 /**
  * Parses and verifies the doc comments for functions.
  *
@@ -118,8 +113,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
     /**
      * Process the return comment of this function comment.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
+     * @param int                  $stackPtr     The position of the current token
+     *                                           in the stack passed in $tokens.
+     * @param int                  $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -244,7 +241,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
     /**
      * Process any throw tags that this function comment has.
      *
-     * @param int $commentStart The position in the stack where the comment started.
+     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
+     * @param int                  $stackPtr     The position of the current token
+     *                                           in the stack passed in $tokens.
+     * @param int                  $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -297,10 +297,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
     /**
      * Process the function parameter comments.
      *
-     * @param int $commentStart The position in the stack where
-     *                          the comment started.
-     * @param int $commentEnd   The position in the stack where
-     *                          the comment ended.
+     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
+     * @param int                  $stackPtr     The position of the current token
+     *                                           in the stack passed in $tokens.
+     * @param int                  $commentStart The position in the stack where the comment started.
      *
      * @return void
      */

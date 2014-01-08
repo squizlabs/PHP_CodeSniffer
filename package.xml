@@ -112,41 +112,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </file>
    </dir>
    <dir name="CodeSniffer">
-    <dir name="CommentParser">
-     <file baseinstalldir="PHP" name="AbstractDocElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="AbstractParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ClassCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="CommentElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="DocElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="FunctionCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="MemberCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="PairElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ParameterElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ParserException.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="SingleElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-    </dir>
     <dir name="DocGenerators">
      <file baseinstalldir="PHP" name="Generator.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
