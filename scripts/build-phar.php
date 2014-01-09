@@ -14,18 +14,18 @@
  */
 
 error_reporting(E_ALL | E_STRICT);
-
 if (ini_get('phar.readonly') === '1') {
     echo 'Unable to build, phar.readonly in php.ini is set to read only.'."\n";
     exit(1);
 }
 
 $validOptions = array(
+                 '--use-package'    => 'Use a package.xml as the build list',
                  '--build-full'     => 'Build a full installation of phpcs (including tests)',
                  '--build-only'     => 'Build phpcs with only the specified standard.',
                  '--build-standard' => 'Build the standard phpcs',
                 );
-$requireOpts  = array('--build-only');
+$requireOpts  = array('--build-only', '--use-package');
 
 $name     = NULL;
 $options  = array();
@@ -91,12 +91,7 @@ if ($name === NULL || $showHelp !== false) {
     exit(0);
 }
 
-if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
-    include_once dirname(__FILE__).'/../CodeSniffer.php';
-} else {
-    include_once 'PHP/CodeSniffer.php';
-}
-
+include_once dirname(__FILE__).'/../CodeSniffer.php';
 build($name, $destDir, $options);
 
 
@@ -116,29 +111,84 @@ function build($name, $destDir, $options)
     }
 
     $pharFile = PHP_CodeSniffer::realpath($destDir).'/'.$name;
+    $phar     = new Phar($pharFile, 0, 'CodeSniffer.phar');
 
-    // Force remove itself and git files.
-    $remove[] = '.git';
-    $remove[] = '.gitattributes';
-    $remove[] = '.gitignore';
-    $remove[] = 'scripts';
-    $remove[] = basename($name);
-    if (file_exists($name) === true) {
-        unlink($name);
-    }
+    if (isset($options['use-package']) === TRUE) {
+        if (file_exists($options['use-package']) === FALSE) {
+            // Sanity check first.
+            echo 'Invalid package file.'."\n";
+            exit(1);
+        }
 
-    if (array_key_exists('build-full', $options) === false) {
-        $remove[] = 'tests';
-        $remove[] = 'Tests';
+        $includeTests = FALSE;
+        if (isset($options['build-full']) === TRUE) {
+            $includeTests = TRUE;
+        }
+
+        $standard  = NULL;
+        $whitelist = array();
+        if (isset($options['build-only']) === TRUE) {
+            $standard  = $options['build-only'];
+            $whitelist = getStandardWhitelist($options['build-only']);
+        }
+
+        $package = new DOMDocument('1.0', 'utf-8');
+        $loaded  = $package->loadXML(file_get_contents($options['use-package']));
+        if ($loaded === false) {
+            // Unable to load the package file.
+            echo 'Invalid package file.'."\n";
+            exit(1);
+        }
+
+        buildFromPackage($phar, $package, $standard, $includeTests, $whitelist);
+    } else {
+        // Otherwise we are building from a directory.
+        $whitelist = array();
+        $remove    = array(
+                      '.git',
+                      '.gitattributes',
+                      '.gitignore',
+                      'scripts',
+                      basename($name),
+                     );
+        if (file_exists($name) === true) {
+            unlink($name);
+        }
+
+        if (array_key_exists('build-full', $options) === false) {
+            // Remove the tests from everything but build-full.
+            $remove[] = 'tests';
+            $remove[] = 'Tests';
+        }//end if
+
+        if (array_key_exists('build-only', $options) === true) {
+            $whitelist = getStandardWhitelist($options['build-only']);
+            $remove[]  = 'Standards';
+        }
+
+        buildFromDirectory($phar, dirname(dirname(__FILE__)), $remove, $whitelist);
     }//end if
 
+    addStub($phar);
+    addConfigFile($phar, $options);
+
+}//end build()
+
+/**
+ * Return a whitelist for the standard.
+ *
+ * @param string $standard The standard to whitelist.
+ *
+ * @return array
+ */
+function getStandardWhitelist($standard=NULL)
+{
     $whitelist = array();
-    if (array_key_exists('build-only', $options) === true
-        && $options['build-only'] !== true
-    ) {
-        if (PHP_CodeSniffer::isInstalledStandard($options['build-only']) === true) {
+    if ($standard !== null) {
+        // Build a single standard (with dependencies).
+        if (PHP_CodeSniffer::isInstalledStandard($standard) === true) {
             $phpcs       = new PHP_CodeSniffer();
-            $whitelist   = $phpcs->getSniffFiles(dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'], $options['build-only']);
+            $whitelist   = $phpcs->getSniffFiles(dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard, $standard);
             foreach ($whitelist as $file) {
                 findDependencies($file, $whitelist);
             }
@@ -148,21 +198,122 @@ function build($name, $destDir, $options)
             $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractScopeSniff.php';
             $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractVariableSniff.php';
             $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/IncorrectPatternException.php';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'];
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$options['build-only'].'/ruleset.xml';
-            $remove[]    = 'Standards';
+            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard;
+            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml';
         } else {
-            echo 'Unable to build phar file with non-existing standard: '.$options['build-only']."\n";
-            return;
+            echo 'Unable to build phar file with non-existing standard: '.$standard."\n";
+            exit(1);
         }
     }
 
-    $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
-    buildFromDirectory($phar, dirname(dirname(__FILE__)), $remove, $whitelist);
-    addStub($phar);
-    addConfigFile($phar, $options);
+    return $whitelist;
 
-}//end build()
+}//end getStandardWhitelist()
+
+
+/**
+ * Build from a package list.
+ *
+ * @param object  &$phar        The Phar class.
+ * @param object  $dom          The package dom.
+ * @param string  $standard     The standard to build (if needed).
+ * @param boolean $includeTests If TRUE, include the tests.
+ * @param array   $whitelist    The standard whitelist.
+ *
+ * @return void
+ */
+function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $whitelist=array())
+{
+    $contents = $dom->getElementsByTagName('contents');
+    if ($contents->length === 0 || $contents->item(0)->hasChildNodes() === false) {
+        // Invalid xml.
+        echo 'Invalid package file.'."\n";
+        exit(1);
+    }
+
+    $roles = array('php');
+    if ($includeTests === TRUE) {
+        $roles[] = 'test';
+    }
+
+    $topLevels = $contents->item(0)->childNodes;
+    $tlLength  = $topLevels->length;
+    for ($l = 0; $l < $tlLength; $l++) {
+        $currentLevel = $topLevels->item($l);
+        buildFromNode($phar, $currentLevel, $roles, '', $standard, $whitelist);
+    }
+
+}//end buildFromPackage()
+
+
+/**
+ * Add from a node.
+ *
+ * @param object &$phar     The Phar class.
+ * @param object $node      The node to add.
+ * @param array  $roles     The roles allowed.
+ * @param string $prefix    The prefix of the structure.
+ * @param string $standard  The standard to include.
+ * @param array  $whitelist The files that make up the standard.
+ *
+ * @return void
+ */
+function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=NULL, $whitelist=array())
+{
+    $nodeName = $node->nodeName;
+    if ($nodeName !== 'dir' && $nodeName !== 'file') {
+        // Invalid node.
+        return;
+    }
+
+    $path = $prefix.$node->getAttribute('name');
+    if (in_array($node->getAttribute('role'), $roles) === TRUE) {
+        if ($standard === NULL
+            || (strpos($path, '/Standards/') !== FALSE
+            && verifyPath($path, $whitelist) === TRUE)
+        ) {
+            $path = ltrim($path, '/');
+            $phar->addFile(dirname(dirname(__FILE__)).'/'.$path, $path);
+            $phar[$path]->compress(Phar::GZ);
+        }
+    }//end if
+
+    if ($nodeName === 'dir') {
+        // Descend into the depths.
+        $path     = rtrim($path, '/').'/';
+        $children = $node->childNodes;
+        $childLn  = $children->length;
+        for ($c = 0; $c < $childLn; $c++) {
+            $child = $children->item($c);
+            buildFromNode($phar, $child, $roles, $path, $standard, $whitelist);
+        }
+    }
+
+}//end buildFromNode()
+
+
+/**
+ * Verify a path.
+ *
+ * @param string $path      The path to verify.
+ * @param array  $whitelist The whitelist.
+ *
+ * @return boolean
+ */
+function verifyPath($path, $whitelist=array())
+{
+    // Return TRUE, if the path is in the whitelist.
+    $verified = false;
+    foreach ($whitelist as $file) {
+        if (strpos($file, $path) !== FALSE) {
+            $verified = true;
+            break;
+        }
+    }
+
+    return $verified;
+
+}//end verifyPath()
 
 
 /**
@@ -222,7 +373,7 @@ function buildFromDirectory(&$phar, $baseDir, $remove=array(), $whitelist=array(
  */
 function findDependencies($file, array &$whitelist)
 {
-    $className = str_replace(dirname(__FILE__).'/CodeSniffer/Standards/', '', substr($file, 0, -4));
+    $className = str_replace(dirname(dirname(__FILE__)).'/CodeSniffer/Standards/', '', substr($file, 0, -4));
     $className = str_replace('/', '_', $className);
     if (strpos($className, 'Abstract') === 0) {
         $className = 'PHP_CodeSniffer_Standards_'.$className;
@@ -247,7 +398,7 @@ function findDependencies($file, array &$whitelist)
             foreach ($matches[1] as $match) {
                 if (isset($match) === true && strpos($match, '_Sniffs_') !== false) {
                     $interiorClass = $match;
-                    $intClassFile  = dirname(__FILE__).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
+                    $intClassFile  = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
                     $whitelist[]   = $intClassFile;
                     findDependencies($intClassFile, $whitelist);
                 }
@@ -260,7 +411,7 @@ function findDependencies($file, array &$whitelist)
             foreach ($matches[1] as $match) {
                 if (isset($match) === true && strpos($match, '_Sniffs_') !== false) {
                     $interiorClass = $match;
-                    $intClassFile  = dirname(__FILE__).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
+                    $intClassFile  = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.str_replace('_', '/', $interiorClass).'.php';
                     $whitelist[]   = $intClassFile;
                     findDependencies($intClassFile, $whitelist);
                 }
