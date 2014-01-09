@@ -147,3 +147,18 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+/**
+ * Comment
+ *
+ * @one
+ * @two
+ * @one
+ *
+ * @two   something
+ *        here
+ * @two   foo
+ * @three something
+ *        here
+ * @three bar
+ */

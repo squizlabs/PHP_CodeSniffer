@@ -252,6 +252,22 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
         }
 
+        $foundTags = array();
+        foreach ($tokens[$stackPtr]['comment_tags'] as $pos => $tag) {
+            $tagName = $tokens[$tag]['content'];
+            if (in_array($tagName, $foundTags) === true) {
+                $lastTag = $tokens[$stackPtr]['comment_tags'][($pos - 1)];
+                if ($tokens[$lastTag]['content'] !== $tagName) {
+                    $error = 'Tags must be grouped together in a doc comment';
+                    $phpcsFile->addError($error, $tag, 'TagsNotGrouped');
+                }
+
+                continue;
+            }
+
+            $foundTags[] = $tagName;
+        }
+
     }//end process()
 
 
