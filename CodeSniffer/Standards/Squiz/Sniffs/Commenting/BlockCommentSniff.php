@@ -96,7 +96,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->fixer->replaceToken($stackPtr, '/*');
             }
 
-            $end = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+            $end = $tokens[$stackPtr]['comment_closer'];
             if ($tokens[$end]['content'] !== '*/') {
                 $error = 'Block comments must be ended with */';
                 $fix   = $phpcsFile->addFixableError($error, $end, 'WrongEnd');
