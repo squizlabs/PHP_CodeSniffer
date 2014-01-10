@@ -148,19 +148,20 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         $throwTokens = array_unique($throwTokens);
 
         $throwTags    = array();
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
-        for ($i = ($commentStart + 1); $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] !== T_DOC_COMMENT_TAG
-                || $tokens[$i]['content'] !== '@throws'
-            ) {
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
             }
 
-            $throwValue = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i, ($commentEnd - 1));
-            if ($throwValue !== false
-                && $tokens[$throwValue]['line'] === $tokens[$i]['line']
-            ) {
-                $throwTags[] = $tokens[$throwValue]['content'];
+            if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
+                $exception = $tokens[($tag + 2)]['content'];
+                $space     = strpos($exception, ' ');
+                if ($space !== false) {
+                    $exception = substr($exception, 0, $space);
+                }
+
+                $throwTags[] = $exception;
             }
         }
 

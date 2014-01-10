@@ -228,5 +228,26 @@ class Foo {
     public function bar() {
         throw new Exception();
     }
+
+    /**
+     * Returns information for a test.
+     *
+     * This info includes parameters, their valid values.
+     *
+     * @param integer $projectid Id of the project.
+     *
+     * @return array
+     * @throws ChannelException If the project is invalid.
+     */
+    public static function getTestInfo($projectid=NULL)
+    {
+        try {
+            DAL::beginTransaction();
+            DAL::commit();
+        } catch (DALException $e) {
+            DAL::rollBack();
+            throw new ChannelException($e);
+        }
+    }
 }
 ?>
