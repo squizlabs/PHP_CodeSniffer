@@ -3,7 +3,6 @@
  <description>The Squiz coding standard.</description>
 
  <!-- Include some specific sniffs -->
- <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
  <rule ref="Generic.Commenting.Todo"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
@@ -43,20 +42,6 @@
    <property name="maxPadding" value="8"/>
    <property name="ignoreMultiLine" value="true"/>
    <property name="error" value="true"/>
-  </properties>
- </rule>
-
- <!-- Tweaks to metrics -->
- <rule ref="Generic.Metrics.CyclomaticComplexity">
-  <properties>
-   <property name="complexity" value="10"/>
-   <property name="absoluteComplexity" value="100"/>
-  </properties>
- </rule>
- <rule ref="Generic.Metrics.NestingLevel">
-  <properties>
-   <property name="nestingLevel" value="5"/>
-   <property name="absoluteNestingLevel" value="50"/>
   </properties>
  </rule>
 

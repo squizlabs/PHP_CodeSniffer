@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
   - Fixed bug #20145 : Custom ruleset preferences directory over installed standard
   - Fixed bug #20147 : phpcs-svn-pre-commit - no more default error report
  </notes>
