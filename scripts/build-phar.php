@@ -27,9 +27,8 @@ $validOptions = array(
                 );
 $requireOpts  = array('--build-only', '--use-package');
 
-$name     = NULL;
+$name     = null;
 $options  = array();
-$destDir  = dirname(dirname(__FILE__));
 $showHelp = false;
 foreach ($argv as $index => $arg) {
     if ($arg === '--help') {
@@ -42,8 +41,6 @@ foreach ($argv as $index => $arg) {
         continue;
     } else if ($index === 1 && strpos($arg, '-') !== 0) {
         $name = $arg;
-    } else if ($index === 2 && strpos($arg, '-') !== 0) {
-        $destDir = $arg;
     } else {
         // Other arg.
         $value = null;
@@ -69,12 +66,12 @@ foreach ($argv as $index => $arg) {
     }
 }
 
-if ($name === NULL || $showHelp !== false) {
+if ($name === null || $showHelp !== false) {
     if ($showHelp !== false) {
         echo $showHelp."\n";
     }
 
-    echo 'Usage: '.$argv[0].' <name> <destinationDir> <options>'."\n";
+    echo 'Usage: '.$argv[0].' <filename> <options>'."\n";
     echo ' where <options> can be:'."\n";
     foreach ($validOptions as $option => $optHelp) {
         echo "\t".$option;
@@ -91,46 +88,46 @@ if ($name === NULL || $showHelp !== false) {
     exit(0);
 }
 
-include_once dirname(__FILE__).'/../CodeSniffer.php';
-build($name, $destDir, $options);
+require_once dirname(__FILE__).'/../CodeSniffer.php';
+build($name, $options);
 
 
 /**
  * Build CodeSniffer into a phar file.
  *
- * @param string $name    The name of the phar file.
- * @param string $destDir Where to place the finished product.
+ * @param string $path    The path and name of the phar file.
  * @param array  $options The build options.
  *
  * @return void
  */
-function build($name, $destDir, $options)
+function build($path, $options)
 {
-    if (substr(strtolower($name), -5) !== '.phar') {
-        $name .= '.phar';
+    if (substr(strtolower($path), -5) !== '.phar') {
+        // Sanity check, add the .phar to the end if not there.
+        $path .= '.phar';
     }
 
-    $pharFile = PHP_CodeSniffer::realpath($destDir).'/'.$name;
+    $pharFile = PHP_CodeSniffer::realpath(dirname($path)).'/'.basename($path);
     if (file_exists($pharFile) === true) {
         unlink($pharFile);
     }
 
     $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
-    if (isset($options['use-package']) === TRUE) {
-        if (file_exists($options['use-package']) === FALSE) {
+    if (isset($options['use-package']) === true) {
+        if (file_exists($options['use-package']) === false) {
             // Sanity check first.
             echo 'Invalid package file.'."\n";
             exit(1);
         }
 
-        $includeTests = FALSE;
-        if (isset($options['build-full']) === TRUE) {
-            $includeTests = TRUE;
+        $includeTests = false;
+        if (isset($options['build-full']) === true) {
+            $includeTests = true;
         }
 
-        $standard  = NULL;
+        $standard  = null;
         $whitelist = array();
-        if (isset($options['build-only']) === TRUE) {
+        if (isset($options['build-only']) === true) {
             $standard  = $options['build-only'];
             $whitelist = getStandardWhitelist($options['build-only']);
         }
@@ -153,11 +150,8 @@ function build($name, $destDir, $options)
                       '.gitignore',
                       'scripts',
                       '.travis.yml',
-                      basename($name),
+                      basename($path),
                      );
-        if (file_exists($name) === true) {
-            unlink($name);
-        }
 
         if (array_key_exists('build-full', $options) === false) {
             // Remove the tests from everything but build-full.
@@ -185,7 +179,7 @@ function build($name, $destDir, $options)
  *
  * @return array
  */
-function getStandardWhitelist($standard=NULL)
+function getStandardWhitelist($standard=null)
 {
     $whitelist = array();
     if ($standard !== null) {
@@ -221,12 +215,12 @@ function getStandardWhitelist($standard=NULL)
  * @param object  &$phar        The Phar class.
  * @param object  $dom          The package dom.
  * @param string  $standard     The standard to build (if needed).
- * @param boolean $includeTests If TRUE, include the tests.
+ * @param boolean $includeTests If true, include the tests.
  * @param array   $whitelist    The standard whitelist.
  *
  * @return void
  */
-function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $whitelist=array())
+function buildFromPackage(&$phar, $dom, $standard=null, $includeTests=false, $whitelist=array())
 {
     $contents = $dom->getElementsByTagName('contents');
     if ($contents->length === 0 || $contents->item(0)->hasChildNodes() === false) {
@@ -236,7 +230,7 @@ function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $wh
     }
 
     $roles = array('php', 'data');
-    if ($includeTests === TRUE) {
+    if ($includeTests === true) {
         $roles[] = 'test';
     }
 
@@ -274,7 +268,7 @@ function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $wh
  *
  * @return void
  */
-function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=NULL, $whitelist=array())
+function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=null, $whitelist=array())
 {
     $nodeName = $node->nodeName;
     if ($nodeName !== 'dir' && $nodeName !== 'file') {
@@ -283,10 +277,10 @@ function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=NULL, $white
     }
 
     $path = $prefix.$node->getAttribute('name');
-    if (in_array($node->getAttribute('role'), $roles) === TRUE) {
-        if ($standard === NULL
-            || (strpos($path, '/Standards/') === FALSE
-            || verifyPath($path, $whitelist) === TRUE)
+    if (in_array($node->getAttribute('role'), $roles) === true) {
+        if ($standard === null
+            || (strpos($path, '/Standards/') === false
+            || verifyPath($path, $whitelist) === true)
         ) {
             $path = ltrim($path, '/');
             $phar->addFile(dirname(dirname(__FILE__)).'/'.$path, $path);
@@ -318,10 +312,10 @@ function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=NULL, $white
  */
 function verifyPath($path, $whitelist=array())
 {
-    // Return TRUE, if the path is in the whitelist.
+    // Return true, if the path is in the whitelist.
     $verified = false;
     foreach ($whitelist as $file) {
-        if (strpos($file, $path) !== FALSE) {
+        if (strpos($file, $path) !== false) {
             $verified = true;
             break;
         }
@@ -368,10 +362,10 @@ function buildFromDirectory(&$phar, $baseDir, $remove=array(), $whitelist=array(
             $phar->addEmptyDir($path);
         } else {
             $path = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
-            if (strpos($path, '/') === FALSE) {
+            if (strpos($path, '/') === false) {
                 // Remove top level files.
-                if (strpos($path, '.phar') !== FALSE
-                    || (strpos($path, '.php') !== FALSE && $path !== 'CodeSniffer.php')
+                if (strpos($path, '.phar') !== false
+                    || (strpos($path, '.php') !== false && $path !== 'CodeSniffer.php')
                 ) {
                     // Only CodeSniffer.php should exist in the top level.
                     // As well, we better not add any phar files either.
