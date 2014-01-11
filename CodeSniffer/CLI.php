@@ -166,6 +166,14 @@ class PHP_CodeSniffer_CLI
             $defaults['showProgress'] = (bool) $showProgress;
         }
 
+        if (PHP_CodeSniffer::isPharFile(dirname(dirname(__FILE__))) === true) {
+            // If this is a phar file, check for the standard in the config.
+            $standard = PHP_CodeSniffer::getConfigData('standard');
+            if ($standard !== null) {
+                $defaults['standard'] = $standard;
+            }
+        }
+
         return $defaults;
 
     }//end getDefaults()

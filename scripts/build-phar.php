@@ -111,8 +111,11 @@ function build($name, $destDir, $options)
     }
 
     $pharFile = PHP_CodeSniffer::realpath($destDir).'/'.$name;
-    $phar     = new Phar($pharFile, 0, 'CodeSniffer.phar');
+    if (file_exists($pharFile) === true) {
+        unlink($pharFile);
+    }
 
+    $phar = new Phar($pharFile, 0, 'CodeSniffer.phar');
     if (isset($options['use-package']) === TRUE) {
         if (file_exists($options['use-package']) === FALSE) {
             // Sanity check first.
@@ -149,6 +152,7 @@ function build($name, $destDir, $options)
                       '.gitattributes',
                       '.gitignore',
                       'scripts',
+                      '.travis.yml',
                       basename($name),
                      );
         if (file_exists($name) === true) {
@@ -193,13 +197,13 @@ function getStandardWhitelist($standard=NULL)
                 findDependencies($file, $whitelist);
             }
 
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractPatternSniff.php';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractScopeSniff.php';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/AbstractVariableSniff.php';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/IncorrectPatternException.php';
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard;
-            $whitelist[] = dirname(__FILE__).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/AbstractPatternSniff.php';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/AbstractScopeSniff.php';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/AbstractVariableSniff.php';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/IncorrectPatternException.php';
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard;
+            $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml';
         } else {
             echo 'Unable to build phar file with non-existing standard: '.$standard."\n";
             exit(1);
@@ -231,7 +235,7 @@ function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $wh
         exit(1);
     }
 
-    $roles = array('php');
+    $roles = array('php', 'data');
     if ($includeTests === TRUE) {
         $roles[] = 'test';
     }
@@ -241,6 +245,18 @@ function buildFromPackage(&$phar, $dom, $standard=NULL, $includeTests=FALSE, $wh
     for ($l = 0; $l < $tlLength; $l++) {
         $currentLevel = $topLevels->item($l);
         buildFromNode($phar, $currentLevel, $roles, '', $standard, $whitelist);
+    }
+
+    // Finally, a couple of last additions.
+    $files = array(
+              'README.markdown',
+              'composer.json',
+              'licence.txt',
+              'package.xml',
+             );
+    foreach ($files as $file) {
+        $phar->addFile(dirname(dirname(__FILE__)).'/'.$file, $file);
+        $phar[$file]->compress(Phar::GZ);
     }
 
 }//end buildFromPackage()
@@ -269,8 +285,8 @@ function buildFromNode(&$phar, $node, $roles, $prefix='', $standard=NULL, $white
     $path = $prefix.$node->getAttribute('name');
     if (in_array($node->getAttribute('role'), $roles) === TRUE) {
         if ($standard === NULL
-            || (strpos($path, '/Standards/') !== FALSE
-            && verifyPath($path, $whitelist) === TRUE)
+            || (strpos($path, '/Standards/') === FALSE
+            || verifyPath($path, $whitelist) === TRUE)
         ) {
             $path = ltrim($path, '/');
             $phar->addFile(dirname(dirname(__FILE__)).'/'.$path, $path);
@@ -351,12 +367,21 @@ function buildFromDirectory(&$phar, $baseDir, $remove=array(), $whitelist=array(
             $path = str_replace($baseDir, '', $path);
             $phar->addEmptyDir($path);
         } else {
-            $fileLoc = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
-            $content = file_get_contents($file->getPath().'/'.$file->getFileName());
-            file_put_contents($prefix.'/'.$fileLoc, $content);
+            $path = ltrim(str_replace($baseDir, '', $file->getPath().'/'.$file->getFileName()), '/');
+            if (strpos($path, '/') === FALSE) {
+                // Remove top level files.
+                if (strpos($path, '.phar') !== FALSE
+                    || (strpos($path, '.php') !== FALSE && $path !== 'CodeSniffer.php')
+                ) {
+                    // Only CodeSniffer.php should exist in the top level.
+                    // As well, we better not add any phar files either.
+                    continue;
+                }
+            }
 
             // Compress.
-            $phar[$fileLoc]->compress(Phar::GZ);
+            $phar->addFile($baseDir.'/'.$path, $path);
+            $phar[$path]->compress(Phar::GZ);
         }//end if
     }//end foreach
 
@@ -437,6 +462,8 @@ function addStub(&$phar)
     $stub .= '    PHP_Timer::start();';
     $stub .= '}';
     $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/CLI.php";';
+    $stub .= 'include_once "phar://".__FILE__."/CodeSniffer.php";';
+    $stub .= '$config = PHP_CodeSniffer::getAllConfigData();';
     $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
     $stub .= '$phpcs->checkRequirements();';
     $stub .= '$numErrors = $phpcs->process();';
