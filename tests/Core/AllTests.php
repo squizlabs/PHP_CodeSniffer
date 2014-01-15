@@ -29,6 +29,7 @@ require_once 'Reports/SvnblameTest.php';
 require_once 'Reports/GitblameTest.php';
 require_once 'Reports/HgblameTest.php';
 require_once 'Reports/JunitTest.php';
+require_once 'Tokenizers/PHPTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -92,6 +93,7 @@ class PHP_CodeSniffer_Core_AllTests
         $suite->addTestSuite('Core_Reports_GitblameTest');
         $suite->addTestSuite('Core_Reports_HgblameTest');
         $suite->addTestSuite('Core_Reports_JunitTest');
+        $suite->addTestSuite('Core_Tokenizers_PHP');
         return $suite;
 
     }//end suite()

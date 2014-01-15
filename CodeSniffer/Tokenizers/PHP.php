@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+require_once dirname(dirname(__FILE__)).'/Tokenizer.php';
 
 /**
  * Tokenizes PHP code.
@@ -23,7 +24,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Tokenizers_PHP
+class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
 {
 
     /**
@@ -243,7 +244,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
      *
      * @return array
      */
-    public function tokenizeString($string, $eolChar='\n')
+    protected function tokenize($string, $eolChar='\n')
     {
         $tokens      = @token_get_all($string);
         $finalTokens = array();
@@ -357,7 +358,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
                 // Add the start heredoc token to the final array.
                 $finalTokens[$newStackPtr]
-                    = PHP_CodeSniffer::standardiseToken($token);
+                    = $this->standardiseToken($token);
 
                 // Check if this is actually a nowdoc and use a different token
                 // to help the sniffs.
@@ -419,7 +420,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 // Add the end heredoc token to the final array.
                 $finalTokens[$newStackPtr]
-                    = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
+                    = $this->standardiseToken($tokens[$stackPtr]);
 
                 if ($nowdoc === true) {
                     $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
@@ -461,7 +462,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $newStackPtr++;
                 }
             } else {
-                $newToken = PHP_CodeSniffer::standardiseToken($token);
+                $newToken = $this->standardiseToken($token);
 
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
@@ -500,7 +501,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         return $finalTokens;
 
-    }//end tokenizeString()
+    }//end tokenize()
 
 
     /**
@@ -517,9 +518,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
      *
      * @return void
      */
-    public function processAdditional(&$tokens, $eolChar)
+    protected function processAdditional(&$tokens, $eolChar)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if ($this->getVerbose() > 1) {
             echo "\t*** START ADDITIONAL PHP PROCESSING ***".PHP_EOL;
         }
 
@@ -536,7 +537,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $tokens[$i]['code'] = T_CLOSURE;
                     $tokens[$i]['type'] = 'T_CLOSURE';
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if ($this->getVerbose() > 1) {
                         $line = $tokens[$i]['line'];
                         echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
                     }
@@ -547,7 +548,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
 
                         $tokens[$x]['conditions'][$i] = T_CLOSURE;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if ($this->getVerbose() > 1) {
                             $type = $tokens[$x]['type'];
                             echo "\t\t* cleaned $x ($type) *".PHP_EOL;
                         }
@@ -578,7 +579,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $closer                  = $tokens[$i]['bracket_closer'];
                     $tokens[$closer]['code'] = T_CLOSE_SHORT_ARRAY;
                     $tokens[$closer]['type'] = 'T_CLOSE_SHORT_ARRAY';
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if ($this->getVerbose() > 1) {
                         $line = $tokens[$i]['line'];
                         echo "\t* token $i on line $line changed from T_OPEN_SQUARE_BRACKET to T_OPEN_SHORT_ARRAY".PHP_EOL;
                         $line = $tokens[$closer]['line'];
@@ -598,7 +599,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $tokens[$i]['code'] = T_STRING;
                     $tokens[$i]['type'] = 'T_STRING';
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if ($this->getVerbose() > 1) {
                         $line = $tokens[$i]['line'];
                         echo "\t* token $i on line $line changed from T_STATIC to T_STRING".PHP_EOL;
                     }
@@ -611,7 +612,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 $tokens[$i]['code'] = T_STRING;
                 $tokens[$i]['type'] = 'T_STRING';
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if ($this->getVerbose() > 1) {
                     $line = $tokens[$i]['line'];
                     echo "\t* token $i on line $line changed from T_CLASS to T_STRING".PHP_EOL;
                 }
@@ -646,7 +647,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // worry about fixing anything.
                 $newCloser = $tokens[$x]['scope_closer'];
                 $tokens[$i]['scope_closer'] = $newCloser;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if ($this->getVerbose() > 1) {
                     $oldType = $tokens[$scopeCloser]['type'];
                     $newType = $tokens[$newCloser]['type'];
                     $line    = $tokens[$i]['line'];
@@ -673,7 +674,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             $tokens[$x]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_opener']    = $x;
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if ($this->getVerbose() > 1) {
                 $line      = $tokens[$i]['line'];
                 $tokenType = $tokens[$i]['type'];
 
@@ -694,7 +695,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         $oldConditions = $tokens[$x]['conditions'];
                         unset($tokens[$x]['conditions'][$num]);
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if ($this->getVerbose() > 1) {
                             $type     = $tokens[$x]['type'];
                             $oldConds = '';
                             foreach ($oldConditions as $condition) {
@@ -720,7 +721,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
         }//end for
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if ($this->getVerbose() > 1) {
             echo "\t*** END ADDITIONAL PHP PROCESSING ***".PHP_EOL;
         }
 

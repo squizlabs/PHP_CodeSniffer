@@ -97,14 +97,6 @@ class PHP_CodeSniffer
     protected $files = array();
 
     /**
-     * A cache of different token types, resolved into arrays.
-     *
-     * @var array()
-     * @see standardiseToken()
-     */
-    private static $_resolveTokenCache = array();
-
-    /**
      * The directory to search for sniffs in.
      *
      * This is declared static because it is also used in the
@@ -167,6 +159,7 @@ class PHP_CodeSniffer
                                      'inc' => 'PHP',
                                      'js'  => 'JS',
                                      'css' => 'CSS',
+                                     'sql' => 'SQL',
                                     );
 
     /**
@@ -1591,196 +1584,17 @@ class PHP_CodeSniffer
      */
     public static function standardiseToken($token)
     {
-        if (is_array($token) === false) {
-            if (isset(self::$_resolveTokenCache[$token]) === true) {
-                $newToken = self::$_resolveTokenCache[$token];
-            } else {
-                $newToken = self::resolveSimpleToken($token);
-            }
-        } else {
-            switch ($token[0]) {
-            case T_STRING:
-                // Some T_STRING tokens can be more specific.
-                $tokenType = strtolower($token[1]);
-                if (isset(self::$_resolveTokenCache[$tokenType]) === true) {
-                    $newToken = self::$_resolveTokenCache[$tokenType];
-                } else {
-                    $newToken = self::resolveTstringToken($tokenType);
-                }
+        $newToken = array();
+        if (class_exists('PHP_CodeSniffer_Tokenizers_PHP') === true) {
+            $tokenizer = new PHP_CodeSniffer_Tokenizers_PHP();
+            $tokenizer->setVerbose(PHP_CODESNIFFER_VERBOSITY);
 
-                break;
-            case T_CURLY_OPEN:
-                $newToken = array(
-                             'code' => T_OPEN_CURLY_BRACKET,
-                             'type' => 'T_OPEN_CURLY_BRACKET',
-                            );
-                break;
-            default:
-                $newToken = array(
-                             'code' => $token[0],
-                             'type' => token_name($token[0]),
-                            );
-                break;
-            }//end switch
-
-            $newToken['content'] = $token[1];
+            $newToken = $tokenizer->standardiseToken($token);
         }//end if
 
         return $newToken;
 
     }//end standardiseToken()
-
-
-    /**
-     * Converts T_STRING tokens into more usable token names.
-     *
-     * The token should be produced using the token_get_all() function.
-     * Currently, not all T_STRING tokens are converted.
-     *
-     * @param string $token The T_STRING token to convert as constructed
-     *                      by token_get_all().
-     *
-     * @return array The new token.
-     */
-    public static function resolveTstringToken($token)
-    {
-        $newToken = array();
-        switch ($token) {
-        case 'false':
-            $newToken['type'] = 'T_FALSE';
-            break;
-        case 'true':
-            $newToken['type'] = 'T_TRUE';
-            break;
-        case 'null':
-            $newToken['type'] = 'T_NULL';
-            break;
-        case 'self':
-            $newToken['type'] = 'T_SELF';
-            break;
-        case 'parent':
-            $newToken['type'] = 'T_PARENT';
-            break;
-        default:
-            $newToken['type'] = 'T_STRING';
-            break;
-        }
-
-        $newToken['code'] = constant($newToken['type']);
-
-        self::$_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveTstringToken()
-
-
-    /**
-     * Converts simple tokens into a format that conforms to complex tokens
-     * produced by token_get_all().
-     *
-     * Simple tokens are tokens that are not in array form when produced from
-     * token_get_all().
-     *
-     * @param string $token The simple token to convert.
-     *
-     * @return array The new token in array format.
-     */
-    public static function resolveSimpleToken($token)
-    {
-        $newToken = array();
-
-        switch ($token) {
-        case '{':
-            $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
-            break;
-        case '}':
-            $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
-            break;
-        case '[':
-            $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
-            break;
-        case ']':
-            $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
-            break;
-        case '(':
-            $newToken['type'] = 'T_OPEN_PARENTHESIS';
-            break;
-        case ')':
-            $newToken['type'] = 'T_CLOSE_PARENTHESIS';
-            break;
-        case ':':
-            $newToken['type'] = 'T_COLON';
-            break;
-        case '.':
-            $newToken['type'] = 'T_STRING_CONCAT';
-            break;
-        case '?':
-            $newToken['type'] = 'T_INLINE_THEN';
-            break;
-        case ';':
-            $newToken['type'] = 'T_SEMICOLON';
-            break;
-        case '=':
-            $newToken['type'] = 'T_EQUAL';
-            break;
-        case '*':
-            $newToken['type'] = 'T_MULTIPLY';
-            break;
-        case '/':
-            $newToken['type'] = 'T_DIVIDE';
-            break;
-        case '+':
-            $newToken['type'] = 'T_PLUS';
-            break;
-        case '-':
-            $newToken['type'] = 'T_MINUS';
-            break;
-        case '%':
-            $newToken['type'] = 'T_MODULUS';
-            break;
-        case '^':
-            $newToken['type'] = 'T_POWER';
-            break;
-        case '&':
-            $newToken['type'] = 'T_BITWISE_AND';
-            break;
-        case '|':
-            $newToken['type'] = 'T_BITWISE_OR';
-            break;
-        case '<':
-            $newToken['type'] = 'T_LESS_THAN';
-            break;
-        case '>':
-            $newToken['type'] = 'T_GREATER_THAN';
-            break;
-        case '!':
-            $newToken['type'] = 'T_BOOLEAN_NOT';
-            break;
-        case ',':
-            $newToken['type'] = 'T_COMMA';
-            break;
-        case '@':
-            $newToken['type'] = 'T_ASPERAND';
-            break;
-        case '$':
-            $newToken['type'] = 'T_DOLLAR';
-            break;
-        case '`':
-            $newToken['type'] = 'T_BACKTICK';
-            break;
-        default:
-            $newToken['type'] = 'T_NONE';
-            break;
-        }//end switch
-
-        $newToken['code']    = constant($newToken['type']);
-        $newToken['content'] = $token;
-
-        self::$_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveSimpleToken()
-
 
     /**
      * Returns true if the specified string is in the camel caps format.
