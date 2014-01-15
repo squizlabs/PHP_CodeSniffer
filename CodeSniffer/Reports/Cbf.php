@@ -60,7 +60,7 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
         $changed   = $phpcsFile->fixer->fixFile();
 
-        if ($report['filename'] === 'STDIN') {
+        if (empty($cliValues['files']) === true) {
             // Replacing STDIN, so output current file to STDOUT
             // even if nothing was fixed. Exit here because we
             // can't process any more than 1 file in this setup.
