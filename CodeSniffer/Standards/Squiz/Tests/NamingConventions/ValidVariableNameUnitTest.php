@@ -66,8 +66,6 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
                 63  => 1,
                 64  => 1,
                 67  => 1,
-                76  => 1,
-                78  => 1,
                 81  => 1,
                 106 => 1,
                 107 => 1,
