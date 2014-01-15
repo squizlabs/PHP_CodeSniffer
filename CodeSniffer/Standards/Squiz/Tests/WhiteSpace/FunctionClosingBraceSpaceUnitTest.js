@@ -104,3 +104,14 @@ CustomFormEditWidgetType.prototype = {
     }
 
 };
+
+var SquizCIRunnerRunnersScreen = new function()
+{
+    this.initScreen = function(usersFolderid)
+    {
+        for (var i = 0; i < paramSelectors.length; i++) {
+        }//end for
+
+    }
+
+};

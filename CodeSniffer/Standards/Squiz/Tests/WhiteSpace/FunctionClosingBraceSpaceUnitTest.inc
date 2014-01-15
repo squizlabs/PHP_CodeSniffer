@@ -29,4 +29,11 @@ function foo() { }
 function foo() {}
 function foo() {
 }
-?>
+
+function foo()
+{
+    for ($i = 0; $i < $bar; $i++) {
+    }//end for
+
+
+}

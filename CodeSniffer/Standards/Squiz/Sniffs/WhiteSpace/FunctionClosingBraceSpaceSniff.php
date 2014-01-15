@@ -122,7 +122,6 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    $phpcsFile->fixer->addNewlineBefore($i);
                     $phpcsFile->fixer->endChangeset();
                 }
             }//end if
