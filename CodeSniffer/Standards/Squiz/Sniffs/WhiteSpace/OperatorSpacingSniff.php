@@ -67,8 +67,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * Processes this sniff, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The current file being checked.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      *
      * @return void
      */
@@ -96,9 +96,20 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
         if ($tokens[$stackPtr]['code'] === T_EQUAL) {
             // Skip for '=&' case.
-            if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
+            if (isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND
+            ) {
                 return;
             }
+        }
+
+        // Skip short ternary such as: $foo = $bar ?: true;
+        if (($tokens[$stackPtr]['code'] == T_INLINE_THEN
+            && $tokens[$stackPtr + 1]['code'] == T_INLINE_ELSE)
+            || ($tokens[$stackPtr - 1]['code'] == T_INLINE_THEN
+            && $tokens[$stackPtr]['code'] == T_INLINE_ELSE)
+        ) {
+                return;
         }
 
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {

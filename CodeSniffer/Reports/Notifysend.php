@@ -7,7 +7,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2012 Christian Weiske
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,7 +25,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Christian Weiske <christian.weiske@netresearch.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2012 Christian Weiske
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -59,6 +63,17 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected $version = null;
 
+    /**
+     * A record of the last file checked.
+     *
+     * This is used in case we only checked one file and need to print
+     * the name/path of the file. We wont have access to the checked file list
+     * after the run has been completed.
+     *
+     * @var string
+     */
+    private $_lastCheckedFile = '';
+
 
     /**
      * Load configuration data.
@@ -92,37 +107,62 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
 
 
     /**
-     * Generates a summary of errors and warnings for each file processed.
+     * Generate a partial report for a single processed file.
      *
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report.
+     * @param array   $report      Prepared report data.
      * @param boolean $showSources Show sources?
      * @param int     $width       Maximum allowed line width.
-     * @param boolean $toScreen    Is the report being printed to screen?
      *
-     * @return string
+     * @return boolean
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+        // We don't need to print anything, but we want this file counted
+        // in the total number of checked files even if it has no errors.
+        $this->_lastCheckedFile = $report['filename'];
+        return true;
+
+    }//end generateFileReport()
+
+
+    /**
+     * Generates a summary of errors and warnings for each file processed.
+     *
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
+     *
+     * @return void
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $msg = $this->generateMessage($report);
+        $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);
         if ($msg === null) {
-            if ($this->showOk) {
+            if ($this->showOk === true) {
                 $this->notifyAllFine();
             }
-
-            return 0;
+        } else {
+            $this->notifyErrors($msg);
         }
-
-        $this->notifyErrors($msg);
-
-        return ($report['totals']['errors'] + $report['totals']['warnings']);
 
     }//end generate()
 
@@ -130,31 +170,32 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     /**
      * Generate the error message to show to the user.
      *
-     * @param array $report CS report data.
+     * @param int $totalFiles    Total number of files processed during the run.
+     * @param int $totalErrors   Total number of errors found during the run.
+     * @param int $totalWarnings Total number of warnings found during the run.
      *
      * @return string Error message or NULL if no error/warning found.
      */
-    protected function generateMessage($report)
+    protected function generateMessage($totalFiles, $totalErrors, $totalWarnings)
     {
-        $allErrors   = $report['totals']['errors'];
-        $allWarnings = $report['totals']['warnings'];
-
-        if ($allErrors == 0 && $allWarnings == 0) {
+        if ($totalErrors === 0 && $totalWarnings === 0) {
             // Nothing to print.
             return null;
         }
 
         $msg = '';
-        if (count($report['files']) > 1) {
-            $msg .= 'Checked ' . count($report['files']) . ' files' . PHP_EOL;
+        if ($totalFiles > 1) {
+            $msg .= 'Checked '.$totalFiles.' files'.PHP_EOL;
         } else {
-            $msg .= key($report['files']) . PHP_EOL;
+            $msg .= $this->_lastCheckedFile.PHP_EOL;
         }
-        if ($allWarnings > 0) {
-            $msg .= $allWarnings . ' warnings' . PHP_EOL;
+
+        if ($totalWarnings > 0) {
+            $msg .= $totalWarnings.' warnings'.PHP_EOL;
         }
-        if ($allErrors > 0) {
-            $msg .= $allErrors . ' errors' . PHP_EOL;
+
+        if ($totalErrors > 0) {
+            $msg .= $totalErrors.' errors'.PHP_EOL;
         }
 
         return $msg;

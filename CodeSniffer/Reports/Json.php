@@ -32,48 +32,79 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
 
 
     /**
-     * Generates a json report.
-     * 
-     * @param array   $report      Prepared report.
+     * Generate a partial report for a single processed file.
+     *
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
+     *
+     * @param array   $report      Prepared report data.
      * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
-     * 
-     * @return string 
+     * @param int     $width       Maximum allowed line width.
+     *
+     * @return boolean
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+
+        $filename = str_replace('"', '\"', $report['filename']);
+        $filename = str_replace('/', '\/', $report['filename']);
+        echo "\"$filename\":{";
+        echo '"errors":'.$report['errors'].',"warnings":'.$report['warnings'].',"messages":[';
+
+        $messages = '';
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $error['message'] = str_replace('"', '\"', $error['message']);
+                    $error['message'] = str_replace('/', '\/', $error['message']);
+
+                    $messages .= '{"message":"'.$error['message'].'",';
+                    $messages .= '"source":"'.$error['source'].'",';
+                    $messages .= '"severity":'.$error['severity'].',';
+                    $messages .= '"type":"'.$error['type'].'",';
+                    $messages .= '"line":'.$line.',"column":'.$column.'},';
+                }
+            }
+        }
+
+        echo rtrim($messages, ',');
+        echo ']},';
+
+        return true;
+
+    }//end generateFileReport()
+
+
+    /**
+     * Generates a JSON report.
+     *
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
+     *
+     * @return void
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $errorsShown = 0;
-        $newReport   = array(
-                        'totals' => $report['totals'],
-                        'files'  => array(),
-                       );
-
-        foreach ($report['files'] as $filename => $file) {
-            $newReport['files'][$filename] = array(
-                                              'errors'   => $file['errors'],
-                                              'warnings' => $file['warnings'],
-                                              'messages' => array(),
-                                             );
-
-            foreach ($file['messages'] as $line => $lineErrors) {
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $error['line']   = $line;
-                        $error['column'] = $column;
-                        $newReport['files'][$filename]['messages'][] = $error;
-                        $errorsShown++;
-                    }
-                }
-            }
-        }//end foreach
-
-        echo json_encode($newReport);
-        return $errorsShown;
+        echo '{"totals":{"errors":'.$totalErrors.',"warnings":'.$totalWarnings.'},"files":{';
+        echo rtrim($cachedData, ',');
+        echo "}}";
 
     }//end generate()
 

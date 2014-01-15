@@ -1,20 +1,19 @@
 <?php
 /**
- * Unit test class for the ScopeClosingBrace sniff.
+ * Unit test class for the DisallowBooleanStatement sniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for the ScopeClosingBrace sniff.
+ * Unit test class for the DisallowBooleanStatement sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -22,13 +21,12 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
+class Squiz_Tests_PHP_DisallowBooleanStatementUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -43,14 +41,10 @@ class PEAR_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnitT
     public function getErrorList()
     {
         return array(
-                11 => 1,
+                3  => 1,
+                8  => 1,
                 13 => 1,
-                24 => 1,
-                61 => 1,
-                65 => 1,
-                85 => 1,
-                89 => 1,
-                98 => 1,
+                15 => 1,
                );
 
     }//end getErrorList()

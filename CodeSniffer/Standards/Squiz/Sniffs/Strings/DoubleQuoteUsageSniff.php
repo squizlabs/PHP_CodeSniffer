@@ -114,6 +114,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
                          '\t',
                          '\v',
                          '\x',
+                         '\b',
                          '\'',
                         );
 

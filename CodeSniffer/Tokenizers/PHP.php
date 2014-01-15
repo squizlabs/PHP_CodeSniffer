@@ -184,6 +184,7 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                                                              T_RETURN,
                                                              T_CONTINUE,
                                                              T_THROW,
+                                                             T_EXIT,
                                                             ),
                                                 'strict' => true,
                                                 'shared' => true,
@@ -200,6 +201,7 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                                                              T_RETURN,
                                                              T_CONTINUE,
                                                              T_THROW,
+                                                             T_EXIT,
                                                             ),
                                                 'strict' => true,
                                                 'shared' => true,
@@ -432,6 +434,46 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
 
                 // Continue, as we're done with this token.
                 continue;
+            }//end if
+
+            /*
+                PHP doesn't assign a token to goto labels, so we have to.
+                These are just string tokens with a single colon after them. Double
+                colons are already tokenized and so don't interfere with this check.
+                But we do have to account for CASE statements, that look just like
+                goto labels.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && $tokens[($stackPtr + 1)] === ':'
+                && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
+            ) {
+                $stopTokens = array(
+                               T_CASE,
+                               T_SEMICOLON,
+                               T_OPEN_CURLY_BRACKET,
+                               T_INLINE_THEN,
+                              );
+
+                for ($x = ($newStackPtr - 1); $x > 0; $x--) {
+                    if (in_array($finalTokens[$x]['code'], $stopTokens) === true) {
+                        break;
+                    }
+                }
+
+                if ($finalTokens[$x]['code'] !== T_CASE
+                    && $finalTokens[$x]['code'] !== T_INLINE_THEN
+                ) {
+                    $finalTokens[$newStackPtr] = array(
+                                                  'content' => $token[1].':',
+                                                  'code'    => T_GOTO_LABEL,
+                                                  'type'    => 'T_GOTO_LABEL',
+                                                 );
+                    $newStackPtr++;
+                    $stackPtr++;
+                    continue;
+                }
             }//end if
 
             /*

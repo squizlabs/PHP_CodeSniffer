@@ -22,7 +22,7 @@ declare(encoding='utf-8');
 * @package    PHP_CodeSniffer
 * @package    ADDITIONAL PACKAGE TAG
 * @subpackage SUBPACKAGE TAG
-* @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
+* @author     AntÃ´nio Carlos VenÃ¢ncio JÃºnior <foreign@character.net>
 * @author       Greg Sherwood gsherwood@squiz.net
 * @author     Mr T <t@squiz.net>
 * @author
