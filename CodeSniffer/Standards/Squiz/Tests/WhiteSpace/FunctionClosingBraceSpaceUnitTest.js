@@ -111,7 +111,6 @@ var SquizCIRunnerRunnersScreen = new function()
     {
         for (var i = 0; i < paramSelectors.length; i++) {
         }//end for
-
     }
 
 };

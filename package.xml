@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- NoSpaceBeforeTag becomes NoSpaceAfterStar
     -- SpaceBeforeTag becomes SpaceAfterStar
     -- SpaceBeforeAsterisk becomes SpaceBeforeStar
+  - Squiz FunctionClosingBraceSpaceSniff now requires a blank line before the brace in all cases except function args
   - Added error Squiz.Commenting.ClassComment.SpacingAfter to ensure there are no blank lines after a class comment
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
     -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances

@@ -62,9 +62,8 @@ class Squiz_Tests_WhiteSpace_FunctionClosingBraceSpaceUnitTest extends AbstractS
                     32  => 1,
                     53  => 1,
                     59  => 1,
-                    67  => 1,
                     84  => 1,
-                    115 => 1,
+                    114 => 1,
                    );
             break;
         default:
