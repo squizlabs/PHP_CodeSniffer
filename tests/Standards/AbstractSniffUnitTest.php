@@ -91,7 +91,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
         if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
             // We have not been installed.
-            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
+            $standardsDir = PHP_CodeSniffer::realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
             $testFileBase = $standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
         } else {
             // The name of the dummy file we are testing.

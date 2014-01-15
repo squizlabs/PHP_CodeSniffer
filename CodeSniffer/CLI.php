@@ -366,7 +366,7 @@ class PHP_CodeSniffer_CLI
                     // Passed report file is a filename in the current directory.
                     $values['reportFile'] = getcwd().'/'.basename($values['reportFile']);
                 } else {
-                    $dir = realpath(getcwd().'/'.$dir);
+                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
                     if ($dir !== false) {
                         // Report file path is relative.
                         $values['reportFile'] = $dir.'/'.basename($values['reportFile']);
@@ -394,7 +394,7 @@ class PHP_CodeSniffer_CLI
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = realpath(getcwd().'/'.$dir);
+                                $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);
@@ -736,6 +736,9 @@ class PHP_CodeSniffer_CLI
         }
 
         $cleaned = array();
+        if (is_array($standards) === false) {
+            $standards = array($standards);
+        }
 
         // Check if the standard name is valid, or if the case is invalid.
         $installedStandards = PHP_CodeSniffer::getInstalledStandards();

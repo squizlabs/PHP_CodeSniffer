@@ -415,9 +415,9 @@ class PHP_CodeSniffer
             if ($installed !== null) {
                 $standard = $installed;
             } else if (is_dir($standard) === true
-                && is_file(realpath($standard.'/ruleset.xml')) === true
+                && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
             ) {
-                $standard = realpath($standard.'/ruleset.xml');
+                $standard = self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
@@ -551,13 +551,13 @@ class PHP_CodeSniffer
      */
     public function processRuleset($rulesetPath, $depth=0)
     {
-        $rulesetPath = realpath($rulesetPath);
+        $rulesetPath = self::realpath($rulesetPath);
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo "Processing ruleset $rulesetPath".PHP_EOL;
         }
 
-        $ruleset = simplexml_load_file($rulesetPath);
+        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
             throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
         }
@@ -660,7 +660,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = realpath($sniff);
+                $files[] = self::realpath($sniff);
             }
         }
 
@@ -766,6 +766,15 @@ class PHP_CodeSniffer
         if (is_file($ref) === false) {
             // See if this is a whole standard being referenced.
             $path = $this->getInstalledStandardPath($ref);
+            if (self::isPharFile($path) === true) {
+                // If the ruleset exists inside the phar file, use it.
+                if (file_exists($path.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
+                    $path = $path.DIRECTORY_SEPARATOR.'ruleset.xml';
+                } else {
+                    $path = null;
+                }
+            }
+
             if ($path !== null) {
                 $ref = $path;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -796,7 +805,15 @@ class PHP_CodeSniffer
                 $newRef  = false;
                 $stdPath = $this->getInstalledStandardPath($stdName);
                 if ($stdPath !== null && $path !== '') {
-                    $newRef = self::realpath(dirname($stdPath).$path);
+                    if (self::isPharFile($stdPath) === true
+                        && strpos($stdPath, 'ruleset.xml') === false
+                    ) {
+                        // Phar files can only return the directory,
+                        // since ruleset can be omitted if building one standard.
+                        $newRef = self::realpath($stdPath.$path);
+                    } else {
+                        $newRef = self::realpath(dirname($stdPath).$path);
+                    }
                 }
 
                 if ($newRef === false) {
@@ -810,7 +827,7 @@ class PHP_CodeSniffer
                             continue;
                         }
 
-                        $newRef = realpath($dir.$path);
+                        $newRef = self::realpath($dir.$path);
 
                         if ($newRef !== false) {
                             $ref = $newRef;
@@ -2008,7 +2025,7 @@ class PHP_CodeSniffer
     public static function isInstalledStandard($standard)
     {
         $path = self::getInstalledStandardPath($standard);
-        if ($path !== null) {
+        if ($path !== null && strpos($path, 'ruleset.xml') !== false) {
             return true;
         } else {
             // This could be a custom standard, installed outside our
@@ -2045,16 +2062,22 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
-        $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
+        $installedPaths = array(dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR.'Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }
 
         foreach ($installedPaths as $installedPath) {
-            $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
+            $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
+            $path = self::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
             if (is_file($path) === true) {
                 return $path;
+            } else if (self::isPharFile($standardPath) === true) {
+                $path = self::realpath($standardPath);
+                if ($path !== false) {
+                    return $path;
+                }
             }
         }
 

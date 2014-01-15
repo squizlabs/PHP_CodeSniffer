@@ -186,7 +186,7 @@ function getStandardWhitelist($standard=null)
         // Build a single standard (with dependencies).
         if (PHP_CodeSniffer::isInstalledStandard($standard) === true) {
             $phpcs       = new PHP_CodeSniffer();
-            $whitelist   = $phpcs->getSniffFiles(dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard, $standard);
+            $whitelist   = $phpcs->processRuleset(dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml');
             foreach ($whitelist as $file) {
                 findDependencies($file, $whitelist);
             }
