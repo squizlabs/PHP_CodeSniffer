@@ -180,6 +180,14 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
                     $requiredOps++;
 
+                    // If there are more ops found then required, reset the 
+                    // number of required ops
+                    // This solves the issue for validation errors on
+                    // if ($a instanceof \MyClass === false && $b = true)
+                    if ($foundOps > $requiredOps) {
+                        $foundOps = $requiredOps;
+                    }
+                    
                     // If we get to here and we have not found the right number of
                     // comparison operators, then we must have had an implicit
                     // true operation ie. if ($a) instead of the required
