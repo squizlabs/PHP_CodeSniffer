@@ -1,10 +1,11 @@
 {
-    "name": "squizlabs/php_codesniffer",
-    "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+    "name": "squizlabs/php_codesniffer_tests",
+    "description": "A test lib that can easily be required & used in custom PHP_CodeSniffer rulesets",
     "type": "library",
     "keywords": [
         "phpcs",
-        "standards"
+        "standards",
+        "tests"
     ],
     "homepage": "http://www.squizlabs.com/php-codesniffer",
     "license": "BSD-3-Clause",
@@ -20,29 +21,7 @@
     },
     "autoload": {
         "classmap": [
-            "CodeSniffer.php",
-            "CodeSniffer/CLI.php",
-            "CodeSniffer/Exception.php",
-            "CodeSniffer/File.php",
-            "CodeSniffer/Report.php",
-            "CodeSniffer/Reporting.php",
-            "CodeSniffer/Sniff.php",
-            "CodeSniffer/Tokens.php",
-            "CodeSniffer/Reports/",
-            "CodeSniffer/CommentParser/",
-            "CodeSniffer/Tokenizers/",
-            "CodeSniffer/DocGenerators/",
-            "CodeSniffer/Standards/AbstractPatternSniff.php",
-            "CodeSniffer/Standards/AbstractScopeSniff.php",
-            "CodeSniffer/Standards/AbstractVariableSniff.php",
-            "CodeSniffer/Standards/IncorrectPatternException.php",
-            "CodeSniffer/Standards/Generic/Sniffs/",
-            "CodeSniffer/Standards/MySource/Sniffs/",
-            "CodeSniffer/Standards/PEAR/Sniffs/",
-            "CodeSniffer/Standards/PSR1/Sniffs/",
-            "CodeSniffer/Standards/PSR2/Sniffs/",
-            "CodeSniffer/Standards/Squiz/Sniffs/",
-            "CodeSniffer/Standards/Zend/Sniffs/"
+            "AbstractSniffUnitTest.php"
         ]
     },
     "suggest": {
@@ -50,9 +29,8 @@
     },
     "require": {
         "php": ">=5.1.2",
-        "ext-tokenizer": "*"
-    },
-    "bin": [
-        "scripts/phpcs"
-    ]
+        "ext-tokenizer": "*",
+        "squizlabs/php_codesniffer": "1.5.1",
+        "phpunit/phpunit": "~3.7.27"
+    }
 }
