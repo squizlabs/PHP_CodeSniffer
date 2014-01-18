@@ -87,4 +87,21 @@ switch (true) {
             return null;
         }
 }
+
+switch (true) {
+    case Foo::class:
+        break;
+}
+
+switch ($foo) {
+    case Foo::class:
+        break;
+case Foo::class:
+}
+
+switch ($foo) {
+    case Foo::class: {
+        break;
+        }
+}
 ?>
