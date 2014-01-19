@@ -48,7 +48,7 @@ $var1000 .= 'var1';
 $var1    = 'var1';
 $var10   .= 'var1';
 $var100  = 'var1';
-$var1000 .= 'var1';
+$var1000.= 'var1';
 
 // Valid
 $var1  .= 'var1';
@@ -200,4 +200,19 @@ if (TRUE) {
     $args = array('foo' => 'foo');
     $res  = 'bar';
 }
-?>
+
+// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 8
+
+$one                = 'one';
+$varonetwo          = 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+$one        = 'one';
+$varonetwo .= 'two';
+$varonetwo  = 'two';
+$varonetwo .= 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 1000

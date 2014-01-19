@@ -46,6 +46,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- NoSpaceBeforeTag becomes NoSpaceAfterStar
     -- SpaceBeforeTag becomes SpaceAfterStar
     -- SpaceBeforeAsterisk becomes SpaceBeforeStar
+  - Generic MultipleStatementAlignment now aligns assignments within a block so they fit within their max padding setting
+    -- The sniff previously requested the padding as 1 space if max padding was exceeded
+    -- It now aligns the assignment with surrounding assignments if it can
+    -- Removed property ignoreMultiline as multi-line assignments are now handled correctly and should not be ignored
   - Squiz FunctionClosingBraceSpaceSniff now requires a blank line before the brace in all cases except function args
   - Added error Squiz.Commenting.ClassComment.SpacingAfter to ensure there are no blank lines after a class comment
   - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment

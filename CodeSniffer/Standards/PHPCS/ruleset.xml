@@ -35,7 +35,6 @@
  <rule ref="Generic.Formatting.MultipleStatementAlignment">
   <properties>
    <property name="maxPadding" value="8"/>
-   <property name="ignoreMultiLine" value="true"/>
    <property name="error" value="true"/>
   </properties>
  </rule>
