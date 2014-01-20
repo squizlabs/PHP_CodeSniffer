@@ -50,19 +50,11 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
      * @param int                  $stackPtr  The position in the stack where
      *                                        the token was found.
      *
-     * @return void
+     * @return int
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // Because we are analyzing the whole file in one step, execute this method
-        // only on first occurrence of a T_OPEN_TAG.
-        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
-        if ($prevOpenTag !== false) {
-            return;
-        }
-
-        $fileName = $phpcsFile->getFilename();
-
+        $fileName     = $phpcsFile->getFilename();
         $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {
             return;
@@ -118,6 +110,9 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 }
             }//end foreach
         }//end if
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 

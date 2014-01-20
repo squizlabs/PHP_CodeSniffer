@@ -58,9 +58,6 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     public $maxPadding = 1000;
 
-    private $_lastAssign = 0;
-    private $_lastFile   = null;
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -81,7 +78,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      * @param int                  $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
-     * @return void
+     * @return int
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -96,17 +93,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             }
         }
 
-        if ($this->_lastFile !== $phpcsFile->getFilename()) {
-            $this->_lastFile   = $phpcsFile->getFilename();
-            $this->_lastAssign = 0;
-        } else {
-            if ($stackPtr <= $this->_lastAssign) {
-                // Already processed.
-                return;
-            }
-        }
-
-        $this->checkAlignment($phpcsFile, $stackPtr);
+        $lastAssign = $this->checkAlignment($phpcsFile, $stackPtr);
+        return ($lastAssign + 1);
 
     }//end process()
 
@@ -118,7 +106,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      * @param int                  $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
-     * @return void
+     * @return int
      */
     public function checkAlignment(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -298,9 +286,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         }//end foreach
 
         if ($stopped !== null) {
-            $this->checkAlignment($phpcsFile, $stopped);
+            return $this->checkAlignment($phpcsFile, $stopped);
         } else {
-            $this->_lastAssign = $assignment;
+            return $assignment;
         }
 
 

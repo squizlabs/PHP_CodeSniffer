@@ -246,6 +246,16 @@ class PHP_CodeSniffer_File
     private $_activeListener = '';
 
     /**
+     * An array of sniffs that are ignoring tokens for the current file.
+     *
+     * The sniff's process() method can return a token to ignore up to
+     * so the sniff will not be run again until that token is reached.
+     *
+     * @var array()
+     */
+    private $_listenerIgnoreTo = array();
+
+    /**
      * An array of sniffs being processed and how long they took.
      *
      * @var array()
@@ -523,6 +533,13 @@ class PHP_CodeSniffer_File
             }
 
             foreach ($this->_listeners[$tokenType] as $listenerData) {
+                if (isset($this->_listenerIgnoreTo[$listenerData['class']]) === true
+                    && $this->_listenerIgnoreTo[$listenerData['class']] > $stackPtr
+                ) {
+                    // This sniff is ignoring past this token.
+                    continue;
+                }
+
                 // Make sure this sniff supports the tokenizer
                 // we are currently using.
                 $listener = $listenerData['listener'];
@@ -559,7 +576,10 @@ class PHP_CodeSniffer_File
                     echo "\t\t\tProcessing ".$this->_activeListener.'... ';
                 }
 
-                $listener->process($this, $stackPtr);
+                $ignoreTo = $listener->process($this, $stackPtr);
+                if ($ignoreTo !== null) {
+                    $this->_listenerIgnoreTo[$this->_activeListener] = $ignoreTo;
+                }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 2) {
                     $timeTaken = (microtime(true) - $startTime);
@@ -646,8 +666,9 @@ class PHP_CodeSniffer_File
      */
     public function cleanUp()
     {
-        $this->_tokens    = null;
-        $this->_listeners = null;
+        $this->_tokens           = null;
+        $this->_listeners        = null;
+        $this->_listenerIgnoreTo = null;
 
     }//end cleanUp()
 

@@ -68,17 +68,11 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      * @param int                  $stackPtr  The position of the current token in
      *                                        the stack passed in $tokens.
      *
-     * @return void
+     * @return int
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Make sure this is the first open tag.
-        $previousOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
-        if ($previousOpenTag !== false) {
-            return;
-        }
 
         $tokenCount         = 0;
         $currentLineContent = '';
@@ -98,6 +92,9 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
 
         $currentLineContent = substr($currentLineContent, 0, $trim);
         $this->checkLineLength($phpcsFile, ($tokenCount - 1), $currentLineContent);
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 

@@ -30,6 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=diff to show suggested changes to fix coding standard violations
   - The --report argument now allows for custom reports to be used
     -- Use the full path to your custom report class as the report name
+  - Sniff process() methods can not optionally return a token to ignore up to
+    -- If returned, the sniff will not be executed again until the passed token in reached in the file
+    -- Useful if you are looking for tokens like T_OPEN_TAG but only want to process the first one
   - Removed the comment parser classes and replaced it with a simple comment tokenier
     -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
     -- This change requires a significant rewrite of sniffs that use the comment parser
