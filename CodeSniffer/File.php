@@ -1537,6 +1537,15 @@ class PHP_CodeSniffer_File
                 return $i;
             }
 
+            // handle 5.5 ClassName::class
+            if ($opener === null && $tokenType === T_CLASS && isset($tokens[$i - 1]) && $tokens[$i - 1]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found 5.5 ::class, continuing".PHP_EOL;
+                }
+                continue;
+            }
+
             // Is this an opening condition ?
             if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
                 if ($opener === null) {
