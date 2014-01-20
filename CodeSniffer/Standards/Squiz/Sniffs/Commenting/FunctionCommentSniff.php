@@ -288,7 +288,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $comment .= ' '.$tokens[$i]['content'];
                     }
                 }
-print_r($comment);
+
                 // Starts with a capital letter and ends with a fullstop.
                 $firstChar = $comment{0};
                 if (strtoupper($firstChar) !== $firstChar) {
