@@ -747,7 +747,7 @@ class PHP_CodeSniffer_CLI
      */
     public function explainStandard($standard)
     {
-        $phpcs  = new PHP_CodeSniffer();
+        $phpcs = new PHP_CodeSniffer();
         $phpcs->process(array(), $standard);
         $sniffs = $phpcs->getSniffs();
         $sniffs = array_keys($sniffs);

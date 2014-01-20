@@ -120,7 +120,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $moreTokens = parent::tokenizeString($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
-                $lastSpace  = array_pop($moreTokens);
+                $lastSpace = array_pop($moreTokens);
                 if ($lastSpace['content'] !== ' ') {
                     // The space we added before the closing tag was not the only
                     // space at the end of the content, so add the whitespace back,

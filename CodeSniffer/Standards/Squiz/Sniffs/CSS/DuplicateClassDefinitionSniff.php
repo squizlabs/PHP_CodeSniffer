@@ -92,7 +92,7 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
 
             $names = explode(',', $name);
             sort($names);
-            $name  = implode(',', $names);
+            $name = implode(',', $names);
 
             if (isset($classNames[$name]) === true) {
                 $first = $classNames[$name];
