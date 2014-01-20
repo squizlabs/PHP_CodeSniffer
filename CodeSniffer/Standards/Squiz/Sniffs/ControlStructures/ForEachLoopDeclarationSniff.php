@@ -124,7 +124,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
                     $spaces = strlen($tokens[($doubleArrow + 1)]['content']);
                     $error  = 'Expected 1 space after "=>"; %s found';
                     $data   = array($spaces);
-                    $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterArrow', $data);
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterArrow', $data);
                     if ($fix === true && $phpcsFile->fixer->enabled === true) {
                         $phpcsFile->fixer->replaceToken(($doubleArrow + 1), ' ');
                     }
