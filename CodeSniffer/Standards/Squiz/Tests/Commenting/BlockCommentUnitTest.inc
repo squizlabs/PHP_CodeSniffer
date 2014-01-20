@@ -178,4 +178,8 @@ trait MyTrait {
     这是一条测试评论.
 */
 
-?>
+/*Channels::includeSystem('Permission');
+if (Permission::hasPermission($projectid, 'project.metadata.add') === FALSE) {
+    throw new PermissionException(_('You do not have permission to add metadata field'));
+}*/
+

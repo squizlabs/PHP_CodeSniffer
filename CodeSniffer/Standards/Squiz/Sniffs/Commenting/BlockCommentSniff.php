@@ -162,7 +162,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoNewLine');
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $comment = preg_replace(
-                    '/^(\s*\/\*\*?)\s/',
+                    '/^(\s*\/\*\*?)/',
                     '$1'.$phpcsFile->eolChar.' ',
                     $tokens[$stackPtr]['content'],
                     1
