@@ -73,7 +73,6 @@ if ($suffix === '' && $allowPatch === true) {
 
 $numErrors = $phpcs->process($cliValues);
 
-
 if ($suffix === '' && $allowPatch === true) {
     if (file_exists($diffFile) === false) {
         // Nothing to fix.
@@ -101,7 +100,7 @@ if ($suffix === '' && $allowPatch === true) {
             echo "Returned: $retVal\n";
             $exit = 3;
         }
-    }
+    }//end if
 } else {
     if ($numErrors === 0) {
         // No errors left unfixed.
@@ -110,12 +109,10 @@ if ($suffix === '' && $allowPatch === true) {
         // Errors we can't fix.
         $exit = 2;
     }
-}
+}//end if
 
 if (class_exists('PHP_Timer', false) === true) {
     echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
 }
 
 exit($exit);
-
-?>

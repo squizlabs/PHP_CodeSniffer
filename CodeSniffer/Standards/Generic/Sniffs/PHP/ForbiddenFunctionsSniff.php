@@ -186,9 +186,9 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         }
 
         if ($this->forbiddenFunctions[$pattern] !== null) {
-            $type  .= 'WithAlternative';
-            $data[] = $this->forbiddenFunctions[$pattern];
-            $error .= '; use %s() instead';
+            $type .= 'WithAlternative';
+            $data[]  = $this->forbiddenFunctions[$pattern];
+            $error.= '; use %s() instead';
         }
 
         if ($this->error === true) {

@@ -156,7 +156,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
         }
 
         if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-            $nextVar          = ($stackPtr + 1);
+            $nextVar = ($stackPtr + 1);
             $previousVariable = ($stackPtr + 1);
             $variableCount    = 0;
             while (($nextVar = $phpcsFile->findNext(T_VARIABLE, ($nextVar + 1), $statementEnd)) !== false) {

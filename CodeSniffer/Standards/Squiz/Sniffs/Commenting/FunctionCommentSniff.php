@@ -261,7 +261,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             $exception = null;
             $comment   = null;
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
-                $matches = array();
+                $matches   = array();
                 preg_match('/([^\s]+)(?:\s+(.*))?/', $tokens[($tag + 2)]['content'], $matches);
                 $exception = $matches[1];
                 if (isset($matches[2]) === true) {

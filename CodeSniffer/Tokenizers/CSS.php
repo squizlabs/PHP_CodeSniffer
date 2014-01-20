@@ -51,8 +51,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         // the open and close tags we add are parsed correctly.
         $eolAdded = false;
         if (substr($string, (strlen($eolChar) * -1)) !== $eolChar) {
-            $string  .= $eolChar;
-            $eolAdded = true;
+            $string .= $eolChar;
+            $eolAdded  = true;
         }
 
         $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
@@ -120,7 +120,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $moreTokens = parent::tokenizeString($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
-                $lastSpace = array_pop($moreTokens);
+                $lastSpace  = array_pop($moreTokens);
                 if ($lastSpace['content'] !== ' ') {
                     // The space we added before the closing tag was not the only
                     // space at the end of the content, so add the whitespace back,
@@ -182,7 +182,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 && (substr($token['content'], 0, 2) === '//'
                 || $token['content']{0} === '#')
             ) {
-                $content = ltrim($token['content'], '#/');
+                $content       = ltrim($token['content'], '#/');
                 $commentTokens
                     = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
 

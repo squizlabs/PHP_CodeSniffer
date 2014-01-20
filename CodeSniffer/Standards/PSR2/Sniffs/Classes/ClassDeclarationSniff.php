@@ -211,7 +211,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $keywordTokenType = T_IMPLEMENTS;
         }
 
-        $implements          = $phpcsFile->findNext($keywordTokenType, ($stackPtr + 1), $openingBrace);
+        $implements = $phpcsFile->findNext($keywordTokenType, ($stackPtr + 1), $openingBrace);
         $multiLineImplements = false;
         if ($implements !== false) {
             $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($implements + 1), $openingBrace, true);
@@ -232,7 +232,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $nextClass    = $phpcsFile->findNext($find, ($nextClass + 1), ($openingBrace - 1));
         }
 
-        $classCount         = count($classNames);
+        $classCount = count($classNames);
         $checkingImplements = false;
         foreach ($classNames as $i => $className) {
             if ($tokens[$className]['code'] == $keywordTokenType) {

@@ -246,8 +246,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 continue;
             }
 
-            $expectedText  = $data['expected'];
-            $expectedText .= ($data['expected'] === 1) ? ' space' : ' spaces';
+            $expectedText = $data['expected'];
+            $expectedText.= ($data['expected'] === 1) ? ' space' : ' spaces';
 
             $foundText = $data['found'];
             if ($foundText === null) {

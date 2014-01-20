@@ -338,7 +338,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             continue;
                         }
 
-                        $contentLength = strlen($tokens[$firstToken]['content']);
+                        $contentLength        = strlen($tokens[$firstToken]['content']);
                         $trimmedContentLength
                             = strlen(ltrim($tokens[$firstToken]['content']));
 

@@ -93,19 +93,19 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']           = array();
-        $defaults['standard']        = null;
-        $defaults['verbosity']       = 0;
-        $defaults['interactive']     = false;
-        $defaults['explain']         = false;
-        $defaults['local']           = false;
-        $defaults['showSources']     = false;
-        $defaults['extensions']      = array();
-        $defaults['sniffs']          = array();
-        $defaults['ignored']         = array();
-        $defaults['reportFile']      = null;
-        $defaults['generator']       = '';
-        $defaults['reports']         = array();
+        $defaults['files']       = array();
+        $defaults['standard']    = null;
+        $defaults['verbosity']   = 0;
+        $defaults['interactive'] = false;
+        $defaults['explain']     = false;
+        $defaults['local']       = false;
+        $defaults['showSources'] = false;
+        $defaults['extensions']  = array();
+        $defaults['sniffs']      = array();
+        $defaults['ignored']     = array();
+        $defaults['reportFile']  = null;
+        $defaults['generator']   = '';
+        $defaults['reports']     = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
 
@@ -329,7 +329,7 @@ class PHP_CodeSniffer_CLI
             print_r($data);
             exit(0);
         case 'runtime-set':
-            $key = $_SERVER['argv'][($pos + 1)];
+            $key   = $_SERVER['argv'][($pos + 1)];
             $value = $_SERVER['argv'][($pos + 2)];
             $_SERVER['argv'][($pos + 1)] = '';
             $_SERVER['argv'][($pos + 2)] = '';
@@ -443,8 +443,8 @@ class PHP_CodeSniffer_CLI
                     if ($eqPos === false) {
                         $values[$arg] = $arg;
                     } else {
-                        $value        = substr($arg, ($eqPos + 1));
-                        $arg          = substr($arg, 0, $eqPos);
+                        $value = substr($arg, ($eqPos + 1));
+                        $arg   = substr($arg, 0, $eqPos);
                         $values[$arg] = $value;
                     }
                 } else {
@@ -747,7 +747,7 @@ class PHP_CodeSniffer_CLI
      */
     public function explainStandard($standard)
     {
-        $phpcs = new PHP_CodeSniffer();
+        $phpcs  = new PHP_CodeSniffer();
         $phpcs->process(array(), $standard);
         $sniffs = $phpcs->getSniffs();
         $sniffs = array_keys($sniffs);
@@ -914,8 +914,8 @@ class PHP_CodeSniffer_CLI
             if ($numStandards === 1) {
                 echo "The only coding standard installed is $lastStandard".PHP_EOL;
             } else {
-                $standardList  = implode(', ', $installedStandards);
-                $standardList .= ' and '.$lastStandard;
+                $standardList = implode(', ', $installedStandards);
+                $standardList.= ' and '.$lastStandard;
                 echo 'The installed coding standards are '.$standardList.PHP_EOL;
             }
         }

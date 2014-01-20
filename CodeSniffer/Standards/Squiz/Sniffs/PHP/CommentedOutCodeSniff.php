@@ -139,7 +139,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
 
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
-        $oldErrors = ini_get('error_reporting');
+        $oldErrors    = ini_get('error_reporting');
         ini_set('error_reporting', 0);
         $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
         ini_set('error_reporting', $oldErrors);

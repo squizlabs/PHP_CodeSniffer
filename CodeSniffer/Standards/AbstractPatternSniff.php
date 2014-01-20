@@ -109,8 +109,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
             // Find a token position in the pattern that we can use
             // for a listener token.
-            $pos           = $this->_getListenerTokenPos($parsedPattern);
-            $tokenType     = $parsedPattern[$pos]['token'];
+            $pos       = $this->_getListenerTokenPos($parsedPattern);
+            $tokenType = $parsedPattern[$pos]['token'];
             $listenTypes[] = $tokenType;
 
             $patternArray = array(
@@ -435,7 +435,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             }//end for
         }//end if
 
-        $stackPtr          = $origStackPtr;
+        $stackPtr = $origStackPtr;
         $lastAddedStackPtr = null;
         $patternLen        = count($pattern);
 
@@ -478,7 +478,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             );
 
                             $lastAddedStackPtr = $stackPtr;
-                            $stackPtr          = $next;
+                            $stackPtr = $next;
                         }//end if
 
                         if ($stackPtr !== $lastAddedStackPtr) {
@@ -486,7 +486,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         }
                     } else {
                         if ($stackPtr !== $lastAddedStackPtr) {
-                            $found            .= $tokens[$stackPtr]['content'];
+                            $found .= $tokens[$stackPtr]['content'];
                             $lastAddedStackPtr = $stackPtr;
                         }
                     }//end if
@@ -578,7 +578,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     }//end if
 
                     if ($next !== $lastAddedStackPtr) {
-                        $found            .= $tokens[$next]['content'];
+                        $found .= $tokens[$next]['content'];
                         $lastAddedStackPtr = $next;
                     }
 
@@ -636,7 +636,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 }
 
                 if ($stackPtr !== $lastAddedStackPtr) {
-                    $found            .= 'abc';
+                    $found .= 'abc';
                     $lastAddedStackPtr = $stackPtr;
                 }
 
@@ -804,7 +804,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
+                $i = ($i + 2);
 
                 if ($specialPattern['to'] !== 'unknown') {
                     $firstToken++;
@@ -813,12 +813,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = array('type' => 'string');
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
+                $i = ($i + 2);
             } else if (substr($pattern, $i, 3) === 'EOL') {
                 $specialPattern = array('type' => 'newline');
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
+                $i = ($i + 2);
             }//end if
 
             if ($specialPattern !== false || $isLastChar === true) {

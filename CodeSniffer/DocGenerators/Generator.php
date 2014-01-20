@@ -131,7 +131,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      */
     protected function getStandardFiles()
     {
-        $phpcs = new PHP_CodeSniffer();
+        $phpcs  = new PHP_CodeSniffer();
         $phpcs->process(array(), $this->_standard);
         $sniffs = $phpcs->getSniffs();
 

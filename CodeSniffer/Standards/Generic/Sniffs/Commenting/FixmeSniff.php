@@ -71,11 +71,11 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
         if (preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches) !== 0) {
             // Clear whitespace and some common characters not required at
             // the end of a fixme message to make the error more informative.
-            $type         = 'CommentFound';
+            $type = 'CommentFound';
             $fixmeMessage = trim($matches[1]);
             $fixmeMessage = trim($fixmeMessage, '-:[](). ');
             $error        = 'Comment refers to a FIXME task';
-            $data         = array($fixmeMessage);
+            $data = array($fixmeMessage);
             if ($fixmeMessage !== '') {
                 $type   = 'TaskFound';
                 $error .= ' "%s"';

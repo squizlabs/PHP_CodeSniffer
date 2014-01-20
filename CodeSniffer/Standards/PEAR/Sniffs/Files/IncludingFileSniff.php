@@ -108,23 +108,23 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         if ($inCondition === true) {
             // We are inside a conditional statement. We need an include_once.
             if ($tokenCode === T_REQUIRE_ONCE) {
-                $error  = 'File is being conditionally included; ';
-                $error .= 'use "include_once" instead';
+                $error = 'File is being conditionally included; ';
+                $error.= 'use "include_once" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseIncludeOnce');
             } else if ($tokenCode === T_REQUIRE) {
-                $error  = 'File is being conditionally included; ';
-                $error .= 'use "include" instead';
+                $error = 'File is being conditionally included; ';
+                $error.= 'use "include" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseInclude');
             }
         } else {
             // We are unconditionally including, we need a require_once.
             if ($tokenCode === T_INCLUDE_ONCE) {
-                $error  = 'File is being unconditionally included; ';
-                $error .= 'use "require_once" instead';
+                $error = 'File is being unconditionally included; ';
+                $error.= 'use "require_once" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseRequireOnce');
             } else if ($tokenCode === T_INCLUDE) {
-                $error  = 'File is being unconditionally included; ';
-                $error .= 'use "require" instead';
+                $error = 'File is being unconditionally included; ';
+                $error.= 'use "require" instead';
                 $phpcsFile->addError($error, $stackPtr, 'UseRequire');
             }
         }//end if

@@ -407,9 +407,9 @@ class PHP_CodeSniffer
         }
 
         // Reset the members.
-        $this->listeners       = array();
-        $this->sniffs          = array();
-        $this->ruleset         = array();
+        $this->listeners = array();
+        $this->sniffs    = array();
+        $this->ruleset   = array();
         $this->_tokenListeners = array();
         self::$rulesetDirs     = array();
 
@@ -479,9 +479,9 @@ class PHP_CodeSniffer
         }
 
         $numProcessed = 0;
-        $dots         = 0;
-        $maxLength    = strlen($numFiles);
-        $lastDir      = '';
+        $dots      = 0;
+        $maxLength = strlen($numFiles);
+        $lastDir   = '';
         foreach ($todo as $file) {
             $this->file = $file;
             $currDir    = dirname($file);
@@ -524,7 +524,7 @@ class PHP_CodeSniffer
                 echo str_repeat(' ', $padding);
                 $percent = round($numProcessed / $numFiles * 100);
                 echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
-                $dots = 0;
+                $dots    = 0;
             }
         }//end foreach
 
@@ -568,7 +568,7 @@ class PHP_CodeSniffer
         $includedSniffs = array();
         $excludedSniffs = array();
 
-        $rulesetDir          = dirname($rulesetPath);
+        $rulesetDir = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.'/Sniffs') === true) {
@@ -1329,8 +1329,8 @@ class PHP_CodeSniffer
         if ($contents === null && is_readable($filePath) === true) {
             $handle = fopen($filePath, 'r');
             if ($handle !== false) {
-                $firstContent  = fgets($handle);
-                $firstContent .= fgets($handle);
+                $firstContent = fgets($handle);
+                $firstContent.= fgets($handle);
                 fclose($handle);
 
                 if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
@@ -1796,7 +1796,7 @@ class PHP_CodeSniffer
 
         if ($strict === true) {
             // Check that there are not two capital letters next to each other.
-            $length          = strlen($string);
+            $length = strlen($string);
             $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {

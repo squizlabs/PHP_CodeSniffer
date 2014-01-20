@@ -365,7 +365,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 $currentEntry['arrow'] = $nextToken;
-                $keyUsed               = true;
+                $keyUsed = true;
 
                 // Find the start of index that uses this double arrow.
                 $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $arrayStart, true);
@@ -377,7 +377,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $index = ($indexStart + 1);
                 }
 
-                $currentEntry['index']         = $index;
+                $currentEntry['index'] = $index;
                 $currentEntry['index_content'] = $phpcsFile->getTokensAsString($index, ($indexEnd - $index + 1));
 
                 $indexLength = strlen($currentEntry['index_content']);
@@ -386,10 +386,10 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 // Find the value of this index.
-                $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
+                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
                 $currentEntry['value'] = $nextContent;
-                $indices[]             = $currentEntry;
-                $lastToken             = T_DOUBLE_ARROW;
+                $indices[] = $currentEntry;
+                $lastToken = T_DOUBLE_ARROW;
             }//end if
         }//end while
 
@@ -641,7 +641,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 for ($i = ($index['value'] + 1); $i < $arrayEnd; $i++) {
                     // Skip bracketed statements, like function calls.
                     if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                        $i         = $tokens[$i]['parenthesis_closer'];
+                        $i = $tokens[$i]['parenthesis_closer'];
                         $valueLine = $tokens[$i]['line'];
                         continue;
                     }

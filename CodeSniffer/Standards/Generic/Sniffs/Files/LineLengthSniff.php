@@ -74,7 +74,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $tokenCount         = 0;
+        $tokenCount = 0;
         $currentLineContent = '';
         $currentLine        = 1;
 
