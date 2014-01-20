@@ -420,7 +420,8 @@ class PHP_CodeSniffer_File
     public function refreshTokenListeners()
     {
         $this->phpcs->populateTokenListeners();
-        $this->_listeners = $this->phpcs->getTokenSniffs();
+        $this->_listeners        = $this->phpcs->getTokenSniffs();
+        $this->_listenerIgnoreTo = null;
 
     }//end refreshTokenListeners()
 
