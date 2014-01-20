@@ -212,7 +212,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     }
 
                     $assignColumn = ($varEnd + $padding);
-                }
+                }//end if
 
                 if (($assignColumn + $assignLen) > ($assignments[$maxPadding]['assign_col'] + $assignments[$maxPadding]['assign_len'])) {
                     $newPadding = ($varEnd - $assignments[$maxPadding]['var_end'] + $assignLen - $assignments[$maxPadding]['assign_len'] + 1);
@@ -265,8 +265,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 continue;
             }
 
-            $expectedText = $data['expected'];
-            $expectedText.= ($data['expected'] === 1) ? ' space' : ' spaces';
+            $expectedText  = $data['expected'];
+            $expectedText .= ($data['expected'] === 1) ? ' space' : ' spaces';
 
             $foundText = $data['found'];
             if ($foundText === null) {

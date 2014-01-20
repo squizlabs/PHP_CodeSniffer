@@ -914,8 +914,8 @@ class PHP_CodeSniffer_CLI
             if ($numStandards === 1) {
                 echo "The only coding standard installed is $lastStandard".PHP_EOL;
             } else {
-                $standardList = implode(', ', $installedStandards);
-                $standardList.= ' and '.$lastStandard;
+                $standardList  = implode(', ', $installedStandards);
+                $standardList .= ' and '.$lastStandard;
                 echo 'The installed coding standards are '.$standardList.PHP_EOL;
             }
         }

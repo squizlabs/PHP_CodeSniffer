@@ -83,7 +83,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
                 $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $className);
                 $declarationName        = substr($declarationName, 1);
                 $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
-                $fullQualifiedClassName.= '\\'.$tokens[$className]['content'];
+                $fullQualifiedClassName .= '\\'.$tokens[$className]['content'];
             }
 
             if ($declarationName === $fullQualifiedClassName) {

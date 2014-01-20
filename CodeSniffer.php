@@ -1329,8 +1329,8 @@ class PHP_CodeSniffer
         if ($contents === null && is_readable($filePath) === true) {
             $handle = fopen($filePath, 'r');
             if ($handle !== false) {
-                $firstContent = fgets($handle);
-                $firstContent.= fgets($handle);
+                $firstContent  = fgets($handle);
+                $firstContent .= fgets($handle);
                 fclose($handle);
 
                 if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {

@@ -57,8 +57,8 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
-            $error = 'Perl-style comments are not allowed. Use "// Comment."';
-            $error.= ' or "/* comment */" instead.';
+            $error  = 'Perl-style comments are not allowed. Use "// Comment."';
+            $error .= ' or "/* comment */" instead.';
             $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
         }
 
