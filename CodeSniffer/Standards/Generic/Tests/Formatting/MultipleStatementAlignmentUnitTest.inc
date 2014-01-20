@@ -221,3 +221,6 @@ $filterQuery = SquizRoadmap::getSearchQueryFilter($searchParams);
 Channels::addToBasket('itemid', $filterQuery);
 $query   = DAL::getDALQuery('SquizRoadmapItem', 'getItemIds');
 $results = DAL::getAssoc($query, 0);
+
+$path  = BaseSystem::getDataDir('SquizRoadmap').'/items/';
+$path .= FileSystem::getHashDir($itemid).'/'.$itemid;
