@@ -118,6 +118,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $maxPadding  = null;
         $stopped     = null;
         $lastCode    = $stackPtr;
+        $lastSemi    = null;
 
         $find = array_diff(PHP_CodeSniffer_Tokens::$assignmentTokens, array(T_DOUBLE_ARROW));
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
@@ -129,10 +130,24 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     }
 
                     $lastCode = $assign;
-                }
+
+                    if ($tokens[$assign]['code'] === T_SEMICOLON) {
+                        if ($tokens[$assign]['conditions'] === $tokens[$stackPtr]['conditions']) {
+                            if ($lastSemi !== null && $prevAssign !== null && $lastSemi > $prevAssign) {
+                                // This statement did not have an assignment operator in it.
+                                break;
+                            } else {
+                                $lastSemi = $assign;
+                            }
+                        } else {
+                            // Statement is in a different context, so the block is over.
+                            break;
+                        }
+                    }
+                }//end if
 
                 continue;
-            }
+            }//end if
 
             if ($assign !== $stackPtr) {
                 // Has to be nested inside the same conditions as the first assignment.
