@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Improved support for the PHP 5.5. classname::class syntax
+    -- PSR2 SwitchDeclarationSniff no longer throws errors when this syntax is used in CASE conditions
   - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
   - Generic FixmeSniff and TodoSniff now work correctly with accented characters
   - Fixed bug #20145 : Custom ruleset preferences directory over installed standard

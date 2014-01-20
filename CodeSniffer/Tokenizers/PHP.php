@@ -535,6 +535,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     }
                 }
 
+                // This is a special case for the PHP 5.5 classname::class syntax
+                // where "class" should be T_STRING instead of T_CLASS.
+                if ($newToken['code'] === T_CLASS
+                    && $finalTokens[($newStackPtr - 1)]['code'] === T_DOUBLE_COLON
+                ) {
+                    $newToken['code'] = T_STRING;
+                    $newToken['type'] = 'T_STRING';
+                }
+
                 $finalTokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
             }//end if
@@ -647,17 +656,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
-            } else if ($tokens[$i]['code'] === T_CLASS
-                && $tokens[($i - 1)]['code'] === T_DOUBLE_COLON
-            ) {
-                $tokens[$i]['code'] = T_STRING;
-                $tokens[$i]['type'] = 'T_STRING';
-
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $line = $tokens[$i]['line'];
-                    echo "\t* token $i on line $line changed from T_CLASS to T_STRING".PHP_EOL;
-                }
-            }//end if
+            }
 
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)
