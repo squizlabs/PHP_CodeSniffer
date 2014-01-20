@@ -253,7 +253,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
         $tokens = $phpcsFile->getTokens();
 
         $throws = array();
-        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+        foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
             }
@@ -276,6 +276,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 $error = 'Comment missing for @throws tag in function comment';
                 $phpcsFile->addError($error, $tag, 'EmptyThrows');
             } else {
+                // Any strings until the next tag belong to this comment.
+                if (isset($tokens[$commentStart]['comment_tags'][($pos + 1)]) === true) {
+                    $end = $tokens[$commentStart]['comment_tags'][($pos + 1)];
+                } else {
+                    $end = $tokens[$commentStart]['comment_closer'];
+                }
+
+                for ($i = ($tag + 3); $i < $end; $i++) {
+                    if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                        $comment .= ' '.$tokens[$i]['content'];
+                    }
+                }
+print_r($comment);
                 // Starts with a capital letter and ends with a fullstop.
                 $firstChar = $comment{0};
                 if (strtoupper($firstChar) !== $firstChar) {
