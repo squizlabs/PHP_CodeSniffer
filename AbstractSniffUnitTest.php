@@ -39,20 +39,39 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      */
     protected static $phpcs = null;
 
+    /**
+     * Extension of unit tests - can be overwritten by defining TEST_EXT
+     * MUST include the file extension
+     *
+     * @var string
+     */
+    protected static $testExtension = 'UnitTest.php';
+
+    /**
+     * Name of the standard being tested; is set based on this class name
+     *
+     * @var string
+     */
+    protected $testBaseName;
 
     /**
      * Sets up this unit test.
      *
      * @return void
      */
-    protected function setUp()
+    public static function setUpBeforeClass()
     {
-        if (self::$phpcs === null) {
-            self::$phpcs = new PHP_CodeSniffer();
+        if (defined('TEST_EXT')) {
+            self::$testExtension = TEST_EXT;
         }
 
-    }//end setUp()
+        self::$phpcs = new PHP_CodeSniffer();
+    }//end setUpBeforeClass()
 
+    protected function setUp()
+    {
+        $this->testBaseName = rtrim(get_class($this), self::$testExtension);
+    }
 
     /**
      * Should this test be skipped for some reason.
@@ -73,7 +92,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      * @return void
      * @throws PHPUnit_Framework_Error
      */
-    protected final function runTest()
+    public final function runTest()
     {
         // Skip this test if we can't run in this environment.
         if ($this->shouldSkipTest() === true) {
@@ -91,7 +110,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
         foreach ($di as $file) {
             $path = $file->getPathname();
-            if (rtrim('.php', $path) === $path ) {
+            if (rtrim($path, '.php') === $path ) {
                 $testFiles[] = $path;
             }
         }
@@ -99,7 +118,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // Get them in order.
         sort($testFiles);
 
-        self::$phpcs->process(array(), $standardName, array($sniffCode));
+        self::$phpcs->process(array(), $this->getStandardName(), array($this->getSniffCode()));
         self::$phpcs->setIgnorePatterns(array());
 
         $failureMessages = array();
@@ -310,6 +329,28 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
     }//end generateFailureMessages()
 
+    /**
+     * Gets the sniff code based on the implmenting class
+     *
+     * @return string
+     */
+    protected function getSniffCode()
+    {
+        // The code of the sniff we are testing.
+        $parts = explode('_', $this->testBaseName);
+
+        return $parts[0].'.'.$parts[2].'.'.$parts[3];
+    }//end getSniffCode()
+
+    /**
+     * Gets the standard name based on current class name
+     *
+     * @return string
+     */
+    protected function getStandardName()
+    {
+        return (defined('STANDARD_PATH')) ? STANDARD_PATH : substr($this->testBaseName, 0, strpos($this->testBaseName, '_'));
+    }//end getStandardName()
 
     /**
      * Returns the lines where errors should occur.
@@ -334,5 +375,3 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
 
 }//end class
-
-?>
