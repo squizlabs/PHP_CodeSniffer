@@ -69,6 +69,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
     /**
      * Tests the extending classes Sniff class.
      *
+     * @test
      * @return void
      * @throws PHPUnit_Framework_Error
      */
