@@ -79,38 +79,19 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
-        // The basis for determining file locations.
-        $basename = substr(get_class($this), 0, -8);
-
-        // The name of the coding standard we are testing.
-        $standardName = substr($basename, 0, strpos($basename, '_'));
-
-        // The code of the sniff we are testing.
-        $parts     = explode('_', $basename);
-        $sniffCode = $parts[0].'.'.$parts[2].'.'.$parts[3];
-
-        if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
-            // We have not been installed.
-            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
-            $testFileBase = $standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
-        } else {
-            // The name of the dummy file we are testing.
-            $testFileBase = dirname(__FILE__).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
+        if (!defined('TEST_PATH') || realpath(TEST_PATH) === false ) {
+            throw new \Exception('TEST_PATH is not defined');
         }
 
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.
         $testFiles = array();
-
-        $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
-        $di  = new DirectoryIterator($dir);
+        $di  = new DirectoryIterator(realpath(TEST_PATH));
 
         foreach ($di as $file) {
             $path = $file->getPathname();
-            if (substr($path, 0, strlen($testFileBase)) === $testFileBase) {
-                if ($path !== $testFileBase.'php') {
-                    $testFiles[] = $path;
-                }
+            if (rtrim('.php', $path) === $path ) {
+                $testFiles[] = $path;
             }
         }
 
