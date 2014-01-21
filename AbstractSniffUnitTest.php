@@ -106,10 +106,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.
         $testFiles = array();
-        $di  = new DirectoryIterator(realpath(TEST_PATH));
+        $files = $this->getAllFiles(realpath(TEST_PATH));
 
-        foreach ($di as $file) {
-            $path = $file->getPathname();
+        foreach ($files as $path) {
             if (rtrim($path, '.php') === $path ) {
                 $testFiles[] = $path;
             }
@@ -351,6 +350,29 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
     {
         return (defined('STANDARD_PATH')) ? STANDARD_PATH : substr($this->testBaseName, 0, strpos($this->testBaseName, '_'));
     }//end getStandardName()
+
+    /**
+     * Returns all files in a directory & its subdirs
+     *
+     * @param string Directory
+     * @return array
+     */
+    protected function getAllFiles($dir) {
+        $dir = rtrim($dir, DIRECTORY_SEPARATOR);
+        $items = glob($dir.DIRECTORY_SEPARATOR.'*');
+        $items = array_diff($items, array('.', '..'));
+
+        $files = array();
+
+        foreach ( $items as $key => $file ) {
+            if ( is_dir( $file ) ) {
+              $files = array_merge($files, $this->getAllFiles($file));
+              continue;
+            }
+            $files[] = $file;
+        }
+        return $files;
+    }
 
     /**
      * Returns the lines where errors should occur.
