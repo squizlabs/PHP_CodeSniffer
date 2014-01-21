@@ -766,7 +766,7 @@ class PHP_CodeSniffer
         if (is_file($ref) === false) {
             // See if this is a whole standard being referenced.
             $path = $this->getInstalledStandardPath($ref);
-            if (self::isPharFile($path) === true) {
+            if (self::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
                 // If the ruleset exists inside the phar file, use it.
                 if (file_exists($path.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                     $path = $path.DIRECTORY_SEPARATOR.'ruleset.xml';
@@ -1976,7 +1976,7 @@ class PHP_CodeSniffer
 
         if ($standardsDir === '') {
             $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
-            $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
+            $configPaths    = self::getConfigData('installed_paths');
             if ($configPaths !== null) {
                 $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
             }
@@ -2063,7 +2063,7 @@ class PHP_CodeSniffer
     public static function getInstalledStandardPath($standard)
     {
         $installedPaths = array(dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR.'Standards');
-        $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
+        $configPaths    = self::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }
@@ -2148,7 +2148,7 @@ class PHP_CodeSniffer
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
             ) {
-                $error = "Config file $configFile is not writable";
+                $error = 'Config file '.$configFile.' is not writable';
                 throw new PHP_CodeSniffer_Exception($error);
             }
         }

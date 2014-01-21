@@ -198,6 +198,17 @@ function getStandardWhitelist($standard=null)
             $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/IncorrectPatternException.php';
             $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard;
             $whitelist[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml';
+
+            // Finally, add in the dependent ruleset.xml files.
+            $rulesets   = findDependentRuleset($standard);
+            $extraFiles = array();
+            foreach ($rulesets as $ruleset) {
+                $rStandard  = str_replace(dirname(dirname($ruleset)).'/', '', dirname($ruleset));
+                $extraFiles = array_merge($extraFiles, getStandardWhitelist($rStandard));
+            }
+
+            $whitelist = array_merge($whitelist, $rulesets);
+            $whitelist = array_merge($whitelist, $extraFiles);
         } else {
             echo 'Unable to build phar file with non-existing standard: '.$standard."\n";
             exit(1);
@@ -439,6 +450,42 @@ function findDependencies($file, array &$whitelist)
     }
 
 }//end findDependencies()
+
+
+/**
+ * Return a list a dependent ruleset files.
+ *
+ * @param string $standard The standard to use.
+ *
+ * @return array
+ */
+function findDependentRuleset($standard=null)
+{
+    $files       = array();
+    if (PHP_CodeSniffer::isInstalledStandard($standard) === true) {
+        $rulesetPath = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$standard.'/ruleset.xml';
+        $ruleset     = simplexml_load_string(file_get_contents($rulesetPath));
+        if ($ruleset === false) {
+            return $files;
+        }
+
+        foreach ($ruleset->rule as $rule) {
+            if (isset($rule['ref']) === false) {
+                continue;
+            }
+
+            if (PHP_CodeSniffer::isInstalledStandard($rule['ref']) === true) {
+                $files[] = dirname(dirname(__FILE__)).'/CodeSniffer/Standards/'.$rule['ref'].'/ruleset.xml';
+
+                // Recursive.
+                $files = array_merge($files, findDependentRuleset($rule['ref']));
+            }
+        }
+    }//end if
+
+    return $files;
+
+}//end findDependentRuleset()
 
 
 /**
