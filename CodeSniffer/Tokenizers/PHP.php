@@ -724,7 +724,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
-            }
+            }//end if
 
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)
