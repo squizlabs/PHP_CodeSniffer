@@ -49,4 +49,10 @@ foreach ($cookies as $cookie)
 foreach ($stringParade as $hit)
     $hitParade[] = $hit + 0; //cast to integer
 
-?>
+if ($foo) :
+    echo 'true';
+elseif ($something) :
+    echo 'foo';
+else:
+    echo 'false';
+endif;

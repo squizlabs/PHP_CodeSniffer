@@ -180,6 +180,12 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
                     $requiredOps++;
 
+                    // When the instanceof operator is used with another operator
+                    // like ===, you can get more ops than are required.
+                    if ($foundOps > $requiredOps) {
+                        $foundOps = $requiredOps;
+                    }
+
                     // If we get to here and we have not found the right number of
                     // comparison operators, then we must have had an implicit
                     // true operation ie. if ($a) instead of the required

@@ -71,6 +71,7 @@ switch (0) {
 switch ($foo) {
     case Foo::ONE:
     case Foo::TWO:
+    case Foo::Class:
         break;
 }
 
