@@ -497,7 +497,8 @@ function findDependentRuleset($standard=null)
  */
 function addStub(&$phar)
 {
-    $stub  = '<?php error_reporting(E_ALL | E_STRICT);';
+    $stub  = '#!/usr/bin/env php'."\n";
+    $stub .= '<?php error_reporting(E_ALL | E_STRICT);';
     $stub .= '@include_once "PHP/Timer.php";';
     $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
     $stub .= '    PHP_Timer::start();';
