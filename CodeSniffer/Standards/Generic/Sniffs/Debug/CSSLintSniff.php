@@ -90,10 +90,10 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
 
             $line    = (int) $matches[2];
             $message = 'csslint says: '.$output[($i + 1)];
-            // 1-st line is message with error line and error code.
-            // 2-nd error message.
-            // 3-d wrong line in file.
-            // 4-th empty line.
+            // First line is message with error line and error code.
+            // Second is error message.
+            // Third is wrong line in file.
+            // Fourth is empty line.
             $i += 4;
 
             $lineToken = null;
@@ -113,5 +113,3 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

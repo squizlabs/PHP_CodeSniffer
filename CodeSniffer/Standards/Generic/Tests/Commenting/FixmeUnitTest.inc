@@ -1,7 +1,7 @@
 <?php
 /**
  * FIXME: really need to fix this before I commit.
- *
+ * FIXME
  */
 
 // FIXME: this is broken, don't forget to fix it
@@ -19,4 +19,5 @@ Debug::bam('test');
 // To do this, use a function!
 // nofixme! NOFIXME! NOfixme!
 //FIXME.
-?>
+//éfixme
+//fixmeé

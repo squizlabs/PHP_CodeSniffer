@@ -71,4 +71,3 @@ class Generic_Sniffs_Files_InlineHTMLSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-

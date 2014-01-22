@@ -115,11 +115,9 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
                     $phpcsFile->addWarning($error, $stackPtr, 'Found');
                 }
             }
-        }
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

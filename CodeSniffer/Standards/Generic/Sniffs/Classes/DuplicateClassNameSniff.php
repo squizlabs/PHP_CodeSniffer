@@ -116,7 +116,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
                                                          'line' => $tokens[$stackPtr]['line'],
                                                         );
                 }
-            }
+            }//end if
 
             $stackPtr = $phpcsFile->findNext($findTokens, ($stackPtr + 1));
         }//end while
@@ -125,5 +125,3 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-?>

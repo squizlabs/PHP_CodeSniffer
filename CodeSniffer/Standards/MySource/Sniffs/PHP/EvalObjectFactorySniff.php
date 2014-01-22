@@ -122,5 +122,3 @@ class MySource_Sniffs_PHP_EvalObjectFactorySniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

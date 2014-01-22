@@ -84,5 +84,3 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
 
 
 }//end class
-
-?>

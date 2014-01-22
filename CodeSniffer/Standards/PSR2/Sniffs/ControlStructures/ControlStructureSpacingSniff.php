@@ -70,7 +70,10 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                 $gap   = strlen($tokens[($parenOpener + 1)]['content']);
                 $error = 'Expected 0 spaces after opening bracket; %s found';
                 $data  = array($gap);
-                $phpcsFile->addError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
+                }
             }
 
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']
@@ -79,7 +82,10 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                 $gap   = strlen($tokens[($parenCloser - 1)]['content']);
                 $error = 'Expected 0 spaces before closing bracket; %s found';
                 $data  = array($gap);
-                $phpcsFile->addError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
+                $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
+                }
             }
         }//end if
 
@@ -87,5 +93,3 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
 
 
 }//end class
-
-?>

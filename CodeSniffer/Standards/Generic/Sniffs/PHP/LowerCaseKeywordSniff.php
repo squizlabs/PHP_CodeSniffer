@@ -126,12 +126,14 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                       strtolower($keyword),
                       $keyword,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($keyword));
+            }
         }
 
     }//end process()
 
 
 }//end class
-
-?>

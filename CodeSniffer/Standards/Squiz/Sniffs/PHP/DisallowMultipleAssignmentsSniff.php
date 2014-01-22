@@ -97,7 +97,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 // We found our variable.
                 break;
             }
-        }
+        }//end for
 
         if ($varToken <= 0) {
             // Didn't find a variable.
@@ -155,7 +155,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 $prevLine = $tokens[$i]['line'];
                 break;
             }
-        }
+        }//end for
 
         // Ignore the first part of FOR loops as we are allowed to
         // assign variables there even though the variable is not the
@@ -176,5 +176,3 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
 
 }//end class
-
-?>

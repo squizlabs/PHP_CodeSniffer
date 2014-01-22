@@ -69,13 +69,12 @@ class Squiz_Sniffs_CSS_SemicolonSpacingSniff implements PHP_CodeSniffer_Sniff
         }
 
         if ($tokens[($semicolon - 1)]['code'] === T_WHITESPACE) {
-            $length  = strlen($tokens[($semicolon - 1)]['content']);
-            $error = 'Expected 0 spaces before semicolon in style definition; %s found';
-            $data  = array($length);
+            $length = strlen($tokens[($semicolon - 1)]['content']);
+            $error  = 'Expected 0 spaces before semicolon in style definition; %s found';
+            $data   = array($length);
             $phpcsFile->addError($error, $stackPtr, 'SpaceFound', $data);
         }
 
     }//end process()
 
 }//end class
-?>

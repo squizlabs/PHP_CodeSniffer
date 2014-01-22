@@ -87,7 +87,7 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
 
         // Find the required indent based on the ident of the previous line.
         $assignmentIndent = 0;
-        $prevLine         = $tokens[$prev]['line'];
+        $prevLine = $tokens[$prev]['line'];
         for ($i = ($prev - 1); $i >= 0; $i--) {
             if ($tokens[$i]['line'] !== $prevLine) {
                 $i++;
@@ -116,5 +116,3 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
     }//end process()
 
 }//end class
-
-?>

@@ -66,5 +66,3 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniff
 
 
 }//end class
-
-?>

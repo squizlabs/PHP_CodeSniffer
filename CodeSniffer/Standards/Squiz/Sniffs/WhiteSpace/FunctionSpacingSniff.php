@@ -82,22 +82,24 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                 continue;
             } else {
                 $nextLineToken = ($i + 1);
+                if (isset($tokens[$nextLineToken]) === false) {
+                    $nextLineToken = null;
+                }
+
                 break;
             }
         }
 
-        if (is_null($nextLineToken) === true) {
-            // Never found the next line, which means
-            // there are 0 blank lines after the function.
-            $foundLines = 0;
-        } else {
-            $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextLineToken + 1), null, true);
+        $foundLines = 0;
+        if (is_null($nextLineToken) === false) {
+            $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextLineToken + 1), null, true);
             if ($nextContent === false) {
                 // We are at the end of the file.
-                $foundLines = 0;
-            } else {
-                $foundLines = ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
+                $nextContent = ($phpcsFile->numTokens - 1);
+                $foundLines++;
             }
+
+            $foundLines += ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
         }
 
         if ($foundLines !== $this->spacing) {
@@ -111,8 +113,45 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                        $this->spacing,
                        $foundLines,
                       );
-            $phpcsFile->addError($error, $closer, 'After', $data);
-        }
+
+            $fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1));
+                if ($foundLines < $this->spacing) {
+                    if ($nextSpace === false || $foundLines === 0) {
+                        // Account for a comment after the closing brace.
+                        $nextSpace = $closer;
+                        if (isset($tokens[($closer + 1)]) === true
+                            && $tokens[($closer + 1)]['code'] === T_COMMENT
+                        ) {
+                            $nextSpace++;
+                        }
+                    }
+
+                    $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
+                    $phpcsFile->fixer->addContent($nextSpace, $padding);
+                } else {
+                    $spacing = $this->spacing;
+                    if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
+                        // Account for a comment after the closing brace.
+                        $nextSpace++;
+                        $spacing--;
+                    }
+
+                    if ($nextContent === ($phpcsFile->numTokens - 1)) {
+                        $spacing--;
+                    }
+
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $spacing));
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
+        }//end if
 
         /*
             Check the number of blank lines
@@ -132,18 +171,19 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         if (is_null($prevLineToken) === true) {
             // Never found the previous line, which means
             // there are 0 blank lines before the function.
-            $foundLines = 0;
+            $foundLines  = 0;
+            $prevContent = 0;
         } else {
-            $prevContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT), $prevLineToken, null, true);
+            $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $prevLineToken, null, true);
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
             // the previous function and no blank lines before this one as well.
             $currentLine = $tokens[$stackPtr]['line'];
             $prevLine    = ($tokens[$prevContent]['line'] - 1);
-            $i           = ($stackPtr - 1);
-            $foundLines  = 0;
-            while ($currentLine != $prevLine && $currentLine > 1 && $i > 0) {
+            $i = ($stackPtr - 1);
+            $foundLines = 0;
+            while ($currentLine !== $prevLine && $currentLine > 1 && $i > 0) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];
                     if ($tokens[$scopeCondition]['code'] === T_FUNCTION) {
@@ -182,12 +222,35 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                        $this->spacing,
                        $foundLines,
                       );
-            $phpcsFile->addError($error, $stackPtr, 'Before', $data);
-        }
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($prevContent === 0) {
+                    $nextSpace = 0;
+                } else {
+                    $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($prevContent + 1), $stackPtr);
+                    if ($nextSpace === false) {
+                        $nextSpace = ($stackPtr - 1);
+                    }
+                }
+
+                if ($foundLines < $this->spacing) {
+                    $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
+                    $phpcsFile->fixer->addContent($nextSpace, $padding);
+                } else {
+                    $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing));
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }//end if
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

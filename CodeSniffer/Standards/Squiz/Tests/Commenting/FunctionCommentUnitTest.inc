@@ -612,4 +612,19 @@ public function usesCallable(callable $cb) {
     $cb();
 }
 
-?>
+/**
+ * Creates a map of tokens => line numbers for each token.
+ *
+ * @param array  &$tokens   The array of tokens to process.
+ * @param object $tokenizer The tokenizer being used to process this file.
+ * @param string $eolChar   The EOL character
+ *                          to use for splitting strings.
+ *
+ * @return void
+ * @throws Exception If something really bad
+ *                   happens while doing foo.
+ */
+public function foo(array &$tokens, $tokenizer, $eolChar)
+{
+
+}//end foo()

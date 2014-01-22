@@ -81,5 +81,3 @@ class Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff implements PHP_CodeSniff
 
 
 }//end class
-
-?>

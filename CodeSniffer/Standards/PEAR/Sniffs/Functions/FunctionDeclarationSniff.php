@@ -224,7 +224,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
             $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
-                $open         = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                $open = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
                 $closeBracket = $tokens[$open]['parenthesis_closer'];
 
                 $prev = $phpcsFile->findPrevious(
@@ -244,8 +244,8 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         }//end if
 
         // Each line between the parenthesis should be indented 4 spaces.
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
-        $lastLine     = $tokens[$openBracket]['line'];
+        $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
+        $lastLine    = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             if ($tokens[$i]['line'] !== $lastLine) {
                 if ($i === $tokens[$stackPtr]['parenthesis_closer']
@@ -333,5 +333,3 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-?>

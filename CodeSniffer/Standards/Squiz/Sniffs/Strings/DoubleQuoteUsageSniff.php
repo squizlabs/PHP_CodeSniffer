@@ -64,10 +64,12 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $workingString = $tokens[$stackPtr]['content'];
+        $workingString   = $tokens[$stackPtr]['content'];
+        $lastStringToken = $stackPtr;
         $i = ($stackPtr + 1);
         while ($tokens[$i]['code'] === $tokens[$stackPtr]['code']) {
             $workingString .= $tokens[$i]['content'];
+            $lastStringToken  = $i;
             $i++;
         }
 
@@ -96,16 +98,6 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             return;
         }//end if
 
-        // Work through the following tokens, in case this string is stretched
-        // over multiple Lines.
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['type'] !== 'T_CONSTANT_ENCAPSED_STRING') {
-                break;
-            }
-
-            $workingString .= $tokens[$i]['content'];
-        }
-
         $allowedChars = array(
                          '\0',
                          '\n',
@@ -125,12 +117,22 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
         }
 
         $error = 'String %s does not require double quotes; use single quotes instead';
-        $data  = array($workingString);
-        $phpcsFile->addError($error, $stackPtr, 'NotRequired', $data);
+        $data  = array(str_replace("\n", '\n', $workingString));
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
+
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            $innerContent = trim($workingString, '"');
+            $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
+            while ($lastStringToken !== $stackPtr) {
+                $phpcsFile->fixer->replaceToken($lastStringToken, '');
+                $lastStringToken--;
+            }
+
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end process()
 
 
 }//end class
-
-?>

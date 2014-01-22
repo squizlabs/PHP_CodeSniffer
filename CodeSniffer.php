@@ -24,6 +24,10 @@ if (class_exists('PHP_CodeSniffer_File', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_File not found');
 }
 
+if (class_exists('PHP_CodeSniffer_Fixer', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Fixer not found');
+}
+
 if (class_exists('PHP_CodeSniffer_Tokens', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Tokens not found');
 }
@@ -69,14 +73,14 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '1.5.2';
+    const VERSION = '1.6.0a1';
 
     /**
-     * Package stability; either stable or beta.
+     * Package stability; either stable, beta or alpha.
      *
      * @var string
      */
-    const STABILITY = 'stable';
+    const STABILITY = 'alpha';
 
     /**
      * The file or directory that is currently being processed.
@@ -234,6 +238,10 @@ class PHP_CodeSniffer
 
         if (defined('PHPCS_DEFAULT_WARN_SEV') === false) {
             define('PHPCS_DEFAULT_WARN_SEV', 5);
+        }
+
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
         }
 
         // Set default CLI object in case someone is running us
@@ -399,9 +407,9 @@ class PHP_CodeSniffer
         }
 
         // Reset the members.
-        $this->listeners       = array();
-        $this->sniffs          = array();
-        $this->ruleset         = array();
+        $this->listeners = array();
+        $this->sniffs    = array();
+        $this->ruleset   = array();
         $this->_tokenListeners = array();
         self::$rulesetDirs     = array();
 
@@ -477,12 +485,12 @@ class PHP_CodeSniffer
         }
 
         $numProcessed = 0;
-        $dots         = 0;
-        $maxLength    = strlen($numFiles);
-        $lastDir      = '';
+        $dots      = 0;
+        $maxLength = strlen($numFiles);
+        $lastDir   = '';
         foreach ($todo as $file) {
             $this->file = $file;
-            $currDir = dirname($file);
+            $currDir    = dirname($file);
             if ($lastDir !== $currDir) {
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
@@ -566,7 +574,7 @@ class PHP_CodeSniffer
         $includedSniffs = array();
         $excludedSniffs = array();
 
-        $rulesetDir          = dirname($rulesetPath);
+        $rulesetDir = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.'/Sniffs') === true) {
@@ -1386,7 +1394,8 @@ class PHP_CodeSniffer
                 $filename = (string) $filename;
             }
 
-            $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+            $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
+            $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
@@ -1405,6 +1414,7 @@ class PHP_CodeSniffer
         if (PHP_CODESNIFFER_INTERACTIVE === false) {
             // Cache the report data for this file so we can unset it to save memory.
             $this->reporting->cacheFileReport($phpcsFile, $cliValues);
+            $phpcsFile->cleanUp();
             return $phpcsFile;
         }
 
@@ -1424,7 +1434,7 @@ class PHP_CodeSniffer
 
             $reportClass = $this->reporting->factory('full');
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
-            $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
+            $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 
             echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
             $input = fgets(STDIN);
@@ -1485,7 +1495,6 @@ class PHP_CodeSniffer
         );
 
         $phpcsFile->start($contents);
-        $phpcsFile->cleanUp();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $timeTaken = (time() - $startTime);
@@ -1814,7 +1823,7 @@ class PHP_CodeSniffer
 
         if ($strict === true) {
             // Check that there are not two capital letters next to each other.
-            $length          = strlen($string);
+            $length = strlen($string);
             $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {
@@ -1966,7 +1975,7 @@ class PHP_CodeSniffer
      *                                look in its default locations.
      *
      * @return array
-     * @see isInstalledStandard()
+     * @see    isInstalledStandard()
      */
     public static function getInstalledStandards(
         $includeGeneric=false,
@@ -2020,7 +2029,7 @@ class PHP_CodeSniffer
      * @param string $standard The name of the coding standard.
      *
      * @return boolean
-     * @see getInstalledStandards()
+     * @see    getInstalledStandards()
      */
     public static function isInstalledStandard($standard)
     {
@@ -2095,8 +2104,8 @@ class PHP_CodeSniffer
      * @param string $key The name of the config value.
      *
      * @return string|null
-     * @see setConfigData()
-     * @see getAllConfigData()
+     * @see    setConfigData()
+     * @see    getAllConfigData()
      */
     public static function getConfigData($key)
     {
@@ -2130,7 +2139,7 @@ class PHP_CodeSniffer
      *                           data to the config file.
      *
      * @return boolean
-     * @see getConfigData()
+     * @see    getConfigData()
      * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
@@ -2184,7 +2193,7 @@ class PHP_CodeSniffer
      * Get all config data in an array.
      *
      * @return string
-     * @see getConfigData()
+     * @see    getConfigData()
      */
     public static function getAllConfigData()
     {
@@ -2305,5 +2314,3 @@ class PHP_CodeSniffer
 
 
 }//end class
-
-?>

@@ -65,5 +65,3 @@ class Generic_Sniffs_Formatting_NoSpaceAfterCastSniff implements PHP_CodeSniffer
 
 
 }//end class
-
-?>

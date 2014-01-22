@@ -82,5 +82,3 @@ class Squiz_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

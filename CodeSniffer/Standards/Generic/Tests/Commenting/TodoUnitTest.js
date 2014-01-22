@@ -1,7 +1,7 @@
-<?php
+
 /**
  * TODO: Write this comment
- *
+ * TODO
  */
 
 // TODO: remove this.
@@ -19,4 +19,5 @@ alert('test');
 // To do this, use a function!
 // notodo! NOTODO! NOtodo!
 //TODO.
-?>
+//étodo
+//todoé

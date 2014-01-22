@@ -105,5 +105,3 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

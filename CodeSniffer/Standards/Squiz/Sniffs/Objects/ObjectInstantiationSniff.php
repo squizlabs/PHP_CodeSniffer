@@ -79,5 +79,3 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
 
 
 }//end class
-
-?>

@@ -79,7 +79,17 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         $braceLine   = $tokens[$curlyBrace]['line'];
         if ($braceLine === $classLine) {
             $error = 'Opening brace of a %s must be on the line after the definition';
-            $phpcsFile->addError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
+            $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken(($curlyBrace - 1), '');
+                }
+
+                $phpcsFile->fixer->addNewlineBefore($curlyBrace);
+                $phpcsFile->fixer->endChangeset();
+            }
+
             return;
         } else if ($braceLine > ($classLine + 1)) {
             $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
@@ -90,11 +100,14 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                      );
             $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
             return;
-        }
+        }//end if
 
         if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening %s brace must be on a line by itself';
-            $phpcsFile->addError($error, $curlyBrace, 'OpenBraceNotAlone', $errorData);
+            $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNotAlone', $errorData);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewline($curlyBrace);
+            }
         }
 
         if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
@@ -113,13 +126,20 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                           $expected,
                           $spaces,
                          );
-                $phpcsFile->addError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
+
+                $fix = $phpcsFile->addFixableError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $indent = str_repeat(' ', $expected);
+                    if ($spaces === 0) {
+                        $phpcsFile->fixer->addContentBefore($curlyBrace, $indent);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($curlyBrace - 1), $indent);
+                    }
+                }
             }
-        }
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

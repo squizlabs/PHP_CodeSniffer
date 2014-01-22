@@ -6,22 +6,37 @@
  <!-- Include the whole PEAR standard -->
  <rule ref="PEAR"/>
 
- <!-- Include most of the Squiz standard -->
- <rule ref="Squiz">
-  <exclude name="Squiz.Classes.ClassFileName"/>
-  <exclude name="Squiz.Classes.ValidClassName"/>
-  <exclude name="Squiz.Commenting.ClassComment"/>
-  <exclude name="Squiz.Commenting.FileComment"/>
-  <exclude name="Squiz.Commenting.FunctionComment"/>
-  <exclude name="Squiz.Commenting.VariableComment"/>
-  <exclude name="Squiz.ControlStructures.SwitchDeclaration"/>
-  <exclude name="Squiz.Files.FileExtension"/>
-  <exclude name="Squiz.NamingConventions.ConstantCase"/>
+ <!-- Include some sniffs from other standards that don't conflict with PEAR -->
+ <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
+ <rule ref="Squiz.Arrays.ArrayDeclaration" />
+ <rule ref="Squiz.Commenting.ClosingDeclarationComment" />
+ <rule ref="Squiz.Commenting.DocCommentAlignment" />
+ <rule ref="Squiz.Commenting.LongConditionClosingComment" />
+ <rule ref="Squiz.Commenting.PostStatementComment" />
+ <rule ref="Generic.Commenting.Todo"/>
+ <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+ <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+ <rule ref="Generic.Formatting.SpaceAfterCast"/>
+ <rule ref="Generic.NamingConventions.ConstructorName"/>
+ <rule ref="Generic.PHP.DeprecatedFunctions"/>
+ <rule ref="Generic.PHP.LowerCaseKeyword"/>
+ <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+ <rule ref="PSR2.Files.EndFileNewline"/>
+ <rule ref="Zend.Files.ClosingTag"/>
+
+ <!-- Only one argument per line in multi-line function calls -->
+ <rule ref="PEAR.Functions.FunctionCallSignature">
+  <properties>
+   <property name="allowMultipleArguments" value="false"/>
+  </properties>
  </rule>
 
- <!-- We allow variables to be used inside double quoted strings -->
- <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
-  <severity>0</severity>
+ <!-- Have 8 chars padding maximum and always show as errors -->
+ <rule ref="Generic.Formatting.MultipleStatementAlignment">
+  <properties>
+   <property name="maxPadding" value="8"/>
+   <property name="error" value="true"/>
+  </properties>
  </rule>
 
-</ruleset>
+ </ruleset>

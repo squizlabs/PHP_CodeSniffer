@@ -153,11 +153,11 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 $start = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
             } else {
                 $start = $tokens[$end]['parenthesis_opener'];
-            }
+            }//end if
         } else {
             $start = $tokens[$stackPtr]['parenthesis_opener'];
             $end   = $tokens[$stackPtr]['parenthesis_closer'];
-        }
+        }//end if
 
         $requiredOps = 0;
         $foundOps    = 0;
@@ -179,6 +179,12 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
             if ($phpcsFile->tokenizerType !== 'JS') {
                 if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
                     $requiredOps++;
+
+                    // When the instanceof operator is used with another operator
+                    // like ===, you can get more ops than are required.
+                    if ($foundOps > $requiredOps) {
+                        $foundOps = $requiredOps;
+                    }
 
                     // If we get to here and we have not found the right number of
                     // comparison operators, then we must have had an implicit
@@ -206,5 +212,3 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
 
 }//end class
-
-?>

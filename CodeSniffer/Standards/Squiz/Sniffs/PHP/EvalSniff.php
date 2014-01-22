@@ -61,5 +61,3 @@ class Squiz_Sniffs_PHP_EvalSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

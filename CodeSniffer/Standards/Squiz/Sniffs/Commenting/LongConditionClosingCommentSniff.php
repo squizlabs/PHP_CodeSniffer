@@ -159,7 +159,16 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
             if ($lineDifference >= $this->lineLimit) {
                 $error = 'End comment for long condition not found; expected "%s"';
                 $data  = array($expected);
-                $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Missing', $data);
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                    if ($next !== false && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
+                        $expected .= $phpcsFile->eolChar;
+                    }
+
+                    $phpcsFile->fixer->addContent($stackPtr, $expected);
+                }
             }
 
             return;
@@ -178,7 +187,12 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                       $expected,
                       $found,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'Invalid', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($comment, $expected);
+            }
+
             return;
         }
 
@@ -186,6 +200,3 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 
 
 }//end class
-
-
-?>

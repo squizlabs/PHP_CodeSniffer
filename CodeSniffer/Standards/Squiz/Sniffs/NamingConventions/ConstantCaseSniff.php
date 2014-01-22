@@ -61,5 +61,3 @@ class Squiz_Sniffs_NamingConventions_ConstantCaseSniff extends Generic_Sniffs_PH
 
 
 }//end class
-
-?>

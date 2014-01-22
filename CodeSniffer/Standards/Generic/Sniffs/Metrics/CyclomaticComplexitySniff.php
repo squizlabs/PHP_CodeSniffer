@@ -125,5 +125,3 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

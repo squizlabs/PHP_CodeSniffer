@@ -222,5 +222,3 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

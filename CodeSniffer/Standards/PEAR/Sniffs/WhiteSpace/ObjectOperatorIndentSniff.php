@@ -170,5 +170,3 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

@@ -136,4 +136,9 @@ switch ($moo)
         $moo = 'moo';
     break;
 }
+
+do {
+}
+while (true);
+
 ?>

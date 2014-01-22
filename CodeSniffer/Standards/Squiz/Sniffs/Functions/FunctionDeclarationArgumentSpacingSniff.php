@@ -66,14 +66,14 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
     {
         $this->equalsSpacing = (int) $this->equalsSpacing;
 
-        $tokens       = $phpcsFile->getTokens();
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $tokens      = $phpcsFile->getTokens();
+        $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
         $this->processBracket($phpcsFile, $openBracket);
 
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
             $use = $phpcsFile->findNext(T_USE, ($tokens[$openBracket]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
-                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
+                $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
                 $this->processBracket($phpcsFile, $openBracket);
             }
         }
@@ -120,8 +120,17 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                               $tokens[$nextParam]['content'],
                               $spacesBefore,
                              );
-                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeEquals', $data);
-                }
+
+                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeEquals', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $padding = str_repeat(' ', $this->equalsSpacing);
+                        if ($spacesBefore === 0) {
+                            $phpcsFile->fixer->addContentBefore($nextToken, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($nextToken - 1), $padding);
+                        }
+                    }
+                }//end if
 
                 $spacesAfter = 0;
                 if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
@@ -134,8 +143,17 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                               $tokens[$nextParam]['content'],
                               $spacesAfter,
                              );
-                    $phpcsFile->addError($error, $nextToken, 'SpaceAfterDefault', $data);
-                }
+
+                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceAfterDefault', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $padding = str_repeat(' ', $this->equalsSpacing);
+                        if ($spacesAfter === 0) {
+                            $phpcsFile->fixer->addContent($nextToken, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($nextToken + 1), $padding);
+                        }
+                    }
+                }//end if
             }//end if
 
             // Find and check the comma (if there is one).
@@ -148,7 +166,11 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                               $tokens[$nextParam]['content'],
                               strlen($tokens[($nextComma - 1)]['content']),
                              );
-                    $phpcsFile->addError($error, $nextToken, 'SpaceBeforeComma', $data);
+
+                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
+                    }
                 }
             }
 
@@ -213,13 +235,20 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                       $arg,
                                       $gap,
                                      );
-                            $phpcsFile->addError($error, $nextToken, 'SpacingBeforeArg', $data);
+
+                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpacingBeforeArg', $data);
+                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken($whitespace, ' ');
+                            }
                         }
                     }//end if
                 } else {
                     $error = 'Expected 1 space between comma and argument "%s"; 0 found';
                     $data  = array($arg);
-                    $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeArg', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeArg', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->addContent($whitespace, ' ');
+                    }
                 }//end if
             } else {
                 // First argument in function declaration.
@@ -265,7 +294,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                   $gap,
                                  );
                         $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
-                    }
+                    }//end if
                 }//end if
             }//end if
 
@@ -296,5 +325,3 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
 
 }//end class
-
-?>

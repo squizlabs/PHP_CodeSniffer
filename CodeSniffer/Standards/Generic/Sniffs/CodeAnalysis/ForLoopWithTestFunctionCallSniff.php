@@ -109,5 +109,3 @@ class Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff implements PH
 
 
 }//end class
-
-?>

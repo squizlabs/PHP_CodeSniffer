@@ -88,5 +88,3 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends PHP_CodeSniffer_Stand
 
 
 }//end class
-
-?>

@@ -49,7 +49,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
     {
         return array(
                 T_COMMENT,
-                T_DOC_COMMENT,
+                T_DOC_COMMENT_OPEN_TAG,
                );
 
     }//end register()
@@ -71,7 +71,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         // If this is a function/class/interface doc block comment, skip it.
         // We are only interested in inline doc block comments, which are
         // not allowed.
-        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT) {
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
             $nextToken = $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($stackPtr + 1),
@@ -122,16 +122,15 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                     return;
                 }
 
-                // Only error once per comment.
-                if (substr($tokens[$stackPtr]['content'], 0, 3) === '/**') {
-                    $error  = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                if ($tokens[$stackPtr]['content'] === '/**') {
+                    $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
                     $phpcsFile->addError($error, $stackPtr, 'DocBlock');
                 }
             }//end if
         }//end if
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
-            $error  = 'Perl-style comments are not allowed; use "// Comment" instead';
+            $error = 'Perl-style comments are not allowed; use "// Comment" instead';
             $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
         }
 
@@ -243,7 +242,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                 $ender .= ' '.$closerName.',';
             }
 
-            $ender = rtrim($ender, ',');
+            $ender = trim($ender, ' ,');
             $data  = array($ender);
             $phpcsFile->addError($error, $stackPtr, 'InvalidEndChar', $data);
         }
@@ -267,6 +266,3 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-
-?>

@@ -20,10 +20,12 @@
 * send a note to license@php.net so we can mail you a copy immediately.
 * @package    SquizCMS
 * @package    ADDITIONAL PACKAGE TAG
-* @subpackage not_camelcased
+* @subpkg     not_camelcased
 * @author     Antônio Carlos Venâncio Júnior <foreign@character.net>
 * @author
 * @copyright  1997~1994 The PHP Group
+* @copyright  1994-1997 The PHP Group
+* @copyright  The PHP Group
 * @license    http://www.php.net/license/3_0.txt
 * @summary    An unknown summary tag
 *

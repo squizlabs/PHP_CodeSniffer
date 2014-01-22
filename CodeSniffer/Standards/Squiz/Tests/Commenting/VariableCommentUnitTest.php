@@ -40,34 +40,18 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                6   => 1,
-                8   => 1,
                 21  => 1,
                 24  => 1,
-                28  => 1,
-                38  => 1,
-                41  => 1,
-                53  => 1,
                 56  => 1,
-                63  => 1,
                 64  => 1,
-                69  => 2,
                 73  => 1,
-                81  => 1,
-                82  => 1,
                 84  => 1,
-                90  => 1,
-                92  => 1,
-                128 => 1,
+                131 => 1,
                 137 => 1,
                 145 => 1,
                 153 => 1,
-                158 => 1,
-                159 => 1,
                 163 => 1,
                 178 => 1,
-                180 => 1,
-                184 => 1,
                );
 
     }//end getErrorList()
@@ -83,13 +67,9 @@ class Squiz_Tests_Commenting_VariableCommentUnitTest extends AbstractSniffUnitTe
      */
     public function getWarningList()
     {
-        return array(
-                93 => 1,
-               );
+        return array(93 => 1);
 
     }//end getWarningList()
 
 
 }//end class
-
-?>

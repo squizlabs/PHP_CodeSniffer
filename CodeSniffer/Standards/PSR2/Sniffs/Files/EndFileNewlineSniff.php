@@ -64,34 +64,49 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Skip to the end of the file.
-        $tokens   = $phpcsFile->getTokens();
-        $stackPtr = ($phpcsFile->numTokens - 1);
+        $tokens    = $phpcsFile->getTokens();
+        $lastToken = ($phpcsFile->numTokens - 1);
 
         // Hard-coding the expected \n in this sniff as it is PSR-2 specific and
         // PSR-2 enforces the use of unix style newlines.
-        if (substr($tokens[$stackPtr]['content'], -1) !== "\n") {
+        if (substr($tokens[$lastToken]['content'], -1) !== "\n") {
             $error = 'Expected 1 newline at end of file; 0 found';
-            $phpcsFile->addError($error, $stackPtr, 'NoneFound');
+            $fix   = $phpcsFile->addFixableError($error, $lastToken, 'NoneFound');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewline($lastToken);
+            }
+
             return;
         }
 
         // Go looking for the last non-empty line.
-        $lastLine = $tokens[$stackPtr]['line'];
-        while ($tokens[$stackPtr]['code'] === T_WHITESPACE) {
-            $stackPtr--;
+        $lastLine = $tokens[$lastToken]['line'];
+        if ($tokens[$lastToken]['code'] === T_WHITESPACE) {
+            $lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
+        } else {
+            $lastCode = $lastToken;
         }
 
-        $lastCodeLine = $tokens[$stackPtr]['line'];
+        $lastCodeLine = $tokens[$lastCode]['line'];
         $blankLines   = ($lastLine - $lastCodeLine);
         if ($blankLines > 0) {
             $error = 'Expected 1 blank line at end of file; %s found';
             $data  = array($blankLines + 1);
-            $phpcsFile->addError($error, $stackPtr, 'TooMany', $data);
-        }
+            $fix   = $phpcsFile->addFixableError($error, $lastCode, 'TooMany', $data);
+
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($lastCode, rtrim($tokens[$lastCode]['content']));
+                for ($i = ($lastCode + 1); $i < $lastToken; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->replaceToken($lastToken, $phpcsFile->eolChar);
+                $phpcsFile->fixer->endChangeset();
+            }
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

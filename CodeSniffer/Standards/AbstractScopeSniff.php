@@ -80,7 +80,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                               the scope, by calling the
      *                               processTokenOutsideScope method.
      *
-     * @see PHP_CodeSniffer.getValidScopeTokeners()
+     * @see    PHP_CodeSniffer.getValidScopeTokeners()
      * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
      */
     public function __construct(
@@ -120,7 +120,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * for the desired tokens and scope.
      *
      * @return array(int)
-     * @see __constructor()
+     * @see    __constructor()
      */
     public final function register()
     {
@@ -137,7 +137,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                                        token was found.
      *
      * @return void
-     * @see processTokenWithinScope()
+     * @see    processTokenWithinScope()
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -197,5 +197,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

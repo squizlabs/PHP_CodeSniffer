@@ -106,7 +106,7 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
             }
 
             return;
-        }
+        }//end if
 
         if (strtolower($constName) !== 'define') {
             return;
@@ -153,5 +153,3 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
 
 }//end class
-
-?>
