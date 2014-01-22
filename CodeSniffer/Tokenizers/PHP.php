@@ -45,10 +45,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'end'    => array(
                                                              T_CLOSE_CURLY_BRACKET,
                                                              T_ENDIF,
+                                                             T_ELSE,
+                                                             T_ELSEIF,
                                                             ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_ELSE,
+                                                             T_ELSEIF,
+                                                            ),
                                                ),
                             T_TRY           => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
@@ -72,18 +77,38 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'with'   => array(),
                                                ),
                             T_ELSE          => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'start'  => array(
+                                                             T_OPEN_CURLY_BRACKET,
+                                                             T_COLON,
+                                                            ),
+                                                'end'    => array(
+                                                             T_CLOSE_CURLY_BRACKET,
+                                                             T_ENDIF,
+                                                            ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_IF,
+                                                             T_ELSEIF,
+                                                            ),
                                                ),
                             T_ELSEIF        => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'start'  => array(
+                                                             T_OPEN_CURLY_BRACKET,
+                                                             T_COLON,
+                                                            ),
+                                                'end'    => array(
+                                                             T_CLOSE_CURLY_BRACKET,
+                                                             T_ENDIF,
+                                                             T_ELSE,
+                                                             T_ELSEIF,
+                                                            ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_IF,
+                                                             T_ELSE,
+                                                            ),
                                                ),
                             T_FOR           => array(
                                                 'start'  => array(
