@@ -444,6 +444,9 @@ final class PHP_CodeSniffer_Tokens
                                     T_START_HEREDOC,
                                     T_END_HEREDOC,
                                     T_HEREDOC,
+                                    T_START_NOWDOC,
+                                    T_END_NOWDOC,
+                                    T_NOWDOC,
                                    );
 
 
