@@ -54,6 +54,8 @@ class Generic_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends Abstra
                 43 => 3,
                 45 => 1,
                 46 => 2,
+                79 => 1,
+                82 => 1,
                );
 
     }//end getErrorList()
