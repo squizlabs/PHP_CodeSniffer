@@ -97,13 +97,13 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                 if ($tokens[($nextSeparator - 1)]['code'] === T_WHITESPACE) {
                     if (in_array($tokens[($nextSeparator - 2)]['code'], PHP_CodeSniffer_Tokens::$heredocTokens) === false) {
                         $error = 'Space found before comma in function call';
-                        $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeComma');
+                        $phpcsFile->addError($error, $nextSeparator, 'SpaceBeforeComma');
                     }
                 }
 
                 if ($tokens[($nextSeparator + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'No space found after comma in function call';
-                    $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterComma');
+                    $phpcsFile->addError($error, $nextSeparator, 'NoSpaceAfterComma');
                 } else {
                     // If there is a newline in the space, then the must be formatting
                     // each argument on a newline, which is valid, so ignore it.
@@ -112,7 +112,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                         if ($space > 1) {
                             $error = 'Expected 1 space after comma in function call; %s found';
                             $data  = array($space);
-                            $phpcsFile->addError($error, $stackPtr, 'TooMuchSpaceAfterComma', $data);
+                            $phpcsFile->addError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
                         }
                     }
                 }
@@ -123,12 +123,12 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
                         if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
                             $error = 'Expected 1 space before = sign of default value';
-                            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeEquals');
+                            $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeEquals');
                         }
 
                         if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
                             $error = 'Expected 1 space after = sign of default value';
-                            $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterEquals');
+                            $phpcsFile->addError($error, $nextToken, 'NoSpaceAfterEquals');
                         }
                     }
                 }
