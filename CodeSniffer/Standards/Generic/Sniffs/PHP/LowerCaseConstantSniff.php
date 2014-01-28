@@ -80,12 +80,17 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
             || $tokens[$prevPtr]['code'] === T_EXTENDS
             || $tokens[$prevPtr]['code'] === T_IMPLEMENTS
             || $tokens[$prevPtr]['code'] === T_NEW
+            || $tokens[$prevPtr]['code'] === T_CONST
         ) {
             return;
         }
 
         // Class or namespace?
         if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR) {
+            return;
+        }
+
+        if ($tokens[($stackPtr - 1)]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
             return;
         }
 
