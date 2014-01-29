@@ -207,7 +207,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                       $arg,
                                       $gap,
                                      );
-                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
+                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
                             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                                 $phpcsFile->fixer->replaceToken($whitespace, ' ');
                             }
@@ -234,8 +234,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                         $phpcsFile->fixer->replaceToken(($comma + 1), ' ');
                                     }
                                 }
-                            }
-                        }
+                            }//end if
+                        }//end if
                     } else if ($gap !== 1) {
                         // Just make sure this is not actually an indent.
                         if ($tokens[$whitespace]['line'] === $tokens[($whitespace - 1)]['line']) {
