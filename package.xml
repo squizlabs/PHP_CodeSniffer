@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Martin Winkel for the patch
   - Generic FunctionCallArgumentSpacingSniff now longer complains about space before comma when using here/nowdocs
     -- Thanks to Richard van Velzen for the patch
+  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore class constants
+    -- Thanks to Kristopher Wilson for the patch
   - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
   - Generic FixmeSniff and TodoSniff now work correctly with accented characters
   - Fixed bug #20145 : Custom ruleset preferences directory over installed standard
