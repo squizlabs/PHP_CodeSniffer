@@ -37,6 +37,19 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      */
     public $equalsSpacing = 0;
 
+    /**
+     * How many spaces should follow the opening bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesAfterOpen = 0;
+
+    /**
+     * How many spaces should precede the closing bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesBeforeClose = 0;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -65,6 +78,8 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $this->equalsSpacing = (int) $this->equalsSpacing;
+        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
 
         $tokens       = $phpcsFile->getTokens();
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
@@ -248,19 +263,25 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
                         }
 
+                        $spaceAfterOpen = 0;
                         if ($multiLine === false
                             && $tokens[($bracket + 1)]['code'] === T_WHITESPACE
                         ) {
-                            $error = 'Expected 0 spaces between opening bracket and type hint "%s"; %s found';
+                            $spaceAfterOpen = strlen($tokens[($bracket + 1)]['content']);
+                        }
+                        if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+                            $error = 'Expected %d spaces between opening bracket and type hint "%s"; %s found';
                             $data  = array(
+                                      $this->requiredSpacesAfterOpen,
                                       $hint,
-                                      strlen($tokens[($bracket + 1)]['content']),
+                                      $spaceAfterOpen,
                                      );
                             $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpenHint', $data);
                         }
-                    } else if ($multiLine === false) {
-                        $error = 'Expected 0 spaces between opening bracket and argument "%s"; %s found';
+                    } else if ($multiLine === false && $gap !== $this->requiredSpacesAfterOpen) {
+                        $error = 'Expected %d spaces between opening bracket and argument "%s"; %s found';
                         $data  = array(
+                                  $this->requiredSpacesAfterOpen,
                                   $arg,
                                   $gap,
                                  );
@@ -273,21 +294,24 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
         }//end while
 
+        $gap = strlen($tokens[($closeBracket - 1)]['content']);
         if (empty($params) === true) {
             // There are no parameters for this function.
             if (($closeBracket - $openBracket) !== 1) {
                 $error = 'Expected 0 spaces between brackets of function declaration; %s found';
-                $data  = array(strlen($tokens[($closeBracket - 1)]['content']));
+                $data  = array($gap);
                 $phpcsFile->addError($error, $openBracket, 'SpacingBetween', $data);
             }
         } else if ($multiLine === false
             && $tokens[($closeBracket - 1)]['code'] === T_WHITESPACE
+            && $gap !== $this->requiredSpacesBeforeClose
         ) {
             $lastParam = array_pop($params);
-            $error     = 'Expected 0 spaces between argument "%s" and closing bracket; %s found';
+            $error     = 'Expected %d spaces between argument "%s" and closing bracket; %s found';
             $data      = array(
+                          $this->requiredSpacesBeforeClose,
                           $tokens[$lastParam]['content'],
-                          strlen($tokens[($closeBracket - 1)]['content']),
+                          $gap,
                          );
             $phpcsFile->addError($error, $closeBracket, 'SpacingBeforeClose', $data);
         }

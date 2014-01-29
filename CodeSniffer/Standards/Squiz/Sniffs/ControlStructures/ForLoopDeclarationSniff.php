@@ -31,6 +31,20 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
 {
 
     /**
+     * How many spaces should follow the opening bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesAfterOpen = 0;
+
+    /**
+     * How many spaces should precede the closing bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesBeforeClose = 0;
+
+    /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
@@ -64,6 +78,8 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
@@ -75,14 +91,34 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
 
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
-        if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found after opening bracket of FOR loop';
             $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
+        } else if ($this->requiredSpacesAfterOpen > 0) {
+            $spaceAfterOpen = 0;
+            if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+                $spaceAfterOpen = strlen($tokens[($openingBracket + 1)]['content']);
+            }
+            if ($this->requiredSpacesAfterOpen !== $spaceAfterOpen) {
+                $error = 'Expected %d spaces after opening bracket; %s found';
+                $data  = array($this->requiredSpacesAfterOpen, $spaceAfterOpen);
+                $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
+            }
         }
 
-        if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found before closing bracket of FOR loop';
             $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose');
+        } else if ($this->requiredSpacesBeforeClose > 0) {
+            $spaceBeforeClose = 0;
+            if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+                $spaceBeforeClose = strlen($tokens[($closingBracket - 1)]['content']);
+            }
+            if ($this->requiredSpacesBeforeClose !== $spaceBeforeClose) {
+                $error = 'Expected %d spaces before closing bracket; %s found';
+                $data  = array($this->requiredSpacesBeforeClose, $spaceBeforeClose);
+                $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose');
+            }
         }
 
         $firstSemicolon  = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
