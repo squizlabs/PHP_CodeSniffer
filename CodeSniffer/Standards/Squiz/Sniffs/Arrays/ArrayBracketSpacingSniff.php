@@ -84,7 +84,10 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
                          $expected,
                          $found,
                         );
-            $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeBracket', $data);
+            $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeBracket', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
         }
 
         // Open square brackets can't ever have spaces after them.
@@ -99,7 +102,10 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
                              $expected,
                              $found,
                             );
-                $phpcsFile->addError($error, $stackPtr, 'SpaceAfterBracket', $data);
+                $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterBracket', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+                }
             }
         }
 
