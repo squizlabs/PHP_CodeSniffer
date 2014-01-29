@@ -75,13 +75,15 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
         }
 
         $nextToken = $tokens[($stackPtr + 1)];
-        if ($nextToken['code'] !== T_WHITESPACE
-            || strlen($nextToken['content']) !== 1
+        if (strlen($nextToken['content']) !== 1
             || $nextToken['content'] === $phpcsFile->eolChar
         ) {
             $error = 'Scope keyword "%s" must be followed by a single space';
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+            }
         }
 
     }//end process()
