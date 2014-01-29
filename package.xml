@@ -65,6 +65,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz coding standard now enforces no closing PHP tag at the end of a pure PHP file
   - Squiz coding standard now enforces a single newline character at the end of the file
   - Squiz ClassDeclarationSniff no longer checks for a PHP ending tag after a class definition
+  - Squiz ControlStructureSpacingSniff now checks TRY and CATCH statements as well
   - Removed MySource ChannelExceptionSniff
  </notes>
  <contents>

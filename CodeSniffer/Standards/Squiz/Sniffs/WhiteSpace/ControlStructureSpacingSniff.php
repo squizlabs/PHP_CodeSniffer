@@ -57,6 +57,8 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 T_DO,
                 T_ELSE,
                 T_ELSEIF,
+                T_TRY,
+                T_CATCH,
                );
 
     }//end register()
