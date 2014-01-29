@@ -66,4 +66,11 @@ class MyClass
 
 $x = $f?false:TRUE;
 $x = $f? false:TRUE;
-?>
+
+class MyClass
+{
+    // Spice things up a little.
+    const true = FALSE;
+}
+
+var_dump(MyClass::true);
