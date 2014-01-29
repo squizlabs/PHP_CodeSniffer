@@ -226,7 +226,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
             }
-        }
+        }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space after \"$operator\"; 0 found";
