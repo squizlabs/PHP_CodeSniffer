@@ -207,14 +207,20 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                       $arg,
                                       $gap,
                                      );
-                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
+                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
+                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken($whitespace, ' ');
+                            }
                         }
 
                         if ($multiLine === false) {
                             if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
                                 $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
                                 $data  = array($hint);
-                                $phpcsFile->addError($error, $nextToken, 'NoSpaceBeforeHint', $data);
+                                $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeHint', $data);
+                                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                    $phpcsFile->fixer->addContent($comma, ' ');
+                                }
                             } else {
                                 $gap = strlen($tokens[($comma + 1)]['content']);
                                 if ($gap !== 1) {
@@ -223,7 +229,10 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                               $hint,
                                               $gap,
                                              );
-                                    $phpcsFile->addError($error, $nextToken, 'SpacingBeforeHint', $data);
+                                    $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingBeforeHint', $data);
+                                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                        $phpcsFile->fixer->replaceToken(($comma + 1), ' ');
+                                    }
                                 }
                             }
                         }
@@ -274,7 +283,10 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                       $arg,
                                       $gap,
                                      );
-                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterHint', $data);
+                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
+                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken($whitespace, ' ');
+                            }
                         }
 
                         if ($multiLine === false
@@ -285,7 +297,10 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                       $hint,
                                       strlen($tokens[($bracket + 1)]['content']),
                                      );
-                            $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpenHint', $data);
+                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterOpenHint', $data);
+                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                                $phpcsFile->fixer->replaceToken(($bracket + 1), '');
+                            }
                         }
                     } else if ($multiLine === false) {
                         $error = 'Expected 0 spaces between opening bracket and argument "%s"; %s found';
@@ -293,7 +308,10 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                                   $arg,
                                   $gap,
                                  );
-                        $phpcsFile->addError($error, $nextToken, 'SpacingAfterOpen', $data);
+                        $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterOpen', $data);
+                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken($whitespace, '');
+                        }
                     }//end if
                 }//end if
             }//end if
