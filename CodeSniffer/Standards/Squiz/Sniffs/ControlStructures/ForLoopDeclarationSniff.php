@@ -78,7 +78,7 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
@@ -99,9 +99,13 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
             if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
                 $spaceAfterOpen = strlen($tokens[($openingBracket + 1)]['content']);
             }
+
             if ($this->requiredSpacesAfterOpen !== $spaceAfterOpen) {
-                $error = 'Expected %d spaces after opening bracket; %s found';
-                $data  = array($this->requiredSpacesAfterOpen, $spaceAfterOpen);
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesAfterOpen,
+                          $spaceAfterOpen,
+                         );
                 $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
             }
         }
@@ -114,14 +118,18 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
             if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
                 $spaceBeforeClose = strlen($tokens[($closingBracket - 1)]['content']);
             }
+
             if ($this->requiredSpacesBeforeClose !== $spaceBeforeClose) {
-                $error = 'Expected %d spaces before closing bracket; %s found';
-                $data  = array($this->requiredSpacesBeforeClose, $spaceBeforeClose);
+                $error = 'Expected %s spaces before closing bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesBeforeClose,
+                          $spaceBeforeClose,
+                         );
                 $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeClose');
             }
         }
 
-        $firstSemicolon  = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
+        $firstSemicolon = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
 
         // Check whitespace around each of the tokens.
         if ($firstSemicolon !== false) {
@@ -179,5 +187,3 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
 
 
 }//end class
-
-?>

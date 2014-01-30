@@ -48,6 +48,8 @@ class PSR2_Tests_ControlStructures_ControlStructureSpacingUnitTest extends Abstr
                 26 => 2,
                 27 => 2,
                 31 => 1,
+                41 => 2,
+                43 => 2,
                );
 
     }//end getErrorList()

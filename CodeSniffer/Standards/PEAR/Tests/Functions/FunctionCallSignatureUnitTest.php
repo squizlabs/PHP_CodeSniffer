@@ -44,7 +44,7 @@ class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUn
     {
         return array(
                 5   => 1,
-                6   => 1,
+                6   => 2,
                 7   => 1,
                 8   => 1,
                 9   => 2,
@@ -53,7 +53,7 @@ class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUn
                 18  => 1,
                 31  => 1,
                 34  => 1,
-                43  => 1,
+                43  => 2,
                 57  => 1,
                 59  => 1,
                 63  => 1,
@@ -69,6 +69,8 @@ class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUn
                 142 => 2,
                 171 => 1,
                 203 => 1,
+                211 => 2,
+                213 => 2,
                );
 
     }//end getErrorList()

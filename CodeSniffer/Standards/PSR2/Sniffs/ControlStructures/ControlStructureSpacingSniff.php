@@ -76,20 +76,24 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
-            $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
-            $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
+            $parenOpener    = $tokens[$stackPtr]['parenthesis_opener'];
+            $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
             $spaceAfterOpen = 0;
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
                 $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
             }
+
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
-                $error = 'Expected %d spaces after opening bracket; %s found';
-                $data  = array($this->requiredSpacesAfterOpen, $spaceAfterOpen);
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesAfterOpen,
+                          $spaceAfterOpen,
+                         );
                 $phpcsFile->addError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
             }
 
@@ -98,9 +102,13 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                 if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
                     $spaceBeforeClose = strlen($tokens[($parenCloser - 1)]['content']);
                 }
+
                 if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
-                    $error = 'Expected %d spaces before closing bracket; %s found';
-                    $data  = array($this->requiredSpacesBeforeClose, $spaceBeforeClose);
+                    $error = 'Expected %s spaces before closing bracket; %s found';
+                    $data  = array(
+                              $this->requiredSpacesBeforeClose,
+                              $spaceBeforeClose,
+                             );
                     $phpcsFile->addError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
                 }
             }
@@ -110,5 +118,3 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
 
 
 }//end class
-
-?>

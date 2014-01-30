@@ -34,6 +34,26 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Richard van Velzen for the patch
   - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore class constants
     -- Thanks to Kristopher Wilson for the patch
+  - PEAR FunctionCallSignatureSniff now has settings to specify how many spaces should appear before/after parentheses
+    -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+    -- Default remains at 0 for both
+    -- Thanks to Astinus Eberhard for the patch
+  - PSR2 ControlStructureSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+    -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+    -- Default remains at 0 for both
+    -- Thanks to Astinus Eberhard for the patch
+  - Squiz ForEachLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+    -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+    -- Default remains at 0 for both
+    -- Thanks to Astinus Eberhard for the patch
+  - Squiz ForLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+    -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+    -- Default remains at 0 for both
+    -- Thanks to Astinus Eberhard for the patch
+  - Squiz FunctionDeclarationArgumentSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+    -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+    -- Default remains at 0 for both
+    -- Thanks to Astinus Eberhard for the patch
   - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
   - Generic FixmeSniff and TodoSniff now work correctly with accented characters
   - Fixed bug #20145 : Custom ruleset preferences directory over installed standard

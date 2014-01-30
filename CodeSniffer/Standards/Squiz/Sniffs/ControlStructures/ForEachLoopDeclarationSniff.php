@@ -69,7 +69,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
@@ -84,9 +84,13 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
                 $spaceAfterOpen = strlen($tokens[($openingBracket + 1)]['content']);
             }
+
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
-                $error = 'Expected %d spaces after opening bracket; %s found';
-                $data  = array($this->requiredSpacesAfterOpen, $spaceAfterOpen);
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesAfterOpen,
+                          $spaceAfterOpen,
+                         );
                 $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
             }
         }
@@ -99,9 +103,13 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
                 $spaceBeforeClose = strlen($tokens[($closingBracket - 1)]['content']);
             }
+
             if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
-                $error = 'Expected %d spaces before closing bracket; %s found';
-                $data  = array($this->requiredSpacesBeforeClose, $spaceBeforeClose);
+                $error = 'Expected %s spaces before closing bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesBeforeClose,
+                          $spaceBeforeClose,
+                         );
                 $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeClose', $data);
             }
         }
@@ -131,7 +139,6 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
                     $data   = array($spaces);
                     $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeArrow', $data);
                 }
-
             }
 
             if ($tokens[($doubleArrow + 1)]['code'] !== T_WHITESPACE) {
@@ -144,9 +151,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
                     $data   = array($spaces);
                     $phpcsFile->addError($error, $stackPtr, 'SpacingAfterArrow', $data);
                 }
-
             }
-
         }//end if
 
         if ($tokens[($asToken - 1)]['code'] !== T_WHITESPACE) {
@@ -177,5 +182,3 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
 
 
 }//end class
-
-?>

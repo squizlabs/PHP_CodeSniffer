@@ -54,6 +54,8 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
                 21 => 6,
                 27 => 1,
                 30 => 1,
+                37 => 2,
+                39 => 2,
                );
              break;
         case 'ForLoopDeclarationUnitTest.js':
@@ -65,6 +67,8 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
                 19 => 6,
                 33 => 1,
                 36 => 1,
+                43 => 2,
+                45 => 2,
                );
              break;
         default:

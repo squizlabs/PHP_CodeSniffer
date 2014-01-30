@@ -80,7 +80,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
@@ -174,10 +174,10 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
     {
 
         $closer = $tokens[$openBracket]['parenthesis_closer'];
-
         if ($openBracket === ($closer - 1)) {
             return;
         }
+
         if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
             // Checking this: $value = my_function([*]...).
             $error = 'Space after opening parenthesis of function call prohibited';
@@ -187,36 +187,30 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
                 $spaceAfterOpen = strlen($tokens[($openBracket + 1)]['content']);
             }
+
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
-                $error = 'Expected %d spaces after opening bracket; %d found';
-                $data = array($this->requiredSpacesAfterOpen, $spaceAfterOpen);
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesAfterOpen,
+                          $spaceAfterOpen,
+                         );
                 $phpcsFile->addError($error, $stackPtr, 'SpaceAfterOpenBracket', $data);
             }
         }
 
+        // Checking this: $value = my_function(...[*]).
+        $spaceBeforeClose = 0;
         if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
-            // Checking this: $value = my_function(...[*]).
-            $between = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
+            $spaceBeforeClose = strlen($tokens[($closer - 1)]['content']);
+        }
 
-            // Only throw an error if there is some content between the parenthesis.
-            // i.e., Checking for this: $value = my_function().
-            // If there is no content, then we would have thrown an error in the
-            // previous IF statement because it would look like this:
-            // $value = my_function( ).
-            if ($this->requiredSpacesBeforeClose === 0 && $between !== $closer) {
-                $error = 'Space before closing parenthesis of function call prohibited';
-                $phpcsFile->addError($error, $closer, 'SpaceBeforeCloseBracket');
-            } else if ($this->requiredSpacesBeforeClose > 0) {
-                $spaceBeforeClose = 0;
-                if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
-                    $spaceBeforeClose = strlen($tokens[($closer - 1)]['content']);
-                }
-                if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
-                    $error = 'Expected %d spaces before closing bracket; %d found';
-                    $data = array($this->requiredSpacesBeforeClose, $spaceBeforeClose);
-                    $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
-                }
-            }
+        if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
+            $error = 'Expected %s spaces before closing bracket; %s found';
+            $data  = array(
+                      $this->requiredSpacesBeforeClose,
+                      $spaceBeforeClose,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
         }
 
     }//end processSingleLineCall()
@@ -372,4 +366,3 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
 
 }//end class
-?>
