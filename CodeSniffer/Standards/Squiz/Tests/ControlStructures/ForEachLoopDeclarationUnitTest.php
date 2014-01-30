@@ -48,6 +48,8 @@ class Squiz_Tests_ControlStructures_ForEachLoopDeclarationUnitTest extends Abstr
                 14 => 2,
                 17 => 5,
                 21 => 7,
+                26 => 2,
+                28 => 2,
                );
 
     }//end getErrorList()
