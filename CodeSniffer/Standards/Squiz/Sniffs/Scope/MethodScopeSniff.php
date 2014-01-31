@@ -1,6 +1,6 @@
 <?php
 /**
- * Verifies that class members have scope modifiers.
+ * Verifies that class methods have scope modifiers.
  *
  * PHP version 5
  *
@@ -18,7 +18,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 }
 
 /**
- * Verifies that class members have scope modifiers.
+ * Verifies that class methods have scope modifiers.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
