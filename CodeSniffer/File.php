@@ -282,31 +282,19 @@ class PHP_CodeSniffer_File
      */
     protected $ruleset = array();
 
-    /**
-     * An array of sniff codes to restrict violations to.
-     *
-     * This value gets set by PHP_CodeSniffer when the object is created.
-     * It may be empty, indicating that no fitering should take place.
-     *
-     * @var array
-     */
-    protected $restrictions = array();
-
 
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
-     * @param string          $file         The absolute path to the file to process.
-     * @param array(string)   $listeners    The initial listeners listening
-     *                                      to processing of this file.
-     * @param array           $tokenizers   An array of extensions mapping
-     *                                      to the tokenizer to use.
-     * @param array           $ruleset      An array of rules from the
-     *                                      ruleset.xml file.
-     * @param array           $restrictions An array of sniff codes to
-     *                                      restrict violations to.
-     * @param PHP_CodeSniffer $phpcs        The PHP_CodeSniffer object controlling
-     *                                      this run.
+     * @param string          $file       The absolute path to the file to process.
+     * @param array(string)   $listeners  The initial listeners listening
+     *                                    to processing of this file.
+     * @param array           $tokenizers An array of extensions mapping
+     *                                    to the tokenizer to use.
+     * @param array           $ruleset    An array of rules from the
+     *                                    ruleset.xml file.
+     * @param PHP_CodeSniffer $phpcs      The PHP_CodeSniffer object controlling
+     *                                    this run.
      *
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
@@ -316,16 +304,14 @@ class PHP_CodeSniffer_File
         array $listeners,
         array $tokenizers,
         array $ruleset,
-        array $restrictions,
         PHP_CodeSniffer $phpcs
     ) {
-        $this->_file        = trim($file);
-        $this->_listeners   = $listeners;
-        $this->tokenizers   = $tokenizers;
-        $this->ruleset      = $ruleset;
-        $this->restrictions = $restrictions;
-        $this->phpcs        = $phpcs;
-        $this->fixer        = new PHP_CodeSniffer_Fixer();
+        $this->_file      = trim($file);
+        $this->_listeners = $listeners;
+        $this->tokenizers = $tokenizers;
+        $this->ruleset    = $ruleset;
+        $this->phpcs      = $phpcs;
+        $this->fixer      = new PHP_CodeSniffer_Fixer();
 
         $cliValues = $phpcs->cli->getCommandLineValues();
         if (isset($cliValues['showSources']) === true
@@ -844,15 +830,6 @@ class PHP_CodeSniffer_File
             }
         }//end if
 
-        // Make sure this message type is allowed based on the --sniffs
-        // command line argument values.
-        if (empty($this->restrictions) === false
-            && in_array($sniffCode, $this->restrictions) === false
-            && in_array($sniff, $this->restrictions) === false
-        ) {
-            return false;
-        }
-
         // Make sure this message type has not been set to "warning".
         if (isset($this->ruleset[$sniffCode]['type']) === true
             && $this->ruleset[$sniffCode]['type'] === 'warning'
@@ -998,15 +975,6 @@ class PHP_CodeSniffer_File
                 $sniffCode .= '.'.$code;
             }
         }//end if
-
-        // Make sure this message type is allowed based on the --sniffs
-        // command line argument values.
-        if (empty($this->restrictions) === false
-            && in_array($sniffCode, $this->restrictions) === false
-            && in_array($sniff, $this->restrictions) === false
-        ) {
-            return false;
-        }
 
         // Make sure this message type has not been set to "error".
         if (isset($this->ruleset[$sniffCode]['type']) === true

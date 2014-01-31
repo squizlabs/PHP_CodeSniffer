@@ -559,9 +559,10 @@ class PHP_CodeSniffer_CLI
             }
         }
 
-        $phpcs = new PHP_CodeSniffer(null, null, null, null);
+        $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
+        $phpcs->setCli($this);
+        $phpcs->initStandard($values['standard'], $values['sniffs']);
 
-        $phpcs->setVerbosity($values['verbosity']);
         $phpcs->setTabWidth($values['tabWidth']);
         $phpcs->setEncoding($values['encoding']);
         $phpcs->setInteractive($values['interactive']);
@@ -595,14 +596,7 @@ class PHP_CodeSniffer_CLI
             $this->values['reports']   = $values['reports'];
         }
 
-        $phpcs->setCli($this);
-
-        $phpcs->process(
-            $values['files'],
-            $values['standard'],
-            $values['sniffs'],
-            $values['local']
-        );
+        $phpcs->processFiles($values['files'], $values['local']);
 
         if ($fileContents !== '') {
             $phpcs->processFile('STDIN', $fileContents);

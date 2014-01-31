@@ -455,7 +455,7 @@ class PHP_CodeSniffer
 
 
     /**
-     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     * Start a PHP_CodeSniffer run.
      *
      * @param string|array $files        The files and directories to process. For
      *                                   directories, each sub directory will also
@@ -467,7 +467,6 @@ class PHP_CodeSniffer
      * @param boolean      $local        If true, don't recurse into directories.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If files or standard are invalid.
      */
     public function process($files, $standards, array $restrictions=array(), $local=false)
     {
@@ -475,6 +474,23 @@ class PHP_CodeSniffer
             $files = array($files);
         }
 
+        $this->initStandard($standards, $restrictions);
+        $this->processFiles($files, $local);
+
+    }//end process()
+
+
+    /**
+     * Initialise the standard that the run will use.
+     *
+     * @param string|array $standards    The set of code sniffs we are testing
+     *                                   against.
+     * @param array        $restrictions The sniff codes to restrict the
+     *
+     * @return void
+     */
+    public function initStandard($standards, array $restrictions=array())
+    {
         if (is_array($standards) === false) {
             $standards = array($standards);
         }
@@ -530,11 +546,24 @@ class PHP_CodeSniffer
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
-        // The SVN pre-commit calls process() to init the sniffs
-        // and ruleset so there may not be any files to process.
-        // But this has to come after that initial setup.
-        if (empty($files) === true) {
-            return;
+    }//end initStandard()
+
+
+    /**
+     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     *
+     * @param string|array $files The files and directories to process. For
+     *                            directories, each sub directory will also
+     *                            be traversed for source files.
+     * @param boolean      $local If true, don't recurse into directories.
+     *
+     * @return void
+     * @throws PHP_CodeSniffer_Exception If files are invalid.
+     */
+    public function processFiles($files, $local=false)
+    {
+        if (is_array($files) === false) {
+            $files = array($files);
         }
 
         $cliValues    = $this->cli->getCommandLineValues();
@@ -566,7 +595,7 @@ class PHP_CodeSniffer
                 $lastDir = $currDir;
             }
 
-            $phpcsFile = $this->processFile($file, null, $restrictions);
+            $phpcsFile = $this->processFile($file, null);
             $numProcessed++;
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
@@ -608,7 +637,7 @@ class PHP_CodeSniffer
             echo PHP_EOL.PHP_EOL;
         }
 
-    }//end process()
+    }//end processFiles()
 
 
     /**
@@ -1374,17 +1403,15 @@ class PHP_CodeSniffer
      * conforms with the standard. Returns the processed file object, or NULL
      * if no file was processed due to error.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
      * @see    _processFile()
      */
-    public function processFile($file, $contents=null, $restrictions=array())
+    public function processFile($file, $contents=null)
     {
         if ($contents === null && file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
@@ -1418,7 +1445,7 @@ class PHP_CodeSniffer
         }//end if
 
         try {
-            $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+            $phpcsFile = $this->_processFile($file, $contents);
         } catch (Exception $e) {
             $trace = $e->getTrace();
 
@@ -1448,7 +1475,6 @@ class PHP_CodeSniffer
                 $this->_tokenListeners,
                 $this->allowedFileExtensions,
                 $this->ruleset,
-                $restrictions,
                 $this
             );
 
@@ -1497,7 +1523,7 @@ class PHP_CodeSniffer
                 // and only clear it when the file changes, but we are rechecking
                 // the same file.
                 $this->populateTokenListeners();
-                $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+                $phpcsFile = $this->_processFile($file, $contents);
                 break;
             }
         }//end while
@@ -1512,16 +1538,14 @@ class PHP_CodeSniffer
      *
      * Does raw processing only. No interactive support or error checking.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @see    processFile()
      */
-    private function _processFile($file, $contents, $restrictions)
+    private function _processFile($file, $contents)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
@@ -1536,7 +1560,6 @@ class PHP_CodeSniffer
             $this->_tokenListeners,
             $this->allowedFileExtensions,
             $this->ruleset,
-            $restrictions,
             $this
         );
 

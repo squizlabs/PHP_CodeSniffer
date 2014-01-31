@@ -35,7 +35,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressError()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'PEAR', array('Generic.PHP.LowerCaseConstant'));
+        $phpcs->initStandard('PEAR', array('Generic.PHP.LowerCaseConstant'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
@@ -66,7 +66,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressSomeErrors()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'Generic', array('Generic.PHP.LowerCaseConstant'));
+        $phpcs->initStandard('Generic', array('Generic.PHP.LowerCaseConstant'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
@@ -97,7 +97,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressWarning()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'Generic', array('Generic.Commenting.Todo'));
+        $phpcs->initStandard('Generic', array('Generic.Commenting.Todo'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
@@ -128,7 +128,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressFile()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'Generic', array('Generic.Commenting.Todo'));
+        $phpcs->initStandard('Generic', array('Generic.Commenting.Todo'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
