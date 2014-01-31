@@ -216,20 +216,20 @@ class PHP_CodeSniffer
         $encoding='iso-8859-1',
         $interactive=false
     ) {
-        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        if ($verbosity !== null) {
+            $this->setVerbosity($verbosity);
         }
 
-        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
-            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        if ($tabWidth !== null) {
+            $this->setTabWidth($tabWidth);
         }
 
-        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
-            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        if ($encoding !== null) {
+            $this->setEncoding($encoding);
         }
 
-        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
-            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        if ($interactive !== null) {
+            $this->setInteractive($interactive);
         }
 
         if (defined('PHPCS_DEFAULT_ERROR_SEV') === false) {
@@ -293,6 +293,79 @@ class PHP_CodeSniffer
         }
 
     }//end autoload()
+
+
+    /**
+     * Sets the verbosity level.
+     *
+     * @param int $verbosity The verbosity level.
+     *                       1: Print progress information.
+     *                       2: Print tokenizer debug information.
+     *                       3: Print sniff debug information.
+     *
+     * @return void
+     */
+    public function setVerbosity($verbosity)
+    {
+        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        }
+
+    }//end setVerbosity()
+
+
+    /**
+     * Sets the tab width.
+     *
+     * @param int $tabWidth The number of spaces each tab represents.
+     *                      If greater than zero, tabs will be replaced
+     *                      by spaces before testing each file.
+     *
+     * @return void
+     */
+    public function setTabWidth($tabWidth)
+    {
+        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
+            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
+
+    }//end setTabWidth()
+
+
+    /**
+     * Sets the encoding.
+     *
+     * @param string $encoding The charset of the sniffed files.
+     *                         This is important for some reports that output
+     *                         with utf-8 encoding as you don't want it double
+     *                         encoding messages.
+     *
+     * @return void
+     */
+    public function setEncoding($encoding)
+    {
+        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
+            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        }
+
+    }//end setEncoding()
+
+
+    /**
+     * Sets the interactive flag.
+     *
+     * @param bool $interactive If TRUE, will stop after each file with errors
+     *                          and wait for user input.
+     *
+     * @return void
+     */
+    public function setInteractive($interactive)
+    {
+        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
+            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        }
+
+    }//end setInteractive()
 
 
     /**

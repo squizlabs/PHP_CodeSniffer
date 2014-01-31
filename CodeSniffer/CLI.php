@@ -559,12 +559,12 @@ class PHP_CodeSniffer_CLI
             }
         }
 
-        $phpcs = new PHP_CodeSniffer(
-            $values['verbosity'],
-            $values['tabWidth'],
-            $values['encoding'],
-            $values['interactive']
-        );
+        $phpcs = new PHP_CodeSniffer(null, null, null, null);
+
+        $phpcs->setVerbosity($values['verbosity']);
+        $phpcs->setTabWidth($values['tabWidth']);
+        $phpcs->setEncoding($values['encoding']);
+        $phpcs->setInteractive($values['interactive']);
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
