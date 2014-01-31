@@ -725,7 +725,28 @@ class PHP_CodeSniffer
             $this->_processRule($rule, $depth);
         }//end foreach
 
-        // Process custom ignore pattern rules.
+        // Process custom command line arguments.
+        $cliArgs = array();
+        foreach ($ruleset->{'arg'} as $arg) {
+            if (isset($arg['name']) === true) {
+                $argString = '--'.(string) $arg['name'].'='.(string) $arg['value'];
+            } else {
+                $argString = '-'.(string) $arg['value'];
+            }
+
+            $cliArgs[] = $argString;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> set command line value $argString".PHP_EOL;
+            }
+        }
+
+        if (empty($cliArgs) === false) {
+            $this->cli->setCommandLineValues($cliArgs);
+        }
+
+        // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
             $this->setConfigData((string) $config['name'], (string) $config['value'], true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {

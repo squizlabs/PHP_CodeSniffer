@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PEAR">
  <description>The PEAR coding standard.</description>
- <arg value="v"/>
- <arg name="report" value="summary"/>
 
  <!-- Include some additional sniffs from the Generic standard -->
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
