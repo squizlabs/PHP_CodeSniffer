@@ -16,7 +16,7 @@
 /**
  * Squiz_Sniffs_Files_FileExtensionSniff.
  *
- * Tests that the stars in a doc comment align correctly.
+ * Tests that classes and interfaces are not declared in .php files
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
