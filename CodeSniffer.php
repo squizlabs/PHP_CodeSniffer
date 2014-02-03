@@ -387,7 +387,7 @@ class PHP_CodeSniffer
             if ($slash !== false) {
                 // They specified the tokenizer too.
                 list($ext, $tokenizer) = explode('/', $ext);
-                $newExtensions[$ext] = strtoupper($tokenizer);
+                $newExtensions[$ext]   = strtoupper($tokenizer);
                 continue;
             }
 
