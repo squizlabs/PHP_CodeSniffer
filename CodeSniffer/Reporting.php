@@ -275,6 +275,10 @@ class PHP_CodeSniffer_Reporting
 
         // Merge errors and warnings.
         foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
+            if (is_array($lineErrors) === false) {
+                continue;
+            }
+
             foreach ($lineErrors as $column => $colErrors) {
                 $newErrors = array();
                 foreach ($colErrors as $data) {
@@ -294,6 +298,10 @@ class PHP_CodeSniffer_Reporting
         }//end foreach
 
         foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
+            if (is_array($lineWarnings) === false) {
+                continue;
+            }
+
             foreach ($lineWarnings as $column => $colWarnings) {
                 $newWarnings = array();
                 foreach ($colWarnings as $data) {
