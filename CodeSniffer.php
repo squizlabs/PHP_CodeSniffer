@@ -383,6 +383,14 @@ class PHP_CodeSniffer
     {
         $newExtensions = array();
         foreach ($extensions as $ext) {
+            $slash = strpos($ext, '/');
+            if ($slash !== false) {
+                // They specified the tokenizer too.
+                list($ext, $tokenizer) = explode('/', $ext);
+                $newExtensions[$ext] = strtoupper($tokenizer);
+                continue;
+            }
+
             if (isset($this->allowedFileExtensions[$ext]) === true) {
                 $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
             } else {

@@ -898,7 +898,8 @@ class PHP_CodeSniffer_CLI
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '                      (only valid if fixing a directory)'.PHP_EOL;
+        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
+        echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;

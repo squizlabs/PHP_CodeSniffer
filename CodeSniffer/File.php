@@ -717,7 +717,7 @@ class PHP_CodeSniffer_File
                 $numLines = $this->_tokens[($this->numTokens - 1)]['line'];
             }
 
-            echo "[$this->numTokens tokens in $numLines lines]... ";
+            echo "[$this->tokenizerType => $this->numTokens tokens in $numLines lines]... ";
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
             }

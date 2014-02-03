@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The --report argument now allows for custom reports to be used
     -- Use the full path to your custom report class as the report name
   - The --extensions argument is now respected when passing filenames; not just with directories
+  - The --extensions argument now allows you to specify the tokenizer for each extension
+    -- e.g., --extensions=module/php,es/js
   - Command line arguments can now be set in ruleset files
     -- e.g., arg name="report" value="summary" (print summary report; same as --report=summary)
     -- e.g., arg value="sp" (print source and progress information; same as -sp)
