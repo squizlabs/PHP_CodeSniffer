@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=diff to show suggested changes to fix coding standard violations
   - The --report argument now allows for custom reports to be used
     -- Use the full path to your custom report class as the report name
+  - The --extensions argument is now respected when passing filenames; not just with directories
   - Command line arguments can now be set in ruleset files
     -- e.g., arg name="report" value="summary" (print summary report; same as --report=summary)
     -- e.g., arg value="sp" (print source and progress information; same as -sp)

@@ -1300,7 +1300,7 @@ class PHP_CodeSniffer
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
+                if ($this->shouldProcessFile($path, dirname($path)) === false) {
                     continue;
                 }
 
