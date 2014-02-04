@@ -197,7 +197,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
             $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
             if (empty($tokenContent) === false) {
-                if (preg_match('|^.*\s+$|', $tokenContent) !== 0) {
+                if ($tokenContent !== rtrim($tokenContent)) {
                     $phpcsFile->addError('Whitespace found at end of line', $stackPtr, 'EndLine');
                 }
             }
