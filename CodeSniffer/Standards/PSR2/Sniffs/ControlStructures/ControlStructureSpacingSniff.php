@@ -85,7 +85,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
             $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
             $spaceAfterOpen = 0;
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
+                $spaceAfterOpen = strlen(rtrim($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar));
             }
 
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
@@ -100,7 +100,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'] ) {
                 $spaceBeforeClose = 0;
                 if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
-                    $spaceBeforeClose = strlen($tokens[($parenCloser - 1)]['content']);
+                    $spaceBeforeClose = strlen(ltrim($tokens[($parenCloser - 1)]['content'], $phpcsFile->eolChar));
                 }
 
                 if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
