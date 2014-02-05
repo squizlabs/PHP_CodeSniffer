@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2010 Stefano Kowalke
+ * @copyright 2010-2014 Stefano Kowalke
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -18,7 +18,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2010 Stefano Kowalke
+ * @copyright 2010-2014 Stefano Kowalke
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
