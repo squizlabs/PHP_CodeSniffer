@@ -123,6 +123,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
         if ($fix === true && $phpcsFile->fixer->enabled === true) {
             $phpcsFile->fixer->beginChangeset();
             $innerContent = trim($workingString, '"');
+            $innerContent = str_replace('\"', '"', $innerContent);
             $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
             while ($lastStringToken !== $stackPtr) {
                 $phpcsFile->fixer->replaceToken($lastStringToken, '');
