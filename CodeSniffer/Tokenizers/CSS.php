@@ -126,7 +126,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // space at the end of the content, so add the whitespace back,
                     // minus our single space.
                     $lastSpace['content'] = substr($lastSpace['content'], 0, -1);
-                    $moreTokens[] = $lastSpace;
+                    $moreTokens[]         = $lastSpace;
                 }
 
                 // Rebuild the tokens array.

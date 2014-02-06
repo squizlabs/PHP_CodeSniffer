@@ -54,15 +54,15 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
 
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $i = $tokens[$i]['parenthesis_closer'];
+                $i           = $tokens[$i]['parenthesis_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             } else if ($tokens[$i]['code'] === T_CLOSURE) {
-                $i = $tokens[$i]['scope_closer'];
+                $i           = $tokens[$i]['scope_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
-                $i = $tokens[$i]['bracket_closer'];
+                $i           = $tokens[$i]['bracket_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             }

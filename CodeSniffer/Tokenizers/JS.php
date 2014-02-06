@@ -268,11 +268,11 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }
 
-        $tokens     = array();
-        $inString   = '';
-        $stringChar = null;
-        $inComment  = '';
-        $buffer     = '';
+        $tokens          = array();
+        $inString        = '';
+        $stringChar      = null;
+        $inComment       = '';
+        $buffer          = '';
         $preStringBuffer = '';
         $cleanBuffer     = false;
 
@@ -379,7 +379,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             echo "\t=> Added token T_CONSTANT_ENCAPSED_STRING ($content)".PHP_EOL;
                         }
 
-                        $buffer = '';
+                        $buffer          = '';
                         $preStringBuffer = '';
                         $inString        = '';
                         $stringChar      = null;
@@ -406,7 +406,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $preStringBuffer = '';
                     $inString        = '';
                     $stringChar      = null;
-                    $char = $chars[$i];
+                    $char            = $chars[$i];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* found newline before end of string, bailing *".PHP_EOL;
@@ -447,8 +447,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo "\t=> Added token T_REGULAR_EXPRESSION ($content)".PHP_EOL;
                     }
 
-                    $i      = $regex['end'];
-                    $buffer = '';
+                    $i           = $regex['end'];
+                    $buffer      = '';
                     $cleanBuffer = false;
                     continue;
                 }
@@ -802,8 +802,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $newToken['content'] .= $eolChar;
                     }
 
-                    $newToken['type'] = $token['type'];
-                    $newToken['code'] = $token['code'];
+                    $newToken['type']          = $token['type'];
+                    $newToken['code']          = $token['code'];
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
                 }
@@ -1057,12 +1057,12 @@ class PHP_CodeSniffer_Tokenizers_JS
                         }
 
                         $closer = $tokens[$i]['bracket_closer'];
-                        $tokens[$i]['scope_condition'] = $x;
-                        $tokens[$i]['scope_closer']    = $closer;
+                        $tokens[$i]['scope_condition']      = $x;
+                        $tokens[$i]['scope_closer']         = $closer;
                         $tokens[$closer]['scope_condition'] = $x;
                         $tokens[$closer]['scope_opener']    = $i;
-                        $tokens[$x]['scope_opener'] = $i;
-                        $tokens[$x]['scope_closer'] = $closer;
+                        $tokens[$x]['scope_opener']         = $i;
+                        $tokens[$x]['scope_closer']         = $closer;
                         $tokens[$x]['code'] = T_OBJECT;
                         $tokens[$x]['type'] = 'T_OBJECT';
 
@@ -1139,10 +1139,10 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     if ($tokens[$x]['code'] === T_OPEN_CURLY_BRACKET) {
                         $closer = $tokens[$x]['bracket_closer'];
-                        $tokens[$label]['scope_opener'] = $x;
-                        $tokens[$label]['scope_closer'] = $closer;
-                        $tokens[$x]['scope_condition']  = $label;
-                        $tokens[$x]['scope_closer']     = $closer;
+                        $tokens[$label]['scope_opener']     = $x;
+                        $tokens[$label]['scope_closer']     = $closer;
+                        $tokens[$x]['scope_condition']      = $label;
+                        $tokens[$x]['scope_closer']         = $closer;
                         $tokens[$closer]['scope_condition'] = $label;
                         $tokens[$closer]['scope_opener']    = $x;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {

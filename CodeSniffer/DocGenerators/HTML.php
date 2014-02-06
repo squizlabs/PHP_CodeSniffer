@@ -170,7 +170,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
             $doc = new DOMDocument();
             $doc->load($standard);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $title = $this->getTitle($documentation);
+            $title         = $this->getTitle($documentation);
             echo '   <li><a href="#'.str_replace(' ', '-', $title)."\">$title</a></li>".PHP_EOL;
         }
 

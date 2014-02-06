@@ -59,7 +59,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
             }
         }
 
-        $openTag = substr($string, 0, $c);
+        $openTag           = substr($string, 0, $c);
         $tokens[$stackPtr] = array(
                               'content'      => $openTag,
                               'code'         => T_DOC_COMMENT_OPEN_TAG,

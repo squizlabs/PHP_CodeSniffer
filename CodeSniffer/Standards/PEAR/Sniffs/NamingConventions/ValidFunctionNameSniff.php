@@ -118,9 +118,9 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             return;
         }
 
-        $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-        $isPublic    = ($methodProps['scope'] === 'private') ? false : true;
-        $scope       = $methodProps['scope'];
+        $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
+        $isPublic       = ($methodProps['scope'] === 'private') ? false : true;
+        $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
 
         // If it's a private method, it must have an underscore on the front.

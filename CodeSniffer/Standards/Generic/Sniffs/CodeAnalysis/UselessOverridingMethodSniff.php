@@ -132,7 +132,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 
         $parameters       = array('');
         $parenthesisCount = 1;
-        $count = count($tokens);
+        $count            = count($tokens);
         for (++$next; $next < $count; ++$next) {
             $code = $tokens[$next]['code'];
 

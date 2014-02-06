@@ -489,10 +489,10 @@ class PHP_CodeSniffer_File
                     $this->_fixableCount = 0;
                     return;
                 } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                    $start      = strpos($token['content'], '@codingStandardsChangeSetting');
-                    $comment    = substr($token['content'], $start + 30);
-                    $parts      = explode(' ', $comment);
-                    $sniffParts = explode('.', $parts[0]);
+                    $start         = strpos($token['content'], '@codingStandardsChangeSetting');
+                    $comment       = substr($token['content'], $start + 30);
+                    $parts         = explode(' ', $comment);
+                    $sniffParts    = explode('.', $parts[0]);
                     $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
                     $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
                 }//end if
@@ -653,8 +653,8 @@ class PHP_CodeSniffer_File
      */
     public function cleanUp()
     {
-        $this->_tokens    = null;
-        $this->_listeners = null;
+        $this->_tokens           = null;
+        $this->_listeners        = null;
         $this->_listenerIgnoreTo = null;
 
     }//end cleanUp()
@@ -1503,7 +1503,7 @@ class PHP_CodeSniffer_File
                 $tokens[$i]['parenthesis_opener'] = $i;
                 if ($openOwner !== null) {
                     $tokens[$openOwner]['parenthesis_opener'] = $i;
-                    $tokens[$i]['parenthesis_owner'] = $openOwner;
+                    $tokens[$i]['parenthesis_owner']          = $openOwner;
                     $openOwner = null;
                 }
             } else if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
@@ -2117,7 +2117,7 @@ class PHP_CodeSniffer_File
                         if ($tokens[$opener]['scope_closer'] === $i) {
                             $oldOpener = array_pop($openers);
                             if (empty($openers) === false) {
-                                $lastOpener = array_pop($openers);
+                                $lastOpener           = array_pop($openers);
                                 $openers[$lastOpener] = $lastOpener;
                             } else {
                                 $lastOpener = null;
@@ -2308,8 +2308,8 @@ class PHP_CodeSniffer_File
         $opener = $this->_tokens[$stackPtr]['parenthesis_opener'];
         $closer = $this->_tokens[$stackPtr]['parenthesis_closer'];
 
-        $vars    = array();
-        $currVar = null;
+        $vars            = array();
+        $currVar         = null;
         $defaultStart    = null;
         $paramCount      = 0;
         $passByReference = false;
@@ -2369,7 +2369,7 @@ class PHP_CodeSniffer_File
                     continue;
                 }
 
-                $vars[$paramCount] = array();
+                $vars[$paramCount]         = array();
                 $vars[$paramCount]['name'] = $this->_tokens[$currVar]['content'];
 
                 if ($defaultStart !== null) {
@@ -2381,7 +2381,7 @@ class PHP_CodeSniffer_File
                 }
 
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
-                $vars[$paramCount]['type_hint'] = $typeHint;
+                $vars[$paramCount]['type_hint']         = $typeHint;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
@@ -2441,7 +2441,7 @@ class PHP_CodeSniffer_File
                   T_DOC_COMMENT,
                  );
 
-        $scope = 'public';
+        $scope          = 'public';
         $scopeSpecified = false;
         $isAbstract     = false;
         $isFinal        = false;
@@ -2455,15 +2455,15 @@ class PHP_CodeSniffer_File
 
             switch ($this->_tokens[$i]['code']) {
             case T_PUBLIC:
-                $scope = 'public';
+                $scope          = 'public';
                 $scopeSpecified = true;
                 break;
             case T_PRIVATE:
-                $scope = 'private';
+                $scope          = 'private';
                 $scopeSpecified = true;
                 break;
             case T_PROTECTED:
-                $scope = 'protected';
+                $scope          = 'protected';
                 $scopeSpecified = true;
                 break;
             case T_ABSTRACT:
@@ -2553,7 +2553,7 @@ class PHP_CodeSniffer_File
                   T_COMMA,
                  );
 
-        $scope = 'public';
+        $scope          = 'public';
         $scopeSpecified = false;
         $isStatic       = false;
 
@@ -2564,15 +2564,15 @@ class PHP_CodeSniffer_File
 
             switch ($this->_tokens[$i]['code']) {
             case T_PUBLIC:
-                $scope = 'public';
+                $scope          = 'public';
                 $scopeSpecified = true;
                 break;
             case T_PRIVATE:
-                $scope = 'private';
+                $scope          = 'private';
                 $scopeSpecified = true;
                 break;
             case T_PROTECTED:
-                $scope = 'protected';
+                $scope          = 'protected';
                 $scopeSpecified = true;
                 break;
             case T_STATIC:

@@ -329,11 +329,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 continue;
             }
 
-            $type      = '';
-            $typeSpace = 0;
-            $var       = '';
-            $varSpace  = 0;
-            $comment   = '';
+            $type         = '';
+            $typeSpace    = 0;
+            $var          = '';
+            $varSpace     = 0;
+            $comment      = '';
             $commentLines = array();
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();

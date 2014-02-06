@@ -201,10 +201,10 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
             $overallPercent = '('.round((($count / $errorsShown) * 100), 2).')';
             $authorPercent  = '('.$percent.')';
-            $line = str_repeat(' ', (6 - strlen($count))).$count;
-            $line = str_repeat(' ', (12 - strlen($overallPercent))).$overallPercent.$line;
-            $line = str_repeat(' ', (11 - strlen($authorPercent))).$authorPercent.$line;
-            $line = $author.str_repeat(' ', ($width - strlen($author) - strlen($line))).$line;
+            $line           = str_repeat(' ', (6 - strlen($count))).$count;
+            $line           = str_repeat(' ', (12 - strlen($overallPercent))).$overallPercent.$line;
+            $line           = str_repeat(' ', (11 - strlen($authorPercent))).$authorPercent.$line;
+            $line           = $author.str_repeat(' ', ($width - strlen($author) - strlen($line))).$line;
 
             echo $line.PHP_EOL;
 

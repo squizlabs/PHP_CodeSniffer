@@ -95,7 +95,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
             }
 
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
-                $type = 'Default';
+                $type         = 'Default';
                 $foundDefault = true;
             } else {
                 $type = 'Case';

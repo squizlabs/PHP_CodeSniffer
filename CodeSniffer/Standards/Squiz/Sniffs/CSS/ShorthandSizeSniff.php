@@ -84,7 +84,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Get the whole style content.
-        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $end         = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         $origContent = $phpcsFile->getTokensAsString(($stackPtr + 1), ($end - $stackPtr - 1));
         $origContent = trim($origContent, ': ');
 

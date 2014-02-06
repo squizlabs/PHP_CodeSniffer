@@ -181,8 +181,8 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             // the previous function and no blank lines before this one as well.
             $currentLine = $tokens[$stackPtr]['line'];
             $prevLine    = ($tokens[$prevContent]['line'] - 1);
-            $i = ($stackPtr - 1);
-            $foundLines = 0;
+            $i           = ($stackPtr - 1);
+            $foundLines  = 0;
             while ($currentLine !== $prevLine && $currentLine > 1 && $i > 0) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];

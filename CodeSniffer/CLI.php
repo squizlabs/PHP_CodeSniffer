@@ -100,19 +100,19 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']       = array();
-        $defaults['standard']    = null;
-        $defaults['verbosity']   = 0;
-        $defaults['interactive'] = false;
-        $defaults['explain']     = false;
-        $defaults['local']       = false;
-        $defaults['showSources'] = false;
-        $defaults['extensions']  = array();
-        $defaults['sniffs']      = array();
-        $defaults['ignored']     = array();
-        $defaults['reportFile']  = null;
-        $defaults['generator']   = '';
-        $defaults['reports']     = array();
+        $defaults['files']           = array();
+        $defaults['standard']        = null;
+        $defaults['verbosity']       = 0;
+        $defaults['interactive']     = false;
+        $defaults['explain']         = false;
+        $defaults['local']           = false;
+        $defaults['showSources']     = false;
+        $defaults['extensions']      = array();
+        $defaults['sniffs']          = array();
+        $defaults['ignored']         = array();
+        $defaults['reportFile']      = null;
+        $defaults['generator']       = '';
+        $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
 
