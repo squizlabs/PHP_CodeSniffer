@@ -18,6 +18,11 @@
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-phpcs-fixer": "2.0.x-dev"
+        }
+    },
     "autoload": {
         "classmap": [
             "CodeSniffer.php",

@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
   - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
+  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
  </notes>
  <contents>
   <dir name="/">

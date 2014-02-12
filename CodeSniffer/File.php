@@ -1689,8 +1689,10 @@ class PHP_CodeSniffer_File
                 return $i;
             }
 
-            if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['end']) === true
-                && $opener !== null
+            if ($opener !== null
+                && (isset($tokens[$i]['scope_opener']) === false
+                || $tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true)
+                && in_array($tokenType, $tokenizer->scopeOpeners[$currType]['end']) === true
             ) {
                 if ($ignore > 0 && $tokenType === T_CLOSE_CURLY_BRACKET) {
                     // The last opening bracket must have been for a string
@@ -1733,6 +1735,13 @@ class PHP_CodeSniffer_File
                         $ignore = $originalIgnore;
                         return $opener;
                     } else if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
+                        // Unset scope_condition here or else the token will appear to have
+                        // already been processed, and it will be skipped. Normally we want that,
+                        // but in this case, the token is both a closer and an opener, so
+                        // it needs to act like an opener. This is also why we return the
+                        // token before this one; so the closer has a chance to be processed
+                        // a second time, but as an opener.
+                        unset($tokens[$i]['scope_condition']);
                         return ($i - 1);
                     } else {
                         return $i;
@@ -1759,8 +1768,7 @@ class PHP_CodeSniffer_File
                     echo '* token is an opening condition *'.PHP_EOL;
                 }
 
-                $isShared
-                    = ($tokenizer->scopeOpeners[$tokenType]['shared'] === true);
+                $isShared = ($tokenizer->scopeOpeners[$tokenType]['shared'] === true);
 
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     // We've been here before.
