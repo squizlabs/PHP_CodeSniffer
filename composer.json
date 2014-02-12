@@ -30,7 +30,6 @@
             "CodeSniffer/Sniff.php",
             "CodeSniffer/Tokens.php",
             "CodeSniffer/Reports/",
-            "CodeSniffer/CommentParser/",
             "CodeSniffer/Tokenizers/",
             "CodeSniffer/DocGenerators/",
             "CodeSniffer/Standards/AbstractPatternSniff.php",
