@@ -76,6 +76,9 @@ class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         if ($lastChars !== $phpcsFile->eolChar) {
             $error = 'File must end with a newline character';
             $phpcsFile->addError($error, $stackPtr, 'NotFound');
+            $phpcsFile->recordMetric($stackPtr, 'Newline at EOF', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Newline at EOF', 'yes');
         }
 
         // Ignore the rest of the file.

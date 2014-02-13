@@ -76,6 +76,8 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
         $found = str_replace("\n", '\n', $found);
         $found = str_replace("\r", '\r', $found);
 
+        $phpcsFile->recordMetric($stackPtr, 'EOL char', $found);
+
         if ($found !== $this->eolChar) {
             // Check for single line files without an EOL. This is a very special
             // case and the EOL char is set to \n when this happens.

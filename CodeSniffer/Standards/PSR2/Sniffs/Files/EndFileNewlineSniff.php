@@ -51,16 +51,8 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We are only interested if this is the first open tag and in a file
-        // that only contains PHP code.
-        if ($stackPtr !== 0) {
-            if ($phpcsFile->findPrevious(array(T_OPEN_TAG, T_INLINE_HTML), ($stackPtr - 1)) !== false) {
-                return;
-            }
-        }
-
         if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         // Skip to the end of the file.
@@ -76,7 +68,8 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->fixer->addNewline($lastToken);
             }
 
-            return;
+            $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '0');
+            return ($phpcsFile->numTokens + 1);
         }
 
         // Go looking for the last non-empty line.
@@ -89,6 +82,8 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
 
         $lastCodeLine = $tokens[$lastCode]['line'];
         $blankLines   = ($lastLine - $lastCodeLine);
+        $phpcsFile->recordMetric($stackPtr, 'Blank lines at EOF', ($blankLines + 1));
+
         if ($blankLines > 0) {
             $error = 'Expected 1 blank line at end of file; %s found';
             $data  = array($blankLines + 1);
@@ -104,7 +99,14 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->fixer->replaceToken($lastToken, $phpcsFile->eolChar);
                 $phpcsFile->fixer->endChangeset();
             }
+
+            $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', ($blankLines + 1));
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '1');
         }//end if
+
+        // Skip the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 

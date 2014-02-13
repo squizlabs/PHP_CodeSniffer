@@ -69,6 +69,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                       $tokens[$result['effect']]['line'],
                      );
             $phpcsFile->addWarning($error, 0, 'FoundWithSymbols', $data);
+            $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'no');
         }
 
     }//end process()

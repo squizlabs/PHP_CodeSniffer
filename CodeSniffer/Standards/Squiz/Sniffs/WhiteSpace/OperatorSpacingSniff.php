@@ -126,9 +126,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
             } else {
-                if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
-                    $found = strlen($tokens[($stackPtr - 1)]['content']);
+                $found = strlen($tokens[($stackPtr - 1)]['content']);
+                $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
+                if ($found !== 1) {
                     $error = 'Expected 1 space before "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeAmp', $data);
@@ -145,9 +148,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->addContent($stackPtr, ' ');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
             } else {
-                if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
-                    $found = strlen($tokens[($stackPtr + 1)]['content']);
+                $found = strlen($tokens[($stackPtr + 1)]['content']);
+                $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
+                if ($found !== 1) {
                     $error = 'Expected 1 space after "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterAmp', $data);
@@ -211,11 +217,14 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
-        } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+
+            $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
+        } else if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
             // Don't throw an error for assignments, because other standards allow
             // multiple spaces there to align multiple assignments.
-            if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
-                $found = strlen($tokens[($stackPtr - 1)]['content']);
+            $found = strlen($tokens[($stackPtr - 1)]['content']);
+            $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
+            if ($found !== 1) {
                 $error = 'Expected 1 space before "%s"; %s found';
                 $data  = array(
                           $operator,
@@ -234,18 +243,23 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
-        } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+
+            $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
+        } else {
             $found = strlen($tokens[($stackPtr + 1)]['content']);
-            $error = 'Expected 1 space after "%s"; %s found';
-            $data  = array(
-                      $operator,
-                      $found,
-                     );
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+            $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
+            if ($found !== 1) {
+                $error = 'Expected 1 space after "%s"; %s found';
+                $data  = array(
+                          $operator,
+                          $found,
+                         );
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
             }
-        }
+        }//end if
 
     }//end process()
 

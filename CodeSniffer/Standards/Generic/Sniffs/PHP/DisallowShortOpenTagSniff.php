@@ -64,6 +64,9 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
             $error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
             $data  = array($openTag['content']);
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+            $phpcsFile->recordMetric($stackPtr, 'PHP short open tag used', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP short open tag used', 'no');
         }
 
         if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {

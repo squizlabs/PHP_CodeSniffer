@@ -85,6 +85,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                 $phpcsFile->fixer->endChangeset();
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'Function openning brace placement', 'same line');
             return;
         }
 
@@ -146,6 +147,8 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                 }
             }
         }//end if
+
+        $phpcsFile->recordMetric($stackPtr, 'Function openning brace placement', 'new line');
 
     }//end process()
 

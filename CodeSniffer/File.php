@@ -189,12 +189,20 @@ class PHP_CodeSniffer_File
     private $_errors = array();
 
     /**
-     * The warnings raised form PHP_CodeSniffer_Sniffs.
+     * The warnings raised from PHP_CodeSniffer_Sniffs.
      *
      * @var array()
      * @see getWarnings()
      */
     private $_warnings = array();
+
+    /**
+     * The metrics recorded from PHP_CodeSniffer_Sniffs.
+     *
+     * @var array()
+     * @see getMetrics()
+     */
+    private $_metrics = array();
 
     /**
      * Record the errors and warnings raised.
@@ -1074,6 +1082,68 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Adds an warning to the warning stack.
+     *
+     * @param int    $stackPtr The stack position where the metric was recorded.
+     * @param string $metric   The name of the metric being recorded.
+     * @param string $value    The value of the metric being recorded.
+     *
+     * @return boolean
+     */
+    public function recordMetric($stackPtr, $metric, $value)
+    {
+        /*
+        // Don't bother doing any processing if warnings are just going to
+        // be hidden in the reports anyway.
+        if ($this->phpcs->cli->warningSeverity === 0) {
+            return false;
+        }
+        */
+
+        $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
+        if (isset($parts[3]) === true) {
+            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+            // Remove "Sniff" from the end.
+            $sniff = substr($sniff, 0, -5);
+        } else {
+            $sniff = 'unknownSniff';
+        }
+
+        $sniffCode = $sniff;
+
+        // Make sure we are not ignoring this file.
+        $patterns = $this->phpcs->getIgnorePatterns($sniffCode);
+        foreach ($patterns as $pattern => $type) {
+            // While there is support for a type of each pattern
+            // (absolute or relative) we don't actually support it here.
+            $replacements = array(
+                             '\\,' => ',',
+                             '*'   => '.*',
+                            );
+
+            $pattern = strtr($pattern, $replacements);
+            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                return false;
+            }
+        }
+
+        if (isset($this->_metrics[$metric]) === false) {
+            $this->_metrics[$metric] = array(
+                                        $value => array($stackPtr),
+                                       );
+        } else if (isset($this->_metrics[$metric][$value]) === false) {
+            $this->_metrics[$metric][$value] = array($stackPtr);
+        } else {
+            $this->_metrics[$metric][$value][] = $stackPtr;
+        }
+
+        return true;
+
+    }//end recordMetric()
+
+
+    /**
      * Adds a fixable error to the error stack.
      *
      * @param string $error    The error message.
@@ -1146,6 +1216,18 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Returns the number of successes recorded.
+     *
+     * @return int
+     */
+    public function getSuccessCount()
+    {
+        return $this->_successCount;
+
+    }//end getSuccessCount()
+
+
+    /**
      * Returns the number of fixable errors/warnings raised.
      *
      * @return int
@@ -1191,6 +1273,18 @@ class PHP_CodeSniffer_File
         return $this->_warnings;
 
     }//end getWarnings()
+
+
+    /**
+     * Returns the metrics found while processing this file.
+     *
+     * @return array
+     */
+    public function getMetrics()
+    {
+        return $this->_metrics;
+
+    }//end getMetrics()
 
 
     /**

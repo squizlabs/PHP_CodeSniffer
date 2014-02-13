@@ -80,45 +80,51 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
-            $parenOpener    = $tokens[$stackPtr]['parenthesis_opener'];
-            $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
-            $spaceAfterOpen = 0;
-            if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
+        if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
+            return;
+        }
+
+        $parenOpener    = $tokens[$stackPtr]['parenthesis_opener'];
+        $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
+        $spaceAfterOpen = 0;
+        if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
+            $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
+        }
+
+        $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
+
+        if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+            $error = 'Expected %s spaces after opening bracket; %s found';
+            $data  = array(
+                      $this->requiredSpacesAfterOpen,
+                      $spaceAfterOpen,
+                     );
+            $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
+            }
+        }
+
+        if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'] ) {
+            $spaceBeforeClose = 0;
+            if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
+                $spaceBeforeClose = strlen($tokens[($parenCloser - 1)]['content']);
             }
 
-            if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
-                $error = 'Expected %s spaces after opening bracket; %s found';
+            $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', $spaceBeforeClose);
+
+            if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
+                $error = 'Expected %s spaces before closing bracket; %s found';
                 $data  = array(
-                          $this->requiredSpacesAfterOpen,
-                          $spaceAfterOpen,
+                          $this->requiredSpacesBeforeClose,
+                          $spaceBeforeClose,
                          );
-                $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
+                    $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
                 }
             }
-
-            if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'] ) {
-                $spaceBeforeClose = 0;
-                if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
-                    $spaceBeforeClose = strlen($tokens[($parenCloser - 1)]['content']);
-                }
-
-                if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
-                    $error = 'Expected %s spaces before closing bracket; %s found';
-                    $data  = array(
-                              $this->requiredSpacesBeforeClose,
-                              $spaceBeforeClose,
-                             );
-                    $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                        $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
-                    }
-                }
-            }
-        }//end if
+        }
 
     }//end process()
 

@@ -88,6 +88,12 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
         $keyword  = $tokens[$stackPtr]['content'];
         $expected = strtoupper($keyword);
         if ($keyword !== $expected) {
+            if ($keyword === strtolower($keyword)) {
+                $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'lower');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'mixed');
+            }
+
             $error = 'TRUE, FALSE and NULL must be uppercase; expected "%s" but found "%s"';
             $data  = array(
                       $expected,
@@ -98,6 +104,8 @@ class Generic_Sniffs_PHP_UpperCaseConstantSniff implements PHP_CodeSniffer_Sniff
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'upper');
         }
 
     }//end process()

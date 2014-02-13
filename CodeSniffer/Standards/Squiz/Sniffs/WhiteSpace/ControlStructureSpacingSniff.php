@@ -92,6 +92,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $gap);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 0);
             }
 
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']
@@ -104,6 +108,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', $gap);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', 0);
             }
         }//end if
 

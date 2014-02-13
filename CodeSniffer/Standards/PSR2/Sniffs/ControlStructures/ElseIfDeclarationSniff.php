@@ -36,7 +36,10 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
      */
     public function register()
     {
-        return array(T_ELSE);
+        return array(
+                T_ELSE,
+                T_ELSEIF,
+               );
 
     }//end register()
 
@@ -53,8 +56,15 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $next   = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+
+        if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
+            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'elseif');
+            return;
+        }
+
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$next]['code'] === T_IF) {
+            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
             $error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
             $fix   = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
 

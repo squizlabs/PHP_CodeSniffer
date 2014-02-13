@@ -97,12 +97,20 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             // This is a class constant.
             if (strtoupper($constName) !== $constName) {
+                if (strtolower($constName) === $constName) {
+                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'mixed');
+                }
+
                 $error = 'Class constants must be uppercase; expected %s but found %s';
                 $data  = array(
                           strtoupper($constName),
                           $constName,
                          );
                 $phpcsFile->addError($error, $stackPtr, 'ClassConstantNotUpperCase', $data);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
             }
 
             return;
@@ -141,12 +149,20 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
         }
 
         if (strtoupper($constName) !== $constName) {
+            if (strtolower($constName) === $constName) {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'mixed');
+            }
+
             $error = 'Constants must be uppercase; expected %s but found %s';
             $data  = array(
                       $prefix.strtoupper($constName),
                       $prefix.$constName,
                      );
             $phpcsFile->addError($error, $stackPtr, 'ConstantNotUpperCase', $data);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
         }
 
     }//end process()

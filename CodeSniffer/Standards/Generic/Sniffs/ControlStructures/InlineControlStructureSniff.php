@@ -82,6 +82,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+            $phpcsFile->recordMetric($stackPtr, 'Control structure defined inline', 'no');
             return;
         }
 
@@ -111,6 +112,8 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
         } else {
             $fix = $phpcsFile->addFixableWarning('Inline control structures are discouraged', $stackPtr, 'Discouraged');
         }
+
+        $phpcsFile->recordMetric($stackPtr, 'Control structure defined inline', 'yes');
 
         if ($fix === true && $phpcsFile->fixer->enabled === true) {
             $phpcsFile->fixer->beginChangeset();
