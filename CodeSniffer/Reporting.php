@@ -89,6 +89,11 @@ class PHP_CodeSniffer_Reporting
      */
     public function factory($type)
     {
+        $type = ucfirst($type);
+        if (isset($this->_reports[$type]) === true) {
+            return $this->_reports[$type];
+        }
+
         if (strpos($type, '.') !== false) {
             // This is a path to a custom report class.
             $filename = realpath($type);
@@ -100,11 +105,6 @@ class PHP_CodeSniffer_Reporting
             $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
             include_once $filename;
         } else {
-            $type = ucfirst($type);
-            if (isset($this->_reports[$type]) === true) {
-                return $this->_reports[$type];
-            }
-
             $filename        = $type.'.php';
             $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
             if (class_exists($reportClassName, true) === false) {
