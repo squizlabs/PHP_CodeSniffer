@@ -57,20 +57,36 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
         $width=80
     ) {
         $metrics = $phpcsFile->getMetrics();
-        foreach ($metrics as $metric => $values) {
-            foreach ($values as $value => $locations) {
+        foreach ($metrics as $metric => $data) {
+            $sniff    = $data['sniffs'][0];
+            $parts    = explode('.', $sniff);
+            $category = $parts[1];
+
+            if (isset($this->_metricCache[$category]) === false) {
+                $this->_metricCache[$category] = array();
+            }
+
+            if (isset($this->_metricCache[$category][$metric]) === false) {
+                $this->_metricCache[$category][$metric] = array(
+                                                           'sniffs' => $data['sniffs'],
+                                                           'values' => array(),
+                                                          );
+            } else {
+                $this->_metricCache[$category][$metric]['sniffs'] += $data['sniffs'];
+                $this->_metricCache[$category][$metric]['sniffs']  = array_unique($this->_metricCache[$category][$metric]['sniffs']);
+            }
+
+            foreach ($data['values'] as $value => $locations) {
                 $locations = array_unique($locations);
                 $count     = count($locations);
 
-                if (isset($this->_metricCache[$metric]) === false) {
-                    $this->_metricCache[$metric] = array($value => $count);
-                } else if (isset($this->_metricCache[$metric][$value]) === false) {
-                    $this->_metricCache[$metric][$value] = $count;
+                if (isset($this->_metricCache[$category][$metric]['values'][$value]) === false) {
+                    $this->_metricCache[$category][$metric]['values'][$value] = $count;
                 } else {
-                    $this->_metricCache[$metric][$value] += $count;
+                    $this->_metricCache[$category][$metric]['values'][$value] += $count;
                 }
             }
-        }
+        }//end foreach
 
         return true;
 
@@ -114,34 +130,43 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
         echo PHP_EOL.'PHP CODE SNIFFER INFORMATION REPORT'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        foreach ($this->_metricCache as $metric => $values) {
-            // Find the winning value.
-            $winner      = '';
-            $winnerCount = 0;
-            $totalCount  = 0;
-            foreach ($values as $value => $count) {
-                $totalCount += $count;
-                if ($count > $winnerCount) {
-                    $winner      = $value;
-                    $winnerCount = $count;
-                }
-            }
-
-            $winPercent = round(($winnerCount / $totalCount * 100), 2);
-            echo "$metric: $winner [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
-
-            asort($values);
-            $values = array_reverse($values, true);
-            foreach ($values as $value => $count) {
-                if ($value === $winner) {
-                    continue;
-                }
-
-                $percent = round(($count / $totalCount * 100), 2);
-                echo "\t$value => $count ($percent%)".PHP_EOL;
-            }
-
+        foreach ($this->_metricCache as $category => $metrics) {
             echo PHP_EOL;
+            echo str_repeat('-', (strlen($category) + 4));
+            echo (PHP_EOL."| $category |".PHP_EOL);
+            echo str_repeat('-', (strlen($category) + 4));
+            echo PHP_EOL.PHP_EOL;
+
+            foreach ($metrics as $metric => $data) {
+                // Find the winning value.
+                $winner      = '';
+                $winnerCount = 0;
+                $totalCount  = 0;
+                foreach ($data['values'] as $value => $count) {
+                    $totalCount += $count;
+                    if ($count > $winnerCount) {
+                        $winner      = $value;
+                        $winnerCount = $count;
+                    }
+                }
+
+                $winPercent = round(($winnerCount / $totalCount * 100), 2);
+                echo "$metric: $winner [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
+
+                asort($data['values'] );
+                $data['values'] = array_reverse($data['values'], true);
+                foreach ($data['values']  as $value => $count) {
+                    if ($value === $winner) {
+                        continue;
+                    }
+
+                    $percent = round(($count / $totalCount * 100), 2);
+                    echo "\t$value => $count ($percent%)".PHP_EOL;
+                }
+
+                echo PHP_EOL;
+
+            }//end foreach
 
         }//end foreach
 

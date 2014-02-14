@@ -1092,14 +1092,6 @@ class PHP_CodeSniffer_File
      */
     public function recordMetric($stackPtr, $metric, $value)
     {
-        /*
-        // Don't bother doing any processing if warnings are just going to
-        // be hidden in the reports anyway.
-        if ($this->phpcs->cli->warningSeverity === 0) {
-            return false;
-        }
-        */
-
         $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
         if (isset($parts[3]) === true) {
             $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
@@ -1130,12 +1122,18 @@ class PHP_CodeSniffer_File
 
         if (isset($this->_metrics[$metric]) === false) {
             $this->_metrics[$metric] = array(
-                                        $value => array($stackPtr),
+                                        'sniffs' => array($sniffCode),
+                                        'values' => array(
+                                                     $value => array($stackPtr),
+                                                    ),
                                        );
-        } else if (isset($this->_metrics[$metric][$value]) === false) {
-            $this->_metrics[$metric][$value] = array($stackPtr);
         } else {
-            $this->_metrics[$metric][$value][] = $stackPtr;
+            $this->_metrics[$metric]['snifs'][] = $sniffCode;
+            if (isset($this->_metrics[$metric]['values'][$value]) === false) {
+                $this->_metrics[$metric]['values'][$value] = array($stackPtr);
+            } else {
+                $this->_metrics[$metric]['values'][$value][] = $stackPtr;
+            }
         }
 
         return true;
