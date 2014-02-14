@@ -55,13 +55,21 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Array keyword should be lower case.
-        if (strtolower($tokens[$stackPtr]['content']) !== $tokens[$stackPtr]['content']) {
+        if ($tokens[$stackPtr]['content'] !== strtolower($tokens[$stackPtr]['content'])) {
+            if ($tokens[$stackPtr]['content'] !== strtoupper($tokens[$stackPtr]['content'])) {
+                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'upper');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'mixed');
+            }
+
             $error = 'Array keyword should be lower case; expected "array" but found "%s"';
             $data  = array($tokens[$stackPtr]['content']);
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, 'array');
             }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'lower');
         }
 
         $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
