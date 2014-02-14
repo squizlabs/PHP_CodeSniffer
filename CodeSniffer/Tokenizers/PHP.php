@@ -644,6 +644,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
+            // Check for any unset scope conditions due to alternate IF/ENDIF syntax.
+            if (isset($tokens[$i]['scope_opener']) === true
+                && isset($tokens[$i]['scope_condition']) === false
+            ) {
+                $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
+            }
+
             // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {

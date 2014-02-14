@@ -105,3 +105,7 @@ if ($foo):
         $foo = 2;
     endif;
 endif;
+
+if ($foo):
+else if ($baz): $foo = 2;
+endif;
