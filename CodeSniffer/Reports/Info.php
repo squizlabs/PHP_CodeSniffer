@@ -153,7 +153,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
                 $winPercent = round(($winnerCount / $totalCount * 100), 2);
                 echo "$metric: $winner [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
 
-                asort($data['values'] );
+                asort($data['values']);
                 $data['values'] = array_reverse($data['values'], true);
                 foreach ($data['values']  as $value => $count) {
                     if ($value === $winner) {
