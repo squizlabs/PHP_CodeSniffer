@@ -66,7 +66,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$assignmentTokens;
+        return array_diff(PHP_CodeSniffer_Tokens::$assignmentTokens, array(T_DOUBLE_ARROW));
 
     }//end register()
 
