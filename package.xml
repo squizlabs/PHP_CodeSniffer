@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=info to show information about the checked code to make building a standard easier
     -- Checks a number of things, such as what line length you use, and spacing are brackets, but not everything
     -- Still highly experimental
+  - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
+    -- When set to FALSE, error messages will not be recorded and only totals will be returned
+    -- This can save significant memory while processing a large code base
   - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
   - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax

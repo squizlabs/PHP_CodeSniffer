@@ -327,7 +327,10 @@ class PHP_CodeSniffer_File
         ) {
             $recordErrors = false;
             foreach ($cliValues['reports'] as $report => $output) {
-                if ($report !== 'summary' && $report !== 'info') {
+                $reportClass = $phpcs->reporting->factory($report);
+                if (property_exists($reportClass, 'recordErrors') === false
+                    || $reportClass->recordErrors === true
+                ) {
                     $recordErrors = true;
                     break;
                 }
@@ -1134,7 +1137,10 @@ class PHP_CodeSniffer_File
                                                     ),
                                        );
         } else {
-            $this->_metrics[$metric]['snifs'][] = $sniffCode;
+            if (in_array($sniffCode, $this->_metrics[$metric]['sniffs']) === false) {
+                $this->_metrics[$metric]['sniffs'][] = $sniffCode;
+            }
+
             if (isset($this->_metrics[$metric]['values'][$value]) === false) {
                 $this->_metrics[$metric]['values'][$value] = array($stackPtr);
             } else {

@@ -29,6 +29,13 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
 {
 
     /**
+     * TRUE if this report needs error messages instead of just totals.
+     *
+     * @var boolean
+     */
+    public $recordErrors = false;
+
+    /**
      * A cache of metrics collected during the run.
      *
      * @var array
