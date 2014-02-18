@@ -200,6 +200,10 @@ class PHP_CodeSniffer_Tokenizers_Comment
             $start   += strlen($space['content']);
         }
 
+        if (isset($string[$start]) === false) {
+            return $tokens;
+        }
+
         if ($string[$start] === '@') {
             // The content up until the first whitespace is the tag name.
             $tagName = '';
