@@ -324,10 +324,16 @@ class PHP_CodeSniffer_File
         $cliValues = $phpcs->cli->getCommandLineValues();
         if (isset($cliValues['showSources']) === true
             && $cliValues['showSources'] !== true
-            && array_key_exists('summary', $cliValues['reports']) === true
-            && count($cliValues['reports']) === 1
         ) {
-            $this->_recordErrors = false;
+            $recordErrors = false;
+            foreach ($cliValues['reports'] as $report => $output) {
+                if ($report !== 'summary' && $report !== 'info') {
+                    $recordErrors = true;
+                    break;
+                }
+            }
+
+            $this->_recordErrors = $recordErrors;
         }
 
     }//end __construct()
