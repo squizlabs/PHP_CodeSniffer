@@ -454,6 +454,11 @@ class PHP_CodeSniffer_CLI
                     substr($arg, 7)
                 );
                 foreach ($ignored as $pattern) {
+                    $pattern = trim($pattern);
+                    if ($pattern == '') {
+                        continue;
+                    }
+
                     $this->values['ignored'][$pattern] = 'absolute';
                 }
             } else if (substr($arg, 0, 10) === 'generator=') {
