@@ -55,7 +55,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious(T_FUNCTION, ($stackPtr - 1));
+        $function = $phpcsFile->findPrevious(T_FUNCTION, ($stackPtr - 1), null, false, null, true);
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];
