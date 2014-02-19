@@ -49,9 +49,9 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
-
-        $filename = str_replace('"', '\"', $report['filename']);
-        $filename = str_replace('/', '\/', $report['filename']);
+        $filename = str_replace('\\', '\\\\', $report['filename']);
+        $filename = str_replace('"', '\"', $filename);
+        $filename = str_replace('/', '\/', $filename);
         echo "\"$filename\":{";
         echo '"errors":'.$report['errors'].',"warnings":'.$report['warnings'].',"messages":[';
 
@@ -59,6 +59,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
+                    $error['message'] = str_replace('\\', '\\\\', $error['message']);
                     $error['message'] = str_replace('"', '\"', $error['message']);
                     $error['message'] = str_replace('/', '\/', $error['message']);
 

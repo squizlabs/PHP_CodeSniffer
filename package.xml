@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz EchoedStringsSniff now supports statments without a semicolon, such as PHP embedded in HTML
   - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - Fixed bug #20200 : Invalid JSON produced with specific error message
  </notes>
  <contents>
   <dir name="/">
