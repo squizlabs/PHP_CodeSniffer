@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - Fixed bug #20200 : Invalid JSON produced with specific error message
  </notes>
  <contents>
   <dir name="/">
