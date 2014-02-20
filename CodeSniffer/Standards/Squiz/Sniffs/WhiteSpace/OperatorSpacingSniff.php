@@ -144,7 +144,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                         $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                     }
                 }
-            }
+            }//end if
 
             // Check there is one space after the & operator.
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
@@ -171,7 +171,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                         $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                     }
                 }
-            }
+            }//end if
 
             return;
         }//end if
