@@ -59,13 +59,21 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $before = 0;
         } else {
-            $before = strlen($tokens[($stackPtr - 1)]['content']);
+            if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $before = 'newline';
+            } else {
+                $before = strlen($tokens[($stackPtr - 1)]['content']);
+            }
         }
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $after = 0;
         } else {
-            $after = strlen($tokens[($stackPtr + 1)]['content']);
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $after = 'newline';
+            } else {
+                $after = strlen($tokens[($stackPtr + 1)]['content']);
+            }
         }
 
         $phpcsFile->recordMetric($stackPtr, 'Spacing before string concat', $before);
