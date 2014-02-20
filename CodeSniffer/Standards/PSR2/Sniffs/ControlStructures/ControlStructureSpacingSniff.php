@@ -60,6 +60,8 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                 T_DO,
                 T_ELSE,
                 T_ELSEIF,
+                T_TRY,
+                T_CATCH,
                );
 
     }//end register()
