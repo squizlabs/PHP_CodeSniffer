@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
   - Fixed bug #20200 : Invalid JSON produced with specific error message
   - Fixed bug #20204 : Ruleset exclude checks are case sensitive
  </notes>
