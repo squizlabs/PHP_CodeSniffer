@@ -939,7 +939,7 @@ class PHP_CodeSniffer
                     // files before, looking for ones for this particular standard,
                     // and seeing if it is in there.
                     foreach (self::$rulesetDirs as $dir) {
-                        if (basename($dir) !== $stdName) {
+                        if (strtolower(basename($dir)) !== strtolower($stdName)) {
                             continue;
                         }
 
