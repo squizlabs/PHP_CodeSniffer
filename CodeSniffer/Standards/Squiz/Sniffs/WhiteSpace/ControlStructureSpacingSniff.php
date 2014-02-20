@@ -77,10 +77,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            return;
-        }
-
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
@@ -114,6 +110,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', 0);
             }
         }//end if
+
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
 
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
