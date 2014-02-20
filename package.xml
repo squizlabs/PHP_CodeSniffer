@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
   - Fixed bug #20200 : Invalid JSON produced with specific error message
+  - Fixed bug #20204 : Ruleset exclude checks are case sensitive
  </notes>
  <contents>
   <dir name="/">
