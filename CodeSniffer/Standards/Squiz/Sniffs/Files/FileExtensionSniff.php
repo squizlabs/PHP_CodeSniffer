@@ -59,14 +59,16 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
         $extension = substr($fileName, strrpos($fileName, '.'));
         $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), $stackPtr);
 
-        if ($extension === '.php') {
-            if ($nextClass !== false) {
+        if ($nextClass !== false) {
+            $phpcsFile->recordMetric($stackPtr, 'File extension for class files', $extension);
+            if ($extension === '.php') {
                 $error = '%s found in ".php" file; use ".inc" extension instead';
                 $data  = array(ucfirst($tokens[$nextClass]['content']));
                 $phpcsFile->addError($error, $stackPtr, 'ClassFound', $data);
             }
-        } else if ($extension === '.inc') {
-            if ($nextClass === false) {
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'File extension for non-class files', $extension);
+            if ($extension === '.inc') {
                 $error = 'No interface or class found in ".inc" file; use ".php" extension instead';
                 $phpcsFile->addError($error, $stackPtr, 'NoClass');
             }

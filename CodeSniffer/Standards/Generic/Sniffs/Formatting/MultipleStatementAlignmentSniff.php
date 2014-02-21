@@ -260,6 +260,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $prevAssign = $assign;
         }//end for
 
+        $errorGenerated = false;
         foreach ($assignments as $assignment => $data) {
             if ($data['found'] === $data['expected']) {
                 continue;
@@ -294,6 +295,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $fix = $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
             }
 
+            $errorGenerated = true;
+
             if ($fix === true && $phpcsFile->fixer->enabled === true && $data['found'] !== null) {
                 $newContent = str_repeat(' ', $data['expected']);
                 if ($data['found'] === 0) {
@@ -303,6 +306,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
             }
         }//end foreach
+
+        if ($errorGenerated === true) {
+            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'yes');
+        }
 
         if ($stopped !== null) {
             return $this->checkAlignment($phpcsFile, $stopped);

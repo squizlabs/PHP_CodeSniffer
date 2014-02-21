@@ -56,6 +56,7 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
 
         $prev = $phpcsFile->findPrevious(T_SEMICOLON, ($stackPtr - 1));
         if ($prev === false) {
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'no');
             return;
         }
 
@@ -77,7 +78,9 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Each PHP statement must be on a line by itself';
             $phpcsFile->addError($error, $stackPtr, 'SameLine');
-            return;
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'no');
         }
 
     }//end process()
