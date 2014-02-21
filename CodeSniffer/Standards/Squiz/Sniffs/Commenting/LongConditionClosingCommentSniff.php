@@ -127,6 +127,12 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                         }
                     }
 
+                    if (isset($tokens[$nextToken]['scope_closer']) === false) {
+                        // There isn't going to be anywhere to print the "end if" comment
+                        // because there is no closer.
+                        return;
+                    }
+
                     // The end brace becomes the ELSE's end brace.
                     $stackPtr = $tokens[$nextToken]['scope_closer'];
                     $endBrace = $tokens[$stackPtr];
