@@ -81,12 +81,12 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         }
 
         $lastCodeLine = $tokens[$lastCode]['line'];
-        $blankLines   = ($lastLine - $lastCodeLine);
-        $phpcsFile->recordMetric($stackPtr, 'Blank lines at EOF', ($blankLines + 1));
+        $blankLines   = ($lastLine - $lastCodeLine + 1);
+        $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', $blankLines);
 
-        if ($blankLines > 0) {
+        if ($blankLines > 1) {
             $error = 'Expected 1 blank line at end of file; %s found';
-            $data  = array($blankLines + 1);
+            $data  = array($blankLines);
             $fix   = $phpcsFile->addFixableError($error, $lastCode, 'TooMany', $data);
 
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
@@ -99,11 +99,7 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->fixer->replaceToken($lastToken, $phpcsFile->eolChar);
                 $phpcsFile->fixer->endChangeset();
             }
-
-            $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', ($blankLines + 1));
-        } else {
-            $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '1');
-        }//end if
+        }
 
         // Skip the rest of the file.
         return ($phpcsFile->numTokens + 1);
