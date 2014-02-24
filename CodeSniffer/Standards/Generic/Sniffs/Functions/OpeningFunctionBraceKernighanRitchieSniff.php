@@ -74,7 +74,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         if ($lineDifference > 0) {
             $error = 'Opening brace should be on the same line as the declaration';
             $phpcsFile->addError($error, $openingBrace, 'BraceOnNewLine');
-            $phpcsFile->recordMetric($stackPtr, 'Function openning brace placement', 'new line');
+            $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'new line');
             return;
         }
 
@@ -110,7 +110,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             return;
         }
 
-        $phpcsFile->recordMetric($stackPtr, 'Function openning brace placement', 'same line');
+        $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
 
     }//end process()
 
