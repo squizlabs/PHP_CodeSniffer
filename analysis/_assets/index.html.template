@@ -1,0 +1,13 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="_assets/styles.css" />
+    <script src="_assets/Chart.min.js"></script>
+</head>
+<body>
+<div class="metric">
+    ((html))
+    <script>
+    ((js))
+    </script>
+</body>
+</html>

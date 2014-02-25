@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="PHPCS Analysis">
+ <description>Not a standard; just sniffs that record interesting metrics.</description>
+ <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+ <rule ref="Generic.Files.LineEndings"/>
+ <rule ref="Generic.Files.LineLength"/>
+ <rule ref="Generic.Files.LowercasedFilename"/>
+ <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+ <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+ <rule ref="Generic.Formatting.SpaceAfterCast"/>
+ <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+ <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
+ <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+ <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+ <rule ref="Generic.PHP.LowerCaseConstant"/>
+ <rule ref="Generic.PHP.LowerCaseKeyword"/>
+ <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+ <rule ref="PSR1.Classes.ClassDeclaration"/>
+ <rule ref="PSR1.Files.SideEffects"/>
+ <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+ <rule ref="PSR2.Files.EndFileNewline"/>
+ <rule ref="Squiz.Arrays.ArrayDeclaration"/>
+ <rule ref="Squiz.Classes.ValidClassName"/>
+ <rule ref="Squiz.Files.FileExtension"/>
+ <rule ref="Squiz.Strings.ConcatenationSpacing"/>
+ <rule ref="Squiz.Strings.EchoedStrings"/>
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
+ <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
+ <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+ <rule ref="Zend.Files.ClosingTag"/>
+</ruleset>
