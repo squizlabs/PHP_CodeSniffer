@@ -64,44 +64,76 @@ $metricText = array(
                                                                        'description' => 'For files that do not contain classes, what extension does the file use?',
                                                                        'items'       => 'non-class files',
                                                                       ),
-               'Multiple statements on same line'                => array(
+               'Multiple statements on same line'                  => array(
                                                                        'description' => 'Are multiple statements defined on the same line of code?',
                                                                        'items'       => 'statements',
                                                                       ),
-               'Adjacent assignments aligned'                => array(
+               'Adjacent assignments aligned'                      => array(
                                                                        'description' => 'For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?',
                                                                        'items'       => 'assignment blocks',
                                                                       ),
-               'Spacing after cast statement'                => array(
+               'Spacing after cast statement'                      => array(
                                                                        'description' => 'How many spaces are there between a cast statement and the variable?',
                                                                        'items'       => 'cast statements',
                                                                       ),
-               'Function opening brace placement'                => array(
+               'Function opening brace placement'                  => array(
                                                                        'description' => 'Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?',
                                                                        'items'       => 'functions',
                                                                       ),
-               'CamelCase method name'                              => array(
+               'CamelCase method name'                             => array(
                                                                        'description' => 'Are class method names defined using CamelCase?',
                                                                        'items'       => 'methods',
                                                                       ),
-               'CamelCase function name'                              => array(
+               'CamelCase function name'                           => array(
                                                                        'description' => 'Are global function names defined using CamelCase?',
                                                                        'items'       => 'global functions',
                                                                       ),
-               'Constant name case'                              => array(
+               'Constant name case'                                => array(
                                                                        'description' => 'What case are user-defined constants defined in?',
                                                                        'items'       => 'constants',
                                                                       ),
-            'PHP short open tag used'                              => array(
+               'PHP short open tag used'                           => array(
                                                                        'description' => 'Is the PHP short open tag syntax used?',
                                                                        'items'       => 'open tags',
                                                                       ),
-            'PHP keyword case'                              => array(
+               'PHP keyword case'                                  => array(
                                                                        'description' => 'What case are PHP keywords (function, echo, foreach etc.) written in?',
                                                                        'items'       => 'keywords',
                                                                       ),
-        'PHP constant case'                              => array(
+               'PHP constant case'                                 => array(
                                                                        'description' => 'What case are PHP constants (true, false, null) written in?',
                                                                        'items'       => 'constants',
+                                                                      ),
+               'Spacing before string concat'                      => array(
+                                                                       'description' => 'How many spaces precede the string concatenation operator?',
+                                                                       'items'       => 'operators',
+                                                                      ),
+               'Spacing after string concat'                       => array(
+                                                                       'description' => 'How many spaces follow the string concatenation operator?',
+                                                                       'items'       => 'operators',
+                                                                      ),
+               'Brackets around echoed strings'                    => array(
+                                                                       'description' => 'Are parenthesis placed around <em>echo</em>\'d strings?',
+                                                                       'items'       => 'echo statements',
+                                                                      ),
+               'Space before operator'                             => array(
+                                                                       'description' => 'How many spaces precede comparison, arithmetic and assignment operators?',
+                                                                       'items'       => 'operators',
+                                                                      ),
+               'Space after operator'                              => array(
+                                                                       'description' => 'How many spaces precede comparison, arithmetic and assignment operators?',
+                                                                       'items'       => 'operators',
+                                                                      ),
+               'Line indent'                                       => array(
+                                                                       'description' => 'Are lines indented using spaces or tabs?',
+                                                                       'items'       => 'lines',
+                                                                      ),
+               'Spacing before object operator'                    => array(
+                                                                       'description' => 'How many spaces precede the object operator (->)?',
+                                                                       'items'       => 'operators',
+                                                                      ),
+               'Spacing after object operator'                     => array(
+                                                                       'description' => 'How many spaces follow the object operator (->)?',
+                                                                       'items'       => 'operators',
                                                                       ),
               );

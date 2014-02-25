@@ -36,21 +36,21 @@ foreach ($repos as $repo) {
 //        echo PHP_EOL;
 //    }
 //
-//    $reportFile = $repoDir.'/results/'.date('Y-m-d').'.json';
-//    if (file_exists($reportFile) === false) {
-//        $checkDir   = $cloneDir.'/'.$repo->path;
-//        $reportPath = dirname(__FILE__).'/PHPCSInfoReport.php';
-//        $cmd        = 'phpcs --standard='.dirname(__FILE__).'/ruleset.xml --extensions=php,inc -d memory_limit=256M';
-//        $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
-//        $cmd       .= " --report=$reportPath --report-file=$reportFile $checkDir";
-//
-//        echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
-//
-//        exec($cmd);
-//        exec("cp $reportFile $repoDir/results/latest.json");
-//    } else {
-//        echo 'Skipping PHPCS step'.PHP_EOL;
-//    }
+    $reportFile = $repoDir.'/results/'.date('Y-m-d').'.json';
+    if (file_exists($reportFile) === false) {
+        $checkDir   = $cloneDir.'/'.$repo->path;
+        $reportPath = dirname(__FILE__).'/PHPCSInfoReport.php';
+        $cmd        = 'phpcs --standard='.dirname(__FILE__).'/ruleset.xml --extensions=php,inc -d memory_limit=256M';
+        $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
+        $cmd       .= " --report=$reportPath --report-file=$reportFile $checkDir";
+
+        echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
+
+        exec($cmd);
+        exec("cp $reportFile $repoDir/results/latest.json");
+    } else {
+        echo 'Skipping PHPCS step'.PHP_EOL;
+    }
 
     $results[] = $repoDir.'/results/latest.json';
     echo str_repeat('-', 30).PHP_EOL;
