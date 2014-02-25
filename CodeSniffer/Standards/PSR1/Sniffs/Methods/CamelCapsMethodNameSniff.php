@@ -31,6 +31,49 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  */
 class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+    /**
+     * A list of all PHP magic methods.
+     *
+     * @var array
+     */
+    protected $magicMethods = array(
+                               '__construct',
+                               '__destruct',
+                               '__call',
+                               '__callstatic',
+                               '__get',
+                               '__set',
+                               '__isset',
+                               '__unset',
+                               '__sleep',
+                               '__wakeup',
+                               '__tostring',
+                               '__set_state',
+                               '__clone',
+                               '__invoke',
+                               '__call',
+                              );
+
+    /**
+     * A list of all PHP non-magic methods starting with a double underscore.
+     *
+     * These come from PHP modules such as SOAPClient.
+     *
+     * @var array
+     */
+    protected $methodsDoubleUnderscore = array(
+                                          '__soapcall',
+                                          '__getlastrequest',
+                                          '__getlastresponse',
+                                          '__getlastrequestheaders',
+                                          '__getlastresponseheaders',
+                                          '__getfunctions',
+                                          '__gettypes',
+                                          '__dorequest',
+                                          '__setcookie',
+                                          '__setlocation',
+                                          '__setsoapheaders',
+                                         );
 
     /**
      * Constructs a PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
@@ -57,6 +100,11 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends PHP_CodeSniffer_Stand
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
+            return;
+        }
+
+        if (in_array(strtolower($methodName), array_merge($this->magicMethods, $this->methodsDoubleUnderscore)) !== false) {
+            // Ignore magic methods.
             return;
         }
 
