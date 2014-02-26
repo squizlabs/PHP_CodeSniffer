@@ -125,9 +125,6 @@ $filename = dirname(__FILE__).'/_results/'.date('Y-m-d').'.json';
 file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
 exec("cp $filename ".dirname(__FILE__).'/_results/latest.json');
 
-$html = '';
-$js   = '';
-
 $chartNum = 0;
 $colours  = array(
              '#4D5360',
@@ -138,8 +135,9 @@ $colours  = array(
              '#584A5E',
             );
 
-$js .= 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
-$js .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
+$html = '';
+$js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
+$js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
 
 // Imports $metricText variable.
 require_once(dirname(__FILE__).'/_assets/metricText.php');
@@ -157,7 +155,7 @@ foreach ($totals as $metric => $data) {
     }
 
     $chartNum++;
-    $html .= '<div class="metric"><h2 title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2><p>'.$description.'</p>'.PHP_EOL;
+    $html .= '<h2 title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2><div class="metric"><p>'.$description.'</p>'.PHP_EOL;
     $html .= '<canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
     $html .= '<canvas class="chart-repo" id="chart'.$chartNum.'r" width="240" height="240"></canvas>'.PHP_EOL;
     $html .= '<div class="chart-data"><table>';
