@@ -65,36 +65,27 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
     ) {
         $metrics = $phpcsFile->getMetrics();
         foreach ($metrics as $metric => $data) {
-            asort($data['sniffs']);
-            $sniff    = $data['sniffs'][0];
-            $parts    = explode('.', $sniff);
-            $category = $parts[1];
-
-            if (isset($this->_metricCache[$category]) === false) {
-                $this->_metricCache[$category] = array();
-            }
-
-            if (isset($this->_metricCache[$category][$metric]) === false) {
-                $this->_metricCache[$category][$metric] = array(
-                                                           'sniffs' => $data['sniffs'],
-                                                           'total'  => 0,
-                                                           'values' => array(),
-                                                          );
+            if (isset($this->_metricCache[$metric]) === false) {
+                $this->_metricCache[$metric] = array(
+                                                'sniffs' => $data['sniffs'],
+                                                'total'  => 0,
+                                                'values' => array(),
+                                               );
             } else {
-                $this->_metricCache[$category][$metric]['sniffs'] += $data['sniffs'];
-                $this->_metricCache[$category][$metric]['sniffs']  = array_unique($this->_metricCache[$category][$metric]['sniffs']);
+                $this->_metricCache[$metric]['sniffs'] += $data['sniffs'];
+                $this->_metricCache[$metric]['sniffs']  = array_unique($this->_metricCache[$metric]['sniffs']);
             }
 
             foreach ($data['values'] as $value => $locations) {
                 $count = count(array_unique($locations));
 
-                if (isset($this->_metricCache[$category][$metric]['values'][$value]) === false) {
-                    $this->_metricCache[$category][$metric]['values'][$value] = $count;
+                if (isset($this->_metricCache[$metric]['values'][$value]) === false) {
+                    $this->_metricCache[$metric]['values'][$value] = $count;
                 } else {
-                    $this->_metricCache[$category][$metric]['values'][$value] += $count;
+                    $this->_metricCache[$metric]['values'][$value] += $count;
                 }
 
-                $this->_metricCache[$category][$metric]['total'] += $count;
+                $this->_metricCache[$metric]['total'] += $count;
             }
         }//end foreach
 
@@ -134,19 +125,15 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         }
 
         ksort($this->_metricCache);
+        foreach ($this->_metricCache as $metric => $data) {
+            asort($this->_metricCache[$metric]['values']);
+            $this->_metricCache[$metric]['values'] = array_reverse($this->_metricCache[$metric]['values'], true);
 
-        foreach ($this->_metricCache as $cat => $metrics) {
-            foreach ($metrics as $metric => $data) {
-                asort($this->_metricCache[$cat][$metric]['values']);
-                $this->_metricCache[$cat][$metric]['values'] = array_reverse($this->_metricCache[$cat][$metric]['values'], true);
-
-                $this->_metricCache[$cat][$metric]['percentages'] = array();
-                foreach ($this->_metricCache[$cat][$metric]['values'] as $value => $count) {
-                    $percent = round(($count / $this->_metricCache[$cat][$metric]['total'] * 100), 2);
-                    $this->_metricCache[$cat][$metric]['percentages'][$value] = $percent;
-                }
-            }//end foreach
-
+            $this->_metricCache[$metric]['percentages'] = array();
+            foreach ($this->_metricCache[$metric]['values'] as $value => $count) {
+                $percent = round(($count / $this->_metricCache[$metric]['total'] * 100), 2);
+                $this->_metricCache[$metric]['percentages'][$value] = $percent;
+            }
         }//end foreach
 
         echo json_encode($this->_metricCache, JSON_FORCE_OBJECT);

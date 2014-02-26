@@ -37,8 +37,9 @@ $metricText = array(
                                                                        'items'       => 'files',
                                                                       ),
                'Line length'                                       => array(
-                                                                       'description' => 'Including whitespace and comments, how long are code lines?',
+                                                                       'description' => 'Including whitespace and comments, how many characters are in code lines?',
                                                                        'items'       => 'lines',
+                                                                       'sort'        => SORT_NUMERIC,
                                                                       ),
                'Lowercase filename'                                => array(
                                                                        'description' => 'Are PHP filenames lowercase?',
