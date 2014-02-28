@@ -11,6 +11,22 @@ h2 {
     margin-left: -375px;
 }
 
+.intro {
+    width: 800px;
+    position: relative;
+    left: 50%;
+    margin-left: -400px;
+    margin-bottom: 60px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.intro a {
+    color: #000;
+}
+
 .metric {
     width: 800px;
     height: 500px;

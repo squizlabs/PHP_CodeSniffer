@@ -195,11 +195,16 @@ foreach ($resultFiles as $file) {
         $html .= '</div></div>'.PHP_EOL;
     }//end foreach
 
+    $intro  = "<h1>Analysis of Coding Conventions for</br>$repo</h1>".PHP_EOL;
+    $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="https://raw.github.com/squizlabs/PHP_CodeSniffer/gh-pages/analysis/'.$repo.'/results/latest.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+    $intro .= '<p>You can also <a href="../../index.html">view a combined analysis</a> that covers '.count($resultFiles).' PHP projects</p>'.PHP_EOL;
+
     $commitid = $commitids[$repo];
     $footer = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid";
 
     $output = file_get_contents(dirname(__FILE__).'/_assets/index.html.template');
     $output = str_replace('((title))', $repo.' - Coding Standards Analysis', $output);
+    $output = str_replace('((intro))', $intro, $output);
     $output = str_replace('((html))', $html, $output);
     $output = str_replace('((footer))', $footer, $output);
     $output = str_replace('((js))', $js, $output);
@@ -281,7 +286,7 @@ foreach ($totals as $metric => $data) {
 
             sort($data['repos'][$value], SORT_STRING | SORT_FLAG_CASE);
             foreach ($data['repos'][$value] as $repo) {
-                $href      = $repo.'#'.$metricid;
+                $href      = $repo.'/index.html#'.$metricid;
                 $repoHTML .= "      <a href=\"$href\"><li>$repo</li></a>".PHP_EOL;
             }
 
@@ -352,10 +357,17 @@ foreach ($totals as $metric => $data) {
     $html .= '</div>'.PHP_EOL;
 }//end foreach
 
+$intro  = '<h1>Analysis of Coding Conventions</h1>'.PHP_EOL;
+$intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.count($resultFiles).' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
+$intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
+$intro .= '<p>You can <a href="https://raw.github.com/squizlabs/PHP_CodeSniffer/gh-pages/analysis/_results/latest.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+
+
 $footer = 'Report generated on '.date('r');
 
 $output = file_get_contents(dirname(__FILE__).'/_assets/index.html.template');
 $output = str_replace('((title))', 'Coding Standards Analysis', $output);
+$output = str_replace('((intro))', $intro, $output);
 $output = str_replace('((html))', $html, $output);
 $output = str_replace('((footer))', $footer, $output);
 $output = str_replace('((js))', $js, $output);

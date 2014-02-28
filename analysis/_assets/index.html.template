@@ -5,6 +5,9 @@
     <script src="((assetPath))_assets/Chart.min.js"></script>
 </head>
 <body>
+<div class="intro">
+((intro))
+</div>
 ((html))
 <div class="footer">((footer))</div>
 <script>
