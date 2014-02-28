@@ -1,10 +1,12 @@
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="_assets/styles.css" />
-    <script src="_assets/Chart.min.js"></script>
+    <title>((title))</title>
+    <link rel="stylesheet" type="text/css" href="((assetPath))_assets/styles.css" />
+    <script src="((assetPath))_assets/Chart.min.js"></script>
 </head>
 <body>
 ((html))
+<div class="footer">((footer))</div>
 <script>
 ((js))
 </script>

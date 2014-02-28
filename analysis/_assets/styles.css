@@ -5,9 +5,10 @@ body {
 }
 
 h2 {
+    width: 800px;
     position: relative;
     left: 50%;
-    margin-left: -385px;
+    margin-left: -375px;
 }
 
 .metric {
@@ -21,7 +22,6 @@ h2 {
     border-radius: 15px;
     border: 1px solid #ccc;
     background-color: #fff;
-
 }
 
 .chart-value {
@@ -38,10 +38,55 @@ h2 {
 
 .chart-data {
     position: absolute;
-    top: 120px;
+    top: 100px;
     left: 460px;
-
 }
+
+.repo-data {
+    position: absolute;
+    top: 100px;
+    left: 15px;
+    width: 410px;
+    height: 405px;
+    overflow: auto;
+    border-radius: 0px 0px 0px 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: none;
+    padding-left: 15px;
+}
+
+.repo-data a {
+    color: #000;
+    text-decoration: none;
+}
+
+.repo-data a:hover {
+    text-decoration: underline;
+}
+
+.repo-data ul {
+    list-style: none;
+    padding-left: 5px;
+}
+
+.repo-data .close {
+    position: relative;
+    top: 0px;
+    left: 390px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.repo-data .close:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.repo-data p {
+    margin-left: -45px;
+}
+
 
 .colour-box {
     display: inline-block;
@@ -50,6 +95,10 @@ h2 {
     border: 0;
     border-radius: 15px;
     vertical-align: middle;
+}
+
+table {
+    margin-bottom: 20px;
 }
 
 tr th, td
@@ -61,4 +110,19 @@ tr th, td
 .preferred {
     font-size: 12px;
     padding: 0px 0px 15px 0px;
+}
+
+.preferred:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer a {
+    color: #000;
 }
