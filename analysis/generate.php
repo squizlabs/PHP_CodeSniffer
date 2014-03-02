@@ -303,7 +303,7 @@ foreach ($totals as $metric => $data) {
         $html .= '        <td colspan=3 class="preferred"';
         if ($numRepos > 0) {
             $repoResetCode .= "document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';";
-            $html          .= ' onclick="((repoResetCode))document.getElementById(\''.$metricid.'-'.$valueid.'-repos\').style.display=\'block\';"';
+            $html          .= ' onclick="var item=document.getElementById(\''.$metricid.'-'.$valueid.'-repos\');if(item.style.display==\'block\'){item.style.display=\'none\';}else{((repoResetCode))item.style.display=\'block\';}"';
         }
 
         $html .= '>preferred by '.$percentRepos.'% of projects</td>'.PHP_EOL;
