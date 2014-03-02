@@ -42,6 +42,13 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
      */
     private $_metricCache = array();
 
+    /**
+     * The project we are generating data for.
+     *
+     * @var string
+     */
+    private $_project = null;
+
 
     /**
      * Generate a partial report for a single processed file.
@@ -63,29 +70,33 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
+        if ($this->_project === null) {
+            $this->_project = $phpcsFile->phpcs->getConfigData('project');
+        }
+
         $metrics = $phpcsFile->getMetrics();
         foreach ($metrics as $metric => $data) {
-            if (isset($this->_metricCache[$metric]) === false) {
-                $this->_metricCache[$metric] = array(
-                                                'sniffs' => $data['sniffs'],
-                                                'total'  => 0,
-                                                'values' => array(),
-                                               );
+            if (isset($this->_metricCache['metrics'][$metric]) === false) {
+                $this->_metricCache['metrics'][$metric] = array(
+                                                           'sniffs' => $data['sniffs'],
+                                                           'total'  => 0,
+                                                           'values' => array(),
+                                                          );
             } else {
-                $this->_metricCache[$metric]['sniffs'] += $data['sniffs'];
-                $this->_metricCache[$metric]['sniffs']  = array_unique($this->_metricCache[$metric]['sniffs']);
+                $this->_metricCache['metrics'][$metric]['sniffs'] += $data['sniffs'];
+                $this->_metricCache['metrics'][$metric]['sniffs']  = array_unique($this->_metricCache['metrics'][$metric]['sniffs']);
             }
 
             foreach ($data['values'] as $value => $locations) {
                 $count = count(array_unique($locations));
 
-                if (isset($this->_metricCache[$metric]['values'][$value]) === false) {
-                    $this->_metricCache[$metric]['values'][$value] = $count;
+                if (isset($this->_metricCache['metrics'][$metric]['values'][$value]) === false) {
+                    $this->_metricCache['metrics'][$metric]['values'][$value] = $count;
                 } else {
-                    $this->_metricCache[$metric]['values'][$value] += $count;
+                    $this->_metricCache['metrics'][$metric]['values'][$value] += $count;
                 }
 
-                $this->_metricCache[$metric]['total'] += $count;
+                $this->_metricCache['metrics'][$metric]['total'] += $count;
             }
         }//end foreach
 
@@ -119,22 +130,25 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        if (empty($this->_metricCache) === true) {
-            // Nothing to show.
-            return;
-        }
+        foreach ($this->_metricCache['metrics'] as $metric => $data) {
+            asort($this->_metricCache['metrics'][$metric]['values']);
+            $this->_metricCache['metrics'][$metric]['values'] = array_reverse($this->_metricCache['metrics'][$metric]['values'], true);
 
-        ksort($this->_metricCache);
-        foreach ($this->_metricCache as $metric => $data) {
-            asort($this->_metricCache[$metric]['values']);
-            $this->_metricCache[$metric]['values'] = array_reverse($this->_metricCache[$metric]['values'], true);
-
-            $this->_metricCache[$metric]['percentages'] = array();
-            foreach ($this->_metricCache[$metric]['values'] as $value => $count) {
-                $percent = round(($count / $this->_metricCache[$metric]['total'] * 100), 2);
-                $this->_metricCache[$metric]['percentages'][$value] = $percent;
+            $this->_metricCache['metrics'][$metric]['percentages'] = array();
+            foreach ($this->_metricCache['metrics'][$metric]['values'] as $value => $count) {
+                $percent = round(($count / $this->_metricCache['metrics'][$metric]['total'] * 100), 2);
+                $this->_metricCache['metrics'][$metric]['percentages'][$value] = $percent;
             }
         }//end foreach
+
+        $output = array();
+        $cmd    = 'cd '.__DIR__.'/../'.$this->_project.'/src; git log -n 1 --pretty=format:%H;';
+        exec($cmd, $output);
+
+        $this->_metricCache['project'] = array(
+                                          'path'     => $this->_project,
+                                          'commitid' => $output[0],
+                                         );
 
         echo json_encode($this->_metricCache, JSON_FORCE_OBJECT);
 

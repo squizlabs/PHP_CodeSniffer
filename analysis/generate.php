@@ -1,12 +1,10 @@
 <?php
 $resultFiles = array();
-$commitids   = array();
-
-$repos = json_decode(file_get_contents(dirname(__FILE__).'/_assets/repos.json'));
+$repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
 foreach ($repos as $repo) {
     list($orgName, $repoName) = explode('/', $repo->url);
 
-    $orgDir = dirname(__FILE__)."/$orgName";
+    $orgDir = __DIR__."/$orgName";
     if (is_dir($orgDir) === false) {
         mkdir($orgDir);
     }
@@ -37,34 +35,26 @@ foreach ($repos as $repo) {
     //    echo PHP_EOL;
     //}
 
-    $output = array();
-    $cmd    = 'cd '.$cloneDir.'; git log -n 1 --pretty=format:%H;';
-    exec($cmd, $output);
-    $commitids[$repo->url] = $output[0];
-    echo 'At commit '.$output[0].PHP_EOL;
+    $reportFile = $repoDir.'/results.json';
+    if (file_exists($reportFile) === false) {
+        $checkDir   = $cloneDir.'/'.$repo->path;
+        $reportPath = __DIR__.'/_assets/PHPCSInfoReport.php';
+        $cmd        = 'phpcs --standard='.__DIR__.'/_assets/ruleset.xml --extensions=php,inc -d memory_limit=256M';
+        $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
+        $cmd       .= ' --runtime-set project '.$repo->url;
+        $cmd       .= " --report=$reportPath --report-file=$reportFile $checkDir";
+        echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
+        exec($cmd);
+    } else {
+        echo 'Skipping PHPCS step'.PHP_EOL;
+    }
 
-    //$reportFile = $repoDir.'/results/'.date('Y-m-d').'.json';
-    //if (file_exists($reportFile) === false) {
-    //    $checkDir   = $cloneDir.'/'.$repo->path;
-    //    $reportPath = dirname(__FILE__).'/_assets/PHPCSInfoReport.php';
-    //    $cmd        = 'phpcs --standard='.dirname(__FILE__).'/_assets/ruleset.xml --extensions=php,inc -d memory_limit=256M';
-    //    $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
-    //    $cmd       .= " --report=$reportPath --report-file=$reportFile $checkDir";
-
-    //    echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
-
-    //    exec($cmd);
-    //    exec("cp $reportFile $repoDir/results/latest.json");
-    //} else {
-    //    echo 'Skipping PHPCS step'.PHP_EOL;
-    //}
-
-    $resultFiles[] = $repoDir.'/results/latest.json';
+    $resultFiles[] = $reportFile;
     echo str_repeat('-', 30).PHP_EOL;
 }//end foreach
 
 // Imports $metricText variable.
-require_once dirname(__FILE__).'/_assets/metricText.php';
+require_once __DIR__.'/_assets/metricText.php';
 $colours = array(
             '#4D5360',
             '#D4CCC5',
@@ -76,13 +66,11 @@ $colours = array(
 
 $totals = array();
 foreach ($resultFiles as $file) {
-    $parts = explode('/', $file);
-    $num   = count($parts);
-    $repo  = $parts[($num - 4)].'/'.$parts[($num - 3)];
-
-    echo "Processing result file for $repo: $file".PHP_EOL;
     $results = json_decode(file_get_contents($file), true);
-    foreach ($results as $metric => $data) {
+    $repo    = $results['project']['path'];
+    echo "Processing result file for $repo: $file".PHP_EOL;
+
+    foreach ($results['metrics'] as $metric => $data) {
         if (isset($totals[$metric]) === false) {
             $totals[$metric] = array(
                                 'sniffs'      => array(),
@@ -117,7 +105,7 @@ foreach ($resultFiles as $file) {
         }
 
         // Needed for sorting this result set later on.
-        $results[$metric]['winner'] = $winner;
+        $results['metrics'][$metric]['winner'] = $winner;
 
         if (isset($totals[$metric]['repos'][$winner]) === false) {
             $totals[$metric]['repos'][$winner] = array();
@@ -131,9 +119,9 @@ foreach ($resultFiles as $file) {
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
 
-    uasort($results, 'sortMetrics');
+    uasort($results['metrics'], 'sortMetrics');
     $chartNum = 0;
-    foreach ($results as $metric => $data) {
+    foreach ($results['metrics'] as $metric => $data) {
         $description = '';
         if (isset($metricText[$metric]['description']) === true) {
             $description = $metricText[$metric]['description'];
@@ -196,20 +184,20 @@ foreach ($resultFiles as $file) {
     }//end foreach
 
     $intro  = "<h1>Analysis of Coding Conventions for</br>$repo</h1>".PHP_EOL;
-    $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="https://raw.github.com/squizlabs/PHP_CodeSniffer/gh-pages/analysis/'.$repo.'/results/latest.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+    $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
     $intro .= '<p>You can also <a href="../../index.html">view a combined analysis</a> that covers '.count($resultFiles).' PHP projects</p>'.PHP_EOL;
 
-    $commitid = $commitids[$repo];
+    $commitid = $results['project']['commitid'];
     $footer = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid";
 
-    $output = file_get_contents(dirname(__FILE__).'/_assets/index.html.template');
+    $output = file_get_contents(__DIR__.'/_assets/index.html.template');
     $output = str_replace('((title))', $repo.' - Coding Standards Analysis', $output);
     $output = str_replace('((intro))', $intro, $output);
     $output = str_replace('((html))', $html, $output);
     $output = str_replace('((footer))', $footer, $output);
     $output = str_replace('((js))', $js, $output);
     $output = str_replace('((assetPath))', '../../', $output);
-    file_put_contents(dirname(__FILE__).'/'.$repo.'/index.html', $output);
+    file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
 
 }//end foreach
 
@@ -226,9 +214,8 @@ foreach ($totals as $metric => $data) {
     $totals[$metric]['winner'] = $winner;
 }
 
-$filename = dirname(__FILE__).'/_results/'.date('Y-m-d').'.json';
+$filename = __DIR__.'/results.json';
 file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
-exec("cp $filename ".dirname(__FILE__).'/_results/latest.json');
 
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
@@ -360,19 +347,19 @@ foreach ($totals as $metric => $data) {
 $intro  = '<h1>Analysis of Coding Conventions</h1>'.PHP_EOL;
 $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.count($resultFiles).' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
 $intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
-$intro .= '<p>You can <a href="https://raw.github.com/squizlabs/PHP_CodeSniffer/gh-pages/analysis/_results/latest.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+$intro .= '<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
 
 
 $footer = 'Report generated on '.date('r');
 
-$output = file_get_contents(dirname(__FILE__).'/_assets/index.html.template');
+$output = file_get_contents(__DIR__.'/_assets/index.html.template');
 $output = str_replace('((title))', 'Coding Standards Analysis', $output);
 $output = str_replace('((intro))', $intro, $output);
 $output = str_replace('((html))', $html, $output);
 $output = str_replace('((footer))', $footer, $output);
 $output = str_replace('((js))', $js, $output);
 $output = str_replace('((assetPath))', '', $output);
-file_put_contents(dirname(__FILE__).'/index.html', $output);
+file_put_contents(__DIR__.'/index.html', $output);
 
 // Comparison function
 function sortMetrics($a, $b) 

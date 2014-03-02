@@ -9,7 +9,7 @@
 <h1>Analysis of Coding Conventions</h1>
 <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across 44 PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>
 <p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>
-<p>You can <a href="https://raw.github.com/squizlabs/PHP_CodeSniffer/gh-pages/analysis/_results/latest.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
+<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
 
 </div>
 <h2 id="line-indent" title="Generic.WhiteSpace.DisallowSpaceIndent">Line indent</h2>
@@ -2510,57 +2510,11 @@
     </ul>
   </div>
 </div>
-<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
-<div class="metric">
-  <p>Are global function names defined using CamelCase?</p>
-  <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
-  <canvas class="chart-repo" id="chart32r" width="240" height="240"></canvas>
-  <div class="chart-data">
-    <table>
-      <tr title="7,063 global functions">
-        <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>no</td><td>100%</td>
-      </tr>
-      <tr title="23 projects">
-        <td colspan=3 class="preferred" onclick="document.getElementById('camelcase-function-name-no-repos').style.display='none';document.getElementById('camelcase-function-name-no-repos').style.display='block';">preferred by 100% of projects</td>
-      </tr>
-    </table>
-    <p>Based on 7,063 global functions in 23 projects</p>
-  </div>
-  <div id="camelcase-function-name-no-repos" class="repo-data">
-    <p><span onclick="document.getElementById('camelcase-function-name-no-repos').style.display='none';" class="close">[close]</span><strong>23 projects prefer <em>no</em></strong></p>
-    <ul>
-      <a href="cakephp/cakephp/index.html#camelcase-function-name"><li>cakephp/cakephp</li></a>
-      <a href="contao/core/index.html#camelcase-function-name"><li>contao/core</li></a>
-      <a href="drupal/drupal/index.html#camelcase-function-name"><li>drupal/drupal</li></a>
-      <a href="EllisLab/CodeIgniter/index.html#camelcase-function-name"><li>EllisLab/CodeIgniter</li></a>
-      <a href="fabpot/Twig/index.html#camelcase-function-name"><li>fabpot/Twig</li></a>
-      <a href="joomla/joomla-cms/index.html#camelcase-function-name"><li>joomla/joomla-cms</li></a>
-      <a href="kriswallsmith/assetic/index.html#camelcase-function-name"><li>kriswallsmith/assetic</li></a>
-      <a href="laravel/framework/index.html#camelcase-function-name"><li>laravel/framework</li></a>
-      <a href="pear/pear-core/index.html#camelcase-function-name"><li>pear/pear-core</li></a>
-      <a href="phpbb/phpbb/index.html#camelcase-function-name"><li>phpbb/phpbb</li></a>
-      <a href="PHPMailer/PHPMailer/index.html#camelcase-function-name"><li>PHPMailer/PHPMailer</li></a>
-      <a href="phpmyadmin/phpmyadmin/index.html#camelcase-function-name"><li>phpmyadmin/phpmyadmin</li></a>
-      <a href="piwik/piwik/index.html#camelcase-function-name"><li>piwik/piwik</li></a>
-      <a href="pyrocms/pyrocms/index.html#camelcase-function-name"><li>pyrocms/pyrocms</li></a>
-      <a href="sebastianbergmann/phpunit/index.html#camelcase-function-name"><li>sebastianbergmann/phpunit</li></a>
-      <a href="solarphp/core/index.html#camelcase-function-name"><li>solarphp/core</li></a>
-      <a href="sugarcrm/sugarcrm_dev/index.html#camelcase-function-name"><li>sugarcrm/sugarcrm_dev</li></a>
-      <a href="swiftmailer/swiftmailer/index.html#camelcase-function-name"><li>swiftmailer/swiftmailer</li></a>
-      <a href="symfony/symfony/index.html#camelcase-function-name"><li>symfony/symfony</li></a>
-      <a href="TYPO3/TYPO3.CMS/index.html#camelcase-function-name"><li>TYPO3/TYPO3.CMS</li></a>
-      <a href="wikimedia/mediawiki-core/index.html#camelcase-function-name"><li>wikimedia/mediawiki-core</li></a>
-      <a href="WordPress/WordPress/index.html#camelcase-function-name"><li>WordPress/WordPress</li></a>
-      <a href="zikula/core/index.html#camelcase-function-name"><li>zikula/core</li></a>
-    </ul>
-  </div>
-</div>
 <h2 id="file-extension-for-class-files" title="Squiz.Files.FileExtension">File extension for class files</h2>
 <div class="metric">
   <p>For files that contain classes, what extension does the file use?</p>
-  <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
-  <canvas class="chart-repo" id="chart33r" width="240" height="240"></canvas>
+  <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
+  <canvas class="chart-repo" id="chart32r" width="240" height="240"></canvas>
   <div class="chart-data">
     <table>
       <tr title="20,973 class files">
@@ -2626,8 +2580,8 @@
 <h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
 <div class="metric">
   <p>Is the PHP short open tag syntax used?</p>
-  <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
-  <canvas class="chart-repo" id="chart34r" width="240" height="240"></canvas>
+  <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
+  <canvas class="chart-repo" id="chart33r" width="240" height="240"></canvas>
   <div class="chart-data">
     <table>
       <tr title="53,978 open tags">
@@ -2690,8 +2644,54 @@
     </ul>
   </div>
 </div>
+<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
+<div class="metric">
+  <p>Are global function names defined using CamelCase?</p>
+  <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
+  <canvas class="chart-repo" id="chart34r" width="240" height="240"></canvas>
+  <div class="chart-data">
+    <table>
+      <tr title="7,063 global functions">
+        <td><span class="colour-box" style="background-color:#4D5360"></span></td>
+        <td>no</td><td>100%</td>
+      </tr>
+      <tr title="23 projects">
+        <td colspan=3 class="preferred" onclick="document.getElementById('camelcase-function-name-no-repos').style.display='none';document.getElementById('camelcase-function-name-no-repos').style.display='block';">preferred by 100% of projects</td>
+      </tr>
+    </table>
+    <p>Based on 7,063 global functions in 23 projects</p>
+  </div>
+  <div id="camelcase-function-name-no-repos" class="repo-data">
+    <p><span onclick="document.getElementById('camelcase-function-name-no-repos').style.display='none';" class="close">[close]</span><strong>23 projects prefer <em>no</em></strong></p>
+    <ul>
+      <a href="cakephp/cakephp/index.html#camelcase-function-name"><li>cakephp/cakephp</li></a>
+      <a href="contao/core/index.html#camelcase-function-name"><li>contao/core</li></a>
+      <a href="drupal/drupal/index.html#camelcase-function-name"><li>drupal/drupal</li></a>
+      <a href="EllisLab/CodeIgniter/index.html#camelcase-function-name"><li>EllisLab/CodeIgniter</li></a>
+      <a href="fabpot/Twig/index.html#camelcase-function-name"><li>fabpot/Twig</li></a>
+      <a href="joomla/joomla-cms/index.html#camelcase-function-name"><li>joomla/joomla-cms</li></a>
+      <a href="kriswallsmith/assetic/index.html#camelcase-function-name"><li>kriswallsmith/assetic</li></a>
+      <a href="laravel/framework/index.html#camelcase-function-name"><li>laravel/framework</li></a>
+      <a href="pear/pear-core/index.html#camelcase-function-name"><li>pear/pear-core</li></a>
+      <a href="phpbb/phpbb/index.html#camelcase-function-name"><li>phpbb/phpbb</li></a>
+      <a href="PHPMailer/PHPMailer/index.html#camelcase-function-name"><li>PHPMailer/PHPMailer</li></a>
+      <a href="phpmyadmin/phpmyadmin/index.html#camelcase-function-name"><li>phpmyadmin/phpmyadmin</li></a>
+      <a href="piwik/piwik/index.html#camelcase-function-name"><li>piwik/piwik</li></a>
+      <a href="pyrocms/pyrocms/index.html#camelcase-function-name"><li>pyrocms/pyrocms</li></a>
+      <a href="sebastianbergmann/phpunit/index.html#camelcase-function-name"><li>sebastianbergmann/phpunit</li></a>
+      <a href="solarphp/core/index.html#camelcase-function-name"><li>solarphp/core</li></a>
+      <a href="sugarcrm/sugarcrm_dev/index.html#camelcase-function-name"><li>sugarcrm/sugarcrm_dev</li></a>
+      <a href="swiftmailer/swiftmailer/index.html#camelcase-function-name"><li>swiftmailer/swiftmailer</li></a>
+      <a href="symfony/symfony/index.html#camelcase-function-name"><li>symfony/symfony</li></a>
+      <a href="TYPO3/TYPO3.CMS/index.html#camelcase-function-name"><li>TYPO3/TYPO3.CMS</li></a>
+      <a href="wikimedia/mediawiki-core/index.html#camelcase-function-name"><li>wikimedia/mediawiki-core</li></a>
+      <a href="WordPress/WordPress/index.html#camelcase-function-name"><li>WordPress/WordPress</li></a>
+      <a href="zikula/core/index.html#camelcase-function-name"><li>zikula/core</li></a>
+    </ul>
+  </div>
+</div>
 
-<div class="footer">Report generated on Fri, 28 Feb 2014 15:32:35 +1100</div>
+<div class="footer">Report generated on Mon, 03 Mar 2014 10:16:57 +1100</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};
