@@ -176,5 +176,3 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 
 
 }//end class
-
-?>

@@ -70,4 +70,3 @@ class Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff implements PHP_CodeSniffer_Snif
     }//end process()
 
 }//end class
-?>

@@ -177,8 +177,8 @@ foo(
     array(
         'this',
         'is',
-        'an',
-        'array'
+'an',
+'array'
     ),
     array(
         'this',
@@ -188,7 +188,9 @@ foo(
      ),
     function($x)
     {
-         return trim($x);
+        echo 'wee';
+
+        return trim($x);
    }
 );
 
@@ -208,7 +210,7 @@ function foo()
 
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 1
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 1
-ftest($arg, $arg2);
+test($arg, $arg2);
 test( $arg, $arg2 );
 test(  $arg, $arg2  );
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0

@@ -123,5 +123,3 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
 
 
 }//end class
-
-?>

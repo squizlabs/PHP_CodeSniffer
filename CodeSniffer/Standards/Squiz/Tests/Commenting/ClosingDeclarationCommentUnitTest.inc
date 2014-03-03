@@ -74,4 +74,9 @@ class MyClass
 // Closures don't need end comments.
 echo preg_replace_callback('~-([a-z])~', function ($match) { return strtoupper($match[1]); }, 'hello-world');
 
+class TestClass
+{
+}
+//end class
+
 ?>

@@ -32,22 +32,31 @@
 class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 {
 
+    /**
+     * TRUE if this report needs error messages instead of just totals.
+     *
+     * @var boolean
+     */
+    public $recordErrors = false;
+
 
     /**
      * Generate a partial report for a single processed file.
      *
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -87,6 +96,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -98,6 +108,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -114,11 +125,27 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         echo $cachedData;
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$totalErrors.' ERROR(S) ';
-        echo 'AND '.$totalWarnings.' WARNING(S) ';
+        echo 'A TOTAL OF '.$totalErrors.' ERROR';
+        if ($totalErrors !== 1) {
+            echo 'S';
+        }
 
-        echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo ' AND '.$totalWarnings.' WARNING';
+        if ($totalWarnings !== 1) {
+            echo 'S';
+        }
+
+        echo ' WERE FOUND IN '.$totalFiles.' FILE';
+        if ($totalFiles !== 1) {
+            echo 'S';
+        }
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
             && PHP_CODESNIFFER_INTERACTIVE === false
@@ -131,5 +158,3 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
 
 }//end class
-
-?>

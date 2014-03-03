@@ -133,5 +133,3 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

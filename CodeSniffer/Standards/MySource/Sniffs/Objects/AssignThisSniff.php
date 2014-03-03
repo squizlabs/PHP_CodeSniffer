@@ -90,5 +90,3 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

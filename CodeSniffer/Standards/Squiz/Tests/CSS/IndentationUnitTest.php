@@ -46,8 +46,11 @@ class Squiz_Tests_CSS_IndentationUnitTest extends AbstractSniffUnitTest
                 6  => 1,
                 7  => 1,
                 12 => 1,
-                28 => 1,
                 30 => 1,
+                32 => 1,
+                50 => 1,
+                52 => 1,
+                53 => 1,
                );
 
     }//end getErrorList()

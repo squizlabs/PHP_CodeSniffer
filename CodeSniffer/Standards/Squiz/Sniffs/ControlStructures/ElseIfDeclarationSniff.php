@@ -62,6 +62,3 @@ class Squiz_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeS
 
 
 }//end class
-
-
-?>

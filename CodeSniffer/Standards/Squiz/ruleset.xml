@@ -4,6 +4,7 @@
 
  <!-- Include some specific sniffs -->
  <rule ref="Generic.Commenting.Todo"/>
+ <rule ref="Generic.Commenting.DocComment"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
  <rule ref="Generic.Formatting.SpaceAfterCast"/>
@@ -19,6 +20,9 @@
  <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
  <rule ref="PEAR.Files.IncludingFile"/>
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
+ <rule ref="PEAR.Functions.ValidDefaultValue"/>
+ <rule ref="PSR2.Files.EndFileNewline"/>
+ <rule ref="Zend.Files.ClosingTag"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 
  <!-- Lines can be 120 chars long, but never show errors -->
@@ -39,8 +43,7 @@
  <!-- Have 8 chars padding maximum and always show as errors -->
  <rule ref="Generic.Formatting.MultipleStatementAlignment">
   <properties>
-   <property name="maxPadding" value="8"/>
-   <property name="ignoreMultiLine" value="true"/>
+   <property name="maxPadding" value="12"/>
    <property name="error" value="true"/>
   </properties>
  </rule>

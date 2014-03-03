@@ -1,0 +1,118 @@
+#!/usr/bin/env php
+<?php
+/**
+ * PHP Code Beautifier and Fixer
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+error_reporting(E_ALL | E_STRICT);
+
+// Optionally use PHP_Timer to print time/memory stats for the run.
+@include_once 'PHP/Timer.php';
+if (class_exists('PHP_Timer', false) === true) {
+    PHP_Timer::start();
+}
+
+if (defined('PHP_CODESNIFFER_CBF') === false) {
+    define('PHP_CODESNIFFER_CBF', true);
+}
+
+if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
+    include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
+} else {
+    include_once 'PHP/CodeSniffer/CLI.php';
+}
+
+$phpcs = new PHP_CodeSniffer_CLI();
+$phpcs->checkRequirements();
+$phpcs->dieOnUnknownArg = false;
+
+// Override some of the command line settings that might break the fixes.
+$cliValues = $phpcs->getCommandLineValues();
+$cliValues['generator']   = '';
+$cliValues['explain']     = false;
+$cliValues['interactive'] = false;
+$cliValues['showSources'] = false;
+$cliValues['reportFile']  = null;
+$cliValues['generator']   = '';
+$cliValues['reports']     = array();
+
+$suffix = '';
+if (isset($cliValues['suffix']) === true) {
+    $suffix = $cliValues['suffix'];
+}
+
+$allowPatch = true;
+if (isset($cliValues['no-patch']) === true || empty($cliValues['files']) === true) {
+    // They either asked for this,
+    // or they are using STDIN, which can't use diff.
+    $allowPatch = false;
+}
+
+if ($suffix === '' && $allowPatch === true) {
+    // Using the diff/patch tools.
+    $diffFile = getcwd().'/phpcbf-fixed.diff';
+    $cliValues['reports'] = array('diff' => $diffFile);
+    if (file_exists($diffFile) === true) {
+        unlink($diffFile);
+    }
+} else {
+    // Replace the file without the patch command
+    // or writing to a file with a new suffix.
+    $cliValues['reports']       = array('cbf' => null);
+    $cliValues['phpcbf-suffix'] = $suffix;
+}
+
+$numErrors = $phpcs->process($cliValues);
+
+if ($suffix === '' && $allowPatch === true) {
+    if (file_exists($diffFile) === false) {
+        // Nothing to fix.
+        if ($numErrors === 0) {
+            // And no errors reported.
+            $exit = 0;
+        } else {
+            // Errors we can't fix.
+            $exit = 2;
+        }
+    } else {
+        $cmd    = "patch -p0 -ui \"$diffFile\"";
+        $output = array();
+        $retVal = null;
+        exec($cmd, $output, $retVal);
+        unlink($diffFile);
+
+        if ($retVal === 0) {
+            // Everything went well.
+            $filesPatched = count($output);
+            echo "Patched $filesPatched files\n";
+            $exit = 1;
+        } else {
+            print_r($output);
+            echo "Returned: $retVal\n";
+            $exit = 3;
+        }
+    }//end if
+} else {
+    if ($numErrors === 0) {
+        // No errors left unfixed.
+        $exit = 0;
+    } else {
+        // Errors we can't fix.
+        $exit = 2;
+    }
+}//end if
+
+if (class_exists('PHP_Timer', false) === true) {
+    echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+}
+
+exit($exit);

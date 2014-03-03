@@ -51,5 +51,3 @@ class Squiz_Sniffs_Functions_FunctionDeclarationSniff extends PHP_CodeSniffer_St
 
 
 }//end class
-
-?>

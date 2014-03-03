@@ -86,5 +86,3 @@ class Generic_Sniffs_Commenting_TodoSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

@@ -64,5 +64,3 @@ class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

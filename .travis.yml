@@ -8,4 +8,4 @@ php:
 script:
   - phpunit tests/AllTests.php
   - pear package-validate package.xml
-  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PEAR --report=summary --ignore=*/tests/* -np
+  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np

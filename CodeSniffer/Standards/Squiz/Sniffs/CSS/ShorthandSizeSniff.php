@@ -84,11 +84,12 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Get the whole style content.
-        $end     = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        $content = $phpcsFile->getTokensAsString(($stackPtr + 1), ($end - $stackPtr - 1));
-        $content = trim($content, ': ');
+        $end         = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $origContent = $phpcsFile->getTokensAsString(($stackPtr + 1), ($end - $stackPtr - 1));
+        $origContent = trim($origContent, ': ');
 
         // Account for a !important annotation.
+        $content = $origContent;
         if (substr($content, -10) === '!important') {
             $content = substr($content, 0, -10);
             $content = trim($content);
@@ -121,11 +122,27 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
 
         if ($num === 3) {
             $expected = trim($content.' '.$values[1][1].$values[1][2]);
-            $error = 'Shorthand syntax not allowed here; use %s instead';
-            $data  = array($expected);
-            $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
+            $error    = 'Shorthand syntax not allowed here; use %s instead';
+            $data     = array($expected);
+            $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                if (substr($origContent, -10) === '!important') {
+                    $expected .= ' !important';
+                }
+
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
+                $phpcsFile->fixer->replaceToken($next, $expected);
+                for ($next++; $next < $end; $next++) {
+                    $phpcsFile->fixer->replaceToken($next, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+
             return;
-        }
+        }//end if
 
         if ($num === 2) {
             if ($values[0][0] !== $values[1][0]) {
@@ -152,10 +169,23 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
                   $content,
                  );
 
-        $phpcsFile->addError($error, $stackPtr, 'NotUsed', $data);
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $phpcsFile->fixer->beginChangeset();
+            if (substr($origContent, -10) === '!important') {
+                $expected .= ' !important';
+            }
+
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
+            $phpcsFile->fixer->replaceToken($next, $expected);
+            for ($next++; $next < $end; $next++) {
+                $phpcsFile->fixer->replaceToken($next, '');
+            }
+
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end process()
 
 
 }//end class
-?>

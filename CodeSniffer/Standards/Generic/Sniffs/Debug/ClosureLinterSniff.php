@@ -135,5 +135,3 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

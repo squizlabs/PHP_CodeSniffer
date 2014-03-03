@@ -98,5 +98,3 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-?>

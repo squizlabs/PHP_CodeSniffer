@@ -100,6 +100,14 @@ if (defined('T_FINALLY') === false) {
     define('T_FINALLY', 1059);
 }
 
+// Tokens used for parsing doc blocks.
+define('T_DOC_COMMENT_STAR', 1100);
+define('T_DOC_COMMENT_WHITESPACE', 1101);
+define('T_DOC_COMMENT_TAG', 1102);
+define('T_DOC_COMMENT_OPEN_TAG', 1103);
+define('T_DOC_COMMENT_CLOSE_TAG', 1104);
+define('T_DOC_COMMENT_STRING', 1105);
+
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurrence in a file.
@@ -385,6 +393,12 @@ final class PHP_CodeSniffer_Tokens
                                   T_WHITESPACE,
                                   T_COMMENT,
                                   T_DOC_COMMENT,
+                                  T_DOC_COMMENT_STAR,
+                                  T_DOC_COMMENT_WHITESPACE,
+                                  T_DOC_COMMENT_TAG,
+                                  T_DOC_COMMENT_OPEN_TAG,
+                                  T_DOC_COMMENT_CLOSE_TAG,
+                                  T_DOC_COMMENT_STRING,
                                  );
 
     /**
@@ -395,6 +409,12 @@ final class PHP_CodeSniffer_Tokens
     public static $commentTokens = array(
                                     T_COMMENT,
                                     T_DOC_COMMENT,
+                                    T_DOC_COMMENT_STAR,
+                                    T_DOC_COMMENT_WHITESPACE,
+                                    T_DOC_COMMENT_TAG,
+                                    T_DOC_COMMENT_OPEN_TAG,
+                                    T_DOC_COMMENT_CLOSE_TAG,
+                                    T_DOC_COMMENT_STRING,
                                    );
 
     /**
@@ -502,5 +522,3 @@ final class PHP_CodeSniffer_Tokens
 
 
 }//end class
-
-?>

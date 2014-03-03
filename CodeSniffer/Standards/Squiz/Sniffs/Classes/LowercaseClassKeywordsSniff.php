@@ -81,5 +81,3 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

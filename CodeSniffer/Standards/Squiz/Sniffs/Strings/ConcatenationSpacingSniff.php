@@ -56,16 +56,46 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE
-            || $tokens[($stackPtr + 1)]['code'] === T_WHITESPACE
-        ) {
-            $message = 'Concat operator must not be surrounded by spaces';
-            $phpcsFile->addError($message, $stackPtr, 'Missing');
+        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+            $before = 0;
+        } else {
+            if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $before = 'newline';
+            } else {
+                $before = strlen($tokens[($stackPtr - 1)]['content']);
+            }
+        }
+
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $after = 0;
+        } else {
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $after = 'newline';
+            } else {
+                $after = strlen($tokens[($stackPtr + 1)]['content']);
+            }
+        }
+
+        $phpcsFile->recordMetric($stackPtr, 'Spacing before string concat', $before);
+        $phpcsFile->recordMetric($stackPtr, 'Spacing after string concat', $after);
+
+        if ($before === 0 && $after === 0) {
+            return;
+        }
+
+        $message = 'Concat operator must not be surrounded by spaces';
+        $fix     = $phpcsFile->addFixableError($message, $stackPtr, 'PaddingFound');
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
+
+            if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+            }
         }
 
     }//end process()
 
 
 }//end class
-
-?>

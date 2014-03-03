@@ -90,5 +90,3 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
 
 
 }//end class
-
-?>

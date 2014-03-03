@@ -337,5 +337,3 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
 
 }//end class
-
-?>

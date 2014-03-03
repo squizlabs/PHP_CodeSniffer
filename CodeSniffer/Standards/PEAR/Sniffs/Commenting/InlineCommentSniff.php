@@ -66,5 +66,3 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

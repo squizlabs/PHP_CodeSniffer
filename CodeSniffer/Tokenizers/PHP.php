@@ -275,6 +275,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
      */
     public function tokenizeString($string, $eolChar='\n')
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START PHP TOKENIZING ***".PHP_EOL;
+        }
+
         $tokens      = @token_get_all($string);
         $finalTokens = array();
 
@@ -286,6 +290,20 @@ class PHP_CodeSniffer_Tokenizers_PHP
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token        = $tokens[$stackPtr];
             $tokenIsArray = is_array($token);
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if ($tokenIsArray === true) {
+                    $type    = token_name($token[0]);
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
+                } else {
+                    $newToken = PHP_CodeSniffer::resolveSimpleToken($token);
+                    $type     = $newToken['type'];
+                    $content  = $token;
+                }
+
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
+            }
 
             /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
@@ -311,6 +329,21 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     }
                 }
             }//end if
+
+            /*
+                Parse doc blocks into something that can be easily iterated over.
+            */
+
+            if ($tokenIsArray === true && $token[0] === T_DOC_COMMENT) {
+                $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
+                $commentTokens = $tokenizer->tokenizeString($token[1], $eolChar, $newStackPtr);
+                foreach ($commentTokens as $commentToken) {
+                    $finalTokens[$newStackPtr] = $commentToken;
+                    $newStackPtr++;
+                }
+
+                continue;
+            }
 
             /*
                 If this is a double quoted string, PHP will tokenise the whole
@@ -346,7 +379,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         // We found the other end of the double quoted string.
                         break;
                     }
-                }
+                }//end for
 
                 $stackPtr = $i;
 
@@ -445,7 +478,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
-                }
+                }//end for
 
                 // Add the end heredoc token to the final array.
                 $finalTokens[$newStackPtr]
@@ -497,6 +530,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                   'code'    => T_GOTO_LABEL,
                                                   'type'    => 'T_GOTO_LABEL',
                                                  );
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_STRING to T_GOTO_LABEL".PHP_EOL;
+                        echo "\t\t* skipping T_COLON token ".($stackPtr + 1).PHP_EOL;
+                    }
+
                     $newStackPtr++;
                     $stackPtr++;
                     continue;
@@ -538,7 +577,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 if ($newToken['code'] === T_INLINE_THEN) {
                     $insideInlineIf = true;
                 } else if ($insideInlineIf === true && $newToken['code'] === T_COLON) {
-                    $insideInlineIf = false;
+                    $insideInlineIf   = false;
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
                 }
@@ -576,6 +615,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 $newStackPtr++;
             }//end if
         }//end for
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END PHP TOKENIZING ***".PHP_EOL;
+        }
 
         return $finalTokens;
 
@@ -661,7 +704,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
                     $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
 
-                    $closer                  = $tokens[$i]['bracket_closer'];
+                    $closer = $tokens[$i]['bracket_closer'];
                     $tokens[$closer]['code'] = T_CLOSE_SHORT_ARRAY;
                     $tokens[$closer]['type'] = 'T_CLOSE_SHORT_ARRAY';
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -691,7 +734,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
-            }
+            }//end if
 
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)
@@ -743,10 +786,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
             // not whatever it already is. The opener needs to be the opening curly
             // brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
-            $tokens[$i]['scope_closer'] = $newCloser;
-            $tokens[$x]['scope_closer'] = $newCloser;
-            $tokens[$i]['scope_opener'] = $x;
-            $tokens[$x]['scope_condition'] = $i;
+            $tokens[$i]['scope_closer']            = $newCloser;
+            $tokens[$x]['scope_closer']            = $newCloser;
+            $tokens[$i]['scope_opener']            = $x;
+            $tokens[$x]['scope_condition']         = $i;
             $tokens[$newCloser]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_opener']    = $x;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -791,9 +834,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
 
                         break;
-                    }
-                }
-            }
+                    }//end if
+                }//end foreach
+            }//end for
         }//end for
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -804,5 +847,3 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
 
 }//end class
-
-?>

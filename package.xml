@@ -15,21 +15,31 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
  <date>2014-02-05</date>
- <time>10:46:00</time>
+ <time>13:54:00</time>
  <version>
-  <release>1.5.3</release>
-  <api>1.5.3</api>
+  <release>2.0.0a2</release>
+  <api>2.0.0a2</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - Added report type --report=info to show information about the checked code to make building a standard easier
+    -- Checks a number of things, such as what line length you use, and spacing are brackets, but not everything
+    -- Still highly experimental
+  - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
+    -- When set to FALSE, error messages will not be recorded and only totals will be returned
+    -- This can save significant memory while processing a large code base
   - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
+  - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
+  - Squiz EchoedStringsSniff now supports statments without a semicolon, such as PHP embedded in HTML
+  - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
+  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
   - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
     -- Thanks to Maurus Cuelenaere for the patch
+  - PSR2 ControlStructureSpacingSniff now checks TRY and CATCH statements
   - Fixed bug #20200 : Invalid JSON produced with specific error message
   - Fixed bug #20204 : Ruleset exclude checks are case sensitive
  </notes>
@@ -41,9 +51,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </file>
    <file baseinstalldir="PHP" name="CodeSniffer.conf.dist" role="data" />
    <dir name="scripts">
+    <file baseinstalldir="" name="phpcbf" role="script">
+     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
+    </file>
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
@@ -89,41 +101,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </file>
    </dir>
    <dir name="CodeSniffer">
-    <dir name="CommentParser">
-     <file baseinstalldir="PHP" name="AbstractDocElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="AbstractParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ClassCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="CommentElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="DocElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="FunctionCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="MemberCommentParser.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="PairElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ParameterElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="ParserException.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="PHP" name="SingleElement.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-    </dir>
     <dir name="DocGenerators">
      <file baseinstalldir="PHP" name="Generator.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -136,10 +113,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </file>
     </dir>
     <dir name="Reports">
+     <file baseinstalldir="PHP" name="Cbf.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="PHP" name="Checkstyle.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Csv.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Diff.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Emacs.php" role="php">
@@ -152,6 +135,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Hgblame.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Info.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Json.php" role="php">
@@ -298,6 +284,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Commenting">
+        <file baseinstalldir="PHP" name="DocCommentSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="FixmeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -498,6 +487,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Commenting">
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="FixmeUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FixmeUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="FixmeUnitTest.php" role="test">
@@ -707,9 +701,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="MySource">
       <dir name="Sniffs">
        <dir name="Channels">
-        <file baseinstalldir="PHP" name="ChannelExceptionSniff.php" role="php">
-         <tasks:replace from="@package_version@" to="version" type="package-info" />
-        </file>
         <file baseinstalldir="PHP" name="DisallowSelfActionsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -2149,6 +2140,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </file>
     </dir>
     <dir name="Tokenizers">
+     <file baseinstalldir="PHP" name="Comment.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="PHP" name="CSS.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
@@ -2166,6 +2160,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="File.php" role="php">
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="PHP" name="Fixer.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="PHP" name="Report.php" role="php">
@@ -2206,6 +2203,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </os>
   </installconditions>
   <filelist>
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
    <install as="AllTests.php" name="tests/AllTests.php" />
@@ -2220,6 +2218,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </phprelease>
  <phprelease>
   <filelist>
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
@@ -2233,6 +2232,68 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.0.0a1</release>
+    <api>2.0.0a1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2014-02-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added the phpcbf script to automatically fix many errors found by the phpcs script
+    - Added report type --report=diff to show suggested changes to fix coding standard violations
+    - The --report argument now allows for custom reports to be used
+      -- Use the full path to your custom report class as the report name
+    - The --extensions argument is now respected when passing filenames; not just with directories
+    - The --extensions argument now allows you to specify the tokenizer for each extension
+      -- e.g., --extensions=module/php,es/js
+    - Command line arguments can now be set in ruleset files
+      -- e.g., arg name="report" value="summary" (print summary report; same as --report=summary)
+      -- e.g., arg value="sp" (print source and progress information; same as -sp)
+      -- The -vvv, --sniffs, --standard and -l command line arguments cannot be set in this way
+    - Sniff process() methods can not optionally return a token to ignore up to
+      -- If returned, the sniff will not be executed again until the passed token is reached in the file
+      -- Useful if you are looking for tokens like T_OPEN_TAG but only want to process the first one
+    - Removed the comment parser classes and replaced it with a simple comment tokenier
+      -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
+      -- This change requires a significant rewrite of sniffs that use the comment parser
+      -- This change requires minor changes to sniffs that listen for T_DOC_COMMENT tokens directly
+    - Added Generic DocCommentSniff to check generic doc block formatting
+      -- Removed doc block formatting checks from PEAR ClassCommentSniff
+      -- Removed doc block formatting checks from PEAR FileCommentSniff
+      -- Removed doc block formatting checks from PEAR FunctionCommentSniff
+      -- Removed doc block formatting checks from Squiz ClassCommentSniff
+      -- Removed doc block formatting checks from Squiz FileCommentSniff
+      -- Removed doc block formatting checks from Squiz FunctionCommentSniff
+      -- Removed doc block formatting checks from Squiz VariableCommentSniff
+    - Squiz DocCommentAlignmentSniff has had its error codes changed
+      -- NoSpaceBeforeTag becomes NoSpaceAfterStar
+      -- SpaceBeforeTag becomes SpaceAfterStar
+      -- SpaceBeforeAsterisk becomes SpaceBeforeStar
+    - Generic MultipleStatementAlignment now aligns assignments within a block so they fit within their max padding setting
+      -- The sniff previously requested the padding as 1 space if max padding was exceeded
+      -- It now aligns the assignment with surrounding assignments if it can
+      -- Removed property ignoreMultiline as multi-line assignments are now handled correctly and should not be ignored
+    - Squiz FunctionClosingBraceSpaceSniff now requires a blank line before the brace in all cases except function args
+    - Added error Squiz.Commenting.ClassComment.SpacingAfter to ensure there are no blank lines after a class comment
+    - Added error Squiz.WhiteSpace.MemberVarSpacing.AfterComment to ensure there are no blank lines after a member var comment
+      -- Fixes have also been corrected to not strip the member var comment or indent under some circumstances
+      -- Thanks to Mark Scherer for help with this fix
+    - Added error Squiz.Commenting.FunctionCommentThrowTag.Missing to ensure a throw is documented
+    - Removed error Squiz.Commenting.FunctionCommentThrowTag.WrongType
+    - Content passed via STDIN can now specify the filename to use so that sniffs can run the correct filename checks
+      -- Ensure the first line of the content is: phpcs_input_file: /path/to/file
+    - Squiz coding standard now enforces no closing PHP tag at the end of a pure PHP file
+    - Squiz coding standard now enforces a single newline character at the end of the file
+    - Squiz ClassDeclarationSniff no longer checks for a PHP ending tag after a class definition
+    - Squiz ControlStructureSpacingSniff now checks TRY and CATCH statements as well
+    - Removed MySource ChannelExceptionSniff
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.5.2</release>

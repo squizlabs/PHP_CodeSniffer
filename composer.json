@@ -29,12 +29,12 @@
             "CodeSniffer/CLI.php",
             "CodeSniffer/Exception.php",
             "CodeSniffer/File.php",
+            "CodeSniffer/Fixer.php",
             "CodeSniffer/Report.php",
             "CodeSniffer/Reporting.php",
             "CodeSniffer/Sniff.php",
             "CodeSniffer/Tokens.php",
             "CodeSniffer/Reports/",
-            "CodeSniffer/CommentParser/",
             "CodeSniffer/Tokenizers/",
             "CodeSniffer/DocGenerators/",
             "CodeSniffer/Standards/AbstractPatternSniff.php",
@@ -58,6 +58,7 @@
         "ext-tokenizer": "*"
     },
     "bin": [
-        "scripts/phpcs"
+        "scripts/phpcs",
+        "scripts/phpcbf"
     ]
 }

@@ -89,5 +89,3 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-?>

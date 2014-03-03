@@ -144,5 +144,3 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
 
 
 }//end class
-
-?>

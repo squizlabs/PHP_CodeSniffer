@@ -77,5 +77,3 @@ class Generic_Sniffs_PHP_SAPIUsageSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

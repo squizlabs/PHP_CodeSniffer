@@ -160,7 +160,10 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                 $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'no');
             return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
     }//end processTokenWithinScope()
@@ -199,6 +202,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, $this->strict) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
 
@@ -206,5 +212,3 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
 
 }//end class
-
-?>
