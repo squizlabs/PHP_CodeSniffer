@@ -20,10 +20,11 @@ if (ini_get('phar.readonly') === '1') {
 }
 
 $validOptions = array(
-                 '--use-package'    => 'Use a package.xml as the build list',
-                 '--build-full'     => 'Build a full installation of phpcs (including tests)',
+                 '--use-package'    => 'Use a package.xml as the build list.',
+                 '--build-full'     => 'Build a full installation of phpcs (including tests).',
                  '--build-only'     => 'Build phpcs with only the specified standard.',
-                 '--build-standard' => 'Build the standard phpcs',
+                 '--build-standard' => 'Build the standard phpcs.',
+                 '--cbf'            => 'Build the phpcbf package.',
                 );
 $requireOpts  = array('--build-only', '--use-package');
 
@@ -167,8 +168,12 @@ function build($path, $options)
         buildFromDirectory($phar, dirname(dirname(__FILE__)), $remove, $whitelist);
     }//end if
 
-    addStub($phar);
     addConfigFile($phar, $options);
+    if (isset($options['cbf']) === true && $options['cbf'] === true) {
+        addCBFStub($phar);
+    } else {
+        addCSStub($phar);
+    }
 
 }//end build()
 
@@ -489,13 +494,13 @@ function findDependentRuleset($standard=null)
 
 
 /**
- * Add the stub file to the phar.
+ * Add the CS stub file to the phar.
  *
  * @param object &$phar The phar class.
  *
  * @return void
  */
-function addStub(&$phar)
+function addCSStub(&$phar)
 {
     $stub  = '#!/usr/bin/env php'."\n";
     $stub .= '<?php error_reporting(E_ALL | E_STRICT);';
@@ -509,10 +514,100 @@ function addStub(&$phar)
     $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
     $stub .= '$phpcs->checkRequirements();';
     $stub .= '$numErrors = $phpcs->process();';
-    $stub .= '__HALT_COMPILER(); ?'.'>';
+    $stub .= '__HALT_COMPILER();';
     $phar->setStub($stub);
 
-}//end addStub()
+}//end addCSStub()
+
+
+/**
+ * Add the CBF stub file to the phar.
+ *
+ * @param object &$phar The phar class.
+ *
+ * @return void
+ */
+function addCBFStub(&$phar)
+{
+    $stub  = '#!/usr/bin/env php'."\n";
+    $stub .= '<?php error_reporting(E_ALL | E_STRICT);';
+    $stub .= '@include_once "PHP/Timer.php";';
+    $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
+    $stub .= '    PHP_Timer::start();';
+    $stub .= '}';
+    $stub .= 'if (defined("PHP_CODESNIFFER_CBF") === false) {';
+    $stub .= '    define("PHP_CODESNIFFER_CBF", true);';
+    $stub .= '}';
+    $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/CLI.php";';
+    $stub .= 'include_once "phar://".__FILE__."/CodeSniffer.php";';
+    $stub .= '$config = PHP_CodeSniffer::getAllConfigData();';
+    $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
+    $stub .= '$phpcs->checkRequirements();';
+    $stub .= '$phpcs->dieOnUnknownArg = false;';
+    $stub .= '$cliValues = $phpcs->getCommandLineValues();';
+    $stub .= '$cliValues["generator"]   = "";';
+    $stub .= '$cliValues["explain"]     = false;';
+    $stub .= '$cliValues["interactive"] = false;';
+    $stub .= '$cliValues["showSources"] = false;';
+    $stub .= '$cliValues["reportFile"]  = null;';
+    $stub .= '$cliValues["generator"]   = "";';
+    $stub .= '$cliValues["reports"]     = array();';
+    $stub .= '$suffix = "";';
+    $stub .= 'if (isset($cliValues["suffix"]) === true) {';
+    $stub .= '    $suffix = $cliValues["suffix"];';
+    $stub .= '}';
+    $stub .= '$allowPatch = true;';
+    $stub .= 'if (isset($cliValues["no-patch"]) === true || empty($cliValues["files"]) === true) {';
+    $stub .= '    $allowPatch = false;';
+    $stub .= '}';
+    $stub .= 'if ($suffix === "" && $allowPatch === true) {';
+    $stub .= '    $diffFile = dirname(__FILE__)."/phpcbf-fixed.diff";';
+    $stub .= '    $cliValues["reports"] = array("diff" => $diffFile);';
+    $stub .= '    if (file_exists($diffFile) === true) {';
+    $stub .= '        unlink($diffFile);';
+    $stub .= '    }';
+    $stub .= '} else {';
+    $stub .= '    $cliValues["reports"]       = array("cbf" => null);';
+    $stub .= '    $cliValues["phpcbf-suffix"] = $suffix;';
+    $stub .= '}';
+    $stub .= '$numErrors = $phpcs->process($cliValues);';
+    $stub .= 'if ($suffix === "" && $allowPatch === true) {';
+    $stub .= '    if (file_exists($diffFile) === false) {';
+    $stub .= '        if ($numErrors === 0) {';
+    $stub .= '            $exit = 0;';
+    $stub .= '        } else {';
+    $stub .= '            $exit = 2;';
+    $stub .= '        }';
+    $stub .= '    } else {';
+    $stub .= '        $cmd    = "patch -p0 -ui \"$diffFile\"";';
+    $stub .= '        $output = array();';
+    $stub .= '        $retVal = null;';
+    $stub .= '        exec($cmd, $output, $retVal);';
+    $stub .= '        unlink($diffFile);';
+    $stub .= '        if ($retVal === 0) {';
+    $stub .= '            $filesPatched = count($output);';
+    $stub .= '            echo "Patched $filesPatched files\n";';
+    $stub .= '            $exit = 1;';
+    $stub .= '        } else {';
+    $stub .= '            print_r($output);';
+    $stub .= '            echo "Returned: $retVal\n";';
+    $stub .= '            $exit = 3;';
+    $stub .= '        }';
+    $stub .= '    }';
+    $stub .= '} else {';
+    $stub .= '    if ($numErrors === 0) {';
+    $stub .= '        $exit = 0;';
+    $stub .= '    } else {';
+    $stub .= '        $exit = 2;';
+    $stub .= '    }';
+    $stub .= '}';
+    $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
+    $stub .= '    echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;';
+    $stub .= '}';
+    $stub .= '__HALT_COMPILER();';
+    $phar->setStub($stub);
+
+}//end addCBFStub()
 
 
 /**
