@@ -160,7 +160,13 @@ foreach ($resultFiles as $file) {
             $count     = number_format($count, 0, '', ',');
             $valsData .= '{value:'.$percent.',color:"'.$colour.'"},';
 
-            $html .= '<tr title="'.$count.' '.$items.'"><td><span class="colour-box" style="background-color:'.$colour.'"></span></td>';
+            $html .= '<tr title="'.$count.' '.$items.'">';
+            if ($value === $data['winner']) {
+                $html .= '<td><div class="winner"><span class="colour-box winner" style="background-color:'.$colour.'"></span></div></td>';
+            } else {
+                $html .= '<td><span class="colour-box" style="background-color:'.$colour.'"></span></td>';
+            }
+
             $html .= "<td>$value</td><td>$percent%</td></tr>";
             $valueNum++;
         }//end foreach
@@ -296,7 +302,13 @@ foreach ($totals as $metric => $data) {
         $valsData .= '{value:'.$percent.',color:"'.$colour.'"},';
 
         $html .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
-        $html .= '        <td><span class="colour-box" style="background-color:'.$colour.'"></span></td>'.PHP_EOL;
+
+        if ($value === $data['winner']) {
+            $html .= '        <td><div class="winner"><span class="colour-box winner" style="background-color:'.$colour.'"></span></div></td>'.PHP_EOL;
+        } else {
+            $html .= '        <td><span class="colour-box" style="background-color:'.$colour.'"></span></td>'.PHP_EOL;
+        }
+
         $html .= "        <td>$value</td><td>$percent%</td>".PHP_EOL;
         $html .= '      </tr>'.PHP_EOL;
         $html .= '      <tr title="'.$numRepos.' projects">'.PHP_EOL;

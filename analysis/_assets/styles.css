@@ -1,7 +1,7 @@
 body {
     font-family: verdana;
     font-size: 14px;
-    background-color: #efefef
+    background-color: #EFEFEF;
 }
 
 h2 {
@@ -9,6 +9,15 @@ h2 {
     position: relative;
     left: 50%;
     margin-left: -375px;
+}
+
+table {
+    margin-bottom: 20px;
+}
+
+tr th, td {
+    text-align: left;
+    padding: 5px;
 }
 
 .intro {
@@ -19,8 +28,8 @@ h2 {
     margin-bottom: 60px;
     padding: 10px 30px;
     border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: 1px solid #CCC;
+    background-color: #FFF;
 }
 
 .intro a {
@@ -36,8 +45,8 @@ h2 {
     margin-bottom: 60px;
     padding: 10px 30px;
     border-radius: 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: 1px solid #CCC;
+    background-color: #FFF;
 }
 
 .chart-value {
@@ -66,8 +75,8 @@ h2 {
     height: 405px;
     overflow: auto;
     border-radius: 0px 0px 0px 10px;
-    border: 1px solid #ccc;
-    background: #fff;
+    border: 1px solid #CCC;
+    background: #FFF;
     display: none;
     padding-left: 15px;
 }
@@ -103,24 +112,28 @@ h2 {
     margin-left: -45px;
 }
 
-
 .colour-box {
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     border: 0;
-    border-radius: 15px;
+    border-radius: 14px;
     vertical-align: middle;
+    margin-left: 3px;
 }
 
-table {
-    margin-bottom: 20px;
+div.winner {
+    border-radius: 14px;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    box-shadow: 0px 0px 8px 2px #666;
 }
 
-tr th, td
-{
-    text-align: left;
-    padding: 5px;
+span.winner {
+    position: relative;
+    top: 3px;
+    left: 0px;
 }
 
 .preferred {
