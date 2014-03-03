@@ -36,7 +36,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @var int
      */
-    public $indent = 1;
+    public $indent = 4;
 
     /**
      * Does the indent need to be exactly right.
@@ -53,7 +53,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      *
      * @var bool
      */
-    public $tabs = true;
+    public $tabs = false;
 
     /**
      * List of tokens not needing to be checked for indentation.
