@@ -17,24 +17,25 @@
   <p>Are lines indented using spaces or tabs?</p>
   <canvas class="chart-value" id="chart1" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart1r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart1t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="1,463,345 lines">
+      <tr title="1,463,541 lines">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>spaces</td><td>52.48%</td>
+        <td>spaces</td><td>52.46%</td>
       </tr>
       <tr title="34 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('line-indent-spaces-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('line-indent-spaces-repos').style.display='none';document.getElementById('line-indent-tabs-repos').style.display='none';item.style.display='block';}">preferred by 77.27% of projects</td>
       </tr>
-      <tr title="1,324,980 lines">
+      <tr title="1,326,067 lines">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>tabs</td><td>47.52%</td>
+        <td>tabs</td><td>47.54%</td>
       </tr>
       <tr title="10 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('line-indent-tabs-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('line-indent-spaces-repos').style.display='none';document.getElementById('line-indent-tabs-repos').style.display='none';item.style.display='block';}">preferred by 22.73% of projects</td>
       </tr>
     </table>
-    <p>Based on 2,788,325 lines in 44 projects</p>
+    <p>Based on 2,789,608 lines in 44 projects</p>
   </div>
   <div id="line-indent-spaces-repos" class="repo-data">
     <p><span onclick="document.getElementById('line-indent-spaces-repos').style.display='none';" class="close">[close]</span><strong>34 projects prefer <em>spaces</em></strong></p>
@@ -96,24 +97,25 @@
   <p>Is each class defined in a namespace of at least 1 level?</p>
   <canvas class="chart-value" id="chart2" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart2r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart2t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="11,651 classes">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>no</td><td>45.74%</td>
+        <td>no</td><td>45.69%</td>
       </tr>
       <tr title="18 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('class-defined-in-namespace-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('class-defined-in-namespace-no-repos').style.display='none';document.getElementById('class-defined-in-namespace-yes-repos').style.display='none';item.style.display='block';}">preferred by 40.91% of projects</td>
       </tr>
-      <tr title="13,823 classes">
+      <tr title="13,849 classes">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>yes</td><td>54.26%</td>
+        <td>yes</td><td>54.31%</td>
       </tr>
       <tr title="26 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('class-defined-in-namespace-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('class-defined-in-namespace-no-repos').style.display='none';document.getElementById('class-defined-in-namespace-yes-repos').style.display='none';item.style.display='block';}">preferred by 59.09% of projects</td>
       </tr>
     </table>
-    <p>Based on 25,474 classes in 44 projects</p>
+    <p>Based on 25,500 classes in 44 projects</p>
   </div>
   <div id="class-defined-in-namespace-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('class-defined-in-namespace-no-repos').style.display='none';" class="close">[close]</span><strong>18 projects prefer <em>no</em></strong></p>
@@ -175,24 +177,25 @@
   <p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
   <canvas class="chart-value" id="chart3" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart3r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart3t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="101,321 functions">
+      <tr title="101,411 functions">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>new line</td><td>67.03%</td>
+        <td>new line</td><td>67.05%</td>
       </tr>
       <tr title="38 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('function-opening-brace-placement-new-line-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('function-opening-brace-placement-new-line-repos').style.display='none';document.getElementById('function-opening-brace-placement-same-line-repos').style.display='none';item.style.display='block';}">preferred by 86.36% of projects</td>
       </tr>
-      <tr title="49,833 functions">
+      <tr title="49,834 functions">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>same line</td><td>32.97%</td>
+        <td>same line</td><td>32.95%</td>
       </tr>
       <tr title="6 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('function-opening-brace-placement-same-line-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('function-opening-brace-placement-new-line-repos').style.display='none';document.getElementById('function-opening-brace-placement-same-line-repos').style.display='none';item.style.display='block';}">preferred by 13.64% of projects</td>
       </tr>
     </table>
-    <p>Based on 151,154 functions in 44 projects</p>
+    <p>Based on 151,245 functions in 44 projects</p>
   </div>
   <div id="function-opening-brace-placement-new-line-repos" class="repo-data">
     <p><span onclick="document.getElementById('function-opening-brace-placement-new-line-repos').style.display='none';" class="close">[close]</span><strong>38 projects prefer <em>new line</em></strong></p>
@@ -254,24 +257,25 @@
   <p>Are class names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart4" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart4r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart4t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="7,651 classes">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>no</td><td>30.03%</td>
+        <td>no</td><td>30%</td>
       </tr>
       <tr title="13 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('camelcase-class-name-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('camelcase-class-name-no-repos').style.display='none';document.getElementById('camelcase-class-name-yes-repos').style.display='none';item.style.display='block';}">preferred by 29.55% of projects</td>
       </tr>
-      <tr title="17,823 classes">
+      <tr title="17,849 classes">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>yes</td><td>69.97%</td>
+        <td>yes</td><td>70%</td>
       </tr>
       <tr title="31 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('camelcase-class-name-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('camelcase-class-name-no-repos').style.display='none';document.getElementById('camelcase-class-name-yes-repos').style.display='none';item.style.display='block';}">preferred by 70.45% of projects</td>
       </tr>
     </table>
-    <p>Based on 25,474 classes in 44 projects</p>
+    <p>Based on 25,500 classes in 44 projects</p>
   </div>
   <div id="camelcase-class-name-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('camelcase-class-name-no-repos').style.display='none';" class="close">[close]</span><strong>13 projects prefer <em>no</em></strong></p>
@@ -333,24 +337,25 @@
   <p>Are PHP filenames lowercase?</p>
   <canvas class="chart-value" id="chart5" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart5r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart5t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="19,396 files">
+      <tr title="19,423 files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>no</td><td>70.34%</td>
+        <td>no</td><td>70.36%</td>
       </tr>
       <tr title="37 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('lowercase-filename-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('lowercase-filename-no-repos').style.display='none';document.getElementById('lowercase-filename-yes-repos').style.display='none';item.style.display='block';}">preferred by 84.09% of projects</td>
       </tr>
-      <tr title="8,180 files">
+      <tr title="8,184 files">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>yes</td><td>29.66%</td>
+        <td>yes</td><td>29.64%</td>
       </tr>
       <tr title="7 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('lowercase-filename-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('lowercase-filename-no-repos').style.display='none';document.getElementById('lowercase-filename-yes-repos').style.display='none';item.style.display='block';}">preferred by 15.91% of projects</td>
       </tr>
     </table>
-    <p>Based on 27,576 files in 44 projects</p>
+    <p>Based on 27,607 files in 44 projects</p>
   </div>
   <div id="lowercase-filename-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('lowercase-filename-no-repos').style.display='none';" class="close">[close]</span><strong>37 projects prefer <em>no</em></strong></p>
@@ -412,18 +417,19 @@
   <p>How many spaces are there between a cast statement and the variable?</p>
   <canvas class="chart-value" id="chart6" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart6r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart6t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="4,677 cast statements">
+      <tr title="4,687 cast statements">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>0</td><td>28.68%</td>
+        <td>0</td><td>28.71%</td>
       </tr>
       <tr title="9 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-after-cast-statement-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-after-cast-statement-0-repos').style.display='none';document.getElementById('spacing-after-cast-statement-1-repos').style.display='none';item.style.display='block';}">preferred by 20.93% of projects</td>
       </tr>
-      <tr title="11,604 cast statements">
+      <tr title="11,612 cast statements">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>1</td><td>71.17%</td>
+        <td>1</td><td>71.14%</td>
       </tr>
       <tr title="34 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-after-cast-statement-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-after-cast-statement-0-repos').style.display='none';document.getElementById('spacing-after-cast-statement-1-repos').style.display='none';item.style.display='block';}">preferred by 79.07% of projects</td>
@@ -435,7 +441,7 @@
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 16,305 cast statements in 43 projects</p>
+    <p>Based on 16,323 cast statements in 43 projects</p>
   </div>
   <div id="spacing-after-cast-statement-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spacing-after-cast-statement-0-repos').style.display='none';" class="close">[close]</span><strong>9 projects prefer <em>0</em></strong></p>
@@ -496,25 +502,26 @@
   <p>How many spaces follow the string concatenation operator?</p>
   <canvas class="chart-value" id="chart7" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart7r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart7t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="36,310 operators">
+      <tr title="36,304 operators">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>0</td><td>17.4%</td>
+        <td>0</td><td>17.41%</td>
       </tr>
       <tr title="13 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-after-string-concat-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-after-string-concat-0-repos').style.display='none';document.getElementById('spacing-after-string-concat-1-repos').style.display='none';document.getElementById('spacing-after-string-concat-newline-repos').style.display='none';item.style.display='block';}">preferred by 29.55% of projects</td>
       </tr>
-      <tr title="154,485 operators">
+      <tr title="154,387 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>1</td><td>74.03%</td>
+        <td>1</td><td>74.02%</td>
       </tr>
       <tr title="30 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-after-string-concat-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-after-string-concat-0-repos').style.display='none';document.getElementById('spacing-after-string-concat-1-repos').style.display='none';document.getElementById('spacing-after-string-concat-newline-repos').style.display='none';item.style.display='block';}">preferred by 68.18% of projects</td>
       </tr>
-      <tr title="17,493 operators">
+      <tr title="17,498 operators">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
-        <td>newline</td><td>8.38%</td>
+        <td>newline</td><td>8.39%</td>
       </tr>
       <tr title="1 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-after-string-concat-newline-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-after-string-concat-0-repos').style.display='none';document.getElementById('spacing-after-string-concat-1-repos').style.display='none';document.getElementById('spacing-after-string-concat-newline-repos').style.display='none';item.style.display='block';}">preferred by 2.27% of projects</td>
@@ -526,7 +533,7 @@
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 208,672 operators in 44 projects</p>
+    <p>Based on 208,573 operators in 44 projects</p>
   </div>
   <div id="spacing-after-string-concat-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spacing-after-string-concat-0-repos').style.display='none';" class="close">[close]</span><strong>13 projects prefer <em>0</em></strong></p>
@@ -582,7 +589,7 @@
     </ul>
   </div>
   <div id="spacing-after-string-concat-newline-repos" class="repo-data">
-    <p><span onclick="document.getElementById('spacing-after-string-concat-newline-repos').style.display='none';" class="close">[close]</span><strong>1 projects prefer <em>newline</em></strong></p>
+    <p><span onclick="document.getElementById('spacing-after-string-concat-newline-repos').style.display='none';" class="close">[close]</span><strong>1 project prefers <em>newline</em></strong></p>
     <ul>
       <a href="zendframework/zf2/index.html#spacing-after-string-concat"><li>zendframework/zf2</li></a>
     </ul>
@@ -593,37 +600,38 @@
   <p>How many spaces precede the string concatenation operator?</p>
   <canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart8r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="37,163 operators">
+      <tr title="37,157 operators">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
         <td>0</td><td>17.81%</td>
       </tr>
       <tr title="12 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-before-string-concat-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-before-string-concat-0-repos').style.display='none';document.getElementById('spacing-before-string-concat-1-repos').style.display='none';item.style.display='block';}">preferred by 27.27% of projects</td>
       </tr>
-      <tr title="160,297 operators">
+      <tr title="160,200 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>1</td><td>76.82%</td>
+        <td>1</td><td>76.81%</td>
       </tr>
       <tr title="32 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spacing-before-string-concat-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spacing-before-string-concat-0-repos').style.display='none';document.getElementById('spacing-before-string-concat-1-repos').style.display='none';item.style.display='block';}">preferred by 72.73% of projects</td>
       </tr>
-      <tr title="11,083 operators">
+      <tr title="11,088 operators">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
-        <td>newline</td><td>5.31%</td>
+        <td>newline</td><td>5.32%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="129 operators">
+      <tr title="128 operators">
         <td colspan=2>other</td><td colspan=2>0.06%</td>
       </tr>
       <tr>
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 208,672 operators in 44 projects</p>
+    <p>Based on 208,573 operators in 44 projects</p>
   </div>
   <div id="spacing-before-string-concat-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spacing-before-string-concat-0-repos').style.display='none';" class="close">[close]</span><strong>12 projects prefer <em>0</em></strong></p>
@@ -685,16 +693,17 @@
   <p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
   <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart9r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart9t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="81,359 assignment blocks">
+      <tr title="81,374 assignment blocks">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
         <td>no</td><td>21.47%</td>
       </tr>
       <tr title="1 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('adjacent-assignments-aligned-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('adjacent-assignments-aligned-no-repos').style.display='none';document.getElementById('adjacent-assignments-aligned-yes-repos').style.display='none';item.style.display='block';}">preferred by 2.27% of projects</td>
       </tr>
-      <tr title="297,524 assignment blocks">
+      <tr title="297,626 assignment blocks">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
         <td>yes</td><td>78.53%</td>
       </tr>
@@ -702,10 +711,10 @@
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('adjacent-assignments-aligned-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('adjacent-assignments-aligned-no-repos').style.display='none';document.getElementById('adjacent-assignments-aligned-yes-repos').style.display='none';item.style.display='block';}">preferred by 97.73% of projects</td>
       </tr>
     </table>
-    <p>Based on 378,883 assignment blocks in 44 projects</p>
+    <p>Based on 379,000 assignment blocks in 44 projects</p>
   </div>
   <div id="adjacent-assignments-aligned-no-repos" class="repo-data">
-    <p><span onclick="document.getElementById('adjacent-assignments-aligned-no-repos').style.display='none';" class="close">[close]</span><strong>1 projects prefer <em>no</em></strong></p>
+    <p><span onclick="document.getElementById('adjacent-assignments-aligned-no-repos').style.display='none';" class="close">[close]</span><strong>1 project prefers <em>no</em></strong></p>
     <ul>
       <a href="pyrocms/pyrocms/index.html#adjacent-assignments-aligned"><li>pyrocms/pyrocms</li></a>
     </ul>
@@ -764,27 +773,28 @@
   <p>Is each class defined in a file by itself?</p>
   <canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart10r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart10t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="4,521 classes">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>no</td><td>17.75%</td>
+        <td>no</td><td>17.73%</td>
       </tr>
       <tr title="1 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('one-class-per-file-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('one-class-per-file-no-repos').style.display='none';document.getElementById('one-class-per-file-yes-repos').style.display='none';item.style.display='block';}">preferred by 2.27% of projects</td>
       </tr>
-      <tr title="20,953 classes">
+      <tr title="20,979 classes">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>yes</td><td>82.25%</td>
+        <td>yes</td><td>82.27%</td>
       </tr>
       <tr title="43 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('one-class-per-file-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('one-class-per-file-no-repos').style.display='none';document.getElementById('one-class-per-file-yes-repos').style.display='none';item.style.display='block';}">preferred by 97.73% of projects</td>
       </tr>
     </table>
-    <p>Based on 25,474 classes in 44 projects</p>
+    <p>Based on 25,500 classes in 44 projects</p>
   </div>
   <div id="one-class-per-file-no-repos" class="repo-data">
-    <p><span onclick="document.getElementById('one-class-per-file-no-repos').style.display='none';" class="close">[close]</span><strong>1 projects prefer <em>no</em></strong></p>
+    <p><span onclick="document.getElementById('one-class-per-file-no-repos').style.display='none';" class="close">[close]</span><strong>1 project prefers <em>no</em></strong></p>
     <ul>
       <a href="google/google-api-php-client/index.html#one-class-per-file"><li>google/google-api-php-client</li></a>
     </ul>
@@ -843,23 +853,24 @@
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <canvas class="chart-value" id="chart11" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart11r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart11t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="31,757 operators">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>0</td><td>14.99%</td>
+        <td>0</td><td>14.98%</td>
       </tr>
       <tr title="2 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('space-before-operator-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('space-before-operator-0-repos').style.display='none';document.getElementById('space-before-operator-1-repos').style.display='none';item.style.display='block';}">preferred by 4.55% of projects</td>
       </tr>
-      <tr title="176,397 operators">
+      <tr title="176,444 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
         <td>1</td><td>83.25%</td>
       </tr>
       <tr title="42 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('space-before-operator-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('space-before-operator-0-repos').style.display='none';document.getElementById('space-before-operator-1-repos').style.display='none';item.style.display='block';}">preferred by 95.45% of projects</td>
       </tr>
-      <tr title="2,866 operators">
+      <tr title="2,870 operators">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
         <td>newline</td><td>1.35%</td>
       </tr>
@@ -873,7 +884,7 @@
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 211,886 operators in 44 projects</p>
+    <p>Based on 211,937 operators in 44 projects</p>
   </div>
   <div id="space-before-operator-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('space-before-operator-0-repos').style.display='none';" class="close">[close]</span><strong>2 projects prefer <em>0</em></strong></p>
@@ -935,24 +946,25 @@
   <p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
   <canvas class="chart-value" id="chart12" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart12r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart12t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="22,973 files">
+      <tr title="23,005 files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>no</td><td>83.31%</td>
+        <td>no</td><td>83.33%</td>
       </tr>
       <tr title="38 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('declarations-and-side-effects-mixed-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('declarations-and-side-effects-mixed-no-repos').style.display='none';document.getElementById('declarations-and-side-effects-mixed-yes-repos').style.display='none';item.style.display='block';}">preferred by 86.36% of projects</td>
       </tr>
-      <tr title="4,603 files">
+      <tr title="4,602 files">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>yes</td><td>16.69%</td>
+        <td>yes</td><td>16.67%</td>
       </tr>
       <tr title="6 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('declarations-and-side-effects-mixed-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('declarations-and-side-effects-mixed-no-repos').style.display='none';document.getElementById('declarations-and-side-effects-mixed-yes-repos').style.display='none';item.style.display='block';}">preferred by 13.64% of projects</td>
       </tr>
     </table>
-    <p>Based on 27,576 files in 44 projects</p>
+    <p>Based on 27,607 files in 44 projects</p>
   </div>
   <div id="declarations-and-side-effects-mixed-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('declarations-and-side-effects-mixed-no-repos').style.display='none';" class="close">[close]</span><strong>38 projects prefer <em>no</em></strong></p>
@@ -1014,24 +1026,25 @@
   <p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
   <canvas class="chart-value" id="chart13" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart13r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart13t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="2,361 elseif statements">
+      <tr title="2,360 elseif statements">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>else if</td><td>16.16%</td>
+        <td>else if</td><td>16.15%</td>
       </tr>
       <tr title="6 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('use-of-else-if-or-elseif-else-if-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('use-of-else-if-or-elseif-else-if-repos').style.display='none';document.getElementById('use-of-else-if-or-elseif-elseif-repos').style.display='none';item.style.display='block';}">preferred by 13.95% of projects</td>
       </tr>
-      <tr title="12,247 elseif statements">
+      <tr title="12,255 elseif statements">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>elseif</td><td>83.84%</td>
+        <td>elseif</td><td>83.85%</td>
       </tr>
       <tr title="37 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('use-of-else-if-or-elseif-elseif-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('use-of-else-if-or-elseif-else-if-repos').style.display='none';document.getElementById('use-of-else-if-or-elseif-elseif-repos').style.display='none';item.style.display='block';}">preferred by 86.05% of projects</td>
       </tr>
     </table>
-    <p>Based on 14,608 elseif statements in 43 projects</p>
+    <p>Based on 14,615 elseif statements in 43 projects</p>
   </div>
   <div id="use-of-else-if-or-elseif-else-if-repos" class="repo-data">
     <p><span onclick="document.getElementById('use-of-else-if-or-elseif-else-if-repos').style.display='none';" class="close">[close]</span><strong>6 projects prefer <em>else if</em></strong></p>
@@ -1092,16 +1105,17 @@
   <p>How many spaces follow the opening parenthesis of a control structure?</p>
   <canvas class="chart-value" id="chart14" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart14r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart14t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="225,525 control structures">
+      <tr title="225,542 control structures">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>0</td><td>84.83%</td>
+        <td>0</td><td>84.82%</td>
       </tr>
       <tr title="41 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spaces-after-control-structure-open-parenthesis-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spaces-after-control-structure-open-parenthesis-0-repos').style.display='none';document.getElementById('spaces-after-control-structure-open-parenthesis-1-repos').style.display='none';item.style.display='block';}">preferred by 93.18% of projects</td>
       </tr>
-      <tr title="40,264 control structures">
+      <tr title="40,289 control structures">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
         <td>1</td><td>15.15%</td>
       </tr>
@@ -1123,7 +1137,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 265,850 control structures in 44 projects</p>
+    <p>Based on 265,892 control structures in 44 projects</p>
   </div>
   <div id="spaces-after-control-structure-open-parenthesis-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spaces-after-control-structure-open-parenthesis-0-repos').style.display='none';" class="close">[close]</span><strong>41 projects prefer <em>0</em></strong></p>
@@ -1185,9 +1199,10 @@
   <p>What case are PHP constants (true, false, null) written in?</p>
   <canvas class="chart-value" id="chart15" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart15r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart15t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="146,004 constants">
+      <tr title="146,104 constants">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>lower</td><td>85.15%</td>
       </tr>
@@ -1201,7 +1216,7 @@
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="25,453 constants">
+      <tr title="25,463 constants">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
         <td>upper</td><td>14.84%</td>
       </tr>
@@ -1209,7 +1224,7 @@
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('php-constant-case-upper-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('php-constant-case-lower-repos').style.display='none';document.getElementById('php-constant-case-upper-repos').style.display='none';item.style.display='block';}">preferred by 6.82% of projects</td>
       </tr>
     </table>
-    <p>Based on 171,466 constants in 44 projects</p>
+    <p>Based on 171,576 constants in 44 projects</p>
   </div>
   <div id="php-constant-case-lower-repos" class="repo-data">
     <p><span onclick="document.getElementById('php-constant-case-lower-repos').style.display='none';" class="close">[close]</span><strong>41 projects prefer <em>lower</em></strong></p>
@@ -1271,18 +1286,19 @@
   <p>How many spaces precede the closing parenthesis of a control structure?</p>
   <canvas class="chart-value" id="chart16" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart16r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart16t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="228,627 control structures">
+      <tr title="228,645 control structures">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>0</td><td>86%</td>
+        <td>0</td><td>85.99%</td>
       </tr>
       <tr title="41 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spaces-before-control-structure-close-parenthesis-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spaces-before-control-structure-close-parenthesis-0-repos').style.display='none';document.getElementById('spaces-before-control-structure-close-parenthesis-1-repos').style.display='none';item.style.display='block';}">preferred by 93.18% of projects</td>
       </tr>
-      <tr title="37,170 control structures">
+      <tr title="37,194 control structures">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>1</td><td>13.98%</td>
+        <td>1</td><td>13.99%</td>
       </tr>
       <tr title="3 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('spaces-before-control-structure-close-parenthesis-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('spaces-before-control-structure-close-parenthesis-0-repos').style.display='none';document.getElementById('spaces-before-control-structure-close-parenthesis-1-repos').style.display='none';item.style.display='block';}">preferred by 6.82% of projects</td>
@@ -1294,7 +1310,7 @@
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 265,850 control structures in 44 projects</p>
+    <p>Based on 265,892 control structures in 44 projects</p>
   </div>
   <div id="spaces-before-control-structure-close-parenthesis-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spaces-before-control-structure-close-parenthesis-0-repos').style.display='none';" class="close">[close]</span><strong>41 projects prefer <em>0</em></strong></p>
@@ -1356,24 +1372,25 @@
   <p>Is there a PHP closing tag at the end of the file?</p>
   <canvas class="chart-value" id="chart17" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart17r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart17t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="24,149 files">
+      <tr title="24,174 files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>no</td><td>87.57%</td>
+        <td>no</td><td>87.56%</td>
       </tr>
       <tr title="41 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('php-closing-tag-at-eof-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('php-closing-tag-at-eof-no-repos').style.display='none';document.getElementById('php-closing-tag-at-eof-yes-repos').style.display='none';item.style.display='block';}">preferred by 93.18% of projects</td>
       </tr>
-      <tr title="3,427 files">
+      <tr title="3,433 files">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>yes</td><td>12.43%</td>
+        <td>yes</td><td>12.44%</td>
       </tr>
       <tr title="3 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('php-closing-tag-at-eof-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('php-closing-tag-at-eof-no-repos').style.display='none';document.getElementById('php-closing-tag-at-eof-yes-repos').style.display='none';item.style.display='block';}">preferred by 6.82% of projects</td>
       </tr>
     </table>
-    <p>Based on 27,576 files in 44 projects</p>
+    <p>Based on 27,607 files in 44 projects</p>
   </div>
   <div id="php-closing-tag-at-eof-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('php-closing-tag-at-eof-no-repos').style.display='none';" class="close">[close]</span><strong>41 projects prefer <em>no</em></strong></p>
@@ -1435,24 +1452,25 @@
   <p>Are class method names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart18" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart18r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart18t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="16,889 methods">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>no</td><td>11.82%</td>
+        <td>no</td><td>11.8%</td>
       </tr>
       <tr title="3 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('camelcase-method-name-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('camelcase-method-name-no-repos').style.display='none';document.getElementById('camelcase-method-name-yes-repos').style.display='none';item.style.display='block';}">preferred by 6.82% of projects</td>
       </tr>
-      <tr title="126,047 methods">
+      <tr title="126,180 methods">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>yes</td><td>88.18%</td>
+        <td>yes</td><td>88.2%</td>
       </tr>
       <tr title="41 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('camelcase-method-name-yes-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('camelcase-method-name-no-repos').style.display='none';document.getElementById('camelcase-method-name-yes-repos').style.display='none';item.style.display='block';}">preferred by 93.18% of projects</td>
       </tr>
     </table>
-    <p>Based on 142,936 methods in 44 projects</p>
+    <p>Based on 143,069 methods in 44 projects</p>
   </div>
   <div id="camelcase-method-name-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('camelcase-method-name-no-repos').style.display='none';" class="close">[close]</span><strong>3 projects prefer <em>no</em></strong></p>
@@ -1514,25 +1532,26 @@
   <p>How many newline characters appear at the end of the file?</p>
   <canvas class="chart-value" id="chart19" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart19r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart19t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="2,035 files">
+      <tr title="2,040 files">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>0</td><td>7.74%</td>
+        <td>0</td><td>7.75%</td>
       </tr>
       <tr title="3 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('number-of-newlines-at-eof-0-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('number-of-newlines-at-eof-0-repos').style.display='none';document.getElementById('number-of-newlines-at-eof-1-repos').style.display='none';item.style.display='block';}">preferred by 6.82% of projects</td>
       </tr>
-      <tr title="23,951 files">
+      <tr title="23,978 files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>1</td><td>91.05%</td>
+        <td>1</td><td>91.04%</td>
       </tr>
       <tr title="41 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('number-of-newlines-at-eof-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('number-of-newlines-at-eof-0-repos').style.display='none';document.getElementById('number-of-newlines-at-eof-1-repos').style.display='none';item.style.display='block';}">preferred by 93.18% of projects</td>
       </tr>
-      <tr title="297 files">
+      <tr title="296 files">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
-        <td>2</td><td>1.13%</td>
+        <td>2</td><td>1.12%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
@@ -1544,7 +1563,7 @@
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 26,306 files in 44 projects</p>
+    <p>Based on 26,337 files in 44 projects</p>
   </div>
   <div id="number-of-newlines-at-eof-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('number-of-newlines-at-eof-0-repos').style.display='none';" class="close">[close]</span><strong>3 projects prefer <em>0</em></strong></p>
@@ -1606,24 +1625,25 @@
   <p>Are control structures defined inline (without braces)?</p>
   <canvas class="chart-value" id="chart20" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart20r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart20t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="268,668 control structures">
+      <tr title="268,733 control structures">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
-        <td>no</td><td>93.38%</td>
+        <td>no</td><td>93.39%</td>
       </tr>
       <tr title="44 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('control-structure-defined-inline-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('control-structure-defined-inline-no-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
-      <tr title="19,045 control structures">
+      <tr title="19,014 control structures">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>yes</td><td>6.62%</td>
+        <td>yes</td><td>6.61%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 287,713 control structures in 44 projects</p>
+    <p>Based on 287,747 control structures in 44 projects</p>
   </div>
   <div id="control-structure-defined-inline-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('control-structure-defined-inline-no-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>no</em></strong></p>
@@ -1680,30 +1700,31 @@
   <p>Including whitespace and comments, how many characters are in code lines?</p>
   <canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart21r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="4,762,625 lines">
+      <tr title="4,765,511 lines">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>< 80</td><td>93.52%</td>
       </tr>
       <tr title="44 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('line-length-<-80-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('line-length-<-80-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
-      <tr title="29,572 lines">
+      <tr title="29,574 lines">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
         <td>> 150</td><td>0.58%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="262,137 lines">
+      <tr title="262,316 lines">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
         <td>81-120</td><td>5.15%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="38,481 lines">
+      <tr title="38,485 lines">
         <td><span class="colour-box" style="background-color:#949FB1"></span></td>
         <td>121-150</td><td>0.76%</td>
       </tr>
@@ -1711,7 +1732,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 5,092,815 lines in 44 projects</p>
+    <p>Based on 5,095,886 lines in 44 projects</p>
   </div>
   <div id="line-length-<-80-repos" class="repo-data">
     <p><span onclick="document.getElementById('line-length-<-80-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>< 80</em></strong></p>
@@ -1768,6 +1789,7 @@
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart22r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="30,617 operators">
@@ -1777,21 +1799,21 @@
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="1,150,393 operators">
+      <tr title="1,150,722 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
         <td>1</td><td>96.92%</td>
       </tr>
       <tr title="44 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('space-after-operator-1-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('space-after-operator-1-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
-      <tr title="5,965 operators">
+      <tr title="5,961 operators">
         <td colspan=2>other</td><td colspan=2>0.5%</td>
       </tr>
       <tr>
         <td colspan=3 class="preferred">&nbsp;</td>
       </tr>
     </table>
-    <p>Based on 1,186,975 operators in 44 projects</p>
+    <p>Based on 1,187,300 operators in 44 projects</p>
   </div>
   <div id="space-after-operator-1-repos" class="repo-data">
     <p><span onclick="document.getElementById('space-after-operator-1-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>1</em></strong></p>
@@ -1848,6 +1870,7 @@
   <p>What case are user-defined constants defined in?</p>
   <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart23r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
       <tr title="9 constants">
@@ -1859,23 +1882,23 @@
       </tr>
       <tr title="229 constants">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
-        <td>mixed</td><td>2.35%</td>
+        <td>mixed</td><td>2.34%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="9,524 constants">
+      <tr title="9,537 constants">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#9D9B7F"></span></div></td>
-        <td>upper</td><td>97.56%</td>
+        <td>upper</td><td>97.57%</td>
       </tr>
-      <tr title="43 projects">
+      <tr title="44 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('constant-name-case-upper-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('constant-name-case-upper-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
     </table>
-    <p>Based on 9,762 constants in 43 projects</p>
+    <p>Based on 9,775 constants in 44 projects</p>
   </div>
   <div id="constant-name-case-upper-repos" class="repo-data">
-    <p><span onclick="document.getElementById('constant-name-case-upper-repos').style.display='none';" class="close">[close]</span><strong>43 projects prefer <em>upper</em></strong></p>
+    <p><span onclick="document.getElementById('constant-name-case-upper-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>upper</em></strong></p>
     <ul>
       <a href="aws/aws-sdk-php/index.html#constant-name-case"><li>aws/aws-sdk-php</li></a>
       <a href="cakephp/cakephp/index.html#constant-name-case"><li>cakephp/cakephp</li></a>
@@ -1906,6 +1929,7 @@
       <a href="propelorm/Propel/index.html#constant-name-case"><li>propelorm/Propel</li></a>
       <a href="pyrocms/pyrocms/index.html#constant-name-case"><li>pyrocms/pyrocms</li></a>
       <a href="sculpin/sculpin/index.html#constant-name-case"><li>sculpin/sculpin</li></a>
+      <a href="sebastianbergmann/php-code-coverage/index.html#constant-name-case"><li>sebastianbergmann/php-code-coverage</li></a>
       <a href="sebastianbergmann/phpunit/index.html#constant-name-case"><li>sebastianbergmann/phpunit</li></a>
       <a href="Seldaek/monolog/index.html#constant-name-case"><li>Seldaek/monolog</li></a>
       <a href="solarphp/core/index.html#constant-name-case"><li>solarphp/core</li></a>
@@ -1928,9 +1952,10 @@
   <p>How many spaces precede the object operator (->)?</p>
   <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart24r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="679,315 operators">
+      <tr title="679,788 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>0</td><td>98.27%</td>
       </tr>
@@ -1944,7 +1969,7 @@
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="11,904 operators">
+      <tr title="11,901 operators">
         <td><span class="colour-box" style="background-color:#9D9B7F"></span></td>
         <td>newline</td><td>1.72%</td>
       </tr>
@@ -1952,7 +1977,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 691,264 operators in 44 projects</p>
+    <p>Based on 691,734 operators in 44 projects</p>
   </div>
   <div id="spacing-before-object-operator-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spacing-before-object-operator-0-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>0</em></strong></p>
@@ -2009,24 +2034,25 @@
   <p>For files that do not contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart25r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="103 non-class files">
+      <tr title="102 non-class files">
         <td><span class="colour-box" style="background-color:#4D5360"></span></td>
-        <td>.inc</td><td>1.56%</td>
+        <td>.inc</td><td>1.54%</td>
       </tr>
       <tr title="0 projects">
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
-      <tr title="6,500 non-class files">
+      <tr title="6,505 non-class files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td>
-        <td>.php</td><td>98.44%</td>
+        <td>.php</td><td>98.46%</td>
       </tr>
       <tr title="31 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('file-extension-for-non-class-files-.php-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('file-extension-for-non-class-files-.php-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
     </table>
-    <p>Based on 6,603 non-class files in 31 projects</p>
+    <p>Based on 6,607 non-class files in 31 projects</p>
   </div>
   <div id="file-extension-for-non-class-files-.php-repos" class="repo-data">
     <p><span onclick="document.getElementById('file-extension-for-non-class-files-.php-repos').style.display='none';" class="close">[close]</span><strong>31 projects prefer <em>.php</em></strong></p>
@@ -2070,9 +2096,10 @@
   <p>Are parenthesis placed around <em>echo</em>'d strings?</p>
   <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart26r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="20,226 echo statements">
+      <tr title="20,223 echo statements">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>no</td><td>99.53%</td>
       </tr>
@@ -2087,7 +2114,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 20,321 echo statements in 31 projects</p>
+    <p>Based on 20,318 echo statements in 31 projects</p>
   </div>
   <div id="brackets-around-echoed-strings-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('brackets-around-echoed-strings-no-repos').style.display='none';" class="close">[close]</span><strong>31 projects prefer <em>no</em></strong></p>
@@ -2131,9 +2158,10 @@
   <p>What character is used for line breaks?</p>
   <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart27r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="27,462 files">
+      <tr title="27,493 files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>\n</td><td>99.59%</td>
       </tr>
@@ -2148,7 +2176,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 27,576 files in 44 projects</p>
+    <p>Based on 27,607 files in 44 projects</p>
   </div>
   <div id="eol-char-\n-repos" class="repo-data">
     <p><span onclick="document.getElementById('eol-char-\n-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>\n</em></strong></p>
@@ -2205,16 +2233,17 @@
   <p>Are multiple statements defined on the same line of code?</p>
   <canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart28r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="1,046,201 statements">
+      <tr title="1,046,729 statements">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>no</td><td>99.78%</td>
       </tr>
       <tr title="44 projects">
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('multiple-statements-on-same-line-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('multiple-statements-on-same-line-no-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
-      <tr title="2,292 statements">
+      <tr title="2,291 statements">
         <td><span class="colour-box" style="background-color:#D4CCC5"></span></td>
         <td>yes</td><td>0.22%</td>
       </tr>
@@ -2222,7 +2251,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 1,048,493 statements in 44 projects</p>
+    <p>Based on 1,049,020 statements in 44 projects</p>
   </div>
   <div id="multiple-statements-on-same-line-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('multiple-statements-on-same-line-no-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>no</em></strong></p>
@@ -2279,9 +2308,10 @@
   <p>When defining an array, how is the <em>array</em> keyword written?</p>
   <canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart29r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="196,143 array definitions">
+      <tr title="196,186 array definitions">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>lower</td><td>99.83%</td>
       </tr>
@@ -2296,7 +2326,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 196,469 array definitions in 44 projects</p>
+    <p>Based on 196,512 array definitions in 44 projects</p>
   </div>
   <div id="array-keyword-case-lower-repos" class="repo-data">
     <p><span onclick="document.getElementById('array-keyword-case-lower-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>lower</em></strong></p>
@@ -2353,9 +2383,10 @@
   <p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart30r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="1,387,051 keywords">
+      <tr title="1,387,735 keywords">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>lower</td><td>99.85%</td>
       </tr>
@@ -2377,7 +2408,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 1,389,143 keywords in 44 projects</p>
+    <p>Based on 1,389,827 keywords in 44 projects</p>
   </div>
   <div id="php-keyword-case-lower-repos" class="repo-data">
     <p><span onclick="document.getElementById('php-keyword-case-lower-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>lower</em></strong></p>
@@ -2434,9 +2465,10 @@
   <p>How many spaces follow the object operator (->)?</p>
   <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart31r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="691,203 operators">
+      <tr title="691,673 operators">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>0</td><td>99.99%</td>
       </tr>
@@ -2458,7 +2490,7 @@
         <td colspan=3 class="preferred">preferred by 0% of projects</td>
       </tr>
     </table>
-    <p>Based on 691,264 operators in 44 projects</p>
+    <p>Based on 691,734 operators in 44 projects</p>
   </div>
   <div id="spacing-after-object-operator-0-repos" class="repo-data">
     <p><span onclick="document.getElementById('spacing-after-object-operator-0-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>0</em></strong></p>
@@ -2515,9 +2547,10 @@
   <p>For files that contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart32r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="20,973 class files">
+      <tr title="21,000 class files">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>.php</td><td>100%</td>
       </tr>
@@ -2525,7 +2558,7 @@
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('file-extension-for-class-files-.php-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('file-extension-for-class-files-.php-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
     </table>
-    <p>Based on 20,973 class files in 44 projects</p>
+    <p>Based on 21,000 class files in 44 projects</p>
   </div>
   <div id="file-extension-for-class-files-.php-repos" class="repo-data">
     <p><span onclick="document.getElementById('file-extension-for-class-files-.php-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>.php</em></strong></p>
@@ -2582,9 +2615,10 @@
   <p>Is the PHP short open tag syntax used?</p>
   <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart33r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="53,978 open tags">
+      <tr title="54,009 open tags">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>no</td><td>100%</td>
       </tr>
@@ -2592,7 +2626,7 @@
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('php-short-open-tag-used-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('php-short-open-tag-used-no-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
     </table>
-    <p>Based on 53,978 open tags in 44 projects</p>
+    <p>Based on 54,009 open tags in 44 projects</p>
   </div>
   <div id="php-short-open-tag-used-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('php-short-open-tag-used-no-repos').style.display='none';" class="close">[close]</span><strong>44 projects prefer <em>no</em></strong></p>
@@ -2649,9 +2683,10 @@
   <p>Are global function names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
   <canvas class="chart-repo" id="chart34r" width="240" height="240"></canvas>
+  <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
   <div class="chart-data">
     <table>
-      <tr title="7,063 global functions">
+      <tr title="7,038 global functions">
         <td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td>
         <td>no</td><td>100%</td>
       </tr>
@@ -2659,7 +2694,7 @@
         <td colspan=3 class="preferred" onclick="var item=document.getElementById('camelcase-function-name-no-repos');if(item.style.display=='block'){item.style.display='none';}else{document.getElementById('camelcase-function-name-no-repos').style.display='none';item.style.display='block';}">preferred by 100% of projects</td>
       </tr>
     </table>
-    <p>Based on 7,063 global functions in 23 projects</p>
+    <p>Based on 7,038 global functions in 23 projects</p>
   </div>
   <div id="camelcase-function-name-no-repos" class="repo-data">
     <p><span onclick="document.getElementById('camelcase-function-name-no-repos').style.display='none';" class="close">[close]</span><strong>23 projects prefer <em>no</em></strong></p>
@@ -2691,53 +2726,54 @@
   </div>
 </div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};
-var data = [{value:52.48,color:"#4D5360"},{value:47.52,color:"#D4CCC5"}]
+var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,scaleShowGridLines:true,pointDot:false,datasetFill:false};
+var data = [{value:52.46,color:"#4D5360"},{value:47.54,color:"#D4CCC5"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:77.27,color:"#4D5360"},{value:22.73,color:"#D4CCC5"}]
 var c = document.getElementById("chart1r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:45.74,color:"#4D5360"},{value:54.26,color:"#D4CCC5"}]
+var data = [{value:45.69,color:"#4D5360"},{value:54.31,color:"#D4CCC5"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:40.91,color:"#4D5360"},{value:59.09,color:"#D4CCC5"}]
 var c = document.getElementById("chart2r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:67.03,color:"#4D5360"},{value:32.97,color:"#D4CCC5"}]
+var data = [{value:67.05,color:"#4D5360"},{value:32.95,color:"#D4CCC5"}]
 var c = document.getElementById("chart3").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:86.36,color:"#4D5360"},{value:13.64,color:"#D4CCC5"}]
 var c = document.getElementById("chart3r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:30.03,color:"#4D5360"},{value:69.97,color:"#D4CCC5"}]
+var data = [{value:30,color:"#4D5360"},{value:70,color:"#D4CCC5"}]
 var c = document.getElementById("chart4").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:29.55,color:"#4D5360"},{value:70.45,color:"#D4CCC5"}]
 var c = document.getElementById("chart4r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:70.34,color:"#4D5360"},{value:29.66,color:"#D4CCC5"}]
+var data = [{value:70.36,color:"#4D5360"},{value:29.64,color:"#D4CCC5"}]
 var c = document.getElementById("chart5").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:84.09,color:"#4D5360"},{value:15.91,color:"#D4CCC5"}]
 var c = document.getElementById("chart5r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:28.68,color:"#4D5360"},{value:71.17,color:"#D4CCC5"}]
+var data = [{value:28.71,color:"#4D5360"},{value:71.14,color:"#D4CCC5"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:20.93,color:"#4D5360"},{value:79.07,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"}]
 var c = document.getElementById("chart6r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:17.4,color:"#4D5360"},{value:74.03,color:"#D4CCC5"},{value:8.38,color:"#9D9B7F"}]
+var data = [{value:17.41,color:"#4D5360"},{value:74.02,color:"#D4CCC5"},{value:8.39,color:"#9D9B7F"}]
 var c = document.getElementById("chart7").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:29.55,color:"#4D5360"},{value:68.18,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:2.27,color:"#9D9B7F"}]
 var c = document.getElementById("chart7r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:17.81,color:"#4D5360"},{value:76.82,color:"#D4CCC5"},{value:5.31,color:"#9D9B7F"}]
+var data = [{value:17.81,color:"#4D5360"},{value:76.81,color:"#D4CCC5"},{value:5.32,color:"#9D9B7F"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:27.27,color:"#4D5360"},{value:72.73,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"}]
@@ -2749,31 +2785,31 @@ new Chart(c).Doughnut(data,valOptions);
 var data = [{value:2.27,color:"#4D5360"},{value:97.73,color:"#D4CCC5"}]
 var c = document.getElementById("chart9r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:17.75,color:"#4D5360"},{value:82.25,color:"#D4CCC5"}]
+var data = [{value:17.73,color:"#4D5360"},{value:82.27,color:"#D4CCC5"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:2.27,color:"#4D5360"},{value:97.73,color:"#D4CCC5"}]
 var c = document.getElementById("chart10r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:14.99,color:"#4D5360"},{value:83.25,color:"#D4CCC5"},{value:1.35,color:"#9D9B7F"}]
+var data = [{value:14.98,color:"#4D5360"},{value:83.25,color:"#D4CCC5"},{value:1.35,color:"#9D9B7F"}]
 var c = document.getElementById("chart11").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:4.55,color:"#4D5360"},{value:95.45,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"}]
 var c = document.getElementById("chart11r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:83.31,color:"#4D5360"},{value:16.69,color:"#D4CCC5"}]
+var data = [{value:83.33,color:"#4D5360"},{value:16.67,color:"#D4CCC5"}]
 var c = document.getElementById("chart12").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:86.36,color:"#4D5360"},{value:13.64,color:"#D4CCC5"}]
 var c = document.getElementById("chart12r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:16.16,color:"#4D5360"},{value:83.84,color:"#D4CCC5"}]
+var data = [{value:16.15,color:"#4D5360"},{value:83.85,color:"#D4CCC5"}]
 var c = document.getElementById("chart13").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:13.95,color:"#4D5360"},{value:86.05,color:"#D4CCC5"}]
 var c = document.getElementById("chart13r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:84.83,color:"#4D5360"},{value:15.15,color:"#D4CCC5"},{value:0.01,color:"#9D9B7F"},{value:0.02,color:"#949FB1"}]
+var data = [{value:84.82,color:"#4D5360"},{value:15.15,color:"#D4CCC5"},{value:0.01,color:"#9D9B7F"},{value:0.02,color:"#949FB1"}]
 var c = document.getElementById("chart14").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:93.18,color:"#4D5360"},{value:6.82,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#949FB1"}]
@@ -2785,31 +2821,31 @@ new Chart(c).Doughnut(data,valOptions);
 var data = [{value:93.18,color:"#4D5360"},{value:0,color:"#D4CCC5"},{value:6.82,color:"#9D9B7F"}]
 var c = document.getElementById("chart15r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:86,color:"#4D5360"},{value:13.98,color:"#D4CCC5"}]
+var data = [{value:85.99,color:"#4D5360"},{value:13.99,color:"#D4CCC5"}]
 var c = document.getElementById("chart16").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:93.18,color:"#4D5360"},{value:6.82,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"}]
 var c = document.getElementById("chart16r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:87.57,color:"#4D5360"},{value:12.43,color:"#D4CCC5"}]
+var data = [{value:87.56,color:"#4D5360"},{value:12.44,color:"#D4CCC5"}]
 var c = document.getElementById("chart17").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:93.18,color:"#4D5360"},{value:6.82,color:"#D4CCC5"}]
 var c = document.getElementById("chart17r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:11.82,color:"#4D5360"},{value:88.18,color:"#D4CCC5"}]
+var data = [{value:11.8,color:"#4D5360"},{value:88.2,color:"#D4CCC5"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:6.82,color:"#4D5360"},{value:93.18,color:"#D4CCC5"}]
 var c = document.getElementById("chart18r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:7.74,color:"#4D5360"},{value:91.05,color:"#D4CCC5"},{value:1.13,color:"#9D9B7F"}]
+var data = [{value:7.75,color:"#4D5360"},{value:91.04,color:"#D4CCC5"},{value:1.12,color:"#9D9B7F"}]
 var c = document.getElementById("chart19").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:6.82,color:"#4D5360"},{value:93.18,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#949FB1"},{value:0,color:"#949FB1"},{value:0,color:"#949FB1"}]
 var c = document.getElementById("chart19r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:93.38,color:"#4D5360"},{value:6.62,color:"#D4CCC5"}]
+var data = [{value:93.39,color:"#4D5360"},{value:6.61,color:"#D4CCC5"}]
 var c = document.getElementById("chart20").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:100,color:"#4D5360"},{value:0,color:"#D4CCC5"}]
@@ -2827,7 +2863,7 @@ new Chart(c).Doughnut(data,valOptions);
 var data = [{value:0,color:"#4D5360"},{value:100,color:"#D4CCC5"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"},{value:0,color:"#9D9B7F"}]
 var c = document.getElementById("chart22r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:0.09,color:"#4D5360"},{value:2.35,color:"#D4CCC5"},{value:97.56,color:"#9D9B7F"}]
+var data = [{value:0.09,color:"#4D5360"},{value:2.34,color:"#D4CCC5"},{value:97.57,color:"#9D9B7F"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:0,color:"#4D5360"},{value:0,color:"#D4CCC5"},{value:100,color:"#9D9B7F"}]
@@ -2839,7 +2875,7 @@ new Chart(c).Doughnut(data,valOptions);
 var data = [{value:100,color:"#4D5360"},{value:0,color:"#D4CCC5"},{value:0,color:"#9D9B7F"}]
 var c = document.getElementById("chart24r").getContext("2d");
 new Chart(c).Doughnut(data,repoOptions);
-var data = [{value:1.56,color:"#4D5360"},{value:98.44,color:"#D4CCC5"}]
+var data = [{value:1.54,color:"#4D5360"},{value:98.46,color:"#D4CCC5"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:0,color:"#4D5360"},{value:100,color:"#D4CCC5"}]
@@ -2911,3 +2947,21 @@ new Chart(c).Doughnut(data,repoOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->

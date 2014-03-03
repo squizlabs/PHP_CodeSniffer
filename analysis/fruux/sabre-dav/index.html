@@ -40,7 +40,7 @@
 <div class="chart-data"><table><tr title="2 elseif statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>else if</td><td>6.25%</td></tr><tr title="30 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>elseif</td><td>93.75%</td></tr></table>Based on 32 elseif statements</div></div>
 <h2 id="line-length" title="Generic.Files.LineLength">Line length</h2><div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
 <canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="26,483 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>95.91%</td></tr><tr title="63 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0.23%</td></tr><tr title="924 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>3.35%</td></tr><tr title="143 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.52%</td></tr></table>Based on 27,613 lines</div></div>
+<div class="chart-data"><table><tr title="26,482 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>95.9%</td></tr><tr title="63 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0.23%</td></tr><tr title="925 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>3.35%</td></tr><tr title="143 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.52%</td></tr></table>Based on 27,613 lines</div></div>
 <h2 id="spaces-after-control-structure-open-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces after control structure open parenthesis</h2><div class="metric"><p>How many spaces follow the opening parenthesis of a control structure?</p>
 <canvas class="chart-value" id="chart11" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="1,234 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>99.36%</td></tr><tr title="8 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>0.64%</td></tr></table>Based on 1,242 control structures</div></div>
@@ -111,7 +111,7 @@
 <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="4 echo statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 4 echo statements</div></div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100<br/>Using master branch of <a href="https://github.com/fruux/sabre-dav">fruux/sabre-dav</a> @ commit <a href="https://github.com/fruux/sabre-dav/commit/74dec7a62ac5548502811e0dadd26c271978a5f0">74dec7a62ac5548502811e0dadd26c271978a5f0</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/fruux/sabre-dav">fruux/sabre-dav</a> @ commit <a href="https://github.com/fruux/sabre-dav/commit/6c815a149693ba13ec864acb6ee62a8a8efa50a5">6c815a149693ba13ec864acb6ee62a8a8efa50a5</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var data = [{value:69.41,color:"#4D5360"},{value:30.42,color:"#D4CCC5"},{value:0.17,color:"#9D9B7F"}]
@@ -141,7 +141,7 @@ new Chart(c).Doughnut(data,valOptions);
 var data = [{value:6.25,color:"#4D5360"},{value:93.75,color:"#D4CCC5"}]
 var c = document.getElementById("chart9").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = [{value:95.91,color:"#4D5360"},{value:0.23,color:"#D4CCC5"},{value:3.35,color:"#9D9B7F"},{value:0.52,color:"#949FB1"}]
+var data = [{value:95.9,color:"#4D5360"},{value:0.23,color:"#D4CCC5"},{value:3.35,color:"#9D9B7F"},{value:0.52,color:"#949FB1"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = [{value:99.36,color:"#4D5360"},{value:0.64,color:"#D4CCC5"}]
@@ -225,3 +225,21 @@ new Chart(c).Doughnut(data,valOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->

@@ -37,7 +37,7 @@
 <div class="chart-data"><table><tr title="2,502 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>94.2%</td></tr><tr title="154 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>newline</td><td>5.8%</td></tr></table>Based on 2,656 operators</div></div>
 <h2 id="line-length" title="Generic.Files.LineLength">Line length</h2><div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
 <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="21,707 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>97.11%</td></tr><tr title="15 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0.07%</td></tr><tr title="588 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>2.63%</td></tr><tr title="42 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.19%</td></tr></table>Based on 22,352 lines</div></div>
+<div class="chart-data"><table><tr title="21,708 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>97.11%</td></tr><tr title="15 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0.07%</td></tr><tr title="588 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>2.63%</td></tr><tr title="42 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.19%</td></tr></table>Based on 22,353 lines</div></div>
 <h2 id="declarations-and-side-effects-mixed" title="PSR1.Files.SideEffects">Declarations and side effects mixed</h2><div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
 <canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="167 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>97.66%</td></tr><tr title="4 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>2.34%</td></tr></table>Based on 171 files</div></div>
@@ -114,7 +114,7 @@
 <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="2 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 2 global functions</div></div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100<br/>Using master branch of <a href="https://github.com/swiftmailer/swiftmailer">swiftmailer/swiftmailer</a> @ commit <a href="https://github.com/swiftmailer/swiftmailer/commit/37d5164b15d409753b4daa32b5b8d5ac7e4142c0">37d5164b15d409753b4daa32b5b8d5ac7e4142c0</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/swiftmailer/swiftmailer">swiftmailer/swiftmailer</a> @ commit <a href="https://github.com/swiftmailer/swiftmailer/commit/9b26d136c57b3e462358652ea5a483a914fe5be1">9b26d136c57b3e462358652ea5a483a914fe5be1</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var data = [{value:37.97,color:"#4D5360"},{value:57.08,color:"#D4CCC5"},{value:4.95,color:"#9D9B7F"}]
@@ -231,3 +231,21 @@ new Chart(c).Doughnut(data,valOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->

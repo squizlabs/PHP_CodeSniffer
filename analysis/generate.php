@@ -1,6 +1,8 @@
 <?php
 $resultFiles = array();
 $repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
+$today       = date('Y-m-d');
+
 foreach ($repos as $repo) {
     list($orgName, $repoName) = explode('/', $repo->url);
 
@@ -27,29 +29,52 @@ foreach ($repos as $repo) {
         $cmd = "git clone --recursive $cloneURL $cloneDir";
     }
 
-    //$output = array();
-    //$retVal = null;
-    //exec($cmd, $output, $retVal);
-    //echo implode(PHP_EOL, $output);
-    //if (empty($output) === false) {
-    //    echo PHP_EOL;
-    //}
+    // Load in old trend values.
+    $resultFile = $repoDir.'/results.json';
+    if (file_exists($resultFile) === true) {
+        $prevTotals = json_decode(file_get_contents($resultFile), true);
+    } else {
+        $prevTotals = null;
+    }
 
-    $reportFile = $repoDir.'/results.json';
-    if (file_exists($reportFile) === false) {
+    $output = array();
+    $retVal = null;
+    exec($cmd, $output, $retVal);
+    echo implode(PHP_EOL, $output);
+    if (empty($output) === false) {
+        echo PHP_EOL;
+    }
+
+    #if (file_exists($reportFile) === false) {
         $checkDir   = $cloneDir.'/'.$repo->path;
         $reportPath = __DIR__.'/_assets/PHPCSInfoReport.php';
         $cmd        = 'phpcs --standard='.__DIR__.'/_assets/ruleset.xml --extensions=php,inc -d memory_limit=256M';
         $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd       .= ' --runtime-set project '.$repo->url;
-        $cmd       .= " --report=$reportPath --report-file=$reportFile $checkDir";
+        $cmd       .= " --report=$reportPath --report-file=$resultFile $checkDir";
         echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
         exec($cmd);
-    } else {
-        echo 'Skipping PHPCS step'.PHP_EOL;
+    #} else {
+    #    echo 'Skipping PHPCS step'.PHP_EOL;
+    #}
+
+    if ($prevTotals !== null) {
+        // Copy old trend data into the new result set.
+        $newTotals  = json_decode(file_get_contents($resultFile), true);
+        foreach ($prevTotals['metrics'] as $metric => $data) {
+            if (isset($data['trends']) === false) {
+                continue;
+            }
+
+            foreach ($data['trends'] as $date => $values) {
+                $newTotals[$metric]['trends'][$date] = $values;
+            }
+        }
+
+        file_put_contents($resultFile, json_encode($newTotals, JSON_FORCE_OBJECT));
     }
 
-    $resultFiles[] = $reportFile;
+    $resultFiles[] = $resultFile;
     echo str_repeat('-', 30).PHP_EOL;
 }//end foreach
 
@@ -78,6 +103,7 @@ foreach ($resultFiles as $file) {
                                 'total_repos' => 0,
                                 'values'      => array(),
                                 'repos'       => array(),
+                                'trends'      => array(),
                                );
         }
 
@@ -106,6 +132,7 @@ foreach ($resultFiles as $file) {
 
         // Needed for sorting this result set later on.
         $results['metrics'][$metric]['winner'] = $winner;
+        $results['metrics'][$metric]['trends'][$today] = $data['values'];
 
         if (isset($totals[$metric]['repos'][$winner]) === false) {
             $totals[$metric]['repos'][$winner] = array();
@@ -204,8 +231,18 @@ foreach ($resultFiles as $file) {
     $output = str_replace('((js))', $js, $output);
     $output = str_replace('((assetPath))', '../../', $output);
     file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
+    file_put_contents($file, json_encode($results, JSON_FORCE_OBJECT));
 
 }//end foreach
+
+// Load in old trend values.
+$filename = __DIR__.'/results.json';
+$prevTotals = json_decode(file_get_contents($filename), true);
+foreach ($prevTotals as $metric => $data) {
+    foreach ($data['trends'] as $date => $values) {
+        $totals[$metric]['trends'][$date] = $values;
+    }
+}
 
 foreach ($totals as $metric => $data) {
     $winner      = '';
@@ -218,14 +255,15 @@ foreach ($totals as $metric => $data) {
     }
 
     $totals[$metric]['winner'] = $winner;
+    $totals[$metric]['trends'][$today] = $data['values'];
 }
 
-$filename = __DIR__.'/results.json';
 file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
 
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
 $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
+$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,scaleShowGridLines:true,pointDot:false,datasetFill:false};'.PHP_EOL;
 
 uasort($totals, 'sortMetrics');
 $chartNum = 0;
@@ -247,6 +285,7 @@ foreach ($totals as $metric => $data) {
     $html .= '<div class="metric">'.PHP_EOL."  <p>$description</p>".PHP_EOL;
     $html .= '  <canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
     $html .= '  <canvas class="chart-repo" id="chart'.$chartNum.'r" width="240" height="240"></canvas>'.PHP_EOL;
+    $html .= '  <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="145"></canvas>'.PHP_EOL;
     $html .= '  <div class="chart-data">'.PHP_EOL;
     $html .= '    <table>'.PHP_EOL;
 
@@ -273,8 +312,14 @@ foreach ($totals as $metric => $data) {
             $numRepos     = count($data['repos'][$value]);
             $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
 
+            if ($numRepos === 1) {
+                $title = '1 project prefers';
+            } else {
+                $title = "$numRepos projects prefer";
+            }
+            
             $repoHTML .= '  <div id="'.$metricid.'-'.$valueid.'-repos" class="repo-data">'.PHP_EOL;
-            $repoHTML .= "    <p><span onclick=\"document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';\" class=\"close\">[close]</span><strong>$numRepos projects prefer <em>$value</em></strong></p>".PHP_EOL;
+            $repoHTML .= "    <p><span onclick=\"document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';\" class=\"close\">[close]</span><strong>$title <em>$value</em></strong></p>".PHP_EOL;
             $repoHTML .= '    <ul>'.PHP_EOL;
 
             sort($data['repos'][$value], SORT_STRING | SORT_FLAG_CASE);

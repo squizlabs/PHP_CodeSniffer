@@ -38,7 +38,7 @@ tr th, td {
 
 .metric {
     width: 800px;
-    height: 500px;
+    height: 635px;
     position: relative;
     left: 50%;
     margin-left: -400px;
@@ -65,6 +65,13 @@ tr th, td {
     position: absolute;
     top: 100px;
     left: 460px;
+}
+
+.chart-trend {
+    position: absolute;
+    top: 520px;
+    left: 0px;
+    border-top: 1px solid #CCC;
 }
 
 .repo-data {

@@ -111,7 +111,7 @@
 <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="84 cast statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 84 cast statements</div></div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100<br/>Using master branch of <a href="https://github.com/sebastianbergmann/phpunit">sebastianbergmann/phpunit</a> @ commit <a href="https://github.com/sebastianbergmann/phpunit/commit/e7b225122f40ff803d8e9f8cae0e78e0071fe3ad">e7b225122f40ff803d8e9f8cae0e78e0071fe3ad</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/sebastianbergmann/phpunit">sebastianbergmann/phpunit</a> @ commit <a href="https://github.com/sebastianbergmann/phpunit/commit/c1f7067dae59634569696bc12dec2ca69fded9b4">c1f7067dae59634569696bc12dec2ca69fded9b4</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var data = [{value:14.47,color:"#4D5360"},{value:85.53,color:"#D4CCC5"}]
@@ -225,3 +225,21 @@ new Chart(c).Doughnut(data,valOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->

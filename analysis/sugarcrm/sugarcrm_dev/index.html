@@ -114,7 +114,7 @@
 <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="664 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 664 global functions</div></div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100<br/>Using master branch of <a href="https://github.com/sugarcrm/sugarcrm_dev">sugarcrm/sugarcrm_dev</a> @ commit <a href="https://github.com/sugarcrm/sugarcrm_dev/commit/489e4cbacf44ab431e5353c0fbba7b084538859e">489e4cbacf44ab431e5353c0fbba7b084538859e</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/sugarcrm/sugarcrm_dev">sugarcrm/sugarcrm_dev</a> @ commit <a href="https://github.com/sugarcrm/sugarcrm_dev/commit/489e4cbacf44ab431e5353c0fbba7b084538859e">489e4cbacf44ab431e5353c0fbba7b084538859e</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var data = [{value:42.29,color:"#4D5360"},{value:33.39,color:"#D4CCC5"},{value:24,color:"#9D9B7F"}]
@@ -231,3 +231,21 @@ new Chart(c).Doughnut(data,valOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->

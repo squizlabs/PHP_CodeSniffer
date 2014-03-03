@@ -108,7 +108,7 @@
 <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
 <div class="chart-data"><table><tr title="2 echo statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 2 echo statements</div></div>
 
-<div class="footer">Report generated on Mon, 03 Mar 2014 11:13:43 +1100<br/>Using master branch of <a href="https://github.com/propelorm/Propel">propelorm/Propel</a> @ commit <a href="https://github.com/propelorm/Propel/commit/af527736586388c21a5a0a5f97914e7264fe580c">af527736586388c21a5a0a5f97914e7264fe580c</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/propelorm/Propel">propelorm/Propel</a> @ commit <a href="https://github.com/propelorm/Propel/commit/af527736586388c21a5a0a5f97914e7264fe580c">af527736586388c21a5a0a5f97914e7264fe580c</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var data = [{value:17.62,color:"#4D5360"},{value:82.38,color:"#D4CCC5"}]
@@ -219,3 +219,21 @@ new Chart(c).Doughnut(data,valOptions);
 </script>
 </body>
 </html>
+
+<!--
+var c = document.getElementById("chart1tspaces").getContext("2d");
+var data = {
+  labels : ["","","","","","",""],
+  datasets : [
+    {
+      strokeColor : "#4D5360",
+      data : [52.48,51.48,50.48,51.48,50.48,52.48,53.48]
+    },
+    {
+      strokeColor : "#D4CCC5",
+      data : [47.52,47.37,45.52,44.01,44.56,47.52,47.52]
+    }
+  ]
+}
+new Chart(c).Line(data,options);
+-->
