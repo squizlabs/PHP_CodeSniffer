@@ -21,4 +21,10 @@ foreach (${something}AS$blah=>$that) {
 foreach (  $something   aS   $blah    =>   $that   ) {
 }
 
-?>
+// @codingStandardsChangeSetting Squiz.ControlStructures.ForEachLoopDeclaration requiredSpacesAfterOpen 1
+// @codingStandardsChangeSetting Squiz.ControlStructures.ForEachLoopDeclaration requiredSpacesBeforeClose 1
+foreach ($something as $blah => $that) {}
+foreach ( $something as $blah => $that ) {}
+foreach (  $something as $blah => $that  ) {}
+// @codingStandardsChangeSetting Squiz.ControlStructures.ForEachLoopDeclaration requiredSpacesAfterOpen 0
+// @codingStandardsChangeSetting Squiz.ControlStructures.ForEachLoopDeclaration requiredSpacesBeforeClose 0

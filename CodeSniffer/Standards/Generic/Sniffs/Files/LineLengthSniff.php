@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -24,7 +24,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -74,7 +74,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $tokenCount = 0;
+        $tokenCount         = 0;
         $currentLineContent = '';
         $currentLine        = 1;
 
@@ -128,6 +128,17 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             }
         } else {
             $lineLength = strlen($lineContent);
+        }
+
+        // Record metrics for common line length groupings.
+        if ($lineLength <= 80) {
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '< 80');
+        } else if ($lineLength <= 120) {
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '81-120');
+        } else if ($lineLength <= 150) {
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '121-150');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '> 150');
         }
 
         if ($this->absoluteLineLimit > 0

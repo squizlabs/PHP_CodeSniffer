@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,7 +20,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -127,6 +127,12 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                         }
                     }
 
+                    if (isset($tokens[$nextToken]['scope_closer']) === false) {
+                        // There isn't going to be anywhere to print the "end if" comment
+                        // because there is no closer.
+                        return;
+                    }
+
                     // The end brace becomes the ELSE's end brace.
                     $stackPtr = $tokens[$nextToken]['scope_closer'];
                     $endBrace = $tokens[$stackPtr];
@@ -190,7 +196,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->replaceToken($comment, $expected);
+                $phpcsFile->fixer->replaceToken($comment, $expected.$phpcsFile->eolChar);
             }
 
             return;

@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,7 +23,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -58,7 +58,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ($stackPtr - 1));
+        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ($stackPtr - 1), null, false, null, true);
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];

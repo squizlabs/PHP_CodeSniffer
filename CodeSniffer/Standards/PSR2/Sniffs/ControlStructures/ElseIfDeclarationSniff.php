@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,7 +20,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -36,7 +36,10 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
      */
     public function register()
     {
-        return array(T_ELSE);
+        return array(
+                T_ELSE,
+                T_ELSEIF,
+               );
 
     }//end register()
 
@@ -53,8 +56,15 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $next   = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+
+        if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
+            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'elseif');
+            return;
+        }
+
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$next]['code'] === T_IF) {
+            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
             $error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
             $fix   = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
 

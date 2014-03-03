@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -18,7 +18,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -54,15 +54,15 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
 
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $i = $tokens[$i]['parenthesis_closer'];
+                $i           = $tokens[$i]['parenthesis_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             } else if ($tokens[$i]['code'] === T_CLOSURE) {
-                $i = $tokens[$i]['scope_closer'];
+                $i           = $tokens[$i]['scope_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
-                $i = $tokens[$i]['bracket_closer'];
+                $i           = $tokens[$i]['bracket_closer'];
                 $compareLine = $tokens[$i]['line'];
                 continue;
             }

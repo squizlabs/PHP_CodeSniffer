@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -37,7 +37,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -329,11 +329,12 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                 continue;
             }
 
-            $type      = '';
-            $typeSpace = 0;
-            $var       = '';
-            $varSpace  = 0;
-            $comment   = '';
+            $type         = '';
+            $typeSpace    = 0;
+            $var          = '';
+            $varSpace     = 0;
+            $comment      = '';
+            $commentLines = array();
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
                 preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
@@ -354,8 +355,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     } 
 
                     if (isset($matches[4]) === true) {
-                        $varSpace = strlen($matches[3]);
-                        $comment  = $matches[4];
+                        $varSpace       = strlen($matches[3]);
+                        $comment        = $matches[4];
+                        $commentLines[] = array(
+                                           'comment' => $comment,
+                                           'token'   => ($tag + 2),
+                                           'indent'  => $varSpace,
+                                          );
 
                         // Any strings until the next tag belong to this comment.
                         if (isset($tokens[$commentStart]['comment_tags'][($pos + 1)]) === true) {
@@ -366,13 +372,24 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                         for ($i = ($tag + 3); $i < $end; $i++) {
                             if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
-                                $comment .= ' '.$tokens[$i]['content'];
+                                $indent = 0;
+                                if ($tokens[($i - 1)]['code'] === T_DOC_COMMENT_WHITESPACE) {
+                                    $indent = strlen($tokens[($i - 1)]['content']);
+                                }
+
+                                $comment       .= ' '.$tokens[$i]['content'];
+                                $commentLines[] = array(
+                                                   'comment' => $tokens[$i]['content'],
+                                                   'token'   => $i,
+                                                   'indent'  => $indent,
+                                                  );
                             }
                         }
                     } else {
                         $error = 'Missing parameter comment';
                         $phpcsFile->addError($error, $tag, 'MissingParamComment');
-                    }
+                        $commentLines[] = array('comment' => '');
+                    }//end if
                 } else {
                     $error = 'Missing parameter name';
                     $phpcsFile->addError($error, $tag, 'MissingParamName');
@@ -383,12 +400,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
             }//end if
 
             $params[] = array(   
-                         'tag'        => $tag,
-                         'type'       => $type,
-                         'var'        => $var,
-                         'comment'    => $comment,
-                         'type_space' => $typeSpace,
-                         'var_space'  => $varSpace,
+                         'tag'          => $tag,
+                         'type'         => $type,
+                         'var'          => $var,
+                         'comment'      => $comment,
+                         'commentLines' => $commentLines,
+                         'type_space'   => $typeSpace,
+                         'var_space'    => $varSpace,
                         );
         }//end foreach
 
@@ -418,7 +436,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                         $content .= str_repeat(' ', $param['type_space']);
                         $content .= $param['var'];
                         $content .= str_repeat(' ', $param['var_space']);
-                        $content .= $param['comment'];
+                        $content .= $param['commentLines'][0]['comment'];
                         $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                     }
                 } else if (count($typeNames) === 1) {
@@ -480,14 +498,33 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $spaces);
                     $content .= $param['var'];
                     $content .= str_repeat(' ', $param['var_space']);
-                    $content .= $param['comment'];
+                    $content .= $param['commentLines'][0]['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
-                }
-            }
+
+                    // Fix up the indent of additional comment lines.
+                    foreach ($param['commentLines'] as $lineNum => $line) {
+                        if ($lineNum === 0
+                            || $param['commentLines'][$lineNum]['indent'] === 0
+                        ) {
+                            continue;
+                        }
+
+                        $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['type_space']);
+                        $phpcsFile->fixer->replaceToken(
+                            ($param['commentLines'][$lineNum]['token'] - 1),
+                            str_repeat(' ', $newIndent)
+                        );
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
@@ -536,14 +573,33 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $param['type_space']);
                     $content .= $param['var'];
                     $content .= str_repeat(' ', $spaces);
-                    $content .= $param['comment'];
+                    $content .= $param['commentLines'][0]['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
-                }
-            }
+
+                    // Fix up the indent of additional comment lines.
+                    foreach ($param['commentLines'] as $lineNum => $line) {
+                        if ($lineNum === 0
+                            || $param['commentLines'][$lineNum]['indent'] === 0
+                        ) {
+                            continue;
+                        }
+
+                        $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['var_space']);
+                        $phpcsFile->fixer->replaceToken(
+                            ($param['commentLines'][$lineNum]['token'] - 1),
+                            str_repeat(' ', $newIndent)
+                        );
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
 
             // Param comments must start with a capital letter and end with the full stop.
             $firstChar = $param['comment']{0};

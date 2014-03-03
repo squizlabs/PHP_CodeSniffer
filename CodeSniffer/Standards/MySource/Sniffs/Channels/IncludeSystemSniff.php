@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer_MySource
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,7 +23,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @category  PHP
  * @package   PHP_CodeSniffer_MySource
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -132,8 +132,8 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $includedClasses[] = $name;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName = trim($tokens[$typeName]['content'], " '");
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
                 $includedClasses[] = strtolower($typeName).'widgettype';
             }
         }
@@ -279,8 +279,8 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $includedClasses[] = $name;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName = trim($tokens[$typeName]['content'], " '");
+                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName          = trim($tokens[$typeName]['content'], " '");
                 $includedClasses[] = strtolower($typeName).'widgettype';
             }
         }//end for

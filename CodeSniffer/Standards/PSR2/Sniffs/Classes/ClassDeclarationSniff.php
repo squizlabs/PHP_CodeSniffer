@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -25,7 +25,7 @@ if (class_exists('PEAR_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -211,7 +211,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $keywordTokenType = T_IMPLEMENTS;
         }
 
-        $implements = $phpcsFile->findNext($keywordTokenType, ($stackPtr + 1), $openingBrace);
+        $implements          = $phpcsFile->findNext($keywordTokenType, ($stackPtr + 1), $openingBrace);
         $multiLineImplements = false;
         if ($implements !== false) {
             $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($implements + 1), $openingBrace, true);
@@ -232,7 +232,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $nextClass    = $phpcsFile->findNext($find, ($nextClass + 1), ($openingBrace - 1));
         }
 
-        $classCount = count($classNames);
+        $classCount         = count($classNames);
         $checkingImplements = false;
         foreach ($classNames as $i => $className) {
             if ($tokens[$className]['code'] == $keywordTokenType) {

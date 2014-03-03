@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,7 +20,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -55,13 +55,21 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Array keyword should be lower case.
-        if (strtolower($tokens[$stackPtr]['content']) !== $tokens[$stackPtr]['content']) {
+        if ($tokens[$stackPtr]['content'] !== strtolower($tokens[$stackPtr]['content'])) {
+            if ($tokens[$stackPtr]['content'] !== strtoupper($tokens[$stackPtr]['content'])) {
+                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'upper');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'mixed');
+            }
+
             $error = 'Array keyword should be lower case; expected "array" but found "%s"';
             $data  = array($tokens[$stackPtr]['content']);
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, 'array');
             }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'lower');
         }
 
         $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
@@ -377,7 +385,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $index = ($indexStart + 1);
                 }
 
-                $currentEntry['index'] = $index;
+                $currentEntry['index']         = $index;
                 $currentEntry['index_content'] = $phpcsFile->getTokensAsString($index, ($indexEnd - $index + 1));
 
                 $indexLength = strlen($currentEntry['index_content']);
@@ -386,7 +394,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 // Find the value of this index.
-                $nextContent = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
+                $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
                 $currentEntry['value'] = $nextContent;
                 $indices[] = $currentEntry;
                 $lastToken = T_DOUBLE_ARROW;
@@ -641,7 +649,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 for ($i = ($index['value'] + 1); $i < $arrayEnd; $i++) {
                     // Skip bracketed statements, like function calls.
                     if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                        $i = $tokens[$i]['parenthesis_closer'];
+                        $i         = $tokens[$i]['parenthesis_closer'];
                         $valueLine = $tokens[$i]['line'];
                         continue;
                     }

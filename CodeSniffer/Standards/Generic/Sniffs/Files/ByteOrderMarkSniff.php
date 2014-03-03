@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -21,7 +21,7 @@
  * @package   PHP_CodeSniffer
  * @author    Piotr Karas <office@mediaself.pl>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2010-2011 mediaSELF Sp. z o.o.
+ * @copyright 2010-2014 mediaSELF Sp. z o.o.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -65,7 +65,7 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // The BOM will be the very first token in the file.
         if ($stackPtr !== 0) {
@@ -81,9 +81,12 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
                 $errorData = array($bomName);
                 $error     = 'File contains %s byte order mark, which may corrupt your application';
                 $phpcsFile->addError($error, $stackPtr, 'Found', $errorData);
-                break;
+                $phpcsFile->recordMetric($stackPtr, 'Using byte order mark', 'yes');
+                return;
             }
         }
+
+        $phpcsFile->recordMetric($stackPtr, 'Using byte order mark', 'no');
 
     }//end process()
 

@@ -97,3 +97,15 @@ switch ($httpResponseCode) {
     default:
     exit;
 }
+
+if ($foo):
+    if ($bar):
+        $foo = 1;
+    elseif ($baz):
+        $foo = 2;
+    endif;
+endif;
+
+if ($foo):
+else if ($baz): $foo = 2;
+endif;

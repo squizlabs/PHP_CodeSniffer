@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -16,13 +16,13 @@
 /**
  * Squiz_Sniffs_Files_FileExtensionSniff.
  *
- * Tests that the stars in a doc comment align correctly.
+ * Tests that classes and interfaces are not declared in .php files
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -59,14 +59,16 @@ class Squiz_Sniffs_Files_FileExtensionSniff implements PHP_CodeSniffer_Sniff
         $extension = substr($fileName, strrpos($fileName, '.'));
         $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), $stackPtr);
 
-        if ($extension === '.php') {
-            if ($nextClass !== false) {
+        if ($nextClass !== false) {
+            $phpcsFile->recordMetric($stackPtr, 'File extension for class files', $extension);
+            if ($extension === '.php') {
                 $error = '%s found in ".php" file; use ".inc" extension instead';
                 $data  = array(ucfirst($tokens[$nextClass]['content']));
                 $phpcsFile->addError($error, $stackPtr, 'ClassFound', $data);
             }
-        } else if ($extension === '.inc') {
-            if ($nextClass === false) {
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'File extension for non-class files', $extension);
+            if ($extension === '.inc') {
                 $error = 'No interface or class found in ".inc" file; use ".php" extension instead';
                 $phpcsFile->addError($error, $stackPtr, 'NoClass');
             }

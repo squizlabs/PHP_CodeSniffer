@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -24,7 +24,7 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -63,6 +63,13 @@ class PHP_CodeSniffer_CLI
      */
     public $dieOnUnknownArg = true;
 
+    /**
+     * An array of the current command line arguments we are processing.
+     *
+     * @var array
+     */
+    private $_cliArgs = array();
+
 
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
@@ -93,19 +100,19 @@ class PHP_CodeSniffer_CLI
     public function getDefaults()
     {
         // The default values for config settings.
-        $defaults['files']       = array();
-        $defaults['standard']    = null;
-        $defaults['verbosity']   = 0;
-        $defaults['interactive'] = false;
-        $defaults['explain']     = false;
-        $defaults['local']       = false;
-        $defaults['showSources'] = false;
-        $defaults['extensions']  = array();
-        $defaults['sniffs']      = array();
-        $defaults['ignored']     = array();
-        $defaults['reportFile']  = null;
-        $defaults['generator']   = '';
-        $defaults['reports']     = array();
+        $defaults['files']           = array();
+        $defaults['standard']        = null;
+        $defaults['verbosity']       = 0;
+        $defaults['interactive']     = false;
+        $defaults['explain']         = false;
+        $defaults['local']           = false;
+        $defaults['showSources']     = false;
+        $defaults['extensions']      = array();
+        $defaults['sniffs']          = array();
+        $defaults['ignored']         = array();
+        $defaults['reportFile']      = null;
+        $defaults['generator']       = '';
+        $defaults['reports']         = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
 
@@ -180,7 +187,10 @@ class PHP_CodeSniffer_CLI
 
 
     /**
-     * Process the command line arguments and returns the values.
+     * Gets the processed command line values.
+     *
+     * If the values have not yet been set, the values will be sourced
+     * from the command line arguments.
      *
      * @return array
      */
@@ -196,8 +206,33 @@ class PHP_CodeSniffer_CLI
 
         $values = $this->getDefaults();
 
-        for ($i = 1; $i < $_SERVER['argc']; $i++) {
-            $arg = $_SERVER['argv'][$i];
+        $args = $_SERVER['argv'];
+        array_shift($args);
+
+        $this->setCommandLineValues($args);
+        return $this->values;
+
+    }//end getCommandLineValues()
+
+
+    /**
+     * Set the command line values.
+     *
+     * @param array $args An array of command line arguments to process.
+     *
+     * @return void
+     */
+    public function setCommandLineValues($args)
+    {
+        if (empty($this->values) === true) {
+            $this->values = $this->getDefaults();
+        }
+
+        $this->_cliArgs = $args;
+        $numArgs        = count($args);
+
+        for ($i = 0; $i < $numArgs; $i++) {
+            $arg = $this->_cliArgs[$i];
             if ($arg === '') {
                 continue;
             }
@@ -209,8 +244,7 @@ class PHP_CodeSniffer_CLI
                 }
 
                 if ($arg{1} === '-') {
-                    $values
-                        = $this->processLongArgument(substr($arg, 2), $i, $values);
+                    $this->processLongArgument(substr($arg, 2), $i);
                 } else {
                     $switches = str_split($arg);
                     foreach ($switches as $switch) {
@@ -218,31 +252,26 @@ class PHP_CodeSniffer_CLI
                             continue;
                         }
 
-                        $values = $this->processShortArgument($switch, $i, $values);
+                        $this->processShortArgument($switch, $i);
                     }
                 }
             } else {
-                $values = $this->processUnknownArgument($arg, $i, $values);
+                $this->processUnknownArgument($arg, $i);
             }//end if
         }//end for
 
-        $this->values = $values;
-        return $values;
-
-    }//end getCommandLineValues()
+    }//end setCommandLineValues()
 
 
     /**
      * Processes a short (-e) command line argument.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see    getCommandLineValues()
+     * @return void
      */
-    public function processShortArgument($arg, $pos, $values)
+    public function processShortArgument($arg, $pos)
     {
         switch ($arg) {
         case 'h':
@@ -255,26 +284,26 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'v' :
-            $values['verbosity']++;
+            $this->values['verbosity']++;
             break;
         case 'l' :
-            $values['local'] = true;
+            $this->values['local'] = true;
             break;
         case 's' :
-            $values['showSources'] = true;
+            $this->values['showSources'] = true;
             break;
         case 'a' :
-            $values['interactive'] = true;
+            $this->values['interactive'] = true;
             break;
         case 'e':
-            $values['explain'] = true;
+            $this->values['explain'] = true;
             break;
         case 'p' :
-            $values['showProgress'] = true;
+            $this->values['showProgress'] = true;
             break;
         case 'd' :
-            $ini = explode('=', $_SERVER['argv'][($pos + 1)]);
-            $_SERVER['argv'][($pos + 1)] = '';
+            $ini = explode('=', $this->_cliArgs[($pos + 1)]);
+            $this->_cliArgs[($pos + 1)] = '';
             if (isset($ini[1]) === true) {
                 ini_set($ini[0], $ini[1]);
             } else {
@@ -283,14 +312,14 @@ class PHP_CodeSniffer_CLI
 
             break;
         case 'n' :
-            $values['warningSeverity'] = 0;
+            $this->values['warningSeverity'] = 0;
             break;
         case 'w' :
-            $values['warningSeverity'] = null;
+            $this->values['warningSeverity'] = null;
             break;
         default:
             if ($this->dieOnUnknownArg === false) {
-                $values[$arg] = $arg;
+                $this->values[$arg] = $arg;
             } else {
                 echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
                 $this->printUsage();
@@ -298,22 +327,18 @@ class PHP_CodeSniffer_CLI
             }
         }//end switch
 
-        return $values;
-
     }//end processShortArgument()
 
 
     /**
      * Processes a long (--example) command line argument.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see    getCommandLineValues()
+     * @return void
      */
-    public function processLongArgument($arg, $pos, $values)
+    public function processLongArgument($arg, $pos)
     {
         switch ($arg) {
         case 'help':
@@ -324,12 +349,12 @@ class PHP_CodeSniffer_CLI
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
         case 'config-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
-            $value = $_SERVER['argv'][($pos + 2)];
+            $key   = $this->_cliArgs[($pos + 1)];
+            $value = $this->_cliArgs[($pos + 2)];
             PHP_CodeSniffer::setConfigData($key, $value);
             exit(0);
         case 'config-delete':
-            $key = $_SERVER['argv'][($pos + 1)];
+            $key = $this->_cliArgs[($pos + 1)];
             PHP_CodeSniffer::setConfigData($key, null);
             exit(0);
         case 'config-show':
@@ -337,49 +362,49 @@ class PHP_CodeSniffer_CLI
             print_r($data);
             exit(0);
         case 'runtime-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
-            $value = $_SERVER['argv'][($pos + 2)];
-            $_SERVER['argv'][($pos + 1)] = '';
-            $_SERVER['argv'][($pos + 2)] = '';
+            $key   = $this->_cliArgs[($pos + 1)];
+            $value = $this->_cliArgs[($pos + 2)];
+            $this->_cliArgs[($pos + 1)] = '';
+            $this->_cliArgs[($pos + 2)] = '';
             PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = substr($arg, 7);
-                $values['sniffs'] = explode(',', $sniffs);
+                $this->values['sniffs'] = explode(',', $sniffs);
             } else if (substr($arg, 0, 12) === 'report-file=') {
-                $values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
+                $this->values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
-                if ($values['reportFile'] === false) {
-                    $values['reportFile'] = substr($arg, 12);
+                if ($this->values['reportFile'] === false) {
+                    $this->values['reportFile'] = substr($arg, 12);
                 }
 
-                if (is_dir($values['reportFile']) === true) {
-                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
+                if (is_dir($this->values['reportFile']) === true) {
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
 
-                $dir = dirname($values['reportFile']);
+                $dir = dirname($this->values['reportFile']);
                 if (is_dir($dir) === false) {
-                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" points to a non-existent directory.'.PHP_EOL.PHP_EOL;
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory.'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
 
                 if ($dir === '.') {
                     // Passed report file is a filename in the current directory.
-                    $values['reportFile'] = getcwd().'/'.basename($values['reportFile']);
+                    $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
                 } else {
                     $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
                     if ($dir !== false) {
                         // Report file path is relative.
-                        $values['reportFile'] = $dir.'/'.basename($values['reportFile']);
+                        $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
                     }
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
-                $values['reportWidth'] = (int) substr($arg, 13);
+                $this->values['reportWidth'] = (int) substr($arg, 13);
             } else if (substr($arg, 0, 7) === 'report='
                 || substr($arg, 0, 7) === 'report-'
             ) {
@@ -414,21 +439,21 @@ class PHP_CodeSniffer_CLI
                     $output = null;
                 }//end if
 
-                $values['reports'][$report] = $output;
+                $this->values['reports'][$report] = $output;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
                 if ($standards !== '') {
-                    $values['standard'] = explode(',', $standards);
+                    $this->values['standard'] = explode(',', $standards);
                 }
             } else if (substr($arg, 0, 11) === 'extensions=') {
-                $values['extensions'] = explode(',', substr($arg, 11));
+                $this->values['extensions'] = explode(',', substr($arg, 11));
             } else if (substr($arg, 0, 9) === 'severity=') {
-                $values['errorSeverity']   = (int) substr($arg, 9);
-                $values['warningSeverity'] = $values['errorSeverity'];
+                $this->values['errorSeverity']   = (int) substr($arg, 9);
+                $this->values['warningSeverity'] = $this->values['errorSeverity'];
             } else if (substr($arg, 0, 15) === 'error-severity=') {
-                $values['errorSeverity'] = (int) substr($arg, 15);
+                $this->values['errorSeverity'] = (int) substr($arg, 15);
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
-                $values['warningSeverity'] = (int) substr($arg, 17);
+                $this->values['warningSeverity'] = (int) substr($arg, 17);
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
@@ -437,23 +462,28 @@ class PHP_CodeSniffer_CLI
                     substr($arg, 7)
                 );
                 foreach ($ignored as $pattern) {
-                    $values['ignored'][$pattern] = 'absolute';
+                    $pattern = trim($pattern);
+                    if ($pattern == '') {
+                        continue;
+                    }
+
+                    $this->values['ignored'][$pattern] = 'absolute';
                 }
             } else if (substr($arg, 0, 10) === 'generator=') {
-                $values['generator'] = substr($arg, 10);
+                $this->values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 9) === 'encoding=') {
-                $values['encoding'] = strtolower(substr($arg, 9));
+                $this->values['encoding'] = strtolower(substr($arg, 9));
             } else if (substr($arg, 0, 10) === 'tab-width=') {
-                $values['tabWidth'] = (int) substr($arg, 10);
+                $this->values['tabWidth'] = (int) substr($arg, 10);
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
                     if ($eqPos === false) {
-                        $values[$arg] = $arg;
+                        $this->values[$arg] = $arg;
                     } else {
                         $value = substr($arg, ($eqPos + 1));
                         $arg   = substr($arg, 0, $eqPos);
-                        $values[$arg] = $value;
+                        $this->values[$arg] = $value;
                     }
                 } else {
                     echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
@@ -465,8 +495,6 @@ class PHP_CodeSniffer_CLI
             break;
         }//end switch
 
-        return $values;
-
     }//end processLongArgument()
 
 
@@ -475,29 +503,25 @@ class PHP_CodeSniffer_CLI
      *
      * Assumes all unknown arguments are files and folders to check.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see    getCommandLineValues()
+     * @return void
      */
-    public function processUnknownArgument($arg, $pos, $values)
+    public function processUnknownArgument($arg, $pos)
     {
         $file = PHP_CodeSniffer::realpath($arg);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
-                return $values;
+                return;
             }
 
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
         } else {
-            $values['files'][] = $file;
+            $this->values['files'][] = $file;
         }
-
-        return $values;
 
     }//end processUnknownArgument()
 
@@ -567,12 +591,14 @@ class PHP_CodeSniffer_CLI
             }
         }
 
-        $phpcs = new PHP_CodeSniffer(
-            $values['verbosity'],
-            $values['tabWidth'],
-            $values['encoding'],
-            $values['interactive']
-        );
+        $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
+        $phpcs->setCli($this);
+        $phpcs->initStandard($values['standard'], $values['sniffs']);
+        $values = $this->values;
+
+        $phpcs->setTabWidth($values['tabWidth']);
+        $phpcs->setEncoding($values['encoding']);
+        $phpcs->setInteractive($values['interactive']);
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
@@ -603,14 +629,7 @@ class PHP_CodeSniffer_CLI
             $this->values['reports']   = $values['reports'];
         }
 
-        $phpcs->setCli($this);
-
-        $phpcs->process(
-            $values['files'],
-            $values['standard'],
-            $values['sniffs'],
-            $values['local']
-        );
+        $phpcs->processFiles($values['files'], $values['local']);
 
         if ($fileContents !== '') {
             $phpcs->processFile('STDIN', $fileContents);
@@ -895,7 +914,8 @@ class PHP_CodeSniffer_CLI
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '                      (only valid if fixing a directory)'.PHP_EOL;
+        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
+        echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;

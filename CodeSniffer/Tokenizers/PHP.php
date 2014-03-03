@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -18,7 +18,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -219,7 +219,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                             ),
                                                ),
                             T_DEFAULT       => array(
-                                                'start'  => array(T_COLON),
+                                                'start'  => array(
+                                                             T_COLON,
+                                                             T_SEMICOLON,
+                                                            ),
                                                 'end'    => array(
                                                              T_BREAK,
                                                              T_RETURN,
@@ -396,8 +399,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         $newToken['content'] .= $eolChar;
                     }
 
-                    $newToken['code'] = T_DOUBLE_QUOTED_STRING;
-                    $newToken['type'] = 'T_DOUBLE_QUOTED_STRING';
+                    $newToken['code']          = T_DOUBLE_QUOTED_STRING;
+                    $newToken['type']          = 'T_DOUBLE_QUOTED_STRING';
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
                 }
@@ -561,8 +564,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         $newToken['content'] .= $eolChar;
                     }
 
-                    $newToken['type'] = $tokenName;
-                    $newToken['code'] = $token[0];
+                    $newToken['type']          = $tokenName;
+                    $newToken['code']          = $token[0];
                     $finalTokens[$newStackPtr] = $newToken;
                     $newStackPtr++;
                 }
@@ -644,6 +647,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
+            // Check for any unset scope conditions due to alternate IF/ENDIF syntax.
+            if (isset($tokens[$i]['scope_opener']) === true
+                && isset($tokens[$i]['scope_condition']) === false
+            ) {
+                $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
+            }
+
             // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
@@ -776,10 +786,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
             // not whatever it already is. The opener needs to be the opening curly
             // brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
-            $tokens[$i]['scope_closer']    = $newCloser;
-            $tokens[$x]['scope_closer']    = $newCloser;
-            $tokens[$i]['scope_opener']    = $x;
-            $tokens[$x]['scope_condition'] = $i;
+            $tokens[$i]['scope_closer']            = $newCloser;
+            $tokens[$x]['scope_closer']            = $newCloser;
+            $tokens[$i]['scope_opener']            = $x;
+            $tokens[$x]['scope_condition']         = $i;
             $tokens[$newCloser]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_opener']    = $x;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {

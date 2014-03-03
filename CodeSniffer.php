@@ -9,7 +9,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -60,7 +60,7 @@ if (interface_exists('PHP_CodeSniffer_Sniff', true) === false) {
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '1.6.0a1';
+    const VERSION = '2.0.0a2';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -216,20 +216,20 @@ class PHP_CodeSniffer
         $encoding='iso-8859-1',
         $interactive=false
     ) {
-        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        if ($verbosity !== null) {
+            $this->setVerbosity($verbosity);
         }
 
-        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
-            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        if ($tabWidth !== null) {
+            $this->setTabWidth($tabWidth);
         }
 
-        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
-            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        if ($encoding !== null) {
+            $this->setEncoding($encoding);
         }
 
-        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
-            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        if ($interactive !== null) {
+            $this->setInteractive($interactive);
         }
 
         if (defined('PHPCS_DEFAULT_ERROR_SEV') === false) {
@@ -296,6 +296,79 @@ class PHP_CodeSniffer
 
 
     /**
+     * Sets the verbosity level.
+     *
+     * @param int $verbosity The verbosity level.
+     *                       1: Print progress information.
+     *                       2: Print tokenizer debug information.
+     *                       3: Print sniff debug information.
+     *
+     * @return void
+     */
+    public function setVerbosity($verbosity)
+    {
+        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        }
+
+    }//end setVerbosity()
+
+
+    /**
+     * Sets the tab width.
+     *
+     * @param int $tabWidth The number of spaces each tab represents.
+     *                      If greater than zero, tabs will be replaced
+     *                      by spaces before testing each file.
+     *
+     * @return void
+     */
+    public function setTabWidth($tabWidth)
+    {
+        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
+            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
+
+    }//end setTabWidth()
+
+
+    /**
+     * Sets the encoding.
+     *
+     * @param string $encoding The charset of the sniffed files.
+     *                         This is important for some reports that output
+     *                         with utf-8 encoding as you don't want it double
+     *                         encoding messages.
+     *
+     * @return void
+     */
+    public function setEncoding($encoding)
+    {
+        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
+            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        }
+
+    }//end setEncoding()
+
+
+    /**
+     * Sets the interactive flag.
+     *
+     * @param bool $interactive If TRUE, will stop after each file with errors
+     *                          and wait for user input.
+     *
+     * @return void
+     */
+    public function setInteractive($interactive)
+    {
+        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
+            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        }
+
+    }//end setInteractive()
+
+
+    /**
      * Sets an array of file extensions that we will allow checking of.
      *
      * If the extension is one of the defaults, a specific tokenizer
@@ -310,6 +383,14 @@ class PHP_CodeSniffer
     {
         $newExtensions = array();
         foreach ($extensions as $ext) {
+            $slash = strpos($ext, '/');
+            if ($slash !== false) {
+                // They specified the tokenizer too.
+                list($ext, $tokenizer) = explode('/', $ext);
+                $newExtensions[$ext]   = strtoupper($tokenizer);
+                continue;
+            }
+
             if (isset($this->allowedFileExtensions[$ext]) === true) {
                 $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
             } else {
@@ -382,7 +463,7 @@ class PHP_CodeSniffer
 
 
     /**
-     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     * Start a PHP_CodeSniffer run.
      *
      * @param string|array $files        The files and directories to process. For
      *                                   directories, each sub directory will also
@@ -394,7 +475,6 @@ class PHP_CodeSniffer
      * @param boolean      $local        If true, don't recurse into directories.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If files or standard are invalid.
      */
     public function process($files, $standards, array $restrictions=array(), $local=false)
     {
@@ -402,14 +482,31 @@ class PHP_CodeSniffer
             $files = array($files);
         }
 
+        $this->initStandard($standards, $restrictions);
+        $this->processFiles($files, $local);
+
+    }//end process()
+
+
+    /**
+     * Initialise the standard that the run will use.
+     *
+     * @param string|array $standards    The set of code sniffs we are testing
+     *                                   against.
+     * @param array        $restrictions The sniff codes to restrict the
+     *
+     * @return void
+     */
+    public function initStandard($standards, array $restrictions=array())
+    {
         if (is_array($standards) === false) {
             $standards = array($standards);
         }
 
         // Reset the members.
-        $this->listeners = array();
-        $this->sniffs    = array();
-        $this->ruleset   = array();
+        $this->listeners       = array();
+        $this->sniffs          = array();
+        $this->ruleset         = array();
         $this->_tokenListeners = array();
         self::$rulesetDirs     = array();
 
@@ -463,11 +560,24 @@ class PHP_CodeSniffer
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
-        // The SVN pre-commit calls process() to init the sniffs
-        // and ruleset so there may not be any files to process.
-        // But this has to come after that initial setup.
-        if (empty($files) === true) {
-            return;
+    }//end initStandard()
+
+
+    /**
+     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     *
+     * @param string|array $files The files and directories to process. For
+     *                            directories, each sub directory will also
+     *                            be traversed for source files.
+     * @param boolean      $local If true, don't recurse into directories.
+     *
+     * @return void
+     * @throws PHP_CodeSniffer_Exception If files are invalid.
+     */
+    public function processFiles($files, $local=false)
+    {
+        if (is_array($files) === false) {
+            $files = array($files);
         }
 
         $cliValues    = $this->cli->getCommandLineValues();
@@ -485,9 +595,9 @@ class PHP_CodeSniffer
         }
 
         $numProcessed = 0;
-        $dots      = 0;
-        $maxLength = strlen($numFiles);
-        $lastDir   = '';
+        $dots         = 0;
+        $maxLength    = strlen($numFiles);
+        $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
             $currDir    = dirname($file);
@@ -499,7 +609,7 @@ class PHP_CodeSniffer
                 $lastDir = $currDir;
             }
 
-            $phpcsFile = $this->processFile($file, null, $restrictions);
+            $phpcsFile = $this->processFile($file, null);
             $numProcessed++;
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
@@ -541,7 +651,7 @@ class PHP_CodeSniffer
             echo PHP_EOL.PHP_EOL;
         }
 
-    }//end process()
+    }//end processFiles()
 
 
     /**
@@ -574,7 +684,7 @@ class PHP_CodeSniffer
         $includedSniffs = array();
         $excludedSniffs = array();
 
-        $rulesetDir = dirname($rulesetPath);
+        $rulesetDir          = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.'/Sniffs') === true) {
@@ -629,7 +739,28 @@ class PHP_CodeSniffer
             $this->_processRule($rule, $depth);
         }//end foreach
 
-        // Process custom ignore pattern rules.
+        // Process custom command line arguments.
+        $cliArgs = array();
+        foreach ($ruleset->{'arg'} as $arg) {
+            if (isset($arg['name']) === true) {
+                $argString = '--'.(string) $arg['name'].'='.(string) $arg['value'];
+            } else {
+                $argString = '-'.(string) $arg['value'];
+            }
+
+            $cliArgs[] = $argString;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> set command line value $argString".PHP_EOL;
+            }
+        }
+
+        if (empty($cliArgs) === false) {
+            $this->cli->setCommandLineValues($cliArgs);
+        }
+
+        // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
             $this->setConfigData((string) $config['name'], (string) $config['value'], true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -831,7 +962,7 @@ class PHP_CodeSniffer
                     // files before, looking for ones for this particular standard,
                     // and seeing if it is in there.
                     foreach (self::$rulesetDirs as $dir) {
-                        if (basename($dir) !== $stdName) {
+                        if (strtolower(basename($dir)) !== strtolower($stdName)) {
                             continue;
                         }
 
@@ -1204,7 +1335,7 @@ class PHP_CodeSniffer
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
+                if ($this->shouldProcessFile($path, dirname($path)) === false) {
                     continue;
                 }
 
@@ -1328,17 +1459,15 @@ class PHP_CodeSniffer
      * conforms with the standard. Returns the processed file object, or NULL
      * if no file was processed due to error.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
      * @see    _processFile()
      */
-    public function processFile($file, $contents=null, $restrictions=array())
+    public function processFile($file, $contents=null)
     {
         if ($contents === null && file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
@@ -1372,7 +1501,7 @@ class PHP_CodeSniffer
         }//end if
 
         try {
-            $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+            $phpcsFile = $this->_processFile($file, $contents);
         } catch (Exception $e) {
             $trace = $e->getTrace();
 
@@ -1402,7 +1531,6 @@ class PHP_CodeSniffer
                 $this->_tokenListeners,
                 $this->allowedFileExtensions,
                 $this->ruleset,
-                $restrictions,
                 $this
             );
 
@@ -1451,7 +1579,7 @@ class PHP_CodeSniffer
                 // and only clear it when the file changes, but we are rechecking
                 // the same file.
                 $this->populateTokenListeners();
-                $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+                $phpcsFile = $this->_processFile($file, $contents);
                 break;
             }
         }//end while
@@ -1466,16 +1594,14 @@ class PHP_CodeSniffer
      *
      * Does raw processing only. No interactive support or error checking.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @see    processFile()
      */
-    private function _processFile($file, $contents, $restrictions)
+    private function _processFile($file, $contents)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = time();
@@ -1490,7 +1616,6 @@ class PHP_CodeSniffer
             $this->_tokenListeners,
             $this->allowedFileExtensions,
             $this->ruleset,
-            $restrictions,
             $this
         );
 
@@ -1823,7 +1948,7 @@ class PHP_CodeSniffer
 
         if ($strict === true) {
             // Check that there are not two capital letters next to each other.
-            $length = strlen($string);
+            $length          = strlen($string);
             $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {

@@ -141,4 +141,18 @@ do {
 }
 while (true);
 
-?>
+try {
+    // Something
+} catch (Exception $e) {
+    // Something
+}
+
+try {
+
+    // Something
+
+} catch (Exception $e) {
+
+    // Something
+
+}

@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -38,7 +38,7 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_CLOSE_TAG);
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -56,28 +56,21 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $next = $phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1), null, true);
-        if ($next !== false) {
-            return;
-        }
-
-        // We've found the last closing tag in the file so the only thing
-        // potentially remaining is inline HTML. Now we need to figure out
-        // whether or not it's just a bunch of whitespace.
-        $content = '';
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            $content .= $tokens[$i]['content'];
-        }
-
-        // Check if the remaining inline HTML is just whitespace.
-        $content = trim($content);
-        if (empty($content) === true) {
+        $last = $phpcsFile->findPrevious(array(T_INLINE_HTML, T_WHITESPACE), ($phpcsFile->numTokens - 1), null, true);
+        if ($tokens[$last]['code'] === T_CLOSE_TAG) {
             $error = 'A closing tag is not permitted at the end of a PHP file';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed');
+            $fix   = $phpcsFile->addFixableError($error, $last, 'NotAllowed');
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, '');
+                $phpcsFile->fixer->replaceToken($last, '');
             }
+
+            $phpcsFile->recordMetric($stackPtr, 'PHP closing tag at EOF', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP closing tag at EOF', 'no');
         }
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 

@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -32,7 +32,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -80,9 +80,9 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             // If the class is called with a namespace prefix, build fully qualified
             // namespace calls for both current scope class and requested class.
             if ($tokens[($className - 1)]['code'] === T_NS_SEPARATOR) {
-                $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $className);
-                $declarationName        = substr($declarationName, 1);
-                $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
+                $declarationName         = $this->getDeclarationNameWithNamespace($tokens, $className);
+                $declarationName         = substr($declarationName, 1);
+                $fullQualifiedClassName  = $this->getNamespaceOfScope($phpcsFile, $currScope);
                 $fullQualifiedClassName .= '\\'.$tokens[$className]['content'];
             }
 
@@ -150,7 +150,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
      */
     protected function getNamespaceOfScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $namespace = '\\';
+        $namespace            = '\\';
         $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
 
         if ($namespaceDeclaration !== false) {

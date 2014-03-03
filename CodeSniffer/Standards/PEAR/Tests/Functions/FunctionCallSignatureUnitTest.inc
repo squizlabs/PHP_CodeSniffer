@@ -207,4 +207,11 @@ function foo()
         'string'.
     );
 }
-?>
+
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 1
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 1
+test($arg, $arg2);
+test( $arg, $arg2 );
+test(  $arg, $arg2  );
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0

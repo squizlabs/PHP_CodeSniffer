@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -122,28 +122,56 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // Check there is one space before the & operator.
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space before "&" operator; 0 found';
-                $phpcsFile->addError($error, $stackPtr, 'NoSpaceBeforeAmp');
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBeforeAmp');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
+                }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
             } else {
-                if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+                if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                    $found = 'newline';
+                } else {
                     $found = strlen($tokens[($stackPtr - 1)]['content']);
+                }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
+                if ($found !== 1) {
                     $error = 'Expected 1 space before "&" operator; %s found';
                     $data  = array($found);
-                    $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeAmp', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeAmp', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
+                    }
                 }
-            }
+            }//end if
 
             // Check there is one space after the & operator.
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space after "&" operator; 0 found';
-                $phpcsFile->addError($error, $stackPtr, 'NoSpaceAfterAmp');
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterAmp');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
             } else {
-                if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
+                if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                    $found = 'newline';
+                } else {
                     $found = strlen($tokens[($stackPtr + 1)]['content']);
+                }
+
+                $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
+                if ($found !== 1) {
                     $error = 'Expected 1 space after "&" operator; %s found';
                     $data  = array($found);
-                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfterAmp', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterAmp', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    }
                 }
-            }
+            }//end if
 
             return;
         }//end if
@@ -199,19 +227,30 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
-        } else if (strlen($tokens[($stackPtr - 1)]['content']) !== 1) {
+
+            $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
+        } else if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
             // Don't throw an error for assignments, because other standards allow
             // multiple spaces there to align multiple assignments.
-            if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
+            if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $found = 'newline';
+            } else {
                 $found = strlen($tokens[($stackPtr - 1)]['content']);
+            }
+
+            $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
+            if ($found !== 1) {
                 $error = 'Expected 1 space before "%s"; %s found';
                 $data  = array(
                           $operator,
                           $found,
                          );
-                $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBefore', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
+                }
             }
-        }
+        }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space after \"$operator\"; 0 found";
@@ -219,15 +258,28 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
-        } else if (strlen($tokens[($stackPtr + 1)]['content']) !== 1) {
-            $found = strlen($tokens[($stackPtr + 1)]['content']);
-            $error = 'Expected 1 space after "%s"; %s found';
-            $data  = array(
-                      $operator,
-                      $found,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
-        }
+
+            $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
+        } else {
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $found = 'newline';
+            } else {
+                $found = strlen($tokens[($stackPtr + 1)]['content']);
+            }
+
+            $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
+            if ($found !== 1) {
+                $error = 'Expected 1 space after "%s"; %s found';
+                $data  = array(
+                          $operator,
+                          $found,
+                         );
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
+            }
+        }//end if
 
     }//end process()
 

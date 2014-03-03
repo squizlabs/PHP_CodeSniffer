@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -57,6 +57,8 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 T_DO,
                 T_ELSE,
                 T_ELSEIF,
+                T_TRY,
+                T_CATCH,
                );
 
     }//end register()
@@ -75,10 +77,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            return;
-        }
-
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
@@ -90,6 +88,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $gap);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 0);
             }
 
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']
@@ -102,8 +104,16 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
                 }
+
+                $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', $gap);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', 0);
             }
         }//end if
+
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
 
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
@@ -246,7 +256,11 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $error = 'No blank line found after control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->addNewline($scopeCloser);
+                for ($i = $scopeCloser; $i <= $trailingContent; $i++) {
+                    if ($tokens[$i]['line'] > $tokens[$scopeCloser]['line']) {
+                        $phpcsFile->fixer->addNewline(($i - 1));
+                    }
+                }
             }
         }//end if
 

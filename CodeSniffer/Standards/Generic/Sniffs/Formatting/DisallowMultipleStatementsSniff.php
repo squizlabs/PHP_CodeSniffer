@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,7 +20,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -56,6 +56,7 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
 
         $prev = $phpcsFile->findPrevious(T_SEMICOLON, ($stackPtr - 1));
         if ($prev === false) {
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'no');
             return;
         }
 
@@ -77,7 +78,9 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Each PHP statement must be on a line by itself';
             $phpcsFile->addError($error, $stackPtr, 'SameLine');
-            return;
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'no');
         }
 
     }//end process()

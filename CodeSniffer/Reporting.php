@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -27,8 +27,8 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
  * @package   PHP_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -89,6 +89,11 @@ class PHP_CodeSniffer_Reporting
      */
     public function factory($type)
     {
+        $type = ucfirst($type);
+        if (isset($this->_reports[$type]) === true) {
+            return $this->_reports[$type];
+        }
+
         if (strpos($type, '.') !== false) {
             // This is a path to a custom report class.
             $filename = realpath($type);
@@ -100,11 +105,6 @@ class PHP_CodeSniffer_Reporting
             $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
             include_once $filename;
         } else {
-            $type = ucfirst($type);
-            if (isset($this->_reports[$type]) === true) {
-                return $this->_reports[$type];
-            }
-
             $filename        = $type.'.php';
             $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
             if (class_exists($reportClassName, true) === false) {
@@ -275,6 +275,10 @@ class PHP_CodeSniffer_Reporting
 
         // Merge errors and warnings.
         foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
+            if (is_array($lineErrors) === false) {
+                continue;
+            }
+
             foreach ($lineErrors as $column => $colErrors) {
                 $newErrors = array();
                 foreach ($colErrors as $data) {
@@ -294,6 +298,10 @@ class PHP_CodeSniffer_Reporting
         }//end foreach
 
         foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
+            if (is_array($lineWarnings) === false) {
+                continue;
+            }
+
             foreach ($lineWarnings as $column => $colWarnings) {
                 $newWarnings = array();
                 foreach ($colWarnings as $data) {

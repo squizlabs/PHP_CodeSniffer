@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -66,7 +66,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$assignmentTokens;
+        return array_diff(PHP_CodeSniffer_Tokens::$assignmentTokens, array(T_DOUBLE_ARROW));
 
     }//end register()
 
@@ -260,6 +260,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $prevAssign = $assign;
         }//end for
 
+        $errorGenerated = false;
         foreach ($assignments as $assignment => $data) {
             if ($data['found'] === $data['expected']) {
                 continue;
@@ -294,6 +295,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 $fix = $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
             }
 
+            $errorGenerated = true;
+
             if ($fix === true && $phpcsFile->fixer->enabled === true && $data['found'] !== null) {
                 $newContent = str_repeat(' ', $data['expected']);
                 if ($data['found'] === 0) {
@@ -303,6 +306,12 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                 }
             }
         }//end foreach
+
+        if ($errorGenerated === true) {
+            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'yes');
+        }
 
         if ($stopped !== null) {
             return $this->checkAlignment($phpcsFile, $stopped);

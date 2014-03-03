@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,7 +20,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -121,6 +121,12 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
         $tokens  = $phpcsFile->getTokens();
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
+            if ($keyword === strtoupper($keyword)) {
+                $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'upper');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'mixed');
+            }
+
             $error = 'PHP keywords must be lowercase; expected "%s" but found "%s"';
             $data  = array(
                       strtolower($keyword),
@@ -131,6 +137,8 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, strtolower($keyword));
             }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'lower');
         }
 
     }//end process()

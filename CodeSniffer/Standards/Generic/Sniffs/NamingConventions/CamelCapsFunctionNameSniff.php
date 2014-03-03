@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -27,7 +27,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -160,7 +160,10 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                 $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'no');
             return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
     }//end processTokenWithinScope()
@@ -199,6 +202,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, $this->strict) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
 

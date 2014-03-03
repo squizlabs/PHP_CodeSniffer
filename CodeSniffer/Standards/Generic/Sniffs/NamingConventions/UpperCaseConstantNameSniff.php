@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -97,12 +97,20 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
             // This is a class constant.
             if (strtoupper($constName) !== $constName) {
+                if (strtolower($constName) === $constName) {
+                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'mixed');
+                }
+
                 $error = 'Class constants must be uppercase; expected %s but found %s';
                 $data  = array(
                           strtoupper($constName),
                           $constName,
                          );
                 $phpcsFile->addError($error, $stackPtr, 'ClassConstantNotUpperCase', $data);
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
             }
 
             return;
@@ -141,12 +149,20 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
         }
 
         if (strtoupper($constName) !== $constName) {
+            if (strtolower($constName) === $constName) {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'mixed');
+            }
+
             $error = 'Constants must be uppercase; expected %s but found %s';
             $data  = array(
                       $prefix.strtoupper($constName),
                       $prefix.$constName,
                      );
             $phpcsFile->addError($error, $stackPtr, 'ConstantNotUpperCase', $data);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
         }
 
     }//end process()
