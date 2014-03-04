@@ -29,8 +29,11 @@ foreach ($repos as $repo) {
         $cmd = "git clone --recursive $cloneURL $cloneDir";
     }
 
-    // Load in old trend values.
     $resultFile = $repoDir.'/results.json';
+    $resultFiles[] = $resultFile;
+continue;
+
+    // Load in old trend values.
     if (file_exists($resultFile) === true) {
         $prevTotals = json_decode(file_get_contents($resultFile), true);
     } else {
@@ -45,7 +48,7 @@ foreach ($repos as $repo) {
         echo PHP_EOL;
     }
 
-    #if (file_exists($reportFile) === false) {
+    if (true || file_exists($resultFile) === false) {
         $checkDir   = $cloneDir.'/'.$repo->path;
         $reportPath = __DIR__.'/_assets/PHPCSInfoReport.php';
         $cmd        = 'phpcs --standard='.__DIR__.'/_assets/ruleset.xml --extensions=php,inc -d memory_limit=256M';
@@ -54,27 +57,37 @@ foreach ($repos as $repo) {
         $cmd       .= " --report=$reportPath --report-file=$resultFile $checkDir";
         echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
         exec($cmd);
-    #} else {
-    #    echo 'Skipping PHPCS step'.PHP_EOL;
-    #}
+    } else {
+        echo 'Skipping PHPCS step'.PHP_EOL;
+    }
 
     if ($prevTotals !== null) {
         // Copy old trend data into the new result set.
-        $newTotals  = json_decode(file_get_contents($resultFile), true);
+        $newTotals = json_decode(file_get_contents($resultFile), true);
         foreach ($prevTotals['metrics'] as $metric => $data) {
             if (isset($data['trends']) === false) {
                 continue;
             }
 
+            if (isset($newTotals['metrics'][$metric]) === false) {
+                $newTotals['metrics'][$metric] = array(
+                                        'sniffs'      => array(),
+                                        'total'       => 0,
+                                        'values'      => array(),
+                                        'percentages' => array(),
+                                        'trends'      => $data['trends'],
+                                       );
+                continue;
+            }
+
             foreach ($data['trends'] as $date => $values) {
-                $newTotals[$metric]['trends'][$date] = $values;
+                $newTotals['metrics'][$metric]['trends'][$date] = $values;
             }
         }
 
         file_put_contents($resultFile, json_encode($newTotals, JSON_FORCE_OBJECT));
     }
 
-    $resultFiles[] = $resultFile;
     echo str_repeat('-', 30).PHP_EOL;
 }//end foreach
 
@@ -145,6 +158,7 @@ foreach ($resultFiles as $file) {
 
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
+    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
 
     uasort($results['metrics'], 'sortMetrics');
     $chartNum = 0;
@@ -161,11 +175,14 @@ foreach ($resultFiles as $file) {
 
         $chartNum++;
         $id    = str_replace(' ', '-', strtolower($metric));
-        $html .= '<h2 id="'.$id.'" title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2><div class="metric"><p>'.$description.'</p>'.PHP_EOL;
-        $html .= '<canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
-        $html .= '<div class="chart-data"><table>';
+        $html .= '<h2 id="'.$id.'" title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2>'.PHP_EOL;
+        $html .= '<div class="metric"><p>'.$description.'</p>'.PHP_EOL;
+        $html .= '  <canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
+        $html .= '  <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="145"></canvas>'.PHP_EOL;
+        $html .= '  <div class="chart-data"><table>';
 
         $valsData  = 'var data = [';
+        $trendData = '';
         $valueNum  = 0;
         $other     = 0;
         $numValues = count($data['values']);
@@ -195,6 +212,21 @@ foreach ($resultFiles as $file) {
             }
 
             $html .= "<td>$value</td><td>$percent%</td></tr>";
+
+            $trendData .= '{strokeColor:"'.$colour.'",data:[';
+            foreach ($data['trends'] as $date => $trendValues) {
+                $trendTotal = array_sum($trendValues);
+                foreach ($trendValues as $trendValue => $trendCount) {
+                    if ($trendValue !== $value) {
+                        continue;
+                    }
+
+                    $trendData .= round(($trendCount / $trendTotal * 100), 2).',';
+                }
+            }
+
+            $trendData = rtrim($trendData, ',');
+            $trendData .= ']},';
             $valueNum++;
         }//end foreach
 
@@ -204,6 +236,15 @@ foreach ($resultFiles as $file) {
         $js .= $valsData;
         $js .= 'var c = document.getElementById("chart'.$chartNum.'").getContext("2d");'.PHP_EOL;
         $js .= 'new Chart(c).Doughnut(data,valOptions);'.PHP_EOL;
+
+        $js .= 'var data = {labels:[';
+        $js .= str_repeat('"",', count($data['trends']));
+        $js  = rtrim($js, ',');
+
+        $trendData = rtrim($trendData, ',');
+        $js .= "],datasets:[$trendData]};".PHP_EOL;
+        $js .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
+        $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
 
         if ($other > 0) {
             $percent = round($other / $data['total'] * 100, 2);
@@ -239,6 +280,18 @@ foreach ($resultFiles as $file) {
 $filename = __DIR__.'/results.json';
 $prevTotals = json_decode(file_get_contents($filename), true);
 foreach ($prevTotals as $metric => $data) {
+    if (isset($totals[$metric]) === false) {
+        $totals[$metric] = array(
+                                'sniffs'      => array(),
+                                'total'       => 0,
+                                'total_repos' => 0,
+                                'values'      => array(),
+                                'repos'       => array(),
+                                'trends'      => $data['trends'],
+                               );
+        continue;
+    }
+
     foreach ($data['trends'] as $date => $values) {
         $totals[$metric]['trends'][$date] = $values;
     }
@@ -263,11 +316,15 @@ file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
 $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
-$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,scaleShowGridLines:true,pointDot:false,datasetFill:false};'.PHP_EOL;
+$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
 
 uasort($totals, 'sortMetrics');
 $chartNum = 0;
 foreach ($totals as $metric => $data) {
+    if ($data['total'] === 0) {
+        continue;
+    }
+
     $description = '';
     if (isset($metricText[$metric]['description']) === true) {
         $description = $metricText[$metric]['description'];
@@ -291,6 +348,7 @@ foreach ($totals as $metric => $data) {
 
     $valsData      = 'var data = [';
     $repoData      = 'var data = [';
+    $trendData     = '';
     $repoHTML      = '';
     $repoResetCode = '';
 
@@ -366,6 +424,21 @@ foreach ($totals as $metric => $data) {
         $html .= '>preferred by '.$percentRepos.'% of projects</td>'.PHP_EOL;
         $html .= '      </tr>'.PHP_EOL;
 
+        $trendData .= '{strokeColor:"'.$colour.'",data:[';
+        foreach ($data['trends'] as $date => $trendValues) {
+            $trendTotal = array_sum($trendValues);
+            foreach ($trendValues as $trendValue => $trendCount) {
+                if ($trendValue !== $value) {
+                    continue;
+                }
+
+                $trendData .= round(($trendCount / $trendTotal * 100), 2).',';
+            }
+        }
+
+        $trendData = rtrim($trendData, ',');
+        $trendData .= ']},';
+
         $valueNum++;
     }//end foreach
 
@@ -382,6 +455,15 @@ foreach ($totals as $metric => $data) {
     $js .= $repoData;
     $js .= 'var c = document.getElementById("chart'.$chartNum.'r").getContext("2d");'.PHP_EOL;
     $js .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
+
+    $js .= 'var data = {labels:[';
+    $js .= str_repeat('"",', count($data['trends']));
+    $js  = rtrim($js, ',');
+
+    $trendData = rtrim($trendData, ',');
+    $js .= "],datasets:[$trendData]};".PHP_EOL;
+    $js .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
+    $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
 
     if ($other > 0) {
         $percent = round($other / $data['total'] * 100, 2);
@@ -421,6 +503,12 @@ file_put_contents(__DIR__.'/index.html', $output);
 // Comparison function
 function sortMetrics($a, $b) 
 {
+    if (empty($a['values']) === true) {
+        return -1;
+    } else if (empty($b['values']) === true) {
+        return 1;
+    }
+
     $aPercent = ($a['values'][$a['winner']] / $a['total']);
     $bPercent = ($b['values'][$b['winner']] / $b['total']);
     if ($aPercent < $bPercent) {

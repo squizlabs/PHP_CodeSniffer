@@ -11,214 +11,385 @@
 <p>You can also <a href="../../index.html">view a combined analysis</a> that covers 44 PHP projects</p>
 
 </div>
-<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2><div class="metric"><p>Are class names defined using CamelCase?</p>
-<canvas class="chart-value" id="chart1" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="241 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>56.84%</td></tr><tr title="183 classes"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>43.16%</td></tr></table>Based on 424 classes</div></div>
-<h2 id="adjacent-assignments-aligned" title="Generic.Formatting.MultipleStatementAlignment">Adjacent assignments aligned</h2><div class="metric"><p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
-<canvas class="chart-value" id="chart2" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="7,462 assignment blocks"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>58.24%</td></tr><tr title="5,351 assignment blocks"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>41.76%</td></tr></table>Based on 12,813 assignment blocks</div></div>
-<h2 id="class-defined-in-namespace" title="PSR1.Classes.ClassDeclaration">Class defined in namespace</h2><div class="metric"><p>Is each class defined in a namespace of at least 1 level?</p>
-<canvas class="chart-value" id="chart3" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="297 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>70.05%</td></tr><tr title="127 classes"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>29.95%</td></tr></table>Based on 424 classes</div></div>
-<h2 id="camelcase-method-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase method name</h2><div class="metric"><p>Are class method names defined using CamelCase?</p>
-<canvas class="chart-value" id="chart4" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="575 methods"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>26.32%</td></tr><tr title="1,610 methods"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>73.68%</td></tr></table>Based on 2,185 methods</div></div>
-<h2 id="spacing-after-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing after string concat</h2><div class="metric"><p>How many spaces follow the string concatenation operator?</p>
-<canvas class="chart-value" id="chart5" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,483 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>74.05%</td></tr><tr title="834 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>24.87%</td></tr><tr title="36 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>1.07%</td></tr></table>Based on 3,353 operators</div></div>
-<h2 id="spacing-before-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing before string concat</h2><div class="metric"><p>How many spaces precede the string concatenation operator?</p>
-<canvas class="chart-value" id="chart6" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,486 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>74.14%</td></tr><tr title="845 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>25.2%</td></tr><tr title="22 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>0.66%</td></tr></table>Based on 3,353 operators</div></div>
-<h2 id="line-indent" title="Generic.WhiteSpace.DisallowSpaceIndent">Line indent</h2><div class="metric"><p>Are lines indented using spaces or tabs?</p>
-<canvas class="chart-value" id="chart7" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="37,945 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>spaces</td><td>77.8%</td></tr><tr title="10,828 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>tabs</td><td>22.2%</td></tr></table>Based on 48,773 lines</div></div>
-<h2 id="spaces-after-control-structure-open-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces after control structure open parenthesis</h2><div class="metric"><p>How many spaces follow the opening parenthesis of a control structure?</p>
-<canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="3,807 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>85.94%</td></tr><tr title="623 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>14.06%</td></tr></table>Based on 4,430 control structures</div></div>
-<h2 id="lowercase-filename" title="Generic.Files.LowercasedFilename">Lowercase filename</h2><div class="metric"><p>Are PHP filenames lowercase?</p>
-<canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="301 files"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>13.12%</td></tr><tr title="1,993 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>86.88%</td></tr></table>Based on 2,294 files</div></div>
-<h2 id="line-length" title="Generic.Files.LineLength">Line length</h2><div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
-<canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="124,289 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>88.43%</td></tr><tr title="2,848 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>2.03%</td></tr><tr title="11,099 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>7.9%</td></tr><tr title="2,320 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>1.65%</td></tr></table>Based on 140,556 lines</div></div>
-<h2 id="spacing-after-cast-statement" title="Generic.Formatting.SpaceAfterCast">Spacing after cast statement</h2><div class="metric"><p>How many spaces are there between a cast statement and the variable?</p>
-<canvas class="chart-value" id="chart11" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="14 cast statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>10.37%</td></tr><tr title="121 cast statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>89.63%</td></tr></table>Based on 135 cast statements</div></div>
-<h2 id="declarations-and-side-effects-mixed" title="PSR1.Files.SideEffects">Declarations and side effects mixed</h2><div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
-<canvas class="chart-value" id="chart12" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,078 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>90.58%</td></tr><tr title="216 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>9.42%</td></tr></table>Based on 2,294 files</div></div>
-<h2 id="space-before-operator" title="Squiz.WhiteSpace.OperatorSpacing">Space before operator</h2><div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
-<canvas class="chart-value" id="chart13" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="200 operators"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>6.39%</td></tr><tr title="2,876 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>91.88%</td></tr><tr title="44 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>1.41%</td></tr><tr title="10 operators"><td colspan=2>other</td><td colspan=2>0.32%</td></tr></table>Based on 3,130 operators</div></div>
-<h2 id="spacing-before-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing before object operator</h2><div class="metric"><p>How many spaces precede the object operator (->)?</p>
-<canvas class="chart-value" id="chart14" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="15,917 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>93.91%</td></tr><tr title="1,032 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>newline</td><td>6.09%</td></tr></table>Based on 16,949 operators</div></div>
-<h2 id="php-closing-tag-at-eof" title="Zend.Files.ClosingTag">PHP closing tag at EOF</h2><div class="metric"><p>Is there a PHP closing tag at the end of the file?</p>
-<canvas class="chart-value" id="chart15" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,155 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>93.94%</td></tr><tr title="139 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>6.06%</td></tr></table>Based on 2,294 files</div></div>
-<h2 id="control-structure-defined-inline" title="Generic.ControlStructures.InlineControlStructure">Control structure defined inline</h2><div class="metric"><p>Are control structures defined inline (without braces)?</p>
-<canvas class="chart-value" id="chart16" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="4,608 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>94.12%</td></tr><tr title="288 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>5.88%</td></tr></table>Based on 4,896 control structures</div></div>
-<h2 id="php-constant-case" title="Generic.PHP.LowerCaseConstant">PHP constant case</h2><div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
-<canvas class="chart-value" id="chart17" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="3,358 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>96.52%</td></tr><tr title="121 constants"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>upper</td><td>3.48%</td></tr></table>Based on 3,479 constants</div></div>
-<h2 id="number-of-newlines-at-eof" title="PSR2.Files.EndFileNewline">Number of newlines at EOF</h2><div class="metric"><p>How many newline characters appear at the end of the file?</p>
-<canvas class="chart-value" id="chart18" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="73 files"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>3.44%</td></tr><tr title="2,052 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>96.56%</td></tr></table>Based on 2,125 files</div></div>
-<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2><div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
-<canvas class="chart-value" id="chart19" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="27,383 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>96.71%</td></tr><tr title="6 keywords"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>mixed</td><td>0.02%</td></tr><tr title="926 keywords"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>upper</td><td>3.27%</td></tr></table>Based on 28,315 keywords</div></div>
-<h2 id="function-opening-brace-placement" title="Generic.Functions.OpeningFunctionBraceBsdAllman">Function opening brace placement</h2><div class="metric"><p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
-<canvas class="chart-value" id="chart20" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,325 functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>new line</td><td>98.48%</td></tr><tr title="36 functions"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>same line</td><td>1.52%</td></tr></table>Based on 2,361 functions</div></div>
-<h2 id="one-class-per-file" title="PSR1.Classes.ClassDeclaration">One class per file</h2><div class="metric"><p>Is each class defined in a file by itself?</p>
-<canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="6 classes"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>1.42%</td></tr><tr title="418 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>98.58%</td></tr></table>Based on 424 classes</div></div>
-<h2 id="use-of-else-if-or-elseif" title="PSR2.ControlStructures.ElseIfDeclaration">Use of ELSE IF or ELSEIF</h2><div class="metric"><p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
-<canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2 elseif statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>else if</td><td>1.14%</td></tr><tr title="173 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>elseif</td><td>98.86%</td></tr></table>Based on 175 elseif statements</div></div>
-<h2 id="space-after-operator" title="Squiz.WhiteSpace.OperatorSpacing">Space after operator</h2><div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
-<canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="52,791 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>99.17%</td></tr><tr title="442 operators"><td colspan=2>other</td><td colspan=2>0.83%</td></tr></table>Based on 53,233 operators</div></div>
-<h2 id="spaces-before-control-structure-close-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces before control structure close parenthesis</h2><div class="metric"><p>How many spaces precede the closing parenthesis of a control structure?</p>
-<canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="4,395 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>99.21%</td></tr><tr title="35 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>0.79%</td></tr></table>Based on 4,430 control structures</div></div>
-<h2 id="eol-char" title="Generic.Files.LineEndings">EOL char</h2><div class="metric"><p>What character is used for line breaks?</p>
-<canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="2,280 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>\n</td><td>99.39%</td></tr><tr title="14 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>\r\n</td><td>0.61%</td></tr></table>Based on 2,294 files</div></div>
-<h2 id="brackets-around-echoed-strings" title="Squiz.Strings.EchoedStrings">Brackets around echoed strings</h2><div class="metric"><p>Are parenthesis placed around <em>echo</em>'d strings?</p>
-<canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="1,831 echo statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>99.56%</td></tr><tr title="8 echo statements"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>0.44%</td></tr></table>Based on 1,839 echo statements</div></div>
-<h2 id="multiple-statements-on-same-line" title="Generic.Formatting.DisallowMultipleStatements">Multiple statements on same line</h2><div class="metric"><p>Are multiple statements defined on the same line of code?</p>
-<canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="50,838 statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>99.88%</td></tr><tr title="59 statements"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>0.12%</td></tr></table>Based on 50,897 statements</div></div>
-<h2 id="file-extension-for-class-files" title="Squiz.Files.FileExtension">File extension for class files</h2><div class="metric"><p>For files that contain classes, what extension does the file use?</p>
-<canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="418 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 418 class files</div></div>
-<h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2><div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
-<canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="1,876 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 1,876 non-class files</div></div>
-<h2 id="spacing-after-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing after object operator</h2><div class="metric"><p>How many spaces follow the object operator (->)?</p>
-<canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="16,949 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 16,949 operators</div></div>
-<h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2><div class="metric"><p>What case are user-defined constants defined in?</p>
-<canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="136 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 136 constants</div></div>
-<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2><div class="metric"><p>Is the PHP short open tag syntax used?</p>
-<canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="4,765 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 4,765 open tags</div></div>
-<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2><div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
-<canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="3,600 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 3,600 array definitions</div></div>
-<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2><div class="metric"><p>Are global function names defined using CamelCase?</p>
-<canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
-<div class="chart-data"><table><tr title="36 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 36 global functions</div></div>
+<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2>
+<div class="metric"><p>Are class names defined using CamelCase?</p>
+  <canvas class="chart-value" id="chart1" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart1t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="241 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>56.84%</td></tr><tr title="183 classes"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>43.16%</td></tr></table>Based on 424 classes</div></div>
+<h2 id="adjacent-assignments-aligned" title="Generic.Formatting.MultipleStatementAlignment">Adjacent assignments aligned</h2>
+<div class="metric"><p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
+  <canvas class="chart-value" id="chart2" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart2t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="7,462 assignment blocks"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>58.23%</td></tr><tr title="5,352 assignment blocks"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>41.77%</td></tr></table>Based on 12,814 assignment blocks</div></div>
+<h2 id="class-defined-in-namespace" title="PSR1.Classes.ClassDeclaration">Class defined in namespace</h2>
+<div class="metric"><p>Is each class defined in a namespace of at least 1 level?</p>
+  <canvas class="chart-value" id="chart3" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart3t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="297 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>70.05%</td></tr><tr title="127 classes"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>29.95%</td></tr></table>Based on 424 classes</div></div>
+<h2 id="camelcase-method-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase method name</h2>
+<div class="metric"><p>Are class method names defined using CamelCase?</p>
+  <canvas class="chart-value" id="chart4" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart4t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="575 methods"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>26.32%</td></tr><tr title="1,610 methods"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>73.68%</td></tr></table>Based on 2,185 methods</div></div>
+<h2 id="spacing-after-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing after string concat</h2>
+<div class="metric"><p>How many spaces follow the string concatenation operator?</p>
+  <canvas class="chart-value" id="chart5" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart5t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,483 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>74.05%</td></tr><tr title="834 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>24.87%</td></tr><tr title="36 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>1.07%</td></tr></table>Based on 3,353 operators</div></div>
+<h2 id="spacing-before-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing before string concat</h2>
+<div class="metric"><p>How many spaces precede the string concatenation operator?</p>
+  <canvas class="chart-value" id="chart6" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart6t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,486 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>74.14%</td></tr><tr title="845 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>25.2%</td></tr><tr title="22 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>0.66%</td></tr></table>Based on 3,353 operators</div></div>
+<h2 id="line-indent" title="Generic.WhiteSpace.DisallowSpaceIndent">Line indent</h2>
+<div class="metric"><p>Are lines indented using spaces or tabs?</p>
+  <canvas class="chart-value" id="chart7" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart7t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="37,946 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>spaces</td><td>77.8%</td></tr><tr title="10,828 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>tabs</td><td>22.2%</td></tr></table>Based on 48,774 lines</div></div>
+<h2 id="spaces-after-control-structure-open-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces after control structure open parenthesis</h2>
+<div class="metric"><p>How many spaces follow the opening parenthesis of a control structure?</p>
+  <canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="3,807 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>85.94%</td></tr><tr title="623 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>14.06%</td></tr></table>Based on 4,430 control structures</div></div>
+<h2 id="lowercase-filename" title="Generic.Files.LowercasedFilename">Lowercase filename</h2>
+<div class="metric"><p>Are PHP filenames lowercase?</p>
+  <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart9t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="301 files"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>13.12%</td></tr><tr title="1,993 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>86.88%</td></tr></table>Based on 2,294 files</div></div>
+<h2 id="line-length" title="Generic.Files.LineLength">Line length</h2>
+<div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
+  <canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart10t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="124,291 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>88.43%</td></tr><tr title="2,848 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>2.03%</td></tr><tr title="11,099 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>7.9%</td></tr><tr title="2,320 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>1.65%</td></tr></table>Based on 140,558 lines</div></div>
+<h2 id="spacing-after-cast-statement" title="Generic.Formatting.SpaceAfterCast">Spacing after cast statement</h2>
+<div class="metric"><p>How many spaces are there between a cast statement and the variable?</p>
+  <canvas class="chart-value" id="chart11" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart11t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="14 cast statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>10.37%</td></tr><tr title="121 cast statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>89.63%</td></tr></table>Based on 135 cast statements</div></div>
+<h2 id="declarations-and-side-effects-mixed" title="PSR1.Files.SideEffects">Declarations and side effects mixed</h2>
+<div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
+  <canvas class="chart-value" id="chart12" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart12t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,078 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>90.58%</td></tr><tr title="216 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>9.42%</td></tr></table>Based on 2,294 files</div></div>
+<h2 id="space-before-operator" title="Squiz.WhiteSpace.OperatorSpacing">Space before operator</h2>
+<div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <canvas class="chart-value" id="chart13" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart13t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="200 operators"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>6.39%</td></tr><tr title="2,876 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>91.88%</td></tr><tr title="44 operators"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>newline</td><td>1.41%</td></tr><tr title="10 operators"><td colspan=2>other</td><td colspan=2>0.32%</td></tr></table>Based on 3,130 operators</div></div>
+<h2 id="spacing-before-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing before object operator</h2>
+<div class="metric"><p>How many spaces precede the object operator (->)?</p>
+  <canvas class="chart-value" id="chart14" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart14t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="15,917 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>93.91%</td></tr><tr title="1,032 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>newline</td><td>6.09%</td></tr></table>Based on 16,949 operators</div></div>
+<h2 id="php-closing-tag-at-eof" title="Zend.Files.ClosingTag">PHP closing tag at EOF</h2>
+<div class="metric"><p>Is there a PHP closing tag at the end of the file?</p>
+  <canvas class="chart-value" id="chart15" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart15t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,155 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>93.94%</td></tr><tr title="139 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>6.06%</td></tr></table>Based on 2,294 files</div></div>
+<h2 id="control-structure-defined-inline" title="Generic.ControlStructures.InlineControlStructure">Control structure defined inline</h2>
+<div class="metric"><p>Are control structures defined inline (without braces)?</p>
+  <canvas class="chart-value" id="chart16" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart16t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="4,608 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>94.12%</td></tr><tr title="288 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>5.88%</td></tr></table>Based on 4,896 control structures</div></div>
+<h2 id="php-constant-case" title="Generic.PHP.LowerCaseConstant">PHP constant case</h2>
+<div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
+  <canvas class="chart-value" id="chart17" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart17t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="3,358 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>96.52%</td></tr><tr title="121 constants"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>upper</td><td>3.48%</td></tr></table>Based on 3,479 constants</div></div>
+<h2 id="number-of-newlines-at-eof" title="PSR2.Files.EndFileNewline">Number of newlines at EOF</h2>
+<div class="metric"><p>How many newline characters appear at the end of the file?</p>
+  <canvas class="chart-value" id="chart18" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart18t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="73 files"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>0</td><td>3.44%</td></tr><tr title="2,052 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>1</td><td>96.56%</td></tr></table>Based on 2,125 files</div></div>
+<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
+<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
+  <canvas class="chart-value" id="chart19" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart19t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="27,383 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>96.71%</td></tr><tr title="6 keywords"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>mixed</td><td>0.02%</td></tr><tr title="926 keywords"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>upper</td><td>3.27%</td></tr></table>Based on 28,315 keywords</div></div>
+<h2 id="function-opening-brace-placement" title="Generic.Functions.OpeningFunctionBraceBsdAllman">Function opening brace placement</h2>
+<div class="metric"><p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
+  <canvas class="chart-value" id="chart20" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart20t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,325 functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>new line</td><td>98.48%</td></tr><tr title="36 functions"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>same line</td><td>1.52%</td></tr></table>Based on 2,361 functions</div></div>
+<h2 id="one-class-per-file" title="PSR1.Classes.ClassDeclaration">One class per file</h2>
+<div class="metric"><p>Is each class defined in a file by itself?</p>
+  <canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="6 classes"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>1.42%</td></tr><tr title="418 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>98.58%</td></tr></table>Based on 424 classes</div></div>
+<h2 id="use-of-else-if-or-elseif" title="PSR2.ControlStructures.ElseIfDeclaration">Use of ELSE IF or ELSEIF</h2>
+<div class="metric"><p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
+  <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2 elseif statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>else if</td><td>1.14%</td></tr><tr title="173 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>elseif</td><td>98.86%</td></tr></table>Based on 175 elseif statements</div></div>
+<h2 id="space-after-operator" title="Squiz.WhiteSpace.OperatorSpacing">Space after operator</h2>
+<div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="52,792 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>99.17%</td></tr><tr title="442 operators"><td colspan=2>other</td><td colspan=2>0.83%</td></tr></table>Based on 53,234 operators</div></div>
+<h2 id="spaces-before-control-structure-close-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces before control structure close parenthesis</h2>
+<div class="metric"><p>How many spaces precede the closing parenthesis of a control structure?</p>
+  <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="4,395 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>99.21%</td></tr><tr title="35 control structures"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>0.79%</td></tr></table>Based on 4,430 control structures</div></div>
+<h2 id="eol-char" title="Generic.Files.LineEndings">EOL char</h2>
+<div class="metric"><p>What character is used for line breaks?</p>
+  <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="2,280 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>\n</td><td>99.39%</td></tr><tr title="14 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>\r\n</td><td>0.61%</td></tr></table>Based on 2,294 files</div></div>
+<h2 id="brackets-around-echoed-strings" title="Squiz.Strings.EchoedStrings">Brackets around echoed strings</h2>
+<div class="metric"><p>Are parenthesis placed around <em>echo</em>'d strings?</p>
+  <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="1,831 echo statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>99.56%</td></tr><tr title="8 echo statements"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>0.44%</td></tr></table>Based on 1,839 echo statements</div></div>
+<h2 id="multiple-statements-on-same-line" title="Generic.Formatting.DisallowMultipleStatements">Multiple statements on same line</h2>
+<div class="metric"><p>Are multiple statements defined on the same line of code?</p>
+  <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="50,839 statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>99.88%</td></tr><tr title="59 statements"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>0.12%</td></tr></table>Based on 50,898 statements</div></div>
+<h2 id="file-extension-for-class-files" title="Squiz.Files.FileExtension">File extension for class files</h2>
+<div class="metric"><p>For files that contain classes, what extension does the file use?</p>
+  <canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="418 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 418 class files</div></div>
+<h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2>
+<div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
+  <canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="1,876 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 1,876 non-class files</div></div>
+<h2 id="spacing-after-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing after object operator</h2>
+<div class="metric"><p>How many spaces follow the object operator (->)?</p>
+  <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="16,949 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 16,949 operators</div></div>
+<h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2>
+<div class="metric"><p>What case are user-defined constants defined in?</p>
+  <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="136 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 136 constants</div></div>
+<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
+<div class="metric"><p>Is the PHP short open tag syntax used?</p>
+  <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="4,765 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 4,765 open tags</div></div>
+<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
+<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
+  <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="3,600 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 3,600 array definitions</div></div>
+<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
+<div class="metric"><p>Are global function names defined using CamelCase?</p>
+  <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="36 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 36 global functions</div></div>
 
-<div class="footer">Report generated on Tue, 04 Mar 2014 08:41:39 +1100<br/>Using master branch of <a href="https://github.com/pyrocms/pyrocms">pyrocms/pyrocms</a> @ commit <a href="https://github.com/pyrocms/pyrocms/commit/ef3f265b242e868d7bfbdedfae6ec93b7bf93ee9">ef3f265b242e868d7bfbdedfae6ec93b7bf93ee9</div>
+<div class="footer">Report generated on Tue, 04 Mar 2014 14:43:17 +1100<br/>Using master branch of <a href="https://github.com/pyrocms/pyrocms">pyrocms/pyrocms</a> @ commit <a href="https://github.com/pyrocms/pyrocms/commit/d370c58f9291cc29c4e5757fab8ef17cbcedba24">d370c58f9291cc29c4e5757fab8ef17cbcedba24</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
+var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,bezierCurve:false,pointDot:false,datasetFill:false};
 var data = [{value:56.84,color:"#4D5360"},{value:43.16,color:"#D4CCC5"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = [{value:58.24,color:"#4D5360"},{value:41.76,color:"#D4CCC5"}]
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[56.84,56.84]},{strokeColor:"#D4CCC5",data:[43.16,43.16]}]};
+var c = document.getElementById("chart1t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
+var data = [{value:58.23,color:"#4D5360"},{value:41.77,color:"#D4CCC5"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[58.24,58.23]},{strokeColor:"#D4CCC5",data:[41.76,41.77]}]};
+var c = document.getElementById("chart2t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:70.05,color:"#4D5360"},{value:29.95,color:"#D4CCC5"}]
 var c = document.getElementById("chart3").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[70.05,70.05]},{strokeColor:"#D4CCC5",data:[29.95,29.95]}]};
+var c = document.getElementById("chart3t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:26.32,color:"#4D5360"},{value:73.68,color:"#D4CCC5"}]
 var c = document.getElementById("chart4").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[26.32,26.32]},{strokeColor:"#D4CCC5",data:[73.68,73.68]}]};
+var c = document.getElementById("chart4t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:74.05,color:"#4D5360"},{value:24.87,color:"#D4CCC5"},{value:1.07,color:"#9D9B7F"}]
 var c = document.getElementById("chart5").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[74.05,74.05]},{strokeColor:"#D4CCC5",data:[24.87,24.87]},{strokeColor:"#9D9B7F",data:[1.07,1.07]}]};
+var c = document.getElementById("chart5t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:74.14,color:"#4D5360"},{value:25.2,color:"#D4CCC5"},{value:0.66,color:"#9D9B7F"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[74.14,74.14]},{strokeColor:"#D4CCC5",data:[25.2,25.2]},{strokeColor:"#9D9B7F",data:[0.66,0.66]}]};
+var c = document.getElementById("chart6t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:77.8,color:"#4D5360"},{value:22.2,color:"#D4CCC5"}]
 var c = document.getElementById("chart7").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[77.8,77.8]},{strokeColor:"#D4CCC5",data:[22.2,22.2]}]};
+var c = document.getElementById("chart7t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:85.94,color:"#4D5360"},{value:14.06,color:"#D4CCC5"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[85.94,85.94]},{strokeColor:"#D4CCC5",data:[14.06,14.06]}]};
+var c = document.getElementById("chart8t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:13.12,color:"#4D5360"},{value:86.88,color:"#D4CCC5"}]
 var c = document.getElementById("chart9").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[13.12,13.12]},{strokeColor:"#D4CCC5",data:[86.88,86.88]}]};
+var c = document.getElementById("chart9t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:88.43,color:"#4D5360"},{value:2.03,color:"#D4CCC5"},{value:7.9,color:"#9D9B7F"},{value:1.65,color:"#949FB1"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[88.43,88.43]},{strokeColor:"#D4CCC5",data:[2.03,2.03]},{strokeColor:"#9D9B7F",data:[7.9,7.9]},{strokeColor:"#949FB1",data:[1.65,1.65]}]};
+var c = document.getElementById("chart10t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:10.37,color:"#4D5360"},{value:89.63,color:"#D4CCC5"}]
 var c = document.getElementById("chart11").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[10.37,10.37]},{strokeColor:"#D4CCC5",data:[89.63,89.63]}]};
+var c = document.getElementById("chart11t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:90.58,color:"#4D5360"},{value:9.42,color:"#D4CCC5"}]
 var c = document.getElementById("chart12").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[90.58,90.58]},{strokeColor:"#D4CCC5",data:[9.42,9.42]}]};
+var c = document.getElementById("chart12t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:6.39,color:"#4D5360"},{value:91.88,color:"#D4CCC5"},{value:1.41,color:"#9D9B7F"}]
 var c = document.getElementById("chart13").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[6.39,6.39]},{strokeColor:"#D4CCC5",data:[91.88,91.88]},{strokeColor:"#9D9B7F",data:[1.41,1.41]}]};
+var c = document.getElementById("chart13t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:93.91,color:"#4D5360"},{value:6.09,color:"#D4CCC5"}]
 var c = document.getElementById("chart14").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[93.91,93.91]},{strokeColor:"#D4CCC5",data:[6.09,6.09]}]};
+var c = document.getElementById("chart14t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:93.94,color:"#4D5360"},{value:6.06,color:"#D4CCC5"}]
 var c = document.getElementById("chart15").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[93.94,93.94]},{strokeColor:"#D4CCC5",data:[6.06,6.06]}]};
+var c = document.getElementById("chart15t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:94.12,color:"#4D5360"},{value:5.88,color:"#D4CCC5"}]
 var c = document.getElementById("chart16").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[94.12,94.12]},{strokeColor:"#D4CCC5",data:[5.88,5.88]}]};
+var c = document.getElementById("chart16t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:96.52,color:"#4D5360"},{value:3.48,color:"#D4CCC5"}]
 var c = document.getElementById("chart17").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[96.52,96.52]},{strokeColor:"#D4CCC5",data:[3.48,3.48]}]};
+var c = document.getElementById("chart17t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:3.44,color:"#4D5360"},{value:96.56,color:"#D4CCC5"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[3.44,3.44]},{strokeColor:"#D4CCC5",data:[96.56,96.56]}]};
+var c = document.getElementById("chart18t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:96.71,color:"#4D5360"},{value:0.02,color:"#D4CCC5"},{value:3.27,color:"#9D9B7F"}]
 var c = document.getElementById("chart19").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[96.71,96.71]},{strokeColor:"#D4CCC5",data:[0.02,0.02]},{strokeColor:"#9D9B7F",data:[3.27,3.27]}]};
+var c = document.getElementById("chart19t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:98.48,color:"#4D5360"},{value:1.52,color:"#D4CCC5"}]
 var c = document.getElementById("chart20").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[98.48,98.48]},{strokeColor:"#D4CCC5",data:[1.52,1.52]}]};
+var c = document.getElementById("chart20t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:1.42,color:"#4D5360"},{value:98.58,color:"#D4CCC5"}]
 var c = document.getElementById("chart21").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[1.42,1.42]},{strokeColor:"#D4CCC5",data:[98.58,98.58]}]};
+var c = document.getElementById("chart21t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:1.14,color:"#4D5360"},{value:98.86,color:"#D4CCC5"}]
 var c = document.getElementById("chart22").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[1.14,1.14]},{strokeColor:"#D4CCC5",data:[98.86,98.86]}]};
+var c = document.getElementById("chart22t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:99.17,color:"#4D5360"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[99.17,99.17]}]};
+var c = document.getElementById("chart23t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:99.21,color:"#4D5360"},{value:0.79,color:"#D4CCC5"}]
 var c = document.getElementById("chart24").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[99.21,99.21]},{strokeColor:"#D4CCC5",data:[0.79,0.79]}]};
+var c = document.getElementById("chart24t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:99.39,color:"#4D5360"},{value:0.61,color:"#D4CCC5"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[99.39,99.39]},{strokeColor:"#D4CCC5",data:[0.61,0.61]}]};
+var c = document.getElementById("chart25t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:99.56,color:"#4D5360"},{value:0.44,color:"#D4CCC5"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[99.56,99.56]},{strokeColor:"#D4CCC5",data:[0.44,0.44]}]};
+var c = document.getElementById("chart26t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:99.88,color:"#4D5360"},{value:0.12,color:"#D4CCC5"}]
 var c = document.getElementById("chart27").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[99.88,99.88]},{strokeColor:"#D4CCC5",data:[0.12,0.12]}]};
+var c = document.getElementById("chart27t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart28").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart28t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart29").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart29t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart30").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart30t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart31").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart31t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart32").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart32t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart33").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart33t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart34").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["",""],datasets:[{strokeColor:"#4D5360",data:[100,100]}]};
+var c = document.getElementById("chart34t").getContext("2d");
+new Chart(c).Line(data,trendOptions);
 
 </script>
 <script>
