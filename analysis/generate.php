@@ -1,7 +1,14 @@
 <?php
-$resultFiles = array();
-$repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
-$today       = date('Y-m-d');
+$resultFiles  = array();
+$repos        = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
+$today        = date('Y-m-d');
+$checkoutDate = $today;
+
+foreach ($_SERVER['argv'] as $arg) {
+    if (substr($arg, 0, 7) == '--date=') {
+        $checkoutDate = substr($arg, 7);
+    }
+}
 
 foreach ($repos as $repo) {
     list($orgName, $repoName) = explode('/', $repo->url);
@@ -24,14 +31,23 @@ foreach ($repos as $repo) {
 
     if (is_dir($cloneDir) === true) {
         echo 'Repository clone already exists, updating'.PHP_EOL;
-        $cmd = "cd $cloneDir; git pull; git submodule update --init --recursive";
+        $cmd = "cd $cloneDir; ";
+        if ($checkoutDate !== $today) {
+            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" master`; ";
+        } else {
+            $cmd .= "git checkout master; git pull; ";
+        }
+
+        $cmd .= 'git submodule update --init --recursive;';
     } else {
-        $cmd = "git clone --recursive $cloneURL $cloneDir";
+        $cmd = "git clone --recursive $cloneURL $cloneDir;";
+        if ($checkoutDate !== $today) {
+            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" master`; git submodule update --init --recursive;";
+        }
     }
 
-    $resultFile = $repoDir.'/results.json';
+    $resultFile    = $repoDir.'/results.json';
     $resultFiles[] = $resultFile;
-continue;
 
     // Load in old trend values.
     if (file_exists($resultFile) === true) {
@@ -41,8 +57,7 @@ continue;
     }
 
     $output = array();
-    $retVal = null;
-    exec($cmd, $output, $retVal);
+    exec($cmd, $output);
     echo implode(PHP_EOL, $output);
     if (empty($output) === false) {
         echo PHP_EOL;
@@ -145,7 +160,7 @@ foreach ($resultFiles as $file) {
 
         // Needed for sorting this result set later on.
         $results['metrics'][$metric]['winner'] = $winner;
-        $results['metrics'][$metric]['trends'][$today] = $data['values'];
+        $results['metrics'][$metric]['trends'][$checkoutDate] = $data['values'];
 
         if (isset($totals[$metric]['repos'][$winner]) === false) {
             $totals[$metric]['repos'][$winner] = array();
@@ -158,7 +173,7 @@ foreach ($resultFiles as $file) {
 
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
-    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
 
     uasort($results['metrics'], 'sortMetrics');
     $chartNum = 0;
@@ -216,12 +231,20 @@ foreach ($resultFiles as $file) {
             $trendData .= '{strokeColor:"'.$colour.'",data:[';
             foreach ($data['trends'] as $date => $trendValues) {
                 $trendTotal = array_sum($trendValues);
+                $addedValue = false;
                 foreach ($trendValues as $trendValue => $trendCount) {
                     if ($trendValue !== $value) {
                         continue;
                     }
 
                     $trendData .= round(($trendCount / $trendTotal * 100), 2).',';
+                    $addedValue = true;
+                    break;
+                }
+
+                if ($addedValue === false) {
+                    // Percentage must have been 0 as no values recorded.
+                    $trendData .= '0.00,';
                 }
             }
 
@@ -308,7 +331,7 @@ foreach ($totals as $metric => $data) {
     }
 
     $totals[$metric]['winner'] = $winner;
-    $totals[$metric]['trends'][$today] = $data['values'];
+    $totals[$metric]['trends'][$checkoutDate] = $data['values'];
 }
 
 file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
@@ -316,7 +339,7 @@ file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
 $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
-$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleShowLabels:false,bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
+$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
 
 uasort($totals, 'sortMetrics');
 $chartNum = 0;
