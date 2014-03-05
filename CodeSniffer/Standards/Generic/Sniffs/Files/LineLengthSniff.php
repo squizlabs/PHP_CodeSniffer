@@ -132,13 +132,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
 
         // Record metrics for common line length groupings.
         if ($lineLength <= 80) {
-            $phpcsFile->recordMetric($stackPtr, 'Line length', '< 80');
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '80 or less');
         } else if ($lineLength <= 120) {
             $phpcsFile->recordMetric($stackPtr, 'Line length', '81-120');
         } else if ($lineLength <= 150) {
             $phpcsFile->recordMetric($stackPtr, 'Line length', '121-150');
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'Line length', '> 150');
+            $phpcsFile->recordMetric($stackPtr, 'Line length', '151 or more');
         }
 
         if ($this->absoluteLineLimit > 0
