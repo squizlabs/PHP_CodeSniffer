@@ -262,5 +262,41 @@
         "url": "contao/core",
         "path": "system",
         "ignore": "*/tcpdf/*"
+    },
+    {
+        "name": "Facebook PHP SDK",
+        "url": "facebook/facebook-php-sdk",
+        "path": "src",
+        "ignore": ""
+    },
+    {
+        "name": "Klein.php",
+        "url": "chriso/klein.php",
+        "path": "src/Klein",
+        "ignore": ""
+    },
+    {
+        "name": "Magento",
+        "url": "magento/magento2",
+        "path": "app/code/Magento",
+        "ignore": ""
+    },
+    {
+        "name": "Ratchet",
+        "url": "cboden/Ratchet",
+        "path": "src/Ratchet",
+        "ignore": ""
+    },
+    {
+        "name": "React",
+        "url": "reactphp/react",
+        "path": "src",
+        "ignore": ""
+    },
+    {
+        "name": "SilverStripe Framework",
+        "url": "silverstripe/silverstripe-framework",
+        "path": "",
+        "ignore": "*/thirdparty/*"
     }
 ]

@@ -8,7 +8,7 @@
 <div class="intro">
 <h1>Analysis of Coding Conventions for</br>laravel/framework</h1>
 <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
-<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 44 PHP projects</p>
+<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 50 PHP projects</p>
 
 </div>
 <h2 id="number-of-newlines-at-eof" title="PSR2.Files.EndFileNewline">Number of newlines at EOF</h2>
@@ -50,7 +50,7 @@
 <div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
   <canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="60,253 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>98.75%</td></tr><tr title="2 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0%</td></tr><tr title="750 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>1.23%</td></tr><tr title="9 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.01%</td></tr></table>Based on 61,014 lines</div></div>
+  <div class="chart-data"><table><tr title="60,253 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>80 or less</td><td>98.75%</td></tr><tr title="750 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>81-120</td><td>1.23%</td></tr><tr title="9 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>121-150</td><td>0.01%</td></tr><tr title="2 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>151 or more</td><td>0%</td></tr></table>Based on 61,014 lines</div></div>
 <h2 id="php-closing-tag-at-eof" title="Zend.Files.ClosingTag">PHP closing tag at EOF</h2>
 <div class="metric"><p>Is there a PHP closing tag at the end of the file?</p>
   <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
@@ -111,78 +111,78 @@
   <canvas class="chart-value" id="chart20" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart20t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="4,045 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>99.93%</td></tr><tr title="3 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>newline</td><td>0.07%</td></tr></table>Based on 4,048 operators</div></div>
-<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
-<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
+<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2>
+<div class="metric"><p>Are class names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="16,881 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 16,881 keywords</div></div>
-<h2 id="declarations-and-side-effects-mixed" title="PSR1.Files.SideEffects">Declarations and side effects mixed</h2>
-<div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
+  <div class="chart-data"><table><tr title="352 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 352 classes</div></div>
+<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
+<div class="metric"><p>Is the PHP short open tag syntax used?</p>
   <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="435 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 435 open tags</div></div>
+<h2 id="declarations-and-side-effects-mixed" title="PSR1.Files.SideEffects">Declarations and side effects mixed</h2>
+<div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
+  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="359 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 359 files</div></div>
 <h2 id="file-extension-for-class-files" title="Squiz.Files.FileExtension">File extension for class files</h2>
 <div class="metric"><p>For files that contain classes, what extension does the file use?</p>
-  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="352 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 352 class files</div></div>
-<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
-<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
   <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="944 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 944 array definitions</div></div>
-<h2 id="camelcase-method-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase method name</h2>
-<div class="metric"><p>Are class method names defined using CamelCase?</p>
+  <div class="chart-data"><table><tr title="352 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 352 class files</div></div>
+<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
+<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="16,881 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 16,881 keywords</div></div>
+<h2 id="camelcase-method-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase method name</h2>
+<div class="metric"><p>Are class method names defined using CamelCase?</p>
+  <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="3,309 methods"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 3,309 methods</div></div>
 <h2 id="use-of-else-if-or-elseif" title="PSR2.ControlStructures.ElseIfDeclaration">Use of ELSE IF or ELSEIF</h2>
 <div class="metric"><p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
-  <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="52 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>elseif</td><td>100%</td></tr></table>Based on 52 elseif statements</div></div>
-<h2 id="php-constant-case" title="Generic.PHP.LowerCaseConstant">PHP constant case</h2>
-<div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
   <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="937 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 937 constants</div></div>
+  <div class="chart-data"><table><tr title="52 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>elseif</td><td>100%</td></tr></table>Based on 52 elseif statements</div></div>
 <h2 id="spacing-after-cast-statement" title="Generic.Formatting.SpaceAfterCast">Spacing after cast statement</h2>
 <div class="metric"><p>How many spaces are there between a cast statement and the variable?</p>
   <canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="98 cast statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 98 cast statements</div></div>
-<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2>
-<div class="metric"><p>Are class names defined using CamelCase?</p>
+<h2 id="php-constant-case" title="Generic.PHP.LowerCaseConstant">PHP constant case</h2>
+<div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
   <canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="352 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 352 classes</div></div>
+  <div class="chart-data"><table><tr title="937 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 937 constants</div></div>
 <h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2>
 <div class="metric"><p>What case are user-defined constants defined in?</p>
   <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="14 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 14 constants</div></div>
-<h2 id="spacing-after-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing after object operator</h2>
-<div class="metric"><p>How many spaces follow the object operator (->)?</p>
+<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
+<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
   <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="7,205 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 7,205 operators</div></div>
+  <div class="chart-data"><table><tr title="944 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 944 array definitions</div></div>
 <h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2>
 <div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="7 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 7 non-class files</div></div>
-<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
-<div class="metric"><p>Is the PHP short open tag syntax used?</p>
+<h2 id="spacing-after-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing after object operator</h2>
+<div class="metric"><p>How many spaces follow the object operator (->)?</p>
   <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="435 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 435 open tags</div></div>
+  <div class="chart-data"><table><tr title="7,205 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 7,205 operators</div></div>
 <h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
 <div class="metric"><p>Are global function names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="47 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 47 global functions</div></div>
 
-<div class="footer">Report generated on Wed, 05 Mar 2014 13:45:37 +1100<br/>Using master branch of <a href="https://github.com/laravel/framework">laravel/framework</a> @ commit <a href="https://github.com/laravel/framework/commit/f972cfaf1d7c341800e90e6fb82fce748a4a2b08">f972cfaf1d7c341800e90e6fb82fce748a4a2b08</div>
+<div class="footer">Report generated on Wed, 05 Mar 2014 15:09:37 +1100<br/>Using master branch of <a href="https://github.com/laravel/framework">laravel/framework</a> @ commit <a href="https://github.com/laravel/framework/commit/f972cfaf1d7c341800e90e6fb82fce748a4a2b08">f972cfaf1d7c341800e90e6fb82fce748a4a2b08</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};
@@ -228,10 +228,10 @@ new Chart(c).Doughnut(data,valOptions);
 var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[98.05,98.05,97.98,97.98,97.98,98,98,97.98,97.98,97.98,98,98.05]},{strokeColor:"#D4CCC5",data:[1.95,1.95,2.02,2.02,2.02,2,2,2.02,2.02,2.02,2,1.95]}]};
 var c = document.getElementById("chart7t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:98.75,color:"#4D5360"},{value:0,color:"#D4CCC5"},{value:1.23,color:"#9D9B7F"},{value:0.01,color:"#949FB1"}]
+var data = [{value:98.75,color:"#4D5360"},{value:1.23,color:"#D4CCC5"},{value:0.01,color:"#9D9B7F"},{value:0,color:"#949FB1"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[98.75,98.75,98.79,98.78,98.77,98.78,98.78,98.79,98.78,98.78,98.78,98.75]},{strokeColor:"#D4CCC5",data:[0,0,0,0,0,0,0,0,0,0,0,0]},{strokeColor:"#9D9B7F",data:[1.23,1.23,1.2,1.2,1.21,1.21,1.21,1.2,1.2,1.2,1.21,1.23]},{strokeColor:"#949FB1",data:[0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]}]};
+var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,98.75]},{strokeColor:"#D4CCC5",data:[1.23,1.23,1.2,1.2,1.21,1.21,1.21,1.2,1.2,1.2,1.21,1.23]},{strokeColor:"#9D9B7F",data:[0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]},{strokeColor:"#949FB1",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0]}]};
 var c = document.getElementById("chart8t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:98.89,color:"#4D5360"},{value:1.11,color:"#D4CCC5"}]

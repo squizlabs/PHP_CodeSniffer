@@ -56,12 +56,12 @@ foreach ($repos as $repo) {
         $prevTotals = null;
     }
 
-    $output = array();
-    exec($cmd, $output);
-    echo implode(PHP_EOL, $output);
-    if (empty($output) === false) {
-        echo PHP_EOL;
-    }
+    //$output = array();
+    //exec($cmd, $output);
+    //echo implode(PHP_EOL, $output);
+    //if (empty($output) === false) {
+    //    echo PHP_EOL;
+    //}
 
     if (true || file_exists($resultFile) === false) {
         $checkDir   = $cloneDir.'/'.$repo->path;
@@ -74,6 +74,7 @@ foreach ($repos as $repo) {
         exec($cmd);
     } else {
         echo 'Skipping PHPCS step'.PHP_EOL;
+        continue;
     }
 
     if ($prevTotals !== null) {

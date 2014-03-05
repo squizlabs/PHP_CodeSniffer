@@ -8,7 +8,7 @@
 <div class="intro">
 <h1>Analysis of Coding Conventions for</br>yiisoft/yii2</h1>
 <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
-<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 44 PHP projects</p>
+<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 50 PHP projects</p>
 
 </div>
 <h2 id="lowercase-filename" title="Generic.Files.LowercasedFilename">Lowercase filename</h2>
@@ -40,7 +40,7 @@
 <div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
   <canvas class="chart-value" id="chart6" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart6t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="85,149 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>< 80</td><td>90.6%</td></tr><tr title="380 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>> 150</td><td>0.4%</td></tr><tr title="7,882 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>81-120</td><td>8.39%</td></tr><tr title="576 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>121-150</td><td>0.61%</td></tr></table>Based on 93,987 lines</div></div>
+  <div class="chart-data"><table><tr title="85,149 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>80 or less</td><td>90.6%</td></tr><tr title="7,882 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>81-120</td><td>8.39%</td></tr><tr title="576 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>121-150</td><td>0.61%</td></tr><tr title="380 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>151 or more</td><td>0.4%</td></tr></table>Based on 93,987 lines</div></div>
 <h2 id="spacing-before-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing before string concat</h2>
 <div class="metric"><p>How many spaces precede the string concatenation operator?</p>
   <canvas class="chart-value" id="chart7" width="400" height="400"></canvas>
@@ -121,63 +121,63 @@
   <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="17,360 statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>99.95%</td></tr><tr title="9 statements"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>0.05%</td></tr></table>Based on 17,369 statements</div></div>
-<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
-<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
-  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="26,212 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 26,212 keywords</div></div>
-<h2 id="one-class-per-file" title="PSR1.Classes.ClassDeclaration">One class per file</h2>
-<div class="metric"><p>Is each class defined in a file by itself?</p>
-  <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="477 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 477 classes</div></div>
-<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
-<div class="metric"><p>Is the PHP short open tag syntax used?</p>
-  <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="1,337 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 1,337 open tags</div></div>
 <h2 id="php-constant-case" title="Generic.PHP.LowerCaseConstant">PHP constant case</h2>
 <div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
+  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="3,149 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 3,149 constants</div></div>
+<h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
+<div class="metric"><p>Is the PHP short open tag syntax used?</p>
+  <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="1,337 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 1,337 open tags</div></div>
+<h2 id="one-class-per-file" title="PSR1.Classes.ClassDeclaration">One class per file</h2>
+<div class="metric"><p>Is each class defined in a file by itself?</p>
+  <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
+  <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
+  <div class="chart-data"><table><tr title="477 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 477 classes</div></div>
+<h2 id="eol-char" title="Generic.Files.LineEndings">EOL char</h2>
+<div class="metric"><p>What character is used for line breaks?</p>
   <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="3,149 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 3,149 constants</div></div>
+  <div class="chart-data"><table><tr title="644 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>\n</td><td>100%</td></tr></table>Based on 644 files</div></div>
 <h2 id="spaces-after-control-structure-open-parenthesis" title="Squiz.WhiteSpace.ControlStructureSpacing">Spaces after control structure open parenthesis</h2>
 <div class="metric"><p>How many spaces follow the opening parenthesis of a control structure?</p>
   <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="4,966 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 4,966 control structures</div></div>
-<h2 id="eol-char" title="Generic.Files.LineEndings">EOL char</h2>
-<div class="metric"><p>What character is used for line breaks?</p>
+<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
+<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="644 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>\n</td><td>100%</td></tr></table>Based on 644 files</div></div>
+  <div class="chart-data"><table><tr title="26,212 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 26,212 keywords</div></div>
 <h2 id="file-extension-for-class-files" title="Squiz.Files.FileExtension">File extension for class files</h2>
 <div class="metric"><p>For files that contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="482 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 482 class files</div></div>
-<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
-<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
+<h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2>
+<div class="metric"><p>What case are user-defined constants defined in?</p>
   <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="59 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 59 array definitions</div></div>
+  <div class="chart-data"><table><tr title="191 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 191 constants</div></div>
 <h2 id="spacing-after-object-operator" title="Squiz.WhiteSpace.ObjectOperatorSpacing">Spacing after object operator</h2>
 <div class="metric"><p>How many spaces follow the object operator (->)?</p>
   <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="12,248 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 12,248 operators</div></div>
-<h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2>
-<div class="metric"><p>What case are user-defined constants defined in?</p>
+<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
+<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
   <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="191 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 191 constants</div></div>
+  <div class="chart-data"><table><tr title="59 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 59 array definitions</div></div>
 <h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2>
 <div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="162 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 162 non-class files</div></div>
 
-<div class="footer">Report generated on Wed, 05 Mar 2014 13:45:37 +1100<br/>Using master branch of <a href="https://github.com/yiisoft/yii2">yiisoft/yii2</a> @ commit <a href="https://github.com/yiisoft/yii2/commit/e51bf13161b857e0c33dffc58725239efe75ebdb">e51bf13161b857e0c33dffc58725239efe75ebdb</div>
+<div class="footer">Report generated on Wed, 05 Mar 2014 15:09:37 +1100<br/>Using master branch of <a href="https://github.com/yiisoft/yii2">yiisoft/yii2</a> @ commit <a href="https://github.com/yiisoft/yii2/commit/e51bf13161b857e0c33dffc58725239efe75ebdb">e51bf13161b857e0c33dffc58725239efe75ebdb</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};
@@ -211,10 +211,10 @@ new Chart(c).Doughnut(data,valOptions);
 var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[10.59,10.59,9.94,12.45,12.52,11.91,11.62,9.58,12.4,12.5,11.48,10.59]},{strokeColor:"#D4CCC5",data:[89.23,89.23,90.06,87.55,87.48,87.9,88.19,90.42,87.6,87.5,88.33,89.41]}]};
 var c = document.getElementById("chart5t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:90.6,color:"#4D5360"},{value:0.4,color:"#D4CCC5"},{value:8.39,color:"#9D9B7F"},{value:0.61,color:"#949FB1"}]
+var data = [{value:90.6,color:"#4D5360"},{value:8.39,color:"#D4CCC5"},{value:0.61,color:"#9D9B7F"},{value:0.4,color:"#949FB1"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[90.6,90.6,91.3,91.49,90.76,90.71,90.7,91.32,91.09,90.72,90.71,90.6]},{strokeColor:"#D4CCC5",data:[0.4,0.4,0.07,0.07,0.35,0.37,0.38,0.07,0.23,0.37,0.38,0.4]},{strokeColor:"#9D9B7F",data:[8.38,8.38,8.22,8.02,8.33,8.35,8.34,8.19,8.19,8.35,8.33,8.39]},{strokeColor:"#949FB1",data:[0.61,0.61,0.41,0.41,0.55,0.57,0.58,0.41,0.49,0.56,0.57,0.61]}]};
+var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,90.6]},{strokeColor:"#D4CCC5",data:[8.38,8.38,8.22,8.02,8.33,8.35,8.34,8.19,8.19,8.35,8.33,8.39]},{strokeColor:"#9D9B7F",data:[0.61,0.61,0.41,0.41,0.55,0.57,0.58,0.41,0.49,0.56,0.57,0.61]},{strokeColor:"#949FB1",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.4]}]};
 var c = document.getElementById("chart6t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:1.37,color:"#4D5360"},{value:95.54,color:"#D4CCC5"},{value:0.04,color:"#9D9B7F"},{value:3.05,color:"#949FB1"}]
@@ -316,7 +316,7 @@ new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[99.94,99.94,99.89,99.93,99.93,99.93,99.93,99.93,99.93,99.93,99.93,100]}]};
 var c = document.getElementById("chart23t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
@@ -334,7 +334,7 @@ new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[99.94,99.94,99.89,99.93,99.93,99.93,99.93,99.93,99.93,99.93,99.93,100]}]};
+var data = {labels:["","","","","","","","","","","",""],datasets:[{strokeColor:"#4D5360",data:[100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart26t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]

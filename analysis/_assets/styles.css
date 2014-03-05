@@ -8,7 +8,7 @@ h2 {
     width: 800px;
     position: relative;
     left: 50%;
-    margin-left: -375px;
+    margin-left: -405px;
 }
 
 table {
@@ -24,7 +24,7 @@ tr th, td {
     width: 800px;
     position: relative;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -430px;
     margin-bottom: 60px;
     padding: 10px 30px;
     border-radius: 15px;
@@ -41,7 +41,7 @@ tr th, td {
     height: 635px;
     position: relative;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -430px;
     margin-bottom: 60px;
     padding: 10px 30px;
     border-radius: 15px;
