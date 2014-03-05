@@ -56,7 +56,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         // Array keyword should be lower case.
         if ($tokens[$stackPtr]['content'] !== strtolower($tokens[$stackPtr]['content'])) {
-            if ($tokens[$stackPtr]['content'] !== strtoupper($tokens[$stackPtr]['content'])) {
+            if ($tokens[$stackPtr]['content'] === strtoupper($tokens[$stackPtr]['content'])) {
                 $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'upper');
             } else {
                 $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'mixed');
