@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
   - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
+  - PSR1 CamelCapsMethodNameSniff now ignores magic methods
+    -- Thanks to Eser Ozvataf for the patch
   - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
     -- Thanks to Maurus Cuelenaere for the patch
   - Fixed bug #20200 : Invalid JSON produced with specific error message
