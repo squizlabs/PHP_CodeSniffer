@@ -1,15 +1,26 @@
 <?php
-$resultFiles  = array();
-$repos        = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
+$resultFiles = array();
+$repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
+
 $today        = date('Y-m-d');
 $checkoutDate = $today;
-
+$recordTrend  = false;
+$runPHPCS     = true;
+$runGit       = true;
 foreach ($_SERVER['argv'] as $arg) {
-    if (substr($arg, 0, 7) == '--date=') {
+    if (substr($arg, 0, 7) === '--date=') {
         $checkoutDate = substr($arg, 7);
+    } else if ($arg === '--trend') {
+        $recordTrend = true;
+    } else if ($arg === '--no-phpcs') {
+        $runPHPCS = false;
+    } else if ($arg === '--no-git') {
+        $runGit = false;
     }
 }
 
+$repoCount = count($repos);
+$repoNum   = 0;
 foreach ($repos as $repo) {
     list($orgName, $repoName) = explode('/', $repo->url);
 
@@ -24,58 +35,86 @@ foreach ($repos as $repo) {
         mkdir($repoDir.'/results');
     }
 
-    $cloneDir = $repoDir.'/src';
-    $cloneURL = 'https://github.com/'.$repo->url.'.git';
-
-    echo 'Processing '.$repo->name." ($cloneURL)".PHP_EOL;
-
-    if (is_dir($cloneDir) === true) {
-        echo 'Repository clone already exists, updating'.PHP_EOL;
-        $cmd = "cd $cloneDir; ";
-        if ($checkoutDate !== $today) {
-            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" master`; ";
-        } else {
-            $cmd .= "git checkout master; git pull; ";
-        }
-
-        $cmd .= 'git submodule update --init --recursive;';
-    } else {
-        $cmd = "git clone --recursive $cloneURL $cloneDir;";
-        if ($checkoutDate !== $today) {
-            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" master`; git submodule update --init --recursive;";
-        }
-    }
-
+    $cloneDir      = $repoDir.'/src';
+    $cloneURL      = 'https://github.com/'.$repo->url.'.git';
     $resultFile    = $repoDir.'/results.json';
     $resultFiles[] = $resultFile;
+    $prevTotals    = null;
 
-    // Load in old trend values.
-    if (file_exists($resultFile) === true) {
+    $repoNum++;
+    echo 'Processing '.$repo->name." ($repoNum / $repoCount)".PHP_EOL;
+    echo "\tclone URL: $cloneURL".PHP_EOL;
+
+    if (is_dir($cloneDir) === false) {
+        if ($runGit === false) {
+            echo "\t* respository has not been cloned, skipping *".PHP_EOL;
+            continue;
+        }
+
+        // Clone it.
+        echo "\t=> Cloning new repository".PHP_EOL;
+        $cmd = "git clone --recursive $cloneURL $cloneDir";
+        echo "\t\tcmd: $cmd".PHP_EOL;
+        $output = shell_exec($cmd);
+        echo implode(PHP_EOL, $output);
+    } else if ($runPHPCS === true && file_exists($resultFile) === true) {
+        // Load in old trend values.
+        echo "\t=> Loading old trend values from $resultFile".PHP_EOL;
         $prevTotals = json_decode(file_get_contents($resultFile), true);
-    } else {
-        $prevTotals = null;
     }
 
-    //$output = array();
-    //exec($cmd, $output);
-    //echo implode(PHP_EOL, $output);
-    //if (empty($output) === false) {
-    //    echo PHP_EOL;
-    //}
+    if ($runGit === true) {
+        // Figure out the HEAD ref and use that.
+        echo "\t=> Determining branch to use".PHP_EOL;
+        $cmd = "cd $cloneDir; cat .git/refs/remotes/origin/HEAD";
+        echo "\t\tcmd: ";
+        echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+        $branch = trim(shell_exec($cmd));
+        echo "\t\tout: $branch".PHP_EOL;
+        $branch = substr($branch, (strpos($branch, 'origin/') + 7));
+        echo "\t\t* using branch $branch *".PHP_EOL;
 
-    if (true || file_exists($resultFile) === false) {
-        $checkDir   = $cloneDir.'/'.$repo->path;
-        $reportPath = __DIR__.'/_assets/PHPCSInfoReport.php';
-        $cmd        = 'phpcs --standard='.__DIR__.'/_assets/ruleset.xml --extensions=php,inc -d memory_limit=256M';
+        $cmd = "cd $cloneDir; ";
+        if ($checkoutDate !== $today) {
+            echo "\t=> Checking out specific date: $checkoutDate".PHP_EOL;
+            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" $branch` 2>&1; ";
+        } else {
+            echo "\t=> Updating repository".PHP_EOL;
+            $cmd .= "git checkout $branch 2>&1; git pull 2>&1; ";
+        }
+
+        $cmd .= 'git submodule update --init --recursive 2>&1';
+
+        echo "\t\tcmd: ";
+        echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+
+        $output = trim(shell_exec($cmd));
+        echo "\t\tout: ";
+        echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+    } else {
+        echo "\t* skipping respository update step *".PHP_EOL;
+    }
+
+    if ($runPHPCS === true) {
+        $checkDir          = $cloneDir.'/'.$repo->path;
+        $infoReportPath    = __DIR__.'/_assets/PHPCSInfoReport.php';
+        $summaryReportPath = __DIR__.'/_assets/PHPCSSummaryReport.php';
+        $cmd        = 'phpcs -d memory_limit=256M '.$checkDir.' --standard='.__DIR__.'/_assets/ruleset.xml --extensions=php,inc';
         $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd       .= ' --runtime-set project '.$repo->url;
-        $cmd       .= " --report=$reportPath --report-file=$resultFile $checkDir";
-        echo 'Running PHPCS'.PHP_EOL."\t=> $cmd".PHP_EOL;
-        exec($cmd);
+        $cmd       .= " --report=$summaryReportPath --report-$infoReportPath=$resultFile";
+        echo "\t=> Running PHP_CodeSniffer".PHP_EOL;
+        echo "\t\tcmd: ";
+        echo str_replace(' --', PHP_EOL."\t\tcmd: --", $cmd).PHP_EOL;
+        $output = trim(shell_exec($cmd));
+        echo "\t\tout: ";
+        echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
     } else {
-        echo 'Skipping PHPCS step'.PHP_EOL;
+        echo "\t* skipping PHP_CodeSniffer step *".PHP_EOL.PHP_EOL;
         continue;
     }
+
+    echo PHP_EOL;
 
     if ($prevTotals !== null) {
         // Copy old trend data into the new result set.
@@ -87,24 +126,25 @@ foreach ($repos as $repo) {
 
             if (isset($newTotals['metrics'][$metric]) === false) {
                 $newTotals['metrics'][$metric] = array(
-                                        'sniffs'      => array(),
-                                        'total'       => 0,
-                                        'values'      => array(),
-                                        'percentages' => array(),
-                                        'trends'      => $data['trends'],
-                                       );
+                                                  'sniffs'      => array(),
+                                                  'total'       => 0,
+                                                  'values'      => array(),
+                                                  'percentages' => array(),
+                                                  'trends'      => $data['trends'],
+                                                 );
                 continue;
             }
 
             foreach ($data['trends'] as $date => $values) {
                 $newTotals['metrics'][$metric]['trends'][$date] = $values;
             }
-        }
 
-        file_put_contents($resultFile, json_encode($newTotals, JSON_FORCE_OBJECT));
-    }
+            ksort($newTotals['metrics'][$metric]['trends']);
+        }//end foreach
 
-    echo str_repeat('-', 30).PHP_EOL;
+        file_put_contents($resultFile, json_encode($newTotals, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
+    }//end if
+
 }//end foreach
 
 // Imports $metricText variable.
@@ -118,11 +158,13 @@ $colours = array(
             '#584A5E',
            );
 
+echo "Generating HTML files".PHP_EOL;
+
 $totals = array();
 foreach ($resultFiles as $file) {
     $results = json_decode(file_get_contents($file), true);
     $repo    = $results['project']['path'];
-    echo "Processing result file for $repo: $file".PHP_EOL;
+    echo "\t=> Processing result file for $repo: $file".PHP_EOL;
 
     foreach ($results['metrics'] as $metric => $data) {
         if (isset($totals[$metric]) === false) {
@@ -159,10 +201,12 @@ foreach ($resultFiles as $file) {
             }
         }
 
+        if ($recordTrend === true) {
+            $results['metrics'][$metric]['trends'][$checkoutDate] = $data['values'];
+        }
+
         // Needed for sorting this result set later on.
         $results['metrics'][$metric]['winner'] = $winner;
-        $results['metrics'][$metric]['trends'][$checkoutDate] = $data['values'];
-
         if (isset($totals[$metric]['repos'][$winner]) === false) {
             $totals[$metric]['repos'][$winner] = array();
         }
@@ -174,7 +218,7 @@ foreach ($resultFiles as $file) {
 
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
-    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
 
     uasort($results['metrics'], 'sortMetrics');
     $chartNum = 0;
@@ -229,7 +273,8 @@ foreach ($resultFiles as $file) {
 
             $html .= "<td>$value</td><td>$percent%</td></tr>";
 
-            $trendData .= '{strokeColor:"'.$colour.'",data:[';
+            $trendData .= "{strokeColor:\"$colour\",pointStrokeColor:\"$colour\",pointColor:\"#FFF\",data:[";
+            ksort($data['trends']);
             foreach ($data['trends'] as $date => $trendValues) {
                 $trendTotal = array_sum($trendValues);
                 $addedValue = false;
@@ -249,7 +294,7 @@ foreach ($resultFiles as $file) {
                 }
             }
 
-            $trendData = rtrim($trendData, ',');
+            $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
             $valueNum++;
         }//end foreach
@@ -262,13 +307,26 @@ foreach ($resultFiles as $file) {
         $js .= 'new Chart(c).Doughnut(data,valOptions);'.PHP_EOL;
 
         $js .= 'var data = {labels:[';
-        $js .= str_repeat('"",', count($data['trends']));
+        $numDates = count($data['trends']);
+        $dateStep = ceil($numDates / 4);
+        $dateNum  = 1;
+        foreach (array_keys($data['trends']) as $date) {
+            //if ($dateNum === 1 || $dateNum === $numDates || $dateNum % $dateStep === 0) {
+                $time = strtotime($date);
+                $js .= '"'.date('d-M', $time).'",';
+            //} else {
+            //    $js .= '"",';
+            //}
+
+            $dateNum++;
+            continue;
+        }
         $js  = rtrim($js, ',');
 
         $trendData = rtrim($trendData, ',');
-        $js .= "],datasets:[$trendData]};".PHP_EOL;
-        $js .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
-        $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+        $js       .= "],datasets:[$trendData]};".PHP_EOL;
+        $js       .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
+        $js       .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
 
         if ($other > 0) {
             $percent = round($other / $data['total'] * 100, 2);
@@ -286,7 +344,7 @@ foreach ($resultFiles as $file) {
     $intro .= '<p>You can also <a href="../../index.html">view a combined analysis</a> that covers '.count($resultFiles).' PHP projects</p>'.PHP_EOL;
 
     $commitid = $results['project']['commitid'];
-    $footer = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid";
+    $footer   = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid";
 
     $output = file_get_contents(__DIR__.'/_assets/index.html.template');
     $output = str_replace('((title))', $repo.' - Coding Standards Analysis', $output);
@@ -296,30 +354,34 @@ foreach ($resultFiles as $file) {
     $output = str_replace('((js))', $js, $output);
     $output = str_replace('((assetPath))', '../../', $output);
     file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
-    file_put_contents($file, json_encode($results, JSON_FORCE_OBJECT));
+    file_put_contents($file, json_encode($results, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
 
 }//end foreach
 
 // Load in old trend values.
-$filename = __DIR__.'/results.json';
+$filename   = __DIR__.'/results.json';
 $prevTotals = json_decode(file_get_contents($filename), true);
 foreach ($prevTotals as $metric => $data) {
+    if (isset($data['trends']) === false) {
+        continue;
+    }
+
     if (isset($totals[$metric]) === false) {
         $totals[$metric] = array(
-                                'sniffs'      => array(),
-                                'total'       => 0,
-                                'total_repos' => 0,
-                                'values'      => array(),
-                                'repos'       => array(),
-                                'trends'      => $data['trends'],
-                               );
+                            'sniffs'      => array(),
+                            'total'       => 0,
+                            'total_repos' => 0,
+                            'values'      => array(),
+                            'repos'       => array(),
+                            'trends'      => $data['trends'],
+                           );
         continue;
     }
 
     foreach ($data['trends'] as $date => $values) {
         $totals[$metric]['trends'][$date] = $values;
     }
-}
+}//end foreach
 
 foreach ($totals as $metric => $data) {
     $winner      = '';
@@ -332,15 +394,19 @@ foreach ($totals as $metric => $data) {
     }
 
     $totals[$metric]['winner'] = $winner;
-    $totals[$metric]['trends'][$checkoutDate] = $data['values'];
+
+    if ($recordTrend === true) {
+        $totals[$metric]['trends'][$checkoutDate] = $data['values'];
+        ksort($totals[$metric]['trends']);
+    }
 }
 
-file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT));
+file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
 
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
 $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
-$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:false,datasetFill:false};'.PHP_EOL;
+$js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
 
 uasort($totals, 'sortMetrics');
 $chartNum = 0;
@@ -415,7 +481,7 @@ foreach ($totals as $metric => $data) {
         } else {
             $numRepos     = 0;
             $percentRepos = 0;
-        }
+        }//end if
 
         $repoData .= '{value:'.$percentRepos.',color:"'.$colour.'"},';
 
@@ -448,7 +514,7 @@ foreach ($totals as $metric => $data) {
         $html .= '>preferred by '.$percentRepos.'% of projects</td>'.PHP_EOL;
         $html .= '      </tr>'.PHP_EOL;
 
-        $trendData .= '{strokeColor:"'.$colour.'",data:[';
+        $trendData .= "{strokeColor:\"$colour\",pointStrokeColor:\"$colour\",pointColor:\"#FFF\",data:[";
         foreach ($data['trends'] as $date => $trendValues) {
             $trendTotal = array_sum($trendValues);
             foreach ($trendValues as $trendValue => $trendCount) {
@@ -460,7 +526,7 @@ foreach ($totals as $metric => $data) {
             }
         }
 
-        $trendData = rtrim($trendData, ',');
+        $trendData  = rtrim($trendData, ',');
         $trendData .= ']},';
 
         $valueNum++;
@@ -481,13 +547,27 @@ foreach ($totals as $metric => $data) {
     $js .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
 
     $js .= 'var data = {labels:[';
-    $js .= str_repeat('"",', count($data['trends']));
+    $numDates = count($data['trends']);
+    $dateStep = ceil($numDates / 4);
+    $dateNum  = 1;
+    foreach (array_keys($data['trends']) as $date) {
+        //if ($dateNum === 1 || $dateNum === $numDates || $dateNum % $dateStep === 0) {
+            $time = strtotime($date);
+            $js .= '"'.date('d-M', $time).'",';
+        //} else {
+        //    $js .= '"",';
+        //}
+
+        $dateNum++;
+        continue;
+    }
+
     $js  = rtrim($js, ',');
 
     $trendData = rtrim($trendData, ',');
-    $js .= "],datasets:[$trendData]};".PHP_EOL;
-    $js .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
-    $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+    $js       .= "],datasets:[$trendData]};".PHP_EOL;
+    $js       .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
+    $js       .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
 
     if ($other > 0) {
         $percent = round($other / $data['total'] * 100, 2);

@@ -168,9 +168,9 @@
         "ignore": ""
     },
     {
-        "name": "eZ Publish 5",
-        "url": "ezsystems/ezpublish-community",
-        "path": "src",
+        "name": "eZ Publish 5.x Kernel",
+        "url": "ezsystems/ezpublish-kernel",
+        "path": "eZ",
         "ignore": ""
     },
     {

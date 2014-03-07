@@ -26,6 +26,7 @@ tr th, td {
     left: 50%;
     margin-left: -430px;
     margin-bottom: 60px;
+    margin-top: 30px;
     padding: 10px 30px;
     border-radius: 15px;
     border: 1px solid #CCC;
@@ -38,7 +39,7 @@ tr th, td {
 
 .metric {
     width: 800px;
-    height: 635px;
+    height: 655px;
     position: relative;
     left: 50%;
     margin-left: -430px;
@@ -70,8 +71,7 @@ tr th, td {
 .chart-trend {
     position: absolute;
     top: 520px;
-    left: 0px;
-    border-top: 1px solid #CCC;
+    left: -10px;
 }
 
 .repo-data {
