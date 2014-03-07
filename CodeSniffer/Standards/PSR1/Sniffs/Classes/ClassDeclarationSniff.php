@@ -70,7 +70,7 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
             $namespace = $phpcsFile->findNext(array(T_NAMESPACE, T_CLASS, T_INTERFACE, T_TRAIT), 0);
-            if ($tokens[$stackPtr]['code'] !== T_NAMESPACE) {
+            if ($tokens[$namespace]['code'] !== T_NAMESPACE) {
                 $error = 'Each %s must be in a namespace of at least one level (a top-level vendor name)';
                 $phpcsFile->addError($error, $stackPtr, 'MissingNamespace', $errorData);
                 $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'no');
