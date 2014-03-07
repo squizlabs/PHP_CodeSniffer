@@ -74,24 +74,20 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $tokenCount         = 0;
         $currentLineContent = '';
-        $currentLine        = 1;
-
         $trim = (strlen($phpcsFile->eolChar) * -1);
-        for (; $tokenCount < $phpcsFile->numTokens; $tokenCount++) {
-            if ($tokens[$tokenCount]['line'] === $currentLine) {
-                $currentLineContent .= $tokens[$tokenCount]['content'];
-            } else {
+        for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
+            if ($tokens[$i]['column'] === 1) {
                 $currentLineContent = substr($currentLineContent, 0, $trim);
-                $this->checkLineLength($phpcsFile, ($tokenCount - 1), $currentLineContent);
-                $currentLineContent = $tokens[$tokenCount]['content'];
-                $currentLine++;
+                $this->checkLineLength($phpcsFile, ($i - 1), $currentLineContent);
+                $currentLineContent = $tokens[$i]['content'];
+            } else {
+                $currentLineContent .= $tokens[$i]['content'];
             }
         }
 
         $currentLineContent = substr($currentLineContent, 0, $trim);
-        $this->checkLineLength($phpcsFile, ($tokenCount - 1), $currentLineContent);
+        $this->checkLineLength($phpcsFile, ($i - 1), $currentLineContent);
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);

@@ -49,7 +49,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(T_WHITESPACE);
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -66,27 +66,29 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Make sure this is whitespace used for indentation.
-        $line = $tokens[$stackPtr]['line'];
-        if ($stackPtr > 0 && $tokens[($stackPtr - 1)]['line'] === $line) {
-            return;
-        }
-
-        if (strpos($tokens[$stackPtr]['content'], "\t") !== false) {
-            $error = 'Spaces must be used to indent lines; tabs are not allowed';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TabsUsed');
-            $phpcsFile->recordMetric($stackPtr, 'Line indent', 'tabs');
-
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                // Replace tabs with spaces, usign an indent of 4 spaces.
-                // Other sniffs can then correct the indent if they need to.
-                $newContent = str_replace("\t", '    ', $tokens[$stackPtr]['content']);
-                $phpcsFile->fixer->replaceToken($stackPtr, $newContent);
+        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+            if ($tokens[$i]['column'] !== 1 || $tokens[$i]['code'] !== T_WHITESPACE) {
+                continue;
             }
-        } else if (strpos($tokens[$stackPtr]['content'], ' ') !== false) {
-            $phpcsFile->recordMetric($stackPtr, 'Line indent', 'spaces');
+
+            if (strpos($tokens[$i]['content'], "\t") !== false) {
+                $error = 'Spaces must be used to indent lines; tabs are not allowed';
+                $fix   = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
+                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    // Replace tabs with spaces, usign an indent of 4 spaces.
+                    // Other sniffs can then correct the indent if they need to.
+                    $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
+                    $phpcsFile->fixer->replaceToken($i, $newContent);
+                }
+            } else {
+                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+            }
         }
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
