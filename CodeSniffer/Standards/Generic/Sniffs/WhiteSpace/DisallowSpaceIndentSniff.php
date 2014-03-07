@@ -75,7 +75,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
                 $error = 'Tabs must be used to indent lines; spaces are not allowed';
                 $phpcsFile->addError($error, $i, 'SpacesUsed');
                 $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
-            } else {
+            } else if (strpos($tokens[$i]['content'], "\t") !== false) {
                 $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
             }
         }

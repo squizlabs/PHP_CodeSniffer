@@ -82,7 +82,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                     $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
                     $phpcsFile->fixer->replaceToken($i, $newContent);
                 }
-            } else {
+            } else if (strpos($tokens[$i]['content'], ' ') !== false) {
                 $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
             }
         }
