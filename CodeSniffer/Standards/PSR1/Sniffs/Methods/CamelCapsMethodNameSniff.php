@@ -12,8 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff not found');
 }
 
 /**
@@ -29,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
 {
 
     /**
@@ -57,6 +57,12 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends PHP_CodeSniffer_Stand
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
+            return;
+        }
+
+        // Ignore magic methods.
+        $magicPart = strtolower(substr($methodName, 2));
+        if (in_array($magicPart, array_merge($this->magicMethods, $this->methodsDoubleUnderscore)) !== false) {
             return;
         }
 
