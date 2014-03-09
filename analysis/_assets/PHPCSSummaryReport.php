@@ -63,7 +63,7 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $showSources=false,
         $width=80
     ) {
-        $this->_files[$phpcsFile->getFilename()] = PHP_Timer::resourceUsage();
+        $this->_files[$phpcsFile->getFilename()] = $phpcsFile->numTokens;
         return true;
 
     }//end generateFileReport()
@@ -94,7 +94,7 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $width=80,
         $toScreen=true
     ) {
-        echo 'Processed '.count($this->_files).' files'.PHP_EOL;
+        echo 'Processed '.count($this->_files).' files containing '.array_sum($this->_files).' tokens'.PHP_EOL;
         echo PHP_Timer::resourceUsage().PHP_EOL;
 
     }//end generate()

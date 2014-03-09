@@ -93,7 +93,7 @@
         "name": "CakePHP",
         "url": "cakephp/cakephp",
         "path": "",
-        "ignore": ""
+        "ignore": "lib/Cake/Test/*,lib/Cake/Config/*"
     },
     {
         "name": "Google APIs Client Library",
@@ -140,8 +140,8 @@
     {
         "name": "WordPress",
         "url": "WordPress/WordPress",
-        "path": "",
-        "ignore": "wp-admin/includes/class-ftp*"
+        "path": "wp-admin",
+        "ignore": "*/includes/class-ftp*,*/class-pclzip.php"
     },
     {
         "name": "Drupal",
@@ -165,7 +165,7 @@
         "name": "TYPO3 CMS",
         "url": "TYPO3/TYPO3.CMS",
         "path": "typo3",
-        "ignore": ""
+        "ignore": "*/adodb/*"
     },
     {
         "name": "eZ Publish 5.x Kernel",
@@ -225,7 +225,7 @@
         "name": "MediaWiki",
         "url": "wikimedia/mediawiki-core",
         "path": "includes",
-        "ignore": ""
+        "ignore": "*/ZhConversion.php,*/Installer.i18n.php"
     },
     {
         "name": "Zikula",
