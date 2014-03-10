@@ -298,5 +298,11 @@
         "url": "silverstripe/silverstripe-framework",
         "path": "",
         "ignore": "*/thirdparty/*"
+    },
+    {
+        "name": "Faker",
+        "url": "fzaninotto/Faker",
+        "path": "src",
+        "ignore": ""
     }
 ]

@@ -5,7 +5,7 @@ function getRepoDirs($repo)
     $dirs = array();
     list($orgName, $repoName) = explode('/', $repo->url);
 
-    $dirs['org']   = realpath(__DIR__."/../$orgName");
+    $dirs['org']   = __DIR__."/../$orgName";
     $dirs['repo']  = $dirs['org']."/$repoName";
     $dirs['clone'] = $dirs['repo'].'/src';
 
@@ -16,11 +16,11 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
 {
     $dirs = getRepoDirs($repo);
     if (is_dir($dirs['org']) === false) {
-        mkdir($orgDir);
+        mkdir($dirs['org']);
     }
 
     if (is_dir($dirs['repo']) === false) {
-        mkdir($repoDir);
+        mkdir($dirs['repo']);
     }
 
     if ($resultFile === null) {
