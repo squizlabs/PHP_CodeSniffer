@@ -12,7 +12,7 @@ function getRepoDirs($repo)
     return $dirs;
 }
 
-function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $resultFile=null)
+function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs=array(), $resultFile=null)
 {
     $dirs = getRepoDirs($repo);
     if (is_dir($dirs['org']) === false) {
@@ -91,6 +91,11 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $result
         $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd       .= ' --runtime-set project '.$repo->url;
         $cmd       .= " --report=$summaryReportPath --report-$infoReportPath=$resultFile";
+
+        if (empty($sniffs) === false) {
+            $cmd .= ' --sniffs='.implode(',', $sniffs);
+        }
+
         echo "\t=> Running PHP_CodeSniffer".PHP_EOL;
         echo "\t\tcmd: ";
         echo str_replace(' --', PHP_EOL."\t\tcmd: --", $cmd).PHP_EOL;

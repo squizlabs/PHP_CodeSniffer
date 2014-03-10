@@ -2565,6 +2565,72 @@
             },
             "winner": "no"
         },
+        "Array keyword case": {
+            "sniffs": {
+                "0": "Squiz.Arrays.ArrayDeclaration"
+            },
+            "total": 3602,
+            "values": {
+                "lower": 3602
+            },
+            "percentages": {
+                "lower": 100
+            },
+            "trends": {
+                "2013-11-06": {
+                    "lower": 3490
+                },
+                "2013-11-13": {
+                    "lower": 3487
+                },
+                "2013-11-20": {
+                    "lower": 3501
+                },
+                "2013-11-27": {
+                    "lower": 3533
+                },
+                "2013-12-04": {
+                    "lower": 3570
+                },
+                "2013-12-11": {
+                    "lower": 3570
+                },
+                "2013-12-18": {
+                    "lower": 3579
+                },
+                "2013-12-25": {
+                    "lower": 3610
+                },
+                "2014-01-05": {
+                    "lower": 3576
+                },
+                "2014-01-12": {
+                    "lower": 3579
+                },
+                "2014-01-19": {
+                    "lower": 3593
+                },
+                "2014-01-26": {
+                    "lower": 3609
+                },
+                "2014-02-02": {
+                    "lower": 3606
+                },
+                "2014-02-09": {
+                    "lower": 3610
+                },
+                "2014-02-16": {
+                    "lower": 3611
+                },
+                "2014-02-23": {
+                    "lower": 3603
+                },
+                "2014-03-02": {
+                    "lower": 3600
+                }
+            },
+            "winner": "lower"
+        },
         "File extension for class files": {
             "sniffs": {
                 "0": "Squiz.Files.FileExtension"
@@ -2763,72 +2829,6 @@
             },
             "winner": 0
         },
-        "Constant name case": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.UpperCaseConstantName"
-            },
-            "total": 136,
-            "values": {
-                "upper": 136
-            },
-            "percentages": {
-                "upper": 100
-            },
-            "trends": {
-                "2013-11-06": {
-                    "upper": 150
-                },
-                "2013-11-13": {
-                    "upper": 150
-                },
-                "2013-11-20": {
-                    "upper": 150
-                },
-                "2013-11-27": {
-                    "upper": 150
-                },
-                "2013-12-04": {
-                    "upper": 140
-                },
-                "2013-12-11": {
-                    "upper": 140
-                },
-                "2013-12-18": {
-                    "upper": 140
-                },
-                "2013-12-25": {
-                    "upper": 140
-                },
-                "2014-01-05": {
-                    "upper": 140
-                },
-                "2014-01-12": {
-                    "upper": 140
-                },
-                "2014-01-19": {
-                    "upper": 140
-                },
-                "2014-01-26": {
-                    "upper": 144
-                },
-                "2014-02-02": {
-                    "upper": 136
-                },
-                "2014-02-09": {
-                    "upper": 136
-                },
-                "2014-02-16": {
-                    "upper": 136
-                },
-                "2014-02-23": {
-                    "upper": 136
-                },
-                "2014-03-02": {
-                    "upper": 136
-                }
-            },
-            "winner": "upper"
-        },
         "PHP short open tag used": {
             "sniffs": {
                 "0": "Generic.PHP.DisallowShortOpenTag"
@@ -2895,71 +2895,71 @@
             },
             "winner": "no"
         },
-        "Array keyword case": {
+        "Constant name case": {
             "sniffs": {
-                "0": "Squiz.Arrays.ArrayDeclaration"
+                "0": "Generic.NamingConventions.UpperCaseConstantName"
             },
-            "total": 3602,
+            "total": 136,
             "values": {
-                "lower": 3602
+                "upper": 136
             },
             "percentages": {
-                "lower": 100
+                "upper": 100
             },
             "trends": {
                 "2013-11-06": {
-                    "lower": 3490
+                    "upper": 150
                 },
                 "2013-11-13": {
-                    "lower": 3487
+                    "upper": 150
                 },
                 "2013-11-20": {
-                    "lower": 3501
+                    "upper": 150
                 },
                 "2013-11-27": {
-                    "lower": 3533
+                    "upper": 150
                 },
                 "2013-12-04": {
-                    "lower": 3570
+                    "upper": 140
                 },
                 "2013-12-11": {
-                    "lower": 3570
+                    "upper": 140
                 },
                 "2013-12-18": {
-                    "lower": 3579
+                    "upper": 140
                 },
                 "2013-12-25": {
-                    "lower": 3610
+                    "upper": 140
                 },
                 "2014-01-05": {
-                    "lower": 3576
+                    "upper": 140
                 },
                 "2014-01-12": {
-                    "lower": 3579
+                    "upper": 140
                 },
                 "2014-01-19": {
-                    "lower": 3593
+                    "upper": 140
                 },
                 "2014-01-26": {
-                    "lower": 3609
+                    "upper": 144
                 },
                 "2014-02-02": {
-                    "lower": 3606
+                    "upper": 136
                 },
                 "2014-02-09": {
-                    "lower": 3610
+                    "upper": 136
                 },
                 "2014-02-16": {
-                    "lower": 3611
+                    "upper": 136
                 },
                 "2014-02-23": {
-                    "lower": 3603
+                    "upper": 136
                 },
                 "2014-03-02": {
-                    "lower": 3600
+                    "upper": 136
                 }
             },
-            "winner": "lower"
+            "winner": "upper"
         },
         "CamelCase function name": {
             "sniffs": {

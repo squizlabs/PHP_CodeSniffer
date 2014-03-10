@@ -159,12 +159,13 @@ foreach ($resultFiles as $file) {
 
         ksort($data['values'], $sort);
         foreach ($data['values'] as $value => $count) {
-            $colour  = $colours[$valueNum];
             $percent = round($count / $data['total'] * 100, 2);
             if ($numValues > 4 && $percent < 1) {
                 $other += $count;
                 continue;
             }
+
+            $colour = $colours[$valueNum];
 
             $count     = number_format($count, 0, '', ',');
             $valsData .= '{value:'.$percent.',color:"'.$colour.'"},';
