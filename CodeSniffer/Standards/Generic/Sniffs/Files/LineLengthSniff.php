@@ -74,7 +74,7 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $currentLineContent = '';
+        $currentLineContent = $tokens[$stackPtr]['content'];
         $trim = (strlen($phpcsFile->eolChar) * -1);
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] === 1) {
@@ -106,6 +106,11 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
      */
     protected function checkLineLength(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $lineContent)
     {
+        // Ignore blank lines.
+        if ($lineContent === '') {
+            return;
+        }
+
         // If the content is a CVS or SVN id in a version tag, or it is
         // a license tag with a name and URL, or it is an SVN URL, there
         // is nothing the developer can do to shorten the line,
