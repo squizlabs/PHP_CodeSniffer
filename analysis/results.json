@@ -1,154 +1,16 @@
 {
-    "Declarations and side effects mixed": {
+    "EOL char": {
         "sniffs": {
-            "0": "PSR1.Files.SideEffects"
+            "0": "Generic.Files.LineEndings"
         },
-        "total": 33164,
+        "total": 33027,
         "total_repos": 50,
         "values": {
-            "no": 28776,
-            "yes": 4388
+            "\\n": 32914,
+            "\\r\\n": 113
         },
         "repos": {
-            "no": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "piwik\/piwik",
-                "9": "codeguy\/Slim",
-                "10": "PHPMailer\/PHPMailer",
-                "11": "padraic\/mockery",
-                "12": "composer\/composer",
-                "13": "google\/google-api-php-client",
-                "14": "aws\/aws-sdk-php",
-                "15": "Seldaek\/monolog",
-                "16": "swiftmailer\/swiftmailer",
-                "17": "doctrine\/doctrine2",
-                "18": "zendframework\/zf2",
-                "19": "pyrocms\/pyrocms",
-                "20": "WordPress\/WordPress",
-                "21": "drupal\/drupal",
-                "22": "jackalope\/jackalope",
-                "23": "TYPO3\/TYPO3.CMS",
-                "24": "ezsystems\/ezpublish-kernel",
-                "25": "solarphp\/core",
-                "26": "propelorm\/Propel",
-                "27": "ppi\/framework",
-                "28": "phpDocumentor\/phpDocumentor2",
-                "29": "phpbb\/phpbb",
-                "30": "fruux\/sabre-dav",
-                "31": "wikimedia\/mediawiki-core",
-                "32": "zikula\/core",
-                "33": "tedivm\/Stash",
-                "34": "sculpin\/sculpin",
-                "35": "kriswallsmith\/assetic",
-                "36": "kriswallsmith\/Buzz",
-                "37": "contao\/core",
-                "38": "chriso\/klein.php",
-                "39": "magento\/magento2",
-                "40": "cboden\/Ratchet",
-                "41": "reactphp\/react",
-                "42": "silverstripe\/silverstripe-framework"
-            },
-            "yes": {
-                "0": "EllisLab\/CodeIgniter",
-                "1": "joomla\/joomla-cms",
-                "2": "cakephp\/cakephp",
-                "3": "phpmyadmin\/phpmyadmin",
-                "4": "pear\/pear-core",
-                "5": "sugarcrm\/sugarcrm_dev",
-                "6": "facebook\/facebook-php-sdk"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "no": 28220,
-                "yes": 4649
-            },
-            "2013-11-13": {
-                "no": 28169,
-                "yes": 4644
-            },
-            "2013-11-20": {
-                "no": 28013,
-                "yes": 4780
-            },
-            "2013-11-27": {
-                "no": 28268,
-                "yes": 4640
-            },
-            "2013-12-04": {
-                "no": 28250,
-                "yes": 4640
-            },
-            "2013-12-11": {
-                "no": 28408,
-                "yes": 4644
-            },
-            "2013-12-18": {
-                "no": 28436,
-                "yes": 4644
-            },
-            "2013-12-25": {
-                "no": 28345,
-                "yes": 4646
-            },
-            "2014-01-05": {
-                "no": 28239,
-                "yes": 4835
-            },
-            "2014-01-12": {
-                "no": 28496,
-                "yes": 4645
-            },
-            "2014-01-19": {
-                "no": 28554,
-                "yes": 4645
-            },
-            "2014-01-26": {
-                "no": 28711,
-                "yes": 4633
-            },
-            "2014-02-02": {
-                "no": 28923,
-                "yes": 4640
-            },
-            "2014-02-09": {
-                "no": 29018,
-                "yes": 4641
-            },
-            "2014-02-16": {
-                "no": 28955,
-                "yes": 4645
-            },
-            "2014-02-23": {
-                "no": 29167,
-                "yes": 4641
-            },
-            "2014-03-02": {
-                "no": 29232,
-                "yes": 4641
-            }
-        },
-        "winner": "no"
-    },
-    "Function opening brace placement": {
-        "sniffs": {
-            "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
-        },
-        "total": 175182,
-        "total_repos": 50,
-        "values": {
-            "new line": 126083,
-            "same line": 49099
-        },
-        "repos": {
-            "new line": {
+            "\\n": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -164,128 +26,126 @@
                 "12": "padraic\/mockery",
                 "13": "joomla\/joomla-cms",
                 "14": "composer\/composer",
-                "15": "google\/google-api-php-client",
-                "16": "aws\/aws-sdk-php",
-                "17": "Seldaek\/monolog",
-                "18": "swiftmailer\/swiftmailer",
-                "19": "doctrine\/doctrine2",
-                "20": "zendframework\/zf2",
-                "21": "pyrocms\/pyrocms",
-                "22": "phpmyadmin\/phpmyadmin",
-                "23": "jackalope\/jackalope",
-                "24": "ezsystems\/ezpublish-kernel",
-                "25": "pear\/pear-core",
-                "26": "solarphp\/core",
-                "27": "propelorm\/Propel",
-                "28": "ppi\/framework",
-                "29": "phpDocumentor\/phpDocumentor2",
-                "30": "phpbb\/phpbb",
-                "31": "sugarcrm\/sugarcrm_dev",
-                "32": "zikula\/core",
-                "33": "tedivm\/Stash",
-                "34": "sculpin\/sculpin",
-                "35": "kriswallsmith\/assetic",
-                "36": "kriswallsmith\/Buzz",
-                "37": "contao\/core",
-                "38": "chriso\/klein.php",
-                "39": "magento\/magento2",
-                "40": "reactphp\/react"
-            },
-            "same line": {
-                "0": "cakephp\/cakephp",
-                "1": "WordPress\/WordPress",
-                "2": "drupal\/drupal",
-                "3": "TYPO3\/TYPO3.CMS",
-                "4": "fruux\/sabre-dav",
-                "5": "wikimedia\/mediawiki-core",
-                "6": "facebook\/facebook-php-sdk",
-                "7": "cboden\/Ratchet",
-                "8": "silverstripe\/silverstripe-framework"
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
             }
         },
         "trends": {
             "2013-11-06": {
-                "new line": 120514,
-                "same line": 55089
+                "\\n": 32670,
+                "\\r\\n": 199
             },
             "2013-11-13": {
-                "new line": 122178,
-                "same line": 55138
+                "\\n": 32608,
+                "\\r\\n": 205
             },
             "2013-11-20": {
-                "new line": 121834,
-                "same line": 55378
+                "\\n": 32594,
+                "\\r\\n": 199
             },
             "2013-11-27": {
-                "new line": 122174,
-                "same line": 55551
+                "\\n": 32709,
+                "\\r\\n": 199
             },
             "2013-12-04": {
-                "new line": 122156,
-                "same line": 55624
+                "\\n": 32688,
+                "\\r\\n": 202
             },
             "2013-12-11": {
-                "new line": 123381,
-                "same line": 55655
+                "\\n": 32849,
+                "\\r\\n": 203
             },
             "2013-12-18": {
-                "new line": 123387,
-                "same line": 55716
+                "\\n": 32877,
+                "\\r\\n": 203
             },
             "2013-12-25": {
-                "new line": 123183,
-                "same line": 55824
+                "\\n": 32787,
+                "\\r\\n": 204
             },
             "2014-01-05": {
-                "new line": 123532,
-                "same line": 55922
+                "\\n": 32874,
+                "\\r\\n": 200
             },
             "2014-01-12": {
-                "new line": 123888,
-                "same line": 56057
+                "\\n": 32939,
+                "\\r\\n": 202
             },
             "2014-01-19": {
-                "new line": 124201,
-                "same line": 55998
+                "\\n": 32997,
+                "\\r\\n": 202
             },
             "2014-01-26": {
-                "new line": 124514,
-                "same line": 56013
+                "\\n": 33142,
+                "\\r\\n": 202
             },
             "2014-02-02": {
-                "new line": 125254,
-                "same line": 56104
+                "\\n": 33361,
+                "\\r\\n": 202
             },
             "2014-02-09": {
-                "new line": 125667,
-                "same line": 56140
+                "\\n": 33457,
+                "\\r\\n": 202
             },
             "2014-02-16": {
-                "new line": 125522,
-                "same line": 56226
+                "\\n": 33396,
+                "\\r\\n": 204
             },
             "2014-02-23": {
-                "new line": 126136,
-                "same line": 56350
+                "\\n": 33605,
+                "\\r\\n": 203
             },
             "2014-03-02": {
-                "new line": 126404,
-                "same line": 56401
+                "\\n": 33759,
+                "\\r\\n": 114
             }
         },
-        "winner": "new line"
+        "winner": "\\n"
     },
     "Line length": {
         "sniffs": {
             "0": "Generic.Files.LineLength"
         },
-        "total": 5696939,
+        "total": 5068142,
         "total_repos": 50,
         "values": {
-            "80 or less": 5345926,
-            "81-120": 290890,
-            "121-150": 35135,
-            "151 or more": 24988
+            "80 or less": 4719302,
+            "81-120": 288940,
+            "121-150": 34996,
+            "151 or more": 24904
         },
         "repos": {
             "80 or less": {
@@ -447,18 +307,412 @@
         },
         "winner": "80 or less"
     },
-    "CamelCase method name": {
+    "Lowercase filename": {
         "sniffs": {
-            "0": "Generic.NamingConventions.CamelCapsFunctionName"
+            "0": "Generic.Files.LowercasedFilename"
         },
-        "total": 167373,
+        "total": 33027,
         "total_repos": 50,
         "values": {
-            "yes": 145010,
-            "no": 22363
+            "no": 25106,
+            "yes": 7921
         },
         "repos": {
+            "no": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "piwik\/piwik",
+                "9": "codeguy\/Slim",
+                "10": "padraic\/mockery",
+                "11": "composer\/composer",
+                "12": "cakephp\/cakephp",
+                "13": "google\/google-api-php-client",
+                "14": "aws\/aws-sdk-php",
+                "15": "Seldaek\/monolog",
+                "16": "swiftmailer\/swiftmailer",
+                "17": "doctrine\/doctrine2",
+                "18": "zendframework\/zf2",
+                "19": "drupal\/drupal",
+                "20": "jackalope\/jackalope",
+                "21": "TYPO3\/TYPO3.CMS",
+                "22": "ezsystems\/ezpublish-kernel",
+                "23": "pear\/pear-core",
+                "24": "solarphp\/core",
+                "25": "propelorm\/Propel",
+                "26": "ppi\/framework",
+                "27": "phpDocumentor\/phpDocumentor2",
+                "28": "fruux\/sabre-dav",
+                "29": "sugarcrm\/sugarcrm_dev",
+                "30": "wikimedia\/mediawiki-core",
+                "31": "zikula\/core",
+                "32": "tedivm\/Stash",
+                "33": "sculpin\/sculpin",
+                "34": "kriswallsmith\/assetic",
+                "35": "kriswallsmith\/Buzz",
+                "36": "contao\/core",
+                "37": "chriso\/klein.php",
+                "38": "magento\/magento2",
+                "39": "cboden\/Ratchet",
+                "40": "reactphp\/react",
+                "41": "silverstripe\/silverstripe-framework"
+            },
             "yes": {
+                "0": "EllisLab\/CodeIgniter",
+                "1": "PHPMailer\/PHPMailer",
+                "2": "joomla\/joomla-cms",
+                "3": "pyrocms\/pyrocms",
+                "4": "WordPress\/WordPress",
+                "5": "phpmyadmin\/phpmyadmin",
+                "6": "phpbb\/phpbb",
+                "7": "facebook\/facebook-php-sdk"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "no": 24592,
+                "yes": 8277
+            },
+            "2013-11-13": {
+                "no": 24537,
+                "yes": 8276
+            },
+            "2013-11-20": {
+                "no": 24609,
+                "yes": 8184
+            },
+            "2013-11-27": {
+                "no": 24633,
+                "yes": 8275
+            },
+            "2013-12-04": {
+                "no": 24604,
+                "yes": 8286
+            },
+            "2013-12-11": {
+                "no": 24759,
+                "yes": 8293
+            },
+            "2013-12-18": {
+                "no": 24776,
+                "yes": 8304
+            },
+            "2013-12-25": {
+                "no": 24680,
+                "yes": 8311
+            },
+            "2014-01-05": {
+                "no": 24783,
+                "yes": 8291
+            },
+            "2014-01-12": {
+                "no": 24805,
+                "yes": 8336
+            },
+            "2014-01-19": {
+                "no": 24844,
+                "yes": 8355
+            },
+            "2014-01-26": {
+                "no": 24989,
+                "yes": 8355
+            },
+            "2014-02-02": {
+                "no": 25204,
+                "yes": 8359
+            },
+            "2014-02-09": {
+                "no": 25272,
+                "yes": 8387
+            },
+            "2014-02-16": {
+                "no": 25208,
+                "yes": 8392
+            },
+            "2014-02-23": {
+                "no": 25421,
+                "yes": 8387
+            },
+            "2014-03-02": {
+                "no": 25466,
+                "yes": 8407
+            }
+        },
+        "winner": "no"
+    },
+    "PHP short open tag used": {
+        "sniffs": {
+            "0": "Generic.PHP.DisallowShortOpenTag"
+        },
+        "total": 56165,
+        "total_repos": 50,
+        "values": {
+            "no": 56165
+        },
+        "repos": {
+            "no": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "no": 59010
+            },
+            "2013-11-13": {
+                "no": 58953
+            },
+            "2013-11-20": {
+                "no": 58878
+            },
+            "2013-11-27": {
+                "no": 58989
+            },
+            "2013-12-04": {
+                "no": 58865
+            },
+            "2013-12-11": {
+                "no": 59110
+            },
+            "2013-12-18": {
+                "no": 59137
+            },
+            "2013-12-25": {
+                "no": 59080
+            },
+            "2014-01-05": {
+                "no": 59208
+            },
+            "2014-01-12": {
+                "no": 59409
+            },
+            "2014-01-19": {
+                "no": 59468
+            },
+            "2014-01-26": {
+                "no": 59673
+            },
+            "2014-02-02": {
+                "no": 59942
+            },
+            "2014-02-09": {
+                "no": 60019
+            },
+            "2014-02-16": {
+                "no": 59986
+            },
+            "2014-02-23": {
+                "no": 60191
+            },
+            "2014-03-02": {
+                "no": 60276
+            }
+        },
+        "winner": "no"
+    },
+    "Line indent": {
+        "sniffs": {
+            "0": "Generic.WhiteSpace.DisallowSpaceIndent"
+        },
+        "total": 3029693,
+        "total_repos": 50,
+        "values": {
+            "spaces": 1862081,
+            "tabs": 1167612
+        },
+        "repos": {
+            "spaces": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "guzzle\/guzzle",
+                "5": "fabpot\/Twig",
+                "6": "piwik\/piwik",
+                "7": "codeguy\/Slim",
+                "8": "PHPMailer\/PHPMailer",
+                "9": "padraic\/mockery",
+                "10": "composer\/composer",
+                "11": "google\/google-api-php-client",
+                "12": "aws\/aws-sdk-php",
+                "13": "Seldaek\/monolog",
+                "14": "swiftmailer\/swiftmailer",
+                "15": "doctrine\/doctrine2",
+                "16": "zendframework\/zf2",
+                "17": "pyrocms\/pyrocms",
+                "18": "drupal\/drupal",
+                "19": "phpmyadmin\/phpmyadmin",
+                "20": "jackalope\/jackalope",
+                "21": "ezsystems\/ezpublish-kernel",
+                "22": "pear\/pear-core",
+                "23": "solarphp\/core",
+                "24": "propelorm\/Propel",
+                "25": "ppi\/framework",
+                "26": "phpDocumentor\/phpDocumentor2",
+                "27": "fruux\/sabre-dav",
+                "28": "sugarcrm\/sugarcrm_dev",
+                "29": "zikula\/core",
+                "30": "tedivm\/Stash",
+                "31": "sculpin\/sculpin",
+                "32": "kriswallsmith\/assetic",
+                "33": "kriswallsmith\/Buzz",
+                "34": "facebook\/facebook-php-sdk",
+                "35": "chriso\/klein.php",
+                "36": "magento\/magento2",
+                "37": "cboden\/Ratchet",
+                "38": "reactphp\/react"
+            },
+            "tabs": {
+                "0": "laravel\/framework",
+                "1": "yiisoft\/yii2",
+                "2": "EllisLab\/CodeIgniter",
+                "3": "joomla\/joomla-cms",
+                "4": "cakephp\/cakephp",
+                "5": "WordPress\/WordPress",
+                "6": "TYPO3\/TYPO3.CMS",
+                "7": "phpbb\/phpbb",
+                "8": "wikimedia\/mediawiki-core",
+                "9": "contao\/core",
+                "10": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "spaces": 1794064,
+                "tabs": 1379838
+            },
+            "2013-11-13": {
+                "spaces": 1808330,
+                "tabs": 1382210
+            },
+            "2013-11-20": {
+                "spaces": 1813406,
+                "tabs": 1379926
+            },
+            "2013-11-27": {
+                "spaces": 1811265,
+                "tabs": 1391533
+            },
+            "2013-12-04": {
+                "spaces": 1809033,
+                "tabs": 1393809
+            },
+            "2013-12-11": {
+                "spaces": 1818491,
+                "tabs": 1397198
+            },
+            "2013-12-18": {
+                "spaces": 1821118,
+                "tabs": 1405846
+            },
+            "2013-12-25": {
+                "spaces": 1818546,
+                "tabs": 1400604
+            },
+            "2014-01-05": {
+                "spaces": 1830060,
+                "tabs": 1393883
+            },
+            "2014-01-12": {
+                "spaces": 1827884,
+                "tabs": 1398537
+            },
+            "2014-01-19": {
+                "spaces": 1829697,
+                "tabs": 1399363
+            },
+            "2014-01-26": {
+                "spaces": 1835421,
+                "tabs": 1398119
+            },
+            "2014-02-02": {
+                "spaces": 1844286,
+                "tabs": 1398886
+            },
+            "2014-02-09": {
+                "spaces": 1849177,
+                "tabs": 1401032
+            },
+            "2014-02-16": {
+                "spaces": 1848342,
+                "tabs": 1400307
+            },
+            "2014-02-23": {
+                "spaces": 1856725,
+                "tabs": 1400897
+            },
+            "2014-03-02": {
+                "spaces": 1875245,
+                "tabs": 1385535
+            }
+        },
+        "winner": "spaces"
+    },
+    "Declarations and side effects mixed": {
+        "sniffs": {
+            "0": "PSR1.Files.SideEffects"
+        },
+        "total": 33027,
+        "total_repos": 50,
+        "values": {
+            "no": 28736,
+            "yes": 4291
+        },
+        "repos": {
+            "no": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -471,254 +725,116 @@
                 "9": "codeguy\/Slim",
                 "10": "PHPMailer\/PHPMailer",
                 "11": "padraic\/mockery",
-                "12": "joomla\/joomla-cms",
-                "13": "composer\/composer",
-                "14": "cakephp\/cakephp",
-                "15": "google\/google-api-php-client",
-                "16": "aws\/aws-sdk-php",
-                "17": "Seldaek\/monolog",
-                "18": "swiftmailer\/swiftmailer",
-                "19": "doctrine\/doctrine2",
-                "20": "zendframework\/zf2",
-                "21": "pyrocms\/pyrocms",
-                "22": "drupal\/drupal",
-                "23": "phpmyadmin\/phpmyadmin",
-                "24": "jackalope\/jackalope",
-                "25": "TYPO3\/TYPO3.CMS",
-                "26": "ezsystems\/ezpublish-kernel",
-                "27": "pear\/pear-core",
-                "28": "solarphp\/core",
-                "29": "propelorm\/Propel",
-                "30": "ppi\/framework",
-                "31": "phpDocumentor\/phpDocumentor2",
-                "32": "fruux\/sabre-dav",
-                "33": "sugarcrm\/sugarcrm_dev",
-                "34": "wikimedia\/mediawiki-core",
-                "35": "zikula\/core",
-                "36": "tedivm\/Stash",
-                "37": "sculpin\/sculpin",
-                "38": "kriswallsmith\/assetic",
-                "39": "kriswallsmith\/Buzz",
-                "40": "contao\/core",
-                "41": "facebook\/facebook-php-sdk",
-                "42": "chriso\/klein.php",
-                "43": "magento\/magento2",
-                "44": "cboden\/Ratchet",
-                "45": "reactphp\/react",
-                "46": "silverstripe\/silverstripe-framework"
+                "12": "composer\/composer",
+                "13": "google\/google-api-php-client",
+                "14": "aws\/aws-sdk-php",
+                "15": "Seldaek\/monolog",
+                "16": "swiftmailer\/swiftmailer",
+                "17": "doctrine\/doctrine2",
+                "18": "zendframework\/zf2",
+                "19": "pyrocms\/pyrocms",
+                "20": "WordPress\/WordPress",
+                "21": "drupal\/drupal",
+                "22": "jackalope\/jackalope",
+                "23": "TYPO3\/TYPO3.CMS",
+                "24": "ezsystems\/ezpublish-kernel",
+                "25": "solarphp\/core",
+                "26": "propelorm\/Propel",
+                "27": "ppi\/framework",
+                "28": "phpDocumentor\/phpDocumentor2",
+                "29": "phpbb\/phpbb",
+                "30": "fruux\/sabre-dav",
+                "31": "wikimedia\/mediawiki-core",
+                "32": "zikula\/core",
+                "33": "tedivm\/Stash",
+                "34": "sculpin\/sculpin",
+                "35": "kriswallsmith\/assetic",
+                "36": "kriswallsmith\/Buzz",
+                "37": "contao\/core",
+                "38": "chriso\/klein.php",
+                "39": "magento\/magento2",
+                "40": "cboden\/Ratchet",
+                "41": "reactphp\/react",
+                "42": "silverstripe\/silverstripe-framework"
             },
-            "no": {
-                "0": "EllisLab\/CodeIgniter",
-                "1": "WordPress\/WordPress",
-                "2": "phpbb\/phpbb"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "yes": 141245,
-                "no": 23899
-            },
-            "2013-11-13": {
-                "yes": 143015,
-                "no": 23848
-            },
-            "2013-11-20": {
-                "yes": 143265,
-                "no": 23529
-            },
-            "2013-11-27": {
-                "yes": 143632,
-                "no": 23734
-            },
-            "2013-12-04": {
-                "yes": 143700,
-                "no": 23758
-            },
-            "2013-12-11": {
-                "yes": 144899,
-                "no": 23785
-            },
-            "2013-12-18": {
-                "yes": 145184,
-                "no": 23710
-            },
-            "2013-12-25": {
-                "yes": 145031,
-                "no": 23709
-            },
-            "2014-01-05": {
-                "yes": 145724,
-                "no": 23582
-            },
-            "2014-01-12": {
-                "yes": 146162,
-                "no": 23678
-            },
-            "2014-01-19": {
-                "yes": 146416,
-                "no": 23752
-            },
-            "2014-01-26": {
-                "yes": 146919,
-                "no": 23649
-            },
-            "2014-02-02": {
-                "yes": 147674,
-                "no": 23685
-            },
-            "2014-02-09": {
-                "yes": 148086,
-                "no": 23819
-            },
-            "2014-02-16": {
-                "yes": 148042,
-                "no": 23826
-            },
-            "2014-02-23": {
-                "yes": 148787,
-                "no": 23789
-            },
-            "2014-03-02": {
-                "yes": 149144,
-                "no": 23776
-            }
-        },
-        "winner": "yes"
-    },
-    "PHP closing tag at EOF": {
-        "sniffs": {
-            "0": "Zend.Files.ClosingTag"
-        },
-        "total": 33164,
-        "total_repos": 50,
-        "values": {
-            "yes": 3285,
-            "no": 29879
-        },
-        "repos": {
             "yes": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "phpmyadmin\/phpmyadmin",
-                "2": "sugarcrm\/sugarcrm_dev"
-            },
-            "no": {
-                "0": "sebastianbergmann\/phpunit",
-                "1": "sebastianbergmann\/php-code-coverage",
-                "2": "symfony\/symfony",
-                "3": "laravel\/framework",
-                "4": "yiisoft\/yii2",
-                "5": "guzzle\/guzzle",
-                "6": "fabpot\/Twig",
-                "7": "EllisLab\/CodeIgniter",
-                "8": "piwik\/piwik",
-                "9": "codeguy\/Slim",
-                "10": "PHPMailer\/PHPMailer",
-                "11": "padraic\/mockery",
-                "12": "joomla\/joomla-cms",
-                "13": "composer\/composer",
-                "14": "cakephp\/cakephp",
-                "15": "google\/google-api-php-client",
-                "16": "aws\/aws-sdk-php",
-                "17": "Seldaek\/monolog",
-                "18": "swiftmailer\/swiftmailer",
-                "19": "doctrine\/doctrine2",
-                "20": "zendframework\/zf2",
-                "21": "pyrocms\/pyrocms",
-                "22": "WordPress\/WordPress",
-                "23": "drupal\/drupal",
-                "24": "jackalope\/jackalope",
-                "25": "TYPO3\/TYPO3.CMS",
-                "26": "ezsystems\/ezpublish-kernel",
-                "27": "pear\/pear-core",
-                "28": "solarphp\/core",
-                "29": "propelorm\/Propel",
-                "30": "ppi\/framework",
-                "31": "phpDocumentor\/phpDocumentor2",
-                "32": "phpbb\/phpbb",
-                "33": "fruux\/sabre-dav",
-                "34": "wikimedia\/mediawiki-core",
-                "35": "zikula\/core",
-                "36": "tedivm\/Stash",
-                "37": "sculpin\/sculpin",
-                "38": "kriswallsmith\/assetic",
-                "39": "kriswallsmith\/Buzz",
-                "40": "contao\/core",
-                "41": "facebook\/facebook-php-sdk",
-                "42": "chriso\/klein.php",
-                "43": "magento\/magento2",
-                "44": "cboden\/Ratchet",
-                "45": "reactphp\/react",
-                "46": "silverstripe\/silverstripe-framework"
+                "0": "EllisLab\/CodeIgniter",
+                "1": "joomla\/joomla-cms",
+                "2": "cakephp\/cakephp",
+                "3": "phpmyadmin\/phpmyadmin",
+                "4": "pear\/pear-core",
+                "5": "sugarcrm\/sugarcrm_dev",
+                "6": "facebook\/facebook-php-sdk"
             }
         },
         "trends": {
             "2013-11-06": {
-                "yes": 3409,
-                "no": 29460
+                "no": 28220,
+                "yes": 4649
             },
             "2013-11-13": {
-                "yes": 3411,
-                "no": 29402
+                "no": 28169,
+                "yes": 4644
             },
             "2013-11-20": {
-                "yes": 3410,
-                "no": 29383
+                "no": 28013,
+                "yes": 4780
             },
             "2013-11-27": {
-                "yes": 3415,
-                "no": 29493
+                "no": 28268,
+                "yes": 4640
             },
             "2013-12-04": {
-                "yes": 3412,
-                "no": 29478
+                "no": 28250,
+                "yes": 4640
             },
             "2013-12-11": {
-                "yes": 3414,
-                "no": 29638
+                "no": 28408,
+                "yes": 4644
             },
             "2013-12-18": {
-                "yes": 3418,
-                "no": 29662
+                "no": 28436,
+                "yes": 4644
             },
             "2013-12-25": {
-                "yes": 3424,
-                "no": 29567
+                "no": 28345,
+                "yes": 4646
             },
             "2014-01-05": {
-                "yes": 3436,
-                "no": 29638
+                "no": 28239,
+                "yes": 4835
             },
             "2014-01-12": {
-                "yes": 3444,
-                "no": 29697
+                "no": 28496,
+                "yes": 4645
             },
             "2014-01-19": {
-                "yes": 3434,
-                "no": 29765
+                "no": 28554,
+                "yes": 4645
             },
             "2014-01-26": {
-                "yes": 3436,
-                "no": 29908
+                "no": 28711,
+                "yes": 4633
             },
             "2014-02-02": {
-                "yes": 3432,
-                "no": 30131
+                "no": 28923,
+                "yes": 4640
             },
             "2014-02-09": {
-                "yes": 3432,
-                "no": 30227
+                "no": 29018,
+                "yes": 4641
             },
             "2014-02-16": {
-                "yes": 3435,
-                "no": 30165
+                "no": 28955,
+                "yes": 4645
             },
             "2014-02-23": {
-                "yes": 3433,
-                "no": 30375
+                "no": 29167,
+                "yes": 4641
             },
             "2014-03-02": {
-                "yes": 3434,
-                "no": 30439
+                "no": 29232,
+                "yes": 4641
             }
         },
         "winner": "no"
@@ -727,11 +843,11 @@
         "sniffs": {
             "0": "PSR2.Files.EndFileNewline"
         },
-        "total": 32078,
+        "total": 31945,
         "total_repos": 50,
         "values": {
-            "1": 29368,
-            "0": 2127,
+            "1": 29407,
+            "0": 1955,
             "2": 539,
             "3": 36,
             "4": 7,
@@ -933,18 +1049,18 @@
         },
         "winner": 1
     },
-    "Adjacent assignments aligned": {
+    "File extension for class files": {
         "sniffs": {
-            "0": "Generic.Formatting.MultipleStatementAlignment"
+            "0": "Squiz.Files.FileExtension"
         },
-        "total": 399388,
+        "total": 26516,
         "total_repos": 50,
         "values": {
-            "yes": 317949,
-            "no": 81439
+            ".php": 26515,
+            ".inc": 1
         },
         "repos": {
-            "yes": {
+            ".php": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -967,7 +1083,281 @@
                 "19": "swiftmailer\/swiftmailer",
                 "20": "doctrine\/doctrine2",
                 "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                ".php": 26118,
+                ".inc": 1
+            },
+            "2013-11-13": {
+                ".php": 26064,
+                ".inc": 1
+            },
+            "2013-11-20": {
+                ".php": 26044,
+                ".inc": 1
+            },
+            "2013-11-27": {
+                ".php": 26154,
+                ".inc": 1
+            },
+            "2013-12-04": {
+                ".php": 26140,
+                ".inc": 1
+            },
+            "2013-12-11": {
+                ".php": 26303,
+                ".inc": 1
+            },
+            "2013-12-18": {
+                ".php": 26322,
+                ".inc": 1
+            },
+            "2013-12-25": {
+                ".php": 26221,
+                ".inc": 1
+            },
+            "2014-01-05": {
+                ".php": 26298,
+                ".inc": 1
+            },
+            "2014-01-12": {
+                ".php": 26342,
+                ".inc": 1
+            },
+            "2014-01-19": {
+                ".php": 26394,
+                ".inc": 1
+            },
+            "2014-01-26": {
+                ".php": 26536,
+                ".inc": 1
+            },
+            "2014-02-02": {
+                ".php": 26743,
+                ".inc": 1
+            },
+            "2014-02-09": {
+                ".php": 26839,
+                ".inc": 1
+            },
+            "2014-02-16": {
+                ".php": 26784,
+                ".inc": 1
+            },
+            "2014-02-23": {
+                ".php": 26995,
+                ".inc": 1
+            },
+            "2014-03-02": {
+                ".php": 27044,
+                ".inc": 1
+            }
+        },
+        "winner": ".php"
+    },
+    "PHP closing tag at EOF": {
+        "sniffs": {
+            "0": "Zend.Files.ClosingTag"
+        },
+        "total": 33027,
+        "total_repos": 50,
+        "values": {
+            "yes": 3142,
+            "no": 29885
+        },
+        "repos": {
+            "yes": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "phpmyadmin\/phpmyadmin",
+                "2": "sugarcrm\/sugarcrm_dev"
+            },
+            "no": {
+                "0": "sebastianbergmann\/phpunit",
+                "1": "sebastianbergmann\/php-code-coverage",
+                "2": "symfony\/symfony",
+                "3": "laravel\/framework",
+                "4": "yiisoft\/yii2",
+                "5": "guzzle\/guzzle",
+                "6": "fabpot\/Twig",
+                "7": "EllisLab\/CodeIgniter",
+                "8": "piwik\/piwik",
+                "9": "codeguy\/Slim",
+                "10": "PHPMailer\/PHPMailer",
+                "11": "padraic\/mockery",
+                "12": "joomla\/joomla-cms",
+                "13": "composer\/composer",
+                "14": "cakephp\/cakephp",
+                "15": "google\/google-api-php-client",
+                "16": "aws\/aws-sdk-php",
+                "17": "Seldaek\/monolog",
+                "18": "swiftmailer\/swiftmailer",
+                "19": "doctrine\/doctrine2",
+                "20": "zendframework\/zf2",
+                "21": "pyrocms\/pyrocms",
                 "22": "WordPress\/WordPress",
+                "23": "drupal\/drupal",
+                "24": "jackalope\/jackalope",
+                "25": "TYPO3\/TYPO3.CMS",
+                "26": "ezsystems\/ezpublish-kernel",
+                "27": "pear\/pear-core",
+                "28": "solarphp\/core",
+                "29": "propelorm\/Propel",
+                "30": "ppi\/framework",
+                "31": "phpDocumentor\/phpDocumentor2",
+                "32": "phpbb\/phpbb",
+                "33": "fruux\/sabre-dav",
+                "34": "wikimedia\/mediawiki-core",
+                "35": "zikula\/core",
+                "36": "tedivm\/Stash",
+                "37": "sculpin\/sculpin",
+                "38": "kriswallsmith\/assetic",
+                "39": "kriswallsmith\/Buzz",
+                "40": "contao\/core",
+                "41": "facebook\/facebook-php-sdk",
+                "42": "chriso\/klein.php",
+                "43": "magento\/magento2",
+                "44": "cboden\/Ratchet",
+                "45": "reactphp\/react",
+                "46": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "yes": 3409,
+                "no": 29460
+            },
+            "2013-11-13": {
+                "yes": 3411,
+                "no": 29402
+            },
+            "2013-11-20": {
+                "yes": 3410,
+                "no": 29383
+            },
+            "2013-11-27": {
+                "yes": 3415,
+                "no": 29493
+            },
+            "2013-12-04": {
+                "yes": 3412,
+                "no": 29478
+            },
+            "2013-12-11": {
+                "yes": 3414,
+                "no": 29638
+            },
+            "2013-12-18": {
+                "yes": 3418,
+                "no": 29662
+            },
+            "2013-12-25": {
+                "yes": 3424,
+                "no": 29567
+            },
+            "2014-01-05": {
+                "yes": 3436,
+                "no": 29638
+            },
+            "2014-01-12": {
+                "yes": 3444,
+                "no": 29697
+            },
+            "2014-01-19": {
+                "yes": 3434,
+                "no": 29765
+            },
+            "2014-01-26": {
+                "yes": 3436,
+                "no": 29908
+            },
+            "2014-02-02": {
+                "yes": 3432,
+                "no": 30131
+            },
+            "2014-02-09": {
+                "yes": 3432,
+                "no": 30227
+            },
+            "2014-02-16": {
+                "yes": 3435,
+                "no": 30165
+            },
+            "2014-02-23": {
+                "yes": 3433,
+                "no": 30375
+            },
+            "2014-03-02": {
+                "yes": 3434,
+                "no": 30439
+            }
+        },
+        "winner": "no"
+    },
+    "Control structure defined inline": {
+        "sniffs": {
+            "0": "Generic.ControlStructures.InlineControlStructure"
+        },
+        "total": 303827,
+        "total_repos": 50,
+        "values": {
+            "no": 290192,
+            "yes": 13635
+        },
+        "repos": {
+            "no": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
                 "23": "drupal\/drupal",
                 "24": "phpmyadmin\/phpmyadmin",
                 "25": "jackalope\/jackalope",
@@ -995,93 +1385,1029 @@
                 "47": "reactphp\/react",
                 "48": "silverstripe\/silverstripe-framework"
             },
-            "no": {
-                "0": "pyrocms\/pyrocms"
+            "yes": {
+                "0": "WordPress\/WordPress"
             }
         },
         "trends": {
             "2013-11-06": {
-                "yes": 328589,
-                "no": 90646
+                "no": 297581,
+                "yes": 22106
             },
             "2013-11-13": {
-                "yes": 329074,
-                "no": 90711
+                "no": 297126,
+                "yes": 22131
             },
             "2013-11-20": {
-                "yes": 329266,
-                "no": 90552
+                "no": 297357,
+                "yes": 21993
             },
             "2013-11-27": {
-                "yes": 330501,
-                "no": 90923
+                "no": 298425,
+                "yes": 21993
             },
             "2013-12-04": {
-                "yes": 330588,
-                "no": 90818
+                "no": 298336,
+                "yes": 21951
             },
             "2013-12-11": {
-                "yes": 331963,
-                "no": 91017
+                "no": 299184,
+                "yes": 21948
             },
             "2013-12-18": {
-                "yes": 332235,
-                "no": 90974
+                "no": 299392,
+                "yes": 22000
             },
             "2013-12-25": {
-                "yes": 332208,
-                "no": 91033
+                "no": 299260,
+                "yes": 22016
             },
             "2014-01-05": {
-                "yes": 332829,
-                "no": 91129
+                "no": 300030,
+                "yes": 21994
             },
             "2014-01-12": {
-                "yes": 333367,
-                "no": 91240
+                "no": 300346,
+                "yes": 21988
             },
             "2014-01-19": {
-                "yes": 333552,
-                "no": 91276
+                "no": 300600,
+                "yes": 21907
             },
             "2014-01-26": {
-                "yes": 334173,
-                "no": 91436
+                "no": 301361,
+                "yes": 21902
             },
             "2014-02-02": {
-                "yes": 334988,
-                "no": 91598
+                "no": 302058,
+                "yes": 21893
             },
             "2014-02-09": {
-                "yes": 335543,
-                "no": 91707
+                "no": 302490,
+                "yes": 21870
             },
             "2014-02-16": {
-                "yes": 335457,
-                "no": 91510
+                "no": 302197,
+                "yes": 21635
             },
             "2014-02-23": {
-                "yes": 336262,
-                "no": 91639
+                "no": 302949,
+                "yes": 21589
             },
             "2014-03-02": {
-                "yes": 336540,
-                "no": 91647
+                "no": 303037,
+                "yes": 21557
             }
         },
-        "winner": "yes"
+        "winner": "no"
+    },
+    "PHP keyword case": {
+        "sniffs": {
+            "0": "Generic.PHP.LowerCaseKeyword"
+        },
+        "total": 1516680,
+        "total_repos": 50,
+        "values": {
+            "lower": 1514609,
+            "mixed": 429,
+            "upper": 1642
+        },
+        "repos": {
+            "lower": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "lower": 1571183,
+                "upper": 1654,
+                "mixed": 487
+            },
+            "2013-11-13": {
+                "lower": 1577534,
+                "upper": 1638,
+                "mixed": 487
+            },
+            "2013-11-20": {
+                "lower": 1578330,
+                "upper": 1637,
+                "mixed": 487
+            },
+            "2013-11-27": {
+                "lower": 1583477,
+                "upper": 1637,
+                "mixed": 472
+            },
+            "2013-12-04": {
+                "lower": 1582813,
+                "upper": 1639,
+                "mixed": 471
+            },
+            "2013-12-11": {
+                "lower": 1590763,
+                "upper": 1640,
+                "mixed": 471
+            },
+            "2013-12-18": {
+                "lower": 1592617,
+                "upper": 1641,
+                "mixed": 471
+            },
+            "2013-12-25": {
+                "lower": 1591375,
+                "upper": 1652,
+                "mixed": 471
+            },
+            "2014-01-05": {
+                "lower": 1595530,
+                "upper": 1654,
+                "mixed": 473
+            },
+            "2014-01-12": {
+                "lower": 1598336,
+                "upper": 1653,
+                "mixed": 471
+            },
+            "2014-01-19": {
+                "lower": 1600062,
+                "upper": 1673,
+                "mixed": 471
+            },
+            "2014-01-26": {
+                "lower": 1604494,
+                "upper": 1679,
+                "mixed": 471
+            },
+            "2014-02-02": {
+                "lower": 1611049,
+                "upper": 1674,
+                "mixed": 431
+            },
+            "2014-02-09": {
+                "lower": 1614368,
+                "upper": 1674,
+                "mixed": 431
+            },
+            "2014-02-16": {
+                "lower": 1612036,
+                "upper": 1699,
+                "mixed": 431
+            },
+            "2014-02-23": {
+                "lower": 1618183,
+                "upper": 1690,
+                "mixed": 431
+            },
+            "2014-03-02": {
+                "lower": 1620292,
+                "upper": 1693,
+                "mixed": 430
+            }
+        },
+        "winner": "lower"
+    },
+    "Spaces after control structure open parenthesis": {
+        "sniffs": {
+            "0": "Squiz.WhiteSpace.ControlStructureSpacing"
+        },
+        "total": 282050,
+        "total_repos": 50,
+        "values": {
+            "0": 245836,
+            "1": 36186,
+            "3": 15,
+            "2": 13
+        },
+        "repos": {
+            "0": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "drupal\/drupal",
+                "24": "phpmyadmin\/phpmyadmin",
+                "25": "jackalope\/jackalope",
+                "26": "TYPO3\/TYPO3.CMS",
+                "27": "pear\/pear-core",
+                "28": "solarphp\/core",
+                "29": "propelorm\/Propel",
+                "30": "ppi\/framework",
+                "31": "phpDocumentor\/phpDocumentor2",
+                "32": "phpbb\/phpbb",
+                "33": "fruux\/sabre-dav",
+                "34": "sugarcrm\/sugarcrm_dev",
+                "35": "zikula\/core",
+                "36": "tedivm\/Stash",
+                "37": "sculpin\/sculpin",
+                "38": "kriswallsmith\/assetic",
+                "39": "kriswallsmith\/Buzz",
+                "40": "contao\/core",
+                "41": "facebook\/facebook-php-sdk",
+                "42": "chriso\/klein.php",
+                "43": "magento\/magento2",
+                "44": "cboden\/Ratchet",
+                "45": "reactphp\/react",
+                "46": "silverstripe\/silverstripe-framework"
+            },
+            "1": {
+                "0": "WordPress\/WordPress",
+                "1": "ezsystems\/ezpublish-kernel",
+                "2": "wikimedia\/mediawiki-core"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "0": 251215,
+                "1": 44887,
+                "3": 45,
+                "2": 16
+            },
+            "2013-11-13": {
+                "0": 250721,
+                "1": 44922,
+                "3": 44,
+                "2": 16
+            },
+            "2013-11-20": {
+                "0": 250860,
+                "1": 44906,
+                "3": 44,
+                "2": 16
+            },
+            "2013-11-27": {
+                "0": 251742,
+                "1": 44973,
+                "3": 44,
+                "2": 16
+            },
+            "2013-12-04": {
+                "0": 251536,
+                "1": 45009,
+                "3": 44,
+                "2": 16
+            },
+            "2013-12-11": {
+                "0": 252320,
+                "1": 45086,
+                "3": 44,
+                "2": 16
+            },
+            "2013-12-18": {
+                "0": 252490,
+                "1": 45182,
+                "3": 44,
+                "2": 16
+            },
+            "2013-12-25": {
+                "0": 252393,
+                "1": 45187,
+                "3": 44,
+                "2": 16
+            },
+            "2014-01-05": {
+                "0": 253026,
+                "1": 45302,
+                "3": 44,
+                "2": 16
+            },
+            "2014-01-12": {
+                "0": 253137,
+                "1": 45409,
+                "3": 44,
+                "2": 17
+            },
+            "2014-01-19": {
+                "0": 253347,
+                "1": 45373,
+                "3": 44,
+                "2": 17
+            },
+            "2014-01-26": {
+                "0": 253911,
+                "1": 45598,
+                "3": 44,
+                "2": 17
+            },
+            "2014-02-02": {
+                "0": 254632,
+                "1": 45632,
+                "3": 44,
+                "2": 17
+            },
+            "2014-02-09": {
+                "0": 254870,
+                "1": 45802,
+                "3": 44,
+                "2": 17
+            },
+            "2014-02-16": {
+                "0": 254811,
+                "1": 45370,
+                "3": 44,
+                "2": 17
+            },
+            "2014-02-23": {
+                "0": 255471,
+                "1": 45471,
+                "3": 45,
+                "2": 17
+            },
+            "2014-03-02": {
+                "0": 255398,
+                "1": 45595,
+                "3": 45,
+                "2": 16
+            }
+        },
+        "winner": 0
+    },
+    "Spaces before control structure close parenthesis": {
+        "sniffs": {
+            "0": "Squiz.WhiteSpace.ControlStructureSpacing"
+        },
+        "total": 282050,
+        "total_repos": 50,
+        "values": {
+            "0": 249003,
+            "1": 33013,
+            "2": 33,
+            "3": 1
+        },
+        "repos": {
+            "0": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "drupal\/drupal",
+                "24": "phpmyadmin\/phpmyadmin",
+                "25": "jackalope\/jackalope",
+                "26": "TYPO3\/TYPO3.CMS",
+                "27": "pear\/pear-core",
+                "28": "solarphp\/core",
+                "29": "propelorm\/Propel",
+                "30": "ppi\/framework",
+                "31": "phpDocumentor\/phpDocumentor2",
+                "32": "phpbb\/phpbb",
+                "33": "fruux\/sabre-dav",
+                "34": "sugarcrm\/sugarcrm_dev",
+                "35": "zikula\/core",
+                "36": "tedivm\/Stash",
+                "37": "sculpin\/sculpin",
+                "38": "kriswallsmith\/assetic",
+                "39": "kriswallsmith\/Buzz",
+                "40": "contao\/core",
+                "41": "facebook\/facebook-php-sdk",
+                "42": "chriso\/klein.php",
+                "43": "magento\/magento2",
+                "44": "cboden\/Ratchet",
+                "45": "reactphp\/react",
+                "46": "silverstripe\/silverstripe-framework"
+            },
+            "1": {
+                "0": "WordPress\/WordPress",
+                "1": "ezsystems\/ezpublish-kernel",
+                "2": "wikimedia\/mediawiki-core"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "0": 254543,
+                "1": 41559,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-11-13": {
+                "0": 254037,
+                "1": 41605,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-11-20": {
+                "0": 254216,
+                "1": 41549,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-11-27": {
+                "0": 255110,
+                "1": 41604,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-12-04": {
+                "0": 254899,
+                "1": 41645,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-12-11": {
+                "0": 255698,
+                "1": 41707,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-12-18": {
+                "0": 255949,
+                "1": 41722,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2013-12-25": {
+                "0": 255798,
+                "1": 41781,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-01-05": {
+                "0": 256495,
+                "1": 41832,
+                "2": 46,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-01-12": {
+                "0": 256615,
+                "1": 41930,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-01-19": {
+                "0": 256799,
+                "1": 41920,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-01-26": {
+                "0": 257373,
+                "1": 42135,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-02-02": {
+                "0": 258111,
+                "1": 42151,
+                "2": 48,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-02-09": {
+                "0": 258341,
+                "1": 42330,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-02-16": {
+                "0": 258156,
+                "1": 42024,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-02-23": {
+                "0": 258791,
+                "1": 42151,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            },
+            "2014-03-02": {
+                "0": 258706,
+                "1": 42286,
+                "2": 47,
+                "3": 1,
+                "9": 3,
+                "11": 3,
+                "12": 2,
+                "7": 2,
+                "5": 2,
+                "8": 1,
+                "10": 1
+            }
+        },
+        "winner": 0
+    },
+    "Spacing before string concat": {
+        "sniffs": {
+            "0": "Squiz.Strings.ConcatenationSpacing"
+        },
+        "total": 204564,
+        "total_repos": 50,
+        "values": {
+            "0": 35316,
+            "1": 156979,
+            "newline": 12135,
+            "2": 102,
+            "3": 13,
+            "4": 7,
+            "6": 1,
+            "9": 10,
+            "13": 1
+        },
+        "repos": {
+            "0": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "symfony\/symfony",
+                "2": "laravel\/framework",
+                "3": "fabpot\/Twig",
+                "4": "EllisLab\/CodeIgniter",
+                "5": "composer\/composer",
+                "6": "Seldaek\/monolog",
+                "7": "pyrocms\/pyrocms",
+                "8": "jackalope\/jackalope",
+                "9": "sculpin\/sculpin",
+                "10": "kriswallsmith\/assetic",
+                "11": "kriswallsmith\/Buzz",
+                "12": "facebook\/facebook-php-sdk",
+                "13": "reactphp\/react"
+            },
+            "1": {
+                "0": "sebastianbergmann\/phpunit",
+                "1": "sebastianbergmann\/php-code-coverage",
+                "2": "yiisoft\/yii2",
+                "3": "guzzle\/guzzle",
+                "4": "piwik\/piwik",
+                "5": "codeguy\/Slim",
+                "6": "PHPMailer\/PHPMailer",
+                "7": "padraic\/mockery",
+                "8": "joomla\/joomla-cms",
+                "9": "cakephp\/cakephp",
+                "10": "google\/google-api-php-client",
+                "11": "aws\/aws-sdk-php",
+                "12": "swiftmailer\/swiftmailer",
+                "13": "doctrine\/doctrine2",
+                "14": "zendframework\/zf2",
+                "15": "WordPress\/WordPress",
+                "16": "drupal\/drupal",
+                "17": "phpmyadmin\/phpmyadmin",
+                "18": "TYPO3\/TYPO3.CMS",
+                "19": "ezsystems\/ezpublish-kernel",
+                "20": "pear\/pear-core",
+                "21": "solarphp\/core",
+                "22": "propelorm\/Propel",
+                "23": "ppi\/framework",
+                "24": "phpDocumentor\/phpDocumentor2",
+                "25": "phpbb\/phpbb",
+                "26": "fruux\/sabre-dav",
+                "27": "sugarcrm\/sugarcrm_dev",
+                "28": "wikimedia\/mediawiki-core",
+                "29": "zikula\/core",
+                "30": "tedivm\/Stash",
+                "31": "contao\/core",
+                "32": "chriso\/klein.php",
+                "33": "magento\/magento2",
+                "34": "cboden\/Ratchet",
+                "35": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "0": 39106,
+                "1": 166424,
+                "newline": 11643,
+                "2": 110,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-11-13": {
+                "0": 39065,
+                "1": 166391,
+                "newline": 11651,
+                "2": 110,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-11-20": {
+                "0": 39148,
+                "1": 165807,
+                "newline": 11668,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-11-27": {
+                "0": 39284,
+                "1": 166693,
+                "newline": 11728,
+                "2": 108,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-12-04": {
+                "0": 39170,
+                "1": 166782,
+                "newline": 11748,
+                "2": 108,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-12-11": {
+                "0": 39298,
+                "1": 166838,
+                "newline": 11779,
+                "2": 107,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-12-18": {
+                "0": 39300,
+                "1": 166966,
+                "newline": 11924,
+                "2": 110,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2013-12-25": {
+                "0": 39372,
+                "1": 166697,
+                "newline": 11909,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-01-05": {
+                "0": 39293,
+                "1": 166584,
+                "newline": 11928,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-01-12": {
+                "0": 39011,
+                "1": 167034,
+                "newline": 11963,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-01-19": {
+                "0": 39075,
+                "1": 167003,
+                "newline": 11966,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-01-26": {
+                "0": 39256,
+                "1": 166992,
+                "newline": 11730,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-02-02": {
+                "0": 39015,
+                "1": 167032,
+                "newline": 12123,
+                "2": 109,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-02-09": {
+                "0": 39003,
+                "1": 167020,
+                "newline": 12153,
+                "2": 108,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-02-16": {
+                "0": 38620,
+                "1": 167351,
+                "newline": 12136,
+                "2": 108,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-02-23": {
+                "0": 38616,
+                "1": 167462,
+                "newline": 12169,
+                "2": 108,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            },
+            "2014-03-02": {
+                "0": 38616,
+                "1": 167389,
+                "newline": 12208,
+                "2": 107,
+                "3": 15,
+                "4": 8,
+                "6": 2,
+                "9": 13,
+                "5": 1,
+                "7": 1,
+                "11": 1,
+                "13": 1
+            }
+        },
+        "winner": 1
     },
     "Spacing after string concat": {
         "sniffs": {
             "0": "Squiz.Strings.ConcatenationSpacing"
         },
-        "total": 206255,
+        "total": 204564,
         "total_repos": 50,
         "values": {
-            "0": 35624,
-            "1": 152729,
-            "newline": 17544,
-            "2": 261,
+            "0": 34443,
+            "1": 152255,
+            "newline": 17507,
+            "2": 262,
             "8": 12,
             "11": 12,
             "26": 7,
@@ -1570,642 +2896,34 @@
         },
         "winner": 1
     },
-    "Spacing before string concat": {
-        "sniffs": {
-            "0": "Squiz.Strings.ConcatenationSpacing"
-        },
-        "total": 206255,
-        "total_repos": 50,
-        "values": {
-            "0": 36530,
-            "1": 157465,
-            "newline": 12121,
-            "2": 107,
-            "3": 13,
-            "4": 7,
-            "6": 1,
-            "9": 10,
-            "13": 1
-        },
-        "repos": {
-            "0": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "symfony\/symfony",
-                "2": "laravel\/framework",
-                "3": "fabpot\/Twig",
-                "4": "EllisLab\/CodeIgniter",
-                "5": "composer\/composer",
-                "6": "Seldaek\/monolog",
-                "7": "pyrocms\/pyrocms",
-                "8": "jackalope\/jackalope",
-                "9": "sculpin\/sculpin",
-                "10": "kriswallsmith\/assetic",
-                "11": "kriswallsmith\/Buzz",
-                "12": "facebook\/facebook-php-sdk",
-                "13": "reactphp\/react"
-            },
-            "1": {
-                "0": "sebastianbergmann\/phpunit",
-                "1": "sebastianbergmann\/php-code-coverage",
-                "2": "yiisoft\/yii2",
-                "3": "guzzle\/guzzle",
-                "4": "piwik\/piwik",
-                "5": "codeguy\/Slim",
-                "6": "PHPMailer\/PHPMailer",
-                "7": "padraic\/mockery",
-                "8": "joomla\/joomla-cms",
-                "9": "cakephp\/cakephp",
-                "10": "google\/google-api-php-client",
-                "11": "aws\/aws-sdk-php",
-                "12": "swiftmailer\/swiftmailer",
-                "13": "doctrine\/doctrine2",
-                "14": "zendframework\/zf2",
-                "15": "WordPress\/WordPress",
-                "16": "drupal\/drupal",
-                "17": "phpmyadmin\/phpmyadmin",
-                "18": "TYPO3\/TYPO3.CMS",
-                "19": "ezsystems\/ezpublish-kernel",
-                "20": "pear\/pear-core",
-                "21": "solarphp\/core",
-                "22": "propelorm\/Propel",
-                "23": "ppi\/framework",
-                "24": "phpDocumentor\/phpDocumentor2",
-                "25": "phpbb\/phpbb",
-                "26": "fruux\/sabre-dav",
-                "27": "sugarcrm\/sugarcrm_dev",
-                "28": "wikimedia\/mediawiki-core",
-                "29": "zikula\/core",
-                "30": "tedivm\/Stash",
-                "31": "contao\/core",
-                "32": "chriso\/klein.php",
-                "33": "magento\/magento2",
-                "34": "cboden\/Ratchet",
-                "35": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "0": 39106,
-                "1": 166424,
-                "newline": 11643,
-                "2": 110,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-11-13": {
-                "0": 39065,
-                "1": 166391,
-                "newline": 11651,
-                "2": 110,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-11-20": {
-                "0": 39148,
-                "1": 165807,
-                "newline": 11668,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-11-27": {
-                "0": 39284,
-                "1": 166693,
-                "newline": 11728,
-                "2": 108,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-12-04": {
-                "0": 39170,
-                "1": 166782,
-                "newline": 11748,
-                "2": 108,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-12-11": {
-                "0": 39298,
-                "1": 166838,
-                "newline": 11779,
-                "2": 107,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-12-18": {
-                "0": 39300,
-                "1": 166966,
-                "newline": 11924,
-                "2": 110,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2013-12-25": {
-                "0": 39372,
-                "1": 166697,
-                "newline": 11909,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-01-05": {
-                "0": 39293,
-                "1": 166584,
-                "newline": 11928,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-01-12": {
-                "0": 39011,
-                "1": 167034,
-                "newline": 11963,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-01-19": {
-                "0": 39075,
-                "1": 167003,
-                "newline": 11966,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-01-26": {
-                "0": 39256,
-                "1": 166992,
-                "newline": 11730,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-02-02": {
-                "0": 39015,
-                "1": 167032,
-                "newline": 12123,
-                "2": 109,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-02-09": {
-                "0": 39003,
-                "1": 167020,
-                "newline": 12153,
-                "2": 108,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-02-16": {
-                "0": 38620,
-                "1": 167351,
-                "newline": 12136,
-                "2": 108,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-02-23": {
-                "0": 38616,
-                "1": 167462,
-                "newline": 12169,
-                "2": 108,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            },
-            "2014-03-02": {
-                "0": 38616,
-                "1": 167389,
-                "newline": 12208,
-                "2": 107,
-                "3": 15,
-                "4": 8,
-                "6": 2,
-                "9": 13,
-                "5": 1,
-                "7": 1,
-                "11": 1,
-                "13": 1
-            }
-        },
-        "winner": 1
-    },
-    "Spaces before control structure close parenthesis": {
-        "sniffs": {
-            "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-        },
-        "total": 287088,
-        "total_repos": 50,
-        "values": {
-            "0": 253621,
-            "1": 33433,
-            "2": 33,
-            "3": 1
-        },
-        "repos": {
-            "0": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "drupal\/drupal",
-                "24": "phpmyadmin\/phpmyadmin",
-                "25": "jackalope\/jackalope",
-                "26": "TYPO3\/TYPO3.CMS",
-                "27": "pear\/pear-core",
-                "28": "solarphp\/core",
-                "29": "propelorm\/Propel",
-                "30": "ppi\/framework",
-                "31": "phpDocumentor\/phpDocumentor2",
-                "32": "phpbb\/phpbb",
-                "33": "fruux\/sabre-dav",
-                "34": "sugarcrm\/sugarcrm_dev",
-                "35": "zikula\/core",
-                "36": "tedivm\/Stash",
-                "37": "sculpin\/sculpin",
-                "38": "kriswallsmith\/assetic",
-                "39": "kriswallsmith\/Buzz",
-                "40": "contao\/core",
-                "41": "facebook\/facebook-php-sdk",
-                "42": "chriso\/klein.php",
-                "43": "magento\/magento2",
-                "44": "cboden\/Ratchet",
-                "45": "reactphp\/react",
-                "46": "silverstripe\/silverstripe-framework"
-            },
-            "1": {
-                "0": "WordPress\/WordPress",
-                "1": "ezsystems\/ezpublish-kernel",
-                "2": "wikimedia\/mediawiki-core"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "0": 254543,
-                "1": 41559,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-11-13": {
-                "0": 254037,
-                "1": 41605,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-11-20": {
-                "0": 254216,
-                "1": 41549,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-11-27": {
-                "0": 255110,
-                "1": 41604,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-12-04": {
-                "0": 254899,
-                "1": 41645,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-12-11": {
-                "0": 255698,
-                "1": 41707,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-12-18": {
-                "0": 255949,
-                "1": 41722,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2013-12-25": {
-                "0": 255798,
-                "1": 41781,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-01-05": {
-                "0": 256495,
-                "1": 41832,
-                "2": 46,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-01-12": {
-                "0": 256615,
-                "1": 41930,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-01-19": {
-                "0": 256799,
-                "1": 41920,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-01-26": {
-                "0": 257373,
-                "1": 42135,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-02-02": {
-                "0": 258111,
-                "1": 42151,
-                "2": 48,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-02-09": {
-                "0": 258341,
-                "1": 42330,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-02-16": {
-                "0": 258156,
-                "1": 42024,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-02-23": {
-                "0": 258791,
-                "1": 42151,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            },
-            "2014-03-02": {
-                "0": 258706,
-                "1": 42286,
-                "2": 47,
-                "3": 1,
-                "9": 3,
-                "11": 3,
-                "12": 2,
-                "7": 2,
-                "5": 2,
-                "8": 1,
-                "10": 1
-            }
-        },
-        "winner": 0
-    },
     "Space before operator": {
         "sniffs": {
             "0": "Squiz.WhiteSpace.OperatorSpacing"
         },
-        "total": 221002,
+        "total": 217740,
         "total_repos": 50,
         "values": {
-            "1": 183373,
-            "0": 33239,
+            "1": 181055,
+            "0": 32318,
             "22": 19,
             "15": 18,
             "19": 11,
-            "29": 14,
             "24": 10,
+            "29": 14,
             "5": 107,
             "17": 10,
-            "newline": 3562,
             "10": 38,
             "4": 114,
             "13": 21,
-            "28": 4,
-            "9": 47,
             "21": 3,
+            "9": 47,
+            "28": 4,
             "14": 12,
             "8": 35,
             "16": 5,
             "7": 32,
-            "2": 149,
+            "2": 144,
+            "newline": 3544,
             "3": 85,
             "6": 49,
             "12": 14,
@@ -2766,565 +3484,17 @@
         },
         "winner": 1
     },
-    "EOL char": {
-        "sniffs": {
-            "0": "Generic.Files.LineEndings"
-        },
-        "total": 33164,
-        "total_repos": 50,
-        "values": {
-            "\\n": 33050,
-            "\\r\\n": 114
-        },
-        "repos": {
-            "\\n": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "\\n": 32670,
-                "\\r\\n": 199
-            },
-            "2013-11-13": {
-                "\\n": 32608,
-                "\\r\\n": 205
-            },
-            "2013-11-20": {
-                "\\n": 32594,
-                "\\r\\n": 199
-            },
-            "2013-11-27": {
-                "\\n": 32709,
-                "\\r\\n": 199
-            },
-            "2013-12-04": {
-                "\\n": 32688,
-                "\\r\\n": 202
-            },
-            "2013-12-11": {
-                "\\n": 32849,
-                "\\r\\n": 203
-            },
-            "2013-12-18": {
-                "\\n": 32877,
-                "\\r\\n": 203
-            },
-            "2013-12-25": {
-                "\\n": 32787,
-                "\\r\\n": 204
-            },
-            "2014-01-05": {
-                "\\n": 32874,
-                "\\r\\n": 200
-            },
-            "2014-01-12": {
-                "\\n": 32939,
-                "\\r\\n": 202
-            },
-            "2014-01-19": {
-                "\\n": 32997,
-                "\\r\\n": 202
-            },
-            "2014-01-26": {
-                "\\n": 33142,
-                "\\r\\n": 202
-            },
-            "2014-02-02": {
-                "\\n": 33361,
-                "\\r\\n": 202
-            },
-            "2014-02-09": {
-                "\\n": 33457,
-                "\\r\\n": 202
-            },
-            "2014-02-16": {
-                "\\n": 33396,
-                "\\r\\n": 204
-            },
-            "2014-02-23": {
-                "\\n": 33605,
-                "\\r\\n": 203
-            },
-            "2014-03-02": {
-                "\\n": 33759,
-                "\\r\\n": 114
-            }
-        },
-        "winner": "\\n"
-    },
-    "One class per file": {
-        "sniffs": {
-            "0": "PSR1.Classes.ClassDeclaration"
-        },
-        "total": 30764,
-        "total_repos": 50,
-        "values": {
-            "yes": 26607,
-            "no": 4157
-        },
-        "repos": {
-            "yes": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "aws\/aws-sdk-php",
-                "17": "Seldaek\/monolog",
-                "18": "swiftmailer\/swiftmailer",
-                "19": "doctrine\/doctrine2",
-                "20": "zendframework\/zf2",
-                "21": "pyrocms\/pyrocms",
-                "22": "WordPress\/WordPress",
-                "23": "drupal\/drupal",
-                "24": "phpmyadmin\/phpmyadmin",
-                "25": "jackalope\/jackalope",
-                "26": "TYPO3\/TYPO3.CMS",
-                "27": "ezsystems\/ezpublish-kernel",
-                "28": "pear\/pear-core",
-                "29": "solarphp\/core",
-                "30": "propelorm\/Propel",
-                "31": "ppi\/framework",
-                "32": "phpDocumentor\/phpDocumentor2",
-                "33": "phpbb\/phpbb",
-                "34": "fruux\/sabre-dav",
-                "35": "sugarcrm\/sugarcrm_dev",
-                "36": "wikimedia\/mediawiki-core",
-                "37": "zikula\/core",
-                "38": "tedivm\/Stash",
-                "39": "sculpin\/sculpin",
-                "40": "kriswallsmith\/assetic",
-                "41": "kriswallsmith\/Buzz",
-                "42": "contao\/core",
-                "43": "facebook\/facebook-php-sdk",
-                "44": "chriso\/klein.php",
-                "45": "magento\/magento2",
-                "46": "cboden\/Ratchet",
-                "47": "reactphp\/react",
-                "48": "silverstripe\/silverstripe-framework"
-            },
-            "no": {
-                "0": "google\/google-api-php-client"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "yes": 26107,
-                "no": 4289
-            },
-            "2013-11-13": {
-                "yes": 26053,
-                "no": 4537
-            },
-            "2013-11-20": {
-                "yes": 26029,
-                "no": 4547
-            },
-            "2013-11-27": {
-                "yes": 26139,
-                "no": 4536
-            },
-            "2013-12-04": {
-                "yes": 26126,
-                "no": 4527
-            },
-            "2013-12-11": {
-                "yes": 26288,
-                "no": 4578
-            },
-            "2013-12-18": {
-                "yes": 26307,
-                "no": 4576
-            },
-            "2013-12-25": {
-                "yes": 26206,
-                "no": 4576
-            },
-            "2014-01-05": {
-                "yes": 26283,
-                "no": 4577
-            },
-            "2014-01-12": {
-                "yes": 26328,
-                "no": 4590
-            },
-            "2014-01-19": {
-                "yes": 26380,
-                "no": 4593
-            },
-            "2014-01-26": {
-                "yes": 26520,
-                "no": 4589
-            },
-            "2014-02-02": {
-                "yes": 26726,
-                "no": 4592
-            },
-            "2014-02-09": {
-                "yes": 26822,
-                "no": 4591
-            },
-            "2014-02-16": {
-                "yes": 26768,
-                "no": 4616
-            },
-            "2014-02-23": {
-                "yes": 26978,
-                "no": 4620
-            },
-            "2014-03-02": {
-                "yes": 27027,
-                "no": 4622
-            }
-        },
-        "winner": "yes"
-    },
-    "Multiple statements on same line": {
-        "sniffs": {
-            "0": "Generic.Formatting.DisallowMultipleStatements"
-        },
-        "total": 1118581,
-        "total_repos": 50,
-        "values": {
-            "no": 1115747,
-            "yes": 2834
-        },
-        "repos": {
-            "no": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "no": 1181616,
-                "yes": 3295
-            },
-            "2013-11-13": {
-                "no": 1183544,
-                "yes": 3295
-            },
-            "2013-11-20": {
-                "no": 1183021,
-                "yes": 3312
-            },
-            "2013-11-27": {
-                "no": 1186362,
-                "yes": 3285
-            },
-            "2013-12-04": {
-                "no": 1186054,
-                "yes": 3283
-            },
-            "2013-12-11": {
-                "no": 1190638,
-                "yes": 3275
-            },
-            "2013-12-18": {
-                "no": 1191449,
-                "yes": 3274
-            },
-            "2013-12-25": {
-                "no": 1190665,
-                "yes": 3276
-            },
-            "2014-01-05": {
-                "no": 1193242,
-                "yes": 3302
-            },
-            "2014-01-12": {
-                "no": 1195058,
-                "yes": 3275
-            },
-            "2014-01-19": {
-                "no": 1195888,
-                "yes": 3277
-            },
-            "2014-01-26": {
-                "no": 1198505,
-                "yes": 3282
-            },
-            "2014-02-02": {
-                "no": 1202172,
-                "yes": 3283
-            },
-            "2014-02-09": {
-                "no": 1204473,
-                "yes": 3283
-            },
-            "2014-02-16": {
-                "no": 1203609,
-                "yes": 3281
-            },
-            "2014-02-23": {
-                "no": 1207095,
-                "yes": 3277
-            },
-            "2014-03-02": {
-                "no": 1208410,
-                "yes": 3272
-            }
-        },
-        "winner": "no"
-    },
-    "Class defined in namespace": {
-        "sniffs": {
-            "0": "PSR1.Classes.ClassDeclaration"
-        },
-        "total": 30764,
-        "total_repos": 50,
-        "values": {
-            "no": 11138,
-            "yes": 19626
-        },
-        "repos": {
-            "no": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "fabpot\/Twig",
-                "4": "EllisLab\/CodeIgniter",
-                "5": "PHPMailer\/PHPMailer",
-                "6": "joomla\/joomla-cms",
-                "7": "cakephp\/cakephp",
-                "8": "google\/google-api-php-client",
-                "9": "swiftmailer\/swiftmailer",
-                "10": "pyrocms\/pyrocms",
-                "11": "WordPress\/WordPress",
-                "12": "phpmyadmin\/phpmyadmin",
-                "13": "pear\/pear-core",
-                "14": "solarphp\/core",
-                "15": "propelorm\/Propel",
-                "16": "sugarcrm\/sugarcrm_dev",
-                "17": "wikimedia\/mediawiki-core",
-                "18": "facebook\/facebook-php-sdk",
-                "19": "silverstripe\/silverstripe-framework"
-            },
-            "yes": {
-                "0": "symfony\/symfony",
-                "1": "laravel\/framework",
-                "2": "yiisoft\/yii2",
-                "3": "guzzle\/guzzle",
-                "4": "piwik\/piwik",
-                "5": "codeguy\/Slim",
-                "6": "padraic\/mockery",
-                "7": "composer\/composer",
-                "8": "aws\/aws-sdk-php",
-                "9": "Seldaek\/monolog",
-                "10": "doctrine\/doctrine2",
-                "11": "zendframework\/zf2",
-                "12": "drupal\/drupal",
-                "13": "jackalope\/jackalope",
-                "14": "TYPO3\/TYPO3.CMS",
-                "15": "ezsystems\/ezpublish-kernel",
-                "16": "ppi\/framework",
-                "17": "phpDocumentor\/phpDocumentor2",
-                "18": "phpbb\/phpbb",
-                "19": "fruux\/sabre-dav",
-                "20": "zikula\/core",
-                "21": "tedivm\/Stash",
-                "22": "sculpin\/sculpin",
-                "23": "kriswallsmith\/assetic",
-                "24": "kriswallsmith\/Buzz",
-                "25": "contao\/core",
-                "26": "chriso\/klein.php",
-                "27": "magento\/magento2",
-                "28": "cboden\/Ratchet",
-                "29": "reactphp\/react"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "no": 11675,
-                "yes": 18721
-            },
-            "2013-11-13": {
-                "no": 11931,
-                "yes": 18659
-            },
-            "2013-11-20": {
-                "no": 12129,
-                "yes": 18447
-            },
-            "2013-11-27": {
-                "no": 11931,
-                "yes": 18744
-            },
-            "2013-12-04": {
-                "no": 11931,
-                "yes": 18722
-            },
-            "2013-12-11": {
-                "no": 12004,
-                "yes": 18862
-            },
-            "2013-12-18": {
-                "no": 12128,
-                "yes": 18755
-            },
-            "2013-12-25": {
-                "no": 12021,
-                "yes": 18761
-            },
-            "2014-01-05": {
-                "no": 12027,
-                "yes": 18833
-            },
-            "2014-01-12": {
-                "no": 12042,
-                "yes": 18876
-            },
-            "2014-01-19": {
-                "no": 12042,
-                "yes": 18931
-            },
-            "2014-01-26": {
-                "no": 12031,
-                "yes": 19078
-            },
-            "2014-02-02": {
-                "no": 12038,
-                "yes": 19280
-            },
-            "2014-02-09": {
-                "no": 12038,
-                "yes": 19375
-            },
-            "2014-02-16": {
-                "no": 12078,
-                "yes": 19306
-            },
-            "2014-02-23": {
-                "no": 12081,
-                "yes": 19517
-            },
-            "2014-03-02": {
-                "no": 12098,
-                "yes": 19551
-            }
-        },
-        "winner": "yes"
-    },
     "Space after operator": {
         "sniffs": {
             "0": "Squiz.WhiteSpace.OperatorSpacing"
         },
-        "total": 1160466,
+        "total": 1146634,
         "total_repos": 50,
         "values": {
-            "1": 1122354,
-            "0": 31982,
-            "2": 1742,
-            "newline": 4133,
+            "1": 1109465,
+            "0": 31115,
+            "2": 1694,
+            "newline": 4105,
             "3": 74,
             "4": 89,
             "5": 18,
@@ -3908,272 +4078,16 @@
         },
         "winner": 1
     },
-    "CamelCase class name": {
-        "sniffs": {
-            "0": "Squiz.Classes.ValidClassName"
-        },
-        "total": 30742,
-        "total_repos": 50,
-        "values": {
-            "no": 7646,
-            "yes": 23096
-        },
-        "repos": {
-            "no": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "fabpot\/Twig",
-                "4": "EllisLab\/CodeIgniter",
-                "5": "google\/google-api-php-client",
-                "6": "swiftmailer\/swiftmailer",
-                "7": "pyrocms\/pyrocms",
-                "8": "WordPress\/WordPress",
-                "9": "phpmyadmin\/phpmyadmin",
-                "10": "pear\/pear-core",
-                "11": "solarphp\/core",
-                "12": "phpbb\/phpbb"
-            },
-            "yes": {
-                "0": "symfony\/symfony",
-                "1": "laravel\/framework",
-                "2": "yiisoft\/yii2",
-                "3": "guzzle\/guzzle",
-                "4": "piwik\/piwik",
-                "5": "codeguy\/Slim",
-                "6": "PHPMailer\/PHPMailer",
-                "7": "padraic\/mockery",
-                "8": "joomla\/joomla-cms",
-                "9": "composer\/composer",
-                "10": "cakephp\/cakephp",
-                "11": "aws\/aws-sdk-php",
-                "12": "Seldaek\/monolog",
-                "13": "doctrine\/doctrine2",
-                "14": "zendframework\/zf2",
-                "15": "drupal\/drupal",
-                "16": "jackalope\/jackalope",
-                "17": "TYPO3\/TYPO3.CMS",
-                "18": "ezsystems\/ezpublish-kernel",
-                "19": "propelorm\/Propel",
-                "20": "ppi\/framework",
-                "21": "phpDocumentor\/phpDocumentor2",
-                "22": "fruux\/sabre-dav",
-                "23": "sugarcrm\/sugarcrm_dev",
-                "24": "wikimedia\/mediawiki-core",
-                "25": "zikula\/core",
-                "26": "tedivm\/Stash",
-                "27": "sculpin\/sculpin",
-                "28": "kriswallsmith\/assetic",
-                "29": "kriswallsmith\/Buzz",
-                "30": "contao\/core",
-                "31": "facebook\/facebook-php-sdk",
-                "32": "chriso\/klein.php",
-                "33": "magento\/magento2",
-                "34": "cboden\/Ratchet",
-                "35": "reactphp\/react",
-                "36": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "no": 7356,
-                "yes": 23040
-            },
-            "2013-11-13": {
-                "no": 7606,
-                "yes": 22984
-            },
-            "2013-11-20": {
-                "no": 7522,
-                "yes": 23054
-            },
-            "2013-11-27": {
-                "no": 7593,
-                "yes": 23082
-            },
-            "2013-12-04": {
-                "no": 7601,
-                "yes": 23052
-            },
-            "2013-12-11": {
-                "no": 7677,
-                "yes": 23189
-            },
-            "2013-12-18": {
-                "no": 7687,
-                "yes": 23196
-            },
-            "2013-12-25": {
-                "no": 7680,
-                "yes": 23102
-            },
-            "2014-01-05": {
-                "no": 7653,
-                "yes": 23207
-            },
-            "2014-01-12": {
-                "no": 7698,
-                "yes": 23220
-            },
-            "2014-01-19": {
-                "no": 7713,
-                "yes": 23260
-            },
-            "2014-01-26": {
-                "no": 7704,
-                "yes": 23405
-            },
-            "2014-02-02": {
-                "no": 7705,
-                "yes": 23613
-            },
-            "2014-02-09": {
-                "no": 7731,
-                "yes": 23682
-            },
-            "2014-02-16": {
-                "no": 7777,
-                "yes": 23607
-            },
-            "2014-02-23": {
-                "no": 7779,
-                "yes": 23819
-            },
-            "2014-03-02": {
-                "no": 7798,
-                "yes": 23851
-            }
-        },
-        "winner": "yes"
-    },
-    "PHP short open tag used": {
-        "sniffs": {
-            "0": "Generic.PHP.DisallowShortOpenTag"
-        },
-        "total": 56319,
-        "total_repos": 50,
-        "values": {
-            "no": 56319
-        },
-        "repos": {
-            "no": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "no": 59010
-            },
-            "2013-11-13": {
-                "no": 58953
-            },
-            "2013-11-20": {
-                "no": 58878
-            },
-            "2013-11-27": {
-                "no": 58989
-            },
-            "2013-12-04": {
-                "no": 58865
-            },
-            "2013-12-11": {
-                "no": 59110
-            },
-            "2013-12-18": {
-                "no": 59137
-            },
-            "2013-12-25": {
-                "no": 59080
-            },
-            "2014-01-05": {
-                "no": 59208
-            },
-            "2014-01-12": {
-                "no": 59409
-            },
-            "2014-01-19": {
-                "no": 59468
-            },
-            "2014-01-26": {
-                "no": 59673
-            },
-            "2014-02-02": {
-                "no": 59942
-            },
-            "2014-02-09": {
-                "no": 60019
-            },
-            "2014-02-16": {
-                "no": 59986
-            },
-            "2014-02-23": {
-                "no": 60191
-            },
-            "2014-03-02": {
-                "no": 60276
-            }
-        },
-        "winner": "no"
-    },
     "PHP constant case": {
         "sniffs": {
             "0": "Generic.PHP.LowerCaseConstant"
         },
-        "total": 185120,
+        "total": 181886,
         "total_repos": 50,
         "values": {
-            "lower": 158248,
-            "upper": 26863,
-            "mixed": 9
+            "lower": 155254,
+            "upper": 26628,
+            "mixed": 4
         },
         "repos": {
             "lower": {
@@ -4320,598 +4234,702 @@
         },
         "winner": "lower"
     },
-    "Spacing before object operator": {
+    "Multiple statements on same line": {
         "sniffs": {
-            "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
+            "0": "Generic.Formatting.DisallowMultipleStatements"
         },
-        "total": 807957,
+        "total": 1103279,
         "total_repos": 50,
         "values": {
-            "0": 784424,
-            "newline": 23485,
-            "1": 48
-        },
-        "repos": {
-            "0": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "0": 827370,
-                "newline": 23876,
-                "1": 51
-            },
-            "2013-11-13": {
-                "0": 828858,
-                "newline": 23877,
-                "1": 51
-            },
-            "2013-11-20": {
-                "0": 827688,
-                "newline": 23789,
-                "1": 51
-            },
-            "2013-11-27": {
-                "0": 832802,
-                "newline": 23800,
-                "1": 50
-            },
-            "2013-12-04": {
-                "0": 832286,
-                "newline": 23734,
-                "1": 50
-            },
-            "2013-12-11": {
-                "0": 835408,
-                "newline": 24194,
-                "1": 50
-            },
-            "2013-12-18": {
-                "0": 835944,
-                "newline": 24130,
-                "1": 50
-            },
-            "2013-12-25": {
-                "0": 835808,
-                "newline": 24086,
-                "1": 50
-            },
-            "2014-01-05": {
-                "0": 838840,
-                "newline": 24137,
-                "1": 50
-            },
-            "2014-01-12": {
-                "0": 840337,
-                "newline": 24080,
-                "1": 50
-            },
-            "2014-01-19": {
-                "0": 841500,
-                "newline": 24123,
-                "1": 50
-            },
-            "2014-01-26": {
-                "0": 843400,
-                "newline": 24248,
-                "1": 48
-            },
-            "2014-02-02": {
-                "0": 845687,
-                "newline": 24365,
-                "1": 48
-            },
-            "2014-02-09": {
-                "0": 846858,
-                "newline": 24330,
-                "1": 46
-            },
-            "2014-02-16": {
-                "0": 845716,
-                "newline": 24195,
-                "1": 47
-            },
-            "2014-02-23": {
-                "0": 848226,
-                "newline": 24359,
-                "1": 48
-            },
-            "2014-03-02": {
-                "0": 849436,
-                "newline": 24495,
-                "1": 48
-            }
-        },
-        "winner": 0
-    },
-    "File extension for class files": {
-        "sniffs": {
-            "0": "Squiz.Files.FileExtension"
-        },
-        "total": 26607,
-        "total_repos": 50,
-        "values": {
-            ".php": 26606,
-            ".inc": 1
-        },
-        "repos": {
-            ".php": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                ".php": 26118,
-                ".inc": 1
-            },
-            "2013-11-13": {
-                ".php": 26064,
-                ".inc": 1
-            },
-            "2013-11-20": {
-                ".php": 26044,
-                ".inc": 1
-            },
-            "2013-11-27": {
-                ".php": 26154,
-                ".inc": 1
-            },
-            "2013-12-04": {
-                ".php": 26140,
-                ".inc": 1
-            },
-            "2013-12-11": {
-                ".php": 26303,
-                ".inc": 1
-            },
-            "2013-12-18": {
-                ".php": 26322,
-                ".inc": 1
-            },
-            "2013-12-25": {
-                ".php": 26221,
-                ".inc": 1
-            },
-            "2014-01-05": {
-                ".php": 26298,
-                ".inc": 1
-            },
-            "2014-01-12": {
-                ".php": 26342,
-                ".inc": 1
-            },
-            "2014-01-19": {
-                ".php": 26394,
-                ".inc": 1
-            },
-            "2014-01-26": {
-                ".php": 26536,
-                ".inc": 1
-            },
-            "2014-02-02": {
-                ".php": 26743,
-                ".inc": 1
-            },
-            "2014-02-09": {
-                ".php": 26839,
-                ".inc": 1
-            },
-            "2014-02-16": {
-                ".php": 26784,
-                ".inc": 1
-            },
-            "2014-02-23": {
-                ".php": 26995,
-                ".inc": 1
-            },
-            "2014-03-02": {
-                ".php": 27044,
-                ".inc": 1
-            }
-        },
-        "winner": ".php"
-    },
-    "Spaces after control structure open parenthesis": {
-        "sniffs": {
-            "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-        },
-        "total": 287088,
-        "total_repos": 50,
-        "values": {
-            "0": 250449,
-            "1": 36611,
-            "3": 15,
-            "2": 13
-        },
-        "repos": {
-            "0": {
-                "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "laravel\/framework",
-                "5": "yiisoft\/yii2",
-                "6": "guzzle\/guzzle",
-                "7": "fabpot\/Twig",
-                "8": "EllisLab\/CodeIgniter",
-                "9": "piwik\/piwik",
-                "10": "codeguy\/Slim",
-                "11": "PHPMailer\/PHPMailer",
-                "12": "padraic\/mockery",
-                "13": "joomla\/joomla-cms",
-                "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "drupal\/drupal",
-                "24": "phpmyadmin\/phpmyadmin",
-                "25": "jackalope\/jackalope",
-                "26": "TYPO3\/TYPO3.CMS",
-                "27": "pear\/pear-core",
-                "28": "solarphp\/core",
-                "29": "propelorm\/Propel",
-                "30": "ppi\/framework",
-                "31": "phpDocumentor\/phpDocumentor2",
-                "32": "phpbb\/phpbb",
-                "33": "fruux\/sabre-dav",
-                "34": "sugarcrm\/sugarcrm_dev",
-                "35": "zikula\/core",
-                "36": "tedivm\/Stash",
-                "37": "sculpin\/sculpin",
-                "38": "kriswallsmith\/assetic",
-                "39": "kriswallsmith\/Buzz",
-                "40": "contao\/core",
-                "41": "facebook\/facebook-php-sdk",
-                "42": "chriso\/klein.php",
-                "43": "magento\/magento2",
-                "44": "cboden\/Ratchet",
-                "45": "reactphp\/react",
-                "46": "silverstripe\/silverstripe-framework"
-            },
-            "1": {
-                "0": "WordPress\/WordPress",
-                "1": "ezsystems\/ezpublish-kernel",
-                "2": "wikimedia\/mediawiki-core"
-            }
-        },
-        "trends": {
-            "2013-11-06": {
-                "0": 251215,
-                "1": 44887,
-                "3": 45,
-                "2": 16
-            },
-            "2013-11-13": {
-                "0": 250721,
-                "1": 44922,
-                "3": 44,
-                "2": 16
-            },
-            "2013-11-20": {
-                "0": 250860,
-                "1": 44906,
-                "3": 44,
-                "2": 16
-            },
-            "2013-11-27": {
-                "0": 251742,
-                "1": 44973,
-                "3": 44,
-                "2": 16
-            },
-            "2013-12-04": {
-                "0": 251536,
-                "1": 45009,
-                "3": 44,
-                "2": 16
-            },
-            "2013-12-11": {
-                "0": 252320,
-                "1": 45086,
-                "3": 44,
-                "2": 16
-            },
-            "2013-12-18": {
-                "0": 252490,
-                "1": 45182,
-                "3": 44,
-                "2": 16
-            },
-            "2013-12-25": {
-                "0": 252393,
-                "1": 45187,
-                "3": 44,
-                "2": 16
-            },
-            "2014-01-05": {
-                "0": 253026,
-                "1": 45302,
-                "3": 44,
-                "2": 16
-            },
-            "2014-01-12": {
-                "0": 253137,
-                "1": 45409,
-                "3": 44,
-                "2": 17
-            },
-            "2014-01-19": {
-                "0": 253347,
-                "1": 45373,
-                "3": 44,
-                "2": 17
-            },
-            "2014-01-26": {
-                "0": 253911,
-                "1": 45598,
-                "3": 44,
-                "2": 17
-            },
-            "2014-02-02": {
-                "0": 254632,
-                "1": 45632,
-                "3": 44,
-                "2": 17
-            },
-            "2014-02-09": {
-                "0": 254870,
-                "1": 45802,
-                "3": 44,
-                "2": 17
-            },
-            "2014-02-16": {
-                "0": 254811,
-                "1": 45370,
-                "3": 44,
-                "2": 17
-            },
-            "2014-02-23": {
-                "0": 255471,
-                "1": 45471,
-                "3": 45,
-                "2": 17
-            },
-            "2014-03-02": {
-                "0": 255398,
-                "1": 45595,
-                "3": 45,
-                "2": 16
-            }
-        },
-        "winner": 0
-    },
-    "Brackets around echoed strings": {
-        "sniffs": {
-            "0": "Squiz.Strings.EchoedStrings"
-        },
-        "total": 19596,
-        "total_repos": 34,
-        "values": {
-            "no": 19509,
-            "yes": 87
+            "no": 1100712,
+            "yes": 2567
         },
         "repos": {
             "no": {
                 "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "symfony\/symfony",
-                "2": "laravel\/framework",
-                "3": "yiisoft\/yii2",
-                "4": "fabpot\/Twig",
-                "5": "EllisLab\/CodeIgniter",
-                "6": "piwik\/piwik",
-                "7": "codeguy\/Slim",
-                "8": "PHPMailer\/PHPMailer",
-                "9": "joomla\/joomla-cms",
-                "10": "composer\/composer",
-                "11": "cakephp\/cakephp",
-                "12": "swiftmailer\/swiftmailer",
-                "13": "doctrine\/doctrine2",
-                "14": "zendframework\/zf2",
-                "15": "pyrocms\/pyrocms",
-                "16": "WordPress\/WordPress",
-                "17": "drupal\/drupal",
-                "18": "phpmyadmin\/phpmyadmin",
-                "19": "TYPO3\/TYPO3.CMS",
-                "20": "ezsystems\/ezpublish-kernel",
-                "21": "pear\/pear-core",
-                "22": "solarphp\/core",
-                "23": "propelorm\/Propel",
-                "24": "phpDocumentor\/phpDocumentor2",
-                "25": "phpbb\/phpbb",
-                "26": "fruux\/sabre-dav",
-                "27": "sugarcrm\/sugarcrm_dev",
-                "28": "wikimedia\/mediawiki-core",
-                "29": "zikula\/core",
-                "30": "contao\/core",
-                "31": "chriso\/klein.php",
-                "32": "magento\/magento2",
-                "33": "silverstripe\/silverstripe-framework"
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "pyrocms\/pyrocms",
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
             }
         },
         "trends": {
             "2013-11-06": {
-                "no": 20378,
-                "yes": 96
+                "no": 1181616,
+                "yes": 3295
             },
             "2013-11-13": {
-                "no": 20509,
-                "yes": 94
+                "no": 1183544,
+                "yes": 3295
             },
             "2013-11-20": {
-                "no": 20299,
-                "yes": 95
+                "no": 1183021,
+                "yes": 3312
             },
             "2013-11-27": {
-                "no": 20372,
-                "yes": 95
+                "no": 1186362,
+                "yes": 3285
             },
             "2013-12-04": {
-                "no": 20351,
-                "yes": 95
+                "no": 1186054,
+                "yes": 3283
             },
             "2013-12-11": {
-                "no": 20361,
-                "yes": 95
+                "no": 1190638,
+                "yes": 3275
             },
             "2013-12-18": {
-                "no": 20364,
-                "yes": 94
+                "no": 1191449,
+                "yes": 3274
             },
             "2013-12-25": {
-                "no": 20394,
-                "yes": 95
+                "no": 1190665,
+                "yes": 3276
             },
             "2014-01-05": {
-                "no": 20393,
-                "yes": 95
+                "no": 1193242,
+                "yes": 3302
             },
             "2014-01-12": {
-                "no": 20417,
-                "yes": 95
+                "no": 1195058,
+                "yes": 3275
             },
             "2014-01-19": {
-                "no": 20420,
-                "yes": 95
+                "no": 1195888,
+                "yes": 3277
             },
             "2014-01-26": {
-                "no": 20446,
-                "yes": 95
+                "no": 1198505,
+                "yes": 3282
             },
             "2014-02-02": {
-                "no": 20458,
-                "yes": 95
+                "no": 1202172,
+                "yes": 3283
             },
             "2014-02-09": {
-                "no": 20465,
-                "yes": 95
+                "no": 1204473,
+                "yes": 3283
             },
             "2014-02-16": {
-                "no": 20479,
-                "yes": 95
+                "no": 1203609,
+                "yes": 3281
             },
             "2014-02-23": {
-                "no": 20461,
-                "yes": 95
+                "no": 1207095,
+                "yes": 3277
             },
             "2014-03-02": {
-                "no": 20483,
-                "yes": 95
+                "no": 1208410,
+                "yes": 3272
             }
         },
         "winner": "no"
+    },
+    "One class per file": {
+        "sniffs": {
+            "0": "PSR1.Classes.ClassDeclaration"
+        },
+        "total": 30584,
+        "total_repos": 50,
+        "values": {
+            "yes": 26516,
+            "no": 4068
+        },
+        "repos": {
+            "yes": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "aws\/aws-sdk-php",
+                "17": "Seldaek\/monolog",
+                "18": "swiftmailer\/swiftmailer",
+                "19": "doctrine\/doctrine2",
+                "20": "zendframework\/zf2",
+                "21": "pyrocms\/pyrocms",
+                "22": "WordPress\/WordPress",
+                "23": "drupal\/drupal",
+                "24": "phpmyadmin\/phpmyadmin",
+                "25": "jackalope\/jackalope",
+                "26": "TYPO3\/TYPO3.CMS",
+                "27": "ezsystems\/ezpublish-kernel",
+                "28": "pear\/pear-core",
+                "29": "solarphp\/core",
+                "30": "propelorm\/Propel",
+                "31": "ppi\/framework",
+                "32": "phpDocumentor\/phpDocumentor2",
+                "33": "phpbb\/phpbb",
+                "34": "fruux\/sabre-dav",
+                "35": "sugarcrm\/sugarcrm_dev",
+                "36": "wikimedia\/mediawiki-core",
+                "37": "zikula\/core",
+                "38": "tedivm\/Stash",
+                "39": "sculpin\/sculpin",
+                "40": "kriswallsmith\/assetic",
+                "41": "kriswallsmith\/Buzz",
+                "42": "contao\/core",
+                "43": "facebook\/facebook-php-sdk",
+                "44": "chriso\/klein.php",
+                "45": "magento\/magento2",
+                "46": "cboden\/Ratchet",
+                "47": "reactphp\/react",
+                "48": "silverstripe\/silverstripe-framework"
+            },
+            "no": {
+                "0": "google\/google-api-php-client"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "yes": 26107,
+                "no": 4289
+            },
+            "2013-11-13": {
+                "yes": 26053,
+                "no": 4537
+            },
+            "2013-11-20": {
+                "yes": 26029,
+                "no": 4547
+            },
+            "2013-11-27": {
+                "yes": 26139,
+                "no": 4536
+            },
+            "2013-12-04": {
+                "yes": 26126,
+                "no": 4527
+            },
+            "2013-12-11": {
+                "yes": 26288,
+                "no": 4578
+            },
+            "2013-12-18": {
+                "yes": 26307,
+                "no": 4576
+            },
+            "2013-12-25": {
+                "yes": 26206,
+                "no": 4576
+            },
+            "2014-01-05": {
+                "yes": 26283,
+                "no": 4577
+            },
+            "2014-01-12": {
+                "yes": 26328,
+                "no": 4590
+            },
+            "2014-01-19": {
+                "yes": 26380,
+                "no": 4593
+            },
+            "2014-01-26": {
+                "yes": 26520,
+                "no": 4589
+            },
+            "2014-02-02": {
+                "yes": 26726,
+                "no": 4592
+            },
+            "2014-02-09": {
+                "yes": 26822,
+                "no": 4591
+            },
+            "2014-02-16": {
+                "yes": 26768,
+                "no": 4616
+            },
+            "2014-02-23": {
+                "yes": 26978,
+                "no": 4620
+            },
+            "2014-03-02": {
+                "yes": 27027,
+                "no": 4622
+            }
+        },
+        "winner": "yes"
+    },
+    "Class defined in namespace": {
+        "sniffs": {
+            "0": "PSR1.Classes.ClassDeclaration"
+        },
+        "total": 30584,
+        "total_repos": 50,
+        "values": {
+            "no": 10938,
+            "yes": 19646
+        },
+        "repos": {
+            "no": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "fabpot\/Twig",
+                "4": "EllisLab\/CodeIgniter",
+                "5": "PHPMailer\/PHPMailer",
+                "6": "joomla\/joomla-cms",
+                "7": "cakephp\/cakephp",
+                "8": "google\/google-api-php-client",
+                "9": "swiftmailer\/swiftmailer",
+                "10": "pyrocms\/pyrocms",
+                "11": "WordPress\/WordPress",
+                "12": "phpmyadmin\/phpmyadmin",
+                "13": "pear\/pear-core",
+                "14": "solarphp\/core",
+                "15": "propelorm\/Propel",
+                "16": "sugarcrm\/sugarcrm_dev",
+                "17": "wikimedia\/mediawiki-core",
+                "18": "facebook\/facebook-php-sdk",
+                "19": "silverstripe\/silverstripe-framework"
+            },
+            "yes": {
+                "0": "symfony\/symfony",
+                "1": "laravel\/framework",
+                "2": "yiisoft\/yii2",
+                "3": "guzzle\/guzzle",
+                "4": "piwik\/piwik",
+                "5": "codeguy\/Slim",
+                "6": "padraic\/mockery",
+                "7": "composer\/composer",
+                "8": "aws\/aws-sdk-php",
+                "9": "Seldaek\/monolog",
+                "10": "doctrine\/doctrine2",
+                "11": "zendframework\/zf2",
+                "12": "drupal\/drupal",
+                "13": "jackalope\/jackalope",
+                "14": "TYPO3\/TYPO3.CMS",
+                "15": "ezsystems\/ezpublish-kernel",
+                "16": "ppi\/framework",
+                "17": "phpDocumentor\/phpDocumentor2",
+                "18": "phpbb\/phpbb",
+                "19": "fruux\/sabre-dav",
+                "20": "zikula\/core",
+                "21": "tedivm\/Stash",
+                "22": "sculpin\/sculpin",
+                "23": "kriswallsmith\/assetic",
+                "24": "kriswallsmith\/Buzz",
+                "25": "contao\/core",
+                "26": "chriso\/klein.php",
+                "27": "magento\/magento2",
+                "28": "cboden\/Ratchet",
+                "29": "reactphp\/react"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "no": 11675,
+                "yes": 18721
+            },
+            "2013-11-13": {
+                "no": 11931,
+                "yes": 18659
+            },
+            "2013-11-20": {
+                "no": 12129,
+                "yes": 18447
+            },
+            "2013-11-27": {
+                "no": 11931,
+                "yes": 18744
+            },
+            "2013-12-04": {
+                "no": 11931,
+                "yes": 18722
+            },
+            "2013-12-11": {
+                "no": 12004,
+                "yes": 18862
+            },
+            "2013-12-18": {
+                "no": 12128,
+                "yes": 18755
+            },
+            "2013-12-25": {
+                "no": 12021,
+                "yes": 18761
+            },
+            "2014-01-05": {
+                "no": 12027,
+                "yes": 18833
+            },
+            "2014-01-12": {
+                "no": 12042,
+                "yes": 18876
+            },
+            "2014-01-19": {
+                "no": 12042,
+                "yes": 18931
+            },
+            "2014-01-26": {
+                "no": 12031,
+                "yes": 19078
+            },
+            "2014-02-02": {
+                "no": 12038,
+                "yes": 19280
+            },
+            "2014-02-09": {
+                "no": 12038,
+                "yes": 19375
+            },
+            "2014-02-16": {
+                "no": 12078,
+                "yes": 19306
+            },
+            "2014-02-23": {
+                "no": 12081,
+                "yes": 19517
+            },
+            "2014-03-02": {
+                "no": 12098,
+                "yes": 19551
+            }
+        },
+        "winner": "yes"
+    },
+    "CamelCase class name": {
+        "sniffs": {
+            "0": "Squiz.Classes.ValidClassName"
+        },
+        "total": 30560,
+        "total_repos": 50,
+        "values": {
+            "no": 7453,
+            "yes": 23107
+        },
+        "repos": {
+            "no": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "fabpot\/Twig",
+                "4": "EllisLab\/CodeIgniter",
+                "5": "google\/google-api-php-client",
+                "6": "swiftmailer\/swiftmailer",
+                "7": "pyrocms\/pyrocms",
+                "8": "WordPress\/WordPress",
+                "9": "phpmyadmin\/phpmyadmin",
+                "10": "pear\/pear-core",
+                "11": "solarphp\/core",
+                "12": "phpbb\/phpbb"
+            },
+            "yes": {
+                "0": "symfony\/symfony",
+                "1": "laravel\/framework",
+                "2": "yiisoft\/yii2",
+                "3": "guzzle\/guzzle",
+                "4": "piwik\/piwik",
+                "5": "codeguy\/Slim",
+                "6": "PHPMailer\/PHPMailer",
+                "7": "padraic\/mockery",
+                "8": "joomla\/joomla-cms",
+                "9": "composer\/composer",
+                "10": "cakephp\/cakephp",
+                "11": "aws\/aws-sdk-php",
+                "12": "Seldaek\/monolog",
+                "13": "doctrine\/doctrine2",
+                "14": "zendframework\/zf2",
+                "15": "drupal\/drupal",
+                "16": "jackalope\/jackalope",
+                "17": "TYPO3\/TYPO3.CMS",
+                "18": "ezsystems\/ezpublish-kernel",
+                "19": "propelorm\/Propel",
+                "20": "ppi\/framework",
+                "21": "phpDocumentor\/phpDocumentor2",
+                "22": "fruux\/sabre-dav",
+                "23": "sugarcrm\/sugarcrm_dev",
+                "24": "wikimedia\/mediawiki-core",
+                "25": "zikula\/core",
+                "26": "tedivm\/Stash",
+                "27": "sculpin\/sculpin",
+                "28": "kriswallsmith\/assetic",
+                "29": "kriswallsmith\/Buzz",
+                "30": "contao\/core",
+                "31": "facebook\/facebook-php-sdk",
+                "32": "chriso\/klein.php",
+                "33": "magento\/magento2",
+                "34": "cboden\/Ratchet",
+                "35": "reactphp\/react",
+                "36": "silverstripe\/silverstripe-framework"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "no": 7356,
+                "yes": 23040
+            },
+            "2013-11-13": {
+                "no": 7606,
+                "yes": 22984
+            },
+            "2013-11-20": {
+                "no": 7522,
+                "yes": 23054
+            },
+            "2013-11-27": {
+                "no": 7593,
+                "yes": 23082
+            },
+            "2013-12-04": {
+                "no": 7601,
+                "yes": 23052
+            },
+            "2013-12-11": {
+                "no": 7677,
+                "yes": 23189
+            },
+            "2013-12-18": {
+                "no": 7687,
+                "yes": 23196
+            },
+            "2013-12-25": {
+                "no": 7680,
+                "yes": 23102
+            },
+            "2014-01-05": {
+                "no": 7653,
+                "yes": 23207
+            },
+            "2014-01-12": {
+                "no": 7698,
+                "yes": 23220
+            },
+            "2014-01-19": {
+                "no": 7713,
+                "yes": 23260
+            },
+            "2014-01-26": {
+                "no": 7704,
+                "yes": 23405
+            },
+            "2014-02-02": {
+                "no": 7705,
+                "yes": 23613
+            },
+            "2014-02-09": {
+                "no": 7731,
+                "yes": 23682
+            },
+            "2014-02-16": {
+                "no": 7777,
+                "yes": 23607
+            },
+            "2014-02-23": {
+                "no": 7779,
+                "yes": 23819
+            },
+            "2014-03-02": {
+                "no": 7798,
+                "yes": 23851
+            }
+        },
+        "winner": "yes"
+    },
+    "Adjacent assignments aligned": {
+        "sniffs": {
+            "0": "Generic.Formatting.MultipleStatementAlignment"
+        },
+        "total": 393674,
+        "total_repos": 50,
+        "values": {
+            "yes": 313987,
+            "no": 79687
+        },
+        "repos": {
+            "yes": {
+                "0": "squizlabs\/PHP_CodeSniffer",
+                "1": "sebastianbergmann\/phpunit",
+                "2": "sebastianbergmann\/php-code-coverage",
+                "3": "symfony\/symfony",
+                "4": "laravel\/framework",
+                "5": "yiisoft\/yii2",
+                "6": "guzzle\/guzzle",
+                "7": "fabpot\/Twig",
+                "8": "EllisLab\/CodeIgniter",
+                "9": "piwik\/piwik",
+                "10": "codeguy\/Slim",
+                "11": "PHPMailer\/PHPMailer",
+                "12": "padraic\/mockery",
+                "13": "joomla\/joomla-cms",
+                "14": "composer\/composer",
+                "15": "cakephp\/cakephp",
+                "16": "google\/google-api-php-client",
+                "17": "aws\/aws-sdk-php",
+                "18": "Seldaek\/monolog",
+                "19": "swiftmailer\/swiftmailer",
+                "20": "doctrine\/doctrine2",
+                "21": "zendframework\/zf2",
+                "22": "WordPress\/WordPress",
+                "23": "drupal\/drupal",
+                "24": "phpmyadmin\/phpmyadmin",
+                "25": "jackalope\/jackalope",
+                "26": "TYPO3\/TYPO3.CMS",
+                "27": "ezsystems\/ezpublish-kernel",
+                "28": "pear\/pear-core",
+                "29": "solarphp\/core",
+                "30": "propelorm\/Propel",
+                "31": "ppi\/framework",
+                "32": "phpDocumentor\/phpDocumentor2",
+                "33": "phpbb\/phpbb",
+                "34": "fruux\/sabre-dav",
+                "35": "sugarcrm\/sugarcrm_dev",
+                "36": "wikimedia\/mediawiki-core",
+                "37": "zikula\/core",
+                "38": "tedivm\/Stash",
+                "39": "sculpin\/sculpin",
+                "40": "kriswallsmith\/assetic",
+                "41": "kriswallsmith\/Buzz",
+                "42": "contao\/core",
+                "43": "facebook\/facebook-php-sdk",
+                "44": "chriso\/klein.php",
+                "45": "magento\/magento2",
+                "46": "cboden\/Ratchet",
+                "47": "reactphp\/react",
+                "48": "silverstripe\/silverstripe-framework"
+            },
+            "no": {
+                "0": "pyrocms\/pyrocms"
+            }
+        },
+        "trends": {
+            "2013-11-06": {
+                "yes": 328589,
+                "no": 90646
+            },
+            "2013-11-13": {
+                "yes": 329074,
+                "no": 90711
+            },
+            "2013-11-20": {
+                "yes": 329266,
+                "no": 90552
+            },
+            "2013-11-27": {
+                "yes": 330501,
+                "no": 90923
+            },
+            "2013-12-04": {
+                "yes": 330588,
+                "no": 90818
+            },
+            "2013-12-11": {
+                "yes": 331963,
+                "no": 91017
+            },
+            "2013-12-18": {
+                "yes": 332235,
+                "no": 90974
+            },
+            "2013-12-25": {
+                "yes": 332208,
+                "no": 91033
+            },
+            "2014-01-05": {
+                "yes": 332829,
+                "no": 91129
+            },
+            "2014-01-12": {
+                "yes": 333367,
+                "no": 91240
+            },
+            "2014-01-19": {
+                "yes": 333552,
+                "no": 91276
+            },
+            "2014-01-26": {
+                "yes": 334173,
+                "no": 91436
+            },
+            "2014-02-02": {
+                "yes": 334988,
+                "no": 91598
+            },
+            "2014-02-09": {
+                "yes": 335543,
+                "no": 91707
+            },
+            "2014-02-16": {
+                "yes": 335457,
+                "no": 91510
+            },
+            "2014-02-23": {
+                "yes": 336262,
+                "no": 91639
+            },
+            "2014-03-02": {
+                "yes": 336540,
+                "no": 91647
+            }
+        },
+        "winner": "yes"
     },
     "Array keyword case": {
         "sniffs": {
             "0": "Squiz.Arrays.ArrayDeclaration"
         },
-        "total": 187687,
+        "total": 186683,
         "total_repos": 50,
         "values": {
-            "lower": 187343,
+            "lower": 186339,
             "mixed": 344
         },
         "repos": {
@@ -5040,19 +5058,18 @@
         },
         "winner": "lower"
     },
-    "PHP keyword case": {
+    "Function opening brace placement": {
         "sniffs": {
-            "0": "Generic.PHP.LowerCaseKeyword"
+            "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
         },
-        "total": 1534429,
+        "total": 173338,
         "total_repos": 50,
         "values": {
-            "lower": 1532308,
-            "upper": 1692,
-            "mixed": 429
+            "new line": 124461,
+            "same line": 48877
         },
         "repos": {
-            "lower": {
+            "new line": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -5068,144 +5085,129 @@
                 "12": "padraic\/mockery",
                 "13": "joomla\/joomla-cms",
                 "14": "composer\/composer",
-                "15": "cakephp\/cakephp",
-                "16": "google\/google-api-php-client",
-                "17": "aws\/aws-sdk-php",
-                "18": "Seldaek\/monolog",
-                "19": "swiftmailer\/swiftmailer",
-                "20": "doctrine\/doctrine2",
-                "21": "zendframework\/zf2",
-                "22": "pyrocms\/pyrocms",
-                "23": "WordPress\/WordPress",
-                "24": "drupal\/drupal",
-                "25": "phpmyadmin\/phpmyadmin",
-                "26": "jackalope\/jackalope",
-                "27": "TYPO3\/TYPO3.CMS",
-                "28": "ezsystems\/ezpublish-kernel",
-                "29": "pear\/pear-core",
-                "30": "solarphp\/core",
-                "31": "propelorm\/Propel",
-                "32": "ppi\/framework",
-                "33": "phpDocumentor\/phpDocumentor2",
-                "34": "phpbb\/phpbb",
-                "35": "fruux\/sabre-dav",
-                "36": "sugarcrm\/sugarcrm_dev",
-                "37": "wikimedia\/mediawiki-core",
-                "38": "zikula\/core",
-                "39": "tedivm\/Stash",
-                "40": "sculpin\/sculpin",
-                "41": "kriswallsmith\/assetic",
-                "42": "kriswallsmith\/Buzz",
-                "43": "contao\/core",
-                "44": "facebook\/facebook-php-sdk",
-                "45": "chriso\/klein.php",
-                "46": "magento\/magento2",
-                "47": "cboden\/Ratchet",
-                "48": "reactphp\/react",
-                "49": "silverstripe\/silverstripe-framework"
+                "15": "google\/google-api-php-client",
+                "16": "aws\/aws-sdk-php",
+                "17": "Seldaek\/monolog",
+                "18": "swiftmailer\/swiftmailer",
+                "19": "doctrine\/doctrine2",
+                "20": "zendframework\/zf2",
+                "21": "pyrocms\/pyrocms",
+                "22": "phpmyadmin\/phpmyadmin",
+                "23": "jackalope\/jackalope",
+                "24": "ezsystems\/ezpublish-kernel",
+                "25": "pear\/pear-core",
+                "26": "solarphp\/core",
+                "27": "propelorm\/Propel",
+                "28": "ppi\/framework",
+                "29": "phpDocumentor\/phpDocumentor2",
+                "30": "phpbb\/phpbb",
+                "31": "sugarcrm\/sugarcrm_dev",
+                "32": "zikula\/core",
+                "33": "tedivm\/Stash",
+                "34": "sculpin\/sculpin",
+                "35": "kriswallsmith\/assetic",
+                "36": "kriswallsmith\/Buzz",
+                "37": "contao\/core",
+                "38": "chriso\/klein.php",
+                "39": "magento\/magento2",
+                "40": "reactphp\/react"
+            },
+            "same line": {
+                "0": "cakephp\/cakephp",
+                "1": "WordPress\/WordPress",
+                "2": "drupal\/drupal",
+                "3": "TYPO3\/TYPO3.CMS",
+                "4": "fruux\/sabre-dav",
+                "5": "wikimedia\/mediawiki-core",
+                "6": "facebook\/facebook-php-sdk",
+                "7": "cboden\/Ratchet",
+                "8": "silverstripe\/silverstripe-framework"
             }
         },
         "trends": {
             "2013-11-06": {
-                "lower": 1571183,
-                "upper": 1654,
-                "mixed": 487
+                "new line": 120514,
+                "same line": 55089
             },
             "2013-11-13": {
-                "lower": 1577534,
-                "upper": 1638,
-                "mixed": 487
+                "new line": 122178,
+                "same line": 55138
             },
             "2013-11-20": {
-                "lower": 1578330,
-                "upper": 1637,
-                "mixed": 487
+                "new line": 121834,
+                "same line": 55378
             },
             "2013-11-27": {
-                "lower": 1583477,
-                "upper": 1637,
-                "mixed": 472
+                "new line": 122174,
+                "same line": 55551
             },
             "2013-12-04": {
-                "lower": 1582813,
-                "upper": 1639,
-                "mixed": 471
+                "new line": 122156,
+                "same line": 55624
             },
             "2013-12-11": {
-                "lower": 1590763,
-                "upper": 1640,
-                "mixed": 471
+                "new line": 123381,
+                "same line": 55655
             },
             "2013-12-18": {
-                "lower": 1592617,
-                "upper": 1641,
-                "mixed": 471
+                "new line": 123387,
+                "same line": 55716
             },
             "2013-12-25": {
-                "lower": 1591375,
-                "upper": 1652,
-                "mixed": 471
+                "new line": 123183,
+                "same line": 55824
             },
             "2014-01-05": {
-                "lower": 1595530,
-                "upper": 1654,
-                "mixed": 473
+                "new line": 123532,
+                "same line": 55922
             },
             "2014-01-12": {
-                "lower": 1598336,
-                "upper": 1653,
-                "mixed": 471
+                "new line": 123888,
+                "same line": 56057
             },
             "2014-01-19": {
-                "lower": 1600062,
-                "upper": 1673,
-                "mixed": 471
+                "new line": 124201,
+                "same line": 55998
             },
             "2014-01-26": {
-                "lower": 1604494,
-                "upper": 1679,
-                "mixed": 471
+                "new line": 124514,
+                "same line": 56013
             },
             "2014-02-02": {
-                "lower": 1611049,
-                "upper": 1674,
-                "mixed": 431
+                "new line": 125254,
+                "same line": 56104
             },
             "2014-02-09": {
-                "lower": 1614368,
-                "upper": 1674,
-                "mixed": 431
+                "new line": 125667,
+                "same line": 56140
             },
             "2014-02-16": {
-                "lower": 1612036,
-                "upper": 1699,
-                "mixed": 431
+                "new line": 125522,
+                "same line": 56226
             },
             "2014-02-23": {
-                "lower": 1618183,
-                "upper": 1690,
-                "mixed": 431
+                "new line": 126136,
+                "same line": 56350
             },
             "2014-03-02": {
-                "lower": 1620292,
-                "upper": 1693,
-                "mixed": 430
+                "new line": 126404,
+                "same line": 56401
             }
         },
-        "winner": "lower"
+        "winner": "new line"
     },
-    "Lowercase filename": {
+    "CamelCase method name": {
         "sniffs": {
-            "0": "Generic.Files.LowercasedFilename"
+            "0": "Generic.NamingConventions.CamelCapsFunctionName"
         },
-        "total": 33164,
+        "total": 165751,
         "total_repos": 50,
         "values": {
-            "no": 25103,
-            "yes": 8061
+            "yes": 144764,
+            "no": 20987
         },
         "repos": {
-            "no": {
+            "yes": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -5216,269 +5218,252 @@
                 "7": "fabpot\/Twig",
                 "8": "piwik\/piwik",
                 "9": "codeguy\/Slim",
-                "10": "padraic\/mockery",
-                "11": "composer\/composer",
-                "12": "cakephp\/cakephp",
-                "13": "google\/google-api-php-client",
-                "14": "aws\/aws-sdk-php",
-                "15": "Seldaek\/monolog",
-                "16": "swiftmailer\/swiftmailer",
-                "17": "doctrine\/doctrine2",
-                "18": "zendframework\/zf2",
-                "19": "drupal\/drupal",
-                "20": "jackalope\/jackalope",
-                "21": "TYPO3\/TYPO3.CMS",
-                "22": "ezsystems\/ezpublish-kernel",
-                "23": "pear\/pear-core",
-                "24": "solarphp\/core",
-                "25": "propelorm\/Propel",
-                "26": "ppi\/framework",
-                "27": "phpDocumentor\/phpDocumentor2",
-                "28": "fruux\/sabre-dav",
-                "29": "sugarcrm\/sugarcrm_dev",
-                "30": "wikimedia\/mediawiki-core",
-                "31": "zikula\/core",
-                "32": "tedivm\/Stash",
-                "33": "sculpin\/sculpin",
-                "34": "kriswallsmith\/assetic",
-                "35": "kriswallsmith\/Buzz",
-                "36": "contao\/core",
-                "37": "chriso\/klein.php",
-                "38": "magento\/magento2",
-                "39": "cboden\/Ratchet",
-                "40": "reactphp\/react",
-                "41": "silverstripe\/silverstripe-framework"
+                "10": "PHPMailer\/PHPMailer",
+                "11": "padraic\/mockery",
+                "12": "joomla\/joomla-cms",
+                "13": "composer\/composer",
+                "14": "cakephp\/cakephp",
+                "15": "google\/google-api-php-client",
+                "16": "aws\/aws-sdk-php",
+                "17": "Seldaek\/monolog",
+                "18": "swiftmailer\/swiftmailer",
+                "19": "doctrine\/doctrine2",
+                "20": "zendframework\/zf2",
+                "21": "pyrocms\/pyrocms",
+                "22": "drupal\/drupal",
+                "23": "phpmyadmin\/phpmyadmin",
+                "24": "jackalope\/jackalope",
+                "25": "TYPO3\/TYPO3.CMS",
+                "26": "ezsystems\/ezpublish-kernel",
+                "27": "pear\/pear-core",
+                "28": "solarphp\/core",
+                "29": "propelorm\/Propel",
+                "30": "ppi\/framework",
+                "31": "phpDocumentor\/phpDocumentor2",
+                "32": "fruux\/sabre-dav",
+                "33": "sugarcrm\/sugarcrm_dev",
+                "34": "wikimedia\/mediawiki-core",
+                "35": "zikula\/core",
+                "36": "tedivm\/Stash",
+                "37": "sculpin\/sculpin",
+                "38": "kriswallsmith\/assetic",
+                "39": "kriswallsmith\/Buzz",
+                "40": "contao\/core",
+                "41": "facebook\/facebook-php-sdk",
+                "42": "chriso\/klein.php",
+                "43": "magento\/magento2",
+                "44": "cboden\/Ratchet",
+                "45": "reactphp\/react",
+                "46": "silverstripe\/silverstripe-framework"
             },
-            "yes": {
+            "no": {
                 "0": "EllisLab\/CodeIgniter",
-                "1": "PHPMailer\/PHPMailer",
-                "2": "joomla\/joomla-cms",
-                "3": "pyrocms\/pyrocms",
-                "4": "WordPress\/WordPress",
-                "5": "phpmyadmin\/phpmyadmin",
-                "6": "phpbb\/phpbb",
-                "7": "facebook\/facebook-php-sdk"
+                "1": "WordPress\/WordPress",
+                "2": "phpbb\/phpbb"
             }
         },
         "trends": {
             "2013-11-06": {
-                "no": 24592,
-                "yes": 8277
+                "yes": 141245,
+                "no": 23899
             },
             "2013-11-13": {
-                "no": 24537,
-                "yes": 8276
+                "yes": 143015,
+                "no": 23848
             },
             "2013-11-20": {
-                "no": 24609,
-                "yes": 8184
+                "yes": 143265,
+                "no": 23529
             },
             "2013-11-27": {
-                "no": 24633,
-                "yes": 8275
+                "yes": 143632,
+                "no": 23734
             },
             "2013-12-04": {
-                "no": 24604,
-                "yes": 8286
+                "yes": 143700,
+                "no": 23758
             },
             "2013-12-11": {
-                "no": 24759,
-                "yes": 8293
+                "yes": 144899,
+                "no": 23785
             },
             "2013-12-18": {
-                "no": 24776,
-                "yes": 8304
+                "yes": 145184,
+                "no": 23710
             },
             "2013-12-25": {
-                "no": 24680,
-                "yes": 8311
+                "yes": 145031,
+                "no": 23709
             },
             "2014-01-05": {
-                "no": 24783,
-                "yes": 8291
+                "yes": 145724,
+                "no": 23582
             },
             "2014-01-12": {
-                "no": 24805,
-                "yes": 8336
+                "yes": 146162,
+                "no": 23678
             },
             "2014-01-19": {
-                "no": 24844,
-                "yes": 8355
+                "yes": 146416,
+                "no": 23752
             },
             "2014-01-26": {
-                "no": 24989,
-                "yes": 8355
+                "yes": 146919,
+                "no": 23649
             },
             "2014-02-02": {
-                "no": 25204,
-                "yes": 8359
+                "yes": 147674,
+                "no": 23685
             },
             "2014-02-09": {
-                "no": 25272,
-                "yes": 8387
+                "yes": 148086,
+                "no": 23819
             },
             "2014-02-16": {
-                "no": 25208,
-                "yes": 8392
+                "yes": 148042,
+                "no": 23826
             },
             "2014-02-23": {
-                "no": 25421,
-                "yes": 8387
+                "yes": 148787,
+                "no": 23789
             },
             "2014-03-02": {
-                "no": 25466,
-                "yes": 8407
+                "yes": 149144,
+                "no": 23776
             }
         },
-        "winner": "no"
+        "winner": "yes"
     },
-    "Line indent": {
+    "Brackets around echoed strings": {
         "sniffs": {
-            "0": "Generic.WhiteSpace.DisallowSpaceIndent"
+            "0": "Squiz.Strings.EchoedStrings"
         },
-        "total": 3063688,
-        "total_repos": 50,
+        "total": 19527,
+        "total_repos": 35,
         "values": {
-            "spaces": 1867238,
-            "tabs": 1196450
+            "no": 19443,
+            "yes": 84
         },
         "repos": {
-            "spaces": {
+            "no": {
                 "0": "squizlabs\/PHP_CodeSniffer",
-                "1": "sebastianbergmann\/phpunit",
-                "2": "sebastianbergmann\/php-code-coverage",
-                "3": "symfony\/symfony",
-                "4": "guzzle\/guzzle",
-                "5": "fabpot\/Twig",
+                "1": "symfony\/symfony",
+                "2": "laravel\/framework",
+                "3": "yiisoft\/yii2",
+                "4": "fabpot\/Twig",
+                "5": "EllisLab\/CodeIgniter",
                 "6": "piwik\/piwik",
                 "7": "codeguy\/Slim",
                 "8": "PHPMailer\/PHPMailer",
-                "9": "padraic\/mockery",
+                "9": "joomla\/joomla-cms",
                 "10": "composer\/composer",
-                "11": "google\/google-api-php-client",
-                "12": "aws\/aws-sdk-php",
-                "13": "Seldaek\/monolog",
-                "14": "swiftmailer\/swiftmailer",
-                "15": "doctrine\/doctrine2",
-                "16": "zendframework\/zf2",
-                "17": "pyrocms\/pyrocms",
+                "11": "cakephp\/cakephp",
+                "12": "Seldaek\/monolog",
+                "13": "swiftmailer\/swiftmailer",
+                "14": "doctrine\/doctrine2",
+                "15": "zendframework\/zf2",
+                "16": "pyrocms\/pyrocms",
+                "17": "WordPress\/WordPress",
                 "18": "drupal\/drupal",
                 "19": "phpmyadmin\/phpmyadmin",
-                "20": "jackalope\/jackalope",
+                "20": "TYPO3\/TYPO3.CMS",
                 "21": "ezsystems\/ezpublish-kernel",
                 "22": "pear\/pear-core",
                 "23": "solarphp\/core",
                 "24": "propelorm\/Propel",
-                "25": "ppi\/framework",
-                "26": "phpDocumentor\/phpDocumentor2",
+                "25": "phpDocumentor\/phpDocumentor2",
+                "26": "phpbb\/phpbb",
                 "27": "fruux\/sabre-dav",
                 "28": "sugarcrm\/sugarcrm_dev",
-                "29": "zikula\/core",
-                "30": "tedivm\/Stash",
-                "31": "sculpin\/sculpin",
-                "32": "kriswallsmith\/assetic",
-                "33": "kriswallsmith\/Buzz",
-                "34": "facebook\/facebook-php-sdk",
-                "35": "chriso\/klein.php",
-                "36": "magento\/magento2",
-                "37": "cboden\/Ratchet",
-                "38": "reactphp\/react"
-            },
-            "tabs": {
-                "0": "laravel\/framework",
-                "1": "yiisoft\/yii2",
-                "2": "EllisLab\/CodeIgniter",
-                "3": "joomla\/joomla-cms",
-                "4": "cakephp\/cakephp",
-                "5": "WordPress\/WordPress",
-                "6": "TYPO3\/TYPO3.CMS",
-                "7": "phpbb\/phpbb",
-                "8": "wikimedia\/mediawiki-core",
-                "9": "contao\/core",
-                "10": "silverstripe\/silverstripe-framework"
+                "29": "wikimedia\/mediawiki-core",
+                "30": "zikula\/core",
+                "31": "contao\/core",
+                "32": "chriso\/klein.php",
+                "33": "magento\/magento2",
+                "34": "silverstripe\/silverstripe-framework"
             }
         },
         "trends": {
             "2013-11-06": {
-                "spaces": 1794064,
-                "tabs": 1379838
+                "no": 20378,
+                "yes": 96
             },
             "2013-11-13": {
-                "spaces": 1808330,
-                "tabs": 1382210
+                "no": 20509,
+                "yes": 94
             },
             "2013-11-20": {
-                "spaces": 1813406,
-                "tabs": 1379926
+                "no": 20299,
+                "yes": 95
             },
             "2013-11-27": {
-                "spaces": 1811265,
-                "tabs": 1391533
+                "no": 20372,
+                "yes": 95
             },
             "2013-12-04": {
-                "spaces": 1809033,
-                "tabs": 1393809
+                "no": 20351,
+                "yes": 95
             },
             "2013-12-11": {
-                "spaces": 1818491,
-                "tabs": 1397198
+                "no": 20361,
+                "yes": 95
             },
             "2013-12-18": {
-                "spaces": 1821118,
-                "tabs": 1405846
+                "no": 20364,
+                "yes": 94
             },
             "2013-12-25": {
-                "spaces": 1818546,
-                "tabs": 1400604
+                "no": 20394,
+                "yes": 95
             },
             "2014-01-05": {
-                "spaces": 1830060,
-                "tabs": 1393883
+                "no": 20393,
+                "yes": 95
             },
             "2014-01-12": {
-                "spaces": 1827884,
-                "tabs": 1398537
+                "no": 20417,
+                "yes": 95
             },
             "2014-01-19": {
-                "spaces": 1829697,
-                "tabs": 1399363
+                "no": 20420,
+                "yes": 95
             },
             "2014-01-26": {
-                "spaces": 1835421,
-                "tabs": 1398119
+                "no": 20446,
+                "yes": 95
             },
             "2014-02-02": {
-                "spaces": 1844286,
-                "tabs": 1398886
+                "no": 20458,
+                "yes": 95
             },
             "2014-02-09": {
-                "spaces": 1849177,
-                "tabs": 1401032
+                "no": 20465,
+                "yes": 95
             },
             "2014-02-16": {
-                "spaces": 1848342,
-                "tabs": 1400307
+                "no": 20479,
+                "yes": 95
             },
             "2014-02-23": {
-                "spaces": 1856725,
-                "tabs": 1400897
+                "no": 20461,
+                "yes": 95
             },
             "2014-03-02": {
-                "spaces": 1875245,
-                "tabs": 1385535
+                "no": 20483,
+                "yes": 95
             }
         },
-        "winner": "spaces"
+        "winner": "no"
     },
     "Spacing after cast statement": {
         "sniffs": {
             "0": "Generic.Formatting.SpaceAfterCast"
         },
-        "total": 17513,
+        "total": 17379,
         "total_repos": 49,
         "values": {
-            "1": 10935,
-            "0": 6554,
+            "1": 10862,
+            "0": 6493,
             "2": 12,
             "4": 6,
             "3": 6
@@ -5661,18 +5646,19 @@
         },
         "winner": 1
     },
-    "Control structure defined inline": {
+    "Spacing before object operator": {
         "sniffs": {
-            "0": "Generic.ControlStructures.InlineControlStructure"
+            "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
         },
-        "total": 309692,
+        "total": 798823,
         "total_repos": 50,
         "values": {
-            "no": 293440,
-            "yes": 16252
+            "0": 775364,
+            "newline": 23421,
+            "1": 38
         },
         "repos": {
-            "no": {
+            "0": {
                 "0": "squizlabs\/PHP_CodeSniffer",
                 "1": "sebastianbergmann\/phpunit",
                 "2": "sebastianbergmann\/php-code-coverage",
@@ -5696,118 +5682,133 @@
                 "20": "doctrine\/doctrine2",
                 "21": "zendframework\/zf2",
                 "22": "pyrocms\/pyrocms",
-                "23": "drupal\/drupal",
-                "24": "phpmyadmin\/phpmyadmin",
-                "25": "jackalope\/jackalope",
-                "26": "TYPO3\/TYPO3.CMS",
-                "27": "ezsystems\/ezpublish-kernel",
-                "28": "pear\/pear-core",
-                "29": "solarphp\/core",
-                "30": "propelorm\/Propel",
-                "31": "ppi\/framework",
-                "32": "phpDocumentor\/phpDocumentor2",
-                "33": "phpbb\/phpbb",
-                "34": "fruux\/sabre-dav",
-                "35": "sugarcrm\/sugarcrm_dev",
-                "36": "wikimedia\/mediawiki-core",
-                "37": "zikula\/core",
-                "38": "tedivm\/Stash",
-                "39": "sculpin\/sculpin",
-                "40": "kriswallsmith\/assetic",
-                "41": "kriswallsmith\/Buzz",
-                "42": "contao\/core",
-                "43": "facebook\/facebook-php-sdk",
-                "44": "chriso\/klein.php",
-                "45": "magento\/magento2",
-                "46": "cboden\/Ratchet",
-                "47": "reactphp\/react",
-                "48": "silverstripe\/silverstripe-framework"
-            },
-            "yes": {
-                "0": "WordPress\/WordPress"
+                "23": "WordPress\/WordPress",
+                "24": "drupal\/drupal",
+                "25": "phpmyadmin\/phpmyadmin",
+                "26": "jackalope\/jackalope",
+                "27": "TYPO3\/TYPO3.CMS",
+                "28": "ezsystems\/ezpublish-kernel",
+                "29": "pear\/pear-core",
+                "30": "solarphp\/core",
+                "31": "propelorm\/Propel",
+                "32": "ppi\/framework",
+                "33": "phpDocumentor\/phpDocumentor2",
+                "34": "phpbb\/phpbb",
+                "35": "fruux\/sabre-dav",
+                "36": "sugarcrm\/sugarcrm_dev",
+                "37": "wikimedia\/mediawiki-core",
+                "38": "zikula\/core",
+                "39": "tedivm\/Stash",
+                "40": "sculpin\/sculpin",
+                "41": "kriswallsmith\/assetic",
+                "42": "kriswallsmith\/Buzz",
+                "43": "contao\/core",
+                "44": "facebook\/facebook-php-sdk",
+                "45": "chriso\/klein.php",
+                "46": "magento\/magento2",
+                "47": "cboden\/Ratchet",
+                "48": "reactphp\/react",
+                "49": "silverstripe\/silverstripe-framework"
             }
         },
         "trends": {
             "2013-11-06": {
-                "no": 297581,
-                "yes": 22106
+                "0": 827370,
+                "newline": 23876,
+                "1": 51
             },
             "2013-11-13": {
-                "no": 297126,
-                "yes": 22131
+                "0": 828858,
+                "newline": 23877,
+                "1": 51
             },
             "2013-11-20": {
-                "no": 297357,
-                "yes": 21993
+                "0": 827688,
+                "newline": 23789,
+                "1": 51
             },
             "2013-11-27": {
-                "no": 298425,
-                "yes": 21993
+                "0": 832802,
+                "newline": 23800,
+                "1": 50
             },
             "2013-12-04": {
-                "no": 298336,
-                "yes": 21951
+                "0": 832286,
+                "newline": 23734,
+                "1": 50
             },
             "2013-12-11": {
-                "no": 299184,
-                "yes": 21948
+                "0": 835408,
+                "newline": 24194,
+                "1": 50
             },
             "2013-12-18": {
-                "no": 299392,
-                "yes": 22000
+                "0": 835944,
+                "newline": 24130,
+                "1": 50
             },
             "2013-12-25": {
-                "no": 299260,
-                "yes": 22016
+                "0": 835808,
+                "newline": 24086,
+                "1": 50
             },
             "2014-01-05": {
-                "no": 300030,
-                "yes": 21994
+                "0": 838840,
+                "newline": 24137,
+                "1": 50
             },
             "2014-01-12": {
-                "no": 300346,
-                "yes": 21988
+                "0": 840337,
+                "newline": 24080,
+                "1": 50
             },
             "2014-01-19": {
-                "no": 300600,
-                "yes": 21907
+                "0": 841500,
+                "newline": 24123,
+                "1": 50
             },
             "2014-01-26": {
-                "no": 301361,
-                "yes": 21902
+                "0": 843400,
+                "newline": 24248,
+                "1": 48
             },
             "2014-02-02": {
-                "no": 302058,
-                "yes": 21893
+                "0": 845687,
+                "newline": 24365,
+                "1": 48
             },
             "2014-02-09": {
-                "no": 302490,
-                "yes": 21870
+                "0": 846858,
+                "newline": 24330,
+                "1": 46
             },
             "2014-02-16": {
-                "no": 302197,
-                "yes": 21635
+                "0": 845716,
+                "newline": 24195,
+                "1": 47
             },
             "2014-02-23": {
-                "no": 302949,
-                "yes": 21589
+                "0": 848226,
+                "newline": 24359,
+                "1": 48
             },
             "2014-03-02": {
-                "no": 303037,
-                "yes": 21557
+                "0": 849436,
+                "newline": 24495,
+                "1": 48
             }
         },
-        "winner": "no"
+        "winner": 0
     },
     "Spacing after object operator": {
         "sniffs": {
             "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
         },
-        "total": 807957,
+        "total": 798823,
         "total_repos": 50,
         "values": {
-            "0": 807893,
-            "1": 56,
+            "0": 798768,
+            "1": 47,
             "newline": 8
         },
         "repos": {
@@ -5957,11 +5958,11 @@
         "sniffs": {
             "0": "PSR2.ControlStructures.ElseIfDeclaration"
         },
-        "total": 14923,
+        "total": 14754,
         "total_repos": 50,
         "values": {
-            "else if": 2804,
-            "elseif": 12119
+            "else if": 2672,
+            "elseif": 12082
         },
         "repos": {
             "else if": {
@@ -6095,10 +6096,10 @@
         "sniffs": {
             "0": "Generic.NamingConventions.UpperCaseConstantName"
         },
-        "total": 11543,
+        "total": 11419,
         "total_repos": 50,
         "values": {
-            "upper": 11304,
+            "upper": 11180,
             "mixed": 233,
             "lower": 6
         },
@@ -6249,10 +6250,10 @@
         "sniffs": {
             "0": "Squiz.Files.FileExtension"
         },
-        "total": 6557,
+        "total": 6511,
         "total_repos": 34,
         "values": {
-            ".php": 6455,
+            ".php": 6409,
             ".inc": 102
         },
         "repos": {
@@ -6369,10 +6370,10 @@
         "sniffs": {
             "0": "Generic.NamingConventions.CamelCapsFunctionName"
         },
-        "total": 5171,
+        "total": 5063,
         "total_repos": 24,
         "values": {
-            "no": 5171
+            "no": 5063
         },
         "repos": {
             "no": {

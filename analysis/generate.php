@@ -22,7 +22,12 @@ foreach ($_SERVER['argv'] as $arg) {
     }
 }
 
-$repoCount = count($repos);
+if (empty($filterRepos) === true) {
+    $repoCount = count($repos);
+} else {
+    $repoCount = count($filterRepos);
+}
+
 $repoNum   = 0;
 foreach ($repos as $repo) {
     if (empty($filterRepos) === false && in_array($repo->url, $filterRepos) === false) {
@@ -32,6 +37,7 @@ foreach ($repos as $repo) {
     $repoNum++;
     echo 'Processing '.$repo->name." ($repoNum / $repoCount)".PHP_EOL;
     $resultFiles[] = processRepo($repo, $checkoutDate, $runPHPCS, $runGit);
+    echo PHP_EOL;
 }//end foreach
 
 

@@ -102,8 +102,6 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $result
         return $resultFile;
     }
 
-    echo PHP_EOL;
-
     if ($prevTotals !== null) {
         // Copy old trend data into the new result set.
         $newTotals = json_decode(file_get_contents($resultFile), true);

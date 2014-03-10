@@ -37,7 +37,7 @@ $metricText = array(
                                                                        'items'       => 'files',
                                                                       ),
                'Line length'                                       => array(
-                                                                       'description' => 'Including whitespace and comments, how many characters are in code lines?',
+                                                                       'description' => 'Including whitespace and comments, how many characters are in non-empty code lines?',
                                                                        'items'       => 'lines',
                                                                        'sort'        => SORT_NUMERIC,
                                                                       ),

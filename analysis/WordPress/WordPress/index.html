@@ -47,10 +47,10 @@
   <canvas class="chart-trend" id="chart7t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="49 elseif statements"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>else if</td><td>12.19%</td></tr><tr title="353 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>elseif</td><td>87.81%</td></tr></table>Based on 402 elseif statements</div></div>
 <h2 id="line-length" title="Generic.Files.LineLength">Line length</h2>
-<div class="metric"><p>Including whitespace and comments, how many characters are in code lines?</p>
+<div class="metric"><p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
   <canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="57,420 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>80 or less</td><td>90.07%</td></tr><tr title="4,047 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>81-120</td><td>6.35%</td></tr><tr title="1,013 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>121-150</td><td>1.59%</td></tr><tr title="1,270 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>151 or more</td><td>1.99%</td></tr></table>Based on 63,750 lines</div></div>
+  <div class="chart-data"><table><tr title="48,404 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>80 or less</td><td>88.43%</td></tr><tr title="4,047 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>81-120</td><td>7.39%</td></tr><tr title="1,013 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>121-150</td><td>1.85%</td></tr><tr title="1,270 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>151 or more</td><td>2.32%</td></tr></table>Based on 54,734 lines</div></div>
 <h2 id="spacing-after-string-concat" title="Squiz.Strings.ConcatenationSpacing">Spacing after string concat</h2>
 <div class="metric"><p>How many spaces follow the string concatenation operator?</p>
   <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
@@ -116,11 +116,11 @@
   <canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="5,380 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>99.98%</td></tr><tr title="1 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>1</td><td>0.02%</td></tr></table>Based on 5,381 operators</div></div>
-<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
-<div class="metric"><p>Are global function names defined using CamelCase?</p>
+<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
+<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="709 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 709 global functions</div></div>
+  <div class="chart-data"><table><tr title="19,086 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 19,086 keywords</div></div>
 <h2 id="constant-name-case" title="Generic.NamingConventions.UpperCaseConstantName">Constant name case</h2>
 <div class="metric"><p>What case are user-defined constants defined in?</p>
   <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
@@ -131,16 +131,16 @@
   <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="1,971 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 1,971 constants</div></div>
-<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2>
-<div class="metric"><p>Are class names defined using CamelCase?</p>
+<h2 id="camelcase-function-name" title="Generic.NamingConventions.CamelCapsFunctionName">CamelCase function name</h2>
+<div class="metric"><p>Are global function names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="47 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 47 classes</div></div>
-<h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2>
-<div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
+  <div class="chart-data"><table><tr title="709 global functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 709 global functions</div></div>
+<h2 id="camelcase-class-name" title="Squiz.Classes.ValidClassName">CamelCase class name</h2>
+<div class="metric"><p>Are class names defined using CamelCase?</p>
   <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="144 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 144 non-class files</div></div>
+  <div class="chart-data"><table><tr title="47 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 47 classes</div></div>
 <h2 id="php-short-open-tag-used" title="Generic.PHP.DisallowShortOpenTag">PHP short open tag used</h2>
 <div class="metric"><p>Is the PHP short open tag syntax used?</p>
   <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
@@ -161,28 +161,28 @@
   <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="29 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 29 class files</div></div>
-<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
-<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
+<h2 id="file-extension-for-non-class-files" title="Squiz.Files.FileExtension">File extension for non-class files</h2>
+<div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
   <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="1,881 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 1,881 array definitions</div></div>
+  <div class="chart-data"><table><tr title="144 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 144 non-class files</div></div>
 <h2 id="class-defined-in-namespace" title="PSR1.Classes.ClassDeclaration">Class defined in namespace</h2>
 <div class="metric"><p>Is each class defined in a namespace of at least 1 level?</p>
   <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="47 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 47 classes</div></div>
-<h2 id="php-keyword-case" title="Generic.PHP.LowerCaseKeyword">PHP keyword case</h2>
-<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
+<h2 id="array-keyword-case" title="Squiz.Arrays.ArrayDeclaration">Array keyword case</h2>
+<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
   <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="19,086 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 19,086 keywords</div></div>
+  <div class="chart-data"><table><tr title="1,881 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 1,881 array definitions</div></div>
 <h2 id="lowercase-filename" title="Generic.Files.LowercasedFilename">Lowercase filename</h2>
 <div class="metric"><p>Are PHP filenames lowercase?</p>
   <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
   <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
   <div class="chart-data"><table><tr title="173 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 173 files</div></div>
 
-<div class="footer">Report generated on Fri, 07 Mar 2014 20:36:30 +1100<br/>Using master branch of <a href="https://github.com/WordPress/WordPress">WordPress/WordPress</a> @ commit <a href="https://github.com/WordPress/WordPress/commit/c5279336c7380de2d9f9d9a68ad349a96c655266">c5279336c7380de2d9f9d9a68ad349a96c655266</div>
+<div class="footer">Report generated on Mon, 10 Mar 2014 15:47:28 +1100<br/>Using master branch of <a href="https://github.com/WordPress/WordPress">WordPress/WordPress</a> @ commit <a href="https://github.com/WordPress/WordPress/commit/c5279336c7380de2d9f9d9a68ad349a96c655266">c5279336c7380de2d9f9d9a68ad349a96c655266</div>
 <script>
 var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
 var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:true,datasetFill:false};
@@ -228,7 +228,7 @@ new Chart(c).Doughnut(data,valOptions);
 var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[10.67,10.65,10.55,10.54,10.61,10.61,10.61,10.59,10.6,10.6,10.54,10.52,10.52,10.51,10.57,10.56,10.52]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[89.33,89.35,89.45,89.46,89.39,89.39,89.39,89.41,89.4,89.4,89.46,89.48,89.48,89.49,89.43,89.44,89.48]}]};
 var c = document.getElementById("chart7t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:90.07,color:"#4D5360"},{value:6.35,color:"#D4CCC5"},{value:1.59,color:"#9D9B7F"},{value:1.99,color:"#949FB1"}]
+var data = [{value:88.43,color:"#4D5360"},{value:7.39,color:"#D4CCC5"},{value:1.85,color:"#9D9B7F"},{value:2.32,color:"#949FB1"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
 var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[91.24,91.23,91.25,91.26,91.29,91.27,91.27,91.27,91.29,91.3,91.25,91.24,91.26,91.26,91.28,91.29,91.31]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[6.16,6.16,6.16,6.16,6.14,6.16,6.16,6.16,6.15,6.15,6.19,6.19,6.18,6.18,6.17,6.17,6.17]},{strokeColor:"#9D9B7F",pointStrokeColor:"#9D9B7F",pointColor:"#FFF",data:[1.4,1.4,1.39,1.39,1.38,1.38,1.38,1.38,1.38,1.37,1.38,1.38,1.38,1.38,1.37,1.37,1.36]},{strokeColor:"#949FB1",pointStrokeColor:"#949FB1",pointColor:"#FFF",data:[1.21,1.21,1.2,1.19,1.18,1.19,1.19,1.19,1.18,1.18,1.19,1.19,1.19,1.18,1.18,1.18,1.17]}]};
@@ -333,13 +333,13 @@ new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,91.42,91.42,91.42,91.42,91.42,91.42,91.45]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart25t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,89.63,91.42,91.42,91.42,91.42,91.42,91.42,91.45]}]};
 var c = document.getElementById("chart26t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#4D5360"}]

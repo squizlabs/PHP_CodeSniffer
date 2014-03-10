@@ -4,14 +4,14 @@
             "sniffs": {
                 "0": "PSR1.Classes.ClassDeclaration"
             },
-            "total": 3441,
+            "total": 3445,
             "values": {
-                "yes": 1847,
+                "yes": 1851,
                 "no": 1594
             },
             "percentages": {
-                "yes": 53.68,
-                "no": 46.32
+                "yes": 53.73,
+                "no": 46.27
             },
             "trends": {
                 "2013-11-06": {
@@ -89,14 +89,14 @@
             "sniffs": {
                 "0": "Squiz.Classes.ValidClassName"
             },
-            "total": 3441,
+            "total": 3445,
             "values": {
-                "yes": 1858,
+                "yes": 1862,
                 "no": 1583
             },
             "percentages": {
-                "yes": 54,
-                "no": 46
+                "yes": 54.05,
+                "no": 45.95
             },
             "trends": {
                 "2013-11-06": {
@@ -174,14 +174,14 @@
             "sniffs": {
                 "0": "PSR1.Classes.ClassDeclaration"
             },
-            "total": 3441,
+            "total": 3445,
             "values": {
-                "yes": 2064,
+                "yes": 2068,
                 "no": 1377
             },
             "percentages": {
-                "yes": 59.98,
-                "no": 40.02
+                "yes": 60.03,
+                "no": 39.97
             },
             "trends": {
                 "2013-11-06": {
@@ -259,14 +259,14 @@
             "sniffs": {
                 "0": "Generic.PHP.LowerCaseConstant"
             },
-            "total": 14699,
+            "total": 14719,
             "values": {
-                "upper": 9095,
+                "upper": 9115,
                 "lower": 5604
             },
             "percentages": {
-                "upper": 61.87,
-                "lower": 38.13
+                "upper": 61.93,
+                "lower": 38.07
             },
             "trends": {
                 "2013-11-06": {
@@ -361,14 +361,14 @@
             "sniffs": {
                 "0": "Generic.Formatting.SpaceAfterCast"
             },
-            "total": 2795,
+            "total": 2793,
             "values": {
-                "0": 2116,
-                "1": 679
+                "0": 2113,
+                "1": 680
             },
             "percentages": {
-                "0": 75.71,
-                "1": 24.29
+                "0": 75.65,
+                "1": 24.35
             },
             "trends": {
                 "2013-11-06": {
@@ -550,10 +550,10 @@
             "sniffs": {
                 "0": "Generic.Formatting.MultipleStatementAlignment"
             },
-            "total": 40858,
+            "total": 40848,
             "values": {
-                "yes": 32486,
-                "no": 8372
+                "yes": 32479,
+                "no": 8369
             },
             "percentages": {
                 "yes": 79.51,
@@ -635,14 +635,14 @@
             "sniffs": {
                 "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
             },
-            "total": 12718,
+            "total": 12740,
             "values": {
-                "same line": 11043,
+                "same line": 11065,
                 "new line": 1675
             },
             "percentages": {
-                "same line": 86.83,
-                "new line": 13.17
+                "same line": 86.85,
+                "new line": 13.15
             },
             "trends": {
                 "2013-11-06": {
@@ -720,14 +720,14 @@
             "sniffs": {
                 "0": "Generic.Files.LowercasedFilename"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "no": 2117,
-                "yes": 317
+                "no": 2121,
+                "yes": 315
             },
             "percentages": {
-                "no": 86.98,
-                "yes": 13.02
+                "no": 87.07,
+                "yes": 12.93
             },
             "trends": {
                 "2013-11-06": {
@@ -805,14 +805,14 @@
             "sniffs": {
                 "0": "Generic.NamingConventions.CamelCapsFunctionName"
             },
-            "total": 12741,
+            "total": 12758,
             "values": {
-                "yes": 11245,
-                "no": 1496
+                "yes": 11263,
+                "no": 1495
             },
             "percentages": {
-                "yes": 88.26,
-                "no": 11.74
+                "yes": 88.28,
+                "no": 11.72
             },
             "trends": {
                 "2013-11-06": {
@@ -890,9 +890,9 @@
             "sniffs": {
                 "0": "Generic.WhiteSpace.DisallowSpaceIndent"
             },
-            "total": 247522,
+            "total": 247604,
             "values": {
-                "tabs": 218996,
+                "tabs": 219078,
                 "spaces": 28526
             },
             "percentages": {
@@ -975,18 +975,18 @@
             "sniffs": {
                 "0": "Generic.Files.LineLength"
             },
-            "total": 464751,
+            "total": 433625,
             "values": {
-                "80 or less": 421996,
-                "81-120": 30423,
-                "121-150": 6546,
-                "151 or more": 5786
+                "80 or less": 390838,
+                "81-120": 30455,
+                "121-150": 6547,
+                "151 or more": 5785
             },
             "percentages": {
-                "80 or less": 90.8,
-                "81-120": 6.55,
-                "121-150": 1.41,
-                "151 or more": 1.24
+                "80 or less": 90.13,
+                "81-120": 7.02,
+                "121-150": 1.51,
+                "151 or more": 1.33
             },
             "trends": {
                 "2013-11-06": {
@@ -1098,14 +1098,14 @@
             "sniffs": {
                 "0": "PSR2.Files.EndFileNewline"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "1": 2325,
-                "0": 109
+                "1": 2324,
+                "0": 112
             },
             "percentages": {
-                "1": 95.52,
-                "0": 4.48
+                "1": 95.4,
+                "0": 4.6
             },
             "trends": {
                 "2013-11-06": {
@@ -1183,9 +1183,9 @@
             "sniffs": {
                 "0": "PSR1.Files.SideEffects"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "no": 2352,
+                "no": 2354,
                 "yes": 82
             },
             "percentages": {
@@ -1268,9 +1268,9 @@
             "sniffs": {
                 "0": "PSR2.ControlStructures.ElseIfDeclaration"
             },
-            "total": 1298,
+            "total": 1299,
             "values": {
-                "elseif": 1260,
+                "elseif": 1261,
                 "else if": 38
             },
             "percentages": {
@@ -1353,16 +1353,16 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.OperatorSpacing"
             },
-            "total": 19608,
+            "total": 19622,
             "values": {
-                "1": 19044,
+                "1": 19056,
                 "0": 441,
-                "newline": 123
+                "newline": 125
             },
             "percentages": {
                 "1": 97.12,
                 "0": 2.25,
-                "newline": 0.63
+                "newline": 0.64
             },
             "trends": {
                 "2013-11-06": {
@@ -1474,9 +1474,9 @@
             "sniffs": {
                 "0": "Zend.Files.ClosingTag"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "no": 2375,
+                "no": 2377,
                 "yes": 59
             },
             "percentages": {
@@ -1559,16 +1559,16 @@
             "sniffs": {
                 "0": "Squiz.Strings.ConcatenationSpacing"
             },
-            "total": 33860,
+            "total": 33851,
             "values": {
-                "1": 33064,
-                "newline": 651,
+                "1": 33059,
+                "newline": 645,
                 "0": 139,
-                "2": 6
+                "2": 8
             },
             "percentages": {
-                "1": 97.65,
-                "newline": 1.92,
+                "1": 97.66,
+                "newline": 1.91,
                 "0": 0.41,
                 "2": 0.02
             },
@@ -1682,18 +1682,18 @@
             "sniffs": {
                 "0": "Squiz.Strings.ConcatenationSpacing"
             },
-            "total": 33860,
+            "total": 33851,
             "values": {
-                "1": 33349,
-                "newline": 278,
+                "1": 33326,
+                "newline": 293,
                 "0": 231,
-                "2": 2
+                "2": 1
             },
             "percentages": {
-                "1": 98.49,
-                "newline": 0.82,
+                "1": 98.45,
+                "newline": 0.87,
                 "0": 0.68,
-                "2": 0.01
+                "2": 0
             },
             "trends": {
                 "2013-11-06": {
@@ -1805,10 +1805,10 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
             },
-            "total": 66378,
+            "total": 66363,
             "values": {
-                "0": 66003,
-                "newline": 375
+                "0": 65990,
+                "newline": 373
             },
             "percentages": {
                 "0": 99.44,
@@ -1907,9 +1907,9 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.OperatorSpacing"
             },
-            "total": 102605,
+            "total": 102610,
             "values": {
-                "1": 102093,
+                "1": 102098,
                 "0": 387,
                 "newline": 103,
                 "2": 22
@@ -2030,9 +2030,9 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.ControlStructureSpacing"
             },
-            "total": 27571,
+            "total": 27558,
             "values": {
-                "0": 27489,
+                "0": 27476,
                 "1": 82
             },
             "percentages": {
@@ -2115,9 +2115,9 @@
             "sniffs": {
                 "0": "Generic.ControlStructures.InlineControlStructure"
             },
-            "total": 30596,
+            "total": 30582,
             "values": {
-                "no": 30561,
+                "no": 30547,
                 "yes": 35
             },
             "percentages": {
@@ -2200,9 +2200,9 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.ControlStructureSpacing"
             },
-            "total": 27571,
+            "total": 27558,
             "values": {
-                "0": 27566,
+                "0": 27553,
                 "1": 5
             },
             "percentages": {
@@ -2285,9 +2285,9 @@
             "sniffs": {
                 "0": "Squiz.Arrays.ArrayDeclaration"
             },
-            "total": 13654,
+            "total": 13664,
             "values": {
-                "lower": 13652,
+                "lower": 13662,
                 "mixed": 2
             },
             "percentages": {
@@ -2370,9 +2370,9 @@
             "sniffs": {
                 "0": "Generic.PHP.LowerCaseKeyword"
             },
-            "total": 118573,
+            "total": 118663,
             "values": {
-                "lower": 118568,
+                "lower": 118658,
                 "upper": 3,
                 "mixed": 2
             },
@@ -2474,9 +2474,9 @@
             "sniffs": {
                 "0": "Generic.Formatting.DisallowMultipleStatements"
             },
-            "total": 90409,
+            "total": 90425,
             "values": {
-                "no": 90406,
+                "no": 90422,
                 "yes": 3
             },
             "percentages": {
@@ -2559,9 +2559,9 @@
             "sniffs": {
                 "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
             },
-            "total": 66378,
+            "total": 66363,
             "values": {
-                "0": 66377,
+                "0": 66362,
                 "newline": 1
             },
             "percentages": {
@@ -2661,9 +2661,9 @@
             "sniffs": {
                 "0": "Generic.Files.LineEndings"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "\\n": 2434
+                "\\n": 2436
             },
             "percentages": {
                 "\\n": 100
@@ -2827,9 +2827,9 @@
             "sniffs": {
                 "0": "Squiz.Files.FileExtension"
             },
-            "total": 2064,
+            "total": 2068,
             "values": {
-                ".php": 2064
+                ".php": 2068
             },
             "percentages": {
                 ".php": 100
@@ -2893,9 +2893,9 @@
             "sniffs": {
                 "0": "Generic.PHP.DisallowShortOpenTag"
             },
-            "total": 2434,
+            "total": 2436,
             "values": {
-                "no": 2434
+                "no": 2436
             },
             "percentages": {
                 "no": 100
@@ -2959,9 +2959,9 @@
             "sniffs": {
                 "0": "Squiz.Files.FileExtension"
             },
-            "total": 370,
+            "total": 368,
             "values": {
-                ".php": 370
+                ".php": 368
             },
             "percentages": {
                 ".php": 100
@@ -3090,6 +3090,6 @@
     },
     "project": {
         "path": "TYPO3\/TYPO3.CMS",
-        "commitid": "bb56fba04bb6a77dbfafd7629a07fb49e037f407"
+        "commitid": "6695000d764fb3b989b2278b64f07f889bd44e15"
     }
 }
