@@ -110,7 +110,7 @@ foreach ($resultFiles as $file) {
             $totals[$metric]['repos'][$winner] = array();
         }
 
-        $totals[$metric]['repos'][$winner][] = $repo;
+        $totals[$metric]['repos'][$winner][$repo] = round(($winnerCount / $data['total'] * 100), 2);
         $totals[$metric]['total_repos']++;
 
     }//end foreach
@@ -397,10 +397,10 @@ foreach ($totals as $metric => $data) {
             $repoHTML .= "    <p><span onclick=\"document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';\" class=\"close\">[close]</span><strong>$title <em>$value</em></strong></p>".PHP_EOL;
             $repoHTML .= '    <ul>'.PHP_EOL;
 
-            sort($data['repos'][$value], SORT_STRING | SORT_FLAG_CASE);
-            foreach ($data['repos'][$value] as $repo) {
+            ksort($data['repos'][$value], SORT_STRING | SORT_FLAG_CASE);
+            foreach ($data['repos'][$value] as $repo => $percent) {
                 $href      = $repo.'/index.html#'.$metricid;
-                $repoHTML .= "      <a href=\"$href\"><li>$repo</li></a>".PHP_EOL;
+                $repoHTML .= "      <a href=\"$href\"><li>$repo <span class=\"repo-percent\">$percent%</span></li></a>".PHP_EOL;
             }
 
             $repoHTML .= '    </ul>'.PHP_EOL;

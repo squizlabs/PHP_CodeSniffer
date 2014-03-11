@@ -50,9 +50,14 @@ foreach ($repos as $repo) {
         foreach ($results['metrics'] as $metric => $data) {
             $results['metrics'][$metric]['trends'][$date] = $data['values'];
             foreach ($data['values'] as $value => $count) {
-                echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
-                $totals[$metric]['trends'][$date][$value] += $count;
-                echo ' to '.$totals[$metric]['trends'][$date][$value].PHP_EOL;
+                if (isset($totals[$metric]['trends'][$date][$value]) === true) {
+                    echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
+                    $totals[$metric]['trends'][$date][$value] += $count;
+                    echo ' to '.$totals[$metric]['trends'][$date][$value].PHP_EOL;
+                } else {
+                    $totals[$metric]['trends'][$date][$value] = $count;
+                    echo "\t\t* added total $metric ($value) with count ".$totals[$metric]['trends'][$date][$value].PHP_EOL;
+                }
             }
         }
 

@@ -304,5 +304,53 @@
         "url": "fzaninotto/Faker",
         "path": "src",
         "ignore": ""
+    },
+    {
+        "name": "lessphp",
+        "url": "leafo/lessphp",
+        "path": "",
+        "ignore": ""
+    },
+    {
+        "name": "Mustache.php",
+        "url": "bobthecow/mustache.php",
+        "path": "src",
+        "ignore": ""
+    },
+    {
+        "name": "Imagine",
+        "url": "avalanche123/Imagine",
+        "path": "lib",
+        "ignore": ""
+    },
+    {
+        "name": "Anchor CMS",
+        "url": "anchorcms/anchor-cms",
+        "path": "anchor",
+        "ignore": ""
+    },
+    {
+        "name": "ThinkUp",
+        "url": "ginatrapani/ThinkUp",
+        "path": "",
+        "ignore": "webapp/_lib/extlib/*"
+    },
+    {
+        "name": "Silex",
+        "url": "silexphp/Silex",
+        "path": "src",
+        "ignore": ""
+    },
+    {
+        "name": "PHPExcel",
+        "url": "PHPOffice/PHPExcel",
+        "path": "Classes",
+        "ignore": ""
+    },
+    {
+        "name": "ownCloud",
+        "url": "owncloud/core",
+        "path": "",
+        "ignore": "3rdparty/*"
     }
 ]

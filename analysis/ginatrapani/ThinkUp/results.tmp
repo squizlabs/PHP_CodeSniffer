@@ -1,0 +1,592 @@
+{
+    "metrics": {
+        "EOL char": {
+            "sniffs": {
+                "0": "Generic.Files.LineEndings"
+            },
+            "total": 403,
+            "values": {
+                "\\n": 403
+            },
+            "percentages": {
+                "\\n": 100
+            },
+            "trends": {
+
+            }
+        },
+        "Line length": {
+            "sniffs": {
+                "0": "Generic.Files.LineLength"
+            },
+            "total": 59161,
+            "values": {
+                "80 or less": 50960,
+                "81-120": 8129,
+                "121-150": 59,
+                "151 or more": 13
+            },
+            "percentages": {
+                "80 or less": 86.14,
+                "81-120": 13.74,
+                "121-150": 0.1,
+                "151 or more": 0.02
+            },
+            "trends": {
+
+            }
+        },
+        "Lowercase filename": {
+            "sniffs": {
+                "0": "Generic.Files.LowercasedFilename"
+            },
+            "total": 403,
+            "values": {
+                "no": 283,
+                "yes": 120
+            },
+            "percentages": {
+                "no": 70.22,
+                "yes": 29.78
+            },
+            "trends": {
+
+            }
+        },
+        "PHP short open tag used": {
+            "sniffs": {
+                "0": "Generic.PHP.DisallowShortOpenTag"
+            },
+            "total": 423,
+            "values": {
+                "no": 423
+            },
+            "percentages": {
+                "no": 100
+            },
+            "trends": {
+
+            }
+        },
+        "Line indent": {
+            "sniffs": {
+                "0": "Generic.WhiteSpace.DisallowSpaceIndent"
+            },
+            "total": 37671,
+            "values": {
+                "spaces": 37670,
+                "tabs": 1
+            },
+            "percentages": {
+                "spaces": 100,
+                "tabs": 0
+            },
+            "trends": {
+
+            }
+        },
+        "Declarations and side effects mixed": {
+            "sniffs": {
+                "0": "PSR1.Files.SideEffects"
+            },
+            "total": 403,
+            "values": {
+                "no": 342,
+                "yes": 61
+            },
+            "percentages": {
+                "no": 84.86,
+                "yes": 15.14
+            },
+            "trends": {
+
+            }
+        },
+        "Number of newlines at EOF": {
+            "sniffs": {
+                "0": "PSR2.Files.EndFileNewline"
+            },
+            "total": 402,
+            "values": {
+                "1": 266,
+                "0": 124,
+                "2": 12
+            },
+            "percentages": {
+                "1": 66.17,
+                "0": 30.85,
+                "2": 2.99
+            },
+            "trends": {
+
+            }
+        },
+        "File extension for non-class files": {
+            "sniffs": {
+                "0": "Squiz.Files.FileExtension"
+            },
+            "total": 82,
+            "values": {
+                ".php": 82
+            },
+            "percentages": {
+                ".php": 100
+            },
+            "trends": {
+
+            }
+        },
+        "PHP closing tag at EOF": {
+            "sniffs": {
+                "0": "Zend.Files.ClosingTag"
+            },
+            "total": 403,
+            "values": {
+                "no": 385,
+                "yes": 18
+            },
+            "percentages": {
+                "no": 95.53,
+                "yes": 4.47
+            },
+            "trends": {
+
+            }
+        },
+        "Adjacent assignments aligned": {
+            "sniffs": {
+                "0": "Generic.Formatting.MultipleStatementAlignment"
+            },
+            "total": 6080,
+            "values": {
+                "yes": 4238,
+                "no": 1842
+            },
+            "percentages": {
+                "yes": 69.7,
+                "no": 30.3
+            },
+            "trends": {
+
+            }
+        },
+        "Space after operator": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.OperatorSpacing"
+            },
+            "total": 15438,
+            "values": {
+                "1": 13619,
+                "0": 1665,
+                "newline": 87,
+                "2": 67
+            },
+            "percentages": {
+                "1": 88.22,
+                "0": 10.79,
+                "newline": 0.56,
+                "2": 0.43
+            },
+            "trends": {
+
+            }
+        },
+        "Multiple statements on same line": {
+            "sniffs": {
+                "0": "Generic.Formatting.DisallowMultipleStatements"
+            },
+            "total": 17910,
+            "values": {
+                "no": 17904,
+                "yes": 6
+            },
+            "percentages": {
+                "no": 99.97,
+                "yes": 0.03
+            },
+            "trends": {
+
+            }
+        },
+        "Spacing before string concat": {
+            "sniffs": {
+                "0": "Squiz.Strings.ConcatenationSpacing"
+            },
+            "total": 4036,
+            "values": {
+                "0": 3110,
+                "1": 827,
+                "newline": 98,
+                "2": 1
+            },
+            "percentages": {
+                "0": 77.06,
+                "1": 20.49,
+                "newline": 2.43,
+                "2": 0.02
+            },
+            "trends": {
+
+            }
+        },
+        "Spacing after string concat": {
+            "sniffs": {
+                "0": "Squiz.Strings.ConcatenationSpacing"
+            },
+            "total": 4036,
+            "values": {
+                "0": 2782,
+                "1": 826,
+                "newline": 427,
+                "2": 1
+            },
+            "percentages": {
+                "0": 68.93,
+                "1": 20.47,
+                "newline": 10.58,
+                "2": 0.02
+            },
+            "trends": {
+
+            }
+        },
+        "PHP constant case": {
+            "sniffs": {
+                "0": "Generic.PHP.LowerCaseConstant"
+            },
+            "total": 2101,
+            "values": {
+                "lower": 2019,
+                "upper": 82
+            },
+            "percentages": {
+                "lower": 96.1,
+                "upper": 3.9
+            },
+            "trends": {
+
+            }
+        },
+        "Control structure defined inline": {
+            "sniffs": {
+                "0": "Generic.ControlStructures.InlineControlStructure"
+            },
+            "total": 4346,
+            "values": {
+                "no": 4300,
+                "yes": 46
+            },
+            "percentages": {
+                "no": 98.94,
+                "yes": 1.06
+            },
+            "trends": {
+
+            }
+        },
+        "PHP keyword case": {
+            "sniffs": {
+                "0": "Generic.PHP.LowerCaseKeyword"
+            },
+            "total": 18655,
+            "values": {
+                "lower": 18654,
+                "upper": 1
+            },
+            "percentages": {
+                "lower": 99.99,
+                "upper": 0.01
+            },
+            "trends": {
+
+            }
+        },
+        "Spaces after control structure open parenthesis": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
+            },
+            "total": 3826,
+            "values": {
+                "0": 3621,
+                "1": 204,
+                "2": 1
+            },
+            "percentages": {
+                "0": 94.64,
+                "1": 5.33,
+                "2": 0.03
+            },
+            "trends": {
+
+            }
+        },
+        "Spaces before control structure close parenthesis": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
+            },
+            "total": 3826,
+            "values": {
+                "0": 3526,
+                "1": 300
+            },
+            "percentages": {
+                "0": 92.16,
+                "1": 7.84
+            },
+            "trends": {
+
+            }
+        },
+        "Space before operator": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.OperatorSpacing"
+            },
+            "total": 4031,
+            "values": {
+                "1": 2319,
+                "0": 1680,
+                "newline": 31,
+                "2": 1
+            },
+            "percentages": {
+                "1": 57.53,
+                "0": 41.68,
+                "newline": 0.77,
+                "2": 0.02
+            },
+            "trends": {
+
+            }
+        },
+        "File extension for class files": {
+            "sniffs": {
+                "0": "Squiz.Files.FileExtension"
+            },
+            "total": 321,
+            "values": {
+                ".php": 321
+            },
+            "percentages": {
+                ".php": 100
+            },
+            "trends": {
+
+            }
+        },
+        "One class per file": {
+            "sniffs": {
+                "0": "PSR1.Classes.ClassDeclaration"
+            },
+            "total": 561,
+            "values": {
+                "yes": 321,
+                "no": 240
+            },
+            "percentages": {
+                "yes": 57.22,
+                "no": 42.78
+            },
+            "trends": {
+
+            }
+        },
+        "Class defined in namespace": {
+            "sniffs": {
+                "0": "PSR1.Classes.ClassDeclaration"
+            },
+            "total": 561,
+            "values": {
+                "no": 331,
+                "yes": 230
+            },
+            "percentages": {
+                "no": 59,
+                "yes": 41
+            },
+            "trends": {
+
+            }
+        },
+        "CamelCase class name": {
+            "sniffs": {
+                "0": "Squiz.Classes.ValidClassName"
+            },
+            "total": 561,
+            "values": {
+                "yes": 545,
+                "no": 16
+            },
+            "percentages": {
+                "yes": 97.15,
+                "no": 2.85
+            },
+            "trends": {
+
+            }
+        },
+        "Function opening brace placement": {
+            "sniffs": {
+                "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
+            },
+            "total": 2227,
+            "values": {
+                "same line": 2200,
+                "new line": 27
+            },
+            "percentages": {
+                "same line": 98.79,
+                "new line": 1.21
+            },
+            "trends": {
+
+            }
+        },
+        "Spacing before object operator": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
+            },
+            "total": 13677,
+            "values": {
+                "0": 13677
+            },
+            "percentages": {
+                "0": 100
+            },
+            "trends": {
+
+            }
+        },
+        "Spacing after object operator": {
+            "sniffs": {
+                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
+            },
+            "total": 13677,
+            "values": {
+                "0": 13677
+            },
+            "percentages": {
+                "0": 100
+            },
+            "trends": {
+
+            }
+        },
+        "CamelCase method name": {
+            "sniffs": {
+                "0": "Generic.NamingConventions.CamelCapsFunctionName"
+            },
+            "total": 2471,
+            "values": {
+                "yes": 2214,
+                "no": 257
+            },
+            "percentages": {
+                "yes": 89.6,
+                "no": 10.4
+            },
+            "trends": {
+
+            }
+        },
+        "Array keyword case": {
+            "sniffs": {
+                "0": "Squiz.Arrays.ArrayDeclaration"
+            },
+            "total": 1519,
+            "values": {
+                "lower": 1519
+            },
+            "percentages": {
+                "lower": 100
+            },
+            "trends": {
+
+            }
+        },
+        "Brackets around echoed strings": {
+            "sniffs": {
+                "0": "Squiz.Strings.EchoedStrings"
+            },
+            "total": 94,
+            "values": {
+                "no": 91,
+                "yes": 3
+            },
+            "percentages": {
+                "no": 96.81,
+                "yes": 3.19
+            },
+            "trends": {
+
+            }
+        },
+        "Use of ELSE IF or ELSEIF": {
+            "sniffs": {
+                "0": "PSR2.ControlStructures.ElseIfDeclaration"
+            },
+            "total": 170,
+            "values": {
+                "elseif": 119,
+                "else if": 51
+            },
+            "percentages": {
+                "elseif": 70,
+                "else if": 30
+            },
+            "trends": {
+
+            }
+        },
+        "Spacing after cast statement": {
+            "sniffs": {
+                "0": "Generic.Formatting.SpaceAfterCast"
+            },
+            "total": 327,
+            "values": {
+                "0": 250,
+                "1": 77
+            },
+            "percentages": {
+                "0": 76.45,
+                "1": 23.55
+            },
+            "trends": {
+
+            }
+        },
+        "Constant name case": {
+            "sniffs": {
+                "0": "Generic.NamingConventions.UpperCaseConstantName"
+            },
+            "total": 131,
+            "values": {
+                "upper": 131
+            },
+            "percentages": {
+                "upper": 100
+            },
+            "trends": {
+
+            }
+        },
+        "CamelCase function name": {
+            "sniffs": {
+                "0": "Generic.NamingConventions.CamelCapsFunctionName"
+            },
+            "total": 11,
+            "values": {
+                "no": 11
+            },
+            "percentages": {
+                "no": 100
+            },
+            "trends": {
+
+            }
+        }
+    },
+    "project": {
+        "path": "ginatrapani\/ThinkUp",
+        "commitid": "cc0be34f7f14fbb81507f4a60c241f0545be3ebc"
+    }
+}

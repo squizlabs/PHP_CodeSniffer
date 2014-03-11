@@ -2485,6 +2485,72 @@
             },
             "winner": "no"
         },
+        "PHP keyword case": {
+            "sniffs": {
+                "0": "Generic.PHP.LowerCaseKeyword"
+            },
+            "total": 39570,
+            "values": {
+                "lower": 39570
+            },
+            "percentages": {
+                "lower": 100
+            },
+            "trends": {
+                "2013-11-06": {
+                    "lower": 39432
+                },
+                "2013-11-13": {
+                    "lower": 39452
+                },
+                "2013-11-20": {
+                    "lower": 39498
+                },
+                "2013-11-27": {
+                    "lower": 39523
+                },
+                "2013-12-04": {
+                    "lower": 39526
+                },
+                "2013-12-11": {
+                    "lower": 39534
+                },
+                "2013-12-18": {
+                    "lower": 39534
+                },
+                "2013-12-25": {
+                    "lower": 39550
+                },
+                "2014-01-05": {
+                    "lower": 39548
+                },
+                "2014-01-12": {
+                    "lower": 39545
+                },
+                "2014-01-19": {
+                    "lower": 39552
+                },
+                "2014-01-26": {
+                    "lower": 39561
+                },
+                "2014-02-02": {
+                    "lower": 39561
+                },
+                "2014-02-09": {
+                    "lower": 39564
+                },
+                "2014-02-16": {
+                    "lower": 39570
+                },
+                "2014-02-23": {
+                    "lower": 39570
+                },
+                "2014-03-02": {
+                    "lower": 39570
+                }
+            },
+            "winner": "lower"
+        },
         "Spacing after object operator": {
             "sniffs": {
                 "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
@@ -2550,72 +2616,6 @@
                 }
             },
             "winner": 0
-        },
-        "Array keyword case": {
-            "sniffs": {
-                "0": "Squiz.Arrays.ArrayDeclaration"
-            },
-            "total": 6817,
-            "values": {
-                "lower": 6817
-            },
-            "percentages": {
-                "lower": 100
-            },
-            "trends": {
-                "2013-11-06": {
-                    "lower": 6813
-                },
-                "2013-11-13": {
-                    "lower": 6813
-                },
-                "2013-11-20": {
-                    "lower": 6817
-                },
-                "2013-11-27": {
-                    "lower": 6818
-                },
-                "2013-12-04": {
-                    "lower": 6816
-                },
-                "2013-12-11": {
-                    "lower": 6816
-                },
-                "2013-12-18": {
-                    "lower": 6816
-                },
-                "2013-12-25": {
-                    "lower": 6816
-                },
-                "2014-01-05": {
-                    "lower": 6816
-                },
-                "2014-01-12": {
-                    "lower": 6816
-                },
-                "2014-01-19": {
-                    "lower": 6816
-                },
-                "2014-01-26": {
-                    "lower": 6816
-                },
-                "2014-02-02": {
-                    "lower": 6816
-                },
-                "2014-02-09": {
-                    "lower": 6816
-                },
-                "2014-02-16": {
-                    "lower": 6817
-                },
-                "2014-02-23": {
-                    "lower": 6817
-                },
-                "2014-03-02": {
-                    "lower": 6817
-                }
-            },
-            "winner": "lower"
         },
         "File extension for class files": {
             "sniffs": {
@@ -2683,68 +2683,68 @@
             },
             "winner": ".php"
         },
-        "PHP keyword case": {
+        "Array keyword case": {
             "sniffs": {
-                "0": "Generic.PHP.LowerCaseKeyword"
+                "0": "Squiz.Arrays.ArrayDeclaration"
             },
-            "total": 39570,
+            "total": 6817,
             "values": {
-                "lower": 39570
+                "lower": 6817
             },
             "percentages": {
                 "lower": 100
             },
             "trends": {
                 "2013-11-06": {
-                    "lower": 39432
+                    "lower": 6813
                 },
                 "2013-11-13": {
-                    "lower": 39452
+                    "lower": 6813
                 },
                 "2013-11-20": {
-                    "lower": 39498
+                    "lower": 6817
                 },
                 "2013-11-27": {
-                    "lower": 39523
+                    "lower": 6818
                 },
                 "2013-12-04": {
-                    "lower": 39526
+                    "lower": 6816
                 },
                 "2013-12-11": {
-                    "lower": 39534
+                    "lower": 6816
                 },
                 "2013-12-18": {
-                    "lower": 39534
+                    "lower": 6816
                 },
                 "2013-12-25": {
-                    "lower": 39550
+                    "lower": 6816
                 },
                 "2014-01-05": {
-                    "lower": 39548
+                    "lower": 6816
                 },
                 "2014-01-12": {
-                    "lower": 39545
+                    "lower": 6816
                 },
                 "2014-01-19": {
-                    "lower": 39552
+                    "lower": 6816
                 },
                 "2014-01-26": {
-                    "lower": 39561
+                    "lower": 6816
                 },
                 "2014-02-02": {
-                    "lower": 39561
+                    "lower": 6816
                 },
                 "2014-02-09": {
-                    "lower": 39564
+                    "lower": 6816
                 },
                 "2014-02-16": {
-                    "lower": 39570
+                    "lower": 6817
                 },
                 "2014-02-23": {
-                    "lower": 39570
+                    "lower": 6817
                 },
                 "2014-03-02": {
-                    "lower": 39570
+                    "lower": 6817
                 }
             },
             "winner": "lower"

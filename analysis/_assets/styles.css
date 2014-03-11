@@ -143,6 +143,11 @@ span.winner {
     left: 0px;
 }
 
+.repo-percent {
+    font-size: 12px;
+    color: #666;
+}
+
 .preferred {
     font-size: 12px;
     padding: 0px 0px 15px 0px;
