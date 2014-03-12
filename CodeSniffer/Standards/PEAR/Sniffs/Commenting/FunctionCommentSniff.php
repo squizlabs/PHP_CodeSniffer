@@ -74,7 +74,10 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
             $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'no');
             return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'yes');
         }
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {

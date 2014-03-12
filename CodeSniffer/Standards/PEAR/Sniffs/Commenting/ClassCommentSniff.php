@@ -80,7 +80,10 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
             $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
             return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
         }
 
         // Try and determine if this is a file comment instead of a class comment.

@@ -151,12 +151,16 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
             $error = 'You must use "/**" style comments for a file comment';
             $phpcsFile->addError($error, $errorToken, 'WrongStyle');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
             return ($phpcsFile->numTokens + 1);
         } else if ($commentStart === false
             || $tokens[$commentStart]['code'] !== T_DOC_COMMENT_OPEN_TAG
         ) {
             $phpcsFile->addError('Missing file doc comment', $errorToken, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
             return ($phpcsFile->numTokens + 1);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
         }
 
         // Check the PHP Version, which should be in some text before the first tag.
@@ -301,7 +305,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $firstBit   = array_shift($nameBits);
                 $newName    = ucfirst($firstBit).'_';
                 foreach ($nameBits as $bit) {
-                    $newName .= ucfirst($bit).'_';
+                    if ($bit !== '') {
+                        $newName .= ucfirst($bit).'_';
+                    }
                 }
 
                 $error     = 'Category name "%s" is not valid; consider "%s" instead';
@@ -345,7 +351,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $firstBit   = array_shift($nameBits);
             $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
             foreach ($nameBits as $bit) {
-                $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                if ($bit !== '') {
+                    $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                }
             }
 
             $error     = 'Package name "%s" is not valid; consider "%s" instead';
@@ -387,7 +395,9 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $firstBit   = array_shift($nameBits);
             $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
             foreach ($nameBits as $bit) {
-                $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                if ($bit !== '') {
+                    $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                }
             }
 
             $error     = 'Subpackage name "%s" is not valid; consider "%s" instead';
