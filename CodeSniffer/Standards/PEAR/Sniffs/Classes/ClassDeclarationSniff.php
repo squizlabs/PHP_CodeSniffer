@@ -79,6 +79,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         $classLine   = $tokens[$lastContent]['line'];
         $braceLine   = $tokens[$curlyBrace]['line'];
         if ($braceLine === $classLine) {
+            $phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'same line');
             $error = 'Opening brace of a %s must be on the line after the definition';
             $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
@@ -92,15 +93,19 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             return;
-        } else if ($braceLine > ($classLine + 1)) {
-            $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
-            $data  = array(
-                      $tokens[$stackPtr]['content'],
-                      $tokens[$stackPtr]['content'],
-                      ($braceLine - $classLine - 1),
-                     );
-            $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
-            return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'new line');
+
+            if ($braceLine > ($classLine + 1)) {
+                $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
+                $data  = array(
+                          $tokens[$stackPtr]['content'],
+                          $tokens[$stackPtr]['content'],
+                          ($braceLine - $classLine - 1),
+                         );
+                $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
+                return;
+            }
         }//end if
 
         if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {
