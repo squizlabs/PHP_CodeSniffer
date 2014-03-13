@@ -51,8 +51,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         // the open and close tags we add are parsed correctly.
         $eolAdded = false;
         if (substr($string, (strlen($eolChar) * -1)) !== $eolChar) {
-            $string .= $eolChar;
-            $eolAdded  = true;
+            $string  .= $eolChar;
+            $eolAdded = true;
         }
 
         $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
