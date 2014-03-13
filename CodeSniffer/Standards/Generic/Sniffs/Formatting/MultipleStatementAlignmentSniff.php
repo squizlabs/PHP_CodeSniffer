@@ -197,13 +197,8 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $assignLen = strlen($tokens[$assign]['content']);
             if ($assign !== $stackPtr) {
                 if (($varEnd + 1) > $assignments[$prevAssign]['assign_col']) {
-                    $padding = ($varEnd - $assignments[$prevAssign]['var_end'] + 1);
-                    if ($padding > $this->maxPadding) {
-                        $stopped = $assign;
-                        break;
-                    }
-
-                    $assignColumn = ($assignments[$prevAssign]['var_end'] + $padding);
+                    $padding      = 1;
+                    $assignColumn = ($varEnd + 1);
                 } else {
                     $padding = ($assignments[$prevAssign]['assign_col'] - $varEnd + $assignments[$prevAssign]['assign_len'] - $assignLen);
                     if ($padding === 0) {
