@@ -78,15 +78,11 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         foreach ($metrics as $metric => $data) {
             if (isset($this->_metricCache['metrics'][$metric]) === false) {
                 $this->_metricCache['metrics'][$metric] = array(
-                                                           'sniffs'      => $data['sniffs'],
                                                            'total'       => 0,
                                                            'values'      => array(),
                                                            'percentages' => array(),
                                                            'trends'      => array(),
                                                           );
-            } else {
-                $this->_metricCache['metrics'][$metric]['sniffs'] += $data['sniffs'];
-                $this->_metricCache['metrics'][$metric]['sniffs']  = array_unique($this->_metricCache['metrics'][$metric]['sniffs']);
             }
 
             foreach ($data['values'] as $value => $locations) {

@@ -117,7 +117,6 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
 
             if (isset($newTotals['metrics'][$metric]) === false) {
                 $newTotals['metrics'][$metric] = array(
-                                                  'sniffs'      => array(),
                                                   'total'       => 0,
                                                   'values'      => array(),
                                                   'percentages' => array(),

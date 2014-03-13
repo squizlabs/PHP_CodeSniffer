@@ -1,9 +1,6 @@
 {
     "metrics": {
         "Spacing after string concat": {
-            "sniffs": {
-                "0": "Squiz.Strings.ConcatenationSpacing"
-            },
             "total": 26623,
             "values": {
                 "0": 11259,
@@ -150,9 +147,6 @@
             "winner": 0
         },
         "Declarations and side effects mixed": {
-            "sniffs": {
-                "0": "PSR1.Files.SideEffects"
-            },
             "total": 2503,
             "values": {
                 "yes": 1319,
@@ -239,9 +233,6 @@
             "winner": "yes"
         },
         "Use of ELSE IF or ELSEIF": {
-            "sniffs": {
-                "0": "PSR2.ControlStructures.ElseIfDeclaration"
-            },
             "total": 1431,
             "values": {
                 "else if": 760,
@@ -328,9 +319,6 @@
             "winner": "else if"
         },
         "Spacing before string concat": {
-            "sniffs": {
-                "0": "Squiz.Strings.ConcatenationSpacing"
-            },
             "total": 26623,
             "values": {
                 "1": 14152,
@@ -477,9 +465,6 @@
             "winner": 1
         },
         "Space before operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.OperatorSpacing"
-            },
             "total": 30212,
             "values": {
                 "0": 16365,
@@ -666,9 +651,6 @@
             "winner": 0
         },
         "Spacing after cast statement": {
-            "sniffs": {
-                "0": "Generic.Formatting.SpaceAfterCast"
-            },
             "total": 134,
             "values": {
                 "1": 73,
@@ -755,9 +737,6 @@
             "winner": 1
         },
         "PHP closing tag at EOF": {
-            "sniffs": {
-                "0": "Zend.Files.ClosingTag"
-            },
             "total": 2503,
             "values": {
                 "yes": 1469,
@@ -844,9 +823,6 @@
             "winner": "yes"
         },
         "CamelCase class name": {
-            "sniffs": {
-                "0": "Squiz.Classes.ValidClassName"
-            },
             "total": 1258,
             "values": {
                 "yes": 741,
@@ -933,9 +909,6 @@
             "winner": "yes"
         },
         "Line indent": {
-            "sniffs": {
-                "0": "Generic.WhiteSpace.DisallowSpaceIndent"
-            },
             "total": 279110,
             "values": {
                 "spaces": 167456,
@@ -1022,9 +995,6 @@
             "winner": "spaces"
         },
         "Function opening brace placement": {
-            "sniffs": {
-                "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
-            },
             "total": 9843,
             "values": {
                 "new line": 5947,
@@ -1111,9 +1081,6 @@
             "winner": "new line"
         },
         "Function has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.FunctionComment"
-            },
             "total": 10006,
             "values": {
                 "yes": 6337,
@@ -1200,9 +1167,6 @@
             "winner": "yes"
         },
         "Class has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.ClassComment"
-            },
             "total": 1258,
             "values": {
                 "yes": 799,
@@ -1289,9 +1253,6 @@
             "winner": "yes"
         },
         "Class opening brace placement": {
-            "sniffs": {
-                "0": "PEAR.Classes.ClassDeclaration"
-            },
             "total": 1258,
             "values": {
                 "new line": 815,
@@ -1378,9 +1339,6 @@
             "winner": "new line"
         },
         "Lowercase filename": {
-            "sniffs": {
-                "0": "Generic.Files.LowercasedFilename"
-            },
             "total": 2503,
             "values": {
                 "no": 1643,
@@ -1467,9 +1425,6 @@
             "winner": "no"
         },
         "Number of newlines at EOF": {
-            "sniffs": {
-                "0": "PSR2.Files.EndFileNewline"
-            },
             "total": 2440,
             "values": {
                 "1": 1607,
@@ -1636,9 +1591,6 @@
             "winner": 1
         },
         "File has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.FileComment"
-            },
             "total": 2503,
             "values": {
                 "no": 1687,
@@ -1725,9 +1677,6 @@
             "winner": "no"
         },
         "Adjacent assignments aligned": {
-            "sniffs": {
-                "0": "Generic.Formatting.MultipleStatementAlignment"
-            },
             "total": 37679,
             "values": {
                 "yes": 27241,
@@ -1814,9 +1763,6 @@
             "winner": "yes"
         },
         "CamelCase method name": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.CamelCapsFunctionName"
-            },
             "total": 8485,
             "values": {
                 "yes": 6289,
@@ -1903,9 +1849,6 @@
             "winner": "yes"
         },
         "Control structure defined inline": {
-            "sniffs": {
-                "0": "Generic.ControlStructures.InlineControlStructure"
-            },
             "total": 34439,
             "values": {
                 "no": 28799,
@@ -1992,9 +1935,6 @@
             "winner": "no"
         },
         "Space after operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.OperatorSpacing"
-            },
             "total": 127622,
             "values": {
                 "1": 109109,
@@ -2281,9 +2221,6 @@
             "winner": 1
         },
         "Constant name case": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.UpperCaseConstantName"
-            },
             "total": 507,
             "values": {
                 "upper": 449,
@@ -2390,9 +2327,6 @@
             "winner": "upper"
         },
         "Line length": {
-            "sniffs": {
-                "0": "Generic.Files.LineLength"
-            },
             "total": 452670,
             "values": {
                 "80 or less": 407048,
@@ -2519,9 +2453,6 @@
             "winner": "80 or less"
         },
         "Spaces after control structure open parenthesis": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-            },
             "total": 30188,
             "values": {
                 "0": 27614,
@@ -2628,9 +2559,6 @@
             "winner": 0
         },
         "Spaces before control structure close parenthesis": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-            },
             "total": 30188,
             "values": {
                 "0": 27719,
@@ -2737,9 +2665,6 @@
             "winner": 0
         },
         "PHP constant case": {
-            "sniffs": {
-                "0": "Generic.PHP.LowerCaseConstant"
-            },
             "total": 16251,
             "values": {
                 "lower": 15732,
@@ -2846,9 +2771,6 @@
             "winner": "lower"
         },
         "One class per file": {
-            "sniffs": {
-                "0": "PSR1.Classes.ClassDeclaration"
-            },
             "total": 1258,
             "values": {
                 "yes": 1234,
@@ -2935,9 +2857,6 @@
             "winner": "yes"
         },
         "Array keyword case": {
-            "sniffs": {
-                "0": "Squiz.Arrays.ArrayDeclaration"
-            },
             "total": 18722,
             "values": {
                 "lower": 18405,
@@ -3024,9 +2943,6 @@
             "winner": "lower"
         },
         "Brackets around echoed strings": {
-            "sniffs": {
-                "0": "Squiz.Strings.EchoedStrings"
-            },
             "total": 1929,
             "values": {
                 "no": 1901,
@@ -3113,9 +3029,6 @@
             "winner": "no"
         },
         "PHP keyword case": {
-            "sniffs": {
-                "0": "Generic.PHP.LowerCaseKeyword"
-            },
             "total": 126855,
             "values": {
                 "lower": 126457,
@@ -3222,9 +3135,6 @@
             "winner": "lower"
         },
         "Multiple statements on same line": {
-            "sniffs": {
-                "0": "Generic.Formatting.DisallowMultipleStatements"
-            },
             "total": 103459,
             "values": {
                 "no": 103261,
@@ -3311,9 +3221,6 @@
             "winner": "no"
         },
         "Spacing after object operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
-            },
             "total": 62350,
             "values": {
                 "0": 62324,
@@ -3400,9 +3307,6 @@
             "winner": 0
         },
         "Spacing before object operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
-            },
             "total": 62350,
             "values": {
                 "0": 62331,
@@ -3508,148 +3412,7 @@
             },
             "winner": 0
         },
-        "EOL char": {
-            "sniffs": {
-                "0": "Generic.Files.LineEndings"
-            },
-            "total": 2503,
-            "values": {
-                "\\n": 2503
-            },
-            "percentages": {
-                "\\n": 100
-            },
-            "trends": {
-                "2013-11-06": {
-                    "\\n": 2503
-                },
-                "2013-11-13": {
-                    "\\n": 2503
-                },
-                "2013-11-20": {
-                    "\\n": 2503
-                },
-                "2013-11-27": {
-                    "\\n": 2503
-                },
-                "2013-12-04": {
-                    "\\n": 2503
-                },
-                "2013-12-11": {
-                    "\\n": 2503
-                },
-                "2013-12-18": {
-                    "\\n": 2503
-                },
-                "2013-12-25": {
-                    "\\n": 2503
-                },
-                "2014-01-05": {
-                    "\\n": 2503
-                },
-                "2014-01-12": {
-                    "\\n": 2503
-                },
-                "2014-01-19": {
-                    "\\n": 2503
-                },
-                "2014-01-26": {
-                    "\\n": 2503
-                },
-                "2014-02-02": {
-                    "\\n": 2503
-                },
-                "2014-02-09": {
-                    "\\n": 2503
-                },
-                "2014-02-16": {
-                    "\\n": 2503
-                },
-                "2014-02-23": {
-                    "\\n": 2503
-                },
-                "2014-03-02": {
-                    "\\n": 2503
-                },
-                "2014-03-09": {
-                    "\\n": 2503
-                }
-            },
-            "winner": "\\n"
-        },
-        "File extension for non-class files": {
-            "sniffs": {
-                "0": "Squiz.Files.FileExtension"
-            },
-            "total": 1269,
-            "values": {
-                ".php": 1269
-            },
-            "percentages": {
-                ".php": 100
-            },
-            "trends": {
-                "2013-11-06": {
-                    ".php": 1269
-                },
-                "2013-11-13": {
-                    ".php": 1269
-                },
-                "2013-11-20": {
-                    ".php": 1269
-                },
-                "2013-11-27": {
-                    ".php": 1269
-                },
-                "2013-12-04": {
-                    ".php": 1269
-                },
-                "2013-12-11": {
-                    ".php": 1269
-                },
-                "2013-12-18": {
-                    ".php": 1269
-                },
-                "2013-12-25": {
-                    ".php": 1269
-                },
-                "2014-01-05": {
-                    ".php": 1269
-                },
-                "2014-01-12": {
-                    ".php": 1269
-                },
-                "2014-01-19": {
-                    ".php": 1269
-                },
-                "2014-01-26": {
-                    ".php": 1269
-                },
-                "2014-02-02": {
-                    ".php": 1269
-                },
-                "2014-02-09": {
-                    ".php": 1269
-                },
-                "2014-02-16": {
-                    ".php": 1269
-                },
-                "2014-02-23": {
-                    ".php": 1269
-                },
-                "2014-03-02": {
-                    ".php": 1269
-                },
-                "2014-03-09": {
-                    ".php": 1269
-                }
-            },
-            "winner": ".php"
-        },
         "Class defined in namespace": {
-            "sniffs": {
-                "0": "PSR1.Classes.ClassDeclaration"
-            },
             "total": 1258,
             "values": {
                 "no": 1258
@@ -3715,79 +3478,7 @@
             },
             "winner": "no"
         },
-        "File extension for class files": {
-            "sniffs": {
-                "0": "Squiz.Files.FileExtension"
-            },
-            "total": 1234,
-            "values": {
-                ".php": 1234
-            },
-            "percentages": {
-                ".php": 100
-            },
-            "trends": {
-                "2013-11-06": {
-                    ".php": 1234
-                },
-                "2013-11-13": {
-                    ".php": 1234
-                },
-                "2013-11-20": {
-                    ".php": 1234
-                },
-                "2013-11-27": {
-                    ".php": 1234
-                },
-                "2013-12-04": {
-                    ".php": 1234
-                },
-                "2013-12-11": {
-                    ".php": 1234
-                },
-                "2013-12-18": {
-                    ".php": 1234
-                },
-                "2013-12-25": {
-                    ".php": 1234
-                },
-                "2014-01-05": {
-                    ".php": 1234
-                },
-                "2014-01-12": {
-                    ".php": 1234
-                },
-                "2014-01-19": {
-                    ".php": 1234
-                },
-                "2014-01-26": {
-                    ".php": 1234
-                },
-                "2014-02-02": {
-                    ".php": 1234
-                },
-                "2014-02-09": {
-                    ".php": 1234
-                },
-                "2014-02-16": {
-                    ".php": 1234
-                },
-                "2014-02-23": {
-                    ".php": 1234
-                },
-                "2014-03-02": {
-                    ".php": 1234
-                },
-                "2014-03-09": {
-                    ".php": 1234
-                }
-            },
-            "winner": ".php"
-        },
         "PHP short open tag used": {
-            "sniffs": {
-                "0": "Generic.PHP.DisallowShortOpenTag"
-            },
             "total": 2836,
             "values": {
                 "no": 2836
@@ -3853,10 +3544,205 @@
             },
             "winner": "no"
         },
-        "CamelCase function name": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.CamelCapsFunctionName"
+        "File extension for non-class files": {
+            "total": 1269,
+            "values": {
+                ".php": 1269
             },
+            "percentages": {
+                ".php": 100
+            },
+            "trends": {
+                "2013-11-06": {
+                    ".php": 1269
+                },
+                "2013-11-13": {
+                    ".php": 1269
+                },
+                "2013-11-20": {
+                    ".php": 1269
+                },
+                "2013-11-27": {
+                    ".php": 1269
+                },
+                "2013-12-04": {
+                    ".php": 1269
+                },
+                "2013-12-11": {
+                    ".php": 1269
+                },
+                "2013-12-18": {
+                    ".php": 1269
+                },
+                "2013-12-25": {
+                    ".php": 1269
+                },
+                "2014-01-05": {
+                    ".php": 1269
+                },
+                "2014-01-12": {
+                    ".php": 1269
+                },
+                "2014-01-19": {
+                    ".php": 1269
+                },
+                "2014-01-26": {
+                    ".php": 1269
+                },
+                "2014-02-02": {
+                    ".php": 1269
+                },
+                "2014-02-09": {
+                    ".php": 1269
+                },
+                "2014-02-16": {
+                    ".php": 1269
+                },
+                "2014-02-23": {
+                    ".php": 1269
+                },
+                "2014-03-02": {
+                    ".php": 1269
+                },
+                "2014-03-09": {
+                    ".php": 1269
+                }
+            },
+            "winner": ".php"
+        },
+        "File extension for class files": {
+            "total": 1234,
+            "values": {
+                ".php": 1234
+            },
+            "percentages": {
+                ".php": 100
+            },
+            "trends": {
+                "2013-11-06": {
+                    ".php": 1234
+                },
+                "2013-11-13": {
+                    ".php": 1234
+                },
+                "2013-11-20": {
+                    ".php": 1234
+                },
+                "2013-11-27": {
+                    ".php": 1234
+                },
+                "2013-12-04": {
+                    ".php": 1234
+                },
+                "2013-12-11": {
+                    ".php": 1234
+                },
+                "2013-12-18": {
+                    ".php": 1234
+                },
+                "2013-12-25": {
+                    ".php": 1234
+                },
+                "2014-01-05": {
+                    ".php": 1234
+                },
+                "2014-01-12": {
+                    ".php": 1234
+                },
+                "2014-01-19": {
+                    ".php": 1234
+                },
+                "2014-01-26": {
+                    ".php": 1234
+                },
+                "2014-02-02": {
+                    ".php": 1234
+                },
+                "2014-02-09": {
+                    ".php": 1234
+                },
+                "2014-02-16": {
+                    ".php": 1234
+                },
+                "2014-02-23": {
+                    ".php": 1234
+                },
+                "2014-03-02": {
+                    ".php": 1234
+                },
+                "2014-03-09": {
+                    ".php": 1234
+                }
+            },
+            "winner": ".php"
+        },
+        "EOL char": {
+            "total": 2503,
+            "values": {
+                "\\n": 2503
+            },
+            "percentages": {
+                "\\n": 100
+            },
+            "trends": {
+                "2013-11-06": {
+                    "\\n": 2503
+                },
+                "2013-11-13": {
+                    "\\n": 2503
+                },
+                "2013-11-20": {
+                    "\\n": 2503
+                },
+                "2013-11-27": {
+                    "\\n": 2503
+                },
+                "2013-12-04": {
+                    "\\n": 2503
+                },
+                "2013-12-11": {
+                    "\\n": 2503
+                },
+                "2013-12-18": {
+                    "\\n": 2503
+                },
+                "2013-12-25": {
+                    "\\n": 2503
+                },
+                "2014-01-05": {
+                    "\\n": 2503
+                },
+                "2014-01-12": {
+                    "\\n": 2503
+                },
+                "2014-01-19": {
+                    "\\n": 2503
+                },
+                "2014-01-26": {
+                    "\\n": 2503
+                },
+                "2014-02-02": {
+                    "\\n": 2503
+                },
+                "2014-02-09": {
+                    "\\n": 2503
+                },
+                "2014-02-16": {
+                    "\\n": 2503
+                },
+                "2014-02-23": {
+                    "\\n": 2503
+                },
+                "2014-03-02": {
+                    "\\n": 2503
+                },
+                "2014-03-09": {
+                    "\\n": 2503
+                }
+            },
+            "winner": "\\n"
+        },
+        "CamelCase function name": {
             "total": 664,
             "values": {
                 "no": 664

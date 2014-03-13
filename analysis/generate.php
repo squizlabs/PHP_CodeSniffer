@@ -40,8 +40,6 @@ foreach ($repos as $repo) {
     echo PHP_EOL;
 }//end foreach
 
-exit;
-
 // Imports $metricText variable.
 require_once __DIR__.'/_assets/metricText.php';
 $colours = array(
@@ -68,7 +66,6 @@ foreach ($resultFiles as $file) {
 
         if (isset($totals[$metric]) === false) {
             $totals[$metric] = array(
-                                'sniffs'      => array(),
                                 'total'       => 0,
                                 'total_repos' => 0,
                                 'values'      => array(),
@@ -76,12 +73,6 @@ foreach ($resultFiles as $file) {
                                 'trends'      => array(),
                                );
         }
-
-        foreach ($data['sniffs'] as $sniff) {
-            $totals[$metric]['sniffs'][] = $sniff;
-        }
-
-        $totals[$metric]['sniffs'] = array_unique($totals[$metric]['sniffs']);
 
         $winner      = '';
         $winnerCount = 0;
@@ -138,7 +129,7 @@ foreach ($resultFiles as $file) {
 
         $chartNum++;
         $id    = str_replace(' ', '-', strtolower($metric));
-        $html .= '<h2 id="'.$id.'" title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2>'.PHP_EOL;
+        $html .= '<h2 id="'.$id.'">'.$metric.'</h2>'.PHP_EOL;
         $html .= '<div class="metric"><p>'.$description.'</p>'.PHP_EOL;
         $html .= '  <canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
         $html .= '  <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="145"></canvas>'.PHP_EOL;
@@ -293,7 +284,6 @@ foreach ($prevTotals as $metric => $data) {
 
     if (isset($totals[$metric]) === false) {
         $totals[$metric] = array(
-                            'sniffs'      => array(),
                             'total'       => 0,
                             'total_repos' => 0,
                             'values'      => array(),
@@ -355,7 +345,7 @@ foreach ($totals as $metric => $data) {
     $chartNum++;
     $metricid = str_replace(' ', '-', strtolower($metric));
 
-    $html .= '<h2 id="'.$metricid.'" title="'.implode(',', $data['sniffs']).'">'.$metric.'</h2>'.PHP_EOL;
+    $html .= '<h2 id="'.$metricid.'">'.$metric.'</h2>'.PHP_EOL;
     $html .= '<div class="metric">'.PHP_EOL."  <p>$description</p>".PHP_EOL;
     $html .= '  <canvas class="chart-value" id="chart'.$chartNum.'" width="400" height="400"></canvas>'.PHP_EOL;
     $html .= '  <canvas class="chart-repo" id="chart'.$chartNum.'r" width="240" height="240"></canvas>'.PHP_EOL;

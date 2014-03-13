@@ -1,9 +1,6 @@
 {
     "metrics": {
         "Declarations and side effects mixed": {
-            "sniffs": {
-                "0": "PSR1.Files.SideEffects"
-            },
             "total": 3285,
             "values": {
                 "no": 1745,
@@ -90,9 +87,6 @@
             "winner": "no"
         },
         "Spacing after string concat": {
-            "sniffs": {
-                "0": "Squiz.Strings.ConcatenationSpacing"
-            },
             "total": 29572,
             "values": {
                 "0": 15740,
@@ -219,9 +213,6 @@
             "winner": 0
         },
         "Spacing before string concat": {
-            "sniffs": {
-                "0": "Squiz.Strings.ConcatenationSpacing"
-            },
             "total": 29572,
             "values": {
                 "0": 16372,
@@ -488,9 +479,6 @@
             "winner": 0
         },
         "Space before operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.OperatorSpacing"
-            },
             "total": 29522,
             "values": {
                 "1": 17631,
@@ -737,9 +725,6 @@
             "winner": 1
         },
         "One class per file": {
-            "sniffs": {
-                "0": "PSR1.Classes.ClassDeclaration"
-            },
             "total": 2341,
             "values": {
                 "yes": 1549,
@@ -826,9 +811,6 @@
             "winner": "yes"
         },
         "Function has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.FunctionComment"
-            },
             "total": 15782,
             "values": {
                 "yes": 11078,
@@ -915,9 +897,6 @@
             "winner": "yes"
         },
         "Adjacent assignments aligned": {
-            "sniffs": {
-                "0": "Generic.Formatting.MultipleStatementAlignment"
-            },
             "total": 60155,
             "values": {
                 "yes": 44116,
@@ -1004,9 +983,6 @@
             "winner": "yes"
         },
         "Number of newlines at EOF": {
-            "sniffs": {
-                "0": "PSR2.Files.EndFileNewline"
-            },
             "total": 3178,
             "values": {
                 "1": 2408,
@@ -1173,9 +1149,6 @@
             "winner": 1
         },
         "Class has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.ClassComment"
-            },
             "total": 2338,
             "values": {
                 "yes": 1852,
@@ -1262,9 +1235,6 @@
             "winner": "yes"
         },
         "CamelCase method name": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.CamelCapsFunctionName"
-            },
             "total": 12946,
             "values": {
                 "no": 10766,
@@ -1351,9 +1321,6 @@
             "winner": "no"
         },
         "Spacing after cast statement": {
-            "sniffs": {
-                "0": "Generic.Formatting.SpaceAfterCast"
-            },
             "total": 1242,
             "values": {
                 "0": 1053,
@@ -1440,9 +1407,6 @@
             "winner": 0
         },
         "Constant name case": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.UpperCaseConstantName"
-            },
             "total": 1414,
             "values": {
                 "upper": 1243,
@@ -1549,9 +1513,6 @@
             "winner": "upper"
         },
         "Use of ELSE IF or ELSEIF": {
-            "sniffs": {
-                "0": "PSR2.ControlStructures.ElseIfDeclaration"
-            },
             "total": 2355,
             "values": {
                 "else if": 2102,
@@ -1638,9 +1599,6 @@
             "winner": "else if"
         },
         "Line length": {
-            "sniffs": {
-                "0": "Generic.Files.LineLength"
-            },
             "total": 540255,
             "values": {
                 "80 or less": 482735,
@@ -1767,9 +1725,6 @@
             "winner": "80 or less"
         },
         "Class defined in namespace": {
-            "sniffs": {
-                "0": "PSR1.Classes.ClassDeclaration"
-            },
             "total": 2341,
             "values": {
                 "no": 2126,
@@ -1856,9 +1811,6 @@
             "winner": "no"
         },
         "Space after operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.OperatorSpacing"
-            },
             "total": 152060,
             "values": {
                 "1": 140275,
@@ -2125,9 +2077,6 @@
             "winner": 1
         },
         "PHP closing tag at EOF": {
-            "sniffs": {
-                "0": "Zend.Files.ClosingTag"
-            },
             "total": 3285,
             "values": {
                 "no": 3169,
@@ -2214,9 +2163,6 @@
             "winner": "no"
         },
         "File has doc comment": {
-            "sniffs": {
-                "0": "PEAR.Commenting.FileComment"
-            },
             "total": 3285,
             "values": {
                 "yes": 3182,
@@ -2303,9 +2249,6 @@
             "winner": "yes"
         },
         "Function opening brace placement": {
-            "sniffs": {
-                "0": "Generic.Functions.OpeningFunctionBraceBsdAllman"
-            },
             "total": 15425,
             "values": {
                 "same line": 15034,
@@ -2392,9 +2335,6 @@
             "winner": "same line"
         },
         "Class opening brace placement": {
-            "sniffs": {
-                "0": "PEAR.Classes.ClassDeclaration"
-            },
             "total": 2341,
             "values": {
                 "same line": 2291,
@@ -2481,9 +2421,6 @@
             "winner": "same line"
         },
         "PHP constant case": {
-            "sniffs": {
-                "0": "Generic.PHP.LowerCaseConstant"
-            },
             "total": 21882,
             "values": {
                 "lower": 21520,
@@ -2570,9 +2507,6 @@
             "winner": "lower"
         },
         "Lowercase filename": {
-            "sniffs": {
-                "0": "Generic.Files.LowercasedFilename"
-            },
             "total": 3285,
             "values": {
                 "yes": 3231,
@@ -2659,9 +2593,6 @@
             "winner": "yes"
         },
         "CamelCase class name": {
-            "sniffs": {
-                "0": "Squiz.Classes.ValidClassName"
-            },
             "total": 2338,
             "values": {
                 "no": 2310,
@@ -2748,9 +2679,6 @@
             "winner": "no"
         },
         "Spaces before control structure close parenthesis": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-            },
             "total": 42897,
             "values": {
                 "0": 42435,
@@ -2857,9 +2785,6 @@
             "winner": 0
         },
         "Spaces after control structure open parenthesis": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ControlStructureSpacing"
-            },
             "total": 42897,
             "values": {
                 "0": 42451,
@@ -2946,9 +2871,6 @@
             "winner": 0
         },
         "Control structure defined inline": {
-            "sniffs": {
-                "0": "Generic.ControlStructures.InlineControlStructure"
-            },
             "total": 49972,
             "values": {
                 "no": 49538,
@@ -3035,9 +2957,6 @@
             "winner": "no"
         },
         "Line indent": {
-            "sniffs": {
-                "0": "Generic.WhiteSpace.DisallowSpaceIndent"
-            },
             "total": 332197,
             "values": {
                 "spaces": 330240,
@@ -3124,9 +3043,6 @@
             "winner": "spaces"
         },
         "EOL char": {
-            "sniffs": {
-                "0": "Generic.Files.LineEndings"
-            },
             "total": 3285,
             "values": {
                 "\\n": 3278,
@@ -3213,9 +3129,6 @@
             "winner": "\\n"
         },
         "PHP keyword case": {
-            "sniffs": {
-                "0": "Generic.PHP.LowerCaseKeyword"
-            },
             "total": 195759,
             "values": {
                 "lower": 195454,
@@ -3322,9 +3235,6 @@
             "winner": "lower"
         },
         "Brackets around echoed strings": {
-            "sniffs": {
-                "0": "Squiz.Strings.EchoedStrings"
-            },
             "total": 10014,
             "values": {
                 "no": 10002,
@@ -3411,9 +3321,6 @@
             "winner": "no"
         },
         "Multiple statements on same line": {
-            "sniffs": {
-                "0": "Generic.Formatting.DisallowMultipleStatements"
-            },
             "total": 177353,
             "values": {
                 "no": 177197,
@@ -3500,9 +3407,6 @@
             "winner": "no"
         },
         "Array keyword case": {
-            "sniffs": {
-                "0": "Squiz.Arrays.ArrayDeclaration"
-            },
             "total": 24609,
             "values": {
                 "lower": 24588,
@@ -3589,9 +3493,6 @@
             "winner": "lower"
         },
         "Spacing after object operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
-            },
             "total": 145270,
             "values": {
                 "0": 145254,
@@ -3678,9 +3579,6 @@
             "winner": 0
         },
         "Spacing before object operator": {
-            "sniffs": {
-                "0": "Squiz.WhiteSpace.ObjectOperatorSpacing"
-            },
             "total": 145270,
             "values": {
                 "0": 145267,
@@ -3787,9 +3685,6 @@
             "winner": 0
         },
         "File extension for non-class files": {
-            "sniffs": {
-                "0": "Squiz.Files.FileExtension"
-            },
             "total": 1736,
             "values": {
                 ".php": 1736
@@ -3856,9 +3751,6 @@
             "winner": ".php"
         },
         "File extension for class files": {
-            "sniffs": {
-                "0": "Squiz.Files.FileExtension"
-            },
             "total": 1549,
             "values": {
                 ".php": 1549
@@ -3925,9 +3817,6 @@
             "winner": ".php"
         },
         "CamelCase function name": {
-            "sniffs": {
-                "0": "Generic.NamingConventions.CamelCapsFunctionName"
-            },
             "total": 2139,
             "values": {
                 "no": 2139
@@ -3994,9 +3883,6 @@
             "winner": "no"
         },
         "PHP short open tag used": {
-            "sniffs": {
-                "0": "Generic.PHP.DisallowShortOpenTag"
-            },
             "total": 5802,
             "values": {
                 "no": 5802
