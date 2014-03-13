@@ -66,7 +66,9 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     public function register()
     {
-        return array_diff(PHP_CodeSniffer_Tokens::$assignmentTokens, array(T_DOUBLE_ARROW));
+        $tokens = PHP_CodeSniffer_Tokens::$assignmentTokens;
+        unset($tokens[T_DOUBLE_ARROW]);
+        return $tokens;
 
     }//end register()
 
@@ -195,7 +197,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $assignLen = strlen($tokens[$assign]['content']);
             if ($assign !== $stackPtr) {
                 if (($varEnd + 1) > $assignments[$prevAssign]['assign_col']) {
-                    $padding = ($varEnd - $assignments[$prevAssign]['var_end'] + $assignLen - $assignments[$prevAssign]['assign_len'] + 1);
+                    $padding = ($varEnd - $assignments[$prevAssign]['var_end'] + 1);
                     if ($padding > $this->maxPadding) {
                         $stopped = $assign;
                         break;

@@ -91,3 +91,5 @@ dfx.stripTags = function(content, allowedTags)
     var re = 'blah';
 };
 
+var contents  += 'if (';
+var conditions = array();
