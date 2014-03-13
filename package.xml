@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR1 and PEAR ClassDeclarationSniffs now support traits (request #20208)
   - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
     -- Thanks to Maurus Cuelenaere for the patch
+  - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
+    -- Thanks to Max Galbusera for the patch
   - Fixed bug #20200 : Invalid JSON produced with specific error message
   - Fixed bug #20204 : Ruleset exclude checks are case sensitive
   - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
