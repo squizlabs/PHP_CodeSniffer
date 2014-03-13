@@ -1190,12 +1190,14 @@ class PHP_CodeSniffer
                 }
             }
 
-            $tokenizers = array('PHP' => 'PHP');
+            $tokenizers = array();
             $vars       = get_class_vars($listenerClass);
             if (isset($vars['supportedTokenizers']) === true) {
                 foreach ($vars['supportedTokenizers'] as $tokenizer) {
                     $tokenizers[$tokenizer] = $tokenizer;
                 }
+            } else {
+                $tokenizers = array('PHP' => 'PHP');
             }
 
             $tokens = $this->listeners[$listenerClass]->register();
