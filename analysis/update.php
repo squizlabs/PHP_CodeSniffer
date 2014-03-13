@@ -52,20 +52,52 @@ foreach ($repos as $repo) {
         $newResults = json_decode(file_get_contents($tempFile), true);
         echo "\t=> Comparing updated metric values".PHP_EOL;
         foreach ($newResults['metrics'] as $metric => $data) {
+            if (isset($results['metrics'][$metric]) === false) {
+                echo "\t\t* new metric detected; setting initial repo values *".PHP_EOL;
+                $results['metrics'][$metric]           = $data;
+                $results['metrics'][$metric]['trends'] = array();
+                $results['metrics'][$metric]['trends'][$date] = array();
+            } else if (isset($results['metrics'][$metric]['trends'][$date]) === false) {
+                echo "\t\t* new trend date detected; setting initial repo values *".PHP_EOL;
+                $results['metrics'][$metric]['trends'][$date] = array();
+            }
+
+            if (isset($totals[$metric]) === false) {
+                echo "\t\t* new metric detected; setting initial total values *".PHP_EOL;
+                $totals[$metric]           = $data;
+                $totals[$metric]['trends'] = array();
+                $totals[$metric]['trends'][$date] = array();
+            } else if (isset($totals[$metric]['trends'][$date]) === false) {
+                echo "\t\t* new trend date detected; setting initial total values *".PHP_EOL;
+                $totals[$metric]['trends'][$date] = array();
+            }
+
             $old = $results['metrics'][$metric]['trends'][$date];
             $new = $data['values'];
             foreach ($new as $value => $count) {
-                if ($old[$value] === $count) {
-                    continue;
+                if (isset($old[$value]) === true) {
+                    if ($old[$value] === $count) {
+                        continue;
+                    }
+
+                    echo "\t\t* change $metric ($value) from ".$old[$value]." to $count".PHP_EOL;
+                } else {
+                    echo "\t\t* set $metric ($value) to $count".PHP_EOL;
+                    $old[$value] = 0;
                 }
 
-                echo "\t\t* change $metric ($value) from ".$old[$value]." to $count".PHP_EOL;
                 $results['metrics'][$metric]['trends'][$date][$value] = $count;
-                echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
-                $totals[$metric]['trends'][$date][$value] += ($count - $old[$value]);
-                echo ' to '.$totals[$metric]['trends'][$date][$value].PHP_EOL;
-            }
-        }
+
+                if (isset($totals[$metric]['trends'][$date][$value]) === true) {
+                    echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
+                    $totals[$metric]['trends'][$date][$value] += ($count - $old[$value]);
+                    echo ' to '.$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
+                } else {
+                    $totals[$metric]['trends'][$date][$value] = $count;
+                    echo "\t\t* added total $metric ($value) with count ".$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
+                }
+            }//end foreach
+        }//end foreach
     }//end foreach
 
     file_put_contents($resultFile, json_encode($results, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));

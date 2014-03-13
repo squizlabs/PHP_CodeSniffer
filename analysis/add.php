@@ -49,14 +49,21 @@ foreach ($repos as $repo) {
         echo "\t=> Updating metric totals".PHP_EOL;
         foreach ($results['metrics'] as $metric => $data) {
             $results['metrics'][$metric]['trends'][$date] = $data['values'];
+            if (isset($totals[$metric]) === false) {
+                // Brand new metric being recorded. The generate.php script
+                // should be run after this to merge all values together,
+                // so we can skip this one.
+                continue;
+            }
+
             foreach ($data['values'] as $value => $count) {
                 if (isset($totals[$metric]['trends'][$date][$value]) === true) {
                     echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
                     $totals[$metric]['trends'][$date][$value] += $count;
-                    echo ' to '.$totals[$metric]['trends'][$date][$value].PHP_EOL;
+                    echo ' to '.$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
                 } else {
                     $totals[$metric]['trends'][$date][$value] = $count;
-                    echo "\t\t* added total $metric ($value) with count ".$totals[$metric]['trends'][$date][$value].PHP_EOL;
+                    echo "\t\t* added total $metric ($value) with count ".$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
                 }
             }
         }

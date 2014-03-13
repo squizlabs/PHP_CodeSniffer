@@ -40,7 +40,7 @@ foreach ($repos as $repo) {
     echo PHP_EOL;
 }//end foreach
 
-
+exit;
 
 // Imports $metricText variable.
 require_once __DIR__.'/_assets/metricText.php';
@@ -333,6 +333,8 @@ $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerC
 $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:90};'.PHP_EOL;
 $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
 
+$metricTable = '';
+
 uasort($totals, 'sortMetrics');
 $chartNum = 0;
 foreach ($totals as $metric => $data) {
@@ -519,17 +521,23 @@ foreach ($totals as $metric => $data) {
         $html   .= '      </tr>'.PHP_EOL;
     }
 
+    $totalItems = number_format($data['total'], 0, '', ',').' '.$items;
+
     $html .= '    </table>'.PHP_EOL;
-    $html .= '    <p>Based on '.number_format($data['total'], 0, '', ',')." $items in ".$data['total_repos'].' projects</p>'.PHP_EOL;
+    $html .= "    <p>Based on $totalItems in ".$data['total_repos'].' projects</p>'.PHP_EOL;
     $html .= '  </div>'.PHP_EOL;
     $html .= $repoHTML;
     $html .= '</div>'.PHP_EOL;
+
+    //$winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
+    //$metricTable .= '<tr><td width="300"><a href="#'.$metricid.'">'.$metric.'</a></td><td>'.$data['winner'].'</td><td>'.$winPercent.'% of '.$totalItems.'</td></tr>';
 }//end foreach
 
 $intro  = '<h1>Analysis of Coding Conventions</h1>'.PHP_EOL;
 $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.count($resultFiles).' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
 $intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
 $intro .= '<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+//$intro .= '<table><tr><th>Metric</th><th>Winner</th><th>Count</th></tr>'.$metricTable.'</table>';
 
 
 $footer = 'Report generated on '.date('r');

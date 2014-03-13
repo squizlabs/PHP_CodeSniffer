@@ -81,6 +81,10 @@ $metricText = array(
                                                                        'description' => 'Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?',
                                                                        'items'       => 'functions',
                                                                       ),
+               'Class opening brace placement'                     => array(
+                                                                       'description' => 'Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?',
+                                                                       'items'       => 'classes',
+                                                                      ),
                'CamelCase method name'                             => array(
                                                                        'description' => 'Are class method names defined using CamelCase?',
                                                                        'items'       => 'methods',
@@ -136,5 +140,17 @@ $metricText = array(
                'Spacing after object operator'                     => array(
                                                                        'description' => 'How many spaces follow the object operator (->)?',
                                                                        'items'       => 'operators',
+                                                                      ),
+               'File has doc comment'                              => array(
+                                                                       'description' => 'Does each PHP file have a docblock comment to describe its purpose?',
+                                                                       'items'       => 'files',
+                                                                      ),
+               'Class has doc comment'                             => array(
+                                                                       'description' => 'Does each class have a docblock comment to describe its purpose?',
+                                                                       'items'       => 'classes',
+                                                                      ),
+               'Function has doc comment'                          => array(
+                                                                       'description' => 'Does each function have a docblock comment to describe its purpose?',
+                                                                       'items'       => 'functions',
                                                                       ),
               );

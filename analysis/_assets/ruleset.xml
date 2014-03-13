@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS Analysis">
- <description>Not a standard; just sniffs that record interesting metrics.</description>
+ <description>Not a real coding standard; just sniffs that record interesting metrics.</description>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Files.LineEndings"/>
  <rule ref="Generic.Files.LineLength"/>
@@ -15,6 +15,10 @@
  <rule ref="Generic.PHP.LowerCaseConstant"/>
  <rule ref="Generic.PHP.LowerCaseKeyword"/>
  <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+ <rule ref="PEAR.Classes.ClassDeclaration"/>
+ <rule ref="PEAR.Commenting.ClassComment"/>
+ <rule ref="PEAR.Commenting.FileComment"/>
+ <rule ref="PEAR.Commenting.FunctionComment"/>
  <rule ref="PSR1.Classes.ClassDeclaration"/>
  <rule ref="PSR1.Files.SideEffects"/>
  <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>

@@ -352,5 +352,11 @@
         "url": "owncloud/core",
         "path": "",
         "ignore": "3rdparty/*"
+    },
+    {
+        "name": "Moodle",
+        "url": "moodle/moodle",
+        "path": "",
+        "ignore": "*/lang/*,*/lib/*"
     }
 ]
