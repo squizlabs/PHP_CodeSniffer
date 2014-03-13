@@ -478,10 +478,7 @@ class PHP_CodeSniffer
      */
     public function process($files, $standards, array $restrictions=array(), $local=false)
     {
-        if (is_array($files) === false) {
-            $files = array($files);
-        }
-
+        $files = (array) $files;
         $this->initStandard($standards, $restrictions);
         $this->processFiles($files, $local);
 
@@ -499,9 +496,7 @@ class PHP_CodeSniffer
      */
     public function initStandard($standards, array $restrictions=array())
     {
-        if (is_array($standards) === false) {
-            $standards = array($standards);
-        }
+        $standards = (array) $standards;
 
         // Reset the members.
         $this->listeners       = array();
@@ -570,10 +565,7 @@ class PHP_CodeSniffer
      */
     public function processFiles($files, $local=false)
     {
-        if (is_array($files) === false) {
-            $files = array($files);
-        }
-
+        $files        = (array) $files;
         $cliValues    = $this->cli->getCommandLineValues();
         $showProgress = $cliValues['showProgress'];
 
@@ -1198,10 +1190,12 @@ class PHP_CodeSniffer
                 }
             }
 
-            $tokenizers = array('PHP');
+            $tokenizers = array('PHP' => 'PHP');
             $vars       = get_class_vars($listenerClass);
             if (isset($vars['supportedTokenizers']) === true) {
-                $tokenizers = $vars['supportedTokenizers'];
+                foreach ($vars['supportedTokenizers'] as $tokenizer) {
+                    $tokenizers[$tokenizer] = $tokenizer;
+                }
             }
 
             $tokens = $this->listeners[$listenerClass]->register();
@@ -1215,12 +1209,12 @@ class PHP_CodeSniffer
                     $this->_tokenListeners[$token] = array();
                 }
 
-                if (in_array($this->listeners[$listenerClass], $this->_tokenListeners[$token], true) === false) {
-                    $this->_tokenListeners[$token][] = array(
-                                                        'listener'   => $this->listeners[$listenerClass],
-                                                        'class'      => $listenerClass,
-                                                        'tokenizers' => $tokenizers,
-                                                       );
+                if (isset($this->_tokenListeners[$token][$listenerClass]) === false) {
+                    $this->_tokenListeners[$token][$listenerClass] = array(
+                                                                      'listener'   => $this->listeners[$listenerClass],
+                                                                      'class'      => $listenerClass,
+                                                                      'tokenizers' => $tokenizers,
+                                                                     );
                 }
             }
         }//end foreach

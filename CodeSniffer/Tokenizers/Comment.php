@@ -234,7 +234,14 @@ class PHP_CodeSniffer_Tokenizers_Comment
         }//end if
 
         // Process the rest of the line.
-        $eol = $this->_findEOL($string, $eolChar, $start, $end);
+        $eolLen = strlen($eolChar);
+        for ($eol = $start; $eol < $end; $eol++) {
+            $eolTest = substr($string, $eol, $eolLen);
+            if ($eolTest === $eolChar) {
+                break;
+            }
+        }
+
         if ($eol > $start) {
             $tokens[] = array(
                          'content' => substr($string, $start, ($eol - $start)),
@@ -287,31 +294,6 @@ class PHP_CodeSniffer_Tokenizers_Comment
         return $token;
 
     }//end _collectWhitespace()
-
-
-    /**
-     * Find the position of the next EOL character.
-     *
-     * @param string $string  The comment string being tokenized.
-     * @param string $eolChar The EOL character to use for splitting strings.
-     * @param int    $start   The position in the string to start processing.
-     * @param int    $end     The position in the string to end processing.
-     *
-     * @return int
-     */
-    private function _findEOL($string, $eolChar, $start, $end)
-    {
-        $eolLen = strlen($eolChar);
-        for ($start; $start < $end; $start++) {
-            $eolTest = substr($string, $start, $eolLen);
-            if ($eolTest === $eolChar) {
-                break;
-            }
-        }
-
-        return $start;
-
-    }//end _findEOL()
 
 
 }//end class

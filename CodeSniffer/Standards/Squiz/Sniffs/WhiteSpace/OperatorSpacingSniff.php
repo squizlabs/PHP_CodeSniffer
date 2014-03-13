@@ -229,7 +229,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
-        } else if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === false) {
+        } else if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$stackPtr]['code']]) === false) {
             // Don't throw an error for assignments, because other standards allow
             // multiple spaces there to align multiple assignments.
             if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {

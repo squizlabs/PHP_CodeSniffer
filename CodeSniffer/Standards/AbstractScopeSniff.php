@@ -106,7 +106,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         }
 
         $this->_listenOutside = $listenOutside;
-        $this->_scopeTokens   = $scopeTokens;
+        $this->_scopeTokens   = array_flip($scopeTokens);
         $this->_tokens        = $tokens;
 
     }//end __construct()
@@ -145,7 +145,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
         $foundScope = false;
         foreach ($tokens[$stackPtr]['conditions'] as $scope => $code) {
-            if (in_array($code, $this->_scopeTokens) === true) {
+            if (isset($this->_scopeTokens[$code]) === true) {
                 $this->processTokenWithinScope($phpcsFile, $stackPtr, $scope);
                 $foundScope = true;
             }

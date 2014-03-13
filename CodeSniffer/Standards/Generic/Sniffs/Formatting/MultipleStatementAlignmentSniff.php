@@ -120,11 +120,13 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $lastCode    = $stackPtr;
         $lastSemi    = null;
 
-        $find = array_diff(PHP_CodeSniffer_Tokens::$assignmentTokens, array(T_DOUBLE_ARROW));
+        $find = PHP_CodeSniffer_Tokens::$assignmentTokens;
+        unset($find[T_DOUBLE_ARROW]);
+
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
-            if (in_array($tokens[$assign]['code'], $find) === false) {
+            if (isset($find[$tokens[$assign]['code']]) === false) {
                 // A blank line indicates that the assignment block has ended.
-                if (in_array($tokens[$assign]['code'], PHP_CodeSniffer_tokens::$emptyTokens) === false) {
+                if (isset(PHP_CodeSniffer_tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {
                         break;
                     }

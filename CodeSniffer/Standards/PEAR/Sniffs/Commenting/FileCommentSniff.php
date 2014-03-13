@@ -215,7 +215,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            if ($this->tags[$name]['allow_multiple'] === false && in_array($name, $foundTags) === true) {
+            if ($this->tags[$name]['allow_multiple'] === false && isset($tagTokens[$name]) === true) {
                 $error = 'Only one %s tag is allowed in a %s comment';
                 $data  = array(
                           $name, $docBlock,
@@ -240,7 +240,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         // Check if the tags are in the correct position.
         $pos = 0;
         foreach ($this->tags as $tag => $tagData) {
-            if (in_array($tag, $foundTags) === false) {
+            if (isset($tagTokens[$tag]) === false) {
                 if ($tagData['required'] === true) {
                     $error = 'Missing %s tag in %s comment';
                     $data  = array(

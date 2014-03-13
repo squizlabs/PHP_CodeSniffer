@@ -205,16 +205,16 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $assignmentTokens = array(
-                                       T_EQUAL,
-                                       T_AND_EQUAL,
-                                       T_CONCAT_EQUAL,
-                                       T_DIV_EQUAL,
-                                       T_MINUS_EQUAL,
-                                       T_MOD_EQUAL,
-                                       T_MUL_EQUAL,
-                                       T_PLUS_EQUAL,
-                                       T_XOR_EQUAL,
-                                       T_DOUBLE_ARROW,
+                                       T_EQUAL        => T_EQUAL,
+                                       T_AND_EQUAL    => T_AND_EQUAL,
+                                       T_CONCAT_EQUAL => T_CONCAT_EQUAL,
+                                       T_DIV_EQUAL    => T_DIV_EQUAL,
+                                       T_MINUS_EQUAL  => T_MINUS_EQUAL,
+                                       T_MOD_EQUAL    => T_MOD_EQUAL,
+                                       T_MUL_EQUAL    => T_MUL_EQUAL,
+                                       T_PLUS_EQUAL   => T_PLUS_EQUAL,
+                                       T_XOR_EQUAL    => T_XOR_EQUAL,
+                                       T_DOUBLE_ARROW => T_DOUBLE_ARROW,
                                       );
 
     /**
@@ -223,12 +223,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $equalityTokens = array(
-                                     T_IS_EQUAL,
-                                     T_IS_NOT_EQUAL,
-                                     T_IS_IDENTICAL,
-                                     T_IS_NOT_IDENTICAL,
-                                     T_IS_SMALLER_OR_EQUAL,
-                                     T_IS_GREATER_OR_EQUAL,
+                                     T_IS_EQUAL            => T_IS_EQUAL,
+                                     T_IS_NOT_EQUAL        => T_IS_NOT_EQUAL,
+                                     T_IS_IDENTICAL        => T_IS_IDENTICAL,
+                                     T_IS_NOT_IDENTICAL    => T_IS_NOT_IDENTICAL,
+                                     T_IS_SMALLER_OR_EQUAL => T_IS_SMALLER_OR_EQUAL,
+                                     T_IS_GREATER_OR_EQUAL => T_IS_GREATER_OR_EQUAL,
                                     );
 
     /**
@@ -237,14 +237,14 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $comparisonTokens = array(
-                                       T_IS_EQUAL,
-                                       T_IS_IDENTICAL,
-                                       T_IS_NOT_EQUAL,
-                                       T_IS_NOT_IDENTICAL,
-                                       T_LESS_THAN,
-                                       T_GREATER_THAN,
-                                       T_IS_SMALLER_OR_EQUAL,
-                                       T_IS_GREATER_OR_EQUAL,
+                                       T_IS_EQUAL            => T_IS_EQUAL,
+                                       T_IS_IDENTICAL        => T_IS_IDENTICAL,
+                                       T_IS_NOT_EQUAL        => T_IS_NOT_EQUAL,
+                                       T_IS_NOT_IDENTICAL    => T_IS_NOT_IDENTICAL,
+                                       T_LESS_THAN           => T_LESS_THAN,
+                                       T_GREATER_THAN        => T_GREATER_THAN,
+                                       T_IS_SMALLER_OR_EQUAL => T_IS_SMALLER_OR_EQUAL,
+                                       T_IS_GREATER_OR_EQUAL => T_IS_GREATER_OR_EQUAL,
                                       );
 
     /**
@@ -253,11 +253,11 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $arithmeticTokens = array(
-                                       T_PLUS,
-                                       T_MINUS,
-                                       T_MULTIPLY,
-                                       T_DIVIDE,
-                                       T_MODULUS,
+                                       T_PLUS     => T_PLUS,
+                                       T_MINUS    => T_MINUS,
+                                       T_MULTIPLY => T_MULTIPLY,
+                                       T_DIVIDE   => T_DIVIDE,
+                                       T_MODULUS  => T_MODULUS,
                                       );
 
     /**
@@ -266,13 +266,13 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $castTokens = array(
-                                 T_INT_CAST,
-                                 T_STRING_CAST,
-                                 T_DOUBLE_CAST,
-                                 T_ARRAY_CAST,
-                                 T_BOOL_CAST,
-                                 T_OBJECT_CAST,
-                                 T_UNSET_CAST,
+                                 T_INT_CAST    => T_INT_CAST,
+                                 T_STRING_CAST => T_STRING_CAST,
+                                 T_DOUBLE_CAST => T_DOUBLE_CAST,
+                                 T_ARRAY_CAST  => T_ARRAY_CAST,
+                                 T_BOOL_CAST   => T_BOOL_CAST,
+                                 T_OBJECT_CAST => T_OBJECT_CAST,
+                                 T_UNSET_CAST  => T_UNSET_CAST,
                                 );
 
     /**
@@ -281,16 +281,16 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $parenthesisOpeners = array(
-                                         T_ARRAY,
-                                         T_FUNCTION,
-                                         T_CLOSURE,
-                                         T_WHILE,
-                                         T_FOR,
-                                         T_FOREACH,
-                                         T_SWITCH,
-                                         T_IF,
-                                         T_ELSEIF,
-                                         T_CATCH,
+                                         T_ARRAY    => T_ARRAY,
+                                         T_FUNCTION => T_FUNCTION,
+                                         T_CLOSURE  => T_CLOSURE,
+                                         T_WHILE    => T_WHILE,
+                                         T_FOR      => T_FOR,
+                                         T_FOREACH  => T_FOREACH,
+                                         T_SWITCH   => T_SWITCH,
+                                         T_IF       => T_IF,
+                                         T_ELSEIF   => T_ELSEIF,
+                                         T_CATCH    => T_CATCH,
                                         );
 
     /**
@@ -299,24 +299,24 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $scopeOpeners = array(
-                                   T_CLASS,
-                                   T_INTERFACE,
-                                   T_TRAIT,
-                                   T_NAMESPACE,
-                                   T_FUNCTION,
-                                   T_CLOSURE,
-                                   T_IF,
-                                   T_SWITCH,
-                                   T_CASE,
-                                   T_DEFAULT,
-                                   T_WHILE,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_FOR,
-                                   T_FOREACH,
-                                   T_DO,
-                                   T_TRY,
-                                   T_CATCH,
+                                   T_CLASS     => T_CLASS,
+                                   T_INTERFACE => T_INTERFACE,
+                                   T_TRAIT     => T_TRAIT,
+                                   T_NAMESPACE => T_NAMESPACE,
+                                   T_FUNCTION  => T_FUNCTION,
+                                   T_CLOSURE   => T_CLOSURE,
+                                   T_IF        => T_IF,
+                                   T_SWITCH    => T_SWITCH,
+                                   T_CASE      => T_CASE,
+                                   T_DEFAULT   => T_DEFAULT,
+                                   T_WHILE     => T_WHILE,
+                                   T_ELSE      => T_ELSE,
+                                   T_ELSEIF    => T_ELSEIF,
+                                   T_FOR       => T_FOR,
+                                   T_FOREACH   => T_FOREACH,
+                                   T_DO        => T_DO,
+                                   T_TRY       => T_TRY,
+                                   T_CATCH     => T_CATCH,
                                   );
 
     /**
@@ -325,9 +325,9 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $scopeModifiers = array(
-                                     T_PRIVATE,
-                                     T_PUBLIC,
-                                     T_PROTECTED,
+                                     T_PRIVATE   => T_PRIVATE,
+                                     T_PUBLIC    => T_PUBLIC,
+                                     T_PROTECTED => T_PROTECTED,
                                     );
 
     /**
@@ -336,12 +336,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $methodPrefixes = array(
-                                     T_PRIVATE,
-                                     T_PUBLIC,
-                                     T_PROTECTED,
-                                     T_ABSTRACT,
-                                     T_STATIC,
-                                     T_FINAL,
+                                     T_PRIVATE   => T_PRIVATE,
+                                     T_PUBLIC    => T_PUBLIC,
+                                     T_PROTECTED => T_PROTECTED,
+                                     T_ABSTRACT  => T_ABSTRACT,
+                                     T_STATIC    => T_STATIC,
+                                     T_FINAL     => T_FINAL,
                                     );
 
     /**
@@ -350,14 +350,14 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $operators = array(
-                                T_MINUS,
-                                T_PLUS,
-                                T_MULTIPLY,
-                                T_DIVIDE,
-                                T_MODULUS,
-                                T_POWER,
-                                T_BITWISE_AND,
-                                T_BITWISE_OR,
+                                T_MINUS       => T_MINUS,
+                                T_PLUS        => T_PLUS,
+                                T_MULTIPLY    => T_MULTIPLY,
+                                T_DIVIDE      => T_DIVIDE,
+                                T_MODULUS     => T_MODULUS,
+                                T_POWER       => T_POWER,
+                                T_BITWISE_AND => T_BITWISE_AND,
+                                T_BITWISE_OR  => T_BITWISE_OR,
                                );
 
     /**
@@ -366,11 +366,11 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $booleanOperators = array(
-                                       T_BOOLEAN_AND,
-                                       T_BOOLEAN_OR,
-                                       T_LOGICAL_AND,
-                                       T_LOGICAL_OR,
-                                       T_LOGICAL_XOR,
+                                       T_BOOLEAN_AND => T_BOOLEAN_AND,
+                                       T_BOOLEAN_OR  => T_BOOLEAN_OR,
+                                       T_LOGICAL_AND => T_LOGICAL_AND,
+                                       T_LOGICAL_OR  => T_LOGICAL_OR,
+                                       T_LOGICAL_XOR => T_LOGICAL_XOR,
                                       );
 
     /**
@@ -379,9 +379,9 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $blockOpeners = array(
-                                   T_OPEN_CURLY_BRACKET,
-                                   T_OPEN_SQUARE_BRACKET,
-                                   T_OPEN_PARENTHESIS,
+                                   T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+                                   T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
+                                   T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
                                   );
 
     /**
@@ -390,15 +390,15 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $emptyTokens = array(
-                                  T_WHITESPACE,
-                                  T_COMMENT,
-                                  T_DOC_COMMENT,
-                                  T_DOC_COMMENT_STAR,
-                                  T_DOC_COMMENT_WHITESPACE,
-                                  T_DOC_COMMENT_TAG,
-                                  T_DOC_COMMENT_OPEN_TAG,
-                                  T_DOC_COMMENT_CLOSE_TAG,
-                                  T_DOC_COMMENT_STRING,
+                                  T_WHITESPACE             => T_WHITESPACE,
+                                  T_COMMENT                => T_COMMENT,
+                                  T_DOC_COMMENT            => T_DOC_COMMENT,
+                                  T_DOC_COMMENT_STAR       => T_DOC_COMMENT_STAR,
+                                  T_DOC_COMMENT_WHITESPACE => T_DOC_COMMENT_WHITESPACE,
+                                  T_DOC_COMMENT_TAG        => T_DOC_COMMENT_TAG,
+                                  T_DOC_COMMENT_OPEN_TAG   => T_DOC_COMMENT_OPEN_TAG,
+                                  T_DOC_COMMENT_CLOSE_TAG  => T_DOC_COMMENT_CLOSE_TAG,
+                                  T_DOC_COMMENT_STRING     => T_DOC_COMMENT_STRING,
                                  );
 
     /**
@@ -407,14 +407,14 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $commentTokens = array(
-                                    T_COMMENT,
-                                    T_DOC_COMMENT,
-                                    T_DOC_COMMENT_STAR,
-                                    T_DOC_COMMENT_WHITESPACE,
-                                    T_DOC_COMMENT_TAG,
-                                    T_DOC_COMMENT_OPEN_TAG,
-                                    T_DOC_COMMENT_CLOSE_TAG,
-                                    T_DOC_COMMENT_STRING,
+                                    T_COMMENT                => T_COMMENT,
+                                    T_DOC_COMMENT            => T_DOC_COMMENT,
+                                    T_DOC_COMMENT_STAR       => T_DOC_COMMENT_STAR,
+                                    T_DOC_COMMENT_WHITESPACE => T_DOC_COMMENT_WHITESPACE,
+                                    T_DOC_COMMENT_TAG        => T_DOC_COMMENT_TAG,
+                                    T_DOC_COMMENT_OPEN_TAG   => T_DOC_COMMENT_OPEN_TAG,
+                                    T_DOC_COMMENT_CLOSE_TAG  => T_DOC_COMMENT_CLOSE_TAG,
+                                    T_DOC_COMMENT_STRING     => T_DOC_COMMENT_STRING,
                                    );
 
     /**
@@ -425,8 +425,8 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $stringTokens = array(
-                                   T_CONSTANT_ENCAPSED_STRING,
-                                   T_DOUBLE_QUOTED_STRING,
+                                   T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
+                                   T_DOUBLE_QUOTED_STRING     => T_DOUBLE_QUOTED_STRING,
                                   );
 
     /**
@@ -435,12 +435,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $bracketTokens = array(
-                                    T_OPEN_CURLY_BRACKET,
-                                    T_CLOSE_CURLY_BRACKET,
-                                    T_OPEN_SQUARE_BRACKET,
-                                    T_CLOSE_SQUARE_BRACKET,
-                                    T_OPEN_PARENTHESIS,
-                                    T_CLOSE_PARENTHESIS,
+                                    T_OPEN_CURLY_BRACKET   => T_OPEN_CURLY_BRACKET,
+                                    T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
+                                    T_OPEN_SQUARE_BRACKET  => T_OPEN_SQUARE_BRACKET,
+                                    T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
+                                    T_OPEN_PARENTHESIS     => T_OPEN_PARENTHESIS,
+                                    T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
                                    );
 
     /**
@@ -449,10 +449,10 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $includeTokens = array(
-                                    T_REQUIRE_ONCE,
-                                    T_REQUIRE,
-                                    T_INCLUDE_ONCE,
-                                    T_INCLUDE,
+                                    T_REQUIRE_ONCE => T_REQUIRE_ONCE,
+                                    T_REQUIRE      => T_REQUIRE,
+                                    T_INCLUDE_ONCE => T_INCLUDE_ONCE,
+                                    T_INCLUDE      => T_INCLUDE,
                                    );
 
     /**
@@ -461,12 +461,12 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $heredocTokens = array(
-                                    T_START_HEREDOC,
-                                    T_END_HEREDOC,
-                                    T_HEREDOC,
-                                    T_START_NOWDOC,
-                                    T_END_NOWDOC,
-                                    T_NOWDOC,
+                                    T_START_HEREDOC => T_START_HEREDOC,
+                                    T_END_HEREDOC   => T_END_HEREDOC,
+                                    T_HEREDOC       => T_HEREDOC,
+                                    T_START_NOWDOC  => T_START_NOWDOC,
+                                    T_END_NOWDOC    => T_END_NOWDOC,
+                                    T_NOWDOC        => T_NOWDOC,
                                    );
 
 
