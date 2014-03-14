@@ -358,5 +358,11 @@
         "url": "moodle/moodle",
         "path": "",
         "ignore": "*/lang/*,*/lib/*"
+    },
+    {
+        "name": "PrestaShop",
+        "url": "PrestaShop/PrestaShop",
+        "path": "",
+        "ignore": "*/tools/*"
     }
 ]
