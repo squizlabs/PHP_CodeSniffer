@@ -463,11 +463,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
             $trailingContent = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), $lastIndex, true);
             if ($tokens[$trailingContent]['code'] !== T_COMMA) {
+                $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'no');
                 $error = 'Comma required after last value in array declaration';
                 $fix   = $phpcsFile->addFixableError($error, $trailingContent, 'NoCommaAfterLast');
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->addContent($trailingContent, ',');
                 }
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'yes');
             }
 
             foreach ($indices as $value) {
