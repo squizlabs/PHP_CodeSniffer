@@ -364,5 +364,11 @@
         "url": "PrestaShop/PrestaShop",
         "path": "",
         "ignore": "*/tools/*"
+    },
+    {
+        "name": "Flysystem",
+        "url": "thephpleague/flysystem",
+        "path": "src",
+        "ignore": ""
     }
 ]
