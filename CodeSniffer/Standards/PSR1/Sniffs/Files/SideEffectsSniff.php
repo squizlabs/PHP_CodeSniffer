@@ -158,6 +158,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                 continue;
             } else if ($tokens[$i]['code'] === T_STRING
                 && strtolower($tokens[$i]['content']) === 'define'
+                && $phpcsFile->findPrevious(T_OBJECT_OPERATOR, ($i - 1), ($i - 1)) === false
             ) {
                 $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
                 if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
