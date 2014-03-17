@@ -95,7 +95,8 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
 
         // Check now that the closing brace is lined up correctly.
         $braceIndent = $tokens[$scopeEnd]['column'];
-        if (in_array($tokens[$stackPtr]['code'], array(T_CASE, T_DEFAULT)) === false
+        if ($tokens[$stackPtr]['code'] !== T_DEFAULT
+            && $tokens[$stackPtr]['code'] !== T_CASE
             && $braceIndent !== $startColumn
         ) {
             $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';

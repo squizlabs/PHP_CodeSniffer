@@ -59,17 +59,17 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         // We are only interested in function/class/interface doc block comments.
         $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         $ignore    = array(
-                      T_CLASS,
-                      T_INTERFACE,
-                      T_FUNCTION,
-                      T_PUBLIC,
-                      T_PRIVATE,
-                      T_PROTECTED,
-                      T_STATIC,
-                      T_ABSTRACT,
+                      T_CLASS     => true,
+                      T_INTERFACE => true,
+                      T_FUNCTION  => true,
+                      T_PUBLIC    => true,
+                      T_PRIVATE   => true,
+                      T_PROTECTED => true,
+                      T_STATIC    => true,
+                      T_ABSTRACT  => true,
                      );
 
-        if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
+        if (isset($ignore[$tokens[$nextToken]['code']]) === false) {
             // Could be a file comment.
             $prevToken = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prevToken]['code'] !== T_OPEN_TAG) {

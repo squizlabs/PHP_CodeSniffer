@@ -75,7 +75,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
 
         // Square brackets can not have a space before them.
         $prevType = $tokens[($stackPtr - 1)]['code'];
-        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$prevType]) === true) {
             $nonSpace = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 2), null, true);
             $expected = $tokens[$nonSpace]['content'].$tokens[$stackPtr]['content'];
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).$tokens[$stackPtr]['content'];
@@ -93,7 +93,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
         // Open square brackets can't ever have spaces after them.
         if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
             $nextType = $tokens[($stackPtr + 1)]['code'];
-            if (in_array($nextType, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$nextType]) === true) {
                 $nonSpace = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 2), null, true);
                 $expected = $tokens[$stackPtr]['content'].$tokens[$nonSpace]['content'];
                 $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace - $stackPtr + 1));

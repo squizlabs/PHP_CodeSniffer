@@ -69,19 +69,19 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
             $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
             $ignore    = array(
-                          T_CLASS,
-                          T_INTERFACE,
-                          T_TRAIT,
-                          T_FUNCTION,
-                          T_PUBLIC,
-                          T_PRIVATE,
-                          T_FINAL,
-                          T_PROTECTED,
-                          T_STATIC,
-                          T_ABSTRACT,
-                          T_CONST,
+                          T_CLASS     => true,
+                          T_INTERFACE => true,
+                          T_TRAIT     => true,
+                          T_FUNCTION  => true,
+                          T_PUBLIC    => true,
+                          T_PRIVATE   => true,
+                          T_FINAL     => true,
+                          T_PROTECTED => true,
+                          T_STATIC    => true,
+                          T_ABSTRACT  => true,
+                          T_CONST     => true,
                          );
-            if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+            if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
                 return;
             }
 

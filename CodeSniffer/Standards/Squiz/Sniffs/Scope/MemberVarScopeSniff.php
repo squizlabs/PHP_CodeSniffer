@@ -49,7 +49,7 @@ class Squiz_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_A
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if ($tokens[$i]['line'] < $tokens[$stackPtr]['line']) {
                 break;
-            } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers) === true) {
+            } else if (isset(PHP_CodeSniffer_Tokens::$scopeModifiers[$tokens[$i]['code']]) === true) {
                 $modifier = $i;
                 break;
             }

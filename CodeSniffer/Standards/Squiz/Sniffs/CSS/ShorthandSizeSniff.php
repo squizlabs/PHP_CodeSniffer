@@ -44,11 +44,11 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $excludeStyles = array(
-                             'background-position',
-                             'box-shadow',
-                             'transform-origin',
-                             '-webkit-transform-origin',
-                             '-ms-transform-origin',
+                             'background-position'      => 'background-position',
+                             'box-shadow'               => 'box-shadow',
+                             'transform-origin'         => 'transform-origin',
+                             '-webkit-transform-origin' => '-webkit-transform-origin',
+                             '-ms-transform-origin'     => '-ms-transform-origin',
                             );
 
 
@@ -79,7 +79,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
 
         // Some styles look like shorthand but are not actually a set of 4 sizes.
         $style = strtolower($tokens[$stackPtr]['content']);
-        if (in_array($style, $this->excludeStyles) === true) {
+        if (isset($this->excludeStyles[$style]) === true) {
             return;
         }
 

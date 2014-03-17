@@ -380,7 +380,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     $found = 'abc';
                 } else if ($pattern[$i]['type'] === 'newline') {
                     if ($this->ignoreComments === true
-                        && in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true
+                        && isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$stackPtr]['code']]) === true
                     ) {
                         $startComment = $phpcsFile->findPrevious(
                             PHP_CodeSniffer_Tokens::$commentTokens,
@@ -410,7 +410,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             // so check the token before to make sure. If it is a newline, we
                             // can ignore the error here.
                             if (($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar)
-                                && ($this->ignoreComments === true && in_array($tokens[($stackPtr - 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === false)
+                                && ($this->ignoreComments === true
+                                && isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr - 1)]['code']]) === false)
                             ) {
                                 $hasError = true;
                             } else {
@@ -445,14 +446,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     if ($this->ignoreComments === true) {
                         // If we are ignoring comments, check to see if this current
                         // token is a comment. If so skip it.
-                        if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$stackPtr]['code']]) === true) {
                             continue;
                         }
 
                         // If the next token is a comment, the we need to skip the
                         // current token as we should allow a space before a
                         // comment for readability.
-                        if (in_array($tokens[($stackPtr + 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr + 1)]['code']]) === true) {
                             continue;
                         }
                     }
@@ -553,7 +554,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $hasComment = false;
                         for ($j = $stackPtr; $j < $next; $j++) {
                             $found .= $tokens[$j]['content'];
-                            if (in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                            if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$j]['code']]) === true) {
                                 $hasComment = true;
                             }
                         }
@@ -658,7 +659,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else {
                     if ($this->ignoreComments === false) {
                         // The newline character cannot be part of a comment.
-                        if (in_array($tokens[$newline]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$newline]['code']]) === true) {
                             $hasError = true;
                         }
                     }

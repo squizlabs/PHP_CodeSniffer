@@ -65,13 +65,12 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $next    = $phpcsFile->findNext(array(T_COLON, T_WHITESPACE), ($stackPtr + 1), null, true);
-        $numbers = array(
-                    T_DNUMBER,
-                    T_LNUMBER,
-                   );
+        $next = $phpcsFile->findNext(array(T_COLON, T_WHITESPACE), ($stackPtr + 1), null, true);
 
-        if ($next === false || in_array($tokens[$next]['code'], $numbers) === false) {
+        if ($next === false
+            || ($tokens[$next]['code'] !== T_DNUMBER
+            && $tokens[$next]['code'] !== T_LNUMBER)
+        ) {
             return;
         }
 

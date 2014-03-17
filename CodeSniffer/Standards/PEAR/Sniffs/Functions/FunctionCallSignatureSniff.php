@@ -116,7 +116,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($tokens[$next]['code'] === T_SEMICOLON) {
-            if (in_array($tokens[($closeBracket + 1)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[($closeBracket + 1)]['code']]) === true) {
                 $error = 'Space after closing parenthesis of function call prohibited';
                 $phpcsFile->addError($error, $closeBracket, 'SpaceAfterCloseBracket');
             }
@@ -283,12 +283,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 $lastLine = $tokens[$i]['line'];
 
                 // Ignore heredoc indentation.
-                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$heredocTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$heredocTokens[$tokens[$i]['code']]) === true) {
                     continue;
                 }
 
                 // Ignore multi-line string indentation.
-                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
                     if ($tokens[$i]['code'] === $tokens[($i - 1)]['code']) {
                         continue;
                     }

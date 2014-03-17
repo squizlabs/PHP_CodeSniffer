@@ -185,17 +185,17 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 return;
             }
 
-            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$prev]['code']]) === true) {
                 // Just trying to operate on a negative value; eg. ($var * -1).
                 return;
             }
 
-            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
                 // Just trying to compare a negative value; eg. ($var === -1).
                 return;
             }
 
-            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
                 // Just trying to assign a negative value; eg. ($var = -1).
                 return;
             }
@@ -203,17 +203,17 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // A list of tokens that indicate that the token is not
             // part of an arithmetic operation.
             $invalidTokens = array(
-                              T_COMMA,
-                              T_OPEN_PARENTHESIS,
-                              T_OPEN_SQUARE_BRACKET,
-                              T_DOUBLE_ARROW,
-                              T_COLON,
-                              T_INLINE_THEN,
-                              T_INLINE_ELSE,
-                              T_CASE,
+                              T_COMMA               => true,
+                              T_OPEN_PARENTHESIS    => true,
+                              T_OPEN_SQUARE_BRACKET => true,
+                              T_DOUBLE_ARROW        => true,
+                              T_COLON               => true,
+                              T_INLINE_THEN         => true,
+                              T_INLINE_ELSE         => true,
+                              T_CASE                => true,
                              );
 
-            if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
+            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
                 // Just trying to use a negative value; eg. myFunction($var, -2).
                 return;
             }

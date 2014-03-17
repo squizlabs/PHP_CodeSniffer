@@ -84,7 +84,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
 
-                if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === false) {
+                if ($tokens[($stackPtr - 2)]['code'] !== T_ABSTRACT
+                    && $tokens[($stackPtr - 2)]['code'] !== T_FINAL
+                ) {
                     if ($spaces !== 0) {
                         $type  = strtolower($tokens[$stackPtr]['content']);
                         $error = 'Expected 0 spaces before %s keyword; %s found';

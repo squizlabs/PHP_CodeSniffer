@@ -124,7 +124,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         // Ignore member var definitions.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($varToken - 1), null, true);
-        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$scopeModifiers[$tokens[$prev]['code']]) === true) {
             return;
         }
 
@@ -151,7 +151,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 return;
             }
 
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
             }

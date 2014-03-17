@@ -105,16 +105,16 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Required tags in correct order.
         $required = array(
-                     '@package',
-                     '@subpackage',
-                     '@author',
-                     '@copyright',
+                     '@package'    => true,
+                     '@subpackage' => true,
+                     '@author'     => true,
+                     '@copyright'  => true,
                     );
 
         $foundTags = array();
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $name       = $tokens[$tag]['content'];
-            $isRequired = in_array($name, $required);
+            $isRequired = isset($required[$name]);
 
             if ($isRequired === true && in_array($name, $foundTags) === true) {
                 $error = 'Only one %s tag is allowed in a file comment';
@@ -164,7 +164,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         }//end foreach
 
         // Check if the tags are in the correct position.
-        foreach ($required as $pos => $tag) {
+        $pos = 0;
+        foreach ($required as $tag => $true) {
             if (in_array($tag, $foundTags) === false) {
                 $error = 'Missing %s tag in file comment';
                 $data  = array($tag);
@@ -183,6 +184,8 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                          );
                 $phpcsFile->addError($error, $tokens[$commentStart]['comment_tags'][$pos], ucfirst($tag).'TagOrder', $data);
             }
+
+            $pos++;
         }
 
         // Ignore the rest of the file.

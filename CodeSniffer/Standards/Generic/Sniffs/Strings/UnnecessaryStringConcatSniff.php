@@ -91,9 +91,8 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             return;
         }
 
-        $stringTokens = PHP_CodeSniffer_Tokens::$stringTokens;
-        if (in_array($tokens[$prev]['code'], $stringTokens) === true
-            && in_array($tokens[$next]['code'], $stringTokens) === true
+        if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$prev]['code']]) === true
+            && isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$next]['code']]) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
                 // Before we throw an error for PHP, allow strings to be

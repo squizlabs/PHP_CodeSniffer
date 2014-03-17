@@ -66,7 +66,7 @@ class Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff implements PHP_CodeSniffer_S
         $tokens = $phpcsFile->getTokens();
 
         $prevType = $tokens[($stackPtr - 1)]['code'];
-        if (in_array($prevType, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$prevType]) === false) {
             return;
         }
 

@@ -320,7 +320,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 for ($x = ($stackPtr - 1); $x >= 0; $x--) {
-                    if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                         break;
                     }
                 }
@@ -332,7 +332,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 if (strtolower($token['content']) === 'url') {
                     // Find the next content.
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                        if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                             break;
                         }
                     }
@@ -344,7 +344,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // Make sure the content isn't empty.
                     for ($y = ($x + 1); $y < $numTokens; $y++) {
-                        if (in_array($finalTokens[$y]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$y]['code']]) === false) {
                             break;
                         }
                     }

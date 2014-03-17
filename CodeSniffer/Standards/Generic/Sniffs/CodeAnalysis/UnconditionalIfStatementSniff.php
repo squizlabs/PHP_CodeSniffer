@@ -86,7 +86,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
                 continue;
             } else if ($code !== T_TRUE && $code !== T_FALSE) {
                 $goodCondition = true;

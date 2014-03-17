@@ -288,7 +288,7 @@ class PHP_CodeSniffer_Fixer
     {
         $this->_inChangeset = false;
 
-        $errors = array_intersect(array_keys($this->_changeset), $this->_fixedTokens);
+        $errors = array_intersect(array_keys($this->_changeset), array_keys($this->_fixedTokens));
         if (empty($errors) === false) {
             // At least one change cannot be applied.
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -330,7 +330,7 @@ class PHP_CodeSniffer_Fixer
     public function replaceToken($stackPtr, $content)
     {
         if ($this->_inChangeset === false
-            && in_array($stackPtr, $this->_fixedTokens) === true
+            && isset($this->_fixedTokens[$stackPtr]) === true
         ) {
             return;
         }
@@ -367,7 +367,7 @@ class PHP_CodeSniffer_Fixer
 
         $this->_tokens[$stackPtr] = $content;
         $this->_numFixes++;
-        $this->_fixedTokens[] = $stackPtr;
+        $this->_fixedTokens[$stackPtr] = true;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $indent = "\t";

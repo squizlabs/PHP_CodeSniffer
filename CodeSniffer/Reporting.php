@@ -157,8 +157,8 @@ class PHP_CodeSniffer_Reporting
 
             if ($generatedReport !== '') {
                 $flags = FILE_APPEND;
-                if (in_array($report, $this->_cachedReports) === false) {
-                    $this->_cachedReports[] = $report;
+                if (isset($this->_cachedReports[$report]) === false) {
+                    $this->_cachedReports[$report] = true;
                     $flags = null;
                 }
 

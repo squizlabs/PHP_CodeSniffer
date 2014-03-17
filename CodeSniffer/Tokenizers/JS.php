@@ -226,8 +226,8 @@ class PHP_CodeSniffer_Tokenizers_JS
      * @var array
      */
     protected $stringTokens = array(
-                               '\'',
-                               '"',
+                               '\'' => '\'',
+                               '"'  => '"',
                               );
 
     /**
@@ -259,10 +259,8 @@ class PHP_CodeSniffer_Tokenizers_JS
             echo "\t*** START JS TOKENIZING ***".PHP_EOL;
         }
 
-        $tokenTypes = array_keys($this->tokenValues);
-
         $maxTokenLength = 0;
-        foreach ($tokenTypes as $token) {
+        foreach ($this->tokenValues as $token => $values) {
             if (strlen($token) > $maxTokenLength) {
                 $maxTokenLength = strlen($token);
             }
@@ -350,7 +348,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             }//end if
 
             // Process strings.
-            if ($inComment === '' && in_array($char, $this->stringTokens) === true) {
+            if ($inComment === '' && isset($this->stringTokens[$char]) === true) {
                 if ($inString === $char) {
                     // This could be the end of the string, but make sure it
                     // is not escaped first.
@@ -456,7 +454,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
             // Check for known tokens, but ignore tokens found that are not at
             // the end of a string, like FOR and this.FORmat.
-            if (in_array(strtolower($buffer), $tokenTypes) === true
+            if (isset($this->tokenValues[strtolower($buffer)]) === true
                 && (preg_match('|[a-zA-z0-9_]|', $char) === 0
                 || isset($chars[($i + 1)]) === false
                 || preg_match('|[a-zA-z0-9_]|', $chars[($i + 1)]) === 0)
@@ -487,7 +485,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
 
-                        if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
+                        if (isset($this->tokenValues[strtolower($charBuffer)]) === true) {
                             // We've found something larger that matches
                             // so we can ignore this char. Except for 1 very specific
                             // case where a comment like /**/ needs to tokenize as
@@ -533,7 +531,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     $cleanBuffer = true;
                 }//end if
-            } else if (in_array(strtolower($char), $tokenTypes) === true) {
+            } else if (isset($this->tokenValues[strtolower($char)]) === true) {
                 // No matter what token we end up using, we don't
                 // need the content in the buffer any more because we have
                 // found a valid token.
@@ -574,7 +572,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                     }
 
-                    if (in_array(strtolower($charBuffer), $tokenTypes) === true) {
+                    if (isset($this->tokenValues[strtolower($charBuffer)]) === true) {
                         // We've found something larger that matches
                         // so we can ignore this char.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -867,37 +865,37 @@ class PHP_CodeSniffer_Tokenizers_JS
     public function getRegexToken($char, $string, $chars, $tokens, $eolChar)
     {
         $beforeTokens = array(
-                         T_EQUAL,
-                         T_OPEN_PARENTHESIS,
-                         T_RETURN,
-                         T_BOOLEAN_OR,
-                         T_BOOLEAN_AND,
-                         T_BITWISE_OR,
-                         T_BITWISE_AND,
-                         T_COMMA,
-                         T_COLON,
-                         T_TYPEOF,
+                         T_EQUAL            => true,
+                         T_OPEN_PARENTHESIS => true,
+                         T_RETURN           => true,
+                         T_BOOLEAN_OR       => true,
+                         T_BOOLEAN_AND      => true,
+                         T_BITWISE_OR       => true,
+                         T_BITWISE_AND      => true,
+                         T_COMMA            => true,
+                         T_COLON            => true,
+                         T_TYPEOF           => true,
                         );
 
         $afterTokens = array(
-                        ',',
-                        ')',
-                        ';',
-                        ' ',
-                        '.',
-                        $eolChar,
+                        ','      => true,
+                        ')'      => true,
+                        ';'      => true,
+                        ' '      => true,
+                        '.'      => true,
+                        $eolChar => true,
                        );
 
         // Find the last non-whitespace token that was added
         // to the tokens array.
         $numTokens = count($tokens);
         for ($prev = ($numTokens - 1); $prev >= 0; $prev--) {
-            if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$prev]['code']]) === false) {
                 break;
             }
         }
 
-        if (in_array($tokens[$prev]['code'], $beforeTokens) === false) {
+        if (isset($beforeTokens[$tokens[$prev]['code']]) === false) {
             return null;
         }
 
@@ -960,7 +958,7 @@ class PHP_CodeSniffer_Tokenizers_JS
             }
         }
 
-        if (in_array($chars[$next], $afterTokens) === false) {
+        if (isset($afterTokens[$chars[$next]]) === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\t* tokens after regular expression do not look correct *".PHP_EOL;
             }
@@ -1025,7 +1023,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 // This could also be an object definition.
                 for ($x = ($i - 1); $x >= 0; $x--) {
-                    if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                         // Non-whitespace content.
                         break;
                     }
@@ -1033,7 +1031,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 if ($tokens[$x]['code'] === T_EQUAL) {
                     for ($x--; $x >= 0; $x--) {
-                        if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                             break;
                         }
                     }
@@ -1044,13 +1042,10 @@ class PHP_CodeSniffer_Tokenizers_JS
                         // Find the first string in this definition.
                         // E.g., WantedString.DontWantThis.prototype.
                         for ($x--; $x >= 0; $x--) {
-                            $wantedTokens = array(
-                                             T_STRING,
-                                             T_PROTOTYPE,
-                                             T_OBJECT_OPERATOR,
-                                            );
-
-                            if (in_array($tokens[$x]['code'], $wantedTokens) === false) {
+                            if ($tokens[$x]['code'] !== T_STRING
+                                && $tokens[$x]['code'] !== T_PROTOTYPE
+                                && $tokens[$x]['code'] !== T_OBJECT_OPERATOR
+                            ) {
                                 $x++;
                                 break;
                             }
@@ -1110,7 +1105,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 // The string to the left of the colon is either a property or label.
                 for ($label = ($i - 1); $label >= 0; $label--) {
-                    if (in_array($tokens[$label]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$label]['code']]) === false) {
                         break;
                     }
                 }
@@ -1132,7 +1127,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     // this property is actually an object, so we can give it
                     // and opener and closer.
                     for ($x = ($i + 1); $x < $numTokens; $x++) {
-                        if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                             break;
                         }
                     }

@@ -102,28 +102,28 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-                   T_DOUBLE_COLON,
-                   T_OBJECT_OPERATOR,
-                   T_FUNCTION,
-                   T_CONST,
-                   T_PUBLIC,
-                   T_PRIVATE,
-                   T_PROTECTED,
-                   T_AS,
-                   T_NEW,
-                   T_INSTEADOF,
-                   T_NS_SEPARATOR,
-                   T_IMPLEMENTS,
+                   T_DOUBLE_COLON    => true,
+                   T_OBJECT_OPERATOR => true,
+                   T_FUNCTION        => true,
+                   T_CONST           => true,
+                   T_PUBLIC          => true,
+                   T_PRIVATE         => true,
+                   T_PROTECTED       => true,
+                   T_AS              => true,
+                   T_NEW             => true,
+                   T_INSTEADOF       => true,
+                   T_NS_SEPARATOR    => true,
+                   T_IMPLEMENTS      => true,
                   );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
+        if (isset($ignore[$tokens[$prevToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;
         }
 
         $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+        if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;
         }

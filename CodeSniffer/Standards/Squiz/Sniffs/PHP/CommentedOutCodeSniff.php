@@ -145,11 +145,11 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
-                        T_WHITESPACE,
-                        T_STRING,
-                        T_STRING_CONCAT,
-                        T_ENCAPSED_AND_WHITESPACE,
-                        T_NONE,
+                        T_WHITESPACE              => true,
+                        T_STRING                  => true,
+                        T_STRING_CONCAT           => true,
+                        T_ENCAPSED_AND_WHITESPACE => true,
+                        T_NONE                    => true,
                        );
 
         $numTokens = count($stringTokens);
@@ -176,7 +176,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
         if ($phpcsFile->tokenizerType === 'PHP'
-            && in_array($stringTokens[($numTokens - 2)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false
+            && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
         ) {
             return;
         }
@@ -186,7 +186,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         $numCode     = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if (in_array($stringTokens[$i]['code'], $emptyTokens) === true) {
+            if (isset($emptyTokens[$stringTokens[$i]['code']]) === true) {
                 // Looks like comment.
                 $numComment++;
             } else if (in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens)

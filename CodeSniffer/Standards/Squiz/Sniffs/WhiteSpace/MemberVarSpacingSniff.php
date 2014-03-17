@@ -49,7 +49,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         $ignore[] = T_WHITESPACE;
 
         $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$prev]['code']]) === true) {
             // Assume the comment belongs to the member var.
             // Check the spacing, but then skip it.
             $foundLines = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
@@ -80,7 +80,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         // There needs to be 1 blank line before the var, not counting comments.
         $prevLineToken = null;
         for ($i = ($start - 1); $i > 0; $i--) {
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
                 // Skip comments.
                 continue;
             } else if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {

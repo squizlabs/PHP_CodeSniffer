@@ -95,7 +95,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
 
             if ($tokens[$nextSeparator]['code'] === T_COMMA) {
                 if ($tokens[($nextSeparator - 1)]['code'] === T_WHITESPACE) {
-                    if (in_array($tokens[($nextSeparator - 2)]['code'], PHP_CodeSniffer_Tokens::$heredocTokens) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$heredocTokens[$tokens[($nextSeparator - 2)]['code']]) === false) {
                         $error = 'Space found before comma in function call';
                         $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'SpaceBeforeComma');
                         if ($fix === true && $phpcsFile->fixer->enabled === true) {

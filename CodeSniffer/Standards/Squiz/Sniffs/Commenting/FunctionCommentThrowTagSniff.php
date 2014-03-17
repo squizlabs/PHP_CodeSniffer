@@ -161,11 +161,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                     $exception = substr($exception, 0, $space);
                 }
 
-                $throwTags[] = $exception;
+                $throwTags[$exception] = true;
             }
         }
-
-        $throwTags = array_unique($throwTags);
 
         if (empty($throwTags) === true) {
             $error = 'Missing @throws tag in function comment';
@@ -192,7 +190,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         }
 
         foreach ($throwTokens as $throw) {
-            if (in_array($throw, $throwTags) === false) {
+            if (isset($throwTags[$throw]) === false) {
                 $error = 'Missing @throws tag for "%s" exception';
                 $data  = array($throw);
                 $phpcsFile->addError($error, $commentEnd, 'Missing', $data);

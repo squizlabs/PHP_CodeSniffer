@@ -188,7 +188,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
             for ($next = $endBracket; $next <= $end; $next++) {
                 // Skip whitespace so we find the next content after the call.
-                if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$next]['code']]) === true) {
                     continue;
                 }
 

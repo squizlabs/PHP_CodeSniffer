@@ -71,7 +71,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         $close     = $tokens[$stackPtr]['parenthesis_closer'];
         for ($i = ($open + 1); $i < $close; $i++) {
             if ($tokens[$i]['code'] === T_VARIABLE) {
-                $foundVars[] = $tokens[$i]['content'];
+                $foundVars[$tokens[$i]['content']] = true;
             }
         }
 
@@ -83,7 +83,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         $end   = $tokens[$stackPtr]['scope_closer'];
         for ($i = ($start + 1); $i < $end; $i++) {
             if ($tokens[$i]['code'] !== T_VARIABLE
-                || in_array($tokens[$i]['content'], $foundVars) === false
+                || isset($foundVars[$tokens[$i]['content']]) === false
             ) {
                 continue;
             }

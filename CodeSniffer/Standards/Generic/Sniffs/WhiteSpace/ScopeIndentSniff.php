@@ -141,7 +141,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $firstToken = $stackPtr;
         for ($i = $stackPtr; $i >= 0; $i--) {
             // Record the first code token on the line.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $firstToken = $i;
             }
 
@@ -227,7 +227,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // If this token is another scope, skip it as it will be handled by
             // another call to this sniff.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$scopeOpeners[$tokens[$i]['code']]) === true) {
                 if (isset($tokens[$i]['scope_opener']) === true) {
                     $i = $tokens[$i]['scope_closer'];
 
@@ -308,8 +308,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // Check to see if this constant string spans multiple lines.
                 // If so, then make sure that the strings on lines other than the
                 // first line are indented appropriately, based on their whitespace.
-                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
-                    if (in_array($tokens[($firstToken - 1)]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$firstToken]['code']]) === true) {
+                    if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[($firstToken - 1)]['code']]) === true) {
                         // If we find a string that directly follows another string
                         // then its just a string that spans multiple lines, so we
                         // don't need to check for indenting.

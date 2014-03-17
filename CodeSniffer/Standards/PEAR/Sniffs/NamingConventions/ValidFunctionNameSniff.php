@@ -41,21 +41,21 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      * @var array
      */
     protected $magicMethods = array(
-                               'construct',
-                               'destruct',
-                               'call',
-                               'callstatic',
-                               'get',
-                               'set',
-                               'isset',
-                               'unset',
-                               'sleep',
-                               'wakeup',
-                               'tostring',
-                               'set_state',
-                               'clone',
-                               'invoke',
-                               'call',
+                               'construct'  => true,
+                               'destruct'   => true,
+                               'call'       => true,
+                               'callstatic' => true,
+                               'get'        => true,
+                               'set'        => true,
+                               'isset'      => true,
+                               'unset'      => true,
+                               'sleep'      => true,
+                               'wakeup'     => true,
+                               'tostring'   => true,
+                               'set_state'  => true,
+                               'clone'      => true,
+                               'invoke'     => true,
+                               'call'       => true,
                               );
 
     /**
@@ -63,7 +63,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @var array
      */
-    protected $magicFunctions = array('autoload');
+    protected $magicFunctions = array('autoload' => true);
 
 
     /**
@@ -100,7 +100,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
-            if (in_array($magicPart, $this->magicMethods) === false) {
+            if (isset($this->magicMethods[$magicPart]) === false) {
                  $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
             }
@@ -192,7 +192,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Is this a magic function. i.e., it is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = strtolower(substr($functionName, 2));
-            if (in_array($magicPart, $this->magicFunctions) === false) {
+            if (isset($this->magicFunctions[$magicPart]) === false) {
                  $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);
             }
