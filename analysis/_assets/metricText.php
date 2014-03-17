@@ -4,6 +4,10 @@ $metricText = array(
                                                                        'description' => 'When defining an array, how is the <em>array</em> keyword written?',
                                                                        'items'       => 'array definitions',
                                                                       ),
+               'Array end comma'                                   => array(
+                                                                       'description' => 'Does the last item end with a comma in a multi-line array definition?',
+                                                                       'items'       => 'array definitions',
+                                                                      ),
                'One class per file'                                => array(
                                                                        'description' => 'Is each class defined in a file by itself?',
                                                                        'items'       => 'classes',
