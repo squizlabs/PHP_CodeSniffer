@@ -32,18 +32,6 @@
 class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 {
 
-    /**
-     * Conditions that should use include_once
-     *
-     * @var array(int)
-     */
-    private static $_conditions = array(
-                                   T_IF,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_SWITCH,
-                                  );
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
