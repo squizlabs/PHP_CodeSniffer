@@ -38,7 +38,7 @@
     {
         "name": "Guzzle",
         "url": "guzzle/guzzle",
-        "path": "src/Guzzle",
+        "path": "src",
         "ignore": ""
     },
     {
