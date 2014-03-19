@@ -68,7 +68,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
             $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" $branch` 2>&1; ";
         } else {
             echo "\t=> Updating repository".PHP_EOL;
-            $cmd .= "git checkout $branch 2>&1; git pull 2>&1; ";
+            $cmd .= "git reset --hard; git clean -df; git checkout $branch 2>&1; git pull 2>&1; ";
         }
 
         $cmd .= 'git submodule update --init --recursive 2>&1';
