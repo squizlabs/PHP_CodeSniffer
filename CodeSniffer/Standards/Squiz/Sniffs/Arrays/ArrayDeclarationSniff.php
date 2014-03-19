@@ -298,7 +298,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         $maxLength  = 0;
 
         // Find all the double arrows that reside in this scope.
-        while (($nextToken = $phpcsFile->findNext(array(T_DOUBLE_ARROW, T_COMMA, T_ARRAY), ($nextToken + 1), $arrayEnd)) !== false) {
+        for ($nextToken = ($stackPtr + 1); $nextToken < $arrayEnd; $nextToken++) {
+            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
+                && $tokens[$nextToken]['code'] !== T_COMMA
+                && $tokens[$nextToken]['code'] !== T_ARRAY
+            ) {
+                continue;
+            }
+
             $currentEntry = array();
 
             if ($tokens[$nextToken]['code'] === T_ARRAY) {

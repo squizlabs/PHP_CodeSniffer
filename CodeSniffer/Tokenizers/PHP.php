@@ -261,6 +261,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
                               T_END_HEREDOC         => T_END_HEREDOC,
                              );
 
+    /**
+     * A cache of different token types, resolved into arrays.
+     *
+     * @var array()
+     * @see standardiseToken()
+     */
+    private static $_resolveTokenCache = array();
+
 
     /**
      * Creates an array of tokens when given some PHP code.
@@ -287,6 +295,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $insideInlineIf = false;
 
+        $commentTokenizer = new PHP_CodeSniffer_Tokenizers_Comment();
+
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token        = $tokens[$stackPtr];
             $tokenIsArray = is_array($token);
@@ -296,7 +306,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $type    = token_name($token[0]);
                     $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
                 } else {
-                    $newToken = PHP_CodeSniffer::resolveSimpleToken($token);
+                    $newToken = self::resolveSimpleToken($token);
                     $type     = $newToken['type'];
                     $content  = $token;
                 }
@@ -335,8 +345,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             */
 
             if ($tokenIsArray === true && $token[0] === T_DOC_COMMENT) {
-                $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
-                $commentTokens = $tokenizer->tokenizeString($token[1], $eolChar, $newStackPtr);
+                $commentTokens = $commentTokenizer->tokenizeString($token[1], $eolChar, $newStackPtr);
                 foreach ($commentTokens as $commentToken) {
                     $finalTokens[$newStackPtr] = $commentToken;
                     $newStackPtr++;
@@ -420,7 +429,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
                 // Add the start heredoc token to the final array.
                 $finalTokens[$newStackPtr]
-                    = PHP_CodeSniffer::standardiseToken($token);
+                    = self::standardiseToken($token);
 
                 // Check if this is actually a nowdoc and use a different token
                 // to help the sniffs.
@@ -482,7 +491,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 // Add the end heredoc token to the final array.
                 $finalTokens[$newStackPtr]
-                    = PHP_CodeSniffer::standardiseToken($tokens[$stackPtr]);
+                    = self::standardiseToken($tokens[$stackPtr]);
 
                 if ($nowdoc === true) {
                     $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
@@ -510,10 +519,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
             ) {
                 $stopTokens = array(
-                               T_CASE               => T_CASE,
-                               T_SEMICOLON          => T_SEMICOLON,
-                               T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET,
-                               T_INLINE_THEN        => T_INLINE_THEN,
+                               T_CASE               => true,
+                               T_SEMICOLON          => true,
+                               T_OPEN_CURLY_BRACKET => true,
+                               T_INLINE_THEN        => true,
                               );
 
                 for ($x = ($newStackPtr - 1); $x > 0; $x--) {
@@ -572,7 +581,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $newStackPtr++;
                 }
             } else {
-                $newToken = PHP_CodeSniffer::standardiseToken($token);
+                $newToken = null;
+                if ($tokenIsArray === false) {
+                    if (isset(self::$_resolveTokenCache[$token]) === true) {
+                        $newToken = self::$_resolveTokenCache[$token];
+                    }
+                } else {
+                    $cacheKey = null;
+                    if ($token[0] === T_STRING) {
+                        $cacheKey = strtolower($token[1]);
+                    } else if ($token[0] !== T_CURLY_OPEN) {
+                        $cacheKey = $token[0];
+                    }
+
+                    if ($cacheKey !== null && isset(self::$_resolveTokenCache[$cacheKey]) === true) {
+                        $newToken            = self::$_resolveTokenCache[$cacheKey];
+                        $newToken['content'] = $token[1];
+                    }
+                }
+
+                if ($newToken === null) {
+                    $newToken = self::standardiseToken($token);
+                }
 
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
@@ -590,12 +620,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // T_ARRAY_HINT.
                 if ($newToken['code'] === T_ARRAY) {
                     // Recalculate number of tokens.
-                    $numTokens = count($tokens);
                     for ($i = $stackPtr; $i < $numTokens; $i++) {
-                        if (is_array($tokens[$i]) === false) {
-                            if ($tokens[$i] === '(') {
-                                break;
-                            }
+                        if ($tokens[$i] === '(') {
+                            break;
                         } else if ($tokens[$i][0] === T_VARIABLE) {
                             $newToken['code'] = T_ARRAY_HINT;
                             $newToken['type'] = 'T_ARRAY_HINT';
@@ -846,6 +873,192 @@ class PHP_CodeSniffer_Tokenizers_PHP
         }
 
     }//end processAdditional()
+
+
+    /**
+     * Takes a token produced from <code>token_get_all()</code> and produces a
+     * more uniform token.
+     *
+     * @param string|array $token The token to convert.
+     *
+     * @return array The new token.
+     */
+    public static function standardiseToken($token)
+    {
+        if (is_array($token) === false) {
+            if (isset(self::$_resolveTokenCache[$token]) === true) {
+                return self::$_resolveTokenCache[$token];
+            }
+        } else {
+            $cacheKey = null;
+            if ($token[0] === T_STRING) {
+                $cacheKey = strtolower($token[1]);
+            } else if ($token[0] !== T_CURLY_OPEN) {
+                $cacheKey = $token[0];
+            }
+
+            if ($cacheKey !== null && isset(self::$_resolveTokenCache[$cacheKey]) === true) {
+                $newToken            = self::$_resolveTokenCache[$cacheKey];
+                $newToken['content'] = $token[1];
+                return $newToken;
+            }
+        }
+
+        if (is_array($token) === false) {
+            return self::resolveSimpleToken($token);
+        }
+
+        if ($token[0] === T_STRING) {
+            switch ($cacheKey) {
+            case 'false':
+                $newToken['type'] = 'T_FALSE';
+                break;
+            case 'true':
+                $newToken['type'] = 'T_TRUE';
+                break;
+            case 'null':
+                $newToken['type'] = 'T_NULL';
+                break;
+            case 'self':
+                $newToken['type'] = 'T_SELF';
+                break;
+            case 'parent':
+                $newToken['type'] = 'T_PARENT';
+                break;
+            default:
+                $newToken['type'] = 'T_STRING';
+                break;
+            }
+
+            $newToken['code'] = constant($newToken['type']);
+
+            self::$_resolveTokenCache[$cacheKey] = $newToken;
+        } else if ($token[0] === T_CURLY_OPEN) {
+            $newToken = array(
+                         'code' => T_OPEN_CURLY_BRACKET,
+                         'type' => 'T_OPEN_CURLY_BRACKET',
+                        );
+        } else {
+            $newToken = array(
+                         'code' => $token[0],
+                         'type' => token_name($token[0]),
+                        );
+
+            self::$_resolveTokenCache[$token[0]] = $newToken;
+        }//end if
+
+        $newToken['content'] = $token[1];
+        return $newToken;
+
+    }//end standardiseToken()
+
+
+    /**
+     * Converts simple tokens into a format that conforms to complex tokens
+     * produced by token_get_all().
+     *
+     * Simple tokens are tokens that are not in array form when produced from
+     * token_get_all().
+     *
+     * @param string $token The simple token to convert.
+     *
+     * @return array The new token in array format.
+     */
+    public static function resolveSimpleToken($token)
+    {
+        $newToken = array();
+
+        switch ($token) {
+        case '{':
+            $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
+            break;
+        case '}':
+            $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
+            break;
+        case '[':
+            $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
+            break;
+        case ']':
+            $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
+            break;
+        case '(':
+            $newToken['type'] = 'T_OPEN_PARENTHESIS';
+            break;
+        case ')':
+            $newToken['type'] = 'T_CLOSE_PARENTHESIS';
+            break;
+        case ':':
+            $newToken['type'] = 'T_COLON';
+            break;
+        case '.':
+            $newToken['type'] = 'T_STRING_CONCAT';
+            break;
+        case '?':
+            $newToken['type'] = 'T_INLINE_THEN';
+            break;
+        case ';':
+            $newToken['type'] = 'T_SEMICOLON';
+            break;
+        case '=':
+            $newToken['type'] = 'T_EQUAL';
+            break;
+        case '*':
+            $newToken['type'] = 'T_MULTIPLY';
+            break;
+        case '/':
+            $newToken['type'] = 'T_DIVIDE';
+            break;
+        case '+':
+            $newToken['type'] = 'T_PLUS';
+            break;
+        case '-':
+            $newToken['type'] = 'T_MINUS';
+            break;
+        case '%':
+            $newToken['type'] = 'T_MODULUS';
+            break;
+        case '^':
+            $newToken['type'] = 'T_POWER';
+            break;
+        case '&':
+            $newToken['type'] = 'T_BITWISE_AND';
+            break;
+        case '|':
+            $newToken['type'] = 'T_BITWISE_OR';
+            break;
+        case '<':
+            $newToken['type'] = 'T_LESS_THAN';
+            break;
+        case '>':
+            $newToken['type'] = 'T_GREATER_THAN';
+            break;
+        case '!':
+            $newToken['type'] = 'T_BOOLEAN_NOT';
+            break;
+        case ',':
+            $newToken['type'] = 'T_COMMA';
+            break;
+        case '@':
+            $newToken['type'] = 'T_ASPERAND';
+            break;
+        case '$':
+            $newToken['type'] = 'T_DOLLAR';
+            break;
+        case '`':
+            $newToken['type'] = 'T_BACKTICK';
+            break;
+        default:
+            $newToken['type'] = 'T_NONE';
+            break;
+        }//end switch
+
+        $newToken['code']    = constant($newToken['type']);
+        $newToken['content'] = $token;
+
+        self::$_resolveTokenCache[$token] = $newToken;
+        return $newToken;
+
+    }//end resolveSimpleToken()
 
 
 }//end class

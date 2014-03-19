@@ -76,7 +76,12 @@ class Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff implements PHP
 
         // If the next non-whitespace token after this token
         // is not an opening parenthesis then it is not a function call.
-        $openBracket = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        for ($openBracket = ($stackPtr + 1); $openBracket < $phpcsFile->numTokens; $openBracket++) {
+            if ($tokens[$openBracket]['code'] !== T_WHITESPACE) {
+                break;
+            }
+        }
+
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             $functionKeyword = $phpcsFile->findPrevious(
                 array(

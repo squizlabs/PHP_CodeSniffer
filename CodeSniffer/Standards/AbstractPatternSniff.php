@@ -940,7 +940,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $tokens = array_slice($tokens, 1, (count($tokens) - 2));
 
         foreach ($tokens as &$token) {
-            $token = PHP_CodeSniffer::standardiseToken($token);
+            $token = PHP_CodeSniffer_Tokenizers_PHP::standardiseToken($token);
         }
 
         $patterns = array();

@@ -481,6 +481,7 @@ class PHP_CodeSniffer_File
 
         $foundCode = false;
         $ignoring  = false;
+        $listeners = $this->phpcs->getSniffs();
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -489,7 +490,7 @@ class PHP_CodeSniffer_File
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
                     $ignoring = true;
-                } else if (strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
+                } else if ($ignoring === true && strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
                     $ignoring = false;
                     // Ignore this comment too.
                     $this->_ignoredLines[$token['line']] = true;
@@ -523,16 +524,15 @@ class PHP_CodeSniffer_File
                 echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
-            $tokenType = $token['code'];
-            if ($tokenType !== T_INLINE_HTML) {
+            if ($token['code'] !== T_INLINE_HTML) {
                 $foundCode = true;
             }
 
-            if (isset($this->_listeners[$tokenType]) === false) {
+            if (isset($this->_listeners[$token['code']]) === false) {
                 continue;
             }
 
-            foreach ($this->_listeners[$tokenType] as $listenerData) {
+            foreach ($this->_listeners[$token['code']] as $listenerData) {
                 if (isset($this->_listenerIgnoreTo[$listenerData['class']]) === true
                     && $this->_listenerIgnoreTo[$listenerData['class']] > $stackPtr
                 ) {
@@ -542,30 +542,18 @@ class PHP_CodeSniffer_File
 
                 // Make sure this sniff supports the tokenizer
                 // we are currently using.
-                $listener = $listenerData['listener'];
-                $class    = $listenerData['class'];
+                $class = $listenerData['class'];
 
                 if (isset($listenerData['tokenizers'][$this->tokenizerType]) === false) {
                     continue;
                 }
 
                 // If the file path matches one of our ignore patterns, skip it.
-                $parts = explode('_', str_replace('\\', '_', $class));
-                if (isset($parts[3]) === true) {
-                    $source   = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
-                    $patterns = $this->phpcs->getIgnorePatterns($source);
-                    foreach ($patterns as $pattern => $type) {
-                        // While there is support for a type of each pattern
-                        // (absolute or relative) we don't actually support it here.
-                        $replacements = array(
-                                         '\\,' => ',',
-                                         '*'   => '.*',
-                                        );
-
-                        $pattern = strtr($pattern, $replacements);
-                        if (preg_match("|{$pattern}|i", $this->_file) === 1) {
-                            continue(2);
-                        }
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                foreach ($listenerData['ignore'] as $pattern) {
+                    if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                        continue(2);
                     }
                 }
 
@@ -576,7 +564,7 @@ class PHP_CodeSniffer_File
                     echo "\t\t\tProcessing ".$this->_activeListener.'... ';
                 }
 
-                $ignoreTo = $listener->process($this, $stackPtr);
+                $ignoreTo = $listeners[$class]->process($this, $stackPtr);
                 if ($ignoreTo !== null) {
                     $this->_listenerIgnoreTo[$this->_activeListener] = $ignoreTo;
                 }
@@ -642,9 +630,6 @@ class PHP_CodeSniffer_File
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
-        }
-
-        if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
 
             asort($this->_listenerTimes, SORT_NUMERIC);
@@ -2306,8 +2291,13 @@ class PHP_CodeSniffer_File
             return null;
         }
 
-        $token = $this->findNext(T_STRING, $stackPtr);
-        return $this->_tokens[$token]['content'];
+        for ($i = $stackPtr; $i < $this->numTokens; $i++) {
+            if ($this->_tokens[$i]['code'] === T_STRING) {
+                break;
+            }
+        }
+
+        return $this->_tokens[$i]['content'];
 
     }//end getDeclarationName()
 
@@ -2334,7 +2324,14 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        $name = $this->findNext(T_STRING, ($stackPtr + 1));
+        $name = false;
+        for ($i = ($stackPtr + 1); $i < $this->numTokens; $i++) {
+            if ($this->_tokens[$i]['code'] === T_STRING) {
+                $name = $i;
+                break;
+            }
+        }
+
         if ($name === false) {
             // No name found.
             return true;
@@ -2415,9 +2412,23 @@ class PHP_CodeSniffer_File
             case T_STRING:
                 // This is a string, so it may be a type hint, but it could
                 // also be a constant used as a default value.
-                $prevComma = $this->findPrevious(T_COMMA, $i, $opener);
+                $prevComma = false;
+                for ($t = $i; $t >= $opener; $t--) {
+                    if ($this->_tokens[$t]['code'] === T_COMMA) {
+                        $prevComma = $t;
+                        break;
+                    }
+                }
+
                 if ($prevComma !== false) {
-                    $nextEquals = $this->findNext(T_EQUAL, $prevComma, $i);
+                    $nextEquals = false;
+                    for ($t = $prevComma; $t < $i; $t++) {
+                        if ($this->_tokens[$t]['code'] === T_EQUAL) {
+                            $nextEquals = $t;
+                            break;
+                        }
+                    }
+
                     if ($nextEquals !== false) {
                         break;
                     }
@@ -2780,12 +2791,13 @@ class PHP_CodeSniffer_File
                     return true;
                 }
             } else {
-                $prev = $this->findPrevious(
-                    array(T_WHITESPACE),
-                    ($this->_tokens[$lastBracket]['parenthesis_opener'] - 1),
-                    null,
-                    true
-                );
+                $prev = false;
+                for ($t = ($this->_tokens[$lastBracket]['parenthesis_opener'] - 1); $t >= 0; $t--) {
+                    if ($this->_tokens[$t]['code'] !== T_WHITESPACE) {
+                        $prev = $t;
+                        break;
+                    }
+                }
 
                 if ($prev !== false && $this->_tokens[$prev]['code'] === T_USE) {
                     return true;

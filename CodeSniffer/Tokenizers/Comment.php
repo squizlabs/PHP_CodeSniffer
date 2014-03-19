@@ -206,19 +206,10 @@ class PHP_CodeSniffer_Tokenizers_Comment
 
         if ($string[$start] === '@') {
             // The content up until the first whitespace is the tag name.
-            $tagName = '';
-            for ($start; $start < $end; $start++) {
-                if ($string[$start] === ' '
-                    || $string[$start] === "\t"
-                    || $string[$start] === "\n"
-                    || $string[$start] === "\r"
-                ) {
-                    break;
-                }
-
-                $tagName .= $string[$start];
-            }
-
+            $matches = array();
+            preg_match('/@[^\s]+/', $string, $matches, 0, $start);
+            $tagName  = $matches[0];
+            $start   += strlen($tagName);
             $tokens[] = array(
                          'content' => $tagName,
                          'code'    => T_DOC_COMMENT_TAG,
@@ -234,12 +225,9 @@ class PHP_CodeSniffer_Tokenizers_Comment
         }//end if
 
         // Process the rest of the line.
-        $eolLen = strlen($eolChar);
-        for ($eol = $start; $eol < $end; $eol++) {
-            $eolTest = substr($string, $eol, $eolLen);
-            if ($eolTest === $eolChar) {
-                break;
-            }
+        $eol = strpos($string, $eolChar, $start);
+        if ($eol === false) {
+            $eol = $end;
         }
 
         if ($eol > $start) {
@@ -250,11 +238,13 @@ class PHP_CodeSniffer_Tokenizers_Comment
                         );
         }
 
-        $tokens[] = array(
-                     'content' => substr($string, $eol, strlen($eolChar)),
-                     'code'    => T_DOC_COMMENT_WHITESPACE,
-                     'type'    => 'T_DOC_COMMENT_WHITESPACE',
-                    );
+        if ($eol !== $end) {
+            $tokens[] = array(
+                         'content' => substr($string, $eol, strlen($eolChar)),
+                         'code'    => T_DOC_COMMENT_WHITESPACE,
+                         'type'    => 'T_DOC_COMMENT_WHITESPACE',
+                        );
+        }
 
         return $tokens;
 
@@ -272,21 +262,15 @@ class PHP_CodeSniffer_Tokenizers_Comment
      */
     private function _collectWhitespace($string, $start, $end)
     {
-        $space = '';
-        for ($start; $start < $end; $start++) {
-            if ($string[$start] !== ' ' && $string[$start] !== "\t") {
-                break;
-            }
-
-            $space .= $string[$start];
-        }
-
-        if ($space === '') {
+        $substr = substr($string, $start);
+        $trimmed = ltrim($substr, ' ');
+        $diff = strlen($substr) - strlen($trimmed);
+        if ($diff === 0) {
             return null;
         }
 
         $token = array(
-                  'content' => $space,
+                  'content' => str_repeat(' ', $diff),
                   'code'    => T_DOC_COMMENT_WHITESPACE,
                   'type'    => 'T_DOC_COMMENT_WHITESPACE',
                  );
