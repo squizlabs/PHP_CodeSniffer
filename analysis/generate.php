@@ -3,7 +3,8 @@ require_once __DIR__.'/_assets/common.php';
 $resultFiles = array();
 $repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
 
-$checkoutDate = date('Y-m-d');
+$today        = date('Y-m-d');
+$checkoutDate = $checkoutDate;
 $recordTrend  = false;
 $runPHPCS     = true;
 $runGit       = true;
@@ -196,6 +197,13 @@ foreach ($resultFiles as $file) {
                 }
             }
 
+            if ($date !== $today) {
+                $trendData .= $percent.',';
+                if ((int) $percent !== 100) {
+                    $perfectScore = false;
+                }
+            }
+
             $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
             $valueNum++;
@@ -231,7 +239,9 @@ foreach ($resultFiles as $file) {
             $dateNum++;
             continue;
         }
-        $js  = rtrim($js, ',');
+
+        //$js  = rtrim($js, ',');
+        $js .= '"'.date('d-M').'"';
 
         $trendData = rtrim($trendData, ',');
         $js       .= "],datasets:[$trendData]};".PHP_EOL;
@@ -449,6 +459,13 @@ foreach ($totals as $metric => $data) {
             }
         }
 
+        if ($date !== $today) {
+            $trendData .= $percent.',';
+            if ((int) $percent !== 100) {
+                $perfectScore = false;
+            }
+        }
+
         $trendData  = rtrim($trendData, ',');
         $trendData .= ']},';
 
@@ -493,7 +510,8 @@ foreach ($totals as $metric => $data) {
         continue;
     }
 
-    $js  = rtrim($js, ',');
+    //$js  = rtrim($js, ',');
+    $js .= '"'.date('d-M').'"';
 
     $trendData = rtrim($trendData, ',');
     $js       .= "],datasets:[$trendData]};".PHP_EOL;
