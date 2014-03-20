@@ -1273,9 +1273,7 @@ class PHP_CodeSniffer_File
     {
         $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
-        self::_createColumnMap($tokens, $tokenizer, $eolChar);
-        self::_createBracketMap($tokens, $tokenizer, $eolChar);
-        self::_createParenthesisMap($tokens, $tokenizer, $eolChar);
+        self::_createTokenMap($tokens, $tokenizer, $eolChar);
         self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
         self::_createScopeMap($tokens, $tokenizer, $eolChar);
 
@@ -1377,10 +1375,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Creates a column map.
-     *
-     * The column map indicates where the token started on the line where it
-     * exists.
+     * Creates a map of brackets positions.
      *
      * @param array  &$tokens   The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
@@ -1388,14 +1383,29 @@ class PHP_CodeSniffer_File
      *
      * @return void
      */
-    private static function _createColumnMap(&$tokens, $tokenizer, $eolChar)
+    private static function _createTokenMap(&$tokens, $tokenizer, $eolChar)
     {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START TOKEN MAP ***".PHP_EOL;
+        }
+
+        $squareOpeners = array();
+        $curlyOpeners  = array();
+        $numTokens     = count($tokens);
+
+        $openers   = array();
+        $openOwner = null;
+
         $currColumn = 1;
         $lineNumber = 1;
-        $count      = count($tokens);
         $eolLen     = (strlen($eolChar) * -1);
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $numTokens; $i++) {
+
+            /*
+                Column and line values.
+            */
+
             $tokens[$i]['line']   = $lineNumber;
             $tokens[$i]['column'] = $currColumn;
 
@@ -1422,35 +1432,46 @@ class PHP_CodeSniffer_File
                 $currColumn            = 1;
                 $tokens[$i]['length'] += $eolLen;
             }
-        }//end for
 
-    }//end _createColumnMap()
+            /*
+                Parenthesis mapping.
+            */
 
+            if (isset(PHP_CodeSniffer_Tokens::$parenthesisOpeners[$tokens[$i]['code']]) === true) {
+                $tokens[$i]['parenthesis_opener'] = null;
+                $tokens[$i]['parenthesis_closer'] = null;
+                $tokens[$i]['parenthesis_owner']  = $i;
+                $openOwner = $i;
+            } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+                $openers[] = $i;
+                $tokens[$i]['parenthesis_opener'] = $i;
+                if ($openOwner !== null) {
+                    $tokens[$openOwner]['parenthesis_opener'] = $i;
+                    $tokens[$i]['parenthesis_owner']          = $openOwner;
+                    $openOwner = null;
+                }
+            } else if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
+                // Did we set an owner for this set of parenthesis?
+                $numOpeners = count($openers);
+                if ($numOpeners !== 0) {
+                    $opener = array_pop($openers);
+                    if (isset($tokens[$opener]['parenthesis_owner']) === true) {
+                        $owner = $tokens[$opener]['parenthesis_owner'];
 
-    /**
-     * Creates a map for opening and closing of square brackets.
-     *
-     * Each bracket token (T_OPEN_SQUARE_BRACKET and T_CLOSE_SQUARE_BRACKET)
-     * has a reference to their opening and closing bracket
-     * (bracket_opener and bracket_closer).
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
-    private static function _createBracketMap(&$tokens, $tokenizer, $eolChar)
-    {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** START BRACKET MAP ***".PHP_EOL;
-        }
+                        $tokens[$owner]['parenthesis_closer'] = $i;
+                        $tokens[$i]['parenthesis_owner']      = $owner;
+                    }
 
-        $squareOpeners = array();
-        $curlyOpeners  = array();
-        $numTokens     = count($tokens);
+                    $tokens[$i]['parenthesis_opener']      = $opener;
+                    $tokens[$i]['parenthesis_closer']      = $i;
+                    $tokens[$opener]['parenthesis_closer'] = $i;
+                }
+            }//end if
 
-        for ($i = 0; $i < $numTokens; $i++) {
+            /*
+                Bracket mapping.
+            */
+
             switch ($tokens[$i]['code']) {
             case T_OPEN_SQUARE_BRACKET:
                 $squareOpeners[] = $i;
@@ -1511,65 +1532,10 @@ class PHP_CodeSniffer_File
         }//end for
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** END BRACKET MAP ***".PHP_EOL;
+            echo "\t*** END TOKEN MAP ***".PHP_EOL;
         }
 
-    }//end _createBracketMap()
-
-
-    /**
-     * Creates a map for opening and closing of parenthesis.
-     *
-     * Each parenthesis token (T_OPEN_PARENTHESIS and T_CLOSE_PARENTHESIS) has a
-     * reference to their opening and closing parenthesis (parenthesis_opener
-     * and parenthesis_closer).
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
-    private static function _createParenthesisMap(&$tokens, $tokenizer, $eolChar)
-    {
-        $openers   = array();
-        $numTokens = count($tokens);
-        $openOwner = null;
-
-        for ($i = 0; $i < $numTokens; $i++) {
-            if (isset(PHP_CodeSniffer_Tokens::$parenthesisOpeners[$tokens[$i]['code']]) === true) {
-                $tokens[$i]['parenthesis_opener'] = null;
-                $tokens[$i]['parenthesis_closer'] = null;
-                $tokens[$i]['parenthesis_owner']  = $i;
-                $openOwner = $i;
-            } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $openers[] = $i;
-                $tokens[$i]['parenthesis_opener'] = $i;
-                if ($openOwner !== null) {
-                    $tokens[$openOwner]['parenthesis_opener'] = $i;
-                    $tokens[$i]['parenthesis_owner']          = $openOwner;
-                    $openOwner = null;
-                }
-            } else if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
-                // Did we set an owner for this set of parenthesis?
-                $numOpeners = count($openers);
-                if ($numOpeners !== 0) {
-                    $opener = array_pop($openers);
-                    if (isset($tokens[$opener]['parenthesis_owner']) === true) {
-                        $owner = $tokens[$opener]['parenthesis_owner'];
-
-                        $tokens[$owner]['parenthesis_closer'] = $i;
-                        $tokens[$i]['parenthesis_owner']      = $owner;
-                    }
-
-                    $tokens[$i]['parenthesis_opener']      = $opener;
-                    $tokens[$i]['parenthesis_closer']      = $i;
-                    $tokens[$opener]['parenthesis_closer'] = $i;
-                }
-            }//end if
-        }//end for
-
-    }//end _createParenthesisMap()
+    }//end _createTokenMap()
 
 
     /**
