@@ -31,7 +31,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Still highly experimental
   - Generic LineLengthSniff now shows warnings for long lines referring to licence and VCS information
     -- It previously ignored these lines, but at the expense of performance
-  - Lots of little performanace improvements that can add up to a substantial saving over large code bases
+  - Generic DisallowTabIndent and DisallowSpaceIndent sniffs no longer error when detecting mixed indent types
+    -- Only the first type of indent found on a line (space or indent) is considered
+  - Lots of little performance improvements that can add up to a substantial saving over large code bases
     -- Added a "length" array index to tokens so you don't need to call strlen() of them, or deal with encoding
     -- Can now use isset() to find tokens inside the PHP_CodeSniffer_Tokens static vars instead of in_array()
   - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
