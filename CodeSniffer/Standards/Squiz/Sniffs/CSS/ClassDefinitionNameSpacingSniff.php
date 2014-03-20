@@ -69,11 +69,11 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
 
         // Find the first blank line before this opening brace, unless we get
         // to another style definition, comment or the start of the file.
-        $endTokens = array(
-                      T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
-                      T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
-                      T_OPEN_TAG            => T_OPEN_TAG,
-                     );
+        $endTokens  = array(
+                       T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+                       T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+                       T_OPEN_TAG            => T_OPEN_TAG,
+                      );
         $endTokens += PHP_CodeSniffer_Tokens::$commentTokens;
 
         $foundContent = false;

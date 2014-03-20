@@ -1273,7 +1273,7 @@ class PHP_CodeSniffer_File
     {
         $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
-        self::_createLineMap($tokens, $tokenizer, $eolChar);
+        self::_createColumnMap($tokens, $tokenizer, $eolChar);
         self::_createBracketMap($tokens, $tokenizer, $eolChar);
         self::_createParenthesisMap($tokens, $tokenizer, $eolChar);
         self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
@@ -1285,8 +1285,6 @@ class PHP_CodeSniffer_File
             self::_convertTabs($tokens, $tokenizer, $eolChar);
         }
 
-        // Column map requires the line map to be complete.
-        self::_createColumnMap($tokens, $tokenizer, $eolChar);
         self::_createLevelMap($tokens, $tokenizer, $eolChar);
 
         // Allow the tokenizer to do additional processing if required.
@@ -1295,32 +1293,6 @@ class PHP_CodeSniffer_File
         return $tokens;
 
     }//end tokenizeString()
-
-
-    /**
-     * Creates a map of tokens => line numbers for each token.
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
-    private static function _createLineMap(&$tokens, $tokenizer, $eolChar)
-    {
-        $lineNumber = 1;
-        $count      = count($tokens);
-
-        for ($i = 0; $i < $count; $i++) {
-            $tokens[$i]['line'] = $lineNumber;
-            if ($tokens[$i]['content'] === '') {
-                continue;
-            }
-
-            $lineNumber += substr_count($tokens[$i]['content'], $eolChar);
-        }
-
-    }//end _createLineMap()
 
 
     /**
@@ -1419,18 +1391,38 @@ class PHP_CodeSniffer_File
     private static function _createColumnMap(&$tokens, $tokenizer, $eolChar)
     {
         $currColumn = 1;
+        $lineNumber = 1;
         $count      = count($tokens);
+        $eolLen     = (strlen($eolChar) * -1);
 
         for ($i = 0; $i < $count; $i++) {
+            $tokens[$i]['line']   = $lineNumber;
             $tokens[$i]['column'] = $currColumn;
-            if (isset($tokens[($i + 1)]['line']) === true
-                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-            ) {
-                $currColumn = 1;
+
+            if (isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true) {
+                $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
             } else {
-                $currColumn += strlen($tokens[$i]['content']);
+                if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
+                    // Not using the default encoding, so take a bit more care.
+                    $length = iconv_strlen($tokens[$i]['content'], PHP_CODESNIFFER_ENCODING);
+                    if ($length === false) {
+                        // String contained invalid characters, so revert to default.
+                        $length = strlen($tokens[$i]['content']);
+                    }
+                } else {
+                    $length = strlen($tokens[$i]['content']);
+                }
             }
-        }
+
+            $tokens[$i]['length'] = $length;
+            $currColumn          += $length;
+
+            if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
+                $lineNumber++;
+                $currColumn            = 1;
+                $tokens[$i]['length'] += $eolLen;
+            }
+        }//end for
 
     }//end _createColumnMap()
 

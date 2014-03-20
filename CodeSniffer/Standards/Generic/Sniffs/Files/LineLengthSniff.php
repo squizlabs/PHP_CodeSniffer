@@ -73,21 +73,13 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        $currentLineContent = $tokens[$stackPtr]['content'];
-        $trim = (strlen($phpcsFile->eolChar) * -1);
-        for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
+        for ($i = 1; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] === 1) {
-                $currentLineContent = substr($currentLineContent, 0, $trim);
-                $this->checkLineLength($phpcsFile, ($i - 1), $currentLineContent);
-                $currentLineContent = $tokens[$i]['content'];
-            } else {
-                $currentLineContent .= $tokens[$i]['content'];
+                $this->checkLineLength($phpcsFile, $tokens, $i);
             }
         }
 
-        $currentLineContent = substr($currentLineContent, 0, $trim);
-        $this->checkLineLength($phpcsFile, ($i - 1), $currentLineContent);
+        $this->checkLineLength($phpcsFile, $tokens, $i);
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);
@@ -98,38 +90,31 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     /**
      * Checks if a line is too long.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
-     * @param int                  $stackPtr    The token at the end of the line.
-     * @param string               $lineContent The content of the line.
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param array                $tokens    The token stack.
+     * @param int                  $stackPtr  The first token on the next line.
      *
      * @return void
      */
-    protected function checkLineLength(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $lineContent)
+    protected function checkLineLength(PHP_CodeSniffer_File $phpcsFile, $tokens, $stackPtr)
     {
-        // Ignore blank lines.
-        if ($lineContent === '') {
+        // The passed token is the first on the line.
+        $stackPtr--;
+
+        if ($tokens[$stackPtr]['column'] === 1
+            && $tokens[$stackPtr]['length'] === 0
+        ) {
+            // Blank line.
             return;
         }
 
-        // If the content is a CVS or SVN id in a version tag, or it is
-        // a license tag with a name and URL, or it is an SVN URL, there
-        // is nothing the developer can do to shorten the line,
-        // so don't throw errors.
-        $regex = '~@license|@version[^\$]+\$Id|\$(Head)?URL[:\$]~';
-        if (preg_match($regex, $lineContent) !== 0) {
-            return;
+        if ($tokens[$stackPtr]['column'] !== 1
+            && $tokens[$stackPtr]['content'] === $phpcsFile->eolChar
+        ) {
+            $stackPtr--;
         }
 
-        if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
-            // Not using the default encoding, so take a bit more care.
-            $lineLength = iconv_strlen($lineContent, PHP_CODESNIFFER_ENCODING);
-            if ($lineLength === false) {
-                // String contained invalid characters, so revert to default.
-                $lineLength = strlen($lineContent);
-            }
-        } else {
-            $lineLength = strlen($lineContent);
-        }
+        $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);
 
         // Record metrics for common line length groupings.
         if ($lineLength <= 80) {

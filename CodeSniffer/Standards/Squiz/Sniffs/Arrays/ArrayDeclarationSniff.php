@@ -156,7 +156,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->fixer->addContentBefore($nextArrow, ' ');
                     }
                 } else {
-                    $spaceLength = strlen($tokens[($nextArrow - 1)]['content']);
+                    $spaceLength = $tokens[($nextArrow - 1)]['length'];
                     if ($spaceLength !== 1) {
                         $content = $tokens[($nextArrow - 2)]['content'];
                         $error   = 'Expected 1 space between "%s" and double arrow; %s found';
@@ -181,7 +181,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->fixer->addContent($nextArrow, ' ');
                     }
                 } else {
-                    $spaceLength = strlen($tokens[($nextArrow + 1)]['content']);
+                    $spaceLength = $tokens[($nextArrow + 1)]['length'];
                     if ($spaceLength !== 1) {
                         $content = $tokens[($nextArrow + 2)]['content'];
                         $error   = 'Expected 1 space between double arrow and "%s"; %s found';
@@ -225,7 +225,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                             $phpcsFile->fixer->addContent($comma, ' ');
                         }
                     } else {
-                        $spaceLength = strlen($tokens[($comma + 1)]['content']);
+                        $spaceLength = $tokens[($comma + 1)]['length'];
                         if ($spaceLength !== 1) {
                             $content = $tokens[($comma + 2)]['content'];
                             $error   = 'Expected 1 space between comma and "%s"; %s found';
@@ -243,7 +243,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                     if ($tokens[($comma - 1)]['code'] === T_WHITESPACE) {
                         $content     = $tokens[($comma - 2)]['content'];
-                        $spaceLength = strlen($tokens[($comma - 1)]['content']);
+                        $spaceLength = $tokens[($comma - 1)]['length'];
                         $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data        = array(
                                         $content,
@@ -337,7 +337,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 if ($keyUsed === false) {
                     if ($tokens[($nextToken - 1)]['code'] === T_WHITESPACE) {
                         $content     = $tokens[($nextToken - 2)]['content'];
-                        $spaceLength = strlen($tokens[($nextToken - 1)]['content']);
+                        $spaceLength = $tokens[($nextToken - 1)]['length'];
                         $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data        = array(
                                         $content,
@@ -406,7 +406,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $indices[] = $currentEntry;
                 $lastToken = T_DOUBLE_ARROW;
             }//end if
-        }//end while
+        }//end for
 
         // Check for mutli-line arrays that should be single-line.
         $singleValue = false;
@@ -621,8 +621,8 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($tokens[$index['value']]['column'] !== $valueStart) {
-                $expected = ($valueStart - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
-                $found    = ($tokens[$index['value']]['column'] - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
+                $expected = ($valueStart - ($tokens[$index['arrow']]['length'] + $tokens[$index['arrow']]['column']));
+                $found    = ($tokens[$index['value']]['column'] - ($tokens[$index['arrow']]['length'] + $tokens[$index['arrow']]['column']));
                 if ($found < 0) {
                     $found = 'newline';
                 }
@@ -689,7 +689,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 // Check that there is no space before the comma.
                 if ($nextComma !== false && $tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
                     $content     = $tokens[($nextComma - 2)]['content'];
-                    $spaceLength = strlen($tokens[($nextComma - 1)]['content']);
+                    $spaceLength = $tokens[($nextComma - 1)]['length'];
                     $error       = 'Expected 0 spaces between "%s" and comma; %s found';
                     $data        = array(
                                     $content,

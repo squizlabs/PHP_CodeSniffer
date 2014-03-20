@@ -194,7 +194,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             // aligned with this statement, or they wouldn't break the max
             // padding length if they aligned with us.
             $varEnd    = $tokens[($var + 1)]['column'];
-            $assignLen = strlen($tokens[$assign]['content']);
+            $assignLen = $tokens[$assign]['length'];
             if ($assign !== $stackPtr) {
                 if (($varEnd + 1) > $assignments[$prevAssign]['assign_col']) {
                     $padding      = 1;
@@ -244,7 +244,11 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
             $found = 0;
             if ($tokens[($var + 1)]['code'] === T_WHITESPACE) {
-                $found = strlen($tokens[($var + 1)]['content']);
+                $found = $tokens[($var + 1)]['length'];
+                if ($found === 0) {
+                    // This means a newline was found.
+                    $found = 1;
+                }
             }
 
             $assignments[$assign] = array(
@@ -258,6 +262,10 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             $lastLine   = $tokens[$assign]['line'];
             $prevAssign = $assign;
         }//end for
+
+        if (empty($assignments) === true) {
+            return $stackPtr;
+        }
 
         $errorGenerated = false;
         foreach ($assignments as $assignment => $data) {

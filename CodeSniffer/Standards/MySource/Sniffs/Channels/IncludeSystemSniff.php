@@ -132,8 +132,8 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $includedClasses[$name] = true;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName = trim($tokens[$typeName]['content'], " '");
                 $includedClasses[strtolower($typeName).'widgettype'] = true;
             }
         }
@@ -275,8 +275,8 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $includedClasses[$name] = true;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName          = trim($tokens[$typeName]['content'], " '");
+                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName = trim($tokens[$typeName]['content'], " '");
                 $includedClasses[strtolower($typeName).'widgettype'] = true;
             }
         }//end for

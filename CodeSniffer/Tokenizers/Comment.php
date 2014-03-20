@@ -262,9 +262,9 @@ class PHP_CodeSniffer_Tokenizers_Comment
      */
     private function _collectWhitespace($string, $start, $end)
     {
-        $substr = substr($string, $start);
+        $substr  = substr($string, $start);
         $trimmed = ltrim($substr, ' ');
-        $diff = strlen($substr) - strlen($trimmed);
+        $diff    = (strlen($substr) - strlen($trimmed));
         if ($diff === 0) {
             return null;
         }

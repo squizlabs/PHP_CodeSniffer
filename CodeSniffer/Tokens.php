@@ -74,39 +74,54 @@ if (defined('T_NAMESPACE') === false) {
     define('T_NAMESPACE', 1053);
 }
 
+if (defined('T_NS_C') === false) {
+    define('T_NS_C', 1054);
+}
+
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1054);
+    define('T_NS_SEPARATOR', 1055);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1055);
+    define('T_GOTO', 1056);
+}
+
+if (defined('T_DIR') === false) {
+    define('T_DIR', 1057);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1056);
+    define('T_TRAIT', 1058);
+}
+
+if (defined('T_TRAIT_C') === false) {
+    define('T_TRAIT_C', 1059);
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1057);
+    define('T_INSTEADOF', 1060);
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1058);
+    define('T_CALLABLE', 1061);
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1059);
+    define('T_FINALLY', 1062);
+}
+if (defined('T_YIELD') === false) {
+    define('T_YIELD', 1063);
 }
 
 // Tokens used for parsing doc blocks.
-define('T_DOC_COMMENT_STAR', 1100);
-define('T_DOC_COMMENT_WHITESPACE', 1101);
-define('T_DOC_COMMENT_TAG', 1102);
-define('T_DOC_COMMENT_OPEN_TAG', 1103);
-define('T_DOC_COMMENT_CLOSE_TAG', 1104);
-define('T_DOC_COMMENT_STRING', 1105);
+define('T_DOC_COMMENT_STAR', 1200);
+define('T_DOC_COMMENT_WHITESPACE', 1201);
+define('T_DOC_COMMENT_TAG', 1202);
+define('T_DOC_COMMENT_OPEN_TAG', 1203);
+define('T_DOC_COMMENT_CLOSE_TAG', 1204);
+define('T_DOC_COMMENT_STRING', 1205);
 
 /**
  * The Tokens class contains weightings for tokens based on their
@@ -150,7 +165,6 @@ final class PHP_CodeSniffer_Tokens
                                  T_IF                  => 50,
                                  T_ELSE                => 50,
                                  T_ELSEIF              => 50,
-                                 T_WHILE               => 50,
                                  T_DO                  => 50,
                                  T_TRY                 => 50,
                                  T_CATCH               => 50,
@@ -198,6 +212,149 @@ final class PHP_CodeSniffer_Tokens
                                  T_IS_SMALLER_OR_EQUAL => 5,
                                  T_IS_GREATER_OR_EQUAL => 5,
                                 );
+
+    /**
+     * The token weightings.
+     *
+     * @var array(int => int)
+     */
+    public static $knownLengths = array(
+                                   T_ABSTRACT                 => 8,
+                                   T_AND_EQUAL                => 2,
+                                   T_ARRAY                    => 5,
+                                   T_AS                       => 2,
+                                   T_BOOLEAN_AND              => 2,
+                                   T_BOOLEAN_OR               => 2,
+                                   T_BREAK                    => 5,
+                                   T_CALLABLE                 => 8,
+                                   T_CASE                     => 4,
+                                   T_CATCH                    => 5,
+                                   T_CLASS                    => 5,
+                                   T_CLASS_C                  => 9,
+                                   T_CLONE                    => 5,
+                                   T_CLOSE_TAG                => 2,
+                                   T_CONCAT_EQUAL             => 2,
+                                   T_CONST                    => 5,
+                                   T_CONTINUE                 => 8,
+                                   T_CURLY_OPEN               => 2,
+                                   T_DEC                      => 2,
+                                   T_DECLARE                  => 7,
+                                   T_DEFAULT                  => 7,
+                                   T_DIR                      => 7,
+                                   T_DIV_EQUAL                => 2,
+                                   T_DO                       => 2,
+                                   T_DOLLAR_OPEN_CURLY_BRACES => 2,
+                                   T_DOUBLE_ARROW             => 2,
+                                   T_DOUBLE_COLON             => 2,
+                                   T_ECHO                     => 4,
+                                   T_ELSE                     => 4,
+                                   T_ELSEIF                   => 6,
+                                   T_EMPTY                    => 5,
+                                   T_ENDDECLARE               => 10,
+                                   T_ENDFOR                   => 6,
+                                   T_ENDFOREACH               => 10,
+                                   T_ENDIF                    => 5,
+                                   T_ENDSWITCH                => 9,
+                                   T_ENDWHILE                 => 8,
+                                   T_EVAL                     => 4,
+                                   T_EXTENDS                  => 7,
+                                   T_FILE                     => 8,
+                                   T_FINAL                    => 5,
+                                   T_FINALLY                  => 7,
+                                   T_FOR                      => 3,
+                                   T_FOREACH                  => 7,
+                                   T_FUNCTION                 => 8,
+                                   T_FUNC_C                   => 12,
+                                   T_GLOBAL                   => 6,
+                                   T_GOTO                     => 4,
+                                   T_HALT_COMPILER            => 15,
+                                   T_IF                       => 2,
+                                   T_IMPLEMENTS               => 10,
+                                   T_INC                      => 2,
+                                   T_INCLUDE                  => 7,
+                                   T_INCLUDE_ONCE             => 12,
+                                   T_INSTANCEOF               => 10,
+                                   T_INSTEADOF                => 9,
+                                   T_INTERFACE                => 9,
+                                   T_ISSET                    => 5,
+                                   T_IS_EQUAL                 => 2,
+                                   T_IS_GREATER_OR_EQUAL      => 2,
+                                   T_IS_IDENTICAL             => 3,
+                                   T_IS_NOT_EQUAL             => 2,
+                                   T_IS_NOT_IDENTICAL         => 3,
+                                   T_IS_SMALLER_OR_EQUAL      => 2,
+                                   T_LINE                     => 8,
+                                   T_LIST                     => 4,
+                                   T_LOGICAL_AND              => 3,
+                                   T_LOGICAL_OR               => 2,
+                                   T_LOGICAL_XOR              => 3,
+                                   T_METHOD_C                 => 10,
+                                   T_MINUS_EQUAL              => 2,
+                                   T_MOD_EQUAL                => 2,
+                                   T_MUL_EQUAL                => 2,
+                                   T_NAMESPACE                => 9,
+                                   T_NS_C                     => 13,
+                                   T_NS_SEPARATOR             => 1,
+                                   T_NEW                      => 3,
+                                   T_OBJECT_OPERATOR          => 2,
+                                   T_OPEN_TAG_WITH_ECHO       => 3,
+                                   T_OR_EQUAL                 => 2,
+                                   T_PLUS_EQUAL               => 2,
+                                   T_PRINT                    => 5,
+                                   T_PRIVATE                  => 7,
+                                   T_PUBLIC                   => 6,
+                                   T_PROTECTED                => 9,
+                                   T_REQUIRE                  => 7,
+                                   T_REQUIRE_ONCE             => 12,
+                                   T_RETURN                   => 6,
+                                   T_STATIC                   => 6,
+                                   T_SWITCH                   => 6,
+                                   T_THROW                    => 5,
+                                   T_TRAIT                    => 5,
+                                   T_TRAIT_C                  => 9,
+                                   T_TRY                      => 3,
+                                   T_UNSET                    => 5,
+                                   T_USE                      => 3,
+                                   T_VAR                      => 3,
+                                   T_WHILE                    => 5,
+                                   T_XOR_EQUAL                => 2,
+                                   T_YIELD                    => 5,
+                                   T_OPEN_CURLY_BRACKET       => 1,
+                                   T_CLOSE_CURLY_BRACKET      => 1,
+                                   T_OPEN_SQUARE_BRACKET      => 1,
+                                   T_CLOSE_SQUARE_BRACKET     => 1,
+                                   T_OPEN_PARENTHESIS         => 1,
+                                   T_CLOSE_PARENTHESIS        => 1,
+                                   T_COLON                    => 1,
+                                   T_STRING_CONCAT            => 1,
+                                   T_INLINE_THEN              => 1,
+                                   T_INLINE_ELSE              => 1,
+                                   T_NULL                     => 4,
+                                   T_FALSE                    => 5,
+                                   T_TRUE                     => 4,
+                                   T_SEMICOLON                => 1,
+                                   T_EQUAL                    => 1,
+                                   T_MULTIPLY                 => 1,
+                                   T_DIVIDE                   => 1,
+                                   T_PLUS                     => 1,
+                                   T_MINUS                    => 1,
+                                   T_MODULUS                  => 1,
+                                   T_POWER                    => 1,
+                                   T_BITWISE_AND              => 1,
+                                   T_BITWISE_OR               => 1,
+                                   T_ARRAY_HINT               => 5,
+                                   T_GREATER_THAN             => 1,
+                                   T_LESS_THAN                => 1,
+                                   T_BOOLEAN_NOT              => 1,
+                                   T_SELF                     => 4,
+                                   T_PARENT                   => 6,
+                                   T_COMMA                    => 1,
+                                   T_THIS                     => 4,
+                                   T_CLOSURE                  => 8,
+                                   T_BACKTICK                 => 1,
+                                   T_OPEN_SHORT_ARRAY         => 1,
+                                   T_CLOSE_SHORT_ARRAY        => 1,
+                                  );
 
     /**
      * Tokens that represent assignments.

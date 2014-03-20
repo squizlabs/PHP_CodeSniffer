@@ -298,15 +298,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
         $commentTokenizer = new PHP_CodeSniffer_Tokenizers_Comment();
 
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
-            $token        = $tokens[$stackPtr];
-            $tokenIsArray = is_array($token);
+            $token        = (array) $tokens[$stackPtr];
+            $tokenIsArray = isset($token[1]);
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 if ($tokenIsArray === true) {
                     $type    = token_name($token[0]);
                     $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
                 } else {
-                    $newToken = self::resolveSimpleToken($token);
+                    $newToken = self::resolveSimpleToken($token[0]);
                     $type     = $newToken['type'];
                     $content  = $token;
                 }
@@ -322,20 +322,19 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 consistent for all lines.
             */
 
-            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
-                if (isset($tokens[($stackPtr + 1)]) === true
-                    && is_array($tokens[($stackPtr + 1)]) === true
-                    && $tokens[($stackPtr + 1)][1][0] === "\n"
+            if ($tokenIsArray === true && $token[1][0] === "\n") {
+                if (isset($tokens[($stackPtr - 1)]) === true
+                    && is_array($tokens[($stackPtr - 1)]) === true
+                    && substr($tokens[($stackPtr - 1)][1], -1) === "\r"
                 ) {
-                    $token[1] .= "\n";
+                    $tokens[($stackPtr - 1)] .= "\n";
 
-                    if ($tokens[($stackPtr + 1)][1] === "\n") {
-                        // The next token's content has been merged into this token,
+                    if ($token[1] === "\n") {
+                        // This token's content has been merged into the previous,
                         // so we can skip it.
-                        $stackPtr++;
+                        continue;
                     } else {
-                        $tokens[($stackPtr + 1)][1]
-                            = substr($tokens[($stackPtr + 1)][1], 1);
+                        $token[1] = substr($token[1], 1);
                     }
                 }
             }//end if
@@ -361,28 +360,29 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 provide a single string.
             */
 
-            if ($tokenIsArray === false && $token === '"') {
+            if ($tokenIsArray === false && $token[0] === '"') {
                 $tokenContent = '"';
                 $nestedVars   = array();
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    $subTokenIsArray = is_array($tokens[$i]);
+                    $subToken        = (array) $tokens[$i];
+                    $subTokenIsArray = isset($subToken[1]);
 
                     if ($subTokenIsArray === true) {
-                        $tokenContent .= $tokens[$i][1];
-                        if ($tokens[$i][1] === '{'
-                            && $tokens[$i][0] !== T_ENCAPSED_AND_WHITESPACE
+                        $tokenContent .= $subToken[1];
+                        if ($subToken[1] === '{'
+                            && $subToken[0] !== T_ENCAPSED_AND_WHITESPACE
                         ) {
                             $nestedVars[] = $i;
                         }
                     } else {
-                        $tokenContent .= $tokens[$i];
-                        if ($tokens[$i] === '}') {
+                        $tokenContent .= $subToken[0];
+                        if ($subToken[0] === '}') {
                             array_pop($nestedVars);
                         }
                     }
 
                     if ($subTokenIsArray === false
-                        && $tokens[$i] === '"'
+                        && $subToken[0] === '"'
                         && empty($nestedVars) === true
                     ) {
                         // We found the other end of the double quoted string.
@@ -583,8 +583,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
             } else {
                 $newToken = null;
                 if ($tokenIsArray === false) {
-                    if (isset(self::$_resolveTokenCache[$token]) === true) {
-                        $newToken = self::$_resolveTokenCache[$token];
+                    if (isset(self::$_resolveTokenCache[$token[0]]) === true) {
+                        $newToken = self::$_resolveTokenCache[$token[0]];
                     }
                 } else {
                     $cacheKey = null;
@@ -885,9 +885,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
      */
     public static function standardiseToken($token)
     {
-        if (is_array($token) === false) {
-            if (isset(self::$_resolveTokenCache[$token]) === true) {
-                return self::$_resolveTokenCache[$token];
+        if (isset($token[1]) === false) {
+            if (isset(self::$_resolveTokenCache[$token[0]]) === true) {
+                return self::$_resolveTokenCache[$token[0]];
             }
         } else {
             $cacheKey = null;
@@ -904,8 +904,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
         }
 
-        if (is_array($token) === false) {
-            return self::resolveSimpleToken($token);
+        if (isset($token[1]) === false) {
+            return self::resolveSimpleToken($token[0]);
         }
 
         if ($token[0] === T_STRING) {

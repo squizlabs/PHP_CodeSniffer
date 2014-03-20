@@ -29,6 +29,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added report type --report=info to show information about the checked code to make building a standard easier
     -- Checks a number of things, such as what line length you use, and spacing are brackets, but not everything
     -- Still highly experimental
+  - Generic LineLengthSniff now shows warnings for long lines referring to licence and VCS information
+    -- It previously ignored these lines, but at the expense of performance
+  - Lots of little performanace improvements that can add up to a substantial saving over large code bases
+    -- Added a "length" array index to tokens so you don't need to call strlen() of them, or deal with encoding
+    -- Can now use isset() to find tokens inside the PHP_CodeSniffer_Tokens static vars instead of in_array()
   - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
     -- When set to FALSE, error messages will not be recorded and only totals will be returned
     -- This can save significant memory while processing a large code base

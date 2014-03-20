@@ -81,7 +81,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-                $gap   = strlen($tokens[($parenOpener + 1)]['content']);
+                $gap   = $tokens[($parenOpener + 1)]['length'];
                 $error = 'Expected 0 spaces after opening bracket; %s found';
                 $data  = array($gap);
                 $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
@@ -97,7 +97,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']
                 && $tokens[($parenCloser - 1)]['code'] === T_WHITESPACE
             ) {
-                $gap   = strlen($tokens[($parenCloser - 1)]['content']);
+                $gap   = $tokens[($parenCloser - 1)]['length'];
                 $error = 'Expected 0 spaces before closing bracket; %s found';
                 $data  = array($gap);
                 $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);

@@ -132,7 +132,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
                     $found = 'newline';
                 } else {
-                    $found = strlen($tokens[($stackPtr - 1)]['content']);
+                    $found = $tokens[($stackPtr - 1)]['length'];
                 }
 
                 $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
@@ -159,7 +159,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
                     $found = 'newline';
                 } else {
-                    $found = strlen($tokens[($stackPtr + 1)]['content']);
+                    $found = $tokens[($stackPtr + 1)]['length'];
                 }
 
                 $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
@@ -235,7 +235,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
                 $found = 'newline';
             } else {
-                $found = strlen($tokens[($stackPtr - 1)]['content']);
+                $found = $tokens[($stackPtr - 1)]['length'];
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
@@ -264,7 +264,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
                 $found = 'newline';
             } else {
-                $found = strlen($tokens[($stackPtr + 1)]['content']);
+                $found = $tokens[($stackPtr + 1)]['length'];
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);

@@ -186,7 +186,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $pos++;
-        }
+        }//end foreach
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);

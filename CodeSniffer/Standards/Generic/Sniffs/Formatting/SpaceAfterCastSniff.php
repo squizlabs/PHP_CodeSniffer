@@ -67,9 +67,9 @@ class Generic_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_S
             return;
         }
 
-        $phpcsFile->recordMetric($stackPtr, 'Spacing after cast statement', strlen($tokens[($stackPtr + 1)]['content']));
+        $phpcsFile->recordMetric($stackPtr, 'Spacing after cast statement', $tokens[($stackPtr + 1)]['length']);
 
-        if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
+        if ($tokens[($stackPtr + 1)]['length'] !== 1) {
             $error = 'A cast statement must be followed by a single space';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TooMuchSpace');
             if ($fix === true && $phpcsFile->fixer->enabled === true) {
