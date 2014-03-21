@@ -4,7 +4,7 @@ $resultFiles = array();
 $repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
 
 $today        = date('Y-m-d');
-$checkoutDate = $checkoutDate;
+$checkoutDate = $today;
 $recordTrend  = false;
 $runPHPCS     = true;
 $runGit       = true;
