@@ -271,9 +271,9 @@
             "winner": "no"
         },
         "Adjacent assignments aligned": {
-            "total": 29134,
+            "total": 29140,
             "values": {
-                "yes": 24227,
+                "yes": 24233,
                 "no": 4907
             },
             "percentages": {
@@ -925,17 +925,17 @@
             "winner": "yes"
         },
         "Line length": {
-            "total": 344904,
+            "total": 344927,
             "values": {
-                "80 or less": 322125,
-                "81-120": 18898,
+                "80 or less": 322149,
+                "81-120": 18897,
                 "121-150": 2949,
                 "151 or more": 932
             },
             "percentages": {
                 "80 or less": 93.4,
                 "81-120": 5.48,
-                "121-150": 0.86,
+                "121-150": 0.85,
                 "151 or more": 0.27
             },
             "trends": {
@@ -1057,9 +1057,9 @@
             "winner": "80 or less"
         },
         "Line indent": {
-            "total": 198634,
+            "total": 198657,
             "values": {
-                "tabs": 188684,
+                "tabs": 188707,
                 "spaces": 9950
             },
             "percentages": {
@@ -1495,9 +1495,9 @@
             "winner": "elseif"
         },
         "Spacing before object operator": {
-            "total": 73047,
+            "total": 73045,
             "values": {
-                "0": 70457,
+                "0": 70455,
                 "newline": 2589,
                 "1": 1
             },
@@ -2112,9 +2112,9 @@
             "winner": 1
         },
         "Space after operator": {
-            "total": 64790,
+            "total": 64796,
             "values": {
-                "1": 63866,
+                "1": 63872,
                 "0": 717,
                 "2": 107,
                 "newline": 69,
@@ -2517,9 +2517,9 @@
             "winner": "yes"
         },
         "Spaces before control structure close parenthesis": {
-            "total": 21702,
+            "total": 21705,
             "values": {
-                "0": 21450,
+                "0": 21453,
                 "1": 247,
                 "2": 4,
                 "3": 1
@@ -2649,9 +2649,9 @@
             "winner": 0
         },
         "Spaces after control structure open parenthesis": {
-            "total": 21702,
+            "total": 21705,
             "values": {
-                "0": 21451,
+                "0": 21454,
                 "1": 249,
                 "newline": 2
             },
@@ -2760,9 +2760,9 @@
             "winner": 0
         },
         "Control structure defined inline": {
-            "total": 23761,
+            "total": 23767,
             "values": {
-                "no": 23497,
+                "no": 23503,
                 "yes": 264
             },
             "percentages": {
@@ -2940,9 +2940,9 @@
             "winner": 1
         },
         "Multiple statements on same line": {
-            "total": 85266,
+            "total": 85271,
             "values": {
-                "no": 84611,
+                "no": 84616,
                 "yes": 655
             },
             "percentages": {
@@ -3570,9 +3570,9 @@
             "winner": "no"
         },
         "PHP keyword case": {
-            "total": 96539,
+            "total": 96544,
             "values": {
-                "lower": 96498,
+                "lower": 96503,
                 "upper": 40,
                 "mixed": 1
             },
@@ -3840,9 +3840,9 @@
             "winner": ".php"
         },
         "Spacing after object operator": {
-            "total": 73047,
+            "total": 73045,
             "values": {
-                "0": 73047
+                "0": 73045
             },
             "percentages": {
                 "0": 100
@@ -4256,6 +4256,6 @@
     },
     "project": {
         "path": "joomla\/joomla-cms",
-        "commitid": "962cf2e249410b2e2850dbb2b5b2708679006ddb"
+        "commitid": "8165137890985db8595007297299dabb23cf99f6"
     }
 }

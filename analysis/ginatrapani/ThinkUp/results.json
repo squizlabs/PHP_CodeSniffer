@@ -751,14 +751,14 @@
             "winner": 0
         },
         "Adjacent assignments aligned": {
-            "total": 6103,
+            "total": 6104,
             "values": {
-                "yes": 4249,
+                "yes": 4250,
                 "no": 1854
             },
             "percentages": {
-                "yes": 69.62,
-                "no": 30.38
+                "yes": 69.63,
+                "no": 30.37
             },
             "trends": {
                 "2013-11-06": {
@@ -1423,10 +1423,10 @@
             "winner": "no"
         },
         "Line length": {
-            "total": 59541,
+            "total": 59546,
             "values": {
-                "80 or less": 51301,
-                "81-120": 8169,
+                "80 or less": 51305,
+                "81-120": 8170,
                 "121-150": 58,
                 "151 or more": 13
             },
@@ -1555,9 +1555,9 @@
             "winner": "80 or less"
         },
         "Space after operator": {
-            "total": 15505,
+            "total": 15506,
             "values": {
-                "1": 13675,
+                "1": 13676,
                 "0": 1676,
                 "newline": 87,
                 "2": 67
@@ -1811,14 +1811,14 @@
             "winner": "yes"
         },
         "Spaces before control structure close parenthesis": {
-            "total": 3848,
+            "total": 3849,
             "values": {
-                "0": 3548,
+                "0": 3549,
                 "1": 300
             },
             "percentages": {
-                "0": 92.2,
-                "1": 7.8
+                "0": 92.21,
+                "1": 7.79
             },
             "trends": {
                 "2013-11-06": {
@@ -1901,9 +1901,9 @@
             "winner": 0
         },
         "Spaces after control structure open parenthesis": {
-            "total": 3848,
+            "total": 3849,
             "values": {
-                "0": 3642,
+                "0": 3643,
                 "1": 205,
                 "2": 1
             },
@@ -2642,9 +2642,9 @@
             "winner": "same line"
         },
         "Control structure defined inline": {
-            "total": 4370,
+            "total": 4372,
             "values": {
-                "no": 4324,
+                "no": 4326,
                 "yes": 46
             },
             "percentages": {
@@ -2732,9 +2732,9 @@
             "winner": "no"
         },
         "Multiple statements on same line": {
-            "total": 17981,
+            "total": 17983,
             "values": {
-                "no": 17975,
+                "no": 17977,
                 "yes": 6
             },
             "percentages": {
@@ -2822,9 +2822,9 @@
             "winner": "no"
         },
         "Line indent": {
-            "total": 37836,
+            "total": 37841,
             "values": {
-                "spaces": 37832,
+                "spaces": 37837,
                 "tabs": 4
             },
             "percentages": {
@@ -2912,9 +2912,9 @@
             "winner": "spaces"
         },
         "PHP keyword case": {
-            "total": 18734,
+            "total": 18737,
             "values": {
-                "lower": 18733,
+                "lower": 18736,
                 "upper": 1
             },
             "percentages": {
@@ -3209,9 +3209,9 @@
             "winner": "lower"
         },
         "Spacing after object operator": {
-            "total": 13705,
+            "total": 13706,
             "values": {
-                "0": 13705
+                "0": 13706
             },
             "percentages": {
                 "0": 100
@@ -3485,9 +3485,9 @@
             "winner": "upper"
         },
         "Spacing before object operator": {
-            "total": 13705,
+            "total": 13706,
             "values": {
-                "0": 13705
+                "0": 13706
             },
             "percentages": {
                 "0": 100
@@ -3642,6 +3642,6 @@
     },
     "project": {
         "path": "ginatrapani\/ThinkUp",
-        "commitid": "ba9b25a317985e54192c9ee7e2848b001a8394f3"
+        "commitid": "780f772e70c5525580119c6fd7dd391fcd5c4e29"
     }
 }

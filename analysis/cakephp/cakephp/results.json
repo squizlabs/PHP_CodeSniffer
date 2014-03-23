@@ -181,14 +181,14 @@
             "winner": "yes"
         },
         "Adjacent assignments aligned": {
-            "total": 8656,
+            "total": 8655,
             "values": {
-                "yes": 7088,
+                "yes": 7087,
                 "no": 1568
             },
             "percentages": {
-                "yes": 81.89,
-                "no": 18.11
+                "yes": 81.88,
+                "no": 18.12
             },
             "trends": {
                 "2013-11-06": {
@@ -361,14 +361,14 @@
             "winner": "yes"
         },
         "Array end comma": {
-            "total": 117,
+            "total": 116,
             "values": {
                 "no": 99,
-                "yes": 18
+                "yes": 17
             },
             "percentages": {
-                "no": 84.62,
-                "yes": 15.38
+                "no": 85.34,
+                "yes": 14.66
             },
             "trends": {
                 "2013-11-06": {
@@ -541,10 +541,10 @@
             "winner": "no"
         },
         "Line length": {
-            "total": 79478,
+            "total": 79491,
             "values": {
-                "80 or less": 73854,
-                "81-120": 5149,
+                "80 or less": 73866,
+                "81-120": 5150,
                 "121-150": 408,
                 "151 or more": 67
             },
@@ -673,9 +673,9 @@
             "winner": "80 or less"
         },
         "Spacing after string concat": {
-            "total": 3123,
+            "total": 3124,
             "values": {
-                "1": 3069,
+                "1": 3070,
                 "newline": 54
             },
             "percentages": {
@@ -1123,9 +1123,9 @@
             "winner": "yes"
         },
         "Spaces after control structure open parenthesis": {
-            "total": 7338,
+            "total": 7339,
             "values": {
-                "0": 7306,
+                "0": 7307,
                 "newline": 32
             },
             "percentages": {
@@ -1412,9 +1412,9 @@
             "winner": 0
         },
         "Space before operator": {
-            "total": 3822,
+            "total": 3825,
             "values": {
-                "1": 3820,
+                "1": 3823,
                 "newline": 2
             },
             "percentages": {
@@ -1502,9 +1502,9 @@
             "winner": 1
         },
         "Space after operator": {
-            "total": 20637,
+            "total": 20640,
             "values": {
-                "1": 20630,
+                "1": 20633,
                 "newline": 7
             },
             "percentages": {
@@ -1730,9 +1730,9 @@
             "winner": "no"
         },
         "PHP constant case": {
-            "total": 4665,
+            "total": 4670,
             "values": {
-                "lower": 4665
+                "lower": 4670
             },
             "percentages": {
                 "lower": 100
@@ -1799,9 +1799,9 @@
             "winner": "lower"
         },
         "PHP keyword case": {
-            "total": 27594,
+            "total": 27592,
             "values": {
-                "lower": 27594
+                "lower": 27592
             },
             "percentages": {
                 "lower": 100
@@ -2178,9 +2178,9 @@
             "winner": "yes"
         },
         "Multiple statements on same line": {
-            "total": 18575,
+            "total": 18574,
             "values": {
-                "no": 18575
+                "no": 18574
             },
             "percentages": {
                 "no": 100
@@ -2385,9 +2385,9 @@
             "winner": "no"
         },
         "Spacing before string concat": {
-            "total": 3123,
+            "total": 3124,
             "values": {
-                "1": 3123
+                "1": 3124
             },
             "percentages": {
                 "1": 100
@@ -2523,9 +2523,9 @@
             "winner": "same line"
         },
         "Line indent": {
-            "total": 43523,
+            "total": 43527,
             "values": {
-                "tabs": 43523
+                "tabs": 43527
             },
             "percentages": {
                 "tabs": 100
@@ -2937,9 +2937,9 @@
             "winner": "elseif"
         },
         "Array keyword case": {
-            "total": 3583,
+            "total": 3582,
             "values": {
-                "lower": 3583
+                "lower": 3582
             },
             "percentages": {
                 "lower": 100
@@ -3075,9 +3075,9 @@
             "winner": "no"
         },
         "Spaces before control structure close parenthesis": {
-            "total": 7338,
+            "total": 7339,
             "values": {
-                "0": 7338
+                "0": 7339
             },
             "percentages": {
                 "0": 100
@@ -3146,6 +3146,6 @@
     },
     "project": {
         "path": "cakephp\/cakephp",
-        "commitid": "8c81cec904653ab758b890d56fb915a583292b00"
+        "commitid": "a801be30d9ed2af8ebe5818afb6eaf1c2d2a01b8"
     }
 }

@@ -3,14 +3,14 @@
         "Number of newlines at EOF": {
             "total": 1505,
             "values": {
-                "0": 868,
-                "1": 471,
+                "0": 869,
+                "1": 470,
                 "2": 122,
                 "3": 44
             },
             "percentages": {
-                "0": 57.67,
-                "1": 31.3,
+                "0": 57.74,
+                "1": 31.23,
                 "2": 8.11,
                 "3": 2.92
             },
@@ -230,12 +230,12 @@
         "Control structure defined inline": {
             "total": 18599,
             "values": {
-                "yes": 12015,
-                "no": 6584
+                "yes": 12013,
+                "no": 6586
             },
             "percentages": {
-                "yes": 64.6,
-                "no": 35.4
+                "yes": 64.59,
+                "no": 35.41
             },
             "trends": {
                 "2013-11-06": {
@@ -318,14 +318,14 @@
             "winner": "yes"
         },
         "Adjacent assignments aligned": {
-            "total": 17185,
+            "total": 17188,
             "values": {
-                "yes": 11780,
-                "no": 5405
+                "yes": 11779,
+                "no": 5409
             },
             "percentages": {
-                "yes": 68.55,
-                "no": 31.45
+                "yes": 68.53,
+                "no": 31.47
             },
             "trends": {
                 "2013-11-06": {
@@ -1038,11 +1038,11 @@
             "winner": "no"
         },
         "Line length": {
-            "total": 213524,
+            "total": 213547,
             "values": {
-                "80 or less": 194180,
-                "81-120": 14009,
-                "121-150": 3034,
+                "80 or less": 194198,
+                "81-120": 14013,
+                "121-150": 3035,
                 "151 or more": 2301
             },
             "percentages": {
@@ -1170,9 +1170,9 @@
             "winner": "80 or less"
         },
         "Line indent": {
-            "total": 143632,
+            "total": 143655,
             "values": {
-                "tabs": 133206,
+                "tabs": 133229,
                 "spaces": 10426
             },
             "percentages": {
@@ -1440,16 +1440,16 @@
             "winner": "yes"
         },
         "Space before operator": {
-            "total": 12236,
+            "total": 12239,
             "values": {
-                "1": 11677,
+                "1": 11680,
                 "0": 517,
                 "newline": 36,
                 "2": 6
             },
             "percentages": {
                 "1": 95.43,
-                "0": 4.23,
+                "0": 4.22,
                 "newline": 0.29,
                 "2": 0.05
             },
@@ -1576,9 +1576,9 @@
             "winner": 1
         },
         "Space after operator": {
-            "total": 72921,
+            "total": 72944,
             "values": {
-                "1": 70584,
+                "1": 70607,
                 "newline": 808,
                 "0": 440,
                 "2": 344,
@@ -2483,9 +2483,9 @@
             "winner": "new line"
         },
         "PHP constant case": {
-            "total": 11831,
+            "total": 11835,
             "values": {
-                "lower": 11756,
+                "lower": 11760,
                 "upper": 75
             },
             "percentages": {
@@ -2663,9 +2663,9 @@
             "winner": "no"
         },
         "PHP keyword case": {
-            "total": 67533,
+            "total": 67537,
             "values": {
-                "lower": 67367,
+                "lower": 67371,
                 "upper": 150,
                 "mixed": 16
             },
@@ -2988,9 +2988,9 @@
             "winner": 0
         },
         "Multiple statements on same line": {
-            "total": 55794,
+            "total": 55806,
             "values": {
-                "no": 55743,
+                "no": 55755,
                 "yes": 51
             },
             "percentages": {
@@ -3078,9 +3078,9 @@
             "winner": "no"
         },
         "Spacing before object operator": {
-            "total": 50420,
+            "total": 50430,
             "values": {
-                "0": 50381,
+                "0": 50391,
                 "newline": 34,
                 "1": 5
             },
@@ -3176,9 +3176,9 @@
             "winner": 0
         },
         "Spacing after cast statement": {
-            "total": 8506,
+            "total": 8507,
             "values": {
-                "0": 8500,
+                "0": 8501,
                 "1": 6
             },
             "percentages": {
@@ -3266,9 +3266,9 @@
             "winner": 0
         },
         "Array keyword case": {
-            "total": 11157,
+            "total": 11160,
             "values": {
-                "lower": 11155,
+                "lower": 11158,
                 "mixed": 2
             },
             "percentages": {
@@ -3356,9 +3356,9 @@
             "winner": "lower"
         },
         "Spacing after object operator": {
-            "total": 50420,
+            "total": 50430,
             "values": {
-                "0": 50415,
+                "0": 50425,
                 "1": 5
             },
             "percentages": {
@@ -3852,6 +3852,6 @@
     },
     "project": {
         "path": "PrestaShop\/PrestaShop",
-        "commitid": "5139c4126db04e98e28565a133e90cfee6b737c7"
+        "commitid": "f79eb7cc75acf2c8a898b416dbac204e8d5dfe36"
     }
 }
