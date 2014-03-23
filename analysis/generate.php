@@ -240,8 +240,11 @@ foreach ($resultFiles as $file) {
             continue;
         }
 
-        //$js  = rtrim($js, ',');
-        $js .= '"'.date('d-M').'"';
+        if (strtotime($today) === $time) {
+            $js  = rtrim($js, ',');
+        } else {
+            $js .= '"'.date('d-M', strtotime($today)).'"';
+        }
 
         $trendData = rtrim($trendData, ',');
         $js       .= "],datasets:[$trendData]};".PHP_EOL;
@@ -510,8 +513,11 @@ foreach ($totals as $metric => $data) {
         continue;
     }
 
-    //$js  = rtrim($js, ',');
-    $js .= '"'.date('d-M').'"';
+    if (strtotime($today) === $time) {
+        $js  = rtrim($js, ',');
+    } else {
+        $js .= '"'.date('d-M', strtotime($today)).'"';
+    }
 
     $trendData = rtrim($trendData, ',');
     $js       .= "],datasets:[$trendData]};".PHP_EOL;
