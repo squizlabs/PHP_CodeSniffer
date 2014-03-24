@@ -745,10 +745,8 @@ class PHP_CodeSniffer_CLI
             return array($standard);
         }
 
-        $cleaned = array();
-        if (is_array($standards) === false) {
-            $standards = array($standards);
-        }
+        $cleaned   = array();
+        $standards = (array) $standards;
 
         // Check if the standard name is valid, or if the case is invalid.
         $installedStandards = PHP_CodeSniffer::getInstalledStandards();
