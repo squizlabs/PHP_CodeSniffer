@@ -124,10 +124,15 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         $scopeSpecified = $methodProps['scope_specified'];
 
         // If it's a private method, it must have an underscore on the front.
-        if ($isPublic === false && $methodName{0} !== '_') {
-            $error = 'Private method name "%s" must be prefixed with an underscore';
-            $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
-            return;
+        if ($isPublic === false) {
+            if ($methodName{0} !== '_') {
+                $error = 'Private method name "%s" must be prefixed with an underscore';
+                $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
+                $phpcsFile->recordMetric($stackPtr, 'Private method prefixed with underscore', 'no');
+                return;
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Private method prefixed with underscore', 'yes');
+            }
         }
 
         // If it's not a private method, it must not have an underscore on the front.
