@@ -2004,7 +2004,7 @@ class PHP_CodeSniffer
 
         foreach ($installedPaths as $installedPath) {
             $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
-            $path = self::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
+            $path         = self::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
             if (is_file($path) === true) {
                 return $path;
             } else if (self::isPharFile($standardPath) === true) {
@@ -2186,7 +2186,9 @@ class PHP_CodeSniffer
 
 
     /**
-     * realpath CodeSniffer style.
+     * CodeSniffer alternative for realpath.
+     *
+     * Allows for phar support.
      *
      * @param string $path The path to use.
      *
@@ -2220,7 +2222,9 @@ class PHP_CodeSniffer
 
 
     /**
-     * chdir() CodeSniffer style.
+     * CodeSniffer alternative for chdir().
+     *
+     * Allows for phar support.
      *
      * @param string $path The path to use.
      *

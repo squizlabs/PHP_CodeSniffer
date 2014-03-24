@@ -135,25 +135,29 @@ class PHP_CodeSniffer_Fixer
             ob_start();
             // Only needed once file content has changed.
             $contents = $this->getContents();
+
             /*
-            @ob_end_clean();
-            $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
-            $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $debugContent);
-            $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
-            echo $debugContent;
+                Useful for debugging fixed contents.
+                @ob_end_clean();
+                $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
+                $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $debugContent);
+                $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
+                echo $debugContent;
             */
 
             $this->_currentFile->refreshTokenListeners();
             $this->_currentFile->start($contents);
             ob_end_clean();
+
             /*
-            Possibly useful as a fail-safe, but may mask problems with the actual
-            fixes being performed.
-            $newContents = $this->getContents();
-            if ($newContents === $contents) {
-                break;
-            }
+                Possibly useful as a fail-safe, but may mask problems with the actual
+                fixes being performed.
+                $newContents = $this->getContents();
+                if ($newContents === $contents) {
+                    break;
+                }
             */
+
             $loops++;
 
             if ($this->_numFixes === 0) {

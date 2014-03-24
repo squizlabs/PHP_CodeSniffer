@@ -423,8 +423,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      */
     public function processAdditional(&$tokens, $eolChar)
     {
-        // We override this method because we don't want the PHP version to
-        // run during CSS processing because it is wasted processing time.
+        /*
+            We override this method because we don't want the PHP version to
+            run during CSS processing because it is wasted processing time.
+        */
 
     }//end processAdditional()
 

@@ -84,7 +84,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_OPEN_TAG) {
-
             /*
                 Check for start of file whitespace.
             */
@@ -132,7 +131,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
         } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
-
             /*
                 Check for end of file whitespace.
             */
@@ -194,7 +192,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 $phpcsFile->fixer->endChangeset();
             }
         } else {
-
             /*
                 Check for end of line whitespace.
             */

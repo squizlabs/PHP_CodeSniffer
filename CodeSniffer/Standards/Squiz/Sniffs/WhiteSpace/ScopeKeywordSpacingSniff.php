@@ -70,7 +70,7 @@ class Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff implements PHP_CodeSniffe
         }
 
         if ($tokens[$prevToken]['code'] === T_AS) {
-            // Trait visibilty change, e.g., use HelloWorld { sayHello as private; }
+            // Trait visibilty change, e.g., "use HelloWorld { sayHello as private; }".
             return;
         }
 

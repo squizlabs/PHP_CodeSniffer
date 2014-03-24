@@ -97,7 +97,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
         $currPos     = $stackPtr;
         if ($currScopeEnd !== 0) {
             while ($currPos < $currScopeEnd && $currPos !== false) {
-
                 /*
                     If we can't find a NEW, we are probably throwing
                     a variable, so we ignore it, but they still need to

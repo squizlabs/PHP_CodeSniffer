@@ -135,7 +135,9 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
      */
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariable()
 
@@ -150,7 +152,9 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
      */
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariableInString()
 

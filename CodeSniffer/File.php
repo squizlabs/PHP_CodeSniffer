@@ -1401,7 +1401,6 @@ class PHP_CodeSniffer_File
         $eolLen     = (strlen($eolChar) * -1);
 
         for ($i = 0; $i < $numTokens; $i++) {
-
             /*
                 Column and line values.
             */
