@@ -327,31 +327,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
-                If we are using \r\n newline characters, the \r and \n are sometimes
-                split over two tokens. This normally occurs after comments. We need
-                to merge these two characters together so that our line endings are
-                consistent for all lines.
-            */
-
-            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
-                if (isset($tokens[($stackPtr + 1)]) === true
-                    && is_array($tokens[($stackPtr + 1)]) === true
-                    && $tokens[($stackPtr + 1)][1][0] === "\n"
-                ) {
-                    echo "FOUND \r\n PROBLEM\n";
-                    $tokens[($stackPtr - 1)] .= "\n";
-
-                    if ($token[1] === "\n") {
-                        // This token's content has been merged into the previous,
-                        // so we can skip it.
-                        continue;
-                    } else {
-                        $token[1] = substr($token[1], 1);
-                    }
-                }
-            }//end if
-
-            /*
                 Parse doc blocks into something that can be easily iterated over.
             */
 
