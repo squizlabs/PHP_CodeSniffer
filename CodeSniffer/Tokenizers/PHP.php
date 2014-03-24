@@ -308,7 +308,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 } else {
                     $newToken = self::resolveSimpleToken($token[0]);
                     $type     = $newToken['type'];
-                    $content  = $token;
+                    $content  = $token[0];
                 }
 
                 $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
