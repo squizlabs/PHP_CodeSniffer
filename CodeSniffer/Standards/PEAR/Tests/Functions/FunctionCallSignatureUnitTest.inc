@@ -1,5 +1,5 @@
-<?php
-
+<?php test(
+);
 test();
 test($arg, $arg2);
 test ();
