@@ -520,7 +520,10 @@ class PHP_CodeSniffer_File
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
                 $content = str_replace($this->eolChar, '\n', $token['content']);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -1596,6 +1599,10 @@ class PHP_CodeSniffer_File
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $numTokens = count($tokens);
@@ -1603,9 +1610,14 @@ class PHP_CodeSniffer_File
             // Check to see if the current token starts a new scope.
             if (isset($tokenizer->scopeOpeners[$tokens[$i]['code']]) === true) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $type    = $tokens[$i]['type'];
-                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
-                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                    $type = $tokens[$i]['type'];
+                    if ($isWin === true) {
+                        $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                    } else {
+                        $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                    }
+
                     echo "\tStart scope map at $i:$type => $content".PHP_EOL;
                 }
 
@@ -1649,6 +1661,14 @@ class PHP_CodeSniffer_File
         $depth=1,
         &$ignore=0
     ) {
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** START SCOPE MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
+        }
+
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
@@ -1669,8 +1689,13 @@ class PHP_CodeSniffer_File
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
-                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo str_repeat("\t", $depth);
                 echo "Process token $i [";
                 if ($opener !== null) {
@@ -1993,6 +2018,10 @@ class PHP_CodeSniffer_File
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START LEVEL MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $numTokens  = count($tokens);
@@ -2003,10 +2032,15 @@ class PHP_CodeSniffer_File
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $type    = $tokens[$i]['type'];
-                $line    = $tokens[$i]['line'];
-                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                $type = $tokens[$i]['type'];
+                $line = $tokens[$i]['line'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo str_repeat("\t", ($level + 1));
                 echo "Process token $i on line $line [lvl:$level;";
                 if (empty($conditions) !== true) {

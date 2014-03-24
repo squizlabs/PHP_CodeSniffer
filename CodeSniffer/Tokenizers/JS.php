@@ -257,6 +257,10 @@ class PHP_CodeSniffer_Tokenizers_JS
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START JS TOKENIZING ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $maxTokenLength = 0;
@@ -290,10 +294,16 @@ class PHP_CodeSniffer_Tokenizers_JS
             $char = $chars[$i];
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content       = str_replace("\n", "\033[30;1m\\n\033[0m", $char);
-                $content       = str_replace(' ', "\033[30;1m·\033[0m", $content);
-                $bufferContent = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
-                $bufferContent = str_replace(' ', "\033[30;1m·\033[0m", $bufferContent);
+                if ($isWin === true) {
+                    $content       = str_replace("\n", '\n', $char);
+                    $bufferContent = str_replace("\n", '\n', $buffer);
+                } else {
+                    $content       = str_replace("\n", "\033[30;1m\\n\033[0m", $char);
+                    $content       = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                    $bufferContent = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
+                    $bufferContent = str_replace(' ', "\033[30;1m·\033[0m", $bufferContent);
+                }
+
                 if ($inString !== '') {
                     echo "\t";
                 }
@@ -316,8 +326,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $buffer);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
                     }
 
@@ -338,8 +353,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $buffer);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
 
@@ -372,8 +392,13 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* found end of string *".PHP_EOL;
-                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer.$char);
-                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            if ($isWin === true) {
+                                $content = str_replace("\n", '\n', $buffer.$char);
+                            } else {
+                                $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer.$char);
+                                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            }
+
                             echo "\t=> Added token T_CONSTANT_ENCAPSED_STRING ($content)".PHP_EOL;
                         }
 
@@ -440,8 +465,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $regex['content']);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $regex['content']);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $regex['content']);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token T_REGULAR_EXPRESSION ($content)".PHP_EOL;
                     }
 
@@ -480,8 +510,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $charBuffer .= $chars[($i + $x)];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $charBuffer);
-                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            if ($isWin === true) {
+                                $content = str_replace("\n", '\n', $charBuffer);
+                            } else {
+                                $content = str_replace("\n", "\033[30;1m\\n\033[0m", $charBuffer);
+                                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            }
+
                             echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
 
@@ -524,8 +559,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $buffer);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token $value ($content)".PHP_EOL;
                     }
 
@@ -544,8 +584,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", substr($buffer, 0, -1));
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', substr($buffer, 0, -1));
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", substr($buffer, 0, -1));
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
                 }
@@ -567,8 +612,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $charBuffer .= $chars[($i + $x)];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $charBuffer);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $charBuffer);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $charBuffer);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                     }
 
@@ -595,8 +645,13 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $char);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $char);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $char);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token $value ($content)".PHP_EOL;
                     }
 
@@ -616,9 +671,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $lastToken   = array_pop($tokens);
                     $lastContent = $lastToken['content'];
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $value   = $this->tokenValues[strtolower($lastContent)];
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $lastContent);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        $value = $this->tokenValues[strtolower($lastContent)];
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $lastContent);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $lastContent);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
                         echo "\t=> Removed token $value ($content)".PHP_EOL;
                     }
 
@@ -634,8 +693,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                     );
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $lastChar);
-                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            if ($isWin === true) {
+                                $content = str_replace("\n", '\n', $lastChar);
+                            } else {
+                                $content = str_replace("\n", "\033[30;1m\\n\033[0m", $lastChar);
+                                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                            }
+
                             echo "\t=> Added token $value ($content)".PHP_EOL;
                         }
                     }
@@ -673,8 +737,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                                 );
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
-                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        if ($isWin === true) {
+                            $content = str_replace("\n", '\n', $buffer);
+                        } else {
+                            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $buffer);
+                            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                        }
+
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
 
@@ -696,8 +765,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                         );
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $buffer);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $buffer);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $buffer);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
             }
         }
@@ -997,6 +1071,10 @@ class PHP_CodeSniffer_Tokenizers_JS
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $numTokens  = count($tokens);
@@ -1004,9 +1082,14 @@ class PHP_CodeSniffer_Tokenizers_JS
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $type    = $tokens[$i]['type'];
-                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                $type = $tokens[$i]['type'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo str_repeat("\t", count($classStack));
 
                 echo "\tProcess token $i: $type => $content".PHP_EOL;

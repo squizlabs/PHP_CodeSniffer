@@ -45,6 +45,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         // If the content doesn't have an EOL char on the end, add one so
@@ -79,9 +83,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $type    = $token['type'];
-                $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token['content']);
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                $type = $token['type'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $token['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -110,8 +119,13 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t\t=> Found premature closing tag at $stackPtr".PHP_EOL;
-                    $cleanContent = str_replace($eolChar, "\033[30;1m\\n\033[0m", $content);
-                    $cleanContent = str_replace(' ', "\033[30;1m·\033[0m", $cleanContent);
+                    if ($isWin === true) {
+                        $cleanContent = str_replace($eolChar, '\n', $content);
+                    } else {
+                        $cleanContent = str_replace($eolChar, "\033[30;1m\\n\033[0m", $content);
+                        $cleanContent = str_replace(' ', "\033[30;1m·\033[0m", $cleanContent);
+                    }
+
                     echo "\t\tcontent: $cleanContent".PHP_EOL;
                     $oldNumTokens = $numTokens;
                 }

@@ -285,6 +285,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START PHP TOKENIZING ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $tokens      = @token_get_all($string);
@@ -303,15 +307,22 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 if ($tokenIsArray === true) {
-                    $type    = token_name($token[0]);
-                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
+                    $type = token_name($token[0]);
+                    if ($isWin === true) {
+                        $content = str_replace($eolChar, '\n', $token[1]);
+                    } else {
+                        $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
+                    }
                 } else {
                     $newToken = self::resolveSimpleToken($token[0]);
                     $type     = $newToken['type'];
                     $content  = $token[0];
                 }
 
-                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                if ($isWin === false) {
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -322,11 +333,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 consistent for all lines.
             */
 
-            if ($tokenIsArray === true && $token[1][0] === "\n") {
-                if (isset($tokens[($stackPtr - 1)]) === true
-                    && is_array($tokens[($stackPtr - 1)]) === true
-                    && substr($tokens[($stackPtr - 1)][1], -1) === "\r"
+            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
+                if (isset($tokens[($stackPtr + 1)]) === true
+                    && is_array($tokens[($stackPtr + 1)]) === true
+                    && $tokens[($stackPtr + 1)][1][0] === "\n"
                 ) {
+                    echo "FOUND \r\n PROBLEM\n";
                     $tokens[($stackPtr - 1)] .= "\n";
 
                     if ($token[1] === "\n") {
