@@ -125,10 +125,10 @@ class PHP_CodeSniffer_Reporting
 
     /**
      * Actually generates the report.
-     * 
+     *
      * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
      * @param array                $cliValues An array of command line arguments.
-     * 
+     *
      * @return void
      */
     public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
@@ -186,12 +186,12 @@ class PHP_CodeSniffer_Reporting
 
     /**
      * Actually generates the report.
-     * 
+     *
      * @param string  $report      Report type.
      * @param boolean $showSources Show sources?
      * @param string  $reportFile  Report file to generate.
      * @param integer $reportWidth Report max width.
-     * 
+     *
      * @return integer
      */
     public function printReport(
