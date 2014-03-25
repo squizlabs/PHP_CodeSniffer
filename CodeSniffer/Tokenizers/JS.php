@@ -313,7 +313,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 }
 
                 echo "\tProcess char $i => $content (buffer: $bufferContent)".PHP_EOL;
-            }
+            }//end if
 
             if ($inString === '' && $inComment === '' && $buffer !== '') {
                 // If the buffer only has whitespace and we are about to
@@ -479,7 +479,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $buffer      = '';
                     $cleanBuffer = false;
                     continue;
-                }
+                }//end if
             }//end if
 
             // Check for known tokens, but ignore tokens found that are not at
@@ -658,7 +658,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     $cleanBuffer = true;
                 } else {
                     $buffer = $char;
-                }
+                }//end if
             }//end if
 
             // Keep track of content inside comments.

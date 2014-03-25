@@ -1628,7 +1628,7 @@ class PHP_CodeSniffer_File
                     $eolChar,
                     $i
                 );
-            }
+            }//end if
         }//end for
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1688,7 +1688,7 @@ class PHP_CodeSniffer_File
             $tokenType = $tokens[$i]['code'];
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $type    = $tokens[$i]['type'];
+                $type = $tokens[$i]['type'];
                 if ($isWin === true) {
                     $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
                 } else {
@@ -1707,7 +1707,7 @@ class PHP_CodeSniffer_File
                 }
 
                 echo "]: $type => $content".PHP_EOL;
-            }
+            }//end if
 
             // Very special case for IF statements in PHP that can be defined without
             // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
@@ -2053,7 +2053,7 @@ class PHP_CodeSniffer_File
                 }
 
                 echo "]: $type => $content".PHP_EOL;
-            }
+            }//end if
 
             $tokens[$i]['level']      = $level;
             $tokens[$i]['conditions'] = $conditions;
