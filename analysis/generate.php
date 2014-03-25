@@ -29,7 +29,7 @@ if (empty($filterRepos) === true) {
     $repoCount = count($filterRepos);
 }
 
-$repoNum   = 0;
+$repoNum = 0;
 foreach ($repos as $repo) {
     if (empty($filterRepos) === false && in_array($repo->url, $filterRepos) === false) {
         continue;
@@ -181,7 +181,7 @@ foreach ($resultFiles as $file) {
                         continue;
                     }
 
-                    $score = round(($trendCount / $trendTotal * 100), 2);
+                    $score      = round(($trendCount / $trendTotal * 100), 2);
                     $trendData .= $score.',';
                     $addedValue = true;
                     if ((int) $score !== 100) {
@@ -195,7 +195,7 @@ foreach ($resultFiles as $file) {
                     // Percentage must have been 0 as no values recorded.
                     $trendData .= '0.00,';
                 }
-            }
+            }//end foreach
 
             if ($date !== $today) {
                 $trendData .= $percent.',';
@@ -224,14 +224,14 @@ foreach ($resultFiles as $file) {
         $js .= 'var c = document.getElementById("chart'.$chartNum.'").getContext("2d");'.PHP_EOL;
         $js .= 'new Chart(c).Doughnut(data,valOptions);'.PHP_EOL;
 
-        $js .= 'var data = {labels:[';
+        $js      .= 'var data = {labels:[';
         $numDates = count($data['trends']);
         $dateStep = ceil($numDates / 4);
         $dateNum  = 1;
         foreach (array_keys($data['trends']) as $date) {
             //if ($dateNum === 1 || $dateNum === $numDates || $dateNum % $dateStep === 0) {
                 $time = strtotime($date);
-                $js .= '"'.date('d-M', $time).'",';
+                $js  .= '"'.date('d-M', $time).'",';
             //} else {
             //    $js .= '"",';
             //}
@@ -241,7 +241,7 @@ foreach ($resultFiles as $file) {
         }
 
         if (strtotime($today) === $time) {
-            $js  = rtrim($js, ',');
+            $js = rtrim($js, ',');
         } else {
             $js .= '"'.date('d-M', strtotime($today)).'"';
         }
@@ -454,7 +454,7 @@ foreach ($totals as $metric => $data) {
                     continue;
                 }
 
-                $score = round(($trendCount / $trendTotal * 100), 2);
+                $score      = round(($trendCount / $trendTotal * 100), 2);
                 $trendData .= $score.',';
                 if ((int) $score !== 100) {
                     $perfectScore = false;
@@ -497,14 +497,14 @@ foreach ($totals as $metric => $data) {
     $js .= 'var c = document.getElementById("chart'.$chartNum.'r").getContext("2d");'.PHP_EOL;
     $js .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
 
-    $js .= 'var data = {labels:[';
+    $js      .= 'var data = {labels:[';
     $numDates = count($data['trends']);
     $dateStep = ceil($numDates / 4);
     $dateNum  = 1;
     foreach (array_keys($data['trends']) as $date) {
         //if ($dateNum === 1 || $dateNum === $numDates || $dateNum % $dateStep === 0) {
             $time = strtotime($date);
-            $js .= '"'.date('d-M', $time).'",';
+            $js  .= '"'.date('d-M', $time).'",';
         //} else {
         //    $js .= '"",';
         //}
@@ -514,7 +514,7 @@ foreach ($totals as $metric => $data) {
     }
 
     if (strtotime($today) === $time) {
-        $js  = rtrim($js, ',');
+        $js = rtrim($js, ',');
     } else {
         $js .= '"'.date('d-M', strtotime($today)).'"';
     }

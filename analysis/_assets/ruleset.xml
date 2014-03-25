@@ -19,6 +19,8 @@
  <rule ref="PEAR.Commenting.ClassComment"/>
  <rule ref="PEAR.Commenting.FileComment"/>
  <rule ref="PEAR.Commenting.FunctionComment"/>
+ <rule ref="PEAR.Commenting.InlineComment"/>
+ <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
  <rule ref="PSR1.Classes.ClassDeclaration"/>
  <rule ref="PSR1.Files.SideEffects"/>
  <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>

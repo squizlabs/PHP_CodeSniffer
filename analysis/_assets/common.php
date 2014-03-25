@@ -10,7 +10,8 @@ function getRepoDirs($repo)
     $dirs['clone'] = $dirs['repo'].'/src';
 
     return $dirs;
-}
+}//end getRepoDirs()
+
 
 function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs=array(), $resultFile=null)
 {
@@ -81,16 +82,17 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
     } else {
         echo "\t* skipping respository update step *".PHP_EOL;
-    }
+    }//end if
 
     if ($runPHPCS === true) {
         $checkDir          = $cloneDir.'/'.$repo->path;
         $infoReportPath    = __DIR__.'/PHPCSInfoReport.php';
         $summaryReportPath = __DIR__.'/PHPCSSummaryReport.php';
-        $cmd        = 'phpcs -d memory_limit=256M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml --extensions=php,inc';
-        $cmd       .= ' --ignore=*/tests/*,'.$repo->ignore;
-        $cmd       .= ' --runtime-set project '.$repo->url;
-        $cmd       .= " --report=$summaryReportPath --report-$infoReportPath=$resultFile";
+        $cmd  = 'phpcs -d memory_limit=256M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml';
+        $cmd .= ' --extensions=php,inc,'.$repo->extensions;
+        $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
+        $cmd .= ' --runtime-set project '.$repo->url;
+        $cmd .= " --report=$summaryReportPath --report-$infoReportPath=$resultFile";
 
         if (empty($sniffs) === false) {
             $cmd .= ' --sniffs='.implode(',', $sniffs);
@@ -105,7 +107,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
     } else {
         echo "\t* skipping PHP_CodeSniffer step *".PHP_EOL.PHP_EOL;
         return $resultFile;
-    }
+    }//end if
 
     if ($prevTotals !== null) {
         // Copy old trend data into the new result set.

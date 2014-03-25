@@ -3,372 +3,434 @@
         "name": "PHP_CodeSniffer",
         "url": "squizlabs/PHP_CodeSniffer",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PHPUnit",
         "url": "sebastianbergmann/phpunit",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PHP_CodeCoverage",
         "url": "sebastianbergmann/php-code-coverage",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Symfony2",
         "url": "symfony/symfony",
         "path": "src/Symfony",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Laravel Framework (Kernel)",
         "url": "laravel/framework",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Yii PHP Framework Version 2",
         "url": "yiisoft/yii2",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Guzzle",
         "url": "guzzle/guzzle",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Twig",
         "url": "fabpot/Twig",
         "path": "lib/Twig",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "CodeIgniter",
         "url": "EllisLab/CodeIgniter",
         "path": "system",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Piwik",
         "url": "piwik/piwik",
         "path": "",
-        "ignore": "libs/*"
+        "ignore": "libs/*",
+        "extensions": ""
     },
     {
         "name": "Slim Framework",
         "url": "codeguy/Slim",
         "path": "Slim",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PHPMailer",
         "url": "PHPMailer/PHPMailer",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Mockery",
         "url": "padraic/mockery",
         "path": "library",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Joomla! CMS",
         "url": "joomla/joomla-cms",
         "path": "",
-        "ignore": "*/simplepie.php"
+        "ignore": "*/simplepie.php",
+        "extensions": ""
     },
     {
         "name": "Composer",
         "url": "composer/composer",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "CakePHP",
         "url": "cakephp/cakephp",
         "path": "",
-        "ignore": "lib/Cake/Test/*,lib/Cake/Config/*"
+        "ignore": "lib/Cake/Test/*,lib/Cake/Config/*",
+        "extensions": ""
     },
     {
         "name": "Google APIs Client Library",
         "url": "google/google-api-php-client",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "AWS SDK for PHP",
         "url": "aws/aws-sdk-php",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Monolog",
         "url": "Seldaek/monolog",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Swift Mailer",
         "url": "swiftmailer/swiftmailer",
         "path": "lib",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Doctrine 2 ORM",
         "url": "doctrine/doctrine2",
         "path": "lib/Doctrine",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Zend Framework",
         "url": "zendframework/zf2",
         "path": "library/Zend",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PyroCMS",
         "url": "pyrocms/pyrocms",
         "path": "",
-        "ignore": "system/codeigniter,system/sparks"
+        "ignore": "system/codeigniter,system/sparks",
+        "extensions": ""
     },
     {
         "name": "WordPress",
         "url": "WordPress/WordPress",
         "path": "wp-admin",
-        "ignore": "*/includes/class-ftp*,*/class-pclzip.php"
+        "ignore": "*/includes/class-ftp*,*/class-pclzip.php",
+        "extensions": ""
     },
     {
         "name": "Drupal",
         "url": "drupal/drupal",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": "module"
     },
     {
         "name": "phpMyAdmin",
         "url": "phpmyadmin/phpmyadmin",
         "path": "",
-        "ignore": "*/test/*,libraries/bfShapeFiles/*,libraries/tcpdf/*,libraries/php-gettext/*,libraries/phpseclib/*"
+        "ignore": "*/test/*,libraries/bfShapeFiles/*,libraries/tcpdf/*,libraries/php-gettext/*,libraries/phpseclib/*",
+        "extensions": ""
     },
     {
         "name": "Jackalope",
         "url": "jackalope/jackalope",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "TYPO3 CMS",
         "url": "TYPO3/TYPO3.CMS",
         "path": "typo3",
-        "ignore": "*/adodb/*"
+        "ignore": "*/adodb/*",
+        "extensions": ""
     },
     {
         "name": "eZ Publish 5.x Kernel",
         "url": "ezsystems/ezpublish-kernel",
         "path": "eZ",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PEAR - The PEAR Installer",
         "url": "pear/pear-core",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Solar Framework",
         "url": "solarphp/core",
         "path": "Solar",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Propel",
         "url": "propelorm/Propel",
         "path": "runtime/lib",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PPI Framework",
         "url": "ppi/framework",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "phpDocumentor",
         "url": "phpDocumentor/phpDocumentor2",
         "path": "src/phpDocumentor",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "phpBB",
         "url": "phpbb/phpbb",
         "path": "phpBB",
-        "ignore": "includes/utf/data/*"
+        "ignore": "includes/utf/data/*",
+        "extensions": ""
     },
     {
         "name": "SabreDAV",
         "url": "fruux/sabre-dav",
         "path": "lib/Sabre",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "SugarCRM CE",
         "url": "sugarcrm/sugarcrm_dev",
         "path": "",
-        "ignore": "include/Smarty/*,include/reCaptcha/*,include/phpmailer/*,include/tcpdf/*,include/pclzip/*,include/nusoap/*,include/javascript/*,include/HTMLPurifier/*,include/HTTP_WebDAV_Server/*,include/Pear/*"
+        "ignore": "include/Smarty/*,include/reCaptcha/*,include/phpmailer/*,include/tcpdf/*,include/pclzip/*,include/nusoap/*,include/javascript/*,include/HTMLPurifier/*,include/HTTP_WebDAV_Server/*,include/Pear/*",
+        "extensions": ""
     },
     {
         "name": "MediaWiki",
         "url": "wikimedia/mediawiki-core",
         "path": "includes",
-        "ignore": "*/ZhConversion.php,*/Installer.i18n.php"
+        "ignore": "*/ZhConversion.php,*/Installer.i18n.php",
+        "extensions": ""
     },
     {
         "name": "Zikula",
         "url": "zikula/core",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Stash",
         "url": "tedivm/Stash",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Sculpin",
         "url": "sculpin/sculpin",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Assetic",
         "url": "kriswallsmith/assetic",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Buzz",
         "url": "kriswallsmith/Buzz",
         "path": "lib",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Contao Open Source CMS",
         "url": "contao/core",
         "path": "system",
-        "ignore": "*/tcpdf/*"
+        "ignore": "*/tcpdf/*",
+        "extensions": ""
     },
     {
         "name": "Facebook PHP SDK",
         "url": "facebook/facebook-php-sdk",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Klein.php",
         "url": "chriso/klein.php",
         "path": "src/Klein",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Magento",
         "url": "magento/magento2",
         "path": "app/code/Magento",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Ratchet",
         "url": "cboden/Ratchet",
         "path": "src/Ratchet",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "React",
         "url": "reactphp/react",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "SilverStripe Framework",
         "url": "silverstripe/silverstripe-framework",
         "path": "",
-        "ignore": "*/thirdparty/*"
+        "ignore": "*/thirdparty/*",
+        "extensions": ""
     },
     {
         "name": "Faker",
         "url": "fzaninotto/Faker",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "lessphp",
         "url": "leafo/lessphp",
         "path": "",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Mustache.php",
         "url": "bobthecow/mustache.php",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Imagine",
         "url": "avalanche123/Imagine",
         "path": "lib",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "Anchor CMS",
         "url": "anchorcms/anchor-cms",
         "path": "anchor",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "ThinkUp",
         "url": "ginatrapani/ThinkUp",
         "path": "",
-        "ignore": "webapp/_lib/extlib/*"
+        "ignore": "webapp/_lib/extlib/*",
+        "extensions": ""
     },
     {
         "name": "Silex",
         "url": "silexphp/Silex",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "PHPExcel",
         "url": "PHPOffice/PHPExcel",
         "path": "Classes",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     },
     {
         "name": "ownCloud",
         "url": "owncloud/core",
         "path": "",
-        "ignore": "3rdparty/*"
+        "ignore": "3rdparty/*",
+        "extensions": ""
     },
     {
         "name": "Moodle",
         "url": "moodle/moodle",
         "path": "",
-        "ignore": "*/lang/*,*/lib/*"
+        "ignore": "*/lang/*,*/lib/*",
+        "extensions": ""
     },
     {
         "name": "PrestaShop",
         "url": "PrestaShop/PrestaShop",
         "path": "",
-        "ignore": "*/tools/*"
+        "ignore": "*/tools/*",
+        "extensions": ""
     },
     {
         "name": "Flysystem",
         "url": "thephpleague/flysystem",
         "path": "src",
-        "ignore": ""
+        "ignore": "",
+        "extensions": ""
     }
 ]

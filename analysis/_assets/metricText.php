@@ -157,4 +157,12 @@ $metricText = array(
                                                                        'description' => 'Does each function have a docblock comment to describe its purpose?',
                                                                        'items'       => 'functions',
                                                                       ),
+               'Private method prefixed with underscore'           => array(
+                                                                       'description' => 'Are private methods prefixed with an underscore?',
+                                                                       'items'       => 'private methods',
+                                                                      ),
+               'Inline comment style'                              => array(
+                                                                       'description' => 'What comment style is used for non docblock comments?',
+                                                                       'items'       => 'comments',
+                                                                      ),
               );
