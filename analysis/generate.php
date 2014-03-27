@@ -277,7 +277,7 @@ foreach ($resultFiles as $file) {
     $output = str_replace('((js))', $js, $output);
     $output = str_replace('((assetPath))', '../../', $output);
     file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
-    file_put_contents($file, json_encode($results, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
+    file_put_contents($file, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
 
 }//end foreach
 
@@ -329,7 +329,7 @@ foreach ($totals as $metric => $data) {
     }
 }
 
-file_put_contents($filename, json_encode($totals, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
+file_put_contents($filename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
 
 $html = '';
 $js   = 'var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};'.PHP_EOL;
