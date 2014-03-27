@@ -402,7 +402,7 @@ foreach ($totals as $metric => $data) {
             $repoHTML .= "    <p><span onclick=\"document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';\" class=\"close\">[close]</span><strong>$title <em>$value</em></strong></p>".PHP_EOL;
             $repoHTML .= '    <ul>'.PHP_EOL;
 
-            ksort($data['repos'][$value], SORT_STRING | SORT_FLAG_CASE);
+            uksort($data['repos'][$value], 'sortRepos');
             foreach ($data['repos'][$value] as $repo => $percent) {
                 $href      = $repo.'/index.html#'.$metricid;
                 $repoHTML .= "      <a href=\"$href\"><li>$repo <span class=\"repo-percent\">$percent%</span></li></a>".PHP_EOL;

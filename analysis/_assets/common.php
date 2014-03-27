@@ -158,7 +158,17 @@ function sortMetrics($a, $b)
     } else {
         return 1;
     }
+
 }//end sortMetrics()
+
+
+// Comparison function
+function sortRepos($a, $b) 
+{
+    return (strtolower($a) > strtolower($b));
+
+}//end sortRepos()
+
 
 /**
  * jsonpp - Pretty print JSON data
