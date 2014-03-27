@@ -148,7 +148,7 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
                                           'commitid' => $output[0],
                                          );
 
-        echo json_encode($this->_metricCache, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+        echo json_encode($this->_metricCache, JSON_FORCE_OBJECT);
 
     }//end generate()
 
