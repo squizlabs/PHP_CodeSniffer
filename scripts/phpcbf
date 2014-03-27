@@ -15,21 +15,19 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-// Optionally use PHP_Timer to print time/memory stats for the run.
-@include_once 'PHP/Timer.php';
-if (class_exists('PHP_Timer', false) === true) {
-    PHP_Timer::start();
-}
-
 if (defined('PHP_CODESNIFFER_CBF') === false) {
     define('PHP_CODESNIFFER_CBF', true);
 }
 
 if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
+    include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
+    include_once 'PHP/CodeSniffer/Reporting.php';
 }
+
+PHP_CodeSniffer_Reporting::startTiming();
 
 $phpcs = new PHP_CodeSniffer_CLI();
 $phpcs->checkRequirements();
@@ -111,8 +109,6 @@ if ($suffix === '' && $allowPatch === true) {
     }
 }//end if
 
-if (class_exists('PHP_Timer', false) === true) {
-    echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
-}
+PHP_CodeSniffer_Reporting::printRunTime();
 
 exit($exit);

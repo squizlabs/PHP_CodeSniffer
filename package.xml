@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
     -- When set to FALSE, error messages will not be recorded and only totals will be returned
     -- This can save significant memory while processing a large code base
+  - Removed dependence on PHP_Timer
   - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
   - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
   - Squiz EchoedStringsSniff now supports statments without a semicolon, such as PHP embedded in HTML
@@ -2204,12 +2205,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <min>1.4.0b1</min>
    </pearinstaller>
   </required>
-  <optional>
-   <package>
-    <name>PHP_Timer</name>
-    <channel>pear.phpunit.de</channel>
-   </package>
-  </optional>
  </dependencies>
  <phprelease>
   <installconditions>

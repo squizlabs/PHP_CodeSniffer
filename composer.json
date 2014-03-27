@@ -50,9 +50,6 @@
             "CodeSniffer/Standards/Zend/Sniffs/"
         ]
     },
-    "suggest": {
-        "phpunit/php-timer": "dev-master"
-    },
     "require": {
         "php": ">=5.1.2",
         "ext-tokenizer": "*"

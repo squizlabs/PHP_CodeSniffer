@@ -1608,7 +1608,7 @@ class PHP_CodeSniffer
     private function _processFile($file, $contents)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $startTime = time();
+            $startTime = microtime(true);
             echo 'Processing '.basename($file).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
@@ -1626,13 +1626,13 @@ class PHP_CodeSniffer
         $phpcsFile->start($contents);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $timeTaken = (time() - $startTime);
-            if ($timeTaken === 0) {
-                echo 'DONE in < 1 second';
-            } else if ($timeTaken === 1) {
-                echo 'DONE in 1 second';
+            $timeTaken = ((microtime(true) - $startTime) * 1000);
+            if ($timeTaken < 1000) {
+                $timeTaken = round($timeTaken);
+                echo "DONE in {$timeTaken}ms";
             } else {
-                echo "DONE in $timeTaken seconds";
+                $timeTaken = round(($timeTaken / 1000), 2);
+                echo "DONE in $timeTaken secs";
             }
 
             $errors   = $phpcsFile->getErrorCount();

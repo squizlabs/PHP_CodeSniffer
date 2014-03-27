@@ -504,12 +504,10 @@ function addCSStub(&$phar)
 {
     $stub  = '#!/usr/bin/env php'."\n";
     $stub .= '<?php error_reporting(E_ALL | E_STRICT);';
-    $stub .= '@include_once "PHP/Timer.php";';
-    $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
-    $stub .= '    PHP_Timer::start();';
-    $stub .= '}';
     $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/CLI.php";';
+    $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/Reporting.php";';
     $stub .= 'include_once "phar://".__FILE__."/CodeSniffer.php";';
+    $stub .= 'PHP_CodeSniffer_Reporting::startTiming();';
     $stub .= '$config = PHP_CodeSniffer::getAllConfigData();';
     $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
     $stub .= '$phpcs->checkRequirements();';
@@ -531,15 +529,13 @@ function addCBFStub(&$phar)
 {
     $stub  = '#!/usr/bin/env php'."\n";
     $stub .= '<?php error_reporting(E_ALL | E_STRICT);';
-    $stub .= '@include_once "PHP/Timer.php";';
-    $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
-    $stub .= '    PHP_Timer::start();';
-    $stub .= '}';
     $stub .= 'if (defined("PHP_CODESNIFFER_CBF") === false) {';
     $stub .= '    define("PHP_CODESNIFFER_CBF", true);';
     $stub .= '}';
     $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/CLI.php";';
+    $stub .= 'include_once "phar://".__FILE__."/CodeSniffer/Reporting.php";';
     $stub .= 'include_once "phar://".__FILE__."/CodeSniffer.php";';
+    $stub .= 'PHP_CodeSniffer_Reporting::startTiming();';
     $stub .= '$config = PHP_CodeSniffer::getAllConfigData();';
     $stub .= '$phpcs = new PHP_CodeSniffer_CLI();';
     $stub .= '$phpcs->checkRequirements();';
@@ -601,9 +597,7 @@ function addCBFStub(&$phar)
     $stub .= '        $exit = 2;';
     $stub .= '    }';
     $stub .= '}';
-    $stub .= 'if (class_exists("PHP_Timer", false) === true) {';
-    $stub .= '    echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;';
-    $stub .= '}';
+    $stub .= 'PHP_CodeSniffer_Reporting::printRunTime();';
     $stub .= '__HALT_COMPILER();';
     $phar->setStub($stub);
 

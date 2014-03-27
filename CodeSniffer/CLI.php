@@ -703,16 +703,13 @@ class PHP_CodeSniffer_CLI
             );
         }
 
-        // Only print PHP_Timer output if no reports were
+        // Only print timer output if no reports were
         // printed to the screen so we don't put additional output
         // in something like an XML report. If we are printing to screen,
         // the report types would have already worked out who should
         // print the timer info.
-        if ($toScreen === false
-            && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists('PHP_Timer', false) === true
-        ) {
-            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+        if ($toScreen === false && PHP_CODESNIFFER_INTERACTIVE === false) {
+            PHP_CodeSniffer_Reporting::printRunTime();
         }
 
         // They should all return the same value, so it

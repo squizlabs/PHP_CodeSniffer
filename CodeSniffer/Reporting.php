@@ -65,6 +65,13 @@ class PHP_CodeSniffer_Reporting
     public $totalFixable = 0;
 
     /**
+     * When the PHPCS run started.
+     *
+     * @var float
+     */
+    public static $startTime = 0;
+
+    /**
      * A list of reports that have written partial report output.
      *
      * @var array
@@ -336,6 +343,46 @@ class PHP_CodeSniffer_Reporting
         return $report;
 
     }//end prepareFileReport()
+
+    /**
+     * Start recording time for the run.
+     *
+     * @return void
+     */
+    public static function startTiming()
+    {
+
+        self::$startTime = microtime(true);
+
+    }//end startTiming()
+
+
+    /**
+     * Print information about the run.
+     *
+     * @return void
+     */
+    public static function printRunTime()
+    {
+        $time = ((microtime(true) - self::$startTime) * 1000);
+
+        if ($time > 60000) {
+            $mins = floor($time / 60000);
+            $secs = round((($time % 60000) / 1000), 2);
+            $time = $mins.' mins';
+            if ($secs !== 0) {
+                $time .= ", $secs secs";
+            }
+        } else if ($time > 1000) {
+            $time = round(($time / 1000), 2).' secs';
+        } else {
+            $time = round($time).'ms';
+        }
+
+        $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'Mb';
+        echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
+
+    }//end printRunTime()
 
 
 }//end class

@@ -17,19 +17,15 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-// Optionally use PHP_Timer to print time/memory stats for the run.
-// Note that the reports are the ones who actually print the data
-// as they decide if it is ok to print this data to screen.
-@include_once 'PHP/Timer.php';
-if (class_exists('PHP_Timer', false) === true) {
-    PHP_Timer::start();
-}
-
 if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
+    include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
+    include_once 'PHP/CodeSniffer/Reporting.php';
 }
+
+PHP_CodeSniffer_Reporting::startTiming();
 
 $phpcs = new PHP_CodeSniffer_CLI();
 $phpcs->checkRequirements();
@@ -40,5 +36,3 @@ if ($numErrors === 0) {
 } else {
     exit(1);
 }
-
-?>

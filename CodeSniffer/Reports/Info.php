@@ -155,11 +155,8 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
 
         echo str_repeat('-', $width).PHP_EOL;
 
-        if ($toScreen === true
-            && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists('PHP_Timer', false) === true
-        ) {
-            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
+            PHP_CodeSniffer_Reporting::printRunTime();
         }
 
     }//end generate()
