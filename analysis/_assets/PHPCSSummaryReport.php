@@ -95,7 +95,7 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $toScreen=true
     ) {
         echo 'Processed '.count($this->_files).' files containing '.array_sum($this->_files).' tokens'.PHP_EOL;
-        echo PHP_Timer::resourceUsage().PHP_EOL;
+        PHP_CodeSniffer_Reporting::printRunTime();
 
     }//end generate()
 
