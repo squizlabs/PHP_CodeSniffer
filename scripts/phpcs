@@ -15,24 +15,11 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-error_reporting(E_ALL | E_STRICT);
-
 if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
-    include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
-    include_once 'PHP/CodeSniffer/Reporting.php';
 }
 
-PHP_CodeSniffer_Reporting::startTiming();
-
-$phpcs = new PHP_CodeSniffer_CLI();
-$phpcs->checkRequirements();
-
-$numErrors = $phpcs->process();
-if ($numErrors === 0) {
-    exit(0);
-} else {
-    exit(1);
-}
+$cli = new PHP_CodeSniffer_CLI();
+$cli->runphpcs();

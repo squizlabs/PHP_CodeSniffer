@@ -13,102 +13,11 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-error_reporting(E_ALL | E_STRICT);
-
-if (defined('PHP_CODESNIFFER_CBF') === false) {
-    define('PHP_CODESNIFFER_CBF', true);
-}
-
 if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer/CLI.php';
-    include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
 } else {
     include_once 'PHP/CodeSniffer/CLI.php';
-    include_once 'PHP/CodeSniffer/Reporting.php';
 }
 
-PHP_CodeSniffer_Reporting::startTiming();
-
-$phpcs = new PHP_CodeSniffer_CLI();
-$phpcs->checkRequirements();
-$phpcs->dieOnUnknownArg = false;
-
-// Override some of the command line settings that might break the fixes.
-$cliValues = $phpcs->getCommandLineValues();
-$cliValues['generator']   = '';
-$cliValues['explain']     = false;
-$cliValues['interactive'] = false;
-$cliValues['showSources'] = false;
-$cliValues['reportFile']  = null;
-$cliValues['generator']   = '';
-$cliValues['reports']     = array();
-
-$suffix = '';
-if (isset($cliValues['suffix']) === true) {
-    $suffix = $cliValues['suffix'];
-}
-
-$allowPatch = true;
-if (isset($cliValues['no-patch']) === true || empty($cliValues['files']) === true) {
-    // They either asked for this,
-    // or they are using STDIN, which can't use diff.
-    $allowPatch = false;
-}
-
-if ($suffix === '' && $allowPatch === true) {
-    // Using the diff/patch tools.
-    $diffFile = getcwd().'/phpcbf-fixed.diff';
-    $cliValues['reports'] = array('diff' => $diffFile);
-    if (file_exists($diffFile) === true) {
-        unlink($diffFile);
-    }
-} else {
-    // Replace the file without the patch command
-    // or writing to a file with a new suffix.
-    $cliValues['reports']       = array('cbf' => null);
-    $cliValues['phpcbf-suffix'] = $suffix;
-}
-
-$numErrors = $phpcs->process($cliValues);
-
-if ($suffix === '' && $allowPatch === true) {
-    if (file_exists($diffFile) === false) {
-        // Nothing to fix.
-        if ($numErrors === 0) {
-            // And no errors reported.
-            $exit = 0;
-        } else {
-            // Errors we can't fix.
-            $exit = 2;
-        }
-    } else {
-        $cmd    = "patch -p0 -ui \"$diffFile\"";
-        $output = array();
-        $retVal = null;
-        exec($cmd, $output, $retVal);
-        unlink($diffFile);
-
-        if ($retVal === 0) {
-            // Everything went well.
-            $filesPatched = count($output);
-            echo "Patched $filesPatched files\n";
-            $exit = 1;
-        } else {
-            print_r($output);
-            echo "Returned: $retVal\n";
-            $exit = 3;
-        }
-    }//end if
-} else {
-    if ($numErrors === 0) {
-        // No errors left unfixed.
-        $exit = 0;
-    } else {
-        // Errors we can't fix.
-        $exit = 2;
-    }
-}//end if
-
-PHP_CodeSniffer_Reporting::printRunTime();
-
-exit($exit);
+$cli = new PHP_CodeSniffer_CLI();
+$cli->runphpcbf();
