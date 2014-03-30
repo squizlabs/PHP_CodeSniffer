@@ -432,5 +432,12 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Phing",
+        "url": "phingofficial/phing",
+        "path": "classes",
+        "ignore": "",
+        "extensions": ""
     }
 ]
