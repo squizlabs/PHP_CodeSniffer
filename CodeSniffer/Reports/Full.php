@@ -92,14 +92,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         echo str_repeat('-', $width).PHP_EOL;
 
         // Work out the max line number for formatting.
-        $maxLine = 0;
-        foreach ($report['messages'] as $line => $lineErrors) {
-            if ($line > $maxLine) {
-                $maxLine = $line;
-            }
-        }
-
-        $maxLineLength = strlen($maxLine);
+        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
 
         // The length of the word ERROR or WARNING; used for padding.
         if ($report['warnings'] > 0) {

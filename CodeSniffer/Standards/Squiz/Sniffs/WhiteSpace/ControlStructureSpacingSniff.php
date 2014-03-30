@@ -182,7 +182,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
         $trailingContent = false;
         for ($i = ($scopeCloser + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['code'] !== T_WHITESPACE) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $trailingContent = $i;
                 break;
             }
@@ -204,21 +204,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         ) {
             // DO with WHILE.
             return;
-        }
-
-        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
-            if ($tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']) {
-                if (substr($tokens[$trailingContent]['content'], 0, 5) === '//end') {
-                    // There is an end comment, so we have to get the next piece
-                    // of content.
-                    $trailingContent = $phpcsFile->findNext(
-                        T_WHITESPACE,
-                        ($trailingContent + 1),
-                        null,
-                        true
-                    );
-                }
-            }
         }
 
         // If this token is closing a CASE or DEFAULT, we don't need the
@@ -264,7 +249,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                     $phpcsFile->fixer->endChangeset();
                 }
             }
-        } else if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
+        } else if ($tokens[$trailingContent]['code'] !== T_ELSE
+            && $tokens[$trailingContent]['code'] !== T_ELSEIF
+            && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
+        ) {
             $error = 'No blank line found after control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
             if ($fix === true && $phpcsFile->fixer->enabled === true) {

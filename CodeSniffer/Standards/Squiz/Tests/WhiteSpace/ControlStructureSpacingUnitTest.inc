@@ -156,3 +156,13 @@ try {
     // Something
 
 }
+
+if ($one) {
+}
+elseif ($two) {
+}
+// else if something
+else if ($three) {
+} // else do something
+else {
+}

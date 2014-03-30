@@ -242,7 +242,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }
         }
 
-        if ($tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i > 0 && $tokens[$i]['code'] === T_WHITESPACE) {
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
