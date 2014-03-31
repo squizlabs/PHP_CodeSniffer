@@ -2151,16 +2151,16 @@ class PHP_CodeSniffer
      */
     public static function getPharFile($path)
     {
-        $pharFile = false;
-        if (self::isPharFile($path) === true) {
-            if (strpos($path, 'phar://') === 0) {
-                $path = substr($path, 7);
-            }
-
-            $endPos   = (strpos($path, '.phar') + 5);
-            $pharFile = substr($path, 0, $endPos);
+        if (self::isPharFile($path) === false) {
+            return false;
         }
 
+        if (strpos($path, 'phar://') === 0) {
+            $path = substr($path, 7);
+        }
+
+        $endPos   = (strpos($path, '.phar') + 5);
+        $pharFile = substr($path, 0, $endPos);
         return $pharFile;
 
     }//end getPharFile()
@@ -2175,12 +2175,11 @@ class PHP_CodeSniffer
      */
     public static function isPharFile($path)
     {
-        $isPhar = false;
         if (strpos($path, '.phar') !== false) {
-            $isPhar = true;
+            return true;
         }
 
-        return $isPhar;
+        return false;
 
     }//end isPharFile()
 
@@ -2196,27 +2195,31 @@ class PHP_CodeSniffer
      */
     public static function realpath($path)
     {
-        if (self::isPharFile($path) === true) {
-            $phar   = self::getPharFile($path);
-            $extra  = str_replace($phar, '', $path);
-            $prefix = false;
-            if (strpos($path, 'phar://') === 0) {
-                $prefix = true;
-                $extra  = str_replace('phar://', '', $extra);
-            }
-
-            $path = realpath($phar);
-            if ($path !== false) {
-                $path .= $extra;
-                if ($prefix === true) {
-                    $path = 'phar://'.$path;
-                }
-            }
-        } else {
-            $path = realpath($path);
+        if (self::isPharFile($path) === false) {
+            return realpath($path);
         }
 
-        return $path;
+        $phar   = self::getPharFile($path);
+        $extra  = str_replace($phar, '', $path);
+        $prefix = false;
+        if (strpos($path, 'phar://') === 0) {
+            $prefix = true;
+            $extra  = str_replace('phar://', '', $extra);
+        }
+
+        $path = realpath($phar);
+        if ($path !== false) {
+            $path .= $extra;
+            if ($prefix === true) {
+                $path = 'phar://'.$path;
+            }
+        }
+
+        if (file_exists($path) === true) {
+            return $path;
+        }
+
+        return false;
 
     }//end realpath()
 
