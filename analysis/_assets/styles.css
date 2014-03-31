@@ -1,65 +1,11 @@
-body {
-    font-family: verdana;
-    font-size: 14px;
-    background-color: #EFEFEF;
-}
-
-h2 {
-    width: 800px;
-    position: relative;
-    left: 50%;
-    margin-left: -405px;
-}
-
-table {
-    margin-bottom: 20px;
-}
-
-tr th, td {
-    text-align: left;
-    padding: 5px;
-}
-
-.intro {
-    width: 800px;
-    position: relative;
-    left: 50%;
-    margin-left: -430px;
-    margin-bottom: 60px;
-    margin-top: 30px;
-    padding: 10px 30px;
-    border-radius: 15px;
-    border: 1px solid #CCC;
-    background-color: #FFF;
-}
-
-.intro a {
-    color: #000;
-}
-
-.metric {
-    width: 800px;
-    height: 655px;
-    position: relative;
-    left: 50%;
-    margin-left: -430px;
-    margin-bottom: 60px;
-    padding: 10px 30px;
-    border-radius: 15px;
-    border: 1px solid #CCC;
-    background-color: #FFF;
-}
-
 .chart-value {
-    position: absolute;
-    top: 100px;
-    left: 30px;
+
 }
 
 .chart-repo {
     position: absolute;
-    top: 180px;
-    left: 110px;
+    top: 123px;
+    left: 133px;
 }
 
 .chart-data {
@@ -69,101 +15,227 @@ tr th, td {
 }
 
 .chart-trend {
-    position: absolute;
-    top: 520px;
-    left: -10px;
+
 }
 
-.repo-data {
-    position: absolute;
-    top: 100px;
-    left: 15px;
-    width: 410px;
-    height: 405px;
-    overflow: auto;
-    border-radius: 0px 0px 0px 10px;
-    border: 1px solid #CCC;
-    background: #FFF;
-    display: none;
-    padding-left: 15px;
-}
 
-.repo-data a {
-    color: #000;
-    text-decoration: none;
-}
 
-.repo-data a:hover {
-    text-decoration: underline;
-}
+    body {
+        font-family: arial, sans-serif;
+        margin: 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
 
-.repo-data ul {
-    list-style: none;
-    padding-left: 5px;
-}
+/* Convention Details */
+    
+    .conventionWrap {
+        border-bottom: 1px solid #e2e2e2;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .conventionDetails {
+        padding: 40px 0;
+        width: 920px;
+        margin: 0 auto;
+    }
+    
+    .conventionDetails h3 {
+        color: #354a5d;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    .conventionDetails p {
+        font-size: 16px;
+        color: #1d2329;
+        margin: 14px 0;
+    }
+    
+/* Current Data */
+    
+    .currentData {
+        border-top: 1px solid #bfbfbf;
+        padding: 25px 0;
+        position: relative;
+    }
+    
+    .currentDataWrap {
+        display: table;
+        margin-left: 65px;
+        margin-top: 6px;
+    }
+    
+    .currentChart {
+        width: 290px;
+        height: 290px;
+        display: table-cell;
+    }
+    
+/* Convention status in project */
 
-.repo-data .close {
-    position: relative;
-    top: 0px;
-    left: 390px;
-    margin-right: 10px;
-    font-size: 12px;
-}
+    .conventionStatusInProject.project {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-right: 42px;
+        padding-top: 8px;
+    }
+    
+    .conventionStatusInProject.combined {
+        display: none;
+    }
+    
+    .conventionStatusInProject p.projectStatusText {
+        color: #2d3e4f;
+        font-size: 13px;
+        font-style: italic;
+        margin: 0;
+    }
+    
+    .conventionStatus {
+        width: 29px; 
+        height: 38px;
+        position: absolute; 
+        top: 0; 
+        right:0; 
+        margin-top: -1px;
+        background-image: url(status.png);
+        background-repeat: no-repeat;
+    }
+    
+    .conventionStatusInProject.true .conventionStatus {
+        background-position: 0 0;
+    }
+    
+    .conventionStatusInProject.false .conventionStatus {
+        background-position: -29px 0;
+        
+    }   
+    
+/* Table */
+    
+    .tableContainer {
+        display: inline-block;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    
+    table.statsTable {
+        border: 1px solid #969fa7;
+        margin: 0 auto 0 65px;
+        vertical-align: middle;
+        border-collapse: collapse;
+    }
+    
+    .statsTable td {
+        padding: 12px;
+        margin: 0;
+        border-bottom: 1px solid #969fa7;
+        border-right: 1px solid #c7c7c7;
+        font-size: 16px;
+        color: #2e374d;
+        font-weight: bold;
+    }
+    
+    .statsTable td a {
+        font-size: 13px;
+        font-weight: normal;
+        text-decoration: none; 
+        border-bottom: 1px solid #78c9cf;
+        color: #2e374d;
+    }
+    
+    .statsTable tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .statsTable td:last-child {
+        border-right: none;
+    }
+    
+    .statsTable .key {
+        width: 10px;
+    }
+    
+    .statsTable .keyDark {
+        background: #2d3f50;
+    }
+    
+    .statsTable .keyMedium {
+        background: #91a2b2;
+    }
+    
+    .statsTable .keyLight {
+        background: #d1d4db;
+    }
+    
+    .statsTable .keyPopular {
+        background-image: url(star.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
 
-.repo-data .close:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
+    .statsTable .value {
+        width: 225px;
+    }
 
-.repo-data p {
-    margin-left: -45px;
-}
+    .statsTable .result {
+        width: 75px;
+        text-align: center;
+    }   
+    
+    p.statsInfo {
+        width: 386px;
+        margin-left: 65px;
+        text-align: center;
+        color: #2e374d;
+        font-size: 13px;
+        font-style: italic;
+        margin-top: 20px;
+    }
 
-.colour-box {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 0;
-    border-radius: 14px;
-    vertical-align: middle;
-    margin-left: 3px;
-}
+/* Historical Data */
+    
+    .historicalData {
+        border-top: 1px solid #bfbfbf;
+        padding: 25px 0;
+    }
 
-div.winner {
-    border-radius: 14px;
-    vertical-align: middle;
-    width: 20px;
-    height: 20px;
-    box-shadow: 0px 0px 8px 2px #666;
-}
-
-span.winner {
-    position: relative;
-    top: 3px;
-    left: 0px;
-}
-
-.repo-percent {
-    font-size: 12px;
-    color: #666;
-}
-
-.preferred {
-    font-size: 12px;
-    padding: 0px 0px 15px 0px;
-}
-
-.preferred:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.footer {
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-}
-
-.footer a {
-    color: #000;
-}
+    .historicalChart {
+        width: 860px;
+        height: 150px;
+        margin-left: 65px;
+        margin-top: 6px;
+        display: inline-block;
+    }
+    
+    .tag {
+        background-color: #b0b6b5;
+        color: #ffffff;
+        text-transform: uppercase;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 5px 3px 5px 7px;
+        position: relative;
+    }
+    
+    .tag:after {
+        content: "";
+        border: 12px solid #fff;
+        border-left: 12px solid #b0b6b5;
+        width:0px;
+        height: 0px;
+        display: block;
+        position: absolute;
+        right: -24px;
+        top: 0;
+    }
+    
+    .screenHide {
+        display: block;
+        position: absolute;
+        left: -9999px;
+    }

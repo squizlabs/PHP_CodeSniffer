@@ -11,438 +11,1620 @@
 <p>You can also <a href="../../index.html">view a combined analysis</a> that covers 63 PHP projects</p>
 
 </div>
-<h2 id="function-has-doc-comment">Function has doc comment</h2>
-<div class="metric"><p>Does each function have a docblock comment to describe its purpose?</p>
-  <canvas class="chart-value" id="chart1" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart1t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="60 functions"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>37.27%</td></tr><tr title="101 functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>62.73%</td></tr></table>Based on 161 functions</div></div>
-<h2 id="array-end-comma">Array end comma</h2>
-<div class="metric"><p>Does the last item end with a comma in a multi-line array definition?</p>
-  <canvas class="chart-value" id="chart2" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart2t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="2 array definitions"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>33.33%</td></tr><tr title="4 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>66.67%</td></tr></table>Based on 6 array definitions</div></div>
-<h2 id="inline-comment-style">Inline comment style</h2>
-<div class="metric"><p>What comment style is used for non docblock comments?</p>
-  <canvas class="chart-value" id="chart3" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart3t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="49 comments"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>/* ... */</td><td>67.12%</td></tr><tr title="24 comments"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>// ...</td><td>32.88%</td></tr></table>Based on 73 comments</div></div>
-<h2 id="declarations-and-side-effects-mixed">Declarations and side effects mixed</h2>
-<div class="metric"><p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
-  <canvas class="chart-value" id="chart4" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart4t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>83.33%</td></tr><tr title="8 files"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>yes</td><td>16.67%</td></tr></table>Based on 48 files</div></div>
-<h2 id="adjacent-assignments-aligned">Adjacent assignments aligned</h2>
-<div class="metric"><p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
-  <canvas class="chart-value" id="chart5" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart5t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="34 assignment blocks"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>9.88%</td></tr><tr title="310 assignment blocks"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>90.12%</td></tr></table>Based on 344 assignment blocks</div></div>
-<h2 id="line-length">Line length</h2>
-<div class="metric"><p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
-  <canvas class="chart-value" id="chart6" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart6t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="3,572 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>80 or less</td><td>92.42%</td></tr><tr title="228 lines"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>81-120</td><td>5.9%</td></tr><tr title="47 lines"><td><span class="colour-box" style="background-color:#9D9B7F"></span></td><td>121-150</td><td>1.22%</td></tr><tr title="18 lines"><td><span class="colour-box" style="background-color:#949FB1"></span></td><td>151 or more</td><td>0.47%</td></tr></table>Based on 3,865 lines</div></div>
-<h2 id="class-has-doc-comment">Class has doc comment</h2>
-<div class="metric"><p>Does each class have a docblock comment to describe its purpose?</p>
-  <canvas class="chart-value" id="chart7" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart7t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="2 classes"><td><span class="colour-box" style="background-color:#4D5360"></span></td><td>no</td><td>5%</td></tr><tr title="38 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#D4CCC5"></span></div></td><td>yes</td><td>95%</td></tr></table>Based on 40 classes</div></div>
-<h2 id="spacing-before-object-operator">Spacing before object operator</h2>
-<div class="metric"><p>How many spaces precede the object operator (->)?</p>
-  <canvas class="chart-value" id="chart8" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="568 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>96.93%</td></tr><tr title="18 operators"><td><span class="colour-box" style="background-color:#D4CCC5"></span></td><td>newline</td><td>3.07%</td></tr></table>Based on 586 operators</div></div>
-<h2 id="file-extension-for-class-files">File extension for class files</h2>
-<div class="metric"><p>For files that contain classes, what extension does the file use?</p>
-  <canvas class="chart-value" id="chart9" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart9t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 40 class files</div></div>
-<h2 id="spacing-before-string-concat">Spacing before string concat</h2>
-<div class="metric"><p>How many spaces precede the string concatenation operator?</p>
-  <canvas class="chart-value" id="chart10" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart10t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="131 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 131 operators</div></div>
-<h2 id="php-closing-tag-at-eof">PHP closing tag at EOF</h2>
-<div class="metric"><p>Is there a PHP closing tag at the end of the file?</p>
-  <canvas class="chart-value" id="chart11" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart11t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 48 files</div></div>
-<h2 id="spaces-before-control-structure-close-parenthesis">Spaces before control structure close parenthesis</h2>
-<div class="metric"><p>How many spaces precede the closing parenthesis of a control structure?</p>
-  <canvas class="chart-value" id="chart12" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart12t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="160 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 160 control structures</div></div>
-<h2 id="line-indent">Line indent</h2>
-<div class="metric"><p>Are lines indented using spaces or tabs?</p>
-  <canvas class="chart-value" id="chart13" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart13t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="2,105 lines"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>spaces</td><td>100%</td></tr></table>Based on 2,105 lines</div></div>
-<h2 id="constant-name-case">Constant name case</h2>
-<div class="metric"><p>What case are user-defined constants defined in?</p>
-  <canvas class="chart-value" id="chart14" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart14t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="4 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>upper</td><td>100%</td></tr></table>Based on 4 constants</div></div>
-<h2 id="php-keyword-case">PHP keyword case</h2>
-<div class="metric"><p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
-  <canvas class="chart-value" id="chart15" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart15t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="1,628 keywords"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 1,628 keywords</div></div>
-<h2 id="number-of-newlines-at-eof">Number of newlines at EOF</h2>
-<div class="metric"><p>How many newline characters appear at the end of the file?</p>
-  <canvas class="chart-value" id="chart16" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart16t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 48 files</div></div>
-<h2 id="multiple-statements-on-same-line">Multiple statements on same line</h2>
-<div class="metric"><p>Are multiple statements defined on the same line of code?</p>
-  <canvas class="chart-value" id="chart17" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart17t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="1,109 statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 1,109 statements</div></div>
-<h2 id="php-constant-case">PHP constant case</h2>
-<div class="metric"><p>What case are PHP constants (true, false, null) written in?</p>
-  <canvas class="chart-value" id="chart18" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart18t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="99 constants"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 99 constants</div></div>
-<h2 id="class-opening-brace-placement">Class opening brace placement</h2>
-<div class="metric"><p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
-  <canvas class="chart-value" id="chart19" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart19t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>new line</td><td>100%</td></tr></table>Based on 40 classes</div></div>
-<h2 id="use-of-else-if-or-elseif">Use of ELSE IF or ELSEIF</h2>
-<div class="metric"><p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
-  <canvas class="chart-value" id="chart20" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart20t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="7 elseif statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>elseif</td><td>100%</td></tr></table>Based on 7 elseif statements</div></div>
-<h2 id="lowercase-filename">Lowercase filename</h2>
-<div class="metric"><p>Are PHP filenames lowercase?</p>
-  <canvas class="chart-value" id="chart21" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 48 files</div></div>
-<h2 id="file-has-doc-comment">File has doc comment</h2>
-<div class="metric"><p>Does each PHP file have a docblock comment to describe its purpose?</p>
-  <canvas class="chart-value" id="chart22" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 48 files</div></div>
-<h2 id="control-structure-defined-inline">Control structure defined inline</h2>
-<div class="metric"><p>Are control structures defined inline (without braces)?</p>
-  <canvas class="chart-value" id="chart23" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="164 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 164 control structures</div></div>
-<h2 id="spacing-after-object-operator">Spacing after object operator</h2>
-<div class="metric"><p>How many spaces follow the object operator (->)?</p>
-  <canvas class="chart-value" id="chart24" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="586 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 586 operators</div></div>
-<h2 id="one-class-per-file">One class per file</h2>
-<div class="metric"><p>Is each class defined in a file by itself?</p>
-  <canvas class="chart-value" id="chart25" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 40 classes</div></div>
-<h2 id="space-after-operator">Space after operator</h2>
-<div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
-  <canvas class="chart-value" id="chart26" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="568 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 568 operators</div></div>
-<h2 id="class-defined-in-namespace">Class defined in namespace</h2>
-<div class="metric"><p>Is each class defined in a namespace of at least 1 level?</p>
-  <canvas class="chart-value" id="chart27" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 40 classes</div></div>
-<h2 id="spaces-after-control-structure-open-parenthesis">Spaces after control structure open parenthesis</h2>
-<div class="metric"><p>How many spaces follow the opening parenthesis of a control structure?</p>
-  <canvas class="chart-value" id="chart28" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="160 control structures"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 160 control structures</div></div>
-<h2 id="camelcase-class-name">CamelCase class name</h2>
-<div class="metric"><p>Are class names defined using CamelCase?</p>
-  <canvas class="chart-value" id="chart29" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="40 classes"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 40 classes</div></div>
-<h2 id="file-extension-for-non-class-files">File extension for non-class files</h2>
-<div class="metric"><p>For files that do not contain classes, what extension does the file use?</p>
-  <canvas class="chart-value" id="chart30" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="8 non-class files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>.php</td><td>100%</td></tr></table>Based on 8 non-class files</div></div>
-<h2 id="function-opening-brace-placement">Function opening brace placement</h2>
-<div class="metric"><p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
-  <canvas class="chart-value" id="chart31" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="157 functions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>new line</td><td>100%</td></tr></table>Based on 157 functions</div></div>
-<h2 id="space-before-operator">Space before operator</h2>
-<div class="metric"><p>How many spaces precede comparison, arithmetic and assignment operators?</p>
-  <canvas class="chart-value" id="chart32" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="105 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 105 operators</div></div>
-<h2 id="php-short-open-tag-used">PHP short open tag used</h2>
-<div class="metric"><p>Is the PHP short open tag syntax used?</p>
-  <canvas class="chart-value" id="chart33" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 open tags"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 48 open tags</div></div>
-<h2 id="spacing-after-string-concat">Spacing after string concat</h2>
-<div class="metric"><p>How many spaces follow the string concatenation operator?</p>
-  <canvas class="chart-value" id="chart34" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="131 operators"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>0</td><td>100%</td></tr></table>Based on 131 operators</div></div>
-<h2 id="array-keyword-case">Array keyword case</h2>
-<div class="metric"><p>When defining an array, how is the <em>array</em> keyword written?</p>
-  <canvas class="chart-value" id="chart35" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart35t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="107 array definitions"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>lower</td><td>100%</td></tr></table>Based on 107 array definitions</div></div>
-<h2 id="private-method-prefixed-with-underscore">Private method prefixed with underscore</h2>
-<div class="metric"><p>Are private methods prefixed with an underscore?</p>
-  <canvas class="chart-value" id="chart36" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart36t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="1 private methods"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>no</td><td>100%</td></tr></table>Based on 1 private methods</div></div>
-<h2 id="camelcase-method-name">CamelCase method name</h2>
-<div class="metric"><p>Are class method names defined using CamelCase?</p>
-  <canvas class="chart-value" id="chart37" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart37t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="142 methods"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>yes</td><td>100%</td></tr></table>Based on 142 methods</div></div>
-<h2 id="spacing-after-cast-statement">Spacing after cast statement</h2>
-<div class="metric"><p>How many spaces are there between a cast statement and the variable?</p>
-  <canvas class="chart-value" id="chart38" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart38t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="8 cast statements"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>1</td><td>100%</td></tr></table>Based on 8 cast statements</div></div>
-<h2 id="eol-char">EOL char</h2>
-<div class="metric"><p>What character is used for line breaks?</p>
-  <canvas class="chart-value" id="chart39" width="400" height="400"></canvas>
-  <canvas class="chart-trend" id="chart39t" width="860" height="145"></canvas>
-  <div class="chart-data"><table><tr title="48 files"><td><div class="winner"><span class="colour-box winner" style="background-color:#4D5360"></span></div></td><td>\n</td><td>100%</td></tr></table>Based on 48 files</div></div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="function-has-doc-comment">Function has doc comment</h3>
+  <p>Does each function have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart1" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="60 functions">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">37.27%</td>
+      </tr>
+      <tr title="101 functions">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">62.73%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 161 functions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart1t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="array-end-comma">Array end comma</h3>
+  <p>Does the last item end with a comma in a multi-line array definition?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart2" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="2 array definitions">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">33.33%</td>
+      </tr>
+      <tr title="4 array definitions">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">66.67%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart2t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="inline-comment-style">Inline comment style</h3>
+  <p>What comment style is used for non docblock comments?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart3" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="49 comments">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">/* ... */ - Most popular method</span></td>
+        <td class="result">/* ... */</td>
+        <td class="value">67.12%</td>
+      </tr>
+      <tr title="24 comments">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">// ...</span></td>
+        <td class="result">// ...</td>
+        <td class="value">32.88%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 73 comments</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart3t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="declarations-and-side-effects-mixed">Declarations and side effects mixed</h3>
+  <p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart4" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">83.33%</td>
+      </tr>
+      <tr title="8 files">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">yes</span></td>
+        <td class="result">yes</td>
+        <td class="value">16.67%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart4t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="adjacent-assignments-aligned">Adjacent assignments aligned</h3>
+  <p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart5" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="34 assignment blocks">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">9.88%</td>
+      </tr>
+      <tr title="310 assignment blocks">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">90.12%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 344 assignment blocks</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart5t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="line-length">Line length</h3>
+  <p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart6" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="3,572 lines">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">80 or less - Most popular method</span></td>
+        <td class="result">80 or less</td>
+        <td class="value">92.42%</td>
+      </tr>
+      <tr title="228 lines">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">81-120</span></td>
+        <td class="result">81-120</td>
+        <td class="value">5.9%</td>
+      </tr>
+      <tr title="47 lines">
+        <td class="key" style="background-color:#D1D4DB"><span class="screenHide">121-150</span></td>
+        <td class="result">121-150</td>
+        <td class="value">1.22%</td>
+      </tr>
+      <tr title="18 lines">
+        <td class="key" style="background-color:#E5E5E5"><span class="screenHide">151 or more</span></td>
+        <td class="result">151 or more</td>
+        <td class="value">0.47%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 3,865 lines</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart6t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="class-has-doc-comment">Class has doc comment</h3>
+  <p>Does each class have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart7" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="2 classes">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">5%</td>
+      </tr>
+      <tr title="38 classes">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">95%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart7t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spacing-before-object-operator">Spacing before object operator</h3>
+  <p>How many spaces precede the object operator (->)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart8" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="568 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">96.93%</td>
+      </tr>
+      <tr title="18 operators">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">newline</span></td>
+        <td class="result">newline</td>
+        <td class="value">3.07%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 586 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart8t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="private-method-prefixed-with-underscore">Private method prefixed with underscore</h3>
+  <p>Are private methods prefixed with an underscore?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart9" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="1 private methods">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1 private methods</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart9t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="space-before-operator">Space before operator</h3>
+  <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart10" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="105 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 105 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart10t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spaces-after-control-structure-open-parenthesis">Spaces after control structure open parenthesis</h3>
+  <p>How many spaces follow the opening parenthesis of a control structure?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart11" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="160 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 160 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart11t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="file-has-doc-comment">File has doc comment</h3>
+  <p>Does each PHP file have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart12" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart12t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="space-after-operator">Space after operator</h3>
+  <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart13" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="568 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 568 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart13t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spacing-after-object-operator">Spacing after object operator</h3>
+  <p>How many spaces follow the object operator (->)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart14" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="586 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 586 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart14t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="file-extension-for-non-class-files">File extension for non-class files</h3>
+  <p>For files that do not contain classes, what extension does the file use?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart15" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="8 non-class files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">.php - Most popular method</span></td>
+        <td class="result">.php</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 8 non-class files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart15t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="file-extension-for-class-files">File extension for class files</h3>
+  <p>For files that contain classes, what extension does the file use?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart16" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 class files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">.php - Most popular method</span></td>
+        <td class="result">.php</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 class files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart16t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spacing-after-string-concat">Spacing after string concat</h3>
+  <p>How many spaces follow the string concatenation operator?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart17" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="131 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 131 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart17t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spacing-before-string-concat">Spacing before string concat</h3>
+  <p>How many spaces precede the string concatenation operator?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart18" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="131 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 131 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart18t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spacing-after-cast-statement">Spacing after cast statement</h3>
+  <p>How many spaces are there between a cast statement and the variable?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart19" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="8 cast statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 8 cast statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart19t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="php-closing-tag-at-eof">PHP closing tag at EOF</h3>
+  <p>Is there a PHP closing tag at the end of the file?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart20" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart20t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="lowercase-filename">Lowercase filename</h3>
+  <p>Are PHP filenames lowercase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart21" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart21t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="spaces-before-control-structure-close-parenthesis">Spaces before control structure close parenthesis</h3>
+  <p>How many spaces precede the closing parenthesis of a control structure?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart22" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="160 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 160 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart22t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="control-structure-defined-inline">Control structure defined inline</h3>
+  <p>Are control structures defined inline (without braces)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart23" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="164 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 164 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart23t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="line-indent">Line indent</h3>
+  <p>Are lines indented using spaces or tabs?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart24" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="2,105 lines">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">spaces - Most popular method</span></td>
+        <td class="result">spaces</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 2,105 lines</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart24t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="one-class-per-file">One class per file</h3>
+  <p>Is each class defined in a file by itself?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart25" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart25t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="constant-name-case">Constant name case</h3>
+  <p>What case are user-defined constants defined in?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart26" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="4 constants">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">upper - Most popular method</span></td>
+        <td class="result">upper</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 4 constants</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart26t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="class-defined-in-namespace">Class defined in namespace</h3>
+  <p>Is each class defined in a namespace of at least 1 level?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart27" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart27t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="php-keyword-case">PHP keyword case</h3>
+  <p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart28" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="1,628 keywords">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1,628 keywords</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart28t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="camelcase-class-name">CamelCase class name</h3>
+  <p>Are class names defined using CamelCase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart29" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart29t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="number-of-newlines-at-eof">Number of newlines at EOF</h3>
+  <p>How many newline characters appear at the end of the file?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart30" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart30t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="function-opening-brace-placement">Function opening brace placement</h3>
+  <p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart31" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="157 functions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
+        <td class="result">new line</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 157 functions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart31t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="multiple-statements-on-same-line">Multiple statements on same line</h3>
+  <p>Are multiple statements defined on the same line of code?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart32" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="1,109 statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1,109 statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart32t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="php-short-open-tag-used">PHP short open tag used</h3>
+  <p>Is the PHP short open tag syntax used?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart33" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 open tags">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 open tags</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart33t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="php-constant-case">PHP constant case</h3>
+  <p>What case are PHP constants (true, false, null) written in?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart34" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="99 constants">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 99 constants</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart34t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="array-keyword-case">Array keyword case</h3>
+  <p>When defining an array, how is the <em>array</em> keyword written?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart35" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="107 array definitions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 107 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart35t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="class-opening-brace-placement">Class opening brace placement</h3>
+  <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart36" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="40 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
+        <td class="result">new line</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 40 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart36t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="camelcase-method-name">CamelCase method name</h3>
+  <p>Are class method names defined using CamelCase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart37" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="142 methods">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 142 methods</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart37t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="use-of-else-if-or-elseif">Use of ELSE IF or ELSEIF</h3>
+  <p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart38" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="7 elseif statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">elseif - Most popular method</span></td>
+        <td class="result">elseif</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 elseif statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart38t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
+<div class="conventionWrap">
+<div class="conventionDetails">
+  <h3 id="eol-char">EOL char</h3>
+  <p>What character is used for line breaks?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart39" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+      <tr title="48 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">\n - Most popular method</span></td>
+        <td class="result">\n</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 48 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart39t" width="860" height="145"></canvas>
+    </div>
+  </div>
+</div>
+</div>
 
-<div class="footer">Report generated on Sun, 30 Mar 2014 18:15:27 +1100<br/>Using master branch of <a href="https://github.com/silexphp/Silex">silexphp/Silex</a> @ commit <a href="https://github.com/silexphp/Silex/commit/aed7cb81eef9ba1082204027a0e3b60440a212e0">aed7cb81eef9ba1082204027a0e3b60440a212e0</div>
+<div class="footer">Report generated on Mon, 31 Mar 2014 17:27:11 +1100<br/>Using master branch of <a href="https://github.com/silexphp/Silex">silexphp/Silex</a> @ commit <a href="https://github.com/silexphp/Silex/commit/aed7cb81eef9ba1082204027a0e3b60440a212e0">aed7cb81eef9ba1082204027a0e3b60440a212e0</div>
 <script>
-var valOptions = {animation:false,segmentStrokeWidth:1,percentageInnerCutout:60};
-var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:8,scaleFontFamily:"verdana",bezierCurve:false,pointDot:true,datasetFill:false};
-var data = [{value:37.27,color:"#4D5360"},{value:62.73,color:"#D4CCC5"}]
+var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
+var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};
+var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:9,scaleFontFamily:"verdana",scaleGridLineColor:"C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
+var data = [{value:37.27,color:"#2D3F50"},{value:62.73,color:"#91A2B2"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[38.26,38,38,38,38,38,38,38,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,37.91,37.27,37.27]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[61.74,62,62,62,62,62,62,62,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,62.09,62.73,62.73]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[38.26,38,38,38,38,38,38,38,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,38.41,37.91,37.27,37.27,37.27]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[61.74,62,62,62,62,62,62,62,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,61.59,62.09,62.73,62.73,62.73]}]};
 var c = document.getElementById("chart1t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:33.33,color:"#4D5360"},{value:66.67,color:"#D4CCC5"}]
+var data = [{value:33.33,color:"#2D3F50"},{value:66.67,color:"#91A2B2"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67]}]};
 var c = document.getElementById("chart2t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:67.12,color:"#4D5360"},{value:32.88,color:"#D4CCC5"}]
+var data = [{value:67.12,color:"#2D3F50"},{value:32.88,color:"#91A2B2"}]
 var c = document.getElementById("chart3").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[67.12]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[32.88]}]};
+var data = {labels:["30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[67.12,67.12]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[32.88,32.88]}]};
 var c = document.getElementById("chart3t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:83.33,color:"#4D5360"},{value:16.67,color:"#D4CCC5"}]
+var data = [{value:83.33,color:"#2D3F50"},{value:16.67,color:"#91A2B2"}]
 var c = document.getElementById("chart4").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,83.33]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,16.67]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,83.33,83.33]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,16.67,16.67]}]};
 var c = document.getElementById("chart4t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:9.88,color:"#4D5360"},{value:90.12,color:"#D4CCC5"}]
+var data = [{value:9.88,color:"#2D3F50"},{value:90.12,color:"#91A2B2"}]
 var c = document.getElementById("chart5").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[9.61,9.82,9.82,9.82,9.82,9.79,9.79,9.82,10,10,10,9.91,9.88,9.88,9.88,9.88,9.88,9.88,9.86,9.88,9.88]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[90.39,90.18,90.18,90.18,90.18,90.21,90.21,90.18,90,90,90,90.09,90.12,90.12,90.12,90.12,90.12,90.12,90.14,90.12,90.12]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[9.61,9.82,9.82,9.82,9.82,9.79,9.79,9.82,10,10,10,9.91,9.88,9.88,9.88,9.88,9.88,9.88,9.86,9.88,9.88,9.88]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[90.39,90.18,90.18,90.18,90.18,90.21,90.21,90.18,90,90,90,90.09,90.12,90.12,90.12,90.12,90.12,90.12,90.14,90.12,90.12,90.12]}]};
 var c = document.getElementById("chart5t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:92.42,color:"#4D5360"},{value:5.9,color:"#D4CCC5"},{value:1.22,color:"#9D9B7F"},{value:0.47,color:"#949FB1"}]
+var data = [{value:92.42,color:"#2D3F50"},{value:5.9,color:"#91A2B2"},{value:1.22,color:"#D1D4DB"},{value:0.47,color:"#E5E5E5"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[92.32,92.22,92.17,92.17,92.17,92.18,92.18,92.22,92.16,92.16,92.16,92.12,92.11,92.11,92.11,92.11,92.11,92.11,92.17,92.42,92.42]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[6.02,6.05,6.1,6.1,6.1,6.09,6.09,6.05,6.1,6.1,6.1,6.14,6.16,6.16,6.16,6.16,6.16,6.16,6.11,5.9,5.9]},{strokeColor:"#9D9B7F",pointStrokeColor:"#9D9B7F",pointColor:"#FFF",data:[1.17,1.24,1.24,1.24,1.24,1.24,1.24,1.24,1.26,1.26,1.26,1.26,1.25,1.25,1.25,1.25,1.25,1.25,1.24,1.22,1.22]},{strokeColor:"#949FB1",pointStrokeColor:"#949FB1",pointColor:"#FFF",data:[0.49,0.49,0.49,0.49,0.49,0.49,0.49,0.49,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.47,0.47]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[92.32,92.22,92.17,92.17,92.17,92.18,92.18,92.22,92.16,92.16,92.16,92.12,92.11,92.11,92.11,92.11,92.11,92.11,92.17,92.42,92.42,92.42]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[6.02,6.05,6.1,6.1,6.1,6.09,6.09,6.05,6.1,6.1,6.1,6.14,6.16,6.16,6.16,6.16,6.16,6.16,6.11,5.9,5.9,5.9]},{strokeColor:"#D1D4DB",pointStrokeColor:"#D1D4DB",pointColor:"#FFF",data:[1.17,1.24,1.24,1.24,1.24,1.24,1.24,1.24,1.26,1.26,1.26,1.26,1.25,1.25,1.25,1.25,1.25,1.25,1.24,1.22,1.22,1.22]},{strokeColor:"#E5E5E5",pointStrokeColor:"#E5E5E5",pointColor:"#FFF",data:[0.49,0.49,0.49,0.49,0.49,0.49,0.49,0.49,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.47,0.47,0.47]}]};
 var c = document.getElementById("chart6t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:5,color:"#4D5360"},{value:95,color:"#D4CCC5"}]
+var data = [{value:5,color:"#2D3F50"},{value:95,color:"#91A2B2"}]
 var c = document.getElementById("chart7").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5,5]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,95,95]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5.13,5,5,5]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,94.87,95,95,95]}]};
 var c = document.getElementById("chart7t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:96.93,color:"#4D5360"},{value:3.07,color:"#D4CCC5"}]
+var data = [{value:96.93,color:"#2D3F50"},{value:3.07,color:"#91A2B2"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[96.93,97,97,97,97,96.83,96.83,97,96.83,96.83,96.83,96.85,96.85,96.85,96.85,96.85,96.85,96.85,96.88,96.93,96.93]},{strokeColor:"#D4CCC5",pointStrokeColor:"#D4CCC5",pointColor:"#FFF",data:[3.07,3,3,3,3,3.17,3.17,3,3.17,3.17,3.17,3.15,3.15,3.15,3.15,3.15,3.15,3.15,3.13,3.07,3.07]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[96.93,97,97,97,97,96.83,96.83,97,96.83,96.83,96.83,96.85,96.85,96.85,96.85,96.85,96.85,96.85,96.88,96.93,96.93,96.93]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[3.07,3,3,3,3,3.17,3.17,3,3.17,3.17,3.17,3.15,3.15,3.15,3.15,3.15,3.15,3.15,3.13,3.07,3.07,3.07]}]};
 var c = document.getElementById("chart8t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart9").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0]}]};
 var c = document.getElementById("chart9t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart10t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart11").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart11t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart12").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart12t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart13").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart13t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart14").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart14t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart15").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0]}]};
 var c = document.getElementById("chart15t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart16").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart16t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart17").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart17t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart18t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart19").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart19t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart20").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart20t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart21").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart21t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart22").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart22t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart23t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart24").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart24t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart25t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart26t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart27").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart27t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart28").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart28t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart29").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart29t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart30").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart30t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart31").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart31t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart32").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart32t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart33").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart33t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart34").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart34t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart35").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart35t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart36").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart36t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart37").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart37t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart38").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart38t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:100,color:"#4D5360"}]
+var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart39").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar"],datasets:[{strokeColor:"#4D5360",pointStrokeColor:"#4D5360",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","13-Nov","20-Nov","27-Nov","04-Dec","11-Dec","18-Dec","25-Dec","05-Jan","12-Jan","19-Jan","26-Jan","02-Feb","09-Feb","16-Feb","23-Feb","02-Mar","09-Mar","16-Mar","23-Mar","30-Mar","31-Mar"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart39t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 
