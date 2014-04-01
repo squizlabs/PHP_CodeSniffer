@@ -227,6 +227,11 @@ function generateReport($results, $repo=null)
         $html .= '      </div>'.PHP_EOL;
         $html .= '      <div class="tableContainer">'.PHP_EOL;
         $html .= '        <table class="statsTable">'.PHP_EOL;
+        $html .= '          <tr class="screenHide">'.PHP_EOL;
+        $html .= '            <th>Key</th>'.PHP_EOL;
+        $html .= '            <th>Method</th>'.PHP_EOL;
+        $html .= '            <th>Use</th>'.PHP_EOL;
+        $html .= '          </tr>'.PHP_EOL;
 
         $valsData      = 'var data = [';
         $repoData      = 'var data = [';
@@ -440,22 +445,20 @@ function generateReport($results, $repo=null)
     }//end foreach
 
     if ($repo === null) {
-        $intro  = '<h1>Analysis of Coding Conventions</h1>'.PHP_EOL;
-        $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
+        $intro = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
         $intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
         $intro .= '<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
 
         $footer    = 'Report generated on '.date('r');
-        $title     = 'Coding Standards Analysis';
+        $title     = 'Analysis of Coding Conventions';
         $assetPath = '';
     } else {
-        $intro  = "<h1>Analysis of Coding Conventions for</br>$repo</h1>".PHP_EOL;
-        $intro .= '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+        $intro = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
         $intro .= '<p>You can also <a href="../../index.html">view a combined analysis</a> that covers '.$GLOBALS['num_repos'].' PHP projects</p>'.PHP_EOL;
 
         $commitid  = $results['project']['commitid'];
         $footer    = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid";
-        $title     = $repo.' - Coding Standards Analysis';
+        $title     = "Analysis of Coding Conventions for $repo";
         $assetPath = '../../';
     }//end if
 

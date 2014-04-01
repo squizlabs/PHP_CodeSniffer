@@ -1,6 +1,4 @@
-.chart-value {
-
-}
+/* Charts */
 
 .chart-repo {
     position: absolute;
@@ -14,228 +12,401 @@
     left: 460px;
 }
 
-.chart-trend {
+body {
+    font-family: arial, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
 
+/* Convention Details */
+
+
+.conventionWrap {
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.conventionDetails {
+    padding: 40px 0;
+    width: 920px;
+    margin: 0 auto;
+}
+
+.conventionDetails h3 {
+    color: #354a5d;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.conventionDetails p {
+    font-size: 16px;
+    color: #1d2329;
+    margin: 14px 0;
+}
+
+/* Current Data */
+
+.currentData {
+    border-top: 1px solid #bfbfbf;
+    padding: 25px 0;
+    position: relative;
+}
+
+.currentDataWrap {
+    display: table;
+    margin-left: 65px;
+    margin-top: 6px;
+}
+
+.currentChart {
+    width: 290px;
+    height: 290px;
+    display: table-cell;
+}
+
+/* Convention status in project */
+
+.conventionStatusInProject.project {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 42px;
+    padding-top: 8px;
+}
+
+.conventionStatusInProject.combined {
+    display: none;
+}
+
+.conventionStatusInProject p.projectStatusText {
+    color: #2d3e4f;
+    font-size: 13px;
+    font-style: italic;
+    margin: 0;
+}
+
+.conventionStatus {
+    width: 29px; 
+    height: 38px;
+    position: absolute; 
+    top: 0; 
+    right:0; 
+    margin-top: -1px;
+    background-image: url(image_sprite_1x.png);
+    background-repeat: no-repeat;
+}
+
+.conventionStatusInProject.true .conventionStatus {
+    background-position: 0 0;
+}
+
+.conventionStatusInProject.false .conventionStatus {
+    background-position: 0 -39px;
+    
+}   
+
+/* Table */
+
+.tableContainer {
+    display: inline-block;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+table.statsTable {
+    margin: 0 auto 0 65px;
+    vertical-align: middle;
+    border-collapse: collapse;
+}
+
+.statsTable td {
+    padding: 12px;
+    margin: 0;
+    border-top: 1px solid #969fa7;
+    border-right: 1px solid #c7c7c7;
+    font-size: 16px;
+    color: #2e374d;
+    font-weight: bold;
+}
+
+.statsTable td a {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none; 
+    border-bottom: 1px solid #78c9cf;
+    color: #2e374d;
+}
+
+.statsTable tr:last-child td {
+    border-bottom: 1px solid #969fa7;
+}
+
+.statsTable td:last-child {
+    border-right: 1px solid #969fa7;
+}
+
+.statsTable .key {
+    width: 10px;
+}
+
+.statsTable .keyDark {
+    background: #2d3f50;
+}
+
+.statsTable .keyMedium {
+    background: #91a2b2;
+}
+
+.statsTable .keyLight {
+    background: #d1d4db;
+}
+
+.statsTable .keypopular:after {
+    background-image: url(image_sprite_1x.png);
+    content: "";
+    width: 13px;
+    height: 13px;
+    background-repeat: no-repeat;
+    background-position: 0 -78px;
+    display: block;
+}
+
+.statsTable .value {
+    width: 225px;
+}
+
+.statsTable .result {
+    width: 75px;
+    text-align: center;
+}   
+
+p.statsInfo {
+    width: 386px;
+    margin-left: 65px;
+    text-align: center;
+    color: #2e374d;
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Historical Data */
+
+.historicalData {
+    border-top: 1px solid #bfbfbf;
+    padding: 25px 0;
+}
+
+.historicalChart {
+    width: 860px;
+    height: 150px;
+    margin-left: 65px;
+    margin-top: 6px;
+    display: inline-block;
+}
+
+.tag {
+    background-color: #979c9b;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 3px 5px 7px;
+    position: relative;
+}
+
+.tag:after {
+    content: "";
+    border: 12px solid #fff;
+    border-left: 12px solid #979c9b;
+    width:0px;
+    height: 0px;
+    display: block;
+    position: absolute;
+    right: -24px;
+    top: 0;
+}
+
+.screenHide {
+    display: block;
+    position: absolute;
+    left: -9999px;
 }
 
 
+/* HEADER */
 
-    body {
-        font-family: arial, sans-serif;
-        margin: 0;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
+#contentWrap.small {
+    padding-top: 650px;
+}
 
-/* Convention Details */
-    
-    .conventionWrap {
-        border-bottom: 1px solid #e2e2e2;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    
-    .conventionDetails {
-        padding: 40px 0;
-        width: 920px;
-        margin: 0 auto;
-    }
-    
-    .conventionDetails h3 {
-        color: #354a5d;
-        font-size: 24px;
-        font-weight: bold;
-        margin: 0;
-    }
-    
-    .conventionDetails p {
-        font-size: 16px;
-        color: #1d2329;
-        margin: 14px 0;
-    }
-    
-/* Current Data */
-    
-    .currentData {
-        border-top: 1px solid #bfbfbf;
-        padding: 25px 0;
-        position: relative;
-    }
-    
-    .currentDataWrap {
-        display: table;
-        margin-left: 65px;
-        margin-top: 6px;
-    }
-    
-    .currentChart {
-        width: 290px;
-        height: 290px;
-        display: table-cell;
-    }
-    
-/* Convention status in project */
+.introductionWrap {
+    background: #2d3f50;
+    color: #ffffff;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    height: 550px;
+}
 
-    .conventionStatusInProject.project {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding-right: 42px;
-        padding-top: 8px;
-    }
-    
-    .conventionStatusInProject.combined {
-        display: none;
-    }
-    
-    .conventionStatusInProject p.projectStatusText {
-        color: #2d3e4f;
-        font-size: 13px;
-        font-style: italic;
-        margin: 0;
-    }
-    
-    .conventionStatus {
-        width: 29px; 
-        height: 38px;
-        position: absolute; 
-        top: 0; 
-        right:0; 
-        margin-top: -1px;
-        background-image: url(status.png);
-        background-repeat: no-repeat;
-    }
-    
-    .conventionStatusInProject.true .conventionStatus {
-        background-position: 0 0;
-    }
-    
-    .conventionStatusInProject.false .conventionStatus {
-        background-position: -29px 0;
-        
-    }   
-    
-/* Table */
-    
-    .tableContainer {
-        display: inline-block;
-        display: table-cell;
-        vertical-align: middle;
-    }
-    
-    table.statsTable {
-        border: 1px solid #969fa7;
-        margin: 0 auto 0 65px;
-        vertical-align: middle;
-        border-collapse: collapse;
-    }
-    
-    .statsTable td {
-        padding: 12px;
-        margin: 0;
-        border-bottom: 1px solid #969fa7;
-        border-right: 1px solid #c7c7c7;
-        font-size: 16px;
-        color: #2e374d;
-        font-weight: bold;
-    }
-    
-    .statsTable td a {
-        font-size: 13px;
-        font-weight: normal;
-        text-decoration: none; 
-        border-bottom: 1px solid #78c9cf;
-        color: #2e374d;
-    }
-    
-    .statsTable tr:last-child td {
-        border-bottom: none;
-    }
-    
-    .statsTable td:last-child {
-        border-right: none;
-    }
-    
-    .statsTable .key {
-        width: 10px;
-    }
-    
-    .statsTable .keyDark {
-        background: #2d3f50;
-    }
-    
-    .statsTable .keyMedium {
-        background: #91a2b2;
-    }
-    
-    .statsTable .keyLight {
-        background: #d1d4db;
-    }
-    
-    .statsTable .keyPopular {
-        background-image: url(star.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
+#introductionWrap.small {
+    z-index: -1;
+    height: 0px;
+}
 
-    .statsTable .value {
-        width: 225px;
-    }
+.introduction {
+    width: 920px;
+    margin: 0px auto;
+    padding: 90px 0 80px;
+    position: relative;
+}
 
-    .statsTable .result {
-        width: 75px;
-        text-align: center;
-    }   
-    
-    p.statsInfo {
-        width: 386px;
-        margin-left: 65px;
-        text-align: center;
-        color: #2e374d;
-        font-size: 13px;
-        font-style: italic;
-        margin-top: 20px;
-    }
+.icon {
+    width: 65px; 
+    height: 65px; 
+    background-position: 0 -91px;
+    background-image: url(image_sprite_1x.png);
+    display: block;
+}
 
-/* Historical Data */
-    
-    .historicalData {
-        border-top: 1px solid #bfbfbf;
-        padding: 25px 0;
-    }
+.introduction h1 {
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 46px;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-    .historicalChart {
-        width: 860px;
-        height: 150px;
-        margin-left: 65px;
-        margin-top: 6px;
-        display: inline-block;
+.introduction p {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 21px;
+    width: 640px;
+}
+
+.introduction a {
+    color: #80d8dd;
+    text-decoration: none;
+}
+
+h2 {
+    margin: 0;
+    color: #2d3e4f;
+    top: 50%;
+    margin-top: -14px;
+    position: absolute;
+    font-size: 24px;
+}
+
+.currentReportWrap {
+    background: #ecf0f1;
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#currentReportWrap.small {
+    position: fixed;
+    top: 63;
+    left: 0;
+    z-index: 10;
+}
+
+.currentReportContent {
+    width: 920px;
+    margin: 0 auto;
+    position: relative;
+    height: 86px;
+}
+
+.selectProjectBtn {
+    border: 1px solid #909da7;
+    background-color: #f6f8f8;
+    padding: 6px 10px;
+    color: #2c3e4f;
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -14px;
+    cursor: pointer;
+    outline: none;
+    transition: font-size 1.0s;
+}
+
+.fixedHeader {
+    background: #2d3f50;
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+.fixedHeader .introduction {
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+/* HEADER SMALL */
+
+.fixedHeader .introduction,
+.small .introduction {
+    padding: 12px 0 0;
+}
+
+.fixedHeader .icon,
+.small .icon {
+    width: 35px;
+    height: 35px;
+    background-position: 0 -173px;
+    display: inline-block;
+}
+
+.fixedHeader .introduction h1,
+.small .introduction h1 {
+    font-size: 20px;
+    line-height: 20px;
+    display: inline-block;
+    position: relative;
+    top: -8px;
+    left: 6px;
+}
+
+.small .introduction p {
+    display: none;
+}
+
+.small h2 {
+    font-size: 17px;
+    line-height: 30px;
+}
+
+.small .currentReportContent {
+    width: 920px;
+    margin: 0 auto;
+    position: relative;
+    height: 45px;
+}
+
+.small .selectProjectBtn {
+    padding: 3px 10px;
+    margin-top: -11px;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2) { 
+    .icon, small.icon, .conventionStatus, .statsTable .keypopular:after {
+        background-image: url(image_sprite_2x.png);
+        background-size: 65px 209px; 
     }
-    
-    .tag {
-        background-color: #b0b6b5;
-        color: #ffffff;
-        text-transform: uppercase;
-        display: inline-block;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 5px 3px 5px 7px;
-        position: relative;
-    }
-    
-    .tag:after {
-        content: "";
-        border: 12px solid #fff;
-        border-left: 12px solid #b0b6b5;
-        width:0px;
-        height: 0px;
-        display: block;
-        position: absolute;
-        right: -24px;
-        top: 0;
-    }
-    
-    .screenHide {
-        display: block;
-        position: absolute;
-        left: -9999px;
-    }
+}

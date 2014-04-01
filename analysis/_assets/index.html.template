@@ -5,12 +5,52 @@
     <script src="((assetPath))_assets/Chart.min.js"></script>
 </head>
 <body>
-<div class="intro">
-((intro))
+<div id="fixedHeader" class="fixedHeader">
+    <div id="fixedHeaderContent" class="introduction">
+        <div class="icon"></div>
+        <h1>((title))</h1>
+    </div>
 </div>
+
+<div id="introductionWrap" class="introductionWrap">
+    <div class="introduction">
+        <div class="icon"></div>
+        <h1>((title))</h1>
+        ((intro))
+    </div>
+</div>
+
+<div id="currentReportWrap" class="currentReportWrap">
+    <div class="currentReportContent">
+        <h2>Combined Analysis</h2>
+        <button class="selectProjectBtn">Load Project Specific Data</button>
+    </div>
+</div>
+
+<div id="contentWrap" class="contentWrap">
 ((html))
+</div>
+
 <div class="footer">((footer))</div>
 <script>
+function init() {
+    window.addEventListener('scroll', function(e){
+        var distanceY = (window.pageYOffset || document.documentElement.scrollTop);
+        if (distanceY > 500) {
+            document.getElementById("introductionWrap").className = "introductionWrap small";
+            document.getElementById("currentReportWrap").className = "currentReportWrap small";
+            document.getElementById("contentWrap").className = "contentWrap small";
+            document.getElementById("fixedHeaderContent").style.opacity = "1";
+        } else {
+            document.getElementById("introductionWrap").className = "introductionWrap";
+            document.getElementById("currentReportWrap").className = "currentReportWrap";
+            document.getElementById("contentWrap").className = "contentWrap";
+            document.getElementById("fixedHeaderContent").style.opacity = "0";
+        }
+    });
+}
+window.onload = init();
+
 ((js))
 </script>
 <script>
