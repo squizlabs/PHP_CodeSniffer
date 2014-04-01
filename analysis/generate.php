@@ -172,7 +172,7 @@ function generateReport($results, $repo=null)
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
     $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
-    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:9,scaleFontFamily:"verdana",scaleGridLineColor:"C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:9,scaleFontFamily:"verdana",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
 
     $metricTable = '';
 
