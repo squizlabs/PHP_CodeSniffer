@@ -161,6 +161,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 || $tokens[$nextBreak]['code'] === T_RETURN
                 || $tokens[$nextBreak]['code'] === T_CONTINUE
                 || $tokens[$nextBreak]['code'] === T_THROW
+                || $tokens[$nextBreak]['code'] === T_EXIT
             ) {
                 if ($tokens[$nextBreak]['scope_condition'] === $nextCase) {
                     // Only need to check a couple of things once, even if the

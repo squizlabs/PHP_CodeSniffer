@@ -268,4 +268,13 @@ switch ($something) {
     default:
     throw new Exception('message');
 }
-?>
+
+switch ($something) {
+    case '1';
+        echo 'one';
+    break;
+
+    default:
+        echo 'default';
+    exit;
+}
