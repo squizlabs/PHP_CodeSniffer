@@ -4,11 +4,11 @@ $resultFiles = array();
 $repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
 
 $GLOBALS['today'] = date('Y-m-d');
-$checkoutDate = $GLOBALS['today'];
-$recordTrend  = false;
-$runPHPCS     = true;
-$runGit       = true;
-$filterRepos  = array();
+$checkoutDate     = $GLOBALS['today'];
+$recordTrend      = false;
+$runPHPCS         = true;
+$runGit           = true;
+$filterRepos      = array();
 foreach ($_SERVER['argv'] as $arg) {
     if (substr($arg, 0, 7) === '--date=') {
         $checkoutDate = substr($arg, 7);
@@ -44,22 +44,21 @@ foreach ($repos as $repo) {
 // Imports $metricText variable.
 require_once __DIR__.'/_assets/metricText.php';
 $GLOBALS['metric_text'] = $metricText;
-$GLOBALS['colours'] = array(
-            '#2D3F50',
-            '#91A2B2',
-            '#D1D4DB',
-            '#E5E5E5',
-           );
+$GLOBALS['colours']     = array(
+                           '#2D3F50',
+                           '#91A2B2',
+                           '#D1D4DB',
+                           '#E5E5E5',
+                          );
 
 $GLOBALS['num_repos'] = count($resultFiles);
 
-echo "Generating HTML files".PHP_EOL;
+echo "Pre-processing result files".PHP_EOL;
 
 $totals = array();
 foreach ($resultFiles as $file) {
     $results = json_decode(file_get_contents($file), true);
     $repo    = $results['project']['path'];
-    echo "\t=> Processing result file for $repo: $file".PHP_EOL;
 
     foreach ($results['metrics'] as $metric => $data) {
         if (empty($data['values']) === true) {
@@ -108,15 +107,9 @@ foreach ($resultFiles as $file) {
 
     }//end foreach
 
-    $output = generateReport($results, $repo);
-    file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
     file_put_contents($file, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
 
 }//end foreach
-
-if (empty($filterRepos) === false) {
-    exit;
-}
 
 // Load in old trend values.
 $filename   = __DIR__.'/results.json';
@@ -160,11 +153,31 @@ foreach ($totals as $metric => $data) {
     }
 }
 
+$GLOBALS['totals'] = $totals;
+
+echo "Generating HTML files".PHP_EOL;
+
+foreach ($resultFiles as $file) {
+    $results = json_decode(file_get_contents($file), true);
+    $repo    = $results['project']['path'];
+    echo "\t=> Processing result file for $repo: $file".PHP_EOL;
+    $output = generateReport($results, $repo);
+    file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
+}
+
+
+if (empty($filterRepos) === false) {
+    exit;
+}
+
 file_put_contents($filename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
 
 echo "\t=> Processing main result file: $filename".PHP_EOL;
 $output = generateReport($totals);
 file_put_contents(__DIR__.'/index.html', $output);
+
+
+
 
 
 function generateReport($results, $repo=null)
@@ -209,10 +222,16 @@ function generateReport($results, $repo=null)
         $html .= '  <div class="currentData">'.PHP_EOL;
 
         if ($repo !== null) {
-            $html .= '    <div class="conventionStatusInProject project false">'.PHP_EOL;
-            $html .= '      <p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
-            $html .= '      <span class="conventionStatus"></span>'.PHP_EOL;
-            $html .= '    </div>'.PHP_EOL;
+            if ($data['winner'] === $GLOBALS['totals'][$metric]['winner']) {
+                $html .= '    <div class="conventionStatusInProject project true">'.PHP_EOL;
+                $html .= '      <p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
+                $html .= '      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '    </div>'.PHP_EOL;
+            } else {
+                $html .= '    <div class="conventionStatusInProject project false">'.PHP_EOL;
+                $html .= '      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '    </div>'.PHP_EOL;
+            }
         }
 
         $html .= '    <div class="tag">Current</div>'.PHP_EOL;
@@ -378,9 +397,9 @@ function generateReport($results, $repo=null)
             $html      = str_replace('((repoResetCode))', $repoResetCode, $html);
             $repoData  = substr($repoData, 0, -1);
             $repoData .= ']'.PHP_EOL;
-            $js .= $repoData;
-            $js .= 'var c = document.getElementById("chart'.$chartNum.'r").getContext("2d");'.PHP_EOL;
-            $js .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
+            $js       .= $repoData;
+            $js       .= 'var c = document.getElementById("chart'.$chartNum.'r").getContext("2d");'.PHP_EOL;
+            $js       .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
         }
 
         $js      .= 'var data = {labels:[';
@@ -445,7 +464,7 @@ function generateReport($results, $repo=null)
     }//end foreach
 
     if ($repo === null) {
-        $intro = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects. This is the same output produced by the <em>info</em> report, but it has been JSON encoded and modified slightly.</p>'.PHP_EOL;
+        $intro  = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
         $intro .= '<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
 
@@ -453,7 +472,7 @@ function generateReport($results, $repo=null)
         $title     = 'Analysis of Coding Conventions';
         $assetPath = '';
     } else {
-        $intro = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
+        $intro  = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
         $intro .= '<p>You can also <a href="../../index.html">view a combined analysis</a> that covers '.$GLOBALS['num_repos'].' PHP projects</p>'.PHP_EOL;
 
         $commitid  = $results['project']['commitid'];
