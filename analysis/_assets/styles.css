@@ -125,7 +125,7 @@ table.statsTable {
     padding: 12px;
     margin: 0;
     border-top: 1px solid #969fa7;
-    border-right: 1px solid #c7c7c7;
+    border-left: 1px solid #c7c7c7;
     font-size: 16px;
     color: #2e374d;
     font-weight: bold;
@@ -149,18 +149,6 @@ table.statsTable {
 
 .statsTable .key {
     width: 10px;
-}
-
-.statsTable .keyDark {
-    background: #2d3f50;
-}
-
-.statsTable .keyMedium {
-    background: #91a2b2;
-}
-
-.statsTable .keyLight {
-    background: #d1d4db;
 }
 
 .statsTable .keypopular:after {
@@ -354,7 +342,9 @@ h2 {
 
 .fixedHeader .introduction {
     opacity: 0;
-    transition: opacity 0.1s;
+    transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -webkit-transition: opacity 0.2s;
 }
 
 /* HEADER SMALL */
