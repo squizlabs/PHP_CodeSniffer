@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Maurus Cuelenaere for the patch
   - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
     -- Thanks to Max Galbusera for the patch
+  - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
   - Fixed bug #20200 : Invalid JSON produced with specific error message
   - Fixed bug #20204 : Ruleset exclude checks are case sensitive
   - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
