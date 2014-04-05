@@ -24,6 +24,9 @@ function myFunction()
 
 }
 
+/**
+ * Doc comment with a white space at the end. 
+ */
 function myFunction2()
 {
     echo 'code here';
