@@ -1494,7 +1494,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Mon, 07 Apr 2014 15:05:05 +1000<br/>Using master branch of <a href="https://github.com/facebook/facebook-php-sdk">facebook/facebook-php-sdk</a> @ commit <a href="https://github.com/facebook/facebook-php-sdk/commit/8e20b40868b6beb72a0d4452d2c275f48f25cbc5">8e20b40868b6beb72a0d4452d2c275f48f25cbc5</div>
+    <div class="footer">Report generated on Mon, 07 Apr 2014 15:31:16 +1000<br/>Using master branch of <a href="https://github.com/facebook/facebook-php-sdk">facebook/facebook-php-sdk</a> @ commit <a href="https://github.com/facebook/facebook-php-sdk/commit/8e20b40868b6beb72a0d4452d2c275f48f25cbc5">8e20b40868b6beb72a0d4452d2c275f48f25cbc5</div>
 </div>
 
 <script>
@@ -1516,6 +1516,21 @@ function init() {
     };
     document.getElementById("flyout").addEventListener('mouseout', mouseout);
     document.getElementById("flyoutFixed").addEventListener('mouseout', mouseout);
+
+    var click = function(e) {
+        if (document.getElementById("flyout").className == "flyout expanded pinned") {
+            return;
+        }
+
+        if (document.getElementById("flyout").className == "flyout expanded") {
+            document.getElementById("flyout").className = "flyout";
+            document.getElementById("flyoutFixed").className = "flyoutFixed";
+        } else {
+            document.getElementById("flyout").className = "flyout expanded";
+            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
+        }
+    };
+    document.getElementById("flyoutFixed").addEventListener('click', click);
 
     document.getElementById("flyoutPin").addEventListener('click', function(e) {
         if (document.getElementById("flyoutPin").className == "flyoutPin") {

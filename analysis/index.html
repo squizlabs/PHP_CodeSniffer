@@ -5187,7 +5187,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Mon, 07 Apr 2014 15:05:06 +1000</div>
+    <div class="footer">Report generated on Mon, 07 Apr 2014 15:31:17 +1000</div>
 </div>
 
 <script>
@@ -5209,6 +5209,21 @@ function init() {
     };
     document.getElementById("flyout").addEventListener('mouseout', mouseout);
     document.getElementById("flyoutFixed").addEventListener('mouseout', mouseout);
+
+    var click = function(e) {
+        if (document.getElementById("flyout").className == "flyout expanded pinned") {
+            return;
+        }
+
+        if (document.getElementById("flyout").className == "flyout expanded") {
+            document.getElementById("flyout").className = "flyout";
+            document.getElementById("flyoutFixed").className = "flyoutFixed";
+        } else {
+            document.getElementById("flyout").className = "flyout expanded";
+            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
+        }
+    };
+    document.getElementById("flyoutFixed").addEventListener('click', click);
 
     document.getElementById("flyoutPin").addEventListener('click', function(e) {
         if (document.getElementById("flyoutPin").className == "flyoutPin") {

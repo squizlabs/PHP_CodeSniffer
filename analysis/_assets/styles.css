@@ -19,6 +19,10 @@ body {
     -moz-box-sizing: border-box;
 }
 
+#mainWrap {
+    min-width: 1100px;
+}
+
 #mainWrap.pinned,
 #fixedHeader.pinned {
     margin-left: 420px;
@@ -602,6 +606,6 @@ h2 {
 (-webkit-min-device-pixel-ratio: 2) { 
     .icon, small.icon, .conventionStatus, .statsTable .keypopular:after {
         background-image: url(image_sprite_2x.png);
-        background-size: 65px 209px; 
+        background-size: 65px 271px; 
     }
 }
