@@ -516,12 +516,6 @@ class PHP_CodeSniffer
                 $ruleset = simplexml_load_file($standard);
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
-                } else if (is_file(self::realpath(PHPCS_CWD.'/'.$standard)) === true) {
-                    $rulePath = self::realpath(PHPCS_CWD.'/'.$standard);
-                    $ruleset  = simplexml_load_file(file_get_contents($rulePath));
-                    if ($ruleset !== false) {
-                        $standardName = (string) $ruleset['name'];
-                    }
                 }
 
                 echo "Registering sniffs in the $standardName standard... ";
