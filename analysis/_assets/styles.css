@@ -371,18 +371,37 @@ h2 {
 /* FLYOUT OVERLAY */
     
 .flyout {
-    background:#1f2a36; 
+    background: #1f2a36;
     height: 100vh;
     position: fixed;
-    left: -472px;
+    left: -372px;
     box-shadow: 1px 0 3px rgba(0,0,0,0.1);
     z-index: 15;
     color: #ffffff;
     padding: 20px 50px 55px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
     -webkit-transition: left 0.3s ease-out;
     -moz-transition: left 0.3s ease-out;
     width: 420px; 
     overflow-y: hidden;
+}
+
+.flyout.expanded .flyoutFixed {
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: #1f2a36;
+    width: 420px;
+    height: 50px;
+}
+
+.flyoutList {
+    width: 100%;
+    border-collapse: collapse;
+    display: table;
+    overflow-y: scroll;
+    margin-top: 40px;
 }
 
 .flyoutHeader {
