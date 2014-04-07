@@ -387,12 +387,23 @@ h2 {
     overflow-y: hidden;
 }
 
+.flyoutFixed {
+    top: 0;
+    left: -372px;
+    position: fixed;
+    background: #1f2a36;
+    width: 420px;
+    height: 50px;
+    -webkit-transition: left 0.3s ease-out;
+    -moz-transition: left 0.3s ease-out;
+}
+
 .flyout.expanded .flyoutFixed {
     top: 0;
     left: 0;
     position: fixed;
     background: #1f2a36;
-    width: 420px;
+    width: 400px;
     height: 50px;
 }
 
@@ -414,7 +425,8 @@ h2 {
 .flyout h2 {
     color: #d9d9d9;
     font-size: 18px;
-    padding-left: 3px;
+    padding-left: 25px;
+    margin-top: 0px;
 }
 
 .flyout li {
