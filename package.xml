@@ -60,6 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
   - Fixed bug #20225 : array_merge() that takes more than one line generates error
   - Fixed bug #20230 : Squiz ControlStructureSpacing sniff assumes specific condition formatting
+  - Fixed bug #20234 : phpcbf patch command absolute paths
  </notes>
  <contents>
   <dir name="/">
