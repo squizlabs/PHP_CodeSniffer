@@ -21,7 +21,7 @@ body {
 
 #mainWrap.pinned,
 #fixedHeader.pinned {
-    margin-left: 460px;
+    margin-left: 420px;
 }
 
 #fixedHeader.pinned .introduction {
