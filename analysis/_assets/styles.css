@@ -19,6 +19,20 @@ body {
     -moz-box-sizing: border-box;
 }
 
+#mainWrap.pinned,
+#fixedHeader.pinned {
+    margin-left: 460px;
+}
+
+#fixedHeader.pinned .introduction {
+    margin-left: 20px;
+}
+
+#mainWrap.pinned .introduction,
+#mainWrap.pinned .conventionWrap {
+    padding-left: 20px;
+}
+
 /* Convention Details */
 
 
@@ -28,7 +42,7 @@ body {
 }
 
 .conventionDetails {
-    padding: 40px 0;
+    padding: 75px 0;
     width: 920px;
     margin: 0 auto;
 }
@@ -290,44 +304,6 @@ h2 {
     font-size: 24px;
 }
 
-.currentReportWrap {
-    background: #ecf0f1;
-    border-bottom: 1px solid #e2e2e2;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-#currentReportWrap.small {
-    position: fixed;
-    top: 63;
-    left: 0;
-    z-index: 10;
-}
-
-.currentReportContent {
-    width: 920px;
-    margin: 0 auto;
-    position: relative;
-    height: 86px;
-}
-
-.selectProjectBtn {
-    border: 1px solid #909da7;
-    background-color: #f6f8f8;
-    padding: 6px 10px;
-    color: #2c3e4f;
-    font-size: 12px;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -14px;
-    cursor: pointer;
-    outline: none;
-    transition: font-size 1.0s;
-}
 
 .fixedHeader {
     background: #2d3f50;
@@ -390,6 +366,207 @@ h2 {
 .small .selectProjectBtn {
     padding: 3px 10px;
     margin-top: -11px;
+}
+
+/* FLYOUT OVERLAY */
+    
+.flyout {
+    background:#1f2a36; 
+    height: 100vh;
+    position: fixed;
+    left: -472px;
+    box-shadow: 1px 0 3px rgba(0,0,0,0.1);
+    z-index: 15;
+    color: #ffffff;
+    padding: 20px 50px 55px;
+    -webkit-transition: left 0.3s ease-out;
+    -moz-transition: left 0.3s ease-out;
+    width: 420px; 
+    overflow-y: hidden;
+}
+
+.flyoutHeader {
+    display: block;
+    position: relative;
+    height: 25px;
+    width: 150px;
+}
+
+.flyout h2 {
+    color: #d9d9d9;
+    font-size: 18px;
+    padding-left: 3px;
+}
+
+.flyout li {
+    display: table-row;
+    text-decoration: none;
+}
+
+.flyout li:hover {
+    display: table-row;
+    background-color: #2d3d4f;
+}
+
+.flyout .td1,
+.flyout .td2,
+.flyout .td3 {
+    font-size: 13px;
+    border-bottom: 1px solid #2b3540;
+    padding: 6px;
+    display: table-cell;
+}
+
+.flyout .td1 a {
+    color: #e4e9ed;
+    width: 98%;
+    text-decoration: none;
+}
+
+.flyout .td1 a:hover {
+    text-decoration: underline;
+}
+
+.flyout .td2 {
+    text-align: right;
+    padding-right: 25px;
+    font-weight: bold;
+    color: #e4e9ed;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.flyout .td3 {
+    color: #ced2d6;
+    width: 1%;
+}
+
+.flyout.expanded {
+    width:420px;
+    left: 0;
+    overflow-y: scroll;
+    padding: 20px 20px 55px;
+}
+
+.flyoutControl {
+    width: 17px;
+    height: 17px;
+    background-image: url(image_sprite_1x.png);
+    background-position: 0 -156px;
+    position: absolute;
+    right: 17px;
+    top: 17px;
+    opacity: 1;
+}
+
+.flyoutPin {
+    width: 17px;
+    height: 17px;
+    background-image: url(image_sprite_1x.png);
+    background-position: 0 -220px;
+    position: absolute;
+    right: 50px;
+    top: 17px;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.flyoutPin.active {
+    background-position: 0 -237px;
+}
+
+.highlight {
+    color: #82cb8c;
+}
+
+/* LIST BOX */
+
+.listBoxWrap {
+    position: fixed;
+    top: 150px;
+    left: 480px;
+    z-index: 15;
+    padding: 10px;
+    background: rgba(28,40,54,0.5);
+    display: none;
+    border-radius: 5px;
+}
+
+.listBoxContent {
+    width: 420px;
+    background: #efefef;
+}
+
+.listBoxClose {
+    width: 12px;
+    height: 12px;
+    display: block;
+    position: absolute;
+    right: 31px;
+    top: 31px;
+    background-image: url(image_sprite_1x.png);
+    background-position: 0 -208px;
+    cursor: pointer;
+    z-index: 15;
+}
+
+.listBoxHeader {
+    background: #efefef;
+    position: absolute;
+    width: 360px;
+    left: 10px;
+    top: 10px;
+    padding: 15px 20px 5px;
+    z-index: 10;
+}
+
+.listBoxHeader h4 {
+    margin: 0 0 15px 0;
+    font-family: 17px;
+    color: #2e374d;
+}
+
+.listBoxListWrap {
+    max-height: 420px;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.listBoxList {
+    width: 100%; 
+    border-collapse: collapse; 
+    display: table; 
+    list-style: none;
+    padding:0;
+    margin:0;
+    margin-top: 30px;
+}
+
+.listBoxList li, .listBoxList a  {
+    list-style: none;
+    display: table-row;
+    color: #000000;
+}
+
+#listBoxList .li a {
+    display: table-row;
+}
+
+
+.listBoxList li:hover {
+    background-color: #f7f7f7;
+}
+
+.listBoxList .td1, .listBoxList .td2 {
+    color: #000000;
+    display: table-cell;
+    font-size: 13px;
+    border-bottom: 1px solid #dedede;
+    padding: 4px;
+}
+
+.listBoxList .td1 {
+    width: 100%;
 }
 
 @media 

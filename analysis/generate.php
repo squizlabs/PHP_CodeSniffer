@@ -215,9 +215,9 @@ function generateReport($results, $repo=null)
         $chartNum++;
         $metricid = str_replace(' ', '-', strtolower($metric));
 
-        $html .= '<div class="conventionWrap">'.PHP_EOL;
+        $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
-        $html .= '  <h3 id="'.$metricid.'">'.$metric.'</h3>'.PHP_EOL;
+        $html .= '  <h3>'.$metric.'</h3>'.PHP_EOL;
         $html .= '  <p>'.$description.'</p>'.PHP_EOL;
         $html .= '  <div class="currentData">'.PHP_EOL;
 
@@ -289,17 +289,24 @@ function generateReport($results, $repo=null)
                         $title = "$numRepos projects prefer";
                     }
 
-                    $repoHTML .= '  <div id="'.$metricid.'-'.$valueid.'-repos" class="repo-data">'.PHP_EOL;
-                    $repoHTML .= "    <p><span onclick=\"document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';\" class=\"close\">[close]</span><strong>$title <em>$value</em></strong></p>".PHP_EOL;
-                    $repoHTML .= '    <ul>'.PHP_EOL;
+                    $repoHTML .= '<div id="'.$metricid.'-'.$valueid.'-repos" class="listBoxWrap">'.PHP_EOL;
+                    $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
+                    $repoHTML .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
+                    $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
+                    $repoHTML .= '            <h4>'.$title.' <i>'.$value.'</i></h4>'.PHP_EOL;
+                    $repoHTML .= '        </div>'.PHP_EOL;
+                    $repoHTML .= '        <div class="listBoxListWrap">'.PHP_EOL;
+                    $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
 
                     uksort($data['repos'][$value], 'sortRepos');
                     foreach ($data['repos'][$value] as $repoName => $percent) {
                         $href      = $repoName.'/index.html#'.$metricid;
-                        $repoHTML .= "      <a href=\"$href\"><li>$repoName <span class=\"repo-percent\">$percent%</span></li></a>".PHP_EOL;
+                        $repoHTML .= '<li><div class="td1"><a href="'.$href.'">'.$repoName.'</a></div><div class="td2">'.$percent.'%</div></li>'.PHP_EOL;
                     }
 
                     $repoHTML .= '    </ul>'.PHP_EOL;
+                    $repoHTML .= '  </div>'.PHP_EOL;
+                    $repoHTML .= '  </div>'.PHP_EOL;
                     $repoHTML .= '  </div>'.PHP_EOL;
                 } else {
                     $numRepos     = 0;
@@ -329,13 +336,13 @@ function generateReport($results, $repo=null)
             $html .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
             $html .= '        <td class="value">'.$percent.'%';
             if ($repo === null) {
-                $html .= '<br/><a href="">preferred by '.$percentRepos.'% of projects</a>';
-            }
+                $html .= '<br/><a href="" onclick="';
+                if ($numRepos > 0) {
+                    $html .= 'document.getElementById(\'listBoxWrap\').innerHTML=document.getElementById(\''.$metricid.'-'.$valueid.'-repos\').innerHTML;document.getElementById(\'listBoxWrap\').style.display=\'block\';';
+                }
 
-            #if ($numRepos > 0) {
-            #    $repoResetCode .= "document.getElementById('{$metricid}-{$valueid}-repos').style.display='none';";
-            #    $html          .= ' onclick="var item=document.getElementById(\''.$metricid.'-'.$valueid.'-repos\');if(item.style.display==\'block\'){item.style.display=\'none\';}else{((repoResetCode))item.style.display=\'block\';}"';
-            #}
+                $html .= 'return false;">preferred by '.$percentRepos.'% of projects</a>';
+            }
 
             $html .= '</td>'.PHP_EOL;
             $html .= '      </tr>'.PHP_EOL;
@@ -448,7 +455,7 @@ function generateReport($results, $repo=null)
         $html .= "        <p class=\"statsInfo\">Based on $totalItems</p>".PHP_EOL;
         $html .= '      </div>'.PHP_EOL;
         $html .= '    </div>'.PHP_EOL;
-        //$html .= $repoHTML;
+        $html .= $repoHTML;
         $html .= '  </div>'.PHP_EOL;
         $html .= '  <div class="historicalData">'.PHP_EOL;
         $html .= '    <div class="tag">Historical</div>'.PHP_EOL;
@@ -458,10 +465,15 @@ function generateReport($results, $repo=null)
         $html .= '  </div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
-
-        //$winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
-        //$metricTable .= '<tr><td width="300"><a href="#'.$metricid.'">'.$metric.'</a></td><td>'.$data['winner'].'</td><td>'.$winPercent.'% of '.$totalItems.'</td></tr>';
     }//end foreach
+
+    ksort($metrics);
+    $sidebar = '';
+    foreach ($metrics as $metric => $data) {
+        $metricid   = str_replace(' ', '-', strtolower($metric));
+        $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
+        $sidebar   .= '<li><div class="td1"><a href="#'.$metricid.'">'.$metric.'</a></div><div class="td2">'.$data['winner'].'</div><div class="td3">'.$winPercent.'%</div></li>';
+    }
 
     if ($repo === null) {
         $intro  = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
@@ -484,6 +496,7 @@ function generateReport($results, $repo=null)
     $output = file_get_contents(__DIR__.'/_assets/index.html.template');
     $output = str_replace('((title))', $title, $output);
     $output = str_replace('((intro))', $intro, $output);
+    $output = str_replace('((sidebar))', $sidebar, $output);
     $output = str_replace('((html))', $html, $output);
     $output = str_replace('((footer))', $footer, $output);
     $output = str_replace('((js))', $js, $output);
