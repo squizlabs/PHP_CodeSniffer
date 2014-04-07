@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>((title))</title>
@@ -9,7 +10,7 @@
 
 <div id="mainWrap" class="mainWrap">
     <div id="flyoutFixed" class="flyoutFixed">
-        <div class="flyoutControl"></div>
+        <div id="flyoutControl" class="flyoutControl"></div>
         <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
         <div class="flyoutHeader">
             <h2>Conventions</h2>
@@ -76,7 +77,19 @@ function init() {
             document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
         }
     };
-    document.getElementById("flyoutFixed").addEventListener('click', click);
+    document.getElementById("flyoutControl").addEventListener('click', click);
+
+    var scroll = function(e) {
+        var flyoutScroll = (document.getElementById('flyout').scrollHeight - document.getElementById('flyout').clientHeight);
+        var delta = e.wheelDelta || -e.detail;
+        if (this.scrollTop >= flyoutScroll && delta < 0) {
+          e.preventDefault();
+        } else if (this.scrollTop <= 0 && delta > 0) {
+          e.preventDefault();
+        }
+    };
+    document.getElementById('flyout').addEventListener('mousewheel', scroll);
+    document.getElementById('flyout').addEventListener('DOMMouseScroll', scroll);
 
     document.getElementById("flyoutPin").addEventListener('click', function(e) {
         if (document.getElementById("flyoutPin").className == "flyoutPin") {

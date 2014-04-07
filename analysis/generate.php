@@ -411,15 +411,15 @@ function generateReport($results, $repo=null)
 
         $js      .= 'var data = {labels:[';
         $numDates = count($data['trends']);
-        $dateStep = ceil($numDates / 4);
-        $dateNum  = 1;
+        $dateStep = ceil($numDates / 20);
+        $dateNum  = 0;
         foreach (array_keys($data['trends']) as $date) {
-            //if ($dateNum === 1 || $dateNum === $numDates || $dateNum % $dateStep === 0) {
+            if ($dateNum === 0 || $dateNum % $dateStep === 0) {
                 $time = strtotime($date);
                 $js  .= '"'.date('d-M', $time).'",';
-            //} else {
-            //    $js .= '"",';
-            //}
+            } else {
+                $js .= '"",';
+            }
 
             $dateNum++;
             continue;
