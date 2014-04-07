@@ -8,14 +8,15 @@
 <div id="listBoxWrap" class="listBoxWrap"></div>
 
 <div id="mainWrap" class="mainWrap">
-    <div id="flyout" class="flyout">
+    <div id="flyoutFixed" class="flyoutFixed">
         <div class="flyoutControl"></div>
         <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
         <div class="flyoutHeader">
             <h2>Conventions</h2>
         </div>
-        
-        <div style="width: 100%; border-collapse: collapse; display: table; overflow-y: scroll; margin-top: 10px;">
+    </div>
+    <div id="flyout" class="flyout">
+        <div class="flyoutList">
             ((sidebar))
         </div>
     </div>
@@ -44,17 +45,23 @@
 
 <script>
 function init() {
-    document.getElementById("flyout").addEventListener('mouseover', function(e) {
+    var mouseover = function(e) {
         if (document.getElementById("flyout").className != "flyout expanded pinned") {
             document.getElementById("flyout").className = "flyout expanded";
+            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
         }
-    });
+    };
+    document.getElementById("flyout").addEventListener('mouseover', mouseover);
+    document.getElementById("flyoutFixed").addEventListener('mouseover', mouseover);
 
-    document.getElementById("flyout").addEventListener('mouseout', function(e) {
+    var mouseout = function(e) {
         if (document.getElementById("flyout").className != "flyout expanded pinned") {
             document.getElementById("flyout").className = "flyout";
+            document.getElementById("flyoutFixed").className = "flyoutFixed";
         }
-    });
+    };
+    document.getElementById("flyout").addEventListener('mouseout', mouseout);
+    document.getElementById("flyoutFixed").addEventListener('mouseout', mouseout);
 
     document.getElementById("flyoutPin").addEventListener('click', function(e) {
         if (document.getElementById("flyoutPin").className == "flyoutPin") {

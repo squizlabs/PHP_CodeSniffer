@@ -213,7 +213,7 @@ function generateReport($results, $repo=null)
         }
 
         $chartNum++;
-        $metricid = str_replace(' ', '-', strtolower($metric));
+        $metricid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($metric));
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
@@ -278,7 +278,7 @@ function generateReport($results, $repo=null)
             }
 
             if ($repo === null) {
-                $valueid = str_replace(' ', '-', strtolower($value));
+                $valueid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($value));
                 if (isset($data['repos'][$value]) === true) {
                     $numRepos     = count($data['repos'][$value]);
                     $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);

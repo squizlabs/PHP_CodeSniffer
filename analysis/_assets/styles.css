@@ -381,34 +381,32 @@ h2 {
     padding: 20px 50px 55px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    transition: left 0.3s ease-out;
     -webkit-transition: left 0.3s ease-out;
     -moz-transition: left 0.3s ease-out;
     width: 420px; 
     overflow-y: hidden;
 }
 
-.flyoutFixed {
+#flyoutFixed {
     top: 0;
-    left: -372px;
-    position: fixed;
-    background: #1f2a36;
-    width: 420px;
-    height: 50px;
-    -webkit-transition: left 0.3s ease-out;
-    -moz-transition: left 0.3s ease-out;
-}
-
-.flyout.expanded .flyoutFixed {
-    top: 0;
-    left: 0;
+    left: -352px;
     position: fixed;
     background: #1f2a36;
     width: 400px;
     height: 50px;
+    transition: left 0.3s ease-out;
+    -webkit-transition: left 0.3s ease-out;
+    -moz-transition: left 0.3s ease-out;
+    z-index: 16;
 }
 
-.flyoutList {
-    width: 100%;
+#flyoutFixed.expanded {
+    left: 0;
+}
+
+.flyout.expanded .flyoutList {
+    width: 372px;
     border-collapse: collapse;
     display: table;
     overflow-y: scroll;
@@ -422,7 +420,7 @@ h2 {
     width: 150px;
 }
 
-.flyout h2 {
+.flyoutFixed h2 {
     color: #d9d9d9;
     font-size: 18px;
     padding-left: 25px;

@@ -8,14 +8,15 @@
 <div id="listBoxWrap" class="listBoxWrap"></div>
 
 <div id="mainWrap" class="mainWrap">
-    <div id="flyout" class="flyout">
+    <div id="flyoutFixed" class="flyoutFixed">
         <div class="flyoutControl"></div>
         <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
         <div class="flyoutHeader">
             <h2>Conventions</h2>
         </div>
-        
-        <div style="width: 100%; border-collapse: collapse; display: table; overflow-y: scroll; margin-top: 10px;">
+    </div>
+    <div id="flyout" class="flyout">
+        <div class="flyoutList">
             <li><div class="td1"><a href="#adjacent-assignments-aligned">Adjacent assignments aligned</a></div><div class="td2">yes</div><div class="td3">73.16%</div></li><li><div class="td1"><a href="#array-end-comma">Array end comma</a></div><div class="td2">yes</div><div class="td3">85.07%</div></li><li><div class="td1"><a href="#array-keyword-case">Array keyword case</a></div><div class="td2">lower</div><div class="td3">100%</div></li><li><div class="td1"><a href="#brackets-around-echoed-strings">Brackets around echoed strings</a></div><div class="td2">no</div><div class="td3">100%</div></li><li><div class="td1"><a href="#camelcase-class-name">CamelCase class name</a></div><div class="td2">no</div><div class="td3">99.81%</div></li><li><div class="td1"><a href="#camelcase-function-name">CamelCase function name</a></div><div class="td2">no</div><div class="td3">100%</div></li><li><div class="td1"><a href="#camelcase-method-name">CamelCase method name</a></div><div class="td2">no</div><div class="td3">77.17%</div></li><li><div class="td1"><a href="#class-defined-in-namespace">Class defined in namespace</a></div><div class="td2">yes</div><div class="td3">66.86%</div></li><li><div class="td1"><a href="#class-has-doc-comment">Class has doc comment</a></div><div class="td2">yes</div><div class="td3">68.38%</div></li><li><div class="td1"><a href="#class-opening-brace-placement">Class opening brace placement</a></div><div class="td2">new line</div><div class="td3">100%</div></li><li><div class="td1"><a href="#constant-name-case">Constant name case</a></div><div class="td2">upper</div><div class="td3">100%</div></li><li><div class="td1"><a href="#control-structure-defined-inline">Control structure defined inline</a></div><div class="td2">no</div><div class="td3">99.22%</div></li><li><div class="td1"><a href="#declarations-and-side-effects-mixed">Declarations and side effects mixed</a></div><div class="td2">no</div><div class="td3">73.28%</div></li><li><div class="td1"><a href="#eol-char">EOL char</a></div><div class="td2">\n</div><div class="td3">100%</div></li><li><div class="td1"><a href="#file-extension-for-class-files">File extension for class files</a></div><div class="td2">.php</div><div class="td3">100%</div></li><li><div class="td1"><a href="#file-extension-for-non-class-files">File extension for non-class files</a></div><div class="td2">.php</div><div class="td3">100%</div></li><li><div class="td1"><a href="#file-has-doc-comment">File has doc comment</a></div><div class="td2">yes</div><div class="td3">99.84%</div></li><li><div class="td1"><a href="#function-has-doc-comment">Function has doc comment</a></div><div class="td2">yes</div><div class="td3">73.61%</div></li><li><div class="td1"><a href="#function-opening-brace-placement">Function opening brace placement</a></div><div class="td2">new line</div><div class="td3">100%</div></li><li><div class="td1"><a href="#inline-comment-style">Inline comment style</a></div><div class="td2">// ...</div><div class="td3">99.03%</div></li><li><div class="td1"><a href="#line-indent">Line indent</a></div><div class="td2">tabs</div><div class="td3">99.95%</div></li><li><div class="td1"><a href="#line-length">Line length</a></div><div class="td2">80 or less</div><div class="td3">91.41%</div></li><li><div class="td1"><a href="#lowercase-filename">Lowercase filename</a></div><div class="td2">yes</div><div class="td3">100%</div></li><li><div class="td1"><a href="#multiple-statements-on-same-line">Multiple statements on same line</a></div><div class="td2">no</div><div class="td3">99.92%</div></li><li><div class="td1"><a href="#number-of-newlines-at-eof">Number of newlines at EOF</a></div><div class="td2">1</div><div class="td3">99.5%</div></li><li><div class="td1"><a href="#one-class-per-file">One class per file</a></div><div class="td2">yes</div><div class="td3">92.95%</div></li><li><div class="td1"><a href="#php-closing-tag-at-eof">PHP closing tag at EOF</a></div><div class="td2">no</div><div class="td3">99.67%</div></li><li><div class="td1"><a href="#php-constant-case">PHP constant case</a></div><div class="td2">lower</div><div class="td3">99.15%</div></li><li><div class="td1"><a href="#php-keyword-case">PHP keyword case</a></div><div class="td2">lower</div><div class="td3">100%</div></li><li><div class="td1"><a href="#php-short-open-tag-used">PHP short open tag used</a></div><div class="td2">no</div><div class="td3">100%</div></li><li><div class="td1"><a href="#private-method-prefixed-with-underscore">Private method prefixed with underscore</a></div><div class="td2">no</div><div class="td3">88.89%</div></li><li><div class="td1"><a href="#space-after-operator">Space after operator</a></div><div class="td2">1</div><div class="td3">93.15%</div></li><li><div class="td1"><a href="#space-before-operator">Space before operator</a></div><div class="td2">1</div><div class="td3">76.35%</div></li><li><div class="td1"><a href="#spaces-after-control-structure-open-parenthesis">Spaces after control structure open parenthesis</a></div><div class="td2">0</div><div class="td3">98.59%</div></li><li><div class="td1"><a href="#spaces-before-control-structure-close-parenthesis">Spaces before control structure close parenthesis</a></div><div class="td2">0</div><div class="td3">98.65%</div></li><li><div class="td1"><a href="#spacing-after-cast-statement">Spacing after cast statement</a></div><div class="td2">1</div><div class="td3">96.82%</div></li><li><div class="td1"><a href="#spacing-after-object-operator">Spacing after object operator</a></div><div class="td2">0</div><div class="td3">100%</div></li><li><div class="td1"><a href="#spacing-after-string-concat">Spacing after string concat</a></div><div class="td2">1</div><div class="td3">99.24%</div></li><li><div class="td1"><a href="#spacing-before-object-operator">Spacing before object operator</a></div><div class="td2">0</div><div class="td3">99.37%</div></li><li><div class="td1"><a href="#spacing-before-string-concat">Spacing before string concat</a></div><div class="td2">1</div><div class="td3">99.56%</div></li><li><div class="td1"><a href="#use-of-else-if-or-elseif">Use of ELSE IF or ELSEIF</a></div><div class="td2">else if</div><div class="td3">98.11%</div></li>
         </div>
     </div>
@@ -1833,22 +1834,28 @@
 
     </div>
 
-    <div class="footer">Report generated on Mon, 07 Apr 2014 13:46:48 +1000<br/>Using master branch of <a href="https://github.com/phpbb/phpbb">phpbb/phpbb</a> @ commit <a href="https://github.com/phpbb/phpbb/commit/99553183ab12d9a4ef540c4e3eb0bbba75cfb5f9">99553183ab12d9a4ef540c4e3eb0bbba75cfb5f9</div>
+    <div class="footer">Report generated on Mon, 07 Apr 2014 15:05:05 +1000<br/>Using master branch of <a href="https://github.com/phpbb/phpbb">phpbb/phpbb</a> @ commit <a href="https://github.com/phpbb/phpbb/commit/99553183ab12d9a4ef540c4e3eb0bbba75cfb5f9">99553183ab12d9a4ef540c4e3eb0bbba75cfb5f9</div>
 </div>
 
 <script>
 function init() {
-    document.getElementById("flyout").addEventListener('mouseover', function(e) {
+    var mouseover = function(e) {
         if (document.getElementById("flyout").className != "flyout expanded pinned") {
             document.getElementById("flyout").className = "flyout expanded";
+            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
         }
-    });
+    };
+    document.getElementById("flyout").addEventListener('mouseover', mouseover);
+    document.getElementById("flyoutFixed").addEventListener('mouseover', mouseover);
 
-    document.getElementById("flyout").addEventListener('mouseout', function(e) {
+    var mouseout = function(e) {
         if (document.getElementById("flyout").className != "flyout expanded pinned") {
             document.getElementById("flyout").className = "flyout";
+            document.getElementById("flyoutFixed").className = "flyoutFixed";
         }
-    });
+    };
+    document.getElementById("flyout").addEventListener('mouseout', mouseout);
+    document.getElementById("flyoutFixed").addEventListener('mouseout', mouseout);
 
     document.getElementById("flyoutPin").addEventListener('click', function(e) {
         if (document.getElementById("flyoutPin").className == "flyoutPin") {
