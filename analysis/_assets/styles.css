@@ -602,6 +602,32 @@ h2 {
     width: 100%;
 }
 
+.footer {
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+    background: #f5f5f5;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1) inset;
+    font-size: 14px;
+    color: #2d3f50;
+}
+
+.footer a {
+    color: #2d3f50;
+}
+
+.backToTop {
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 0;
+    top: 22px;
+    background-image: url(image_sprite_1x.png);
+    background-repeat: no-repeat;
+    background-position: 0 -254px;
+}
+
 @media 
 (-webkit-min-device-pixel-ratio: 2) { 
     .icon, small.icon, .conventionStatus, .statsTable .keypopular:after {

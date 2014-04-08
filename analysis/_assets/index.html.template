@@ -26,6 +26,7 @@
         <div id="fixedHeaderContent" class="introduction">
             <div class="icon"></div>
             <h1>((title))</h1>
+             <a href="#" title="Return to the top of the report" class="backToTop"></a>
         </div>
     </div>
 
