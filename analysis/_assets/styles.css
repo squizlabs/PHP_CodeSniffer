@@ -51,7 +51,7 @@ body {
     margin: 0 auto;
 }
 
-.conventionDetails h3 {
+.conventionDetails h1 {
     color: #354a5d;
     font-size: 24px;
     font-weight: bold;
@@ -213,7 +213,7 @@ p.statsInfo {
 }
 
 .tag {
-    background-color: #979c9b;
+    background-color: #555a59;
     color: #ffffff;
     text-transform: uppercase;
     display: inline-block;
@@ -226,7 +226,7 @@ p.statsInfo {
 .tag:after {
     content: "";
     border: 12px solid #fff;
-    border-left: 12px solid #979c9b;
+    border-left: 12px solid #555a59;
     width:0px;
     height: 0px;
     display: block;
@@ -249,7 +249,7 @@ p.statsInfo {
 }
 
 .introductionWrap {
-    background: #2d3f50;
+    background: #2c3e4f;
     color: #ffffff;
     position: relative;
     top: 0;
@@ -295,19 +295,9 @@ p.statsInfo {
 }
 
 .introduction a {
-    color: #80d8dd;
+    color: #80dfdd;
     text-decoration: none;
 }
-
-h2 {
-    margin: 0;
-    color: #2d3e4f;
-    top: 50%;
-    margin-top: -14px;
-    position: absolute;
-    font-size: 24px;
-}
-
 
 .fixedHeader {
     background: #2d3f50;
@@ -355,11 +345,6 @@ h2 {
     display: none;
 }
 
-.small h2 {
-    font-size: 17px;
-    line-height: 30px;
-}
-
 .small .currentReportContent {
     width: 920px;
     margin: 0 auto;
@@ -379,6 +364,7 @@ h2 {
     height: 100vh;
     position: fixed;
     left: -372px;
+    top: 0;
     box-shadow: 1px 0 3px rgba(0,0,0,0.1);
     z-index: 15;
     color: #ffffff;
@@ -424,8 +410,11 @@ h2 {
     width: 150px;
 }
 
-.flyoutFixed h2 {
+.flyoutFixed h1 {
+    margin: 0;
+    top: 50%;
     color: #d9d9d9;
+    position: absolute;
     font-size: 18px;
     padding-left: 25px;
     margin-top: 0px;
@@ -553,7 +542,7 @@ h2 {
     z-index: 10;
 }
 
-.listBoxHeader h4 {
+.listBoxHeader h3 {
     margin: 0 0 15px 0;
     font-family: 17px;
     color: #2e374d;

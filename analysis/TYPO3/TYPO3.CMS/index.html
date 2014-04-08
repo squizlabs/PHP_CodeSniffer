@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Analysis of Coding Conventions for TYPO3/TYPO3.CMS</title>
     <link rel="stylesheet" type="text/css" href="../../_assets/styles.css" />
@@ -9,11 +9,21 @@
 <div id="listBoxWrap" class="listBoxWrap"></div>
 
 <div id="mainWrap" class="mainWrap">
+    <div id="introductionWrap" class="introductionWrap">
+        <div class="introduction">
+            <div class="icon"></div>
+            <h1>Analysis of Coding Conventions for TYPO3/TYPO3.CMS</h1>
+            <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
+<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 63 PHP projects</p>
+
+        </div>
+    </div>
+
     <div id="flyoutFixed" class="flyoutFixed">
         <div id="flyoutControl" class="flyoutControl"></div>
         <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
         <div class="flyoutHeader">
-            <h2>Conventions</h2>
+            <h1>Conventions</h1>
         </div>
     </div>
     <div id="flyout" class="flyout">
@@ -26,24 +36,14 @@
         <div id="fixedHeaderContent" class="introduction">
             <div class="icon"></div>
             <h1>Analysis of Coding Conventions for TYPO3/TYPO3.CMS</h1>
-             <a href="#" title="Return to the top of the report" class="backToTop"></a>
-        </div>
-    </div>
-
-    <div id="introductionWrap" class="introductionWrap">
-        <div class="introduction">
-            <div class="icon"></div>
-            <h1>Analysis of Coding Conventions for TYPO3/TYPO3.CMS</h1>
-            <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
-<p>You can also <a href="../../index.html">view a combined analysis</a> that covers 63 PHP projects</p>
-
+             <a href="#" title="Return to the top of the report" class="backToTop"><span class="screenHide">Back to top</span></a>
         </div>
     </div>
 
     <div id="contentWrap" class="contentWrap">
     <div id="class-defined-in-namespace" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Class defined in namespace</h3>
+  <h2>Class defined in namespace</h2>
   <p>Is each class defined in a namespace of at least 1 level?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -87,7 +87,7 @@
 </div>
 <div id="camelcase-class-name" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>CamelCase class name</h3>
+  <h2>CamelCase class name</h2>
   <p>Are class names defined using CamelCase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -131,7 +131,7 @@
 </div>
 <div id="one-class-per-file" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>One class per file</h3>
+  <h2>One class per file</h2>
   <p>Is each class defined in a file by itself?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -175,7 +175,7 @@
 </div>
 <div id="php-constant-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>PHP constant case</h3>
+  <h2>PHP constant case</h2>
   <p>What case are PHP constants (true, false, null) written in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -218,7 +218,7 @@
 </div>
 <div id="private-method-prefixed-with-underscore" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Private method prefixed with underscore</h3>
+  <h2>Private method prefixed with underscore</h2>
   <p>Are private methods prefixed with an underscore?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -261,7 +261,7 @@
 </div>
 <div id="spacing-after-cast-statement" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spacing after cast statement</h3>
+  <h2>Spacing after cast statement</h2>
   <p>How many spaces are there between a cast statement and the variable?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -305,7 +305,7 @@
 </div>
 <div id="constant-name-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Constant name case</h3>
+  <h2>Constant name case</h2>
   <p>What case are user-defined constants defined in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -354,7 +354,7 @@
 </div>
 <div id="adjacent-assignments-aligned" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Adjacent assignments aligned</h3>
+  <h2>Adjacent assignments aligned</h2>
   <p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -398,7 +398,7 @@
 </div>
 <div id="file-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>File has doc comment</h3>
+  <h2>File has doc comment</h2>
   <p>Does each PHP file have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -441,7 +441,7 @@
 </div>
 <div id="lowercase-filename" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Lowercase filename</h3>
+  <h2>Lowercase filename</h2>
   <p>Are PHP filenames lowercase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -485,7 +485,7 @@
 </div>
 <div id="function-opening-brace-placement" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Function opening brace placement</h3>
+  <h2>Function opening brace placement</h2>
   <p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -528,7 +528,7 @@
 </div>
 <div id="inline-comment-style" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Inline comment style</h3>
+  <h2>Inline comment style</h2>
   <p>What comment style is used for non docblock comments?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -577,7 +577,7 @@
 </div>
 <div id="camelcase-method-name" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>CamelCase method name</h3>
+  <h2>CamelCase method name</h2>
   <p>Are class method names defined using CamelCase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -621,7 +621,7 @@
 </div>
 <div id="line-indent" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Line indent</h3>
+  <h2>Line indent</h2>
   <p>Are lines indented using spaces or tabs?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -664,7 +664,7 @@
 </div>
 <div id="line-length" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Line length</h3>
+  <h2>Line length</h2>
   <p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -718,7 +718,7 @@
 </div>
 <div id="array-end-comma" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Array end comma</h3>
+  <h2>Array end comma</h2>
   <p>Does the last item end with a comma in a multi-line array definition?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -762,7 +762,7 @@
 </div>
 <div id="class-opening-brace-placement" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Class opening brace placement</h3>
+  <h2>Class opening brace placement</h2>
   <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -805,7 +805,7 @@
 </div>
 <div id="number-of-newlines-at-eof" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Number of newlines at EOF</h3>
+  <h2>Number of newlines at EOF</h2>
   <p>How many newline characters appear at the end of the file?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -849,7 +849,7 @@
 </div>
 <div id="declarations-and-side-effects-mixed" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Declarations and side effects mixed</h3>
+  <h2>Declarations and side effects mixed</h2>
   <p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -893,7 +893,7 @@
 </div>
 <div id="space-before-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Space before operator</h3>
+  <h2>Space before operator</h2>
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -942,7 +942,7 @@
 </div>
 <div id="function-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Function has doc comment</h3>
+  <h2>Function has doc comment</h2>
   <p>Does each function have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -986,7 +986,7 @@
 </div>
 <div id="use-of-else-if-or-elseif" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Use of ELSE IF or ELSEIF</h3>
+  <h2>Use of ELSE IF or ELSEIF</h2>
   <p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1030,7 +1030,7 @@
 </div>
 <div id="php-closing-tag-at-eof" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>PHP closing tag at EOF</h3>
+  <h2>PHP closing tag at EOF</h2>
   <p>Is there a PHP closing tag at the end of the file?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1074,7 +1074,7 @@
 </div>
 <div id="spacing-after-string-concat" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spacing after string concat</h3>
+  <h2>Spacing after string concat</h2>
   <p>How many spaces follow the string concatenation operator?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1128,7 +1128,7 @@
 </div>
 <div id="spacing-before-string-concat" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spacing before string concat</h3>
+  <h2>Spacing before string concat</h2>
   <p>How many spaces precede the string concatenation operator?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1182,7 +1182,7 @@
 </div>
 <div id="spacing-before-object-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spacing before object operator</h3>
+  <h2>Spacing before object operator</h2>
   <p>How many spaces precede the object operator (->)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1226,7 +1226,7 @@
 </div>
 <div id="space-after-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Space after operator</h3>
+  <h2>Space after operator</h2>
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1280,7 +1280,7 @@
 </div>
 <div id="spaces-after-control-structure-open-parenthesis" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spaces after control structure open parenthesis</h3>
+  <h2>Spaces after control structure open parenthesis</h2>
   <p>How many spaces follow the opening parenthesis of a control structure?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1329,7 +1329,7 @@
 </div>
 <div id="class-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Class has doc comment</h3>
+  <h2>Class has doc comment</h2>
   <p>Does each class have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1373,7 +1373,7 @@
 </div>
 <div id="control-structure-defined-inline" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Control structure defined inline</h3>
+  <h2>Control structure defined inline</h2>
   <p>Are control structures defined inline (without braces)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1417,7 +1417,7 @@
 </div>
 <div id="spaces-before-control-structure-close-parenthesis" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spaces before control structure close parenthesis</h3>
+  <h2>Spaces before control structure close parenthesis</h2>
   <p>How many spaces precede the closing parenthesis of a control structure?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1461,7 +1461,7 @@
 </div>
 <div id="array-keyword-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Array keyword case</h3>
+  <h2>Array keyword case</h2>
   <p>When defining an array, how is the <em>array</em> keyword written?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1505,7 +1505,7 @@
 </div>
 <div id="php-keyword-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>PHP keyword case</h3>
+  <h2>PHP keyword case</h2>
   <p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1554,7 +1554,7 @@
 </div>
 <div id="multiple-statements-on-same-line" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Multiple statements on same line</h3>
+  <h2>Multiple statements on same line</h2>
   <p>Are multiple statements defined on the same line of code?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1598,7 +1598,7 @@
 </div>
 <div id="spacing-after-object-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Spacing after object operator</h3>
+  <h2>Spacing after object operator</h2>
   <p>How many spaces follow the object operator (->)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1642,7 +1642,7 @@
 </div>
 <div id="file-extension-for-non-class-files" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>File extension for non-class files</h3>
+  <h2>File extension for non-class files</h2>
   <p>For files that do not contain classes, what extension does the file use?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1681,7 +1681,7 @@
 </div>
 <div id="brackets-around-echoed-strings" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>Brackets around echoed strings</h3>
+  <h2>Brackets around echoed strings</h2>
   <p>Are parenthesis placed around <em>echo</em>'d strings?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1720,7 +1720,7 @@
 </div>
 <div id="eol-char" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>EOL char</h3>
+  <h2>EOL char</h2>
   <p>What character is used for line breaks?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1759,7 +1759,7 @@
 </div>
 <div id="php-short-open-tag-used" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>PHP short open tag used</h3>
+  <h2>PHP short open tag used</h2>
   <p>Is the PHP short open tag syntax used?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1798,7 +1798,7 @@
 </div>
 <div id="file-extension-for-class-files" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>File extension for class files</h3>
+  <h2>File extension for class files</h2>
   <p>For files that contain classes, what extension does the file use?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1837,7 +1837,7 @@
 </div>
 <div id="camelcase-function-name" class="conventionWrap">
 <div class="conventionDetails">
-  <h3>CamelCase function name</h3>
+  <h2>CamelCase function name</h2>
   <p>Are global function names defined using CamelCase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1877,7 +1877,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Tue, 08 Apr 2014 10:24:37 +1000<br/>Using master branch of <a href="https://github.com/TYPO3/TYPO3.CMS">TYPO3/TYPO3.CMS</a> @ commit <a href="https://github.com/TYPO3/TYPO3.CMS/commit/23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558">23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558</div>
+    <div class="footer">Report generated on Tue, 08 Apr 2014 11:10:12 +1000<br/>Using master branch of <a href="https://github.com/TYPO3/TYPO3.CMS">TYPO3/TYPO3.CMS</a> @ commit <a href="https://github.com/TYPO3/TYPO3.CMS/commit/23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558">23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558</div>
 </div>
 
 <script>

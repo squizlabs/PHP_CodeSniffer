@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>((title))</title>
     <link rel="stylesheet" type="text/css" href="((assetPath))_assets/styles.css" />
@@ -9,11 +9,19 @@
 <div id="listBoxWrap" class="listBoxWrap"></div>
 
 <div id="mainWrap" class="mainWrap">
+    <div id="introductionWrap" class="introductionWrap">
+        <div class="introduction">
+            <div class="icon"></div>
+            <h1>((title))</h1>
+            ((intro))
+        </div>
+    </div>
+
     <div id="flyoutFixed" class="flyoutFixed">
         <div id="flyoutControl" class="flyoutControl"></div>
         <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
         <div class="flyoutHeader">
-            <h2>Conventions</h2>
+            <h1>Conventions</h1>
         </div>
     </div>
     <div id="flyout" class="flyout">
@@ -26,15 +34,7 @@
         <div id="fixedHeaderContent" class="introduction">
             <div class="icon"></div>
             <h1>((title))</h1>
-             <a href="#" title="Return to the top of the report" class="backToTop"></a>
-        </div>
-    </div>
-
-    <div id="introductionWrap" class="introductionWrap">
-        <div class="introduction">
-            <div class="icon"></div>
-            <h1>((title))</h1>
-            ((intro))
+             <a href="#" title="Return to the top of the report" class="backToTop"><span class="screenHide">Back to top</span></a>
         </div>
     </div>
 

@@ -217,7 +217,7 @@ function generateReport($results, $repo=null)
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
-        $html .= '  <h3>'.$metric.'</h3>'.PHP_EOL;
+        $html .= '  <h2>'.$metric.'</h2>'.PHP_EOL;
         $html .= '  <p>'.$description.'</p>'.PHP_EOL;
         $html .= '  <div class="currentData">'.PHP_EOL;
 
@@ -293,7 +293,7 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
                     $repoHTML .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
                     $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
-                    $repoHTML .= '            <h4>'.$title.' <i>'.$value.'</i></h4>'.PHP_EOL;
+                    $repoHTML .= '            <h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
                     $repoHTML .= '        </div>'.PHP_EOL;
                     $repoHTML .= '        <div class="listBoxListWrap">'.PHP_EOL;
                     $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
