@@ -217,7 +217,9 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                         $phpcsFile->fixer->replaceToken($stackPtr, rtrim($tokenContent).$phpcsFile->eolChar);
                     }
                 }
-            } else if ($tokens[($stackPtr - 1)]['content'] !== rtrim($tokens[($stackPtr - 1)]['content']) && $tokens[($stackPtr - 1)]['line'] === $tokens[$stackPtr]['line']) {
+            } else if ($tokens[($stackPtr - 1)]['content'] !== rtrim($tokens[($stackPtr - 1)]['content'])
+                && $tokens[($stackPtr - 1)]['line'] === $tokens[$stackPtr]['line']
+            ) {
                 $fix = $phpcsFile->addFixableError('Whitespace found at end of line', ($stackPtr - 1), 'EndLine');
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
                     $phpcsFile->fixer->replaceToken($stackPtr - 1, rtrim($tokens[($stackPtr - 1)]['content']));

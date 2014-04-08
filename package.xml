@@ -52,6 +52,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
     -- Thanks to Maurus Cuelenaere for the patch
   - PSR2 ControlStructureSpacingSniff now checks TRY and CATCH statements
+  - Squiz SuperfluousWhitespaceSniff now detects whitespace at the end of block comment lines
+    -- Thanks to Klaus Purer for the patch
   - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
     -- Thanks to Max Galbusera for the patch
   - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
