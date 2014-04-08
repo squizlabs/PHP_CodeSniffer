@@ -100,10 +100,10 @@ foreach ($repos as $repo) {
         }//end foreach
     }//end foreach
 
-    file_put_contents($resultFile, json_encode($results, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
+    file_put_contents($resultFile, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
     unlink($tempFile);
     echo PHP_EOL;
 
 }//end foreach
 
-file_put_contents($totalFilename, json_encode($totals, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT));
+file_put_contents($totalFilename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
