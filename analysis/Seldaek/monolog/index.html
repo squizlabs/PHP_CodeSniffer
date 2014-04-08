@@ -1650,7 +1650,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Tue, 08 Apr 2014 11:10:12 +1000<br/>Using master branch of <a href="https://github.com/Seldaek/monolog">Seldaek/monolog</a> @ commit <a href="https://github.com/Seldaek/monolog/commit/4cf49e5496857532f4ca4bbb69d1eee591b88234">4cf49e5496857532f4ca4bbb69d1eee591b88234</div>
+    <div class="footer">Report generated on Tue, 08 Apr 2014 11:34:41 +1000<br/>Using master branch of <a href="https://github.com/Seldaek/monolog">Seldaek/monolog</a> @ commit <a href="https://github.com/Seldaek/monolog/commit/4cf49e5496857532f4ca4bbb69d1eee591b88234">4cf49e5496857532f4ca4bbb69d1eee591b88234</div>
 </div>
 
 <script>
@@ -1728,6 +1728,22 @@ function init() {
     });
 }
 window.onload = init();
+
+function showListBox(id) {
+    document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
+    document.getElementById('listBoxWrap').style.display='block';
+    var scroll = function(e) {
+        var listScroll = (document.getElementById('listBoxListWrap').scrollHeight - document.getElementById('listBoxListWrap').clientHeight);
+        var delta = e.wheelDelta || -e.detail;
+        if (this.scrollTop >= listScroll && delta < 0) {
+          e.preventDefault();
+        } else if (this.scrollTop <= 0 && delta > 0) {
+          e.preventDefault();
+        }
+    };
+    document.getElementById('listBoxListWrap').addEventListener('mousewheel', scroll);
+    document.getElementById('listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
+}
 
 var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
 var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};

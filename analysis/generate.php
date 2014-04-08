@@ -295,7 +295,7 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
                     $repoHTML .= '            <h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
                     $repoHTML .= '        </div>'.PHP_EOL;
-                    $repoHTML .= '        <div class="listBoxListWrap">'.PHP_EOL;
+                    $repoHTML .= '        <div id="listBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
                     $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
 
                     uksort($data['repos'][$value], 'sortRepos');
@@ -338,7 +338,7 @@ function generateReport($results, $repo=null)
             if ($repo === null) {
                 $html .= '<br/><a href="" onclick="';
                 if ($numRepos > 0) {
-                    $html .= 'document.getElementById(\'listBoxWrap\').innerHTML=document.getElementById(\''.$metricid.'-'.$valueid.'-repos\').innerHTML;document.getElementById(\'listBoxWrap\').style.display=\'block\';';
+                    $html .= 'showListBox(\''.$metricid.'-'.$valueid.'-repos\');';
                 }
 
                 $html .= 'return false;">preferred by '.$percentRepos.'% of projects</a>';

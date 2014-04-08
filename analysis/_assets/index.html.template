@@ -121,6 +121,22 @@ function init() {
 }
 window.onload = init();
 
+function showListBox(id) {
+    document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
+    document.getElementById('listBoxWrap').style.display='block';
+    var scroll = function(e) {
+        var listScroll = (document.getElementById('listBoxListWrap').scrollHeight - document.getElementById('listBoxListWrap').clientHeight);
+        var delta = e.wheelDelta || -e.detail;
+        if (this.scrollTop >= listScroll && delta < 0) {
+          e.preventDefault();
+        } else if (this.scrollTop <= 0 && delta > 0) {
+          e.preventDefault();
+        }
+    };
+    document.getElementById('listBoxListWrap').addEventListener('mousewheel', scroll);
+    document.getElementById('listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
+}
+
 ((js))
 </script>
 <script>
