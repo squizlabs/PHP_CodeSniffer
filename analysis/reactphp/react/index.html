@@ -1660,7 +1660,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 14:09:57 +1000<br/>Using master branch of <a href="https://github.com/reactphp/react">reactphp/react</a> @ commit <a href="https://github.com/reactphp/react/commit/fb15cab25c244e33c7e2d2027f895efe94523d2c">fb15cab25c244e33c7e2d2027f895efe94523d2c</a></div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 14:52:50 +1000<br/>Using master branch of <a href="https://github.com/reactphp/react">reactphp/react</a> @ commit <a href="https://github.com/reactphp/react/commit/fb15cab25c244e33c7e2d2027f895efe94523d2c">fb15cab25c244e33c7e2d2027f895efe94523d2c</a></div>
 </div>
 
 <script>
@@ -1754,7 +1754,7 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mousedown', function(e) {
+    document.addEventListener('mouseup', function(e) {
         var node = e.target;
         while (node.parentNode) {
             if (node.id === 'listBoxWrap') {

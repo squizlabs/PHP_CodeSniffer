@@ -1624,7 +1624,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 14:09:57 +1000<br/>Using master branch of <a href="https://github.com/kriswallsmith/Buzz">kriswallsmith/Buzz</a> @ commit <a href="https://github.com/kriswallsmith/Buzz/commit/a0f207ac4939978b604be9bec5d5b19baecd8165">a0f207ac4939978b604be9bec5d5b19baecd8165</a></div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 14:52:50 +1000<br/>Using master branch of <a href="https://github.com/kriswallsmith/Buzz">kriswallsmith/Buzz</a> @ commit <a href="https://github.com/kriswallsmith/Buzz/commit/a0f207ac4939978b604be9bec5d5b19baecd8165">a0f207ac4939978b604be9bec5d5b19baecd8165</a></div>
 </div>
 
 <script>
@@ -1718,7 +1718,7 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mousedown', function(e) {
+    document.addEventListener('mouseup', function(e) {
         var node = e.target;
         while (node.parentNode) {
             if (node.id === 'listBoxWrap') {

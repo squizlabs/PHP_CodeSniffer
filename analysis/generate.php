@@ -319,7 +319,7 @@ function generateReport($results, $repo=null)
 
                     $repoHTML .= '<div id="'.$metricid.'-'.$valueid.'-repos" class="listBoxWrap">'.PHP_EOL;
                     $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
-                    $repoHTML .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
+                    $repoHTML .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
                     $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
                     $repoHTML .= '            <h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
                     $repoHTML .= '        </div>'.PHP_EOL;

@@ -136,7 +136,7 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mousedown', function(e) {
+    document.addEventListener('mouseup', function(e) {
         var node = e.target;
         while (node.parentNode) {
             if (node.id === 'listBoxWrap') {
