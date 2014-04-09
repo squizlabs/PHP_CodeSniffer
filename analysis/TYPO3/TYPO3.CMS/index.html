@@ -14,7 +14,7 @@
             <div class="icon"></div>
             <h1>Analysis of Coding Conventions for <span class="repoName">TYPO3 CMS</span></h1>
             <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
-<ul class="reportLinkList"><li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (63 PHP Projects)</a></li><li><a href="" onclick="showListBox('all-repos'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>
+<ul class="reportLinkList"><li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (63 PHP Projects)</a></li><li><a href="" onclick="showListBox('all'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>
 
         </div>
     </div>
@@ -41,13 +41,13 @@
     </div>
 
     <div id="contentWrap" class="contentWrap">
-    <div id="all-repos" class="listBoxWrap">
+    <div id="all" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
-            <h2>View project specific report</i></h2>
+        <div class="listBoxHeader">
+            <h2>View project specific report</h2>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="alllistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html">Anchor CMS</a></div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html">Assetic</a></div></li>
@@ -1952,7 +1952,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 11:47:36 +1000<br/>Using master branch of <a href="https://github.com/TYPO3/TYPO3.CMS">TYPO3/TYPO3.CMS</a> @ commit <a href="https://github.com/TYPO3/TYPO3.CMS/commit/23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558">23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558</a></div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 12:02:49 +1000<br/>Using master branch of <a href="https://github.com/TYPO3/TYPO3.CMS">TYPO3/TYPO3.CMS</a> @ commit <a href="https://github.com/TYPO3/TYPO3.CMS/commit/23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558">23ba3e86b0b1ca3c0ccf1003cd08b8a2eff8e558</a></div>
 </div>
 
 <script>
@@ -2035,7 +2035,7 @@ function showListBox(id) {
     document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
     document.getElementById('listBoxWrap').style.display='block';
     var scroll = function(e) {
-        var listScroll = (document.getElementById('listBoxListWrap').scrollHeight - document.getElementById('listBoxListWrap').clientHeight);
+        var listScroll = (document.getElementById(id + 'listBoxListWrap').scrollHeight - document.getElementById(id + 'listBoxListWrap').clientHeight);
         var delta = e.wheelDelta || -e.detail;
         if (this.scrollTop >= listScroll && delta < 0) {
           e.preventDefault();
@@ -2043,9 +2043,8 @@ function showListBox(id) {
           e.preventDefault();
         }
     };
-    document.getElementById('listBoxListWrap').addEventListener('mousewheel', scroll);
-    document.getElementById('listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
-    return false;
+    document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
+    document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 }
 
 var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};

@@ -192,13 +192,13 @@ function generateReport($results, $repo=null)
     $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
     $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:10,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
 
-    $html .= '<div id="all-repos" class="listBoxWrap">'.PHP_EOL;
+    $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
     $html .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
-    $html .= '        <div id="listBoxHeader" class="listBoxHeader">'.PHP_EOL;
-    $html .= '            <h2>View project specific report</i></h2>'.PHP_EOL;
+    $html .= '        <div class="listBoxHeader">'.PHP_EOL;
+    $html .= '            <h2>View project specific report</h2>'.PHP_EOL;
     $html .= '        </div>'.PHP_EOL;
-    $html .= '        <div id="listBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+    $html .= '        <div id="alllistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
     $html .= '            <ul class="listBoxList">'.PHP_EOL;
 
     foreach ($GLOBALS['repoList'] as $repoURL => $repoName) {
@@ -316,10 +316,10 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '<div id="'.$metricid.'-'.$valueid.'-repos" class="listBoxWrap">'.PHP_EOL;
                     $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
                     $repoHTML .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
-                    $repoHTML .= '        <div id="listBoxHeader" class="listBoxHeader">'.PHP_EOL;
+                    $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
                     $repoHTML .= '            <h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
                     $repoHTML .= '        </div>'.PHP_EOL;
-                    $repoHTML .= '        <div id="listBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+                    $repoHTML .= '        <div id="'.$metricid.'-'.$valueid.'-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
                     $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
 
                     uksort($data['repos'][$value], 'sortRepos');
@@ -503,14 +503,14 @@ function generateReport($results, $repo=null)
         $intro  = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>'.PHP_EOL;
         $intro .= '<p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
-        $intro .= '<ul class="reportLinkList"><li><a href="" onclick="showListBox(\'all-repos\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>'.PHP_EOL;
+        $intro .= '<ul class="reportLinkList"><li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>'.PHP_EOL;
 
         $footer    = 'Report generated on '.date('r');
         $title     = 'Analysis of Coding Conventions';
         $assetPath = '';
     } else {
         $intro  = '<p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions for this project. The graphs for each coding convention show the percentage of each style variation used throughout the project.</p><p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>'.PHP_EOL;
-        $intro .= '<ul class="reportLinkList"><li><a href="../../index.html" class="reportLink reportCombined">View Combined Report ('.$GLOBALS['num_repos'].' PHP Projects)</a></li><li><a href="" onclick="showListBox(\'all-repos\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>'.PHP_EOL;
+        $intro .= '<ul class="reportLinkList"><li><a href="../../index.html" class="reportLink reportCombined">View Combined Report ('.$GLOBALS['num_repos'].' PHP Projects)</a></li><li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>'.PHP_EOL;
 
         $commitid  = $results['project']['commitid'];
         $footer    = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid</a>";

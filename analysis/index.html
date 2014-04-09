@@ -16,7 +16,7 @@
             <p><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across 63 PHP projects.</p>
 <p>The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</p>
 <p>You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</p>
-<ul class="reportLinkList"><li><a href="" onclick="showListBox('all-repos'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>
+<ul class="reportLinkList"><li><a href="" onclick="showListBox('all'); return false;" class="reportLink reportProject">View Project Specific Report</a></li></ul>
 
         </div>
     </div>
@@ -43,13 +43,13 @@
     </div>
 
     <div id="contentWrap" class="contentWrap">
-    <div id="all-repos" class="listBoxWrap">
+    <div id="all" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
-            <h2>View project specific report</i></h2>
+        <div class="listBoxHeader">
+            <h2>View project specific report</h2>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="alllistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html">Anchor CMS</a></div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html">Assetic</a></div></li>
@@ -153,10 +153,10 @@
 <div id="array-end-comma-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>36 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="array-end-comma-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#array-end-comma">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#array-end-comma">CakePHP</a></div><div class="td2">85.34%</div></li>
@@ -201,10 +201,10 @@
 <div id="array-end-comma-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>26 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="array-end-comma-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#array-end-comma">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#array-end-comma">AWS SDK for PHP</a></div><div class="td2">99.18%</div></li>
@@ -280,10 +280,10 @@
 <div id="class-defined-in-namespace-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>28 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-defined-in-namespace-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#class-defined-in-namespace">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#class-defined-in-namespace">CakePHP</a></div><div class="td2">100%</div></li>
@@ -320,10 +320,10 @@
 <div id="class-defined-in-namespace-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>35 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-defined-in-namespace-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#class-defined-in-namespace">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#class-defined-in-namespace">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -413,10 +413,10 @@
 <div id="spacing-after-cast-statement-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>17 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-cast-statement-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="cakephp/cakephp/index.html#spacing-after-cast-statement">CakePHP</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="ezsystems/ezpublish-kernel/index.html#spacing-after-cast-statement">eZ Publish 5.x Kernel</a></div><div class="td2">100%</div></li>
@@ -442,10 +442,10 @@
 <div id="spacing-after-cast-statement-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>45 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-cast-statement-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spacing-after-cast-statement">Anchor CMS</a></div><div class="td2">87.5%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spacing-after-cast-statement">Assetic</a></div><div class="td2">100%</div></li>
@@ -550,10 +550,10 @@
 <div id="spacing-after-string-concat-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>20 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-string-concat-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spacing-after-string-concat">Assetic</a></div><div class="td2">96.86%</div></li>
 <li><div class="td1"><a href="kriswallsmith/Buzz/index.html#spacing-after-string-concat">Buzz</a></div><div class="td2">100%</div></li>
@@ -582,10 +582,10 @@
 <div id="spacing-after-string-concat-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>41 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-string-concat-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spacing-after-string-concat">Anchor CMS</a></div><div class="td2">82.24%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#spacing-after-string-concat">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -635,10 +635,10 @@
 <div id="spacing-after-string-concat-newline-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>2 projects prefer <i>newline</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-string-concat-newline-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="avalanche123/Imagine/index.html#spacing-after-string-concat">Imagine</a></div><div class="td2">70.59%</div></li>
 <li><div class="td1"><a href="zendframework/zf2/index.html#spacing-after-string-concat">Zend Framework</a></div><div class="td2">58.03%</div></li>
@@ -690,10 +690,10 @@
 <div id="line-indent-spaces-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>48 projects prefer <i>spaces</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="line-indent-spaces-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#line-indent">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#line-indent">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -750,10 +750,10 @@
 <div id="line-indent-tabs-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>15 projects prefer <i>tabs</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="line-indent-tabs-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#line-indent">Anchor CMS</a></div><div class="td2">99.89%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#line-indent">CakePHP</a></div><div class="td2">100%</div></li>
@@ -828,10 +828,10 @@
 <div id="spacing-before-string-concat-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>21 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-before-string-concat-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spacing-before-string-concat">Assetic</a></div><div class="td2">96.86%</div></li>
 <li><div class="td1"><a href="kriswallsmith/Buzz/index.html#spacing-before-string-concat">Buzz</a></div><div class="td2">100%</div></li>
@@ -861,10 +861,10 @@
 <div id="spacing-before-string-concat-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>42 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-before-string-concat-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spacing-before-string-concat">Anchor CMS</a></div><div class="td2">81.87%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#spacing-before-string-concat">AWS SDK for PHP</a></div><div class="td2">79.44%</div></li>
@@ -956,10 +956,10 @@
 <div id="class-opening-brace-placement-new-line-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>46 projects prefer <i>new line</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-opening-brace-placement-new-line-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#class-opening-brace-placement">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/Buzz/index.html#class-opening-brace-placement">Buzz</a></div><div class="td2">100%</div></li>
@@ -1014,10 +1014,10 @@
 <div id="class-opening-brace-placement-same-line-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>17 projects prefer <i>same line</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-opening-brace-placement-same-line-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#class-opening-brace-placement">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#class-opening-brace-placement">AWS SDK for PHP</a></div><div class="td2">59.63%</div></li>
@@ -1084,10 +1084,10 @@
 <div id="function-opening-brace-placement-new-line-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>47 projects prefer <i>new line</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="function-opening-brace-placement-new-line-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#function-opening-brace-placement">Assetic</a></div><div class="td2">99.63%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#function-opening-brace-placement">AWS SDK for PHP</a></div><div class="td2">97.44%</div></li>
@@ -1143,10 +1143,10 @@
 <div id="function-opening-brace-placement-same-line-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>16 projects prefer <i>same line</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="function-opening-brace-placement-same-line-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#function-opening-brace-placement">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#function-opening-brace-placement">CakePHP</a></div><div class="td2">100%</div></li>
@@ -1212,10 +1212,10 @@
 <div id="lowercase-filename-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>50 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="lowercase-filename-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#lowercase-filename">Assetic</a></div><div class="td2">98.97%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#lowercase-filename">AWS SDK for PHP</a></div><div class="td2">95.87%</div></li>
@@ -1274,10 +1274,10 @@
 <div id="lowercase-filename-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>13 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="lowercase-filename-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#lowercase-filename">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#lowercase-filename">CodeIgniter</a></div><div class="td2">65.48%</div></li>
@@ -1340,10 +1340,10 @@
 <div id="camelcase-class-name-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>17 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="camelcase-class-name-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#camelcase-class-name">CodeIgniter</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="google/google-api-php-client/index.html#camelcase-class-name">Google APIs Client Library</a></div><div class="td2">100%</div></li>
@@ -1369,10 +1369,10 @@
 <div id="camelcase-class-name-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>46 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="camelcase-class-name-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#camelcase-class-name">Anchor CMS</a></div><div class="td2">62%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#camelcase-class-name">Assetic</a></div><div class="td2">100%</div></li>
@@ -1468,10 +1468,10 @@
 <div id="use-of-else-if-or-elseif-else-if-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>10 projects prefer <i>else if</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="use-of-else-if-or-elseif-else-if-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#use-of-else-if-or-elseif">Anchor CMS</a></div><div class="td2">66.67%</div></li>
 <li><div class="td1"><a href="doctrine/doctrine2/index.html#use-of-else-if-or-elseif">Doctrine 2 ORM</a></div><div class="td2">54.95%</div></li>
@@ -1490,10 +1490,10 @@
 <div id="use-of-else-if-or-elseif-elseif-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>52 projects prefer <i>elseif</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="use-of-else-if-or-elseif-elseif-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#use-of-else-if-or-elseif">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#use-of-else-if-or-elseif">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -1595,10 +1595,10 @@
 <div id="class-has-doc-comment-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>10 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-has-doc-comment-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#class-has-doc-comment">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/Buzz/index.html#class-has-doc-comment">Buzz</a></div><div class="td2">75%</div></li>
@@ -1617,10 +1617,10 @@
 <div id="class-has-doc-comment-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>53 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="class-has-doc-comment-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#class-has-doc-comment">Assetic</a></div><div class="td2">94.9%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#class-has-doc-comment">AWS SDK for PHP</a></div><div class="td2">95.84%</div></li>
@@ -1723,10 +1723,10 @@
 <div id="private-method-prefixed-with-underscore-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>42 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="private-method-prefixed-with-underscore-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#private-method-prefixed-with-underscore">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#private-method-prefixed-with-underscore">Assetic</a></div><div class="td2">100%</div></li>
@@ -1777,10 +1777,10 @@
 <div id="private-method-prefixed-with-underscore-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>12 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="private-method-prefixed-with-underscore-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="contao/core/index.html#private-method-prefixed-with-underscore">Contao Open Source CMS</a></div><div class="td2">71.79%</div></li>
 <li><div class="td1"><a href="magento/magento2/index.html#private-method-prefixed-with-underscore">Magento</a></div><div class="td2">90.68%</div></li>
@@ -1842,10 +1842,10 @@
 <div id="file-has-doc-comment-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>14 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="file-has-doc-comment-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#file-has-doc-comment">Anchor CMS</a></div><div class="td2">86.82%</div></li>
 <li><div class="td1"><a href="kriswallsmith/Buzz/index.html#file-has-doc-comment">Buzz</a></div><div class="td2">100%</div></li>
@@ -1868,10 +1868,10 @@
 <div id="file-has-doc-comment-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>49 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="file-has-doc-comment-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#file-has-doc-comment">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#file-has-doc-comment">AWS SDK for PHP</a></div><div class="td2">99.24%</div></li>
@@ -1970,10 +1970,10 @@
 <div id="adjacent-assignments-aligned-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>1 project prefers <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="adjacent-assignments-aligned-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="pyrocms/pyrocms/index.html#adjacent-assignments-aligned">PyroCMS</a></div><div class="td2">58.53%</div></li>
     </ul>
@@ -1983,10 +1983,10 @@
 <div id="adjacent-assignments-aligned-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>62 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="adjacent-assignments-aligned-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#adjacent-assignments-aligned">Anchor CMS</a></div><div class="td2">80.99%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#adjacent-assignments-aligned">Assetic</a></div><div class="td2">86.92%</div></li>
@@ -2098,10 +2098,10 @@
 <div id="function-has-doc-comment-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>8 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="function-has-doc-comment-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#function-has-doc-comment">Anchor CMS</a></div><div class="td2">93.18%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#function-has-doc-comment">Assetic</a></div><div class="td2">70.73%</div></li>
@@ -2118,10 +2118,10 @@
 <div id="function-has-doc-comment-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>55 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="function-has-doc-comment-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#function-has-doc-comment">AWS SDK for PHP</a></div><div class="td2">85.34%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#function-has-doc-comment">CakePHP</a></div><div class="td2">99.48%</div></li>
@@ -2236,10 +2236,10 @@
 <div id="space-before-operator-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>2 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="space-before-operator-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="fruux/sabre-dav/index.html#space-before-operator">SabreDAV</a></div><div class="td2">69.41%</div></li>
 <li><div class="td1"><a href="sugarcrm/sugarcrm_dev/index.html#space-before-operator">SugarCRM CE</a></div><div class="td2">54.17%</div></li>
@@ -2250,10 +2250,10 @@
 <div id="space-before-operator-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>61 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="space-before-operator-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#space-before-operator">Anchor CMS</a></div><div class="td2">98.53%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#space-before-operator">Assetic</a></div><div class="td2">90.84%</div></li>
@@ -2364,10 +2364,10 @@
 <div id="camelcase-method-name-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>4 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="camelcase-method-name-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#camelcase-method-name">CodeIgniter</a></div><div class="td2">78.03%</div></li>
 <li><div class="td1"><a href="moodle/moodle/index.html#camelcase-method-name">Moodle</a></div><div class="td2">83.22%</div></li>
@@ -2380,10 +2380,10 @@
 <div id="camelcase-method-name-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>59 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="camelcase-method-name-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#camelcase-method-name">Anchor CMS</a></div><div class="td2">86.86%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#camelcase-method-name">Assetic</a></div><div class="td2">99.6%</div></li>
@@ -2492,10 +2492,10 @@
 <div id="declarations-and-side-effects-mixed-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>55 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="declarations-and-side-effects-mixed-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#declarations-and-side-effects-mixed">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#declarations-and-side-effects-mixed">Assetic</a></div><div class="td2">100%</div></li>
@@ -2559,10 +2559,10 @@
 <div id="declarations-and-side-effects-mixed-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>8 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="declarations-and-side-effects-mixed-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="cakephp/cakephp/index.html#declarations-and-side-effects-mixed">CakePHP</a></div><div class="td2">72.08%</div></li>
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#declarations-and-side-effects-mixed">CodeIgniter</a></div><div class="td2">92.26%</div></li>
@@ -2620,10 +2620,10 @@
 <div id="one-class-per-file-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>2 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="one-class-per-file-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="google/google-api-php-client/index.html#one-class-per-file">Google APIs Client Library</a></div><div class="td2">94.92%</div></li>
 <li><div class="td1"><a href="leafo/lessphp/index.html#one-class-per-file">lessphp</a></div><div class="td2">77.78%</div></li>
@@ -2634,10 +2634,10 @@
 <div id="one-class-per-file-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>61 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="one-class-per-file-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#one-class-per-file">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#one-class-per-file">Assetic</a></div><div class="td2">97.96%</div></li>
@@ -2753,10 +2753,10 @@
 <div id="php-constant-case-lower-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>60 projects prefer <i>lower</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-constant-case-lower-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#php-constant-case">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#php-constant-case">Assetic</a></div><div class="td2">99.62%</div></li>
@@ -2825,10 +2825,10 @@
 <div id="php-constant-case-upper-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>3 projects prefer <i>upper</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-constant-case-upper-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#php-constant-case">CodeIgniter</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="drupal/drupal/index.html#php-constant-case">Drupal</a></div><div class="td2">74.24%</div></li>
@@ -2886,10 +2886,10 @@
 <div id="constant-name-case-mixed-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>1 project prefers <i>mixed</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="constant-name-case-mixed-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="PrestaShop/PrestaShop/index.html#constant-name-case">PrestaShop</a></div><div class="td2">77.3%</div></li>
     </ul>
@@ -2899,10 +2899,10 @@
 <div id="constant-name-case-upper-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>61 projects prefer <i>upper</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="constant-name-case-upper-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#constant-name-case">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#constant-name-case">Assetic</a></div><div class="td2">100%</div></li>
@@ -3023,10 +3023,10 @@
 <div id="number-of-newlines-at-eof-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>5 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="number-of-newlines-at-eof-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#number-of-newlines-at-eof">Anchor CMS</a></div><div class="td2">87.5%</div></li>
 <li><div class="td1"><a href="EllisLab/CodeIgniter/index.html#number-of-newlines-at-eof">CodeIgniter</a></div><div class="td2">100%</div></li>
@@ -3040,10 +3040,10 @@
 <div id="number-of-newlines-at-eof-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>57 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="number-of-newlines-at-eof-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#number-of-newlines-at-eof">Assetic</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#number-of-newlines-at-eof">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -3109,10 +3109,10 @@
 <div id="number-of-newlines-at-eof-3-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>1 project prefers <i>3</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="number-of-newlines-at-eof-3-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="leafo/lessphp/index.html#number-of-newlines-at-eof">lessphp</a></div><div class="td2">50%</div></li>
     </ul>
@@ -3168,10 +3168,10 @@
 <div id="inline-comment-style-------repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>1 project prefers <i># ...</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="inline-comment-style-------reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#inline-comment-style">Anchor CMS</a></div><div class="td2">51.67%</div></li>
     </ul>
@@ -3181,10 +3181,10 @@
 <div id="inline-comment-style-----------repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>5 projects prefer <i>/* ... */</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="inline-comment-style-----------reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="avalanche123/Imagine/index.html#inline-comment-style">Imagine</a></div><div class="td2">79.59%</div></li>
 <li><div class="td1"><a href="Seldaek/monolog/index.html#inline-comment-style">Monolog</a></div><div class="td2">58.26%</div></li>
@@ -3198,10 +3198,10 @@
 <div id="inline-comment-style--------repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>57 projects prefer <i>// ...</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="inline-comment-style--------reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#inline-comment-style">Assetic</a></div><div class="td2">52.91%</div></li>
 <li><div class="td1"><a href="aws/aws-sdk-php/index.html#inline-comment-style">AWS SDK for PHP</a></div><div class="td2">100%</div></li>
@@ -3313,10 +3313,10 @@
 <div id="spaces-after-control-structure-open-parenthesis-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>60 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spaces-after-control-structure-open-parenthesis-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spaces-after-control-structure-open-parenthesis">Anchor CMS</a></div><div class="td2">88.37%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spaces-after-control-structure-open-parenthesis">Assetic</a></div><div class="td2">99.79%</div></li>
@@ -3385,10 +3385,10 @@
 <div id="spaces-after-control-structure-open-parenthesis-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>3 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spaces-after-control-structure-open-parenthesis-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="ezsystems/ezpublish-kernel/index.html#spaces-after-control-structure-open-parenthesis">eZ Publish 5.x Kernel</a></div><div class="td2">99.1%</div></li>
 <li><div class="td1"><a href="wikimedia/mediawiki-core/index.html#spaces-after-control-structure-open-parenthesis">MediaWiki</a></div><div class="td2">96.54%</div></li>
@@ -3451,10 +3451,10 @@
 <div id="spaces-before-control-structure-close-parenthesis-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>60 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spaces-before-control-structure-close-parenthesis-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spaces-before-control-structure-close-parenthesis">Anchor CMS</a></div><div class="td2">99.75%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spaces-before-control-structure-close-parenthesis">Assetic</a></div><div class="td2">100%</div></li>
@@ -3523,10 +3523,10 @@
 <div id="spaces-before-control-structure-close-parenthesis-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>3 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spaces-before-control-structure-close-parenthesis-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="ezsystems/ezpublish-kernel/index.html#spaces-before-control-structure-close-parenthesis">eZ Publish 5.x Kernel</a></div><div class="td2">97.95%</div></li>
 <li><div class="td1"><a href="wikimedia/mediawiki-core/index.html#spaces-before-control-structure-close-parenthesis">MediaWiki</a></div><div class="td2">94.17%</div></li>
@@ -3579,10 +3579,10 @@
 <div id="php-closing-tag-at-eof-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>60 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-closing-tag-at-eof-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#php-closing-tag-at-eof">Anchor CMS</a></div><div class="td2">74.42%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#php-closing-tag-at-eof">Assetic</a></div><div class="td2">100%</div></li>
@@ -3651,10 +3651,10 @@
 <div id="php-closing-tag-at-eof-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>3 projects prefer <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-closing-tag-at-eof-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="squizlabs/PHP_CodeSniffer/index.html#php-closing-tag-at-eof">PHP_CodeSniffer</a></div><div class="td2">97.18%</div></li>
 <li><div class="td1"><a href="phpmyadmin/phpmyadmin/index.html#php-closing-tag-at-eof">phpMyAdmin</a></div><div class="td2">90.89%</div></li>
@@ -3717,10 +3717,10 @@
 <div id="line-length-80-or-less-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>80 or less</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="line-length-80-or-less-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#line-length">Anchor CMS</a></div><div class="td2">95.88%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#line-length">Assetic</a></div><div class="td2">96.25%</div></li>
@@ -3833,10 +3833,10 @@
 <div id="control-structure-defined-inline-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>62 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="control-structure-defined-inline-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#control-structure-defined-inline">Anchor CMS</a></div><div class="td2">87.84%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#control-structure-defined-inline">Assetic</a></div><div class="td2">100%</div></li>
@@ -3907,10 +3907,10 @@
 <div id="control-structure-defined-inline-yes-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>1 project prefers <i>yes</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="control-structure-defined-inline-yes-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="PrestaShop/PrestaShop/index.html#control-structure-defined-inline">PrestaShop</a></div><div class="td2">64.62%</div></li>
     </ul>
@@ -3966,10 +3966,10 @@
 <div id="space-after-operator-1-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>1</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="space-after-operator-1-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#space-after-operator">Anchor CMS</a></div><div class="td2">99.07%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#space-after-operator">Assetic</a></div><div class="td2">99.92%</div></li>
@@ -4087,10 +4087,10 @@
 <div id="file-extension-for-non-class-files--php-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>43 projects prefer <i>.php</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="file-extension-for-non-class-files--php-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#file-extension-for-non-class-files">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#file-extension-for-non-class-files">Assetic</a></div><div class="td2">100%</div></li>
@@ -4188,10 +4188,10 @@
 <div id="spacing-before-object-operator-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-before-object-operator-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spacing-before-object-operator">Anchor CMS</a></div><div class="td2">86.38%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spacing-before-object-operator">Assetic</a></div><div class="td2">98.16%</div></li>
@@ -4304,10 +4304,10 @@
 <div id="eol-char--n-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>\n</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="eol-char--n-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#eol-char">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#eol-char">Assetic</a></div><div class="td2">100%</div></li>
@@ -4420,10 +4420,10 @@
 <div id="brackets-around-echoed-strings-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>44 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="brackets-around-echoed-strings-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#brackets-around-echoed-strings">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="cakephp/cakephp/index.html#brackets-around-echoed-strings">CakePHP</a></div><div class="td2">98.8%</div></li>
@@ -4517,10 +4517,10 @@
 <div id="multiple-statements-on-same-line-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="multiple-statements-on-same-line-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#multiple-statements-on-same-line">Anchor CMS</a></div><div class="td2">99.07%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#multiple-statements-on-same-line">Assetic</a></div><div class="td2">99.91%</div></li>
@@ -4633,10 +4633,10 @@
 <div id="array-keyword-case-lower-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>lower</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="array-keyword-case-lower-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#array-keyword-case">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#array-keyword-case">Assetic</a></div><div class="td2">100%</div></li>
@@ -4754,10 +4754,10 @@
 <div id="php-keyword-case-lower-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>lower</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-keyword-case-lower-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#php-keyword-case">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#php-keyword-case">Assetic</a></div><div class="td2">100%</div></li>
@@ -4875,10 +4875,10 @@
 <div id="spacing-after-object-operator-0-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>0</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="spacing-after-object-operator-0-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#spacing-after-object-operator">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#spacing-after-object-operator">Assetic</a></div><div class="td2">100%</div></li>
@@ -4991,10 +4991,10 @@
 <div id="file-extension-for-class-files--php-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>.php</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="file-extension-for-class-files--php-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#file-extension-for-class-files">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#file-extension-for-class-files">Assetic</a></div><div class="td2">100%</div></li>
@@ -5102,10 +5102,10 @@
 <div id="php-short-open-tag-used-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>63 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="php-short-open-tag-used-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#php-short-open-tag-used">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#php-short-open-tag-used">Assetic</a></div><div class="td2">100%</div></li>
@@ -5213,10 +5213,10 @@
 <div id="camelcase-function-name-no-repos" class="listBoxWrap">
     <div class="listBoxContent">
         <div class="listBoxClose" onclick="document.getElementById('listBoxWrap').style.display='none';"></div>
-        <div id="listBoxHeader" class="listBoxHeader">
+        <div class="listBoxHeader">
             <h3>31 projects prefer <i>no</i></h3>
         </div>
-        <div id="listBoxListWrap" class="listBoxListWrap">
+        <div id="camelcase-function-name-no-reposlistBoxListWrap" class="listBoxListWrap">
             <ul class="listBoxList">
 <li><div class="td1"><a href="anchorcms/anchor-cms/index.html#camelcase-function-name">Anchor CMS</a></div><div class="td2">100%</div></li>
 <li><div class="td1"><a href="kriswallsmith/assetic/index.html#camelcase-function-name">Assetic</a></div><div class="td2">100%</div></li>
@@ -5265,7 +5265,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 11:47:37 +1000</div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 12:02:50 +1000</div>
 </div>
 
 <script>
@@ -5348,7 +5348,7 @@ function showListBox(id) {
     document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
     document.getElementById('listBoxWrap').style.display='block';
     var scroll = function(e) {
-        var listScroll = (document.getElementById('listBoxListWrap').scrollHeight - document.getElementById('listBoxListWrap').clientHeight);
+        var listScroll = (document.getElementById(id + 'listBoxListWrap').scrollHeight - document.getElementById(id + 'listBoxListWrap').clientHeight);
         var delta = e.wheelDelta || -e.detail;
         if (this.scrollTop >= listScroll && delta < 0) {
           e.preventDefault();
@@ -5356,9 +5356,8 @@ function showListBox(id) {
           e.preventDefault();
         }
     };
-    document.getElementById('listBoxListWrap').addEventListener('mousewheel', scroll);
-    document.getElementById('listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
-    return false;
+    document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
+    document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 }
 
 var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
