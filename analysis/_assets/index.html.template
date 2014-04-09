@@ -135,6 +135,7 @@ function showListBox(id) {
     };
     document.getElementById('listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById('listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
+    return false;
 }
 
 ((js))

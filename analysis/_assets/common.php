@@ -165,7 +165,7 @@ function sortMetrics($a, $b)
 // Comparison function
 function sortRepos($a, $b) 
 {
-    return (strtolower($a) > strtolower($b));
+    return (strtolower($GLOBALS['repoList'][$a]) > strtolower($GLOBALS['repoList'][$b]));
 
 }//end sortRepos()
 

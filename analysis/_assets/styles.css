@@ -245,7 +245,7 @@ p.statsInfo {
 /* HEADER */
 
 #contentWrap.small {
-    padding-top: 650px;
+    padding-top: 570px;
 }
 
 .introductionWrap {
@@ -285,6 +285,14 @@ p.statsInfo {
     line-height: 46px;
     font-weight: bold;
     margin-top: 10px;
+}
+
+.introduction .repoName {
+    color: #ccf3f2;
+}
+
+.introductionWrap .repoName {
+    display: block;
 }
 
 .introduction p {
@@ -542,9 +550,9 @@ p.statsInfo {
     z-index: 10;
 }
 
-.listBoxHeader h3 {
+.listBoxHeader h3, .listBoxHeader h2 {
     margin: 0 0 10px 0;
-    font-family: 17px;
+    font-size: 17px;
     color: #2e374d;
 }
 
@@ -591,6 +599,47 @@ p.statsInfo {
     width: 100%;
 }
 
+/* Report Links */
+
+.reportLinkList {
+    padding: 0;
+    margin: 30px 0 0;
+    list-style: none;
+}
+
+.reportLinkList li {
+    padding-bottom: 10px;
+}
+
+a.reportLink, a.reportLink:visited {
+    color: #ffffff;
+    border-bottom: 1px solid #66d3dd;
+    margin-left: 25px;
+    margin-top: 10px;
+    font-size: 14px;
+    position: relative;
+}
+
+.reportLink:before {
+    content:"";
+    width: 30px;
+    height: 15px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: -25px;
+    background-image: url(image_sprite_1x.png);
+    background-repeat: no-repeat;
+}
+
+.reportLink.reportCombined:before {
+    background-position: 0 -271px;
+}
+
+.reportLink.reportProject:before {
+    background-position: 0 -286px;
+}
+
 .footer {
     font-style: italic;
     text-align: center;
@@ -619,8 +668,9 @@ p.statsInfo {
 
 @media 
 (-webkit-min-device-pixel-ratio: 2) { 
-    .icon, small.icon, .conventionStatus, .statsTable .keypopular:after {
+    .icon, small.icon, .conventionStatus, .statsTable, .reportLink:before, .keypopular:after {
         background-image: url(image_sprite_2x.png);
-        background-size: 65px 271px; 
+        background-size: 65px 301px; 
+        background-repeat: no-repeat;
     }
 }
