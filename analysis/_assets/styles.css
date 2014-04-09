@@ -366,7 +366,7 @@ p.statsInfo {
 }
 
 /* FLYOUT OVERLAY */
-    
+
 .flyout {
     background: #1f2a36;
     height: 100vh;
@@ -438,6 +438,16 @@ p.statsInfo {
     background-color: #2d3d4f;
 }
 
+.flyoutList ul {
+    margin: 0;
+    padding: 0;
+}
+
+.flyoutList a {
+    display: table;
+    text-decoration: none;
+}
+
 .flyout .td1,
 .flyout .td2,
 .flyout .td3 {
@@ -445,30 +455,28 @@ p.statsInfo {
     border-bottom: 1px solid #2b3540;
     padding: 6px;
     display: table-cell;
+    vertical-align: middle;
 }
 
-.flyout .td1 a {
+.flyout .td1 {
     color: #e4e9ed;
-    width: 98%;
+    width: 228px;
     text-decoration: none;
-}
-
-.flyout .td1 a:hover {
-    text-decoration: underline;
+    font-size: 13px;
 }
 
 .flyout .td2 {
     text-align: right;
-    padding-right: 25px;
     font-weight: bold;
     color: #e4e9ed;
-    width: 1%;
-    white-space: nowrap;
+    width: 62px;
+    max-width: 62px;
 }
 
 .flyout .td3 {
     color: #ced2d6;
-    width: 1%;
+    width: 46px;
+    max-width: 46px;
 }
 
 .flyout.expanded {
@@ -487,6 +495,7 @@ p.statsInfo {
     right: 17px;
     top: 17px;
     opacity: 1;
+    cursor: pointer;
 }
 
 .flyoutPin {

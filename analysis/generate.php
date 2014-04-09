@@ -501,7 +501,7 @@ function generateReport($results, $repo=null)
     foreach ($metrics as $metric => $data) {
         $metricid   = str_replace(' ', '-', strtolower($metric));
         $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
-        $sidebar   .= '<li><div class="td1"><a href="#'.$metricid.'">'.$metric.'</a></div><div class="td2">'.$data['winner'].'</div><div class="td3">'.$winPercent.'%</div></li>';
+        $sidebar   .= '<li><a href="#'.$metricid.'"><div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
     }
 
     if ($repo === null) {
