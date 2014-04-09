@@ -1979,7 +1979,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 14:52:50 +1000<br/>Using master branch of <a href="https://github.com/sugarcrm/sugarcrm_dev">sugarcrm/sugarcrm_dev</a> @ commit <a href="https://github.com/sugarcrm/sugarcrm_dev/commit/489e4cbacf44ab431e5353c0fbba7b084538859e">489e4cbacf44ab431e5353c0fbba7b084538859e</a></div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 15:29:34 +1000<br/>Using master branch of <a href="https://github.com/sugarcrm/sugarcrm_dev">sugarcrm/sugarcrm_dev</a> @ commit <a href="https://github.com/sugarcrm/sugarcrm_dev/commit/489e4cbacf44ab431e5353c0fbba7b084538859e">489e4cbacf44ab431e5353c0fbba7b084538859e</a></div>
 </div>
 
 <script>
@@ -2058,6 +2058,17 @@ function init() {
 }
 window.onload = init();
 
+var listClick = function(e) {
+    var node = e.target;
+    while (node.parentNode) {
+        if (node.id === 'listBoxWrap') {
+            return;
+        }
+        node = node.parentNode;
+    }
+    hideListBox();
+}
+
 function showListBox(id) {
     document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
     document.getElementById('listBoxWrap').style.display='block';
@@ -2073,21 +2084,13 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mouseup', function(e) {
-        var node = e.target;
-        while (node.parentNode) {
-            if (node.id === 'listBoxWrap') {
-                return;
-            }
-            node = node.parentNode;
-        }
-        hideListBox();
-    });
+    document.addEventListener('mouseup', listClick);
 }
 
 function hideListBox()
 {
     document.getElementById('listBoxWrap').style.display='none';
+    document.removeEventListener('mouseup', listClick);
 }
 
 var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};

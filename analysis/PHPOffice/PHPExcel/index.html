@@ -1942,7 +1942,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 09 Apr 2014 14:52:50 +1000<br/>Using master branch of <a href="https://github.com/PHPOffice/PHPExcel">PHPOffice/PHPExcel</a> @ commit <a href="https://github.com/PHPOffice/PHPExcel/commit/e69a5e4d0ffa7fb6f171859e0a04346e580df30b">e69a5e4d0ffa7fb6f171859e0a04346e580df30b</a></div>
+    <div class="footer">Report generated on Wed, 09 Apr 2014 15:29:34 +1000<br/>Using master branch of <a href="https://github.com/PHPOffice/PHPExcel">PHPOffice/PHPExcel</a> @ commit <a href="https://github.com/PHPOffice/PHPExcel/commit/e69a5e4d0ffa7fb6f171859e0a04346e580df30b">e69a5e4d0ffa7fb6f171859e0a04346e580df30b</a></div>
 </div>
 
 <script>
@@ -2021,6 +2021,17 @@ function init() {
 }
 window.onload = init();
 
+var listClick = function(e) {
+    var node = e.target;
+    while (node.parentNode) {
+        if (node.id === 'listBoxWrap') {
+            return;
+        }
+        node = node.parentNode;
+    }
+    hideListBox();
+}
+
 function showListBox(id) {
     document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
     document.getElementById('listBoxWrap').style.display='block';
@@ -2036,21 +2047,13 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mouseup', function(e) {
-        var node = e.target;
-        while (node.parentNode) {
-            if (node.id === 'listBoxWrap') {
-                return;
-            }
-            node = node.parentNode;
-        }
-        hideListBox();
-    });
+    document.addEventListener('mouseup', listClick);
 }
 
 function hideListBox()
 {
     document.getElementById('listBoxWrap').style.display='none';
+    document.removeEventListener('mouseup', listClick);
 }
 
 var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};

@@ -121,6 +121,17 @@ function init() {
 }
 window.onload = init();
 
+var listClick = function(e) {
+    var node = e.target;
+    while (node.parentNode) {
+        if (node.id === 'listBoxWrap') {
+            return;
+        }
+        node = node.parentNode;
+    }
+    hideListBox();
+}
+
 function showListBox(id) {
     document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
     document.getElementById('listBoxWrap').style.display='block';
@@ -136,21 +147,13 @@ function showListBox(id) {
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 
-    document.addEventListener('mouseup', function(e) {
-        var node = e.target;
-        while (node.parentNode) {
-            if (node.id === 'listBoxWrap') {
-                return;
-            }
-            node = node.parentNode;
-        }
-        hideListBox();
-    });
+    document.addEventListener('mouseup', listClick);
 }
 
 function hideListBox()
 {
     document.getElementById('listBoxWrap').style.display='none';
+    document.removeEventListener('mouseup', listClick);
 }
 
 ((js))
