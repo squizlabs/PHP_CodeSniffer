@@ -168,7 +168,7 @@ table.statsTable {
     width: 10px;
 }
 
-.statsTable .keypopular:after {
+.statsTable .keyPopular:after {
     background-image: url(image_sprite_1x.png);
     content: "";
     width: 13px;
@@ -668,7 +668,7 @@ a.reportLink, a.reportLink:visited {
 
 @media 
 (-webkit-min-device-pixel-ratio: 2) { 
-    .icon, small.icon, .conventionStatus, .statsTable, .reportLink:before, .keypopular:after {
+    .icon, small.icon, .conventionStatus, .reportLink:before, .statsTable .keyPopular:after {
         background-image: url(image_sprite_2x.png);
         background-size: 65px 301px; 
         background-repeat: no-repeat;

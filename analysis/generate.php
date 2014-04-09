@@ -194,7 +194,7 @@ function generateReport($results, $repo=null)
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
-    $html .= '        <div class="listBoxClose" onclick="document.getElementById(\'listBoxWrap\').style.display=\'none\';"></div>'.PHP_EOL;
+    $html .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
     $html .= '        <div class="listBoxHeader">'.PHP_EOL;
     $html .= '            <h2>View project specific report</h2>'.PHP_EOL;
     $html .= '        </div>'.PHP_EOL;
@@ -202,7 +202,11 @@ function generateReport($results, $repo=null)
     $html .= '            <ul class="listBoxList">'.PHP_EOL;
 
     foreach ($GLOBALS['repoList'] as $repoURL => $repoName) {
-        $href  = $repoURL.'/index.html';
+        $href = $repoURL.'/index.html';
+        if ($repo !== null) {
+            $href = '../../'.$href;
+        }
+
         $html .= '<li><div class="td1"><a href="'.$href.'">'.$repoName.'</a></div></li>'.PHP_EOL;
     }
 
@@ -493,6 +497,7 @@ function generateReport($results, $repo=null)
 
     ksort($metrics);
     $sidebar = '';
+
     foreach ($metrics as $metric => $data) {
         $metricid   = str_replace(' ', '-', strtolower($metric));
         $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
