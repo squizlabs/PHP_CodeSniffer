@@ -156,6 +156,13 @@ table.statsTable {
     color: #2e374d;
 }
 
+.preferrNone {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none; 
+    color: #2e374d;
+}
+
 .statsTable tr:last-child td {
     border-bottom: 1px solid #969fa7;
 }

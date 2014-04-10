@@ -364,12 +364,19 @@ function generateReport($results, $repo=null)
             $html .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
             $html .= '        <td class="value">'.$percent.'%';
             if ($repo === null) {
-                $html .= '<br/><a href="" onclick="';
+                $html .= '<br/>';
                 if ($numRepos > 0) {
-                    $html .= 'showListBox(\''.$metricid.'-'.$valueid.'-repos\');';
+                    $html .= '<a href="" onclick="showListBox(\''.$metricid.'-'.$valueid.'-repos\');return false;">';
+                } else {
+                    $html .= '<span class="preferrNone">';
                 }
 
-                $html .= 'return false;">preferred by '.$percentRepos.'% of projects</a>';
+                $html .= 'preferred by '.$percentRepos.'% of projects';
+                if ($numRepos > 0) {
+                    $html .= '</a>';
+                } else {
+                    $html .= '</span>';
+                }
             }
 
             $html .= '</td>'.PHP_EOL;
@@ -499,6 +506,10 @@ function generateReport($results, $repo=null)
     $sidebar = '';
 
     foreach ($metrics as $metric => $data) {
+        if (empty($data['values']) === true || $data['total'] === 0) {
+            continue;
+        }
+
         $metricid   = str_replace(' ', '-', strtolower($metric));
         $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
         $sidebar   .= '<li><a href="#'.$metricid.'"><div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
