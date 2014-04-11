@@ -101,6 +101,20 @@ foreach ($resultFiles as $file) {
             $results['metrics'][$metric]['trends'][$checkoutDate] = $data['values'];
         }
 
+        foreach ($data['trends'] as $date => $values) {
+            if (isset($totals[$metric]['trends'][$date]) === false) {
+                $totals[$metric]['trends'][$date] = array();
+            }
+
+            foreach ($values as $value => $count) {
+                if (isset($totals[$metric]['trends'][$date][$value]) === false) {
+                    $totals[$metric]['trends'][$date][$value] = $count;
+                } else {
+                    $totals[$metric]['trends'][$date][$value] += $count;
+                }
+            }
+        }
+
         // Needed for sorting this result set later on.
         $results['metrics'][$metric]['winner'] = $winner;
         if (isset($totals[$metric]['repos'][$winner]) === false) {
@@ -114,30 +128,6 @@ foreach ($resultFiles as $file) {
 
     file_put_contents($file, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
 
-}//end foreach
-
-// Load in old trend values.
-$filename   = __DIR__.'/results.json';
-$prevTotals = json_decode(file_get_contents($filename), true);
-foreach ($prevTotals as $metric => $data) {
-    if (isset($data['trends']) === false) {
-        continue;
-    }
-
-    if (isset($totals[$metric]) === false) {
-        $totals[$metric] = array(
-                            'total'       => 0,
-                            'total_repos' => 0,
-                            'values'      => array(),
-                            'repos'       => array(),
-                            'trends'      => $data['trends'],
-                           );
-        continue;
-    }
-
-    foreach ($data['trends'] as $date => $values) {
-        $totals[$metric]['trends'][$date] = $values;
-    }
 }//end foreach
 
 foreach ($totals as $metric => $data) {
@@ -175,6 +165,7 @@ if (empty($filterRepos) === false) {
     exit;
 }
 
+$filename = __DIR__.'/results.json';
 file_put_contents($filename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
 
 echo "\t=> Processing main result file: $filename".PHP_EOL;
