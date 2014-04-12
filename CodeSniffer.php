@@ -1951,7 +1951,13 @@ class PHP_CodeSniffer
             $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
             $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
             if ($configPaths !== null) {
-                $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
+                $configPaths = explode(',', $configPaths);
+                foreach ( $configPaths as $idx => $configPath ) {
+                    if ( strpos($configPath, '/') !== 0 ) {
+                        $configPaths[$idx] = $installedPaths[0] . '/' . $configPath;
+                    }
+                }
+                $installedPaths = array_merge($installedPaths, $configPaths);
             }
         } else {
             $installedPaths = array($standardsDir);
@@ -2038,7 +2044,13 @@ class PHP_CodeSniffer
         $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
         if ($configPaths !== null) {
-            $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
+            $configPaths = explode(',', $configPaths);
+            foreach ( $configPaths as $idx => $configPath ) {
+                if ( strpos($configPath, '/') !== 0 ) {
+                    $configPaths[$idx] = $installedPaths[0] . '/' . $configPath;
+                }
+            }
+            $installedPaths = array_merge($installedPaths, $configPaths);
         }
 
         foreach ($installedPaths as $installedPath) {
