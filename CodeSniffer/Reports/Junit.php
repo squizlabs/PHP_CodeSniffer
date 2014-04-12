@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Oleg Lobach <oleg@lobach.info>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Oleg Lobach <oleg@lobach.info>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -30,73 +30,62 @@
 class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
 {
 
+    /**
+     * A count of tests that have been performed.
+     *
+     * @var int
+     */
+    private $_tests = 0;
+
 
     /**
-     * Prints all violations for processed files, in a JUnit format.
+     * Generate a partial report for a single processed file.
      *
-     * Violations are grouped by file.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report.
+     * @param array   $report      Prepared report data.
      * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param int     $width       Maximum allowed line width.
      *
-     * @return string
+     * @return boolean
      */
-    public function generate(
+    public function generateFileReport(
         $report,
         $showSources=false,
-        $width=80,
-        $toScreen=true
+        $width=80
     ) {
-        $errors = 0;
-        $tests  = 0;
-        foreach ($report['files'] as $file) {
-            if (count($file['messages']) === 0) {
-                $tests++;
-                continue;
-            }
-
-            $errors += ($file['errors'] + $file['warnings']);
-            $tests  += ($file['errors'] + $file['warnings']);
+        if (count($report['messages']) === 0) {
+            $this->_tests++;
+        } else {
+            $this->_tests += ($report['errors'] + $report['warnings']);
         }
 
         $out = new XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
-        $out->startDocument('1.0', 'UTF-8');
 
-        $out->startElement('testsuites');
-        $out->writeAttribute('name', 'PHP_CodeSniffer '.PHP_CodeSniffer::VERSION);
-        $out->writeAttribute('tests', $tests);
-        $out->writeAttribute('failures', $errors);
+        $out->startElement('testsuite');
+        $out->writeAttribute('name', $report['filename']);
 
-        $errorsShown = 0;
-        foreach ($report['files'] as $filename => $file) {
-            $out->startElement('testsuite');
-            $out->writeAttribute('name', $filename);
+        if (count($report['messages']) === 0) {
+            $out->writeAttribute('tests', 1);
+            $out->writeAttribute('failures', 0);
 
-            if (count($file['messages']) === 0) {
-                $out->writeAttribute('tests', 1);
-                $out->writeAttribute('failures', 0);
-
-                $out->startElement('testcase');
-                $out->writeAttribute('name', $filename);
-                $out->endElement();
-
-                $out->endElement();
-                continue;
-            }
-
-            $failures = ($file['errors'] + $file['warnings']);
+            $out->startElement('testcase');
+            $out->writeAttribute('name', $report['filename']);
+            $out->endElement();
+        } else {
+            $failures = ($report['errors'] + $report['warnings']);
             $out->writeAttribute('tests', $failures);
             $out->writeAttribute('failures', $failures);
 
-            foreach ($file['messages'] as $line => $lineErrors) {
+            foreach ($report['messages'] as $line => $lineErrors) {
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
                         $out->startElement('testcase');
-                        $out->writeAttribute('name', $error['source']." at $filename ($line:$column)");
+                        $out->writeAttribute('name', $error['source'].' at '.$report['filename']." ($line:$column)");
 
                         $error['type'] = strtolower($error['type']);
                         if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
@@ -109,20 +98,46 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
                         $out->endElement();
 
                         $out->endElement();
-
-                        $errorsShown++;
                     }
                 }
-            }//end foreach
-
-            $out->endElement();
-
-        }//end foreach
+            }
+        }//end if
 
         $out->endElement();
         echo $out->flush();
+        return true;
 
-        return $errorsShown;
+    }//end generateFileReport()
+
+
+    /**
+     * Prints all violations for processed files, in a proprietary XML format.
+     *
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
+     *
+     * @return void
+     */
+    public function generate(
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
+        $showSources=false,
+        $width=80,
+        $toScreen=true
+    ) {
+        $failures = ($totalErrors + $totalWarnings);
+        echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'" tests="'.$this->_tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo $cachedData;
+        echo '</testsuites>'.PHP_EOL;
 
     }//end generate()
 

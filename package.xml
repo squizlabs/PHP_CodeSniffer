@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2013-09-26</date>
- <time>09:41:00</time>
+ <date>2014-02-05</date>
+ <time>10:46:00</time>
  <version>
-  <release>1.4.8</release>
-  <api>1.4.8</api>
+  <release>1.5.3</release>
+  <api>1.5.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,12 +26,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
-    -- E.g., to ignore comments, override a property using:
-    -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
-  - PSR2 standard now ignores comments when checking indentation rules
-  - Fixed bug #20097 : CLI.php throws error in php 5.2
-  - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
+  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
+  - PSR1 CamelCapsMethodNameSniff now ignores magic methods
+    -- Thanks to Eser Ozvataf for the patch
+  - PSR1 SideEffectsSniff now ignores methods named define()
+  - PSR1 and PEAR ClassDeclarationSniffs now support traits (request #20208)
+  - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
+    -- Thanks to Maurus Cuelenaere for the patch
+  - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
+    -- Thanks to Max Galbusera for the patch
+  - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
+  - Fixed bug #20200 : Invalid JSON produced with specific error message
+  - Fixed bug #20204 : Ruleset exclude checks are case sensitive
+  - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
+  - Fixed bug #20225 : array_merge() that takes more than one line generates error
+  - Fixed bug #20230 : Squiz ControlStructureSpacing sniff assumes specific condition formatting
  </notes>
  <contents>
   <dir name="/">
@@ -63,69 +73,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
-     <dir name="Reports">
-      <dir name="Mock">
-       <file baseinstalldir="" name="Gitblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Hgblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Svnblame.php" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-      </dir>
-      <dir name="XSD">
-       <file baseinstalldir="" name="Checkstyle.xsd" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Junit.xsd" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-       <file baseinstalldir="" name="Xml.xsd" role="test">
-        <tasks:replace from="@package_version@" to="version" type="package-info" />
-       </file>
-      </dir>
-      <file baseinstalldir="" name="AbstractTestCase.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="CheckstyleTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="CsvTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="EmacsTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="FullTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="GitblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="HgblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="JsonTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="JunitTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SourceTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SummaryTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="SvnblameTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="" name="XmlTest.php" role="test">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-     </dir>
      <file baseinstalldir="" name="AllTests.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
@@ -133,9 +80,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="" name="ReportingTest.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
@@ -1560,6 +1504,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowComparisonAssignmentSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1979,6 +1926,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CommentedOutCodeUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowBooleanStatementUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="DisallowComparisonAssignmentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="DisallowComparisonAssignmentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -2227,9 +2178,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="PHP" name="File.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
-    <file baseinstalldir="PHP" name="MultiFileSniff.php" role="php">
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
     <file baseinstalldir="PHP" name="Report.php" role="php">
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
@@ -2275,27 +2223,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
-   <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
-   <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
-   <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
-   <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
-   <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
-   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/JsonTest.php" name="tests/Core/Reports/JsonTest.php" />
-   <install as="CodeSniffer/Core/Reports/JunitTest.php" name="tests/Core/Reports/JunitTest.php" />
-   <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
-   <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
-   <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Junit.xsd" name="tests/Core/Reports/XSD/Junit.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
-   <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2308,33 +2236,384 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
-   <install as="CodeSniffer/Core/ReportingTest.php" name="tests/Core/ReportingTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/Reports/AbstractTestCase.php" name="tests/Core/Reports/AbstractTestCase.php" />
-   <install as="CodeSniffer/Core/Reports/CheckstyleTest.php" name="tests/Core/Reports/CheckstyleTest.php" />
-   <install as="CodeSniffer/Core/Reports/CsvTest.php" name="tests/Core/Reports/CsvTest.php" />
-   <install as="CodeSniffer/Core/Reports/EmacsTest.php" name="tests/Core/Reports/EmacsTest.php" />
-   <install as="CodeSniffer/Core/Reports/FullTest.php" name="tests/Core/Reports/FullTest.php" />
-   <install as="CodeSniffer/Core/Reports/GitblameTest.php" name="tests/Core/Reports/GitblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/HgblameTest.php" name="tests/Core/Reports/HgblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/JsonTest.php" name="tests/Core/Reports/JsonTest.php" />
-   <install as="CodeSniffer/Core/Reports/JunitTest.php" name="tests/Core/Reports/JunitTest.php" />
-   <install as="CodeSniffer/Core/Reports/SourceTest.php" name="tests/Core/Reports/SourceTest.php" />
-   <install as="CodeSniffer/Core/Reports/SummaryTest.php" name="tests/Core/Reports/SummaryTest.php" />
-   <install as="CodeSniffer/Core/Reports/SvnblameTest.php" name="tests/Core/Reports/SvnblameTest.php" />
-   <install as="CodeSniffer/Core/Reports/XmlTest.php" name="tests/Core/Reports/XmlTest.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Gitblame.php" name="tests/Core/Reports/Mock/Gitblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Hgblame.php" name="tests/Core/Reports/Mock/Hgblame.php" />
-   <install as="CodeSniffer/Core/Reports/Mock/Svnblame.php" name="tests/Core/Reports/Mock/Svnblame.php" />
-   <install as="CodeSniffer/Core/Reports/XSD/Checkstyle.xsd" name="tests/Core/Reports/XSD/Checkstyle.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Junit.xsd" name="tests/Core/Reports/XSD/Junit.xsd" />
-   <install as="CodeSniffer/Core/Reports/XSD/Xml.xsd" name="tests/Core/Reports/XSD/Xml.xsd" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="scripts/phpcs.bat" />
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.5.2</release>
+    <api>1.5.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-02-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Improved support for the PHP 5.5. classname::class syntax
+      -- PSR2 SwitchDeclarationSniff no longer throws errors when this syntax is used in CASE conditions
+    - Improved support for negative checks of instanceOf in Squiz ComparisonOperatorUsageSniff
+      -- Thanks to Martin Winkel for the patch
+    - Generic FunctionCallArgumentSpacingSniff now longer complains about space before comma when using here/nowdocs
+      -- Thanks to Richard van Velzen for the patch
+    - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore class constants
+      -- Thanks to Kristopher Wilson for the patch
+    - PEAR FunctionCallSignatureSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - PSR2 ControlStructureSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz ForEachLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz ForLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz FunctionDeclarationArgumentSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
+    - Generic FixmeSniff and TodoSniff now work correctly with accented characters
+    - Fixed bug #20145 : Custom ruleset preferences directory over installed standard
+    - Fixed bug #20147 : phpcs-svn-pre-commit - no more default error report
+    - Fixed bug #20151 : Problem handling "if(): ... else: ... endif;" syntax
+    - Fixed bug #20190 : Invalid regex in Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.1</release>
+    <api>1.5.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-12-12</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Config values can now be set at runtime using the command line argument [--runtime-set key value]
+      -- Runtime values are the same as config values, but are not written to the main config file
+      -- Thanks to Wim Godden for the patch
+    - Config values can now be set in ruleset files
+      -- e.g., config name="zend_ca_path" value="/path/to/ZendCodeAnalyzer"
+      -- Can not be used to set config values that override command line values, such as show_warnings
+      -- Thanks to Jonathan Marcil for helping with the patch
+    - Added a new installed_paths config value to allow for the setting of directories that contain standards
+      -- By default, standards have to be installed into the CodeSniffer/Standards directory to be considered installed
+      -- New config value allows a list of paths to be set in addition to this internal path
+      -- Installed standards appear when using the -i arg, and can be referenced in rulesets using only their name
+      -- Set paths by running: phpcs --config-set installed_paths /path/one,/path/two,...
+    - PSR2 ClassDeclarationSniff now allows a list of extended interfaces to be split across multiple lines
+    - Squiz DoubleQuoteUsageSniff now allows \b in double quoted strings
+    - Generic ForbiddenFunctionsSniff now ignores object creation
+      -- This is a further fix for bug #20100 : incorrect Function mysql() has been deprecated report
+    - Fixed bug #20136 : Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff and Traits
+    - Fixed bug #20138 : Protected property underscore and camel caps issue (in trait with Zend)
+      -- Thanks to Gaetan Rousseau for the patch
+    - Fixed bug #20139 : No report file generated on success
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.0</release>
+    <api>1.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-11-28</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Doc generation is now working again for installed standards
+      -- Includes a fix for limiting the docs to specific sniffs
+    - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
+      -- E.g., to ignore comments, override a property using:
+      -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
+    - PSR2 standard now ignores comments when checking indentation rules
+    - Generic UpperCaseConstantNameSniff no longer reports errors where constants are used (request #20090)
+      -- It still reports errors where constants are defined
+    - Individual messages can now be excluded in ruleset.xml files using the exclude tag (request #20091)
+      -- Setting message severity to 0 continues to be supported
+    - Squiz OperatorSpacingSniff no longer throws errors for the ?: short ternary operator
+      -- Thanks to Antoine Musso for the patch
+    - Comment parser now supports non-English characters when splitting comment lines into words
+      -- Thanks to Nik Sun for the patch
+    - Exit statements are now recognised as valid closers for CASE and DEFAULT blocks
+      -- Thanks to Maksim Kochkin for the patch
+    - PHP_CodeSniffer_CLI::process() can now be passed an incomplete array of CLI values
+      -- Missing values will be set to the CLI defaults
+      -- Thanks to Maksim Kochkin for the patch
+    - Fixed bug #20093 : Bug with ternary operator token
+    - Fixed bug #20097 : CLI.php throws error in php 5.2
+    - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
+    - Fixed bug #20119 : PHP warning: invalid argument to str_repeat() in SVN blame report with -s
+    - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
+    - Fixed bug #20131 : PHP errors in svnblame report, if there are files not under version control
+    - Fixed bug #20133 : Allow "HG: hg_id" as value for @version tag
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.0RC4</release>
+    <api>1.5.0RC4</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-09-26</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - You can now restrict violations to individual sniff codes using the --sniffs command line argument
+     -- Previously, this only restricted violations to an entire sniff and not individual messages
+     -- If you have scripts calling PHP_CodeSniffer::process() or creating PHP_CodeSniffer_File objects, you must update your code
+     -- The array of restrictions passed to PHP_CodeSniffer::process() must now be an array of sniff codes instead of class names
+     -- The PHP_CodeSniffer_File::__construct() method now requires an array of restrictions to be passed
+    - Doc generation is now working again
+    - Progress information now shows the percentage complete at the end of each line
+    - Added report type --report=junit to show the error list in a JUnit compatible format
+      -- Thanks to Oleg Lobach for the contribution
+    - Added support for the PHP 5.4 callable type hint
+    - Fixed problem where some file content could be ignored when checking STDIN
+    - Version information is now printed when installed via composer or run from a Git clone (request #20050)
+    - Added Squiz DisallowBooleanStatementSniff to ban boolean operators outside of control structure conditions
+    - The CSS tokenizer is now more reliable when encountering 'list' and 'break' strings
+    - Coding standard ignore comments can now appear instead doc blocks as well as inline comments
+      -- Thanks to Stuart Langley for the patch
+    - Generic LineLengthSniff now ignores SVN URL and Head URL comments
+      -- Thanks to Karl DeBisschop for the patch
+    - PEAR MultiLineConditionSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+      -- Thanks to Szabolcs Sulik for the patch
+    - PEAR MultiLineAssignmentSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+      -- Thanks to Szabolcs Sulik for the patch
+    - PEAR FunctionDeclarationSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+      -- Thanks to Szabolcs Sulik for the patch
+    - Squiz SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+      -- Thanks to Szabolcs Sulik for the patch
+    - Squiz CSS IndentationSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the 'indent' setting in a ruleset.xml file to change
+      -- Thanks to Hugo Fonseca for the patch
+    - Squiz and MySource File and Function comment sniffs now allow all tags and don't require a particular licence
+    - Squiz standard now allows lines to be 120 characters long before warning; up from 85
+    - Squiz LowercaseStyleDefinitionSniff no longer throws errors for class names in nested style definitions
+    - Squiz ClassFileNameSniff no longer throws errors when checking STDIN
+    - Squiz CSS sniffs no longer generate errors for IE filters
+    - Squiz CSS IndentationSniff no longer sees comments as blank lines
+    - Squiz LogicalOperatorSpacingSniff now ignores whitespace at the end of a line
+    - Squiz.Scope.MethodScope.Missing error message now mentions 'visibility' instead of 'scope modifier'
+      -- Thanks to Renat Akhmedyanov for the patch
+    - Added support for the PSR2 multi-line arguments errata
+    - The PSR2 standard no longer throws errors for additional spacing after a type hint
+    - PSR UseDeclarationSniff no longer throws errors for USE statements inside TRAITs
+    - Fixed cases where code was incorrectly assigned the T_GOTO_LABEL token when used in a complex CASE condition
+    - Fixed bug #20026 : Check for multi-line arrays that should be single-line is slightly wrong
+      -- Adds new error message for single-line arrays that end with a comma
+    - Fixed bug #20029 : ForbiddenFunction sniff incorrectly recognizes methods in USE clauses
+    - Fixed bug #20043 : Mis-interpretation of Foo::class
+    - Fixed bug #20044 : PSR1 camelCase check does not ignore leading underscores
+    - Fixed bug #20045 : Errors about indentation for closures with multi-line 'use' in functions
+    - Fixed bug #20051 : Undefined index: scope_opener / scope_closer
+      -- Thanks to Anthon Pang for the patch
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.0RC3</release>
+    <api>1.5.0RC3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-07-25</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added report type --report=json to show the error list and total counts for all checked files
+      -- Thanks to Jeffrey Fisher for the contribution
+    - PHP_CodeSniffer::isCamelCaps now allows for acronyms at the start of a string if the strict flag is FALSE
+      -- acronyms are defined as at least 2 uppercase characters in a row
+      -- e.g., the following is now valid camel caps with strict set to FALSE: XMLParser
+    - The PHP tokenizer now tokenizes goto labels as T_GOTO_LABEL instead of T_STRING followed by T_COLON
+    - The JS tokenizer now has support for the T_THROW token
+    - Symlinked directories inside CodeSniffer/Standards and in ruleset.xml files are now supported
+      -- Only available since PHP 5.2.11 and 5.3.1
+      -- Thanks to Maik Penz for the patch
+    - The JS tokenizer now correctly identifies T_INLINE_ELSE tokens instead of leaving them as T_COLON
+      -- Thanks to Arnout Boks for the patch
+    - Explaining a standard (phpcs -e) that uses namespaces now works correctly
+    - Restricting a check to specific sniffs (phpcs --sniffs=...) now works correctly with namespaced sniffs
+      -- Thanks to Maik Penz for the patch
+    - Docs added for the entire Generic standard, and many sniffs from other standards are now documented as well
+      -- Thanks to Spencer Rinehart for the contribution
+    - Clearer error message for when the sniff class name does not match the directory structure
+    - Generated HTML docs now correctly show the open PHP tag in code comparison blocks
+    - Added Generic InlineHTMLSniff to ensure a file only contains PHP code
+    - Added Squiz ShorthandSizeSniff to check that CSS sizes are using shorthand notation only when 1 or 2 values are used
+    - Added Squiz ForbiddenStylesSniff to ban the use of some deprecated browser-specific styles
+    - Added Squiz NamedColoursSniff to ban the use of colour names
+    - PSR2 standard no longer enforces no whitespace between the closing parenthesis of a function call and the semicolon
+    - PSR2 ClassDeclarationSniff now ignores empty classes when checking the end brace position
+    - PSR2 SwitchDeclarationSniff no longer reports errors for empty lines between CASE statements
+    - PEAR ObjectOperatorIndentSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the indent setting in a ruleset.xml file to change
+      -- Thanks to Andrey Mindubaev for the patch
+    - Squiz FileExtensionSniff now supports traits
+      -- Thanks to Lucas Green for the patch
+    - Squiz ArrayDeclarationSniff no longer reports errors for no comma at the end of a line that contains a function call
+    - Squiz SwitchDeclarationSniff now supports T_CONTINUE and T_THROW as valid case/default breaking statements
+    - Squiz CommentedOutCodeSniff is now better at ignoring commented out HTML, XML and regular expressions
+    - Squiz DisallowComparisonAssignmentSniff no longer throws errors for the third expression in a FOR statement
+    - Squiz ColourDefinitionSniff no longer throws errors for some CSS class names
+    - Squiz ControlStructureSpacingSniff now supports all types of CASE/DEFAULT breaking statements
+    - Generic CallTimePassByReferenceSniff now reports errors for functions called using a variable
+      -- Thanks to Maik Penz for the patch
+    - Generic ConstructorNameSniff no longer throws a notice for abstract constructors inside abstract classes
+      -- Thanks to Spencer Rinehart for the patch
+    - Squiz ComparisonOperatorUsageSniff now checks inside elseif statements
+      -- Thanks to Arnout Boks for the patch
+    - Squiz OperatorSpacingSniff now reports errors for no spacing around inline then and else tokens
+      -- Thanks to Arnout Boks for the patch
+    - Fixed bug #19811 : Comments not ignored in all cases in AbstractPatternSniff
+      -- Thanks to Erik Wiffin for the patch
+    - Fixed bug #19892 : ELSE with no braces causes incorrect SWITCH break statement indentation error
+    - Fixed bug #19897 : Indenting warnings in templates not consistent
+    - Fixed bug #19908 : PEAR MultiLineCondition Does Not Apply elseif
+    - Fixed bug #19930 : option --report-file generate an empty file
+    - Fixed bug #19935 : notify-send reports do not vanish in gnome-shell
+      -- Thanks to Christian Weiske for the patch
+    - Fixed bug #19944 : docblock squiz sniff "return void" trips over return in lambda function
+    - Fixed bug #19953 : PSR2 - Spaces before interface name for abstract class
+    - Fixed bug #19956 : phpcs warns for Type Hint missing Resource
+    - Fixed bug #19957 : Does not understand trait method aliasing
+    - Fixed bug #19968 : Permission denied on excluded directory
+    - Fixed bug #19969 : Sniffs with namespace not recognized in reports
+    - Fixed bug #19997 : Class names incorrectly detected as constants
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.0RC2</release>
+    <api>1.5.0RC2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-04-04</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Ruleset processing has been rewritten to be more predictable
+      -- Provides much better support for relative paths inside ruleset files
+      -- May mean that sniffs that were previously ignored are now being included when importing external rulesets
+      -- Ruleset processing output can be seen by using the -vv command line argument
+      -- Internal sniff registering functions have all changed, so please review custom scripts
+    - You can now pass multiple coding standards on the command line, comma separated (request #19144)
+      -- Works with built-in or custom standards and rulesets, or a mix of both
+    - You can now exclude directories or whole standards in a ruleset XML file (request #19731)
+      -- e.g., exclude "Generic.Commenting" or just "Generic"
+      -- You can also pass in a path to a directory instead, if you know it
+    - Added Generic LowerCaseKeywordSniff to ensure all PHP keywords are defined in lowercase
+      -- The PSR2 and Squiz standards now use this sniff
+    - Added Generic SAPIUsageSniff to ensure the PHP_SAPI constant is used instead of php_sapi_name() (request #19863)
+    - Squiz FunctionSpacingSniff now has a setting to specify how many lines there should between functions (request #19843)
+      -- Default remains at 2
+      -- Override the "spacing" setting in a ruleset.xml file to change
+    - Squiz LowercasePHPFunctionSniff no longer throws errors for the limited set of PHP keywords it was checking
+      -- Add a rule for Generic.PHP.LowerCaseKeyword to your ruleset to replicate this functionality
+    - Added support for the PHP 5.4 T_CALLABLE token so it can be used in lower PHP versions
+    - Generic EndFileNoNewlineSniff now supports checking of CSS and JS files
+    - PSR2 SwitchDeclarationSniff now has a setting to specify how many spaces code should be indented
+      -- Default remains at 4; override the indent setting in a ruleset.xml file to change
+      -- Thanks to Asher Snyder for the patch
+    - Generic ScopeIndentSniff now has a setting to specify a list of tokens that should be ignored
+      -- The first token on the line is checked and the whole line is ignored if the token is in the array
+      -- Thanks to Eloy Lafuente for the patch
+    - Squiz LowercaseClassKeywordsSniff now checks for the TRAIT keyword
+      -- Thanks to Anthon Pang for the patch
+    - If you create your own PHP_CodeSniffer object, PHPCS will no longer exit when an unknown argument is found
+      -- This allows you to create wrapper scripts for PHPCS more easily
+    - PSR2 MethodDeclarationSniff no longer generates a notice for methods named "_"
+      -- Thanks to Bart S for the patch
+    - Squiz BlockCommentSniff no longer reports that a blank line between a scope closer and block comment is invalid
+    - Generic DuplicateClassNameSniff no longer reports an invalid error if multiple PHP open tags exist in a file
+    - Generic DuplicateClassNameSniff no longer reports duplicate errors if multiple PHP open tags exist in a file
+    - Fixed bug #19819 : Freeze with syntax error in use statement
+    - Fixed bug #19820 : Wrong message level in Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+    - Fixed bug #19859 : CodeSniffer::setIgnorePatterns API changed
+    - Fixed bug #19871 : findExtendedClassName doesn't return FQCN on namespaced classes
+    - Fixed bug #19879 : bitwise and operator interpreted as reference by value
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.0RC1</release>
+    <api>1.5.0RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2013-02-08</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Reports have been completely rewritten to consume far less memory
+      -- Each report is incrementally written to the file system during a run and then printed out when the run ends
+      -- There is no longer a need to keep the list of errors and warnings in memory during a run
+    - Multi-file sniff support has been removed because they are too memory intensive
+      -- If you have a custom multi-file sniff, you can convert it into a standard sniff quite easily
+      -- See CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php for an example
+    </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.4.8</release>
+    <api>1.4.8</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-11-26</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Generic ScopeIndentSniff now allows for ignored tokens to be set via ruleset.xml files
+      -- E.g., to ignore comments, override a property using:
+      -- name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"
+    - PSR2 standard now ignores comments when checking indentation rules
+    - Squiz OperatorSpacingSniff no longer throws errors for the ?: short ternary operator
+      -- Thanks to Antoine Musso for the patch
+    - Comment parser now supports non-English characters when splitting comment lines into words
+      -- Thanks to Nik Sun for the patch
+    - Exit statements are now recognised as valid closers for CASE and DEFAULT blocks
+      -- Thanks to Maksim Kochkin for the patch
+    - PHP_CodeSniffer_CLI::process() can now be passed an incomplete array of CLI values
+      -- Missing values will be set to the CLI defaults
+      -- Thanks to Maksim Kochkin for the patch
+    - Fixed bug #20097 : CLI.php throws error in php 5.2
+    - Fixed bug #20100 : incorrect Function mysql() has been deprecated report
+    - Fixed bug #20119 : PHP warning: invalid argument to str_repeat() in SVN blame report with -s
+    - Fixed bug #20123 : PSR2 complains about an empty second statement in for-loop
+    - Fixed bug #20131 : PHP errors in svnblame report, if there are files not under version control
+    - Fixed bug #20133 : Allow "HG: hg_id" as value for @version tag
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.4.7</release>

@@ -35,4 +35,7 @@ abstract class Foo
 if ($geometry instanceof static) {
     echo 'foo';
 }
-?>
+
+class MyClass1 {
+    use HelloWorld { sayHello as private; }
+}

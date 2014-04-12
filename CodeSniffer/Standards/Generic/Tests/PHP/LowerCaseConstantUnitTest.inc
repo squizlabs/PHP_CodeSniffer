@@ -63,4 +63,14 @@ class MyClass
         $var = array('foo' => new True());
     }
 }
-?>
+
+$x = $f?FALSE:true;
+$x = $f? FALSE:true;
+
+class MyClass
+{
+    // Spice things up a little.
+    const TRUE = false;
+}
+
+var_dump(MyClass::TRUE);

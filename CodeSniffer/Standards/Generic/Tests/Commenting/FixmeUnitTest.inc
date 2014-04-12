@@ -19,4 +19,5 @@ Debug::bam('test');
 // To do this, use a function!
 // nofixme! NOFIXME! NOfixme!
 //FIXME.
-?>
+//éfixme
+//fixmeé

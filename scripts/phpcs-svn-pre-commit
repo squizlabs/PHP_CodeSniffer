@@ -9,7 +9,7 @@
  * @package   PHP_CodeSniffer
  * @author    Jack Bates <ms419@freezone.co.uk>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -30,7 +30,7 @@ define('PHP_CODESNIFFER_SVNLOOK', '/usr/bin/svnlook');
  * @package   PHP_CodeSniffer
  * @author    Jack Bates <ms419@freezone.co.uk>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -107,12 +107,14 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         $contents = preg_replace('/^.{4}/m', null, $contents);
 
         $values['standard'] = $this->validateStandard($values['standard']);
-        if (PHP_CodeSniffer::isInstalledStandard($values['standard']) === false) {
-            // They didn't select a valid coding standard, so help them
-            // out by letting them know which standards are installed.
-            echo 'ERROR: the "'.$values['standard'].'" coding standard is not installed. ';
-            $this->printInstalledStandards();
-            exit(2);
+        foreach ($values['standard'] as $standard) {
+            if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
+                // They didn't select a valid coding standard, so help them
+                // out by letting them know which standards are installed.
+                echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+                $this->printInstalledStandards();
+                exit(2);
+            }
         }
 
         $phpcs = new PHP_CodeSniffer(
@@ -143,6 +145,10 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
             $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
         } else {
             $this->warningSeverity = $values['warningSeverity'];
+        }
+
+        if (empty($values['reports']) === true) {
+            $this->values['reports']['full'] = $values['reportFile'];
         }
 
         // Initialize PHP_CodeSniffer listeners but don't process any files.

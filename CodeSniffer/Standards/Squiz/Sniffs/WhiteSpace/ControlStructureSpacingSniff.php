@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -135,7 +135,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         }
 
         $trailingContent = $phpcsFile->findNext(
-            T_WHITESPACE,
+            PHP_CodeSniffer_Tokens::$emptyTokens,
             ($scopeCloser + 1),
             null,
             true
@@ -145,21 +145,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             if ($tokens[$stackPtr]['code'] === T_IF) {
                 // IF with ELSE.
                 return;
-            }
-        }
-
-        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
-            if ($tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']) {
-                if (substr($tokens[$trailingContent]['content'], 0, 5) === '//end') {
-                    // There is an end comment, so we have to get the next piece
-                    // of content.
-                    $trailingContent = $phpcsFile->findNext(
-                        T_WHITESPACE,
-                        ($trailingContent + 1),
-                        null,
-                        true
-                    );
-                }
             }
         }
 
@@ -194,11 +179,12 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 $error = 'Blank line found after control structure';
                 $phpcsFile->addError($error, $scopeCloser, 'LineAfterClose');
             }
-        } else {
-            if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-                $error = 'No blank line found after control structure';
-                $phpcsFile->addError($error, $scopeCloser, 'NoLineAfterClose');
-            }
+        } else if ($tokens[$trailingContent]['code'] !== T_ELSE
+            && $tokens[$trailingContent]['code'] !== T_ELSEIF
+            && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
+        ) {
+            $error = 'No blank line found after control structure';
+            $phpcsFile->addError($error, $scopeCloser, 'NoLineAfterClose');
         }
 
     }//end process()

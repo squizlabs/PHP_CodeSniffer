@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -26,7 +26,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -85,9 +85,9 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                 if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                     $objVarName = $tokens[$var]['content'];
 
-                    // There is no way for us to know if the var is public or private,
-                    // so we have to ignore a leading underscore if there is one and just
-                    // check the main part of the variable name.
+                    // There is no way for us to know if the var is public or
+                    // private, so we have to ignore a leading underscore if there is
+                    // one and just check the main part of the variable name.
                     $originalVarName = $objVarName;
                     if (substr($objVarName, 0, 1) === '_') {
                         $objVarName = substr($objVarName, 1);

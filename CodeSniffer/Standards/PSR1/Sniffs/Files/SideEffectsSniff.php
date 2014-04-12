@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -21,7 +21,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -159,12 +159,15 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             } else if ($tokens[$i]['code'] === T_STRING
                 && strtolower($tokens[$i]['content']) === 'define'
             ) {
-                if ($firstSymbol === null) {
-                    $firstSymbol = $i;
-                }
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
+                if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
+                    if ($firstSymbol === null) {
+                        $firstSymbol = $i;
+                    }
 
-                $i = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
-                continue;
+                    $i = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                    continue;
+                }
             }
 
             // Conditional statements are allowed in symbol files as long as the

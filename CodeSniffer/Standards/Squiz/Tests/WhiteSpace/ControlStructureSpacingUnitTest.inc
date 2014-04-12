@@ -136,4 +136,13 @@ switch ($moo)
         $moo = 'moo';
     break;
 }
-?>
+
+if ($one) {
+}
+elseif ($two) {
+}
+// else if something
+else if ($three) {
+} // else do something
+else {
+}

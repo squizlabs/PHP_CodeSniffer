@@ -83,4 +83,11 @@ var x = {
 
     },
 };
-?>
+
+if (one) {
+}
+// else if something
+else if (two) {
+} // else do something
+else {
+}

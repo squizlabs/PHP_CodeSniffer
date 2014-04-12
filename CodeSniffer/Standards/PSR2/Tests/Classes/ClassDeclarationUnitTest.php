@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -21,7 +21,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -41,25 +41,27 @@ class PSR2_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                2  => 1,
-                7  => 3,
-                12 => 1,
-                13 => 1,
-                17 => 1,
-                19 => 2,
-                20 => 1,
-                21 => 1,
-                22 => 1,
-                25 => 1,
-                27 => 1,
-                28 => 1,
-                29 => 1,
-                34 => 1,
-                35 => 2,
-                44 => 1,
-                45 => 1,
-                63 => 1,
-                95 => 1,
+                2   => 1,
+                7   => 3,
+                12  => 1,
+                13  => 1,
+                17  => 1,
+                19  => 2,
+                20  => 1,
+                21  => 1,
+                22  => 1,
+                25  => 1,
+                27  => 1,
+                28  => 1,
+                29  => 1,
+                34  => 1,
+                35  => 2,
+                44  => 1,
+                45  => 1,
+                63  => 1,
+                95  => 1,
+                116 => 1,
+                118 => 1,
                );
 
     }//end getErrorList()

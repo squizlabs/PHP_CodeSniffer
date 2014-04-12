@@ -1,4 +1,4 @@
-<?php
+
 /**
  * FIXME: Write this comment
  *
@@ -19,4 +19,5 @@ alert('test');
 // To do this, use a function!
 // nofixme! NOFIXME! NOfixme!
 //FIXME.
-?>
+//éfixme
+//fixmeé

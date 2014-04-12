@@ -16,7 +16,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */</em>
@@ -41,7 +41,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -59,7 +59,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -78,7 +78,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -97,7 +97,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -116,7 +116,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -134,7 +134,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -153,7 +153,7 @@
  * <em>@category</em> Foo
  * <em>@package</em> Foo_Helpers
  * <em>@author</em> Marty McFly <mmcfly@example.com>
- * <em>@copyright</em> 2013 Foo Inc.
+ * <em>@copyright</em> 2013-2014 Foo Inc.
  * <em>@license</em> MIT License
  * <em>@link</em> http://example.com
  */
@@ -169,7 +169,7 @@
  *
  * @category Foo
  * @package Foo_Helpers
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -188,7 +188,7 @@
  * <em>@category</em> Foo
  * <em>@package</em> Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * <em>@license</em> MIT License
  * @link http://example.com
  */
@@ -206,7 +206,7 @@
  * <em>@category</em> Bar
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -225,7 +225,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -242,7 +242,7 @@
  * <em>@package</em> Foo_Helpers
  * <em>@category</em> Foo
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -261,7 +261,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */
@@ -276,7 +276,7 @@
  * @category Foo
  * @package Foo_Helpers
  * @author Marty McFly <mmcfly@example.com>
- * @copyright 2013 Foo Inc.
+ * @copyright 2013-2014 Foo Inc.
  * @license MIT License
  * @link http://example.com
  */

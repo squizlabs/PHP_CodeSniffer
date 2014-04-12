@@ -67,4 +67,25 @@ switch (0) {
         }
         break;
 }
+
+switch ($foo) {
+    case Foo::ONE:
+    case Foo::TWO:
+    case Foo::Class:
+        break;
+}
+
+switch (true) {
+    case $value instanceof StdClass:
+        return 1;
+    case strpos('_', get_class($value)) !== false:
+        break;
+}
+
+switch (true) {
+    case $value instanceof StdClass:
+        if ($value) {
+            return null;
+        }
+}
 ?>

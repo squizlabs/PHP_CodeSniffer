@@ -7,7 +7,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -18,7 +18,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -45,10 +45,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'end'    => array(
                                                              T_CLOSE_CURLY_BRACKET,
                                                              T_ENDIF,
+                                                             T_ELSE,
+                                                             T_ELSEIF,
                                                             ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_ELSE,
+                                                             T_ELSEIF,
+                                                            ),
                                                ),
                             T_TRY           => array(
                                                 'start'  => array(T_OPEN_CURLY_BRACKET),
@@ -72,18 +77,38 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                 'with'   => array(),
                                                ),
                             T_ELSE          => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'start'  => array(
+                                                             T_OPEN_CURLY_BRACKET,
+                                                             T_COLON,
+                                                            ),
+                                                'end'    => array(
+                                                             T_CLOSE_CURLY_BRACKET,
+                                                             T_ENDIF,
+                                                            ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_IF,
+                                                             T_ELSEIF,
+                                                            ),
                                                ),
                             T_ELSEIF        => array(
-                                                'start'  => array(T_OPEN_CURLY_BRACKET),
-                                                'end'    => array(T_CLOSE_CURLY_BRACKET),
+                                                'start'  => array(
+                                                             T_OPEN_CURLY_BRACKET,
+                                                             T_COLON,
+                                                            ),
+                                                'end'    => array(
+                                                             T_CLOSE_CURLY_BRACKET,
+                                                             T_ENDIF,
+                                                             T_ELSE,
+                                                             T_ELSEIF,
+                                                            ),
                                                 'strict' => false,
                                                 'shared' => false,
-                                                'with'   => array(),
+                                                'with'   => array(
+                                                             T_IF,
+                                                             T_ELSE,
+                                                            ),
                                                ),
                             T_FOR           => array(
                                                 'start'  => array(
@@ -183,6 +208,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                              T_RETURN,
                                                              T_CONTINUE,
                                                              T_THROW,
+                                                             T_EXIT,
                                                             ),
                                                 'strict' => true,
                                                 'shared' => true,
@@ -193,12 +219,16 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                             ),
                                                ),
                             T_DEFAULT       => array(
-                                                'start'  => array(T_COLON),
+                                                'start'  => array(
+                                                             T_COLON,
+                                                             T_SEMICOLON,
+                                                            ),
                                                 'end'    => array(
                                                              T_BREAK,
                                                              T_RETURN,
                                                              T_CONTINUE,
                                                              T_THROW,
+                                                             T_EXIT,
                                                             ),
                                                 'strict' => true,
                                                 'shared' => true,
@@ -434,6 +464,46 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
+                PHP doesn't assign a token to goto labels, so we have to.
+                These are just string tokens with a single colon after them. Double
+                colons are already tokenized and so don't interfere with this check.
+                But we do have to account for CASE statements, that look just like
+                goto labels.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && $tokens[($stackPtr + 1)] === ':'
+                && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
+            ) {
+                $stopTokens = array(
+                               T_CASE,
+                               T_SEMICOLON,
+                               T_OPEN_CURLY_BRACKET,
+                               T_INLINE_THEN,
+                              );
+
+                for ($x = ($newStackPtr - 1); $x > 0; $x--) {
+                    if (in_array($finalTokens[$x]['code'], $stopTokens) === true) {
+                        break;
+                    }
+                }
+
+                if ($finalTokens[$x]['code'] !== T_CASE
+                    && $finalTokens[$x]['code'] !== T_INLINE_THEN
+                ) {
+                    $finalTokens[$newStackPtr] = array(
+                                                  'content' => $token[1].':',
+                                                  'code'    => T_GOTO_LABEL,
+                                                  'type'    => 'T_GOTO_LABEL',
+                                                 );
+                    $newStackPtr++;
+                    $stackPtr++;
+                    continue;
+                }
+            }//end if
+
+            /*
                 If this token has newlines in its content, split each line up
                 and create a new token for each line. We do this so it's easier
                 to ascertain where errors occur on a line.
@@ -493,6 +563,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     }
                 }
 
+                // This is a special case for the PHP 5.5 classname::class syntax
+                // where "class" should be T_STRING instead of T_CLASS.
+                if ($newToken['code'] === T_CLASS
+                    && $finalTokens[($newStackPtr - 1)]['code'] === T_DOUBLE_COLON
+                ) {
+                    $newToken['code'] = T_STRING;
+                    $newToken['type'] = 'T_STRING';
+                }
+
                 $finalTokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
             }//end if
@@ -525,6 +604,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
+            // Check for any unset scope conditions due to alternate IF/ENDIF syntax.
+            if (isset($tokens[$i]['scope_opener']) === true
+                && isset($tokens[$i]['scope_condition']) === false
+            ) {
+                $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
+            }
+
             // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
@@ -605,17 +691,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
-            } else if ($tokens[$i]['code'] === T_CLASS
-                && $tokens[($i - 1)]['code'] === T_DOUBLE_COLON
-            ) {
-                $tokens[$i]['code'] = T_STRING;
-                $tokens[$i]['type'] = 'T_STRING';
-
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $line = $tokens[$i]['line'];
-                    echo "\t* token $i on line $line changed from T_CLASS to T_STRING".PHP_EOL;
-                }
-            }//end if
+            }
 
             if (($tokens[$i]['code'] !== T_CASE
                 && $tokens[$i]['code'] !== T_DEFAULT)

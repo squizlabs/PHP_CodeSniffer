@@ -9,7 +9,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -67,36 +67,37 @@ define('T_NOWDOC', 1048);
 define('T_END_NOWDOC', 1049);
 define('T_OPEN_SHORT_ARRAY', 1050);
 define('T_CLOSE_SHORT_ARRAY', 1051);
+define('T_GOTO_LABEL', 1052);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1052);
+    define('T_NAMESPACE', 1053);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1053);
+    define('T_NS_SEPARATOR', 1054);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1054);
+    define('T_GOTO', 1055);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1055);
+    define('T_TRAIT', 1056);
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1056);
+    define('T_INSTEADOF', 1057);
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1057);
+    define('T_CALLABLE', 1058);
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1058);
+    define('T_FINALLY', 1059);
 }
 
 /**
@@ -110,7 +111,7 @@ if (defined('T_FINALLY') === false) {
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -443,6 +444,9 @@ final class PHP_CodeSniffer_Tokens
                                     T_START_HEREDOC,
                                     T_END_HEREDOC,
                                     T_HEREDOC,
+                                    T_START_NOWDOC,
+                                    T_END_NOWDOC,
+                                    T_NOWDOC,
                                    );
 
 

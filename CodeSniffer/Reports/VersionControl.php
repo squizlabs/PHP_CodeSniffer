@@ -7,8 +7,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Ben Selby <benmatselby@gmail.com>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -21,8 +21,8 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Ben Selby <benmatselby@gmail.com>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -37,99 +37,145 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      */
     protected $reportName = 'VERSION CONTROL';
 
+    /**
+     * A cache of author stats collected during the run.
+     *
+     * @var array
+     */
+    private $_authorCache = array();
+
+    /**
+     * A cache of blame stats collected during the run.
+     *
+     * @var array
+     */
+    private $_praiseCache = array();
+
+    /**
+     * A cache of source stats collected during the run.
+     *
+     * @var array
+     */
+    private $_sourceCache = array();
+
+
+    /**
+     * Generate a partial report for a single processed file.
+     *
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
+     *
+     * @param array   $report      Prepared report data.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed line width.
+     *
+     * @return boolean
+     */
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+        $blames = $this->getBlameContent($report['filename']);
+
+        foreach ($report['messages'] as $line => $lineErrors) {
+            $author = 'Unknown';
+            if (isset($blames[($line - 1)]) === true) {
+                $blameAuthor = $this->getAuthor($blames[($line - 1)]);
+                if ($blameAuthor !== false) {
+                    $author = $blameAuthor;
+                }
+            }
+
+            if (isset($this->_authorCache[$author]) === false) {
+                $this->_authorCache[$author] = 0;
+                $this->_praiseCache[$author] = array(
+                                                'good' => 0,
+                                                'bad'  => 0,
+                                               );
+            }
+
+            $this->_praiseCache[$author]['bad']++;
+
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $this->_authorCache[$author]++;
+
+                    if ($showSources === true) {
+                        $source = $error['source'];
+                        if (isset($this->_sourceCache[$author][$source]) === false) {
+                            $this->_sourceCache[$author][$source] = 1;
+                        } else {
+                            $this->_sourceCache[$author][$source]++;
+                        }
+                    }
+                }
+            }
+
+            unset($blames[($line - 1)]);
+        }//end foreach
+
+        // No go through and give the authors some credit for
+        // all the lines that do not have errors.
+        foreach ($blames as $line) {
+            $author = $this->getAuthor($line);
+            if ($author === false) {
+                $author = 'Unknown';
+            }
+
+            if (isset($this->_authorCache[$author]) === false) {
+                // This author doesn't have any errors.
+                if (PHP_CODESNIFFER_VERBOSITY === 0) {
+                    continue;
+                }
+
+                $this->_authorCache[$author] = 0;
+                $this->_praiseCache[$author] = array(
+                                                'good' => 0,
+                                                'bad'  => 0,
+                                               );
+            }
+
+            $this->_praiseCache[$author]['good']++;
+        }//end foreach
+
+        return true;
+
+    }//end generateFileReport()
+
 
     /**
      * Prints the author of all errors and warnings, as given by "version control blame".
      *
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param integer $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @return string
+     * @return void
      */
     public function generate(
-        $report,
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        $authors = array();
-        $praise  = array();
-        $sources = array();
-        $width   = max($width, 70);
-
-        $errorsShown = 0;
-
-        foreach ($report['files'] as $filename => $file) {
-            $blames = $this->getBlameContent($filename);
-
-            foreach ($file['messages'] as $line => $lineErrors) {
-                $author = $this->getAuthor($blames[($line - 1)]);
-                if ($author === false) {
-                    continue;
-                }
-
-                if (isset($authors[$author]) === false) {
-                    $authors[$author] = 0;
-                    $praise[$author]  = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
-                }
-
-                $praise[$author]['bad']++;
-
-                foreach ($lineErrors as $column => $colErrors) {
-                    foreach ($colErrors as $error) {
-                        $errorsShown++;
-                        $authors[$author]++;
-
-                        if ($showSources === true) {
-                            $source = $error['source'];
-                            if (isset($sources[$author][$source]) === false) {
-                                $sources[$author][$source] = 1;
-                            } else {
-                                $sources[$author][$source]++;
-                            }
-                        }
-                    }
-                }
-
-                unset($blames[($line - 1)]);
-            }//end foreach
-
-            // No go through and give the authors some credit for
-            // all the lines that do not have errors.
-            foreach ($blames as $line) {
-                $author = $this->getAuthor($line);
-                if (false === $author) {
-                    continue;
-                }
-
-                if (isset($authors[$author]) === false) {
-                    // This author doesn't have any errors.
-                    if (PHP_CODESNIFFER_VERBOSITY === 0) {
-                        continue;
-                    }
-
-                    $authors[$author] = 0;
-                    $praise[$author]  = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
-                }
-
-                $praise[$author]['good']++;
-            }//end foreach
-        }//end foreach
-
+        $errorsShown = ($totalErrors + $totalWarnings);
         if ($errorsShown === 0) {
             // Nothing to show.
-            return 0;
+            return;
         }
 
-        arsort($authors);
+        $width = max($width, 70);
+        arsort($this->_authorCache);
 
         echo PHP_EOL.'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
@@ -141,12 +187,12 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             echo str_repeat('-', $width).PHP_EOL;
         }
 
-        foreach ($authors as $author => $count) {
-            if ($praise[$author]['good'] === 0) {
+        foreach ($this->_authorCache as $author => $count) {
+            if ($this->_praiseCache[$author]['good'] === 0) {
                 $percent = 0;
             } else {
-                $total   = ($praise[$author]['bad'] + $praise[$author]['good']);
-                $percent = round(($praise[$author]['bad'] / $total * 100), 2);
+                $total   = ($this->_praiseCache[$author]['bad'] + $this->_praiseCache[$author]['good']);
+                $percent = round(($this->_praiseCache[$author]['bad'] / $total * 100), 2);
             }
 
             $overallPercent = '('.round((($count / $errorsShown) * 100), 2).')';
@@ -158,8 +204,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
             echo $line.PHP_EOL;
 
-            if ($showSources === true && isset($sources[$author]) === true) {
-                $errors = $sources[$author];
+            if ($showSources === true && isset($this->_sourceCache[$author]) === true) {
+                $errors = $this->_sourceCache[$author];
                 asort($errors);
                 $errors = array_reverse($errors);
 
@@ -176,7 +222,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
         echo str_repeat('-', $width).PHP_EOL;
         echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION(S) ';
-        echo 'WERE COMMITTED BY '.count($authors).' AUTHOR(S)'.PHP_EOL;
+        echo 'WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR(S)'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
         if ($toScreen === true
@@ -185,8 +231,6 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         ) {
             echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
-
-        return $errorsShown;
 
     }//end generate()
 

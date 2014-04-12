@@ -39,4 +39,12 @@ foreach ($array as $element) :
     echo 'hello';
 endforeach;
 
+if ($foo) :
+    echo 'true';
+elseif ($something) :
+    echo 'foo';
+else:
+    echo 'false';
+endif;
+
 ?>

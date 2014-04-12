@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -57,23 +57,23 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         $tokens = $phpcsFile->getTokens();
 
         // Find the opening bracket of the inline IF.
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if (isset($tokens[$i]['parenthesis_opener']) === true
-                && $tokens[$i]['parenthesis_opener'] < $i
-            ) {
-                $i = $tokens[$i]['parenthesis_opener'];
-                continue;
-            }
-
-            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                break;
+        $i = 0;
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $parens = $tokens[$stackPtr]['nested_parenthesis'];
+            $i      = array_pop($parens);
+            if (isset($tokens[$i]['parenthesis_owner']) === true) {
+                // The parenthesis are owned by a token like an array or
+                // function, so are not just used for grouping.
+                $i = 0;
             }
         }
 
         if ($i <= 0) {
             // Could not find the beginning of the statement. Probably not
-            // wrapped with brackets, so assume it ends with a semicolon.
-            $statementEnd = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+            // wrapped with brackets, so assume it ends with a
+            // semicolon (end of statement) or comma (end of array value).
+            $else         = $phpcsFile->findNext(T_INLINE_ELSE, ($stackPtr + 1));
+            $statementEnd = $phpcsFile->findNext(array(T_SEMICOLON, T_COMMA), ($else + 1));
         } else {
             $statementEnd = $tokens[$i]['parenthesis_closer'];
         }
