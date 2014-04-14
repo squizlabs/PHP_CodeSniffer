@@ -1979,9 +1979,11 @@ class PHP_CodeSniffer
                         $installedStandards[] = $filename;
                     }
                     // Search for subset rulesets in root, ie: {subset}.ruleset.xml
-                    $subsets = glob($file->getPathname().'/*.rulset.xml');
+                    $subsets = glob($file->getPathname().'/*.ruleset.xml');
                     foreach ( $subsets as $subset ) {
-                        $installedStandards[] = $subset;
+                        $subset_name = preg_match('#[\\/]([^\\/]*).ruleset.xml$#', $subset, $match) > 0
+                            ? $match[1] : null;
+                        $installedStandards[] = $filename.':'.$subset_name;
                     }
                 }
             }
