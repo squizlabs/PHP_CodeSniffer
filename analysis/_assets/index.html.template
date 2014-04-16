@@ -12,7 +12,7 @@
     <div id="introductionWrap" class="introductionWrap">
         <div class="introduction">
             <div class="icon"></div>
-            <h1>((title))</h1>
+            <h1>((heading))</h1>
             ((intro))
         </div>
     </div>
@@ -33,7 +33,7 @@
     <div id="fixedHeader" class="fixedHeader">
         <div id="fixedHeaderContent" class="introduction">
             <div class="icon"></div>
-            <h1>((title))</h1>
+            <h1>((heading))</h1>
              <a href="#" title="Return to the top of the report" class="backToTop"><span class="screenHide">Back to top</span></a>
         </div>
     </div>
@@ -46,119 +46,8 @@
 </div>
 
 <script>
-function init() {
-    var mouseover = function(e) {
-        if (document.getElementById("flyout").className != "flyout expanded pinned") {
-            document.getElementById("flyout").className = "flyout expanded";
-            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
-        }
-    };
-    document.getElementById("flyout").addEventListener('mouseover', mouseover);
-    document.getElementById("flyoutFixed").addEventListener('mouseover', mouseover);
+    ((js))
 
-    var mouseout = function(e) {
-        if (document.getElementById("flyout").className != "flyout expanded pinned") {
-            document.getElementById("flyout").className = "flyout";
-            document.getElementById("flyoutFixed").className = "flyoutFixed";
-        }
-    };
-    document.getElementById("flyout").addEventListener('mouseout', mouseout);
-    document.getElementById("flyoutFixed").addEventListener('mouseout', mouseout);
-
-    var click = function(e) {
-        if (document.getElementById("flyout").className == "flyout expanded pinned") {
-            return;
-        }
-
-        if (document.getElementById("flyout").className == "flyout expanded") {
-            document.getElementById("flyout").className = "flyout";
-            document.getElementById("flyoutFixed").className = "flyoutFixed";
-        } else {
-            document.getElementById("flyout").className = "flyout expanded";
-            document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
-        }
-    };
-    document.getElementById("flyoutControl").addEventListener('click', click);
-
-    var scroll = function(e) {
-        var flyoutScroll = (document.getElementById('flyout').scrollHeight - document.getElementById('flyout').clientHeight);
-        var delta = e.wheelDelta || -e.detail;
-        if (this.scrollTop >= flyoutScroll && delta < 0) {
-          e.preventDefault();
-        } else if (this.scrollTop <= 0 && delta > 0) {
-          e.preventDefault();
-        }
-    };
-    document.getElementById('flyout').addEventListener('mousewheel', scroll);
-    document.getElementById('flyout').addEventListener('DOMMouseScroll', scroll);
-
-    document.getElementById("flyoutPin").addEventListener('click', function(e) {
-        if (document.getElementById("flyoutPin").className == "flyoutPin") {
-            document.getElementById("flyoutPin").className = "flyoutPin active";
-            document.getElementById("flyout").className = "flyout expanded pinned";
-            document.getElementById("mainWrap").className = "mainWrap pinned";
-            document.getElementById("fixedHeader").className = "fixedHeader pinned";
-        } else {
-            document.getElementById("flyoutPin").className = "flyoutPin";
-            document.getElementById("flyout").className = "flyout expanded";
-            document.getElementById("mainWrap").className = "mainWrap";
-            document.getElementById("fixedHeader").className = "fixedHeader";
-        }
-    });
-
-    window.addEventListener('scroll', function(e){
-        var distanceY = (window.pageYOffset || document.documentElement.scrollTop);
-        if (distanceY > 500) {
-            document.getElementById("introductionWrap").className = "introductionWrap small";
-            document.getElementById("contentWrap").className = "contentWrap small";
-            document.getElementById("fixedHeaderContent").style.opacity = "1";
-        } else {
-            document.getElementById("introductionWrap").className = "introductionWrap";
-            document.getElementById("contentWrap").className = "contentWrap";
-            document.getElementById("fixedHeaderContent").style.opacity = "0";
-        }
-    });
-}
-window.onload = init();
-
-var listClick = function(e) {
-    var node = e.target;
-    while (node.parentNode) {
-        if (node.id === 'listBoxWrap') {
-            return;
-        }
-        node = node.parentNode;
-    }
-    hideListBox();
-}
-
-function showListBox(id) {
-    document.getElementById('listBoxWrap').innerHTML = document.getElementById(id).innerHTML;
-    document.getElementById('listBoxWrap').style.display='block';
-    var scroll = function(e) {
-        var listScroll = (document.getElementById(id + 'listBoxListWrap').scrollHeight - document.getElementById(id + 'listBoxListWrap').clientHeight);
-        var delta = e.wheelDelta || -e.detail;
-        if (this.scrollTop >= listScroll && delta < 0) {
-          e.preventDefault();
-        } else if (this.scrollTop <= 0 && delta > 0) {
-          e.preventDefault();
-        }
-    };
-    document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
-    document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
-
-    document.addEventListener('mouseup', listClick);
-}
-
-function hideListBox()
-{
-    document.getElementById('listBoxWrap').style.display='none';
-    document.removeEventListener('mouseup', listClick);
-}
-
-((js))
-</script>
-<script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -166,5 +55,6 @@ function hideListBox()
     ga('create', 'UA-359178-18', 'squizlabs.github.io');
     ga('send', 'pageview');
 </script>
+<script src="((assetPath))_assets/scripts.js"></script>
 </body>
 </html>

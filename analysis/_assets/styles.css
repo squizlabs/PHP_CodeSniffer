@@ -1,17 +1,3 @@
-/* Charts */
-
-.chart-repo {
-    position: absolute;
-    top: 123px;
-    left: 133px;
-}
-
-.chart-data {
-    position: absolute;
-    top: 100px;
-    left: 460px;
-}
-
 body {
     font-family: arial, sans-serif;
     margin: 0;
@@ -28,6 +14,11 @@ body {
     margin-left: 420px;
 }
 
+#mainWrap.pinned #flyoutControl {
+    opacity: 0.5;
+    cursor: default;
+}
+
 #fixedHeader.pinned .introduction {
     margin-left: 20px;
 }
@@ -35,6 +26,20 @@ body {
 #mainWrap.pinned .introduction,
 #mainWrap.pinned .conventionWrap {
     padding-left: 20px;
+}
+
+/* Charts */
+
+.chart-repo {
+    position: absolute;
+    top: 123px;
+    left: 133px;
+}
+
+.chart-data {
+    position: absolute;
+    top: 100px;
+    left: 460px;
 }
 
 /* Convention Details */
@@ -142,10 +147,17 @@ table.statsTable {
     padding: 12px;
     margin: 0;
     border-top: 1px solid #969fa7;
-    border-left: 1px solid #c7c7c7;
-    font-size: 16px;
+    border-left: 1px solid #969fa7;
+    font-size: 17px;
     color: #2e374d;
     font-weight: bold;
+}
+
+.preferrNone {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #2e374d;
 }
 
 .statsTable td a {
@@ -153,13 +165,6 @@ table.statsTable {
     font-weight: normal;
     text-decoration: none; 
     border-bottom: 1px solid #78c9cf;
-    color: #2e374d;
-}
-
-.preferrNone {
-    font-size: 13px;
-    font-weight: normal;
-    text-decoration: none; 
     color: #2e374d;
 }
 
@@ -249,10 +254,14 @@ p.statsInfo {
 }
 
 
-/* HEADER */
+/* Header */
 
 #contentWrap.small {
-    padding-top: 570px;
+    padding-top: 450px;
+}
+
+#contentWrap.small.expanded {
+    padding-top: 630px;
 }
 
 .introductionWrap {
@@ -263,7 +272,18 @@ p.statsInfo {
     left: 0;
     width: 100%;
     z-index: 9;
-    height: 550px;
+    height: 450px;
+}
+
+.introductionWrap.expanded {
+    background: #2c3e4f;
+    color: #ffffff;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    height: 630px;
 }
 
 #introductionWrap.small {
@@ -274,7 +294,7 @@ p.statsInfo {
 .introduction {
     width: 920px;
     margin: 0px auto;
-    padding: 90px 0 80px;
+    padding: 80px 0 80px;
     position: relative;
 }
 
@@ -302,16 +322,91 @@ p.statsInfo {
     display: block;
 }
 
+.introductionWrap .divider {
+    border: none;
+    height: 1px;
+    background: #40505f;
+    width: 690px;
+    margin: 12px 0 20px;
+    left: 0;
+}
+
+.reportInstructionsWrap a h2 {
+    font-size: 18px;
+    color: #ffffff;
+    position: relative;
+}
+
+.reportInstructionsWrap h2:after {
+    content: "";
+    height: 9px;
+    width: 9px;
+    background-position: 0 -349px;
+    background-image: url(image_sprite_1x.png);
+    display: inline-block;
+    position: relative;
+    left: 10px;
+    top: -1px;
+}
+
+.reportInstructionsWrap.expanded h2:after {
+    background-position: 0 -358px;
+}
+
 .introduction p {
     color: #ffffff;
     font-size: 16px;
     line-height: 21px;
-    width: 640px;
+}
+
+.introduction p.overviewText {
+    width: 690px;
 }
 
 .introduction a {
     color: #80dfdd;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.instructionItem {
+    padding-left: 25px;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.instructionItem:before {
+    content: "";
+    width: 15px;
+    height: 16px;
+    display: block;
+    background-image: url(image_sprite_1x.png);
+    position: relative;
+    left: -25px;
+    top: 18px;
+}
+
+.graphInstructions:before {
+    background-position: 0 -301px;
+}
+
+.overviewPanel:before {
+    background-position: 0 -317px;
+}
+
+.rawData:before {
+    background-position: 0 -333px;
+}
+
+ul.reportInstructions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.reportInstructionsWrap.collapsed ul.reportInstructions {
+    display: none;
 }
 
 .fixedHeader {
@@ -331,7 +426,7 @@ p.statsInfo {
     -webkit-transition: opacity 0.2s;
 }
 
-/* HEADER SMALL */
+/* Header - Fixed */
 
 .fixedHeader .introduction,
 .small .introduction {
@@ -372,7 +467,7 @@ p.statsInfo {
     margin-top: -11px;
 }
 
-/* FLYOUT OVERLAY */
+/* Flyout Overlay */
 
 .flyout {
     background: #1f2a36;
@@ -530,7 +625,9 @@ p.statsInfo {
 .listBoxWrap {
     position: fixed;
     top: 150px;
-    left: 480px;
+    left: 50%;
+    width: 420px;
+    margin-left: -210px;
     z-index: 15;
     padding: 10px;
     background: rgba(28,40,54,0.5);
@@ -569,7 +666,7 @@ p.statsInfo {
 .listBoxHeader h3, .listBoxHeader h2 {
     margin: 0 0 10px 0;
     font-size: 17px;
-    color: #2e374d;
+    color: #6c7884;
 }
 
 .listBoxListWrap {
@@ -592,12 +689,12 @@ p.statsInfo {
     list-style: none;
     display: table-row;
     color: #000000;
+    text-decoration: none;
 }
 
 #listBoxList .li a {
     display: table-row;
 }
-
 
 .listBoxList li:hover {
     background-color: #f7f7f7;
@@ -615,6 +712,10 @@ p.statsInfo {
     width: 100%;
 }
 
+#alllistBoxListWrap .listBoxList .td1 {
+    width: 372px;
+}
+
 /* Report Links */
 
 .reportLinkList {
@@ -625,11 +726,12 @@ p.statsInfo {
 
 .reportLinkList li {
     padding-bottom: 10px;
+    display: inline-block;
+    margin-right: 30px;
 }
 
 a.reportLink, a.reportLink:visited {
-    color: #ffffff;
-    border-bottom: 1px solid #66d3dd;
+    color: #80dfdd;
     margin-left: 25px;
     margin-top: 10px;
     font-size: 14px;
@@ -684,9 +786,9 @@ a.reportLink, a.reportLink:visited {
 
 @media 
 (-webkit-min-device-pixel-ratio: 2) { 
-    .icon, small.icon, .conventionStatus, .reportLink:before, .statsTable .keyPopular:after {
+    .icon, small.icon, .conventionStatus, .reportLink:before, .statsTable .keyPopular:after, .instructionItem:before {
         background-image: url(image_sprite_2x.png);
-        background-size: 65px 301px; 
+        background-size: 65px 367px; 
         background-repeat: no-repeat;
     }
 }
