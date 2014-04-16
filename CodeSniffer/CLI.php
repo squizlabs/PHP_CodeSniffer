@@ -400,23 +400,8 @@ class PHP_CodeSniffer_CLI
                     $output = null;
                 }
 
-                $validReports = array(
-                                 'full',
-                                 'xml',
-                                 'json',
-                                 'checkstyle',
-                                 'junit',
-                                 'csv',
-                                 'emacs',
-                                 'notifysend',
-                                 'source',
-                                 'summary',
-                                 'svnblame',
-                                 'gitblame',
-                                 'hgblame',
-                                );
-
-                if (in_array($report, $validReports) === false) {
+                $reportClassName = 'PHP_CodeSniffer_Reports_'.ucfirst($report);
+                if (class_exists($reportClassName, true) === false) {
                     echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
                     exit(2);
                 }
