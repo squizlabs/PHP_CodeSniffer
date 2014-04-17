@@ -1017,10 +1017,10 @@ class PHP_CodeSniffer
     private function _processRule($rule, $depth=0)
     {
         $code = (string) $rule['ref'];
-        $newrule = array();
+        $newRule = array();
         // Custom severity.
         if (isset($rule->severity) === true) {
-            $newrule['severity'] = (int) $rule->severity;
+            $newRule['severity'] = (int) $rule->severity;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> severity set to ".(int) $rule->severity.PHP_EOL;
@@ -1029,7 +1029,7 @@ class PHP_CodeSniffer
 
         // Custom message type.
         if (isset($rule->type) === true) {
-            $newrule['type'] = (string) $rule->type;
+            $newRule['type'] = (string) $rule->type;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> message type set to ".(string) $rule->type.PHP_EOL;
@@ -1038,7 +1038,7 @@ class PHP_CodeSniffer
 
         // Custom message.
         if (isset($rule->message) === true) {
-            $newrule['message'] = (string) $rule->message;
+            $newRule['message'] = (string) $rule->message;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> message set to ".(string) $rule->message.PHP_EOL;
@@ -1048,8 +1048,8 @@ class PHP_CodeSniffer
         // Custom properties.
         if (isset($rule->properties) === true) {
             foreach ($rule->properties->property as $prop) {
-                if (isset($newrule['properties']) === false) {
-                    $newrule['properties'] = array();
+                if (isset($newRule['properties']) === false) {
+                    $newRule['properties'] = array();
                 }
 
                 $name = (string) $prop['name'];
@@ -1057,13 +1057,13 @@ class PHP_CodeSniffer
                     && (string) $prop['type'] === 'array'
                 ) {
                     $value = (string) $prop['value'];
-                    $newrule['properties'][$name] = explode(',', $value);
+                    $newRule['properties'][$name] = explode(',', $value);
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> array property \"$name\" set to \"$value\"".PHP_EOL;
                     }
                 } else {
-                    $newrule['properties'][$name] = (string) $prop['value'];
+                    $newRule['properties'][$name] = (string) $prop['value'];
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"'.PHP_EOL;
@@ -1075,7 +1075,7 @@ class PHP_CodeSniffer
         if (isset($this->ruleset[$code]) === false) {
             $this->ruleset[$code] = array();
         }
-        $this->ruleset[$code][] = $newrule;
+        $this->ruleset[$code][] = $newRule;
 
         // Ignore patterns.
         foreach ($rule->{'exclude-pattern'} as $pattern) {
