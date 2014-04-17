@@ -121,5 +121,3 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
 
 }//end class
-
-?>

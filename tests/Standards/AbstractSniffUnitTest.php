@@ -145,11 +145,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 $phpcsFile->fixer->fixFile();
                 $fixable = $phpcsFile->getFixableCount();
                 if ($fixable > 0) {
-                    $filename = basename($testFile);
+                    $filename          = basename($testFile);
                     $failureMessages[] = "Failed to fix $fixable fixable violations in $filename";
                 }
             }
-        }//end foreach()
+        }//end foreach
 
         if (empty($failureMessages) === false) {
             $this->fail(implode(PHP_EOL, $failureMessages));
@@ -184,10 +184,10 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         }
 
         /*
-         We merge errors and warnings together to make it easier
-         to iterate over them and produce the errors string. In this way,
-         we can report on errors and warnings in the same line even though
-         it's not really structured to allow that.
+            We merge errors and warnings together to make it easier
+            to iterate over them and produce the errors string. In this way,
+            we can report on errors and warnings in the same line even though
+            it's not really structured to allow that.
         */
 
         $allProblems     = array();
@@ -272,7 +272,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 }
 
                 $allProblems[$line]['found_warnings'] = array_merge($foundWarningsTemp, $warningsTemp);
-            }
+            }//end foreach
 
             if (isset($expectedWarnings[$line]) === true) {
                 $allProblems[$line]['expected_warnings'] = $expectedWarnings[$line];
@@ -382,5 +382,3 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
 
 }//end class
-
-?>

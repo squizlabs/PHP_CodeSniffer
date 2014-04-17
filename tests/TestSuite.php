@@ -48,8 +48,8 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
         $result = parent::run($result, $filter);
         spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
 
-        $codes = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
-        $fixes = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
+        $codes   = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
+        $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
         $percent = round(($fixes / $codes * 100), 2);
 
         echo PHP_EOL.PHP_EOL;
@@ -61,5 +61,3 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
 
 
 }//end class
-
-?>
