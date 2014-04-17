@@ -831,18 +831,26 @@ class PHP_CodeSniffer_File
         }//end if
 
         // Make sure this message type has not been set to "warning".
-        if (isset($this->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset[$sniffCode]['type'] === 'warning'
-        ) {
-            // Pass this off to the warning handler.
-            return $this->addWarning($error, $stackPtr, $code, $data, $severity);
+        if (isset($this->ruleset[$sniffCode]) === true) {
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['type']) === true
+                    && $this->ruleset[$sniffCode][$i]['type'] === 'warning'
+                ) {
+                    // Pass this off to the warning handler.
+                    return $this->addWarning($error, $stackPtr, $code, $data, $severity);
+                }
+            }
         }
 
         // Make sure we are interested in this severity level.
-        if (isset($this->ruleset[$sniffCode]['severity']) === true) {
-            $severity = $this->ruleset[$sniffCode]['severity'];
-        } else if ($severity === 0) {
-            $severity = PHPCS_DEFAULT_ERROR_SEV;
+        if (isset($this->ruleset[$sniffCode]) === true) {
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['severity']) === true) {
+                    $severity = $this->ruleset[$sniffCode][$i]['severity'];
+                } else if ($severity === 0) {
+                    $severity = PHPCS_DEFAULT_ERROR_SEV;
+                }
+            }
         }
 
         if ($this->phpcs->cli->errorSeverity > $severity) {
@@ -888,8 +896,12 @@ class PHP_CodeSniffer_File
         }
 
         // Work out the warning message.
-        if (isset($this->ruleset[$sniffCode]['message']) === true) {
-            $error = $this->ruleset[$sniffCode]['message'];
+        if (isset($this->ruleset[$sniffCode]) === true) {
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['message']) === true) {
+                    $error = $this->ruleset[$sniffCode][$i]['message'];
+                }
+            }
         }
 
         if (empty($data) === true) {
@@ -976,23 +988,25 @@ class PHP_CodeSniffer_File
             }
         }//end if
 
-        // Make sure this message type has not been set to "error".
-        if (isset($this->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset[$sniffCode]['type'] === 'error'
-        ) {
-            // Pass this off to the error handler.
-            return $this->addError($warning, $stackPtr, $code, $data, $severity);
-        }
+        if (isset($this->ruleset[$sniffCode]) === true) {
+            // Make sure this message type has not been set to "error".
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['type']) === true
+                    && $this->ruleset[$sniffCode][$i]['type'] === 'error'
+                ) {
+                    // Pass this off to the error handler.
+                    return $this->addError($warning, $stackPtr, $code, $data, $severity);
+                }
+            }
 
-        // Make sure we are interested in this severity level.
-        if (isset($this->ruleset[$sniffCode]['severity']) === true) {
-            $severity = $this->ruleset[$sniffCode]['severity'];
-        } else if ($severity === 0) {
-            $severity = PHPCS_DEFAULT_WARN_SEV;
-        }
-
-        if ($this->phpcs->cli->warningSeverity > $severity) {
-            return false;
+            // Make sure we are interested in this severity level.
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['severity']) === true) {
+                    $severity = $this->ruleset[$sniffCode][$i]['severity'];
+                } else if ($severity === 0) {
+                    $severity = PHPCS_DEFAULT_WARN_SEV;
+                }
+            }
         }
 
         // Make sure we are not ignoring this file.
@@ -1033,9 +1047,13 @@ class PHP_CodeSniffer_File
             return true;
         }
 
-        // Work out the warning message.
-        if (isset($this->ruleset[$sniffCode]['message']) === true) {
-            $warning = $this->ruleset[$sniffCode]['message'];
+        if (isset($this->ruleset[$sniffCode]) === true) {
+            // Work out the warning message.
+            foreach ($this->ruleset[$sniffCode] as $i => $tmp) {
+                if (isset($this->ruleset[$sniffCode][$i]['message']) === true) {
+                    $warning = $this->ruleset[$sniffCode][$i]['message'];
+                }
+            }
         }
 
         if (empty($data) === true) {
