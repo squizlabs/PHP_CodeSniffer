@@ -18,6 +18,7 @@ function init()
             document.getElementById("flyoutFixed").className = "flyoutFixed expanded";
         }
     };
+
     document.getElementById("flyoutControl").addEventListener('click', click);
 
     var scroll = function(e) {
@@ -29,6 +30,7 @@ function init()
           e.preventDefault();
         }
     };
+
     document.getElementById('flyout').addEventListener('mousewheel', scroll);
     document.getElementById('flyout').addEventListener('DOMMouseScroll', scroll);
 
@@ -48,22 +50,28 @@ function init()
 
     window.addEventListener('scroll', function(e){
         var distanceY = (window.pageYOffset || document.documentElement.scrollTop);
-        var height    = 470;
+        var height    = 480;
         if (document.getElementById("introductionWrap").className == "introductionWrap expanded") {
             height = (document.getElementById("introductionWrap").clientHeight + 20);
         }
 
         if (distanceY > height) {
-            document.getElementById("introductionWrap").className = "introductionWrap small";
-            document.getElementById("contentWrap").className      = "contentWrap small";
+            if (document.getElementById("reportInstructionsWrap").className == "reportInstructionsWrap expanded") {
+                document.getElementById("contentWrap").className = "contentWrap small expanded";
+                document.getElementById("introductionWrap").className = "introductionWrap small expanded";
+            } else {
+                document.getElementById("contentWrap").className = "contentWrap small";
+                document.getElementById("introductionWrap").className = "introductionWrap small";
+            }
+
             document.getElementById("fixedHeaderContent").style.opacity = "1";
-            document.getElementById("reportInstructionsWrap").className  = "reportInstructionsWrap collapsed";
         } else {
             if (document.getElementById("reportInstructionsWrap").className == "reportInstructionsWrap expanded") {
                 document.getElementById("introductionWrap").className = "introductionWrap expanded";
             } else {
                 document.getElementById("introductionWrap").className = "introductionWrap";
             }
+
             document.getElementById("contentWrap").className = "contentWrap";
             document.getElementById("fixedHeaderContent").style.opacity = "0";
         }
@@ -79,8 +87,10 @@ var listClick = function(e) {
         if (node.id === 'listBoxWrap') {
             return;
         }
+
         node = node.parentNode;
     }
+
     hideListBox();
 }
 
@@ -106,8 +116,8 @@ function hideFlyout()
 
 function showListBox(id)
 {
-    document.getElementById('listBoxWrap').innerHTML      = document.getElementById(id).innerHTML;
-    document.getElementById('listBoxWrap').style.display ='block';
+    document.getElementById('listBoxWrap').innerHTML     = document.getElementById(id).innerHTML;
+    document.getElementById('listBoxWrap').style.display = 'block';
     var scroll = function(e) {
         var listScroll = (document.getElementById(id + 'listBoxListWrap').scrollHeight - document.getElementById(id + 'listBoxListWrap').clientHeight);
         var delta      = e.wheelDelta || -e.detail;
@@ -117,6 +127,7 @@ function showListBox(id)
           e.preventDefault();
         }
     };
+
     document.getElementById(id + 'listBoxListWrap').addEventListener('mousewheel', scroll);
     document.getElementById(id + 'listBoxListWrap').addEventListener('DOMMouseScroll', scroll);
 

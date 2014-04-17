@@ -257,11 +257,11 @@ p.statsInfo {
 /* Header */
 
 #contentWrap.small {
-    padding-top: 450px;
+    padding-top: 480px;
 }
 
 #contentWrap.small.expanded {
-    padding-top: 630px;
+    padding-top: 620px;
 }
 
 .introductionWrap {
@@ -272,7 +272,7 @@ p.statsInfo {
     left: 0;
     width: 100%;
     z-index: 9;
-    height: 450px;
+    height: 480px;
 }
 
 .introductionWrap.expanded {
@@ -283,7 +283,7 @@ p.statsInfo {
     left: 0;
     width: 100%;
     z-index: 9;
-    height: 630px;
+    height: 620px;
 }
 
 #introductionWrap.small {
