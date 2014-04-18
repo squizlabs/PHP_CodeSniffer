@@ -1015,15 +1015,22 @@ class PHP_CodeSniffer
      */
     private function _processRule($rule, $depth=0)
     {
+        if (isset($rule['id']) === true) {
+            $id = (string) $rule['id'];
+        } else {
+            $id = (string) $rule['ref'];
+        }
         $code = (string) $rule['ref'];
+
+        if (isset($this->ruleset[$id]) === false) {
+            $this->ruleset[$id] = array(
+                'code' => $code,
+            );
+        }
 
         // Custom severity.
         if (isset($rule->severity) === true) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
-            }
-
-            $this->ruleset[$code]['severity'] = (int) $rule->severity;
+            $this->ruleset[$id]['severity'] = (int) $rule->severity;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> severity set to ".(int) $rule->severity.PHP_EOL;
@@ -1032,11 +1039,7 @@ class PHP_CodeSniffer
 
         // Custom message type.
         if (isset($rule->type) === true) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
-            }
-
-            $this->ruleset[$code]['type'] = (string) $rule->type;
+            $this->ruleset[$id]['type'] = (string) $rule->type;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> message type set to ".(string) $rule->type.PHP_EOL;
@@ -1045,11 +1048,7 @@ class PHP_CodeSniffer
 
         // Custom message.
         if (isset($rule->message) === true) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
-            }
-
-            $this->ruleset[$code]['message'] = (string) $rule->message;
+            $this->ruleset[$id]['message'] = (string) $rule->message;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> message set to ".(string) $rule->message.PHP_EOL;
@@ -1059,12 +1058,8 @@ class PHP_CodeSniffer
         // Custom properties.
         if (isset($rule->properties) === true) {
             foreach ($rule->properties->property as $prop) {
-                if (isset($this->ruleset[$code]) === false) {
-                    $this->ruleset[$code] = array(
-                                             'properties' => array(),
-                                            );
-                } else if (isset($this->ruleset[$code]['properties']) === false) {
-                    $this->ruleset[$code]['properties'] = array();
+                if (isset($this->ruleset[$id]['properties']) === false) {
+                    $this->ruleset[$id]['properties'] = array();
                 }
 
                 $name = (string) $prop['name'];
@@ -1072,13 +1067,13 @@ class PHP_CodeSniffer
                     && (string) $prop['type'] === 'array'
                 ) {
                     $value = (string) $prop['value'];
-                    $this->ruleset[$code]['properties'][$name] = explode(',', $value);
+                    $this->ruleset[$id]['properties'][$name] = explode(',', $value);
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> array property \"$name\" set to \"$value\"".PHP_EOL;
                     }
                 } else {
-                    $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
+                    $this->ruleset[$id]['properties'][$name] = (string) $prop['value'];
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"'.PHP_EOL;
@@ -1089,7 +1084,7 @@ class PHP_CodeSniffer
 
         // Ignore patterns.
         foreach ($rule->{'exclude-pattern'} as $pattern) {
-            if (isset($this->ignorePatterns[$code]) === false) {
+            if (isset($this->ignorePatterns[$id]) === false) {
                 $this->ignorePatterns[$code] = array();
             }
 
@@ -1178,24 +1173,26 @@ class PHP_CodeSniffer
         // Construct a list of listeners indexed by token being listened for.
         $this->_tokenListeners = array();
 
-        foreach ($this->sniffs as $listenerClass) {
-            // Work out the internal code for this sniff. Detect usage of namespace
-            // separators instead of underscores to support PHP namespaces.
-            if (strstr($listenerClass, '\\') === false) {
-                $parts = explode('_', $listenerClass);
-            } else {
-                $parts = explode('\\', $listenerClass);
+        foreach ($this->ruleset as $id => $tmp) {
+            $code = $this->ruleset[$id]['code'];
+            $parts = explode('.', $code);
+            if (count($parts) > 3) {
+                continue;
             }
 
-            $code = $parts[0].'.'.$parts[2].'.'.$parts[3];
-            $code = substr($code, 0, -5);
+            $listenerClass = $parts[0].'_Sniffs_'.$parts[1].'_'.$parts[2].'Sniff';
 
-            $this->listeners[$listenerClass] = new $listenerClass();
+            //if (array_search($listenerClass, $this->sniffs) === -1) {
+            //    continue;
+            //}
+
+            $listenerIndex = count($this->listeners);
+            $this->listeners[$listenerIndex] = new $listenerClass();
 
             // Set custom properties.
-            if (isset($this->ruleset[$code]['properties']) === true) {
-                foreach ($this->ruleset[$code]['properties'] as $name => $value) {
-                    $this->setSniffProperty($listenerClass, $name, $value);
+            if (isset($this->ruleset[$id]['properties']) === true) {
+                foreach ($this->ruleset[$id]['properties'] as $name => $value) {
+                    $this->setSniffProperty($listenerIndex, $name, $value);
                 }
             }
 
@@ -1209,7 +1206,7 @@ class PHP_CodeSniffer
                 $tokenizers = array('PHP' => 'PHP');
             }
 
-            $tokens = $this->listeners[$listenerClass]->register();
+            $tokens = $this->listeners[$listenerIndex]->register();
             if (is_array($tokens) === false) {
                 $msg = "Sniff $listenerClass register() method must return an array";
                 throw new PHP_CodeSniffer_Exception($msg);
@@ -1235,8 +1232,9 @@ class PHP_CodeSniffer
                     $this->_tokenListeners[$token] = array();
                 }
 
-                if (isset($this->_tokenListeners[$token][$listenerClass]) === false) {
-                    $this->_tokenListeners[$token][$listenerClass] = array(
+                if (isset($this->_tokenListeners[$token][$listenerIndex]) === false) {
+                    $this->_tokenListeners[$token][$listenerIndex] = array(
+                                                                      'index'      => $listenerIndex,
                                                                       'class'      => $listenerClass,
                                                                       'source'     => $listenerSource,
                                                                       'tokenizers' => $tokenizers,

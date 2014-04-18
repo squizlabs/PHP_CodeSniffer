@@ -546,6 +546,7 @@ class PHP_CodeSniffer_File
                 // Make sure this sniff supports the tokenizer
                 // we are currently using.
                 $class = $listenerData['class'];
+                $index = $listenerData['index'];
 
                 if (isset($listenerData['tokenizers'][$this->tokenizerType]) === false) {
                     continue;
@@ -567,7 +568,7 @@ class PHP_CodeSniffer_File
                     echo "\t\t\tProcessing ".$this->_activeListener.'... ';
                 }
 
-                $ignoreTo = $listeners[$class]->process($this, $stackPtr);
+                $ignoreTo = $listeners[$index]->process($this, $stackPtr);
                 if ($ignoreTo !== null) {
                     $this->_listenerIgnoreTo[$this->_activeListener] = $ignoreTo;
                 }
