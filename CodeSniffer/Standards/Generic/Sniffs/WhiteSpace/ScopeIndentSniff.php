@@ -339,8 +339,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         }
 
                         $contentLength        = strlen($tokens[$firstToken]['content']);
-                        $trimmedContentLength
-                            = strlen(ltrim($tokens[$firstToken]['content']));
+                        $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
 
                         $column = ($contentLength - $trimmedContentLength + 1);
                         if (preg_match('|\*/$|', $content) !== 0) {

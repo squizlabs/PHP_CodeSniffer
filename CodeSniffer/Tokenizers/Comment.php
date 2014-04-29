@@ -264,15 +264,21 @@ class PHP_CodeSniffer_Tokenizers_Comment
      */
     private function _collectWhitespace($string, $start, $end)
     {
-        $substr  = substr($string, $start);
-        $trimmed = ltrim($substr, ' ');
-        $diff    = (strlen($substr) - strlen($trimmed));
-        if ($diff === 0) {
+        $space = '';
+        for ($start; $start < $end; $start++) {
+            if ($string[$start] !== ' ' && $string[$start] !== "\t") {
+                break;
+            }
+
+            $space .= $string[$start];
+        }
+
+        if ($space === '') {
             return null;
         }
 
         $token = array(
-                  'content' => str_repeat(' ', $diff),
+                  'content' => $space,
                   'code'    => T_DOC_COMMENT_WHITESPACE,
                   'type'    => 'T_DOC_COMMENT_WHITESPACE',
                  );

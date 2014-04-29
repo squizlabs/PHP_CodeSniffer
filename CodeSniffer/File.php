@@ -1276,15 +1276,15 @@ class PHP_CodeSniffer_File
     {
         $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
-        self::_createTokenMap($tokens, $tokenizer, $eolChar);
-        self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
-        self::_createScopeMap($tokens, $tokenizer, $eolChar);
-
         // If we know the width of each tab, convert tabs
         // into spaces so sniffs can use one method of checking.
         if (PHP_CODESNIFFER_TAB_WIDTH > 0) {
             self::_convertTabs($tokens, $tokenizer, $eolChar);
         }
+
+        self::_createTokenMap($tokens, $tokenizer, $eolChar);
+        self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
+        self::_createScopeMap($tokens, $tokenizer, $eolChar);
 
         self::_createLevelMap($tokens, $tokenizer, $eolChar);
 
@@ -1312,6 +1312,7 @@ class PHP_CodeSniffer_File
     {
         $currColumn = 1;
         $count      = count($tokens);
+        $eolLen     = (strlen($eolChar) * -1);
 
         for ($i = 0; $i < $count; $i++) {
             $tokenContent = $tokens[$i]['content'];
@@ -1367,9 +1368,7 @@ class PHP_CodeSniffer_File
                 $tokens[$i]['content'] = $newContent;
             }//end if
 
-            if (isset($tokens[($i + 1)]['line']) === true
-                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-            ) {
+            if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
                 $currColumn = 1;
             }
         }//end for
