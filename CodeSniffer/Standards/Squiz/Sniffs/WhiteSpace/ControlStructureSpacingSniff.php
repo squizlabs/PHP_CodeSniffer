@@ -137,26 +137,32 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         }
 
         $trailingContent = $phpcsFile->findNext(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            T_WHITESPACE,
             ($scopeCloser + 1),
             null,
             true
         );
 
+        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
+            // Special exception for code where the comment about
+            // and ELSE or ELSEIF is written between the control structures.
+            $nextCode = $phpcsFile->findNext(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($scopeCloser + 1),
+                null,
+                true
+            );
+
+            if ($tokens[$nextCode]['code'] === T_ELSE
+                || $tokens[$nextCode]['code'] === T_ELSEIF
+            ) {
+                $trailingContent = $nextCode;
+            }
+        }//end if
+
         if ($tokens[$trailingContent]['code'] === T_ELSE) {
             if ($tokens[$stackPtr]['code'] === T_IF) {
                 // IF with ELSE.
-                return;
-            }
-        }
-
-        // If this token is closing a CASE or DEFAULT, we don't need the
-        // blank line after this control structure.
-        if (isset($tokens[$trailingContent]['scope_condition']) === true) {
-            $condition = $tokens[$trailingContent]['scope_condition'];
-            if ($tokens[$condition]['code'] === T_CASE
-                || $tokens[$condition]['code'] === T_DEFAULT
-            ) {
                 return;
             }
         }
@@ -166,15 +172,15 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             return;
         }
 
-        if ($tokens[$trailingContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+        if (isset($tokens[$trailingContent]['scope_condition']) === true
+            && $tokens[$trailingContent]['scope_condition'] !== $trailingContent
+        ) {
             // Another control structure's closing brace.
-            if (isset($tokens[$trailingContent]['scope_condition']) === true) {
-                $owner = $tokens[$trailingContent]['scope_condition'];
-                if ($tokens[$owner]['code'] === T_FUNCTION) {
-                    // The next content is the closing brace of a function
-                    // so normal function rules apply and we can ignore it.
-                    return;
-                }
+            $owner = $tokens[$trailingContent]['scope_condition'];
+            if ($tokens[$owner]['code'] === T_FUNCTION) {
+                // The next content is the closing brace of a function
+                // so normal function rules apply and we can ignore it.
+                return;
             }
 
             if ($tokens[$trailingContent]['line'] !== ($tokens[$scopeCloser]['line'] + 1)) {
