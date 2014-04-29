@@ -774,14 +774,24 @@ a.reportLink, a.reportLink:visited {
 
 .backToTop {
     display: block;
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
     position: absolute;
     right: 0;
-    top: 22px;
+    top: 17px;
+}
+
+.backToTop:after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: block;
     background-image: url(image_sprite_1x.png);
     background-repeat: no-repeat;
     background-position: 0 -254px;
+    position: relative;
+    top: 5px;
+    left: 5px;
 }
 
 @media 
