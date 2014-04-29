@@ -114,24 +114,26 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $phpcsFile->addError($error, $scopeOpener, 'SpacingBeforeOpen');
         }
 
-        $lastContent = $phpcsFile->findPrevious(
-            T_WHITESPACE,
-            ($scopeCloser - 1),
-            null,
-            true
-        );
+        if ($firstContent !== $scopeCloser) {
+            $lastContent = $phpcsFile->findPrevious(
+                T_WHITESPACE,
+                ($scopeCloser - 1),
+                null,
+                true
+            );
 
-        if ($tokens[$lastContent]['line'] !== ($tokens[$scopeCloser]['line'] - 1)) {
-            $errorToken = $scopeCloser;
-            for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
-                if ($tokens[$i]['line'] < $tokens[$scopeCloser]['line']) {
-                    $errorToken = $i;
-                    break;
+            if ($tokens[$lastContent]['line'] !== ($tokens[$scopeCloser]['line'] - 1)) {
+                $errorToken = $scopeCloser;
+                for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
+                    if ($tokens[$i]['line'] < $tokens[$scopeCloser]['line']) {
+                        $errorToken = $i;
+                        break;
+                    }
                 }
-            }
 
-            $error = 'Blank line found at end of control structure';
-            $phpcsFile->addError($error, $errorToken, 'SpacingAfterClose');
+                $error = 'Blank line found at end of control structure';
+                $phpcsFile->addError($error, $errorToken, 'SpacingAfterClose');
+            }
         }
 
         $trailingContent = $phpcsFile->findNext(
