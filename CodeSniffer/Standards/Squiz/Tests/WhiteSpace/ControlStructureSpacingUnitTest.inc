@@ -150,3 +150,7 @@ else {
 if ($one) {
 
 }
+
+do {
+    echo 'hi';
+} while (  $blah  );

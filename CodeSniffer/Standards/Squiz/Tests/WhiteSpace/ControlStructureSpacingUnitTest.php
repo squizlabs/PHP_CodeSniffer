@@ -62,6 +62,7 @@ class Squiz_Tests_WhiteSpace_ControlStructureSpacingUnitTest extends AbstractSni
                     114 => 2,
                     118 => 1,
                     150 => 1,
+                    156 => 2,
                    );
             break;
         case 'ControlStructureSpacingUnitTest.js':
