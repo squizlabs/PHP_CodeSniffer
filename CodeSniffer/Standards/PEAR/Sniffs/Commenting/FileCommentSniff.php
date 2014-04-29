@@ -346,6 +346,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $newContent = str_replace(' ', '_', $content);
+            $newContent = trim($newContent, '_');
             $newContent = preg_replace('/[^A-Za-z_]/', '', $newContent);
             $nameBits   = explode('_', $newContent);
             $firstBit   = array_shift($nameBits);
