@@ -43,7 +43,7 @@ class Generic_Tests_PHP_DisallowShortOpenTagUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         $option = (boolean) ini_get('short_open_tag');
-        if ($option === true) {
+        if ($option === true || defined('HHVM_VERSION') === true) {
             return array(
                     4 => 1,
                     5 => 1,

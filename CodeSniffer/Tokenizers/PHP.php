@@ -750,6 +750,15 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
+            } else if ($tokens[$i]['code'] === T_ECHO && $tokens[$i]['content'] === '<?=') {
+                // HHVM tokenizes <?= as T_ECHO but it should be T_OPEN_TAG_WITH_ECHO.
+                $tokens[$i]['code'] = T_OPEN_TAG_WITH_ECHO;
+                $tokens[$i]['type'] = 'T_OPEN_TAG_WITH_ECHO';
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $line = $tokens[$i]['line'];
+                    echo "\t* token $i on line $line changed from T_ECHO to T_OPEN_TAG_WITH_ECHO".PHP_EOL;
+                }
             }//end if
 
             if (($tokens[$i]['code'] !== T_CASE
