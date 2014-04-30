@@ -6,6 +6,10 @@ php:
   - 5.5
   - hhvm
 
+matrix:
+  allow_failures:
+    - php: hhvm
+
 script:
   - phpunit tests/AllTests.php
   - pear package-validate package.xml
