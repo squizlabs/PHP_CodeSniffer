@@ -69,6 +69,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                             '_COOKIE',
                             '_FILES',
                             'GLOBALS',
+                            'http_response_header'
                            );
 
         // If it's a php reserved var, then its ok.
