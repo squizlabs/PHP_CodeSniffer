@@ -19,4 +19,5 @@ class MyClass {
 function &Sort() {
 
 }
-?>
+
+$connection = new Db\Adapter\Pdo\Mysql($config);

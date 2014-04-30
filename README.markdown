@@ -28,7 +28,7 @@ Make sure you have `~/.composer/vendor/bin/` in your PATH.
 Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
 
     {
-        "require": {
+        "require-dev": {
             "squizlabs/php_codesniffer": "1.*"
         }
     }

@@ -8,8 +8,8 @@
  * @package   PHP_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,8 +23,8 @@
  * @package   PHP_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009 SQLI <www.sqli.com>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2009-2014 SQLI <www.sqli.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -78,14 +78,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         echo str_repeat('-', $width).PHP_EOL;
 
         // Work out the max line number for formatting.
-        $maxLine = 0;
-        foreach ($report['messages'] as $line => $lineErrors) {
-            if ($line > $maxLine) {
-                $maxLine = $line;
-            }
-        }
-
-        $maxLineLength = strlen($maxLine);
+        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
 
         // The length of the word ERROR or WARNING; used for padding.
         if ($report['warnings'] > 0) {

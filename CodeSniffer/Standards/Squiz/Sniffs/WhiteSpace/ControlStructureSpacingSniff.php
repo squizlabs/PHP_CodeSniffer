@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -75,10 +75,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            return;
-        }
-
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
@@ -99,6 +95,10 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             }
         }//end if
 
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
+
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
@@ -114,24 +114,26 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $phpcsFile->addError($error, $scopeOpener, 'SpacingBeforeOpen');
         }
 
-        $lastContent = $phpcsFile->findPrevious(
-            T_WHITESPACE,
-            ($scopeCloser - 1),
-            null,
-            true
-        );
+        if ($firstContent !== $scopeCloser) {
+            $lastContent = $phpcsFile->findPrevious(
+                T_WHITESPACE,
+                ($scopeCloser - 1),
+                null,
+                true
+            );
 
-        if ($tokens[$lastContent]['line'] !== ($tokens[$scopeCloser]['line'] - 1)) {
-            $errorToken = $scopeCloser;
-            for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
-                if ($tokens[$i]['line'] < $tokens[$scopeCloser]['line']) {
-                    $errorToken = $i;
-                    break;
+            if ($tokens[$lastContent]['line'] !== ($tokens[$scopeCloser]['line'] - 1)) {
+                $errorToken = $scopeCloser;
+                for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
+                    if ($tokens[$i]['line'] < $tokens[$scopeCloser]['line']) {
+                        $errorToken = $i;
+                        break;
+                    }
                 }
-            }
 
-            $error = 'Blank line found at end of control structure';
-            $phpcsFile->addError($error, $errorToken, 'SpacingAfterClose');
+                $error = 'Blank line found at end of control structure';
+                $phpcsFile->addError($error, $errorToken, 'SpacingAfterClose');
+            }
         }
 
         $trailingContent = $phpcsFile->findNext(
@@ -141,35 +143,26 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             true
         );
 
+        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
+            // Special exception for code where the comment about
+            // and ELSE or ELSEIF is written between the control structures.
+            $nextCode = $phpcsFile->findNext(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($scopeCloser + 1),
+                null,
+                true
+            );
+
+            if ($tokens[$nextCode]['code'] === T_ELSE
+                || $tokens[$nextCode]['code'] === T_ELSEIF
+            ) {
+                $trailingContent = $nextCode;
+            }
+        }//end if
+
         if ($tokens[$trailingContent]['code'] === T_ELSE) {
             if ($tokens[$stackPtr]['code'] === T_IF) {
                 // IF with ELSE.
-                return;
-            }
-        }
-
-        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
-            if ($tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']) {
-                if (substr($tokens[$trailingContent]['content'], 0, 5) === '//end') {
-                    // There is an end comment, so we have to get the next piece
-                    // of content.
-                    $trailingContent = $phpcsFile->findNext(
-                        T_WHITESPACE,
-                        ($trailingContent + 1),
-                        null,
-                        true
-                    );
-                }
-            }
-        }
-
-        // If this token is closing a CASE or DEFAULT, we don't need the
-        // blank line after this control structure.
-        if (isset($tokens[$trailingContent]['scope_condition']) === true) {
-            $condition = $tokens[$trailingContent]['scope_condition'];
-            if ($tokens[$condition]['code'] === T_CASE
-                || $tokens[$condition]['code'] === T_DEFAULT
-            ) {
                 return;
             }
         }
@@ -179,26 +172,27 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             return;
         }
 
-        if ($tokens[$trailingContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+        if (isset($tokens[$trailingContent]['scope_condition']) === true
+            && $tokens[$trailingContent]['scope_condition'] !== $trailingContent
+        ) {
             // Another control structure's closing brace.
-            if (isset($tokens[$trailingContent]['scope_condition']) === true) {
-                $owner = $tokens[$trailingContent]['scope_condition'];
-                if ($tokens[$owner]['code'] === T_FUNCTION) {
-                    // The next content is the closing brace of a function
-                    // so normal function rules apply and we can ignore it.
-                    return;
-                }
+            $owner = $tokens[$trailingContent]['scope_condition'];
+            if ($tokens[$owner]['code'] === T_FUNCTION) {
+                // The next content is the closing brace of a function
+                // so normal function rules apply and we can ignore it.
+                return;
             }
 
             if ($tokens[$trailingContent]['line'] !== ($tokens[$scopeCloser]['line'] + 1)) {
                 $error = 'Blank line found after control structure';
                 $phpcsFile->addError($error, $scopeCloser, 'LineAfterClose');
             }
-        } else {
-            if ($tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)) {
-                $error = 'No blank line found after control structure';
-                $phpcsFile->addError($error, $scopeCloser, 'NoLineAfterClose');
-            }
+        } else if ($tokens[$trailingContent]['code'] !== T_ELSE
+            && $tokens[$trailingContent]['code'] !== T_ELSEIF
+            && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
+        ) {
+            $error = 'No blank line found after control structure';
+            $phpcsFile->addError($error, $scopeCloser, 'NoLineAfterClose');
         }
 
     }//end process()

@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,13 +22,28 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
+
+
+    /**
+     * How many spaces should follow the opening bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesAfterOpen = 0;
+
+    /**
+     * How many spaces should precede the closing bracket.
+     *
+     * @var int
+     */
+    public $requiredSpacesBeforeClose = 0;
 
 
     /**
@@ -54,19 +69,49 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
+        $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
-        if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found after opening bracket of FOREACH loop';
             $phpcsFile->addError($error, $stackPtr, 'SpaceAfterOpen');
+        } else if ($this->requiredSpacesAfterOpen > 0) {
+            $spaceAfterOpen = 0;
+            if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+                $spaceAfterOpen = strlen($tokens[($openingBracket + 1)]['content']);
+            }
+
+            if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+                $error = 'Expected %s spaces after opening bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesAfterOpen,
+                          $spaceAfterOpen,
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen', $data);
+            }
         }
 
-        if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found before closing bracket of FOREACH loop';
             $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeClose');
+        } else if ($this->requiredSpacesBeforeClose > 0) {
+            $spaceBeforeClose = 0;
+            if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+                $spaceBeforeClose = strlen($tokens[($closingBracket - 1)]['content']);
+            }
+
+            if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
+                $error = 'Expected %s spaces before closing bracket; %s found';
+                $data  = array(
+                          $this->requiredSpacesBeforeClose,
+                          $spaceBeforeClose,
+                         );
+                $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeClose', $data);
+            }
         }
 
         $asToken = $phpcsFile->findNext(T_AS, $openingBracket);
@@ -94,7 +139,6 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
                     $data   = array($spaces);
                     $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeArrow', $data);
                 }
-
             }
 
             if ($tokens[($doubleArrow + 1)]['code'] !== T_WHITESPACE) {
@@ -107,9 +151,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
                     $data   = array($spaces);
                     $phpcsFile->addError($error, $stackPtr, 'SpacingAfterArrow', $data);
                 }
-
             }
-
         }//end if
 
         if ($tokens[($asToken - 1)]['code'] !== T_WHITESPACE) {
@@ -140,5 +182,3 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
 
 
 }//end class
-
-?>

@@ -45,5 +45,7 @@ function myFunction2()
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
 
+// Уберём из системных свойств все кроме информации об услугах
+
 ?>
 

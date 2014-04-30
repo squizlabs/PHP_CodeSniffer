@@ -1,5 +1,5 @@
-<?php
-
+<?php test(
+);
 test();
 test($arg, $arg2);
 test ();
@@ -205,4 +205,11 @@ function foo()
         'string'.
     );
 }
-?>
+
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 1
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 1
+ftest($arg, $arg2);
+test( $arg, $arg2 );
+test(  $arg, $arg2  );
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
+// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0

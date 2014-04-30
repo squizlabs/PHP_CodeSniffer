@@ -239,20 +239,20 @@ switch ($foo) {
 
 // Valid SWITCH statement.
 switch ($something) {
-    case '1':
+    case '1';
         $case = '1';
     return '1';
 
-    case '2':
-    case '3':
+    case '2';
+    case '3';
         $case = '5';
     return '2';
 
-    case '4':
+    case '4';
         $case = '4';
     return '3';
 
-    default:
+    default;
         $case = null;
     return '4';
 }
@@ -268,4 +268,13 @@ switch ($something) {
     default:
     throw new Exception('message');
 }
-?>
+
+switch ($something) {
+    case '1';
+        echo 'one';
+    break;
+
+    default:
+        echo 'default';
+    exit;
+}

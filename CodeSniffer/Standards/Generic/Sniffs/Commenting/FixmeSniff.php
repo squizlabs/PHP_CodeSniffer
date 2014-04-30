@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Sam Graham <php-codesniffer@illusori.co.uk>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -22,7 +22,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Sam Graham <php-codesniffer@illusori.co.uk>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -68,12 +68,12 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
 
         $content = $tokens[$stackPtr]['content'];
         $matches = array();
-        if (preg_match('|[^a-z]+fixme[^a-z]+(.*)|i', $content, $matches) !== 0) {
+        if (preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches) !== 0) {
             // Clear whitespace and some common characters not required at
             // the end of a fixme message to make the error more informative.
             $type         = 'CommentFound';
             $fixmeMessage = trim($matches[1]);
-            $fixmeMessage = trim($fixmeMessage, '[]().');
+            $fixmeMessage = trim($fixmeMessage, '-:[](). ');
             $error        = 'Comment refers to a FIXME task';
             $data         = array($fixmeMessage);
             if ($fixmeMessage !== '') {

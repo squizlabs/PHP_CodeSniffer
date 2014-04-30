@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2013-12-12</date>
- <time>14:07:00</time>
+ <date>2014-02-05</date>
+ <time>10:46:00</time>
  <version>
-  <release>1.5.2</release>
-  <api>1.5.2</api>
+  <release>1.5.3</release>
+  <api>1.5.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,9 +26,30 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
-  - Fixed bug #20145 : Custom ruleset preferences directory over installed standard
-  - Fixed bug #20147 : phpcs-svn-pre-commit - no more default error report
+  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
+  - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
+  - PSR1 CamelCapsMethodNameSniff now ignores magic methods
+    -- Thanks to Eser Ozvataf for the patch
+  - PSR1 SideEffectsSniff now ignores methods named define()
+  - PSR1 and PEAR ClassDeclarationSniffs now support traits (request #20208)
+  - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
+    -- Thanks to Maurus Cuelenaere for the patch
+  - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
+    -- Thanks to Max Galbusera for the patch
+  - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
+  - Squiz ValidVariableNameSniff and Zend ValidVariableNameSniff now ignore additional PHP reserved vars
+    -- Thanks to Mikuláš Dítě and Adrian Crepaz for the patch
+  - Sniff code Squiz.WhiteSpace.MemberVarSpacing.After changed to Squiz.WhiteSpace.MemberVarSpacing.Incorrect (request #20241)
+  - Fixed bug #20200 : Invalid JSON produced with specific error message
+  - Fixed bug #20204 : Ruleset exclude checks are case sensitive
+  - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
+  - Fixed bug #20225 : array_merge() that takes more than one line generates error
+  - Fixed bug #20230 : Squiz ControlStructureSpacing sniff assumes specific condition formatting
+  - Fixed bug #20240 : Squiz block comment sniff fails when newline present
+  - Fixed bug #20247 : The Squiz.WhiteSpace.ControlStructureSpacing sniff and do-while
+    -- Thanks to Alexander Obuhovich for the patch
+  - Fixed bug #20248 : The Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff sniff and empty scope
+  - Fixed bug #20252 : Unitialized string offset when package name starts with underscore
  </notes>
  <contents>
   <dir name="/">
@@ -2230,6 +2251,54 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.5.2</release>
+    <api>1.5.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-02-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Improved support for the PHP 5.5. classname::class syntax
+      -- PSR2 SwitchDeclarationSniff no longer throws errors when this syntax is used in CASE conditions
+    - Improved support for negative checks of instanceOf in Squiz ComparisonOperatorUsageSniff
+      -- Thanks to Martin Winkel for the patch
+    - Generic FunctionCallArgumentSpacingSniff now longer complains about space before comma when using here/nowdocs
+      -- Thanks to Richard van Velzen for the patch
+    - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore class constants
+      -- Thanks to Kristopher Wilson for the patch
+    - PEAR FunctionCallSignatureSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - PSR2 ControlStructureSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz ForEachLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz ForLoopDeclarationSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Squiz FunctionDeclarationArgumentSpacingSniff now has settings to specify how many spaces should appear before/after parentheses
+      -- Override the 'requiredSpacesAfterOpen' and 'requiredSpacesBeforeClose' settings in a ruleset.xml file to change
+      -- Default remains at 0 for both
+      -- Thanks to Astinus Eberhard for the patch
+    - Removed UnusedFunctionParameter, CyclomaticComplexity and NestingLevel from the Squiz standard
+    - Generic FixmeSniff and TodoSniff now work correctly with accented characters
+    - Fixed bug #20145 : Custom ruleset preferences directory over installed standard
+    - Fixed bug #20147 : phpcs-svn-pre-commit - no more default error report
+    - Fixed bug #20151 : Problem handling "if(): ... else: ... endif;" syntax
+    - Fixed bug #20190 : Invalid regex in Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.5.1</release>

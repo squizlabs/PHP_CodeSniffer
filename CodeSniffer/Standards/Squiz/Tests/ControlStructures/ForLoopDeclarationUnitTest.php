@@ -8,7 +8,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -23,7 +23,7 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -54,6 +54,8 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
                 21 => 6,
                 27 => 1,
                 30 => 1,
+                37 => 2,
+                39 => 2,
                );
              break;
         case 'ForLoopDeclarationUnitTest.js':
@@ -65,6 +67,8 @@ class Squiz_Tests_ControlStructures_ForLoopDeclarationUnitTest extends AbstractS
                 19 => 6,
                 33 => 1,
                 36 => 1,
+                43 => 2,
+                45 => 2,
                );
              break;
         default:
