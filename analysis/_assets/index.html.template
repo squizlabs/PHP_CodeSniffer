@@ -26,9 +26,9 @@
         </div>
     </div>
     <div id="flyout" class="flyout">
-        <div class="flyoutList">
+        <ul class="flyoutList">
             ((sidebar))
-        </div>
+        </ul>
     </div>
 
     <div id="fixedHeader" class="fixedHeader">

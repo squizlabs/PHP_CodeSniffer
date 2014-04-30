@@ -40,7 +40,7 @@
         </div>
     </div>
     <div id="flyout" class="flyout">
-        <div class="flyoutList">
+        <ul class="flyoutList">
             <li><a href="#adjacent-assignments-aligned"><div class="td1">Adjacent assignments aligned</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>77.13%</div></a></li>
 <li><a href="#array-end-comma"><div class="td1">Array end comma</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#array-keyword-case"><div class="td1">Array keyword case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
@@ -80,7 +80,7 @@
 <li><a href="#spacing-before-string-concat"><div class="td1">Spacing before string concat</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>50%</div></a></li>
 <li><a href="#use-of-else-if-or-elseif"><div class="td1">Use of ELSE IF or ELSEIF</div><div class="td2"><span class="screenHide">Method: </span>elseif</div><div class="td3"><span class="screenHide">Value: </span>60%</div></a></li>
 
-        </div>
+        </ul>
     </div>
 
     <div id="fixedHeader" class="fixedHeader">
@@ -1711,7 +1711,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Tue, 29 Apr 2014 13:44:08 +1000<br/>Using master branch of <a href="https://github.com/reactphp/react">reactphp/react</a> @ commit <a href="https://github.com/reactphp/react/commit/fb15cab25c244e33c7e2d2027f895efe94523d2c">fb15cab25c244e33c7e2d2027f895efe94523d2c</a></div>
+    <div class="footer">Report generated on Wed, 30 Apr 2014 14:28:45 +1000<br/>Using master branch of <a href="https://github.com/reactphp/react">reactphp/react</a> @ commit <a href="https://github.com/reactphp/react/commit/fb15cab25c244e33c7e2d2027f895efe94523d2c">fb15cab25c244e33c7e2d2027f895efe94523d2c</a></div>
 </div>
 
 <script>
@@ -1721,229 +1721,229 @@ var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>
 var data = [{value:50,color:"#2D3F50"},{value:50,color:"#91A2B2"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]};
 var c = document.getElementById("chart1t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:50,color:"#2D3F50"},{value:50,color:"#91A2B2"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]};
 var c = document.getElementById("chart2t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:40,color:"#2D3F50"},{value:60,color:"#91A2B2"}]
 var c = document.getElementById("chart3").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,28.57,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,71.43,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[50,50,28.57,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[50,50,71.43,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60]}]};
 var c = document.getElementById("chart3t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:69.84,color:"#2D3F50"},{value:30.16,color:"#91A2B2"}]
 var c = document.getElementById("chart4").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[93.75,93.75,71.82,71.59,71.59,75.29,75.29,75.29,75.29,75.29,75.29,75.29,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[6.25,6.25,28.18,28.41,28.41,24.71,24.71,24.71,24.71,24.71,24.71,24.71,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[93.75,93.75,71.82,71.59,71.59,75.29,75.29,75.29,75.29,75.29,75.29,75.29,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84,69.84]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[6.25,6.25,28.18,28.41,28.41,24.71,24.71,24.71,24.71,24.71,24.71,24.71,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16,30.16]}]};
 var c = document.getElementById("chart4t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:73.44,color:"#2D3F50"},{value:26.56,color:"#91A2B2"}]
 var c = document.getElementById("chart5").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[77.05,77.05,73.02,73.02,73.02,74.19,74.19,74.19,74.19,74.19,74.19,74.19,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[22.95,22.95,26.98,26.98,26.98,25.81,25.81,25.81,25.81,25.81,25.81,25.81,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[77.05,77.05,73.02,73.02,73.02,74.19,74.19,74.19,74.19,74.19,74.19,74.19,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44,73.44]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[22.95,22.95,26.98,26.98,26.98,25.81,25.81,25.81,25.81,25.81,25.81,25.81,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56,26.56]}]};
 var c = document.getElementById("chart5t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:22.87,color:"#2D3F50"},{value:77.13,color:"#91A2B2"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[24.62,24.62,23.84,23.24,23.24,23.19,23.19,23.19,23.19,23.19,23.19,23.19,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[75.38,75.38,76.16,76.76,76.76,76.81,76.81,76.81,76.81,76.81,76.81,76.81,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[24.62,24.62,23.84,23.24,23.24,23.19,23.19,23.19,23.19,23.19,23.19,23.19,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87,22.87]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[75.38,75.38,76.16,76.76,76.76,76.81,76.81,76.81,76.81,76.81,76.81,76.81,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13,77.13]}]};
 var c = document.getElementById("chart6t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:93.75,color:"#2D3F50"},{value:6.25,color:"#91A2B2"}]
 var c = document.getElementById("chart7").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[93.44,93.44,93.65,93.65,93.65,93.55,93.55,93.55,93.55,93.55,93.55,93.55,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[6.56,6.56,6.35,6.35,6.35,6.45,6.45,6.45,6.45,6.45,6.45,6.45,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[93.44,93.44,93.65,93.65,93.65,93.55,93.55,93.55,93.55,93.55,93.55,93.55,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75,93.75]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[6.56,6.56,6.35,6.35,6.35,6.45,6.45,6.45,6.45,6.45,6.45,6.45,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25,6.25]}]};
 var c = document.getElementById("chart7t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:96.97,color:"#2D3F50"},{value:2.88,color:"#91A2B2"},{value:0.15,color:"#D1D4DB"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[96.81,96.81,97.53,97.06,97.06,97.09,97.09,97.09,97.09,97.09,97.09,97.09,97.04,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[2.99,2.99,2.3,2.76,2.76,2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.81,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88]},{strokeColor:"#D1D4DB",pointStrokeColor:"#D1D4DB",pointColor:"#FFF",data:[0.21,0.21,0.17,0.18,0.18,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[96.81,96.81,97.53,97.06,97.06,97.09,97.09,97.09,97.09,97.09,97.09,97.09,97.04,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97,96.97]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[2.99,2.99,2.3,2.76,2.76,2.75,2.75,2.75,2.75,2.75,2.75,2.75,2.81,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88,2.88]},{strokeColor:"#D1D4DB",pointStrokeColor:"#D1D4DB",pointColor:"#FFF",data:[0.21,0.21,0.17,0.18,0.18,0.16,0.16,0.16,0.16,0.16,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15]}]};
 var c = document.getElementById("chart8t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:98.11,color:"#2D3F50"},{value:1.89,color:"#91A2B2"}]
 var c = document.getElementById("chart9").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[97.75,97.75,98.02,98.02,98.02,97.85,97.85,97.85,97.85,97.85,97.85,97.85,98.1,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[2.25,2.25,1.98,1.98,1.98,2.15,2.15,2.15,2.15,2.15,2.15,2.15,1.9,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[97.75,97.75,98.02,98.02,98.02,97.85,97.85,97.85,97.85,97.85,97.85,97.85,98.1,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11,98.11]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[2.25,2.25,1.98,1.98,1.98,2.15,2.15,2.15,2.15,2.15,2.15,2.15,1.9,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89,1.89]}]};
 var c = document.getElementById("chart9t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:98.98,color:"#2D3F50"},{value:1.02,color:"#91A2B2"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[98.9,98.9,96.45,98.95,98.95,98.87,98.87,98.87,98.87,98.87,98.87,98.87,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[1.1,1.1,1.02,1.05,1.05,1.13,1.13,1.13,1.13,1.13,1.13,1.13,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[98.9,98.9,96.45,98.95,98.95,98.87,98.87,98.87,98.87,98.87,98.87,98.87,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98,98.98]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[1.1,1.1,1.02,1.05,1.05,1.13,1.13,1.13,1.13,1.13,1.13,1.13,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02,1.02]}]};
 var c = document.getElementById("chart10t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:0.56,color:"#2D3F50"},{value:99.44,color:"#91A2B2"}]
 var c = document.getElementById("chart11").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[0.54,0.54,0.53,0.56,0.56,0.59,0.59,0.59,0.59,0.59,0.59,0.59,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[99.46,99.46,99.47,99.44,99.44,99.41,99.41,99.41,99.41,99.41,99.41,99.41,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[0.54,0.54,0.53,0.56,0.56,0.59,0.59,0.59,0.59,0.59,0.59,0.59,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[99.46,99.46,99.47,99.44,99.44,99.41,99.41,99.41,99.41,99.41,99.41,99.41,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44]}]};
 var c = document.getElementById("chart11t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:0.24,color:"#2D3F50"},{value:99.76,color:"#91A2B2"}]
 var c = document.getElementById("chart12").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[0.26,0.26,0.24,0.24,0.24,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[99.74,99.74,99.76,99.76,99.76,99.74,99.74,99.74,99.74,99.74,99.74,99.74,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[0.26,0.26,0.24,0.24,0.24,0.26,0.26,0.26,0.26,0.26,0.26,0.26,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24,0.24]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[99.74,99.74,99.76,99.76,99.76,99.74,99.74,99.74,99.74,99.74,99.74,99.74,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76,99.76]}]};
 var c = document.getElementById("chart12t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart13").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.47,99.47,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.47,99.47,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart13t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart14").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[76.47,76.47,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[76.47,76.47,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart14t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart15").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart15t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart16").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart16t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart17").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart17t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart18t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart19").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,50,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,50,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart19t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart20").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart20t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart21").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart21t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart22").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart22t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart23t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart24").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart24t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart25t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart26t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart27").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart27t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart28").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart28t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart29").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,76.38,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,76.38,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart29t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart30").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart30t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart31").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart31t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart32").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart32t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart33").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart33t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart34").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart34t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart35").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart35t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart36").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart36t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart37").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart37t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart38").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","29-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06-Nov","","20-Nov","","04-Dec","","18-Dec","","05-Jan","","19-Jan","","02-Feb","","16-Feb","","02-Mar","","16-Mar","","30-Mar","","30-Apr"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart38t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 

@@ -509,7 +509,6 @@ function generateReport($results, $repo=null)
     if ($repo === null) {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<ul class="reportLinkList">'.PHP_EOL;
-        //$intro .= '  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (63 PHP Projects)</a></li>'.PHP_EOL;
         $intro .= '  <li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
         $intro .= '</ul>'.PHP_EOL;
         $intro .= '<div class="divider"></div>'.PHP_EOL;
@@ -529,7 +528,7 @@ function generateReport($results, $repo=null)
     } else {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<ul class="reportLinkList">'.PHP_EOL;
-        $intro .= '  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (63 PHP Projects)</a></li>'.PHP_EOL;
+        $intro .= '  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report ('.$GLOBALS['num_repos'].' PHP Projects)</a></li>'.PHP_EOL;
         $intro .= '  <li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
         $intro .= '</ul>'.PHP_EOL;
         $intro .= '<div class="divider"></div>'.PHP_EOL;
