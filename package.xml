@@ -57,6 +57,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
     -- Thanks to Max Galbusera for the patch
   - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
+  - Squiz ValidVariableNameSniff and Zend ValidVariableNameSniff now ignore additional PHP reserved vars
+    -- Thanks to Mikuláš Dítě and Adrian Crepaz for the patch
   - Sniff code Squiz.WhiteSpace.MemberVarSpacing.After changed to Squiz.WhiteSpace.MemberVarSpacing.Incorrect (request #20241)
   - Fixed bug #20200 : Invalid JSON produced with specific error message
   - Fixed bug #20204 : Ruleset exclude checks are case sensitive
@@ -64,6 +66,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20225 : array_merge() that takes more than one line generates error
   - Fixed bug #20230 : Squiz ControlStructureSpacing sniff assumes specific condition formatting
   - Fixed bug #20234 : phpcbf patch command absolute paths
+  - Fixed bug #20240 : Squiz block comment sniff fails when newline present
+  - Fixed bug #20247 : The Squiz.WhiteSpace.ControlStructureSpacing sniff and do-while
+    -- Thanks to Alexander Obuhovich for the patch
+  - Fixed bug #20248 : The Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff sniff and empty scope
   - Fixed bug #20252 : Unitialized string offset when package name starts with underscore
  </notes>
  <contents>

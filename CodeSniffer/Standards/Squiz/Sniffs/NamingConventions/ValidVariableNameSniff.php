@@ -69,6 +69,9 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                             '_COOKIE',
                             '_FILES',
                             'GLOBALS',
+                            'http_response_header',
+                            'HTTP_RAW_POST_DATA',
+                            'php_errormsg',
                            );
 
         // If it's a php reserved var, then its ok.
@@ -205,7 +208,11 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                             '_COOKIE',
                             '_FILES',
                             'GLOBALS',
+                            'http_response_header',
+                            'HTTP_RAW_POST_DATA',
+                            'php_errormsg',
                            );
+
         if (preg_match_all('|[^\\\]\${?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.
