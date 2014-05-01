@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHPCBF will now fix incorrect newline characters in a file
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
+  - Fixed bug #20261 : phpcbf has an endless fixing loop
  </notes>
  <contents>
   <dir name="/">

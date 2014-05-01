@@ -147,18 +147,20 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         }
 
         // Check after the class/interface name.
-        $gap = $tokens[($className + 1)]['content'];
-        if (strlen($gap) !== 1) {
-            $found = strlen($gap);
-            $error = 'Expected 1 space after %s name; %s found';
-            $data  = array(
-                      $classOrInterface,
-                      $found,
-                     );
+        if ($tokens[($className + 2)]['line'] === $tokens[$className]['line']) {
+            $gap = $tokens[($className + 1)]['content'];
+            if (strlen($gap) !== 1) {
+                $found = strlen($gap);
+                $error = 'Expected 1 space after %s name; %s found';
+                $data  = array(
+                          $classOrInterface,
+                          $found,
+                         );
 
-            $fix = $phpcsFile->addFixableError($error, $className, 'SpaceAfterName', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                $phpcsFile->fixer->replaceToken(($className + 1), ' ');
+                $fix = $phpcsFile->addFixableError($error, $className, 'SpaceAfterName', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($className + 1), ' ');
+                }
             }
         }
 
