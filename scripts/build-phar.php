@@ -47,9 +47,10 @@ foreach ($scripts as $script) {
 
     echo "\t=> adding stub... ";
     $stub  = '#!/usr/bin/env php'."\n";
-    $stub .= '<?php require_once "phar://".__FILE__."/CodeSniffer/CLI.php";';
-    $stub .= '$cli = new PHP_CodeSniffer_CLI();';
-    $stub .= '$cli->run'.$script.'();';
+    $stub .= '<?php'."\n";
+    $stub .= 'require_once "phar://".__FILE__."/CodeSniffer/CLI.php";'."\n";
+    $stub .= '$cli = new PHP_CodeSniffer_CLI();'."\n";
+    $stub .= '$cli->run'.$script.'();'."\n";
     $stub .= '__HALT_COMPILER();';
     $phar->setStub($stub);
     echo 'done'.PHP_EOL;
@@ -106,9 +107,7 @@ function buildFromNode(&$phar, $node, $prefix='')
     }
 
     $path = $prefix.$node->getAttribute('name');
-    if ($node->getAttribute('role') === 'php'
-        || $node->getAttribute('role') === 'data'
-    ) {
+    if ($node->getAttribute('role') === 'php' || $node->getAttribute('role') === 'data') {
         $path = ltrim($path, '/');
         $phar->addFile(realpath(__DIR__.'/../'.$path), $path);
         $phar[$path]->compress(Phar::GZ);
