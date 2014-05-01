@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.0.0a2';
+    const VERSION = '2.0.0a3';
 
     /**
      * Package stability; either stable, beta or alpha.
