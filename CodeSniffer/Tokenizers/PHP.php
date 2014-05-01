@@ -326,7 +326,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 echo "\tProcess token $stackPtr: $type => $content";
-            }
+            }//end if
 
             /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
