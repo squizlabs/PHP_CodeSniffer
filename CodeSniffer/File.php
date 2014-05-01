@@ -688,9 +688,11 @@ class PHP_CodeSniffer_File
         }
 
         $this->tokenizer = new $tokenizerClass();
-        $this->tokenizer->setEncoding(PHP_CODESNIFFER_ENCODING);
         $this->tokenizer->setVerbose(PHP_CODESNIFFER_VERBOSITY);
         $this->tokenizer->setTabWidth(PHP_CODESNIFFER_TAB_WIDTH);
+        if (defined('PHP_CODESNIFFER_ENCODING') === true) {
+            $this->tokenizer->setEncoding(PHP_CODESNIFFER_ENCODING);
+        }
 
         if ($contents === null) {
             $contents = file_get_contents($this->_file);

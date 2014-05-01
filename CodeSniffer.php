@@ -1704,6 +1704,10 @@ class PHP_CodeSniffer
         if (class_exists('PHP_CodeSniffer_Tokenizers_PHP') === true) {
             $tokenizer = new PHP_CodeSniffer_Tokenizers_PHP();
             $tokenizer->setVerbose(PHP_CODESNIFFER_VERBOSITY);
+            $tokenizer->setTabWidth(PHP_CODESNIFFER_TAB_WIDTH);
+            if (defined('PHP_CODESNIFFER_ENCODING') === true) {
+                $tokenizer->setEncoding(PHP_CODESNIFFER_ENCODING);
+            }
 
             $newToken = $tokenizer->standardiseToken($token);
         }//end if

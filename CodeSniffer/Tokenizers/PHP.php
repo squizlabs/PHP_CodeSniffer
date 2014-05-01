@@ -12,6 +12,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 require_once dirname(dirname(__FILE__)).'/Tokenizer.php';
+require_once dirname(__FILE__).'/Comment.php';
 
 /**
  * Tokenizes PHP code.
