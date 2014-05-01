@@ -249,4 +249,11 @@ $callback = function ($bar) use ($foo)
             {
                 $bar += $foo;
             };
-?>
+
+
+function test() {
+
+}//end test()
+
+
+

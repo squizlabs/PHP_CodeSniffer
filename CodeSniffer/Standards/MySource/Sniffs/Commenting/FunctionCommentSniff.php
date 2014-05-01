@@ -36,95 +36,65 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
 
 
     /**
-     * Process a list of unknown tags.
+     * Processes this test, when one of its tokens is encountered.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      *
      * @return void
      */
-    protected function processUnknownTags($commentStart, $commentEnd)
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $unknownTags = $this->commentParser->getUnknown();
-        $words       = $this->commentParser->getWords();
-        $hasApiTag   = false;
-        $apiLength   = 3;
-        foreach ($unknownTags as $errorTag) {
-            $pos = $errorTag['pos'];
-            if ($errorTag['tag'] === 'api') {
+        parent::process($phpcsFile, $stackPtr);
+
+        $tokens = $phpcsFile->getTokens();
+        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find[] = T_WHITESPACE;
+
+        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+            return;
+        }
+
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
+        $hasApiTag    = false;
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            if ($tokens[$tag]['content'] === '@api') {
                 if ($hasApiTag === true) {
                     // We've come across an API tag already, which means
                     // we were not the first tag in the API list.
                     $error = 'The @api tag must come first in the @api tag list in a function comment';
-                    $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiNotFirst');
+                    $phpcsFile->addError($error, $tag, 'ApiNotFirst');
                 }
 
                 $hasApiTag = true;
 
                 // There needs to be a blank line before the @api tag.
-                // So expect a single space before the tag, then 2 newlines before
-                // that, then some content.
-                if (trim($words[($pos - 2)]) !== ''
-                    || strpos($words[($pos - 2)], $this->currentFile->eolChar) === false
-                    || strpos($words[($pos - 3)], $this->currentFile->eolChar) === false
-                    || trim($words[($pos - 4)]) === ''
-                ) {
+                $prev = $phpcsFile->findPrevious(array(T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG), ($tag - 1));
+                if ($tokens[$prev]['line'] !== ($tokens[$tag]['line'] - 2)) {
                     $error = 'There must be one blank line before the @api tag in a function comment';
-                    $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiSpacing');
+                    $phpcsFile->addError($error, $tag, 'ApiSpacing');
                 }
-            } else if (substr($errorTag['tag'], 0, 4) === 'api-') {
+            } else if (substr($tokens[$tag]['content'], 0, 5) === '@api-') {
                 $hasApiTag = true;
 
-                $tagLength = strlen($errorTag['tag']);
-                if ($tagLength > $apiLength) {
-                    $apiLength = $tagLength;
-                }
-
-                if (trim($words[($pos - 2)]) !== ''
-                    || strpos($words[($pos - 2)], $this->currentFile->eolChar) === false
-                    || trim($words[($pos - 3)]) === ''
-                ) {
+                $prev = $phpcsFile->findPrevious(array(T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG), ($tag - 1));
+                if ($tokens[$prev]['line'] !== ($tokens[$tag]['line'] - 1)) {
                     $error = 'There must be no blank line before the @%s tag in a function comment';
-                    $data  = array($errorTag['tag']);
-                    $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiTagSpacing', $data);
+                    $data  = array($tokens[$tag]['content']);
+                    $phpcsFile->addError($error, $tag, 'ApiTagSpacing', $data);
                 }
             }//end if
         }//end foreach
 
-        if ($hasApiTag === true) {
+        if ($hasApiTag === true && substr($tokens[$tag]['content'], 0, 4) !== '@api') {
             // API tags must be the last tags in a function comment.
-            $order   = $this->commentParser->getTagOrders();
-            $lastTag = array_pop($order);
-            if ($lastTag !== 'api'
-                && substr($lastTag, 0, 4) !== 'api-'
-            ) {
-                $error = 'The @api tags must be the last tags in a function comment';
-                $this->currentFile->addError($error, $commentEnd, 'ApiNotLast');
-            }
+            $error = 'The @api tags must be the last tags in a function comment';
+            $phpcsFile->addError($error, $commentEnd, 'ApiNotLast');
+        }
 
-            // Check API tag indenting.
-            foreach ($unknownTags as $errorTag) {
-                if ($errorTag['tag'] === 'api'
-                    || substr($errorTag['tag'], 0, 4) === 'api-'
-                ) {
-                    $expected = ($apiLength - strlen($errorTag['tag']) + 1);
-                    $found    = strlen($words[($errorTag['pos'] + 1)]);
-                    if ($found !== $expected) {
-                        $error = '@%s tag indented incorrectly; expected %s spaces but found %s';
-                        $data  = array(
-                                  $errorTag['tag'],
-                                  $expected,
-                                  $found,
-                                 );
-                        $this->currentFile->addError($error, ($commentStart + $errorTag['line']), 'ApiTagIndent', $data);
-                    }
-                }
-            }
-        }//end if
-
-    }//end processUnknownTags()
+    }//end process()
 
 
 }//end class
-
-?>

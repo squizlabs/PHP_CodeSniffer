@@ -57,6 +57,8 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 T_DO,
                 T_ELSE,
                 T_ELSEIF,
+                T_TRY,
+                T_CATCH,
                );
 
     }//end register()
@@ -79,19 +81,41 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-                $gap   = strlen($tokens[($parenOpener + 1)]['content']);
+                $gap   = $tokens[($parenOpener + 1)]['length'];
                 $error = 'Expected 0 spaces after opening bracket; %s found';
                 $data  = array($gap);
-                $phpcsFile->addError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
+                }
+
+                if ($gap === 0) {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 'newline');
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $gap);
+                }
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 0);
             }
 
             if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']
                 && $tokens[($parenCloser - 1)]['code'] === T_WHITESPACE
             ) {
-                $gap   = strlen($tokens[($parenCloser - 1)]['content']);
+                $gap   = $tokens[($parenCloser - 1)]['length'];
                 $error = 'Expected 0 spaces before closing bracket; %s found';
                 $data  = array($gap);
-                $phpcsFile->addError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
+                $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
+                }
+
+                if ($gap === 0) {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', 'newline');
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', $gap);
+                }
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', 0);
             }
         }//end if
 
@@ -102,16 +126,27 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
         $scopeOpener = $tokens[$stackPtr]['scope_opener'];
         $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
-        $firstContent = $phpcsFile->findNext(
-            T_WHITESPACE,
-            ($scopeOpener + 1),
-            null,
-            true
-        );
+        for ($firstContent = ($scopeOpener + 1); $firstContent < $phpcsFile->numTokens; $firstContent++) {
+            if ($tokens[$firstContent]['code'] !== T_WHITESPACE) {
+                break;
+            }
+        }
 
         if ($tokens[$firstContent]['line'] !== ($tokens[$scopeOpener]['line'] + 1)) {
             $error = 'Blank line found at start of control structure';
-            $phpcsFile->addError($error, $scopeOpener, 'SpacingBeforeOpen');
+            $fix   = $phpcsFile->addFixableError($error, $scopeOpener, 'SpacingBeforeOpen');
+
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $i = ($scopeOpener + 1);
+                while ($tokens[$i]['line'] !== $tokens[$firstContent]['line']) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                    $i++;
+                }
+
+                $phpcsFile->fixer->addNewline($scopeOpener);
+                $phpcsFile->fixer->endChangeset();
+            }
         }
 
         if ($firstContent !== $scopeCloser) {
@@ -132,9 +167,20 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 }
 
                 $error = 'Blank line found at end of control structure';
-                $phpcsFile->addError($error, $errorToken, 'SpacingAfterClose');
-            }
-        }
+                $fix   = $phpcsFile->addFixableError($error, $errorToken, 'SpacingAfterClose');
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $i = ($scopeCloser - 1);
+                    while ($tokens[$i]['line'] !== $tokens[$lastContent]['line']) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                        $i--;
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }//end if
+        }//end if
 
         $trailingContent = $phpcsFile->findNext(
             T_WHITESPACE,
@@ -167,6 +213,13 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             }
         }
 
+        if ($tokens[$trailingContent]['code'] === T_WHILE
+            && $tokens[$stackPtr]['code'] === T_DO
+        ) {
+            // DO with WHILE.
+            return;
+        }
+
         if ($tokens[$trailingContent]['code'] === T_CLOSE_TAG) {
             // At the end of the script or embedded code.
             return;
@@ -185,19 +238,36 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
             if ($tokens[$trailingContent]['line'] !== ($tokens[$scopeCloser]['line'] + 1)) {
                 $error = 'Blank line found after control structure';
-                $phpcsFile->addError($error, $scopeCloser, 'LineAfterClose');
+                $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'LineAfterClose');
+
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $i = ($scopeCloser + 1);
+                    while ($tokens[$i]['line'] !== $tokens[$trailingContent]['line']) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                        $i++;
+                    }
+
+                    $phpcsFile->fixer->addNewline($scopeCloser);
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
         } else if ($tokens[$trailingContent]['code'] !== T_ELSE
             && $tokens[$trailingContent]['code'] !== T_ELSEIF
             && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
         ) {
             $error = 'No blank line found after control structure';
-            $phpcsFile->addError($error, $scopeCloser, 'NoLineAfterClose');
-        }
+            $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                for ($i = $scopeCloser; $i <= $trailingContent; $i++) {
+                    if ($tokens[$i]['line'] > $tokens[$scopeCloser]['line']) {
+                        $phpcsFile->fixer->addNewline(($i - 1));
+                    }
+                }
+            }
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

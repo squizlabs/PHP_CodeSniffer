@@ -65,7 +65,7 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr )
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // The BOM will be the very first token in the file.
         if ($stackPtr !== 0) {
@@ -81,13 +81,14 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
                 $errorData = array($bomName);
                 $error     = 'File contains %s byte order mark, which may corrupt your application';
                 $phpcsFile->addError($error, $stackPtr, 'Found', $errorData);
-                break;
+                $phpcsFile->recordMetric($stackPtr, 'Using byte order mark', 'yes');
+                return;
             }
         }
+
+        $phpcsFile->recordMetric($stackPtr, 'Using byte order mark', 'no');
 
     }//end process()
 
 
 }//end class
-
-?>

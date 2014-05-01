@@ -4,8 +4,11 @@ php:
   - 5.3
   - 5.4
   - 5.5
+  - hhvm
 
 script:
   - phpunit tests/AllTests.php
   - pear package-validate package.xml
-  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PEAR --report=summary --ignore=*/tests/* -np
+  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
+  - php scripts/build-phar.php
+  - php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np

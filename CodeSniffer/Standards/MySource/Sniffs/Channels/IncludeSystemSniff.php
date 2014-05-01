@@ -37,22 +37,22 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      * @var array(string)
      */
     private $_ignore = array(
-                        'self',
-                        'static',
-                        'parent',
-                        'channels',
-                        'basesystem',
-                        'dal',
-                        'init',
-                        'pdo',
-                        'util',
-                        'ziparchive',
-                        'phpunit_framework_assert',
-                        'abstractmysourceunittest',
-                        'abstractdatacleanunittest',
-                        'exception',
-                        'abstractwidgetwidgettype',
-                        'domdocument',
+                        'self'                      => true,
+                        'static'                    => true,
+                        'parent'                    => true,
+                        'channels'                  => true,
+                        'basesystem'                => true,
+                        'dal'                       => true,
+                        'init'                      => true,
+                        'pdo'                       => true,
+                        'util'                      => true,
+                        'ziparchive'                => true,
+                        'phpunit_framework_assert'  => true,
+                        'abstractmysourceunittest'  => true,
+                        'abstractdatacleanunittest' => true,
+                        'exception'                 => true,
+                        'abstractwidgetwidgettype'  => true,
+                        'domdocument'               => true,
                        );
 
 
@@ -98,7 +98,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         }
 
         $className = $tokens[$classNameToken]['content'];
-        if (in_array(strtolower($className), $this->_ignore) === true) {
+        if (isset($this->_ignore[strtolower($className)]) === true) {
             return;
         }
 
@@ -109,7 +109,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         if (preg_match('|/systems/(.*)/([^/]+)?actions.inc$|', $fileName, $matches) !== 0) {
             // This is an actions file, which means we don't
             // have to include the system in which it exists.
-            $includedClasses[] = $matches[2];
+            $includedClasses[$matches[2]] = true;
 
             // Or a system it implements.
             $class      = $phpcsFile->getCondition($stackPtr, T_CLASS);
@@ -118,7 +118,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
                 $implementsClass     = $phpcsFile->findNext(T_STRING, $implements);
                 $implementsClassName = strtolower($tokens[$implementsClass]['content']);
                 if (substr($implementsClassName, -7) === 'actions') {
-                    $includedClasses[] = substr($implementsClassName, 0, -7);
+                    $includedClasses[substr($implementsClassName, 0, -7)] = true;
                 }
             }
         }
@@ -129,12 +129,12 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         for ($i = ($currScope + 1); $i < $stackPtr; $i++) {
             $name = $this->getIncludedClassFromToken($phpcsFile, $tokens, $i);
             if ($name !== false) {
-                $includedClasses[] = $name;
+                $includedClasses[$name] = true;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName          = trim($tokens[$typeName]['content'], " '");
-                $includedClasses[] = strtolower($typeName).'widgettype';
+                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[strtolower($typeName).'widgettype'] = true;
             }
         }
 
@@ -159,7 +159,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
             $name = $this->getIncludedClassFromToken($phpcsFile, $tokens, $i);
             if ($name !== false) {
-                $includedClasses[] = $name;
+                $includedClasses[$name] = true;
             }
         }
 
@@ -196,12 +196,12 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             for ($i = $start; $i < $end; $i++) {
                 $name = $this->getIncludedClassFromToken($phpcsFile, $tokens, $i);
                 if ($name !== false) {
-                    $includedClasses[] = $name;
+                    $includedClasses[$name] = true;
                 }
             }
         }//end if
 
-        if (in_array(strtolower($className), $includedClasses) === false) {
+        if (isset($includedClasses[strtolower($className)]) === false) {
             $error = 'Static method called on non-included class or system "%s"; include system with Channels::includeSystem() or include class with require_once';
             $data  = array($className);
             $phpcsFile->addError($error, $stackPtr, 'NotIncludedCall', $data);
@@ -240,7 +240,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
         }
 
         // Some systems are always available.
-        if (in_array(strtolower($className), $this->_ignore) === true) {
+        if (isset($this->_ignore[strtolower($className)]) === true) {
             return;
         }
 
@@ -252,7 +252,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             // This is an actions file, which means we don't
             // have to include the system in which it exists
             // We know the system from the path.
-            $includedClasses[] = $matches[1];
+            $includedClasses[$matches[1]] = true;
         }
 
         // Go searching for includeSystem, includeAsset or require/include
@@ -261,13 +261,9 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             // Skip classes and functions as will we never get
             // into their scopes when including this file, although
             // we have a chance of getting into IF's, WHILE's etc.
-            $ignoreTokens = array(
-                             T_CLASS,
-                             T_INTERFACE,
-                             T_FUNCTION,
-                            );
-
-            if (in_array($tokens[$i]['code'], $ignoreTokens) === true
+            if (($tokens[$i]['code'] === T_CLASS
+                || $tokens[$i]['code'] === T_INTERFACE
+                || $tokens[$i]['code'] === T_FUNCTION)
                 && isset($tokens[$i]['scope_closer']) === true
             ) {
                 $i = $tokens[$i]['scope_closer'];
@@ -276,16 +272,16 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
             $name = $this->getIncludedClassFromToken($phpcsFile, $tokens, $i);
             if ($name !== false) {
-                $includedClasses[] = $name;
+                $includedClasses[$name] = true;
                 // Special case for Widgets cause they are, well, special.
             } else if (strtolower($tokens[$i]['content']) === 'includewidget') {
-                $typeName          = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
-                $typeName          = trim($tokens[$typeName]['content'], " '");
-                $includedClasses[] = strtolower($typeName).'widgettype';
+                $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($i + 1));
+                $typeName = trim($tokens[$typeName]['content'], " '");
+                $includedClasses[strtolower($typeName).'widgettype'] = true;
             }
         }//end for
 
-        if (in_array(strtolower($className), $includedClasses) === false) {
+        if (isset($includedClasses[strtolower($className)]) === false) {
             if ($tokens[$stackPtr]['code'] === T_EXTENDS) {
                 $error = 'Class extends non-included class or system "%s"; include system with Channels::includeSystem() or include class with require_once';
                 $data  = array($className);
@@ -323,7 +319,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $typeName = trim($tokens[$typeName]['content'], " '");
             return strtolower($typeName).'assettype';
-        } else if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$includeTokens) === true) {
+        } else if (isset(PHP_CodeSniffer_Tokens::$includeTokens[$tokens[$stackPtr]['code']]) === true) {
             $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $filePath = $tokens[$filePath]['content'];
             $filePath = trim($filePath, " '");
@@ -337,5 +333,3 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
 
 
 }//end class
-
-?>

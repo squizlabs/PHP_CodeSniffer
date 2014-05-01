@@ -90,7 +90,9 @@ class PSR2_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Stand
      */
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariable()
 
@@ -105,11 +107,11 @@ class PSR2_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Stand
      */
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariableInString()
 
 
 }//end class
-
-?>

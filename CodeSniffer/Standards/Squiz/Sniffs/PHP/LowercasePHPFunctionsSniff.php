@@ -116,5 +116,3 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
 
 
 }//end class
-
-?>

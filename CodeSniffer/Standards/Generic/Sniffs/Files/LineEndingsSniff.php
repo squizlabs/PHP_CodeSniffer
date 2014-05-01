@@ -68,20 +68,15 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
      * @param int                  $stackPtr  The position of the current token in
      *                                        the stack passed in $tokens.
      *
-     * @return void
+     * @return int
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We are only interested if this is the first open tag.
-        if ($stackPtr !== 0) {
-            if ($phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== false) {
-                return;
-            }
-        }
-
         $found = $phpcsFile->eolChar;
         $found = str_replace("\n", '\n', $found);
         $found = str_replace("\r", '\r', $found);
+
+        $phpcsFile->recordMetric($stackPtr, 'EOL char', $found);
 
         if ($found !== $this->eolChar) {
             // Check for single line files without an EOL. This is a very special
@@ -105,11 +100,12 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
                          $found,
                         );
             $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
-        }
+        }//end if
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
 
 }//end class
-
-?>

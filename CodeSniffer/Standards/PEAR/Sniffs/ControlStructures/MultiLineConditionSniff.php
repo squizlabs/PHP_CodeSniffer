@@ -120,7 +120,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
 
                 if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
-                    if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$booleanOperators) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
                         $phpcsFile->addError($error, $i, 'StartWithBoolean');
                     }
@@ -185,5 +185,3 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

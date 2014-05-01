@@ -150,7 +150,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
      */
     protected function getNamespaceOfScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $namespace = '\\';
+        $namespace            = '\\';
         $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
 
         if ($namespaceDeclaration !== false) {
@@ -163,9 +163,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
 
         return $namespace;
 
-    }//end getNamespaceOfScope
+    }//end getNamespaceOfScope()
 
 
 }//end class
-
-?>

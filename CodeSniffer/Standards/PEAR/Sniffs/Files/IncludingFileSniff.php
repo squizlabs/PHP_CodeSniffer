@@ -32,18 +32,6 @@
 class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 {
 
-    /**
-     * Conditions that should use include_once
-     *
-     * @var array(int)
-     */
-    private static $_conditions = array(
-                                   T_IF,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_SWITCH,
-                                  );
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -99,7 +87,7 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         // including call. If they are then they are probably checking it, so
         // it's conditional.
         $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$previous]['code']]) === true) {
             // The have assigned the return value to it, so its conditional.
             $inCondition = true;
         }
@@ -133,5 +121,3 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

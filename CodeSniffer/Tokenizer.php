@@ -43,6 +43,13 @@ class PHP_CodeSniffer_Tokenizer
     protected $_verbose = 0;
 
     /**
+     * The encoding of the file.
+     *
+     * @var string
+     */
+    protected $_encoding = 'utf-8';
+
+    /**
      * A cache of different token types, resolved into arrays.
      *
      * @var array()
@@ -119,207 +126,29 @@ class PHP_CodeSniffer_Tokenizer
 
 
     /**
-     * Takes a token produced from <code>token_get_all()</code> and produces a
-     * more uniform token.
+     * Returns the encoding setting.
      *
-     * Note that this method also resolves T_STRING tokens into more discrete
-     * types, therefore there is no need to call resolveTstringToken()
-     *
-     * @param string|array $token The token to convert.
-     *
-     * @return array The new token.
+     * @return string
      */
-    public function standardiseToken($token)
+    public function getEncoding()
     {
-        if (is_array($token) === false) {
-            if (isset($this->_resolveTokenCache[$token]) === true) {
-                $newToken = $this->_resolveTokenCache[$token];
-            } else {
-                $newToken = $this->resolveSimpleToken($token);
-            }
-        } else {
-            switch ($token[0]) {
-            case T_STRING:
-                // Some T_STRING tokens can be more specific.
-                $tokenType = strtolower($token[1]);
-                if (isset($this->_resolveTokenCache[$tokenType]) === true) {
-                    $newToken = $this->_resolveTokenCache[$tokenType];
-                } else {
-                    $newToken = $this->resolveTstringToken($tokenType);
-                }
+        return $this->_encoding;
 
-                break;
-            case T_CURLY_OPEN:
-                $newToken = array(
-                             'code' => T_OPEN_CURLY_BRACKET,
-                             'type' => 'T_OPEN_CURLY_BRACKET',
-                            );
-                break;
-            default:
-                $newToken = array(
-                             'code' => $token[0],
-                             'type' => token_name($token[0]),
-                            );
-                break;
-            }//end switch
-
-            $newToken['content'] = $token[1];
-        }//end if
-
-        return $newToken;
-
-    }//end standardiseToken()
+    }//end getEncoding()
 
 
     /**
-     * Converts T_STRING tokens into more usable token names.
+     * Set the encoding setting.
      *
-     * The token should be produced using the token_get_all() function.
-     * Currently, not all T_STRING tokens are converted.
+     * @param string $encoding The encoding setting.
      *
-     * @param string $token The T_STRING token to convert as constructed
-     *                      by token_get_all().
-     *
-     * @return array The new token.
+     * @return void
      */
-    public function resolveTstringToken($token)
+    public function setEncoding($encoding)
     {
-        $newToken = array();
-        switch ($token) {
-        case 'false':
-            $newToken['type'] = 'T_FALSE';
-            break;
-        case 'true':
-            $newToken['type'] = 'T_TRUE';
-            break;
-        case 'null':
-            $newToken['type'] = 'T_NULL';
-            break;
-        case 'self':
-            $newToken['type'] = 'T_SELF';
-            break;
-        case 'parent':
-            $newToken['type'] = 'T_PARENT';
-            break;
-        default:
-            $newToken['type'] = 'T_STRING';
-            break;
-        }
+        $this->_encoding = $encoding;
 
-        $newToken['code'] = constant($newToken['type']);
-
-        $this->_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveTstringToken()
-
-
-    /**
-     * Converts simple tokens into a format that conforms to complex tokens
-     * produced by token_get_all().
-     *
-     * Simple tokens are tokens that are not in array form when produced from
-     * token_get_all().
-     *
-     * @param string $token The simple token to convert.
-     *
-     * @return array The new token in array format.
-     */
-    public function resolveSimpleToken($token)
-    {
-        $newToken = array();
-
-        switch ($token) {
-        case '{':
-            $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
-            break;
-        case '}':
-            $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
-            break;
-        case '[':
-            $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
-            break;
-        case ']':
-            $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
-            break;
-        case '(':
-            $newToken['type'] = 'T_OPEN_PARENTHESIS';
-            break;
-        case ')':
-            $newToken['type'] = 'T_CLOSE_PARENTHESIS';
-            break;
-        case ':':
-            $newToken['type'] = 'T_COLON';
-            break;
-        case '.':
-            $newToken['type'] = 'T_STRING_CONCAT';
-            break;
-        case '?':
-            $newToken['type'] = 'T_INLINE_THEN';
-            break;
-        case ';':
-            $newToken['type'] = 'T_SEMICOLON';
-            break;
-        case '=':
-            $newToken['type'] = 'T_EQUAL';
-            break;
-        case '*':
-            $newToken['type'] = 'T_MULTIPLY';
-            break;
-        case '/':
-            $newToken['type'] = 'T_DIVIDE';
-            break;
-        case '+':
-            $newToken['type'] = 'T_PLUS';
-            break;
-        case '-':
-            $newToken['type'] = 'T_MINUS';
-            break;
-        case '%':
-            $newToken['type'] = 'T_MODULUS';
-            break;
-        case '^':
-            $newToken['type'] = 'T_POWER';
-            break;
-        case '&':
-            $newToken['type'] = 'T_BITWISE_AND';
-            break;
-        case '|':
-            $newToken['type'] = 'T_BITWISE_OR';
-            break;
-        case '<':
-            $newToken['type'] = 'T_LESS_THAN';
-            break;
-        case '>':
-            $newToken['type'] = 'T_GREATER_THAN';
-            break;
-        case '!':
-            $newToken['type'] = 'T_BOOLEAN_NOT';
-            break;
-        case ',':
-            $newToken['type'] = 'T_COMMA';
-            break;
-        case '@':
-            $newToken['type'] = 'T_ASPERAND';
-            break;
-        case '$':
-            $newToken['type'] = 'T_DOLLAR';
-            break;
-        case '`':
-            $newToken['type'] = 'T_BACKTICK';
-            break;
-        default:
-            $newToken['type'] = 'T_NONE';
-            break;
-        }//end switch
-
-        $newToken['code']    = constant($newToken['type']);
-        $newToken['content'] = $token;
-
-        $this->_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveSimpleToken()
+    }//end setEncoding()
 
 
     /**
@@ -405,8 +234,8 @@ class PHP_CodeSniffer_Tokenizer
      * Each tab can represent between 1 and $width spaces, so
      * this cannot be a straight string replace.
      *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -414,6 +243,7 @@ class PHP_CodeSniffer_Tokenizer
     {
         $currColumn = 1;
         $count      = count($tokens);
+        $eolLen     = (strlen($eolChar) * -1);
 
         for ($i = 0; $i < $count; $i++) {
             $tokenContent = $tokens[$i]['content'];
@@ -448,13 +278,13 @@ class PHP_CodeSniffer_Tokenizer
                         $tabNum++;
 
                         // Move the pointer to the next tab stop.
-                        if (($currColumn % $this->_tabWidth) === 0) {
+                        if (($currColumn % $this->getTabWidth()) === 0) {
                             // This is the first tab, and we are already at a
                             // tab stop, so this tab counts as a single space.
                             $currColumn++;
                         } else {
                             $currColumn++;
-                            while (($currColumn % $this->_tabWidth) != 0) {
+                            while (($currColumn % $this->getTabWidth()) != 0) {
                                 $currColumn++;
                             }
 
@@ -469,9 +299,7 @@ class PHP_CodeSniffer_Tokenizer
                 $tokens[$i]['content'] = $newContent;
             }//end if
 
-            if (isset($tokens[($i + 1)]['line']) === true
-                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-            ) {
+            if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
                 $currColumn = 1;
             }
         }//end for
@@ -480,16 +308,16 @@ class PHP_CodeSniffer_Tokenizer
 
 
     /**
-     * Creates a column map.
-     *
-     * The column map indicates where the token started on the line where it
-     * exists.
-     *
-     * @param array  &$tokens The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
+    * Creates a column map.
+    *
+    * The column map indicates where the token started on the line where it
+    * exists.
+    *
+    * @param array &$tokens  The array of tokens to process.
+    * @param string $eolChar The EOL character to use for splitting strings.
+    *
+    * @return void
+    */
     private function _createColumnMap(&$tokens, $eolChar)
     {
         $currColumn = 1;
@@ -510,17 +338,17 @@ class PHP_CodeSniffer_Tokenizer
 
 
     /**
-     * Creates a map for opening and closing of square brackets.
-     *
-     * Each bracket token (T_OPEN_SQUARE_BRACKET and T_CLOSE_SQUARE_BRACKET)
-     * has a reference to their opening and closing bracket
-     * (bracket_opener and bracket_closer).
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
+    * Creates a map for opening and closing of square brackets.
+    *
+    * Each bracket token (T_OPEN_SQUARE_BRACKET and T_CLOSE_SQUARE_BRACKET)
+    * has a reference to their opening and closing bracket
+    * (bracket_opener and bracket_closer).
+    *
+    * @param array &$tokens  The array of tokens to process.
+    * @param string $eolChar The EOL character to use for splitting strings.
+    *
+    * @return void
+    */
     private function _createBracketMap(&$tokens, $eolChar)
     {
         if ($this->getVerbose() > 1) {
@@ -573,7 +401,7 @@ class PHP_CodeSniffer_Tokenizer
                 if (empty($curlyOpeners) === false
                     && isset($tokens[$i]['scope_opener']) === false
                 ) {
-                    $opener                            = array_pop($curlyOpeners);
+                    $opener = array_pop($curlyOpeners);
                     $tokens[$i]['bracket_opener']      = $opener;
                     $tokens[$i]['bracket_closer']      = $i;
                     $tokens[$opener]['bracket_opener'] = $opener;
@@ -599,17 +427,17 @@ class PHP_CodeSniffer_Tokenizer
 
 
     /**
-     * Creates a map for opening and closing of parenthesis.
-     *
-     * Each parenthesis token (T_OPEN_PARENTHESIS and T_CLOSE_PARENTHESIS) has a
-     * reference to their opening and closing parenthesis (parenthesis_opener
-     * and parenthesis_closer).
-     *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
-     *
-     * @return void
-     */
+    * Creates a map for opening and closing of parenthesis.
+    *
+    * Each parenthesis token (T_OPEN_PARENTHESIS and T_CLOSE_PARENTHESIS) has a
+    * reference to their opening and closing parenthesis (parenthesis_opener
+    * and parenthesis_closer).
+    *
+    * @param array &$tokens  The array of tokens to process.
+    * @param string $eolChar The EOL character to use for splitting strings.
+    *
+    * @return void
+    */
     private function _createParenthesisMap(&$tokens, $eolChar)
     {
         $openers   = array();
@@ -655,15 +483,13 @@ class PHP_CodeSniffer_Tokenizer
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
-    private function _createParenthesisNestingMap(
-        &$tokens,
-        $eolChar
-    ) {
+    private function _createParenthesisNestingMap(&$tokens, $eolChar)
+    {
         $numTokens = count($tokens);
         $map       = array();
         for ($i = 0; $i < $numTokens; $i++) {
@@ -698,16 +524,20 @@ class PHP_CodeSniffer_Tokenizer
     /**
      * Creates a scope map of tokens that open scopes.
      *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
-     * @see _recurseScopeMap()
+     * @see    _recurseScopeMap()
      */
     private function _createScopeMap(&$tokens, $eolChar)
     {
         if ($this->getVerbose() > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $numTokens = count($tokens);
@@ -715,18 +545,19 @@ class PHP_CodeSniffer_Tokenizer
             // Check to see if the current token starts a new scope.
             if (isset($this->scopeOpeners[$tokens[$i]['code']]) === true) {
                 if ($this->getVerbose() > 1) {
-                    $type    = $tokens[$i]['type'];
-                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
-                    echo "\tStart scope map at $i: $type => $content".PHP_EOL;
+                    $type = $tokens[$i]['type'];
+                    if ($isWin === true) {
+                        $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                    } else {
+                        $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                        $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                    }
+
+                    echo "\tStart scope map at $i:$type => $content".PHP_EOL;
                 }
 
-                $i = $this->_recurseScopeMap(
-                    $tokens,
-                    $numTokens,
-                    $eolChar,
-                    $i
-                );
-            }
+                $i = $this->_recurseScopeMap($tokens, $numTokens, $eolChar, $i);
+            }//end if
         }//end for
 
         if ($this->getVerbose() > 1) {
@@ -757,6 +588,14 @@ class PHP_CodeSniffer_Tokenizer
         $depth=1,
         &$ignore=0
     ) {
+        if ($this->getVerbose() > 1) {
+            echo "\t*** START SCOPE MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
+        }
+
         $opener    = null;
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
@@ -768,7 +607,7 @@ class PHP_CodeSniffer_Tokenizer
 
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
-        if (in_array($currType, $this->scopeOpeners[$currType]['start']) === true) {
+        if (isset($this->scopeOpeners[$currType]['start'][$currType]) === true) {
             $opener = $stackPtr;
         }
 
@@ -776,8 +615,14 @@ class PHP_CodeSniffer_Tokenizer
             $tokenType = $tokens[$i]['code'];
 
             if ($this->getVerbose() > 1) {
-                $type    = $tokens[$i]['type'];
-                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                $type = $tokens[$i]['type'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo str_repeat("\t", $depth);
                 echo "Process token $i [";
                 if ($opener !== null) {
@@ -789,17 +634,17 @@ class PHP_CodeSniffer_Tokenizer
                 }
 
                 echo "]: $type => $content".PHP_EOL;
-            }
+            }//end if
 
             // Very special case for IF statements in PHP that can be defined without
-            // scope tokens. If an IF statement below this one has an opener but no
+            // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
+            // If an IF statement below this one has an opener but no
             // keyword, the opener will be incorrectly assigned to this IF statement.
-            // E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
             if (($currType === T_IF || $currType === T_ELSE) && $opener === null && $tokens[$i]['code'] === T_SEMICOLON) {
                 if ($this->getVerbose() > 1) {
                     $type = $tokens[$stackPtr]['type'];
                     echo str_repeat("\t", $depth);
-                    echo "=> Found semicolon before scope opener for $stackPtr ($type), bailing".PHP_EOL;
+                    echo "=> Found semicolon before scope opener for $stackPtr:$type, bailing".PHP_EOL;
                 }
 
                 return $i;
@@ -808,7 +653,7 @@ class PHP_CodeSniffer_Tokenizer
             if ($opener !== null
                 && (isset($tokens[$i]['scope_opener']) === false
                 || $this->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true)
-                && in_array($tokenType, $this->scopeOpeners[$currType]['end']) === true
+                && isset($this->scopeOpeners[$currType]['end'][$tokenType]) === true
             ) {
                 if ($ignore > 0 && $tokenType === T_CLOSE_CURLY_BRACKET) {
                     // The last opening bracket must have been for a string
@@ -919,7 +764,7 @@ class PHP_CodeSniffer_Tokenizer
                         echo '* searching for opener *'.PHP_EOL;
                     }
 
-                    if (in_array(T_CLOSE_CURLY_BRACKET, $this->scopeOpeners[$tokenType]['end']) === true) {
+                    if (isset($this->scopeOpeners[$tokenType]['end'][T_CLOSE_CURLY_BRACKET]) === true) {
                         $oldIgnore = $ignore;
                         $ignore    = 0;
                     }
@@ -933,20 +778,20 @@ class PHP_CodeSniffer_Tokenizer
                         $ignore
                     );
 
-                    if (in_array(T_CLOSE_CURLY_BRACKET, $this->scopeOpeners[$tokenType]['end']) === true) {
+                    if (isset($this->scopeOpeners[$tokenType]['end'][T_CLOSE_CURLY_BRACKET]) === true) {
                         $ignore = $oldIgnore;
                     }
                 }//end if
             }//end if
 
-            if (in_array($tokenType, $this->scopeOpeners[$currType]['start']) === true
+            if (isset($this->scopeOpeners[$currType]['start'][$tokenType]) === true
                 && $opener === null
             ) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
                     // Make sure this is actually an opener and not a
                     // string offset (e.g., $var{0}).
                     for ($x = ($i - 1); $x > 0; $x--) {
-                        if (in_array($tokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === true) {
                             continue;
                         } else {
                             // If the first non-whitespace/comment token is a
@@ -981,7 +826,7 @@ class PHP_CodeSniffer_Tokenizer
             } else if ($tokenType === T_OPEN_PARENTHESIS) {
                 if (isset($tokens[$i]['parenthesis_owner']) === true) {
                     $owner = $tokens[$i]['parenthesis_owner'];
-                    if (in_array($tokens[$owner]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true
+                    if (isset(PHP_CodeSniffer_Tokens::$scopeOpeners[$tokens[$owner]['code']]) === true
                         && isset($tokens[$i]['parenthesis_closer']) === true
                     ) {
                         // If we get into here, then we opened a parenthesis for
@@ -1021,7 +866,7 @@ class PHP_CodeSniffer_Tokenizer
                 // token was empty (in which case we'll just confirm there is
                 // more code in this file and not just a big comment).
                 if ($tokens[$i]['line'] >= ($startLine + 3)
-                    && in_array($tokens[($i - 1)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false
+                    && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[($i - 1)]['code']]) === false
                 ) {
                     if ($this->scopeOpeners[$currType]['strict'] === true) {
                         if ($this->getVerbose() > 1) {
@@ -1042,7 +887,7 @@ class PHP_CodeSniffer_Tokenizer
                 }
             } else if ($opener !== null
                 && $tokenType !== T_BREAK
-                && in_array($tokenType, $this->endScopeTokens) === true
+                && isset($this->endScopeTokens[$tokenType]) === true
             ) {
                 if (isset($tokens[$i]['scope_condition']) === false) {
                     if ($ignore > 0) {
@@ -1089,8 +934,8 @@ class PHP_CodeSniffer_Tokenizer
      * 'condition' indice which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
-     * @param array  &$tokens   The array of tokens to process.
-     * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -1098,6 +943,10 @@ class PHP_CodeSniffer_Tokenizer
     {
         if ($this->getVerbose() > 1) {
             echo "\t*** START LEVEL MAP ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
         $numTokens  = count($tokens);
@@ -1108,9 +957,15 @@ class PHP_CodeSniffer_Tokenizer
 
         for ($i = 0; $i < $numTokens; $i++) {
             if ($this->getVerbose() > 1) {
-                $type    = $tokens[$i]['type'];
-                $line    = $tokens[$i]['line'];
-                $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                $type = $tokens[$i]['type'];
+                $line = $tokens[$i]['line'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $tokens[$i]['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $tokens[$i]['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo str_repeat("\t", ($level + 1));
                 echo "Process token $i on line $line [lvl:$level;";
                 if (empty($conditions) !== true) {
@@ -1123,7 +978,7 @@ class PHP_CodeSniffer_Tokenizer
                 }
 
                 echo "]: $type => $content".PHP_EOL;
-            }
+            }//end if
 
             $tokens[$i]['level']      = $level;
             $tokens[$i]['conditions'] = $conditions;
@@ -1135,7 +990,7 @@ class PHP_CodeSniffer_Tokenizer
                     if ($this->getVerbose() > 1) {
                         $type = $tokens[$stackPtr]['type'];
                         echo str_repeat("\t", ($level + 1));
-                        echo "=> Found scope opener for $stackPtr ($type)".PHP_EOL;
+                        echo "=> Found scope opener for $stackPtr:$type".PHP_EOL;
                     }
 
                     $stackPtr = $tokens[$i]['scope_condition'];
@@ -1154,18 +1009,17 @@ class PHP_CodeSniffer_Tokenizer
                         $thisType = $tokens[$tokens[$i]['scope_condition']]['code'];
                         $opener   = $tokens[$lastOpener]['scope_condition'];
 
-                        $isShared = in_array(
-                            $tokens[$opener]['code'],
-                            $this->scopeOpeners[$thisType]['with']
-                        );
+                        $isShared = isset($this->scopeOpeners[$thisType]['with'][$tokens[$opener]['code']]);
 
-                        $sameEnd = ($this->scopeOpeners[$thisType]['end'][0] === $this->scopeOpeners[$tokens[$opener]['code']]['end'][0]);
+                        reset($this->scopeOpeners[$thisType]['end']);
+                        reset($this->scopeOpeners[$tokens[$opener]['code']]['end']);
+                        $sameEnd = (current($this->scopeOpeners[$thisType]['end']) === current($this->scopeOpeners[$tokens[$opener]['code']]['end']));
                         if ($isShared === true && $sameEnd === true) {
                             $badToken = $opener;
                             if ($this->getVerbose() > 1) {
                                 $type = $tokens[$badToken]['type'];
                                 echo str_repeat("\t", ($level + 1));
-                                echo "* shared closer, cleaning up $badToken ($type) *".PHP_EOL;
+                                echo "* shared closer, cleaning up $badToken:$type *".PHP_EOL;
                             }
 
                             for ($x = $tokens[$i]['scope_condition']; $x <= $i; $x++) {
@@ -1191,7 +1045,7 @@ class PHP_CodeSniffer_Tokenizer
 
                                     $newLevel = $tokens[$x]['level'];
                                     echo str_repeat("\t", ($level + 1));
-                                    echo "* cleaned $x ($type) *".PHP_EOL;
+                                    echo "* cleaned $x:$type *".PHP_EOL;
                                     echo str_repeat("\t", ($level + 2));
                                     echo "=> level changed from $oldLevel to $newLevel".PHP_EOL;
                                     echo str_repeat("\t", ($level + 2));
@@ -1203,7 +1057,7 @@ class PHP_CodeSniffer_Tokenizer
                             if ($this->getVerbose() > 1) {
                                 $type = $tokens[$badToken]['type'];
                                 echo str_repeat("\t", ($level + 1));
-                                echo "* token $badToken ($type) removed from conditions array *".PHP_EOL;
+                                echo "* token $badToken:$type removed from conditions array *".PHP_EOL;
                             }
 
                             unset ($openers[$lastOpener]);
@@ -1226,7 +1080,7 @@ class PHP_CodeSniffer_Tokenizer
                     if ($this->getVerbose() > 1) {
                         $type = $tokens[$stackPtr]['type'];
                         echo str_repeat("\t", ($level + 1));
-                        echo "* token $stackPtr ($type) added to conditions array *".PHP_EOL;
+                        echo "* token $stackPtr:$type added to conditions array *".PHP_EOL;
                     }
 
                     $lastOpener = $tokens[$i]['scope_opener'];
@@ -1247,7 +1101,7 @@ class PHP_CodeSniffer_Tokenizer
                             if ($this->getVerbose() > 1) {
                                 $type = $tokens[$oldOpener]['type'];
                                 echo str_repeat("\t", ($level + 1));
-                                echo "=> Found scope closer for $oldOpener ($type)".PHP_EOL;
+                                echo "=> Found scope closer for $oldOpener:$type".PHP_EOL;
                             }
 
                             $oldCondition = array_pop($conditions);
@@ -1262,13 +1116,13 @@ class PHP_CodeSniffer_Tokenizer
                             $condition
                                 = $tokens[$tokens[$i]['scope_condition']]['code'];
                             if ($condition !== $oldCondition) {
-                                if (in_array($condition, $this->scopeOpeners[$oldCondition]['with']) === false) {
+                                if (isset($this->scopeOpeners[$oldCondition]['with'][$condition]) === false) {
                                     $badToken = $tokens[$oldOpener]['scope_condition'];
 
                                     if ($this->getVerbose() > 1) {
                                         $type = token_name($oldCondition);
                                         echo str_repeat("\t", ($level + 1));
-                                        echo "* scope closer was bad, cleaning up $badToken ($type) *".PHP_EOL;
+                                        echo "* scope closer was bad, cleaning up $badToken:$type *".PHP_EOL;
                                     }
 
                                     for ($x = ($oldOpener + 1); $x <= $i; $x++) {
@@ -1294,7 +1148,7 @@ class PHP_CodeSniffer_Tokenizer
 
                                             $newLevel = $tokens[$x]['level'];
                                             echo str_repeat("\t", ($level + 1));
-                                            echo "* cleaned $x ($type) *".PHP_EOL;
+                                            echo "* cleaned $x:$type *".PHP_EOL;
                                             echo str_repeat("\t", ($level + 2));
                                             echo "=> level changed from $oldLevel to $newLevel".PHP_EOL;
                                             echo str_repeat("\t", ($level + 2));

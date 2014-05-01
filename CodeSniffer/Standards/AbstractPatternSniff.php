@@ -97,7 +97,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * <i>getPatterns()</i> method to register the patterns they wish to test.
      *
      * @return array(int)
-     * @see process()
+     * @see    process()
      */
     public final function register()
     {
@@ -202,7 +202,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *                                        found.
      *
      * @return void
-     * @see register()
+     * @see    register()
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -380,7 +380,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     $found = 'abc';
                 } else if ($pattern[$i]['type'] === 'newline') {
                     if ($this->ignoreComments === true
-                        && in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true
+                        && isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$stackPtr]['code']]) === true
                     ) {
                         $startComment = $phpcsFile->findPrevious(
                             PHP_CodeSniffer_Tokens::$commentTokens,
@@ -410,7 +410,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                             // so check the token before to make sure. If it is a newline, we
                             // can ignore the error here.
                             if (($tokens[($stackPtr - 1)]['content'] !== $phpcsFile->eolChar)
-                                && ($this->ignoreComments === true && in_array($tokens[($stackPtr - 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === false)
+                                && ($this->ignoreComments === true
+                                && isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr - 1)]['code']]) === false)
                             ) {
                                 $hasError = true;
                             } else {
@@ -422,7 +423,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     } else {
                         $found    = $tokens[$stackPtr]['content'].$found;
                         $hasError = true;
-                    }
+                    }//end if
 
                     if ($hasError === false && $pattern[($i - 1)]['type'] !== 'newline') {
                         // Make sure they only have 1 newline.
@@ -445,14 +446,14 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     if ($this->ignoreComments === true) {
                         // If we are ignoring comments, check to see if this current
                         // token is a comment. If so skip it.
-                        if (in_array($tokens[$stackPtr]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$stackPtr]['code']]) === true) {
                             continue;
                         }
 
                         // If the next token is a comment, the we need to skip the
                         // current token as we should allow a space before a
                         // comment for readability.
-                        if (in_array($tokens[($stackPtr + 1)]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr + 1)]['code']]) === true) {
                             continue;
                         }
                     }
@@ -479,7 +480,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
                             $lastAddedStackPtr = $stackPtr;
                             $stackPtr          = $next;
-                        }
+                        }//end if
 
                         if ($stackPtr !== $lastAddedStackPtr) {
                             $found .= $tokenContent;
@@ -553,7 +554,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         $hasComment = false;
                         for ($j = $stackPtr; $j < $next; $j++) {
                             $found .= $tokens[$j]['content'];
-                            if (in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                            if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$j]['code']]) === true) {
                                 $hasComment = true;
                             }
                         }
@@ -658,7 +659,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 } else {
                     if ($this->ignoreComments === false) {
                         // The newline character cannot be part of a comment.
-                        if (in_array($tokens[$newline]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$newline]['code']]) === true) {
                             $hasError = true;
                         }
                     }
@@ -747,7 +748,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * other pattern tests.
      *
      * @return array(int)
-     * @see processSupplementary()
+     * @see    processSupplementary()
      */
     protected function registerSupplementary()
     {
@@ -765,7 +766,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
       *                                        process.
       *
       * @return void
-      * @see registerSupplementary()
+      * @see    registerSupplementary()
       */
     protected function processSupplementary(
         PHP_CodeSniffer_File $phpcsFile,
@@ -781,8 +782,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $pattern The pattern to parse.
      *
      * @return array The parsed pattern array.
-     * @see _createSkipPattern()
-     * @see _createTokenPattern()
+     * @see    _createSkipPattern()
+     * @see    _createTokenPattern()
      */
     private function _parse($pattern)
     {
@@ -804,7 +805,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
+                $i = ($i + 2);
 
                 if ($specialPattern['to'] !== 'unknown') {
                     $firstToken++;
@@ -813,13 +814,13 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                 $specialPattern = array('type' => 'string');
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
+                $i = ($i + 2);
             } else if (substr($pattern, $i, 3) === 'EOL') {
                 $specialPattern = array('type' => 'newline');
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
-                $i              = ($i + 2);
-            }
+                $i = ($i + 2);
+            }//end if
 
             if ($specialPattern !== false || $isLastChar === true) {
                 // If we are at the end of the string, don't worry about a limit.
@@ -873,8 +874,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $from    The token content that the skip pattern starts from.
      *
      * @return array The pattern step.
-     * @see _createTokenPattern()
-     * @see _parse()
+     * @see    _createTokenPattern()
+     * @see    _parse()
      */
     private function _createSkipPattern($pattern, $from)
     {
@@ -904,12 +905,12 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             case ')':
                 $nestedParenthesis++;
                 break;
-            }
+            }//end switch
 
             if (isset($skip['to']) === true) {
                 break;
             }
-        }
+        }//end for
 
         if (isset($skip['to']) === false) {
             $skip['to'] = 'unknown';
@@ -926,8 +927,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * @param string $str The tokens string that the pattern should match.
      *
      * @return array The pattern step.
-     * @see _createSkipPattern()
-     * @see _parse()
+     * @see    _createSkipPattern()
+     * @see    _parse()
      */
     private function _createTokenPattern($str)
     {
@@ -939,7 +940,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $tokens = array_slice($tokens, 1, (count($tokens) - 2));
 
         foreach ($tokens as &$token) {
-            $token = PHP_CodeSniffer::standardiseToken($token);
+            $token = PHP_CodeSniffer_Tokenizers_PHP::standardiseToken($token);
         }
 
         $patterns = array();
@@ -957,5 +958,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
 
 
 }//end class
-
-?>

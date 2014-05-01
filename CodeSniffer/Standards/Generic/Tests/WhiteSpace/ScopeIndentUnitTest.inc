@@ -10,7 +10,7 @@ class Test
    function hello() // error here
     { // no error here as brackets can be put anywhere in the pear standard
         echo 'hello';
-    }
+}//end hello()
 
     function hello2()
     {

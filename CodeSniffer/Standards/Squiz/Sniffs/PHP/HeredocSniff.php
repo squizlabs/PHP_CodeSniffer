@@ -64,5 +64,3 @@ class Squiz_Sniffs_PHP_HeredocSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

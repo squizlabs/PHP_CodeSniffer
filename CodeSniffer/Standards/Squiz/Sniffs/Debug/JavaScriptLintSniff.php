@@ -69,9 +69,9 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
         $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
         $msg = exec($cmd, $output, $retval);
 
-        // $exitCode is the last line of $output if no error occurs, on error it
-        // is numeric. Try to handle various error conditions and provide useful
-        // error reporting.
+        // Variable $exitCode is the last line of $output if no error occurs, on
+        // error it is numeric. Try to handle various error conditions and
+        // provide useful error reporting.
         if ($retval === 2 || $retval === 4) {
             if (is_array($output) === true) {
                 $msg = join('\n', $output);
@@ -107,4 +107,3 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-?>

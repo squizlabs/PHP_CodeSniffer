@@ -95,7 +95,11 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
                               $expected,
                               $tokens[$i]['content'],
                              );
-                    $phpcsFile->addError($error, $i, 'FoundUpper', $data);
+
+                    $fix = $phpcsFile->addFixableError($error, $i, 'FoundUpper', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken($i, $expected);
+                    }
                 }
             }
         }//end for
@@ -103,4 +107,3 @@ class Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff implements PHP_CodeSniffer_
     }//end process()
 
 }//end class
-?>

@@ -66,7 +66,7 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
         if ($isInstalled === false) {
             // We have not been installed.
-            $standardsDir = realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
+            $standardsDir = PHP_CodeSniffer::realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
         } else {
             $standardsDir = '';
         }
@@ -121,5 +121,3 @@ class PHP_CodeSniffer_Standards_AllSniffs
 
 
 }//end class
-
-?>

@@ -64,16 +64,19 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
             $error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
             $data  = array($openTag['content']);
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+            $phpcsFile->recordMetric($stackPtr, 'PHP short open tag used', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP short open tag used', 'no');
         }
 
         if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {
             $nextVar = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
             $error   = 'Short PHP opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
-            $data = array(
-                     $nextVar['content'],
-                     $openTag['content'],
-                     $nextVar['content'],
-                    );
+            $data    = array(
+                        $nextVar['content'],
+                        $openTag['content'],
+                        $nextVar['content'],
+                       );
             $phpcsFile->addError($error, $stackPtr, 'EchoFound', $data);
         }
 
@@ -81,5 +84,3 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
 
 
 }//end class
-
-?>

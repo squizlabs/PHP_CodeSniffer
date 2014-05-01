@@ -179,6 +179,18 @@ $listItems[$aliasPath] = array(
                           'itemContent' => implode('<br/>', $aliases)
                          );
 
+$x = array
+  (
+      $x,
+      $y,
+     );
+
+$x = array
+(
+      $x,
+      $y,
+     );
+
 $test = array(
          'test' => TestFunction::blah(
              $value1,

@@ -66,5 +66,3 @@ class Squiz_Sniffs_PHP_GlobalKeywordSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

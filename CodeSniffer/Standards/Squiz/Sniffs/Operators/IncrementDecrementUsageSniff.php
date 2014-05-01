@@ -98,7 +98,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             return;
         }
 
-        if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$arithmeticTokens[$tokens[$next]['code']]) === true) {
             $error = 'Increment and decrement operators cannot be used in an arithmetic operation';
             $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
             return;
@@ -230,5 +230,3 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
 
 
 }//end class
-
-?>

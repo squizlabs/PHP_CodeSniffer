@@ -79,11 +79,14 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space after colon in style definition; 0 found';
-            $phpcsFile->addError($error, $stackPtr, 'NoneAfter');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoneAfter');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addContent($stackPtr, ' ');
+            }
         } else {
             $content = $tokens[($stackPtr + 1)]['content'];
             if (strpos($content, $phpcsFile->eolChar) === false) {
-                $length  = strlen($content);
+                $length = strlen($content);
                 if ($length !== 1) {
                     $error = 'Expected 1 space after colon in style definition; %s found';
                     $data  = array($length);
@@ -98,4 +101,3 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
     }//end process()
 
 }//end class
-?>

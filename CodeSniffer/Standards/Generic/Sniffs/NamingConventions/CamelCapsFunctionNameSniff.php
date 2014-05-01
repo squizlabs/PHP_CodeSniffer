@@ -41,21 +41,21 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      * @var array
      */
     protected $magicMethods = array(
-                               'construct',
-                               'destruct',
-                               'call',
-                               'callstatic',
-                               'get',
-                               'set',
-                               'isset',
-                               'unset',
-                               'sleep',
-                               'wakeup',
-                               'tostring',
-                               'set_state',
-                               'clone',
-                               'invoke',
-                               'call',
+                               'construct'  => true,
+                               'destruct'   => true,
+                               'call'       => true,
+                               'callstatic' => true,
+                               'get'        => true,
+                               'set'        => true,
+                               'isset'      => true,
+                               'unset'      => true,
+                               'sleep'      => true,
+                               'wakeup'     => true,
+                               'tostring'   => true,
+                               'set_state'  => true,
+                               'clone'      => true,
+                               'invoke'     => true,
+                               'call'       => true,
                               );
 
     /**
@@ -66,17 +66,17 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      * @var array
      */
     protected $methodsDoubleUnderscore = array(
-                                          'soapcall',
-                                          'getlastrequest',
-                                          'getlastresponse',
-                                          'getlastrequestheaders',
-                                          'getlastresponseheaders',
-                                          'getfunctions',
-                                          'gettypes',
-                                          'dorequest',
-                                          'setcookie',
-                                          'setlocation',
-                                          'setsoapheaders',
+                                          'soapcall'               => true,
+                                          'getlastrequest'         => true,
+                                          'getlastresponse'        => true,
+                                          'getlastrequestheaders'  => true,
+                                          'getlastresponseheaders' => true,
+                                          'getfunctions'           => true,
+                                          'gettypes'               => true,
+                                          'dorequest'              => true,
+                                          'setcookie'              => true,
+                                          'setlocation'            => true,
+                                          'setsoapheaders'         => true,
                                          );
 
     /**
@@ -84,7 +84,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      *
      * @var array
      */
-    protected $magicFunctions = array('autoload');
+    protected $magicFunctions = array('autoload' => true);
 
     /**
      * If TRUE, the string must not have two capital letters next to each other.
@@ -128,9 +128,11 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
-            if (in_array($magicPart, array_merge($this->magicMethods, $this->methodsDoubleUnderscore)) === false) {
-                 $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
-                 $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
+            if (isset($this->magicMethods[$magicPart]) === false
+                && isset($this->methodsDoubleUnderscore[$magicPart]) === false
+            ) {
+                $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
+                $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
             }
 
             return;
@@ -160,7 +162,10 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                 $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'no');
             return;
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
     }//end processTokenWithinScope()
@@ -188,7 +193,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         // Is this a magic function. i.e., it is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = strtolower(substr($functionName, 2));
-            if (in_array($magicPart, $this->magicFunctions) === false) {
+            if (isset($this->magicFunctions[$magicPart]) === false) {
                  $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);
             }
@@ -199,6 +204,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, $this->strict) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
 
@@ -206,5 +214,3 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
 
 }//end class
-
-?>

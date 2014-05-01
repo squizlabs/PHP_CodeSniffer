@@ -45,21 +45,32 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
     {
         if ($this->getVerbose() > 1) {
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
+            $isWin = false;
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $isWin = true;
+            }
         }
 
-        // If the content doesn't have an EOl char on the end, add one so
+        // If the content doesn't have an EOL char on the end, add one so
         // the open and close tags we add are parsed correctly.
-        if (substr($string, 0, (strlen($eolChar) * -1)) !== $eolChar) {
-            $string .= $eolChar;
+        $eolAdded = false;
+        if (substr($string, (strlen($eolChar) * -1)) !== $eolChar) {
+            $string  .= $eolChar;
+            $eolAdded = true;
         }
 
-        $tokens      = parent::tokenize('<?php '.$string.'?>', $eolChar);
-        $finalTokens = array();
+        $tokens         = parent::tokenize('<?php '.$string.'?'.'>', $eolChar);
+        $finalTokens    = array();
+        $finalTokens[0] = array(
+                           'code'    => T_OPEN_TAG,
+                           'type'    => 'T_OPEN_TAG',
+                           'content' => '',
+                          );
 
-        $newStackPtr      = 0;
+        $newStackPtr      = 1;
         $numTokens        = count($tokens);
         $multiLineComment = false;
-        for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
+        for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
             // CSS files don't have lists or break tags, so convert these to
@@ -71,8 +82,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($this->getVerbose() > 1) {
-                $type    = $token['type'];
-                $content = str_replace($eolChar, '\n', $token['content']);
+                $type = $token['type'];
+                if ($isWin === true) {
+                    $content = str_replace($eolChar, '\n', $token['content']);
+                } else {
+                    $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token['content']);
+                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                }
+
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -96,12 +113,18 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // have to add another closing tag here. If it is the last closing
                     // tag, this additional one would have been added during the
                     // original tokenize call.
-                    $content .= ' ?>';
+                    $content .= ' ?'.'>';
                 }
 
                 if ($this->getVerbose() > 1) {
                     echo "\t\t=> Found premature closing tag at $stackPtr".PHP_EOL;
-                    $cleanContent = str_replace($eolChar, '\n', $content);
+                    if ($isWin === true) {
+                        $cleanContent = str_replace($eolChar, '\n', $content);
+                    } else {
+                        $cleanContent = str_replace($eolChar, "\033[30;1m\\n\033[0m", $content);
+                        $cleanContent = str_replace(' ', "\033[30;1m·\033[0m", $cleanContent);
+                    }
+
                     echo "\t\tcontent: $cleanContent".PHP_EOL;
                     $oldNumTokens = $numTokens;
                 }
@@ -110,7 +133,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $moreTokens = parent::tokenize($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
-                array_pop($moreTokens);
+                $lastSpace = array_pop($moreTokens);
+                if ($lastSpace['content'] !== ' ') {
+                    // The space we added before the closing tag was not the only
+                    // space at the end of the content, so add the whitespace back,
+                    // minus our single space.
+                    $lastSpace['content'] = substr($lastSpace['content'], 0, -1);
+                    $moreTokens[]         = $lastSpace;
+                }
 
                 // Rebuild the tokens array.
                 array_splice($tokens, ($stackPtr + 1), ($x - $stackPtr), $moreTokens);
@@ -165,9 +195,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 && (substr($token['content'], 0, 2) === '//'
                 || $token['content']{0} === '#')
             ) {
-                $content = ltrim($token['content'], '#/');
+                $content       = ltrim($token['content'], '#/');
                 $commentTokens
-                    = parent::tokenize('<?php '.$content.'?>', $eolChar);
+                    = parent::tokenize('<?php '.$content.'?'.'>', $eolChar);
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
@@ -293,7 +323,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     $finalTokens = array_values($finalTokens);
                     $numTokens   = count($finalTokens);
-                }
+                }//end if
 
                 break;
             case T_COLON:
@@ -303,7 +333,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 for ($x = ($stackPtr - 1); $x >= 0; $x--) {
-                    if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                         break;
                     }
                 }
@@ -315,7 +345,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 if (strtolower($token['content']) === 'url') {
                     // Find the next content.
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                        if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                             break;
                         }
                     }
@@ -327,7 +357,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // Make sure the content isn't empty.
                     for ($y = ($x + 1); $y < $numTokens; $y++) {
-                        if (in_array($finalTokens[$y]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$y]['code']]) === false) {
                             break;
                         }
                     }
@@ -369,6 +399,24 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }//end switch
         }//end for
 
+        // Blank out the content of the end tag.
+        $finalTokens[($numTokens - 1)]['content'] = '';
+
+        if ($eolAdded === true) {
+            // Strip off the extra EOL char we added for tokenizing.
+            $finalTokens[($numTokens - 2)]['content'] = substr(
+                $finalTokens[($numTokens - 2)]['content'],
+                0,
+                (strlen($eolChar) * -1)
+            );
+
+            if ($finalTokens[($numTokens - 2)]['content'] === '') {
+                unset($finalTokens[($numTokens - 2)]);
+                $finalTokens = array_values($finalTokens);
+                $numTokens   = count($finalTokens);
+            }
+        }
+
         if ($this->getVerbose() > 1) {
             echo "\t*** END CSS TOKENIZING ***".PHP_EOL;
         }
@@ -388,12 +436,12 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      */
     protected function processAdditional(&$tokens, $eolChar)
     {
-        // We override this method because we don't want the PHP version to
-        // run during CSS processing because it is wasted processing time.
+        /*
+            We override this method because we don't want the PHP version to
+            run during CSS processing because it is wasted processing time.
+        */
 
     }//end processAdditional()
 
 
 }//end class
-
-?>

@@ -50,8 +50,8 @@ if ($result & 4) {
     if ($result | 4) {
     }
 }
-if ($result&4) {
-    if ($result |4) {
+if ($result&4 && $result  &  4) {
+    if ($result |4 || $result  |  4) {
     }
 }
 

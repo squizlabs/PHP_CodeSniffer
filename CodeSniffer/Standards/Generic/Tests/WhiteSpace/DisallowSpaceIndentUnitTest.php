@@ -50,14 +50,12 @@ class Generic_Tests_WhiteSpace_DisallowSpaceIndentUnitTest extends AbstractSniff
                     15 => 1,
                     18 => 1,
                     19 => 1,
-                    22 => 1,
                     24 => 1,
                    );
             break;
         case 'DisallowSpaceIndentUnitTest.js':
             return array(
                     3 => 1,
-                    6 => 1,
                    );
             break;
         case 'DisallowSpaceIndentUnitTest.css':

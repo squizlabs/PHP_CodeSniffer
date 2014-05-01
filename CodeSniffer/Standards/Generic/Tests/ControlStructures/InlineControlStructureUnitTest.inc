@@ -39,6 +39,16 @@ foreach ($array as $element) :
     echo 'hello';
 endforeach;
 
+while (!$this->readLine($tokens, $tag));
+while (!$this->readLine($tokens, $tag)); //skip to end of file
+
+foreach ($cookies as $cookie)
+    if ($cookie->match($uri, $matchSessionCookies, $now))
+        $ret[] = $cookie;
+
+foreach ($stringParade as $hit)
+    $hitParade[] = $hit + 0; //cast to integer
+
 if ($foo) :
     echo 'true';
 elseif ($something) :
@@ -46,5 +56,3 @@ elseif ($something) :
 else:
     echo 'false';
 endif;
-
-?>
