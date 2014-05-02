@@ -199,7 +199,7 @@ class PHP_CodeSniffer_CLI
                         echo "Returned: $retVal".PHP_EOL;
                         $exit = 3;
                     }
-                }
+                }//end if
 
                 unlink($diffFile);
             }//end if
