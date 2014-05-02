@@ -169,22 +169,39 @@ class PHP_CodeSniffer_CLI
                     $exit = 2;
                 }
             } else {
-                $cmd    = "patch -p0 -ui \"$diffFile\"";
-                $output = array();
-                $retVal = null;
-                exec($cmd, $output, $retVal);
-                unlink($diffFile);
-
-                if ($retVal === 0) {
-                    // Everything went well.
-                    $filesPatched = count($output);
-                    echo "Patched $filesPatched files\n";
-                    $exit = 1;
+                if (filesize($diffFile) < 10) {
+                    // Empty or bad diff file.
+                    if ($numErrors === 0) {
+                        // And no errors reported.
+                        $exit = 0;
+                    } else {
+                        // Errors we can't fix.
+                        $exit = 2;
+                    }
                 } else {
-                    print_r($output);
-                    echo "Returned: $retVal\n";
-                    $exit = 3;
+                    $cmd    = "patch -p0 -ui \"$diffFile\"";
+                    $output = array();
+                    $retVal = null;
+                    exec($cmd, $output, $retVal);
+
+                    if ($retVal === 0) {
+                        // Everything went well.
+                        $filesPatched = count($output);
+                        echo "Patched $filesPatched file";
+                        if ($filesPatched > 1) {
+                            echo 's';
+                        }
+
+                        echo PHP_EOL;
+                        $exit = 1;
+                    } else {
+                        print_r($output);
+                        echo "Returned: $retVal".PHP_EOL;
+                        $exit = 3;
+                    }
                 }
+
+                unlink($diffFile);
             }//end if
         } else {
             if ($numErrors === 0) {
@@ -195,6 +212,12 @@ class PHP_CodeSniffer_CLI
                 $exit = 2;
             }
         }//end if
+
+        if ($exit === 0) {
+            echo 'No fixable errors were found'.PHP_EOL;
+        } else if ($exit === 2) {
+            echo 'PHPCBF could not fix the errors found'.PHP_EOL;
+        }
 
         PHP_CodeSniffer_Reporting::printRunTime();
         exit($exit);

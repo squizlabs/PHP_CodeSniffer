@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - PHPCBF will now fix incorrect newline characters in a file
+  - PHPCBF now exists cleanly when there are no errors to fix
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
   - Fixed bug #20261 : phpcbf has an endless fixing loop
  </notes>
