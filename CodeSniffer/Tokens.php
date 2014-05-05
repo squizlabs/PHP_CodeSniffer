@@ -68,10 +68,6 @@ define('T_END_NOWDOC', 1049);
 define('T_OPEN_SHORT_ARRAY', 1050);
 define('T_CLOSE_SHORT_ARRAY', 1051);
 define('T_GOTO_LABEL', 1052);
-define('T_SELECT', 1053);
-define('T_FROM', 1054);
-define('T_WHERE', 1055);
-define('T_JOIN', 1056);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {

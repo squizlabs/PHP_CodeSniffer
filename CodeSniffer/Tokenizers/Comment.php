@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+require_once dirname(dirname(__FILE__)).'/Tokenizer.php';
 
 /**
  * Tokenizes doc block comments.
@@ -23,7 +24,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Tokenizers_Comment
+class PHP_CodeSniffer_Tokenizers_Comment extends PHP_CodeSniffer_Tokenizer
 {
 
 
