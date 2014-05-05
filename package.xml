@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHPCBF will now fix incorrect newline characters in a file
   - PHPCBF now exists cleanly when there are no errors to fix
+  - Added phpcbf.bat file for Windows
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
   - Fixed bug #20261 : phpcbf has an endless fixing loop
  </notes>
@@ -53,7 +54,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
      <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="" name="phpcbf.bat" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
+     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
     </file>
    </dir>
    <dir name="tests">
@@ -2186,9 +2191,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </os>
   </installconditions>
   <filelist>
-   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
+   <install as="phpcbf.bat" name="scripts/phpcbf.bat" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2201,8 +2207,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </phprelease>
  <phprelease>
   <filelist>
-   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2212,6 +2218,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="scripts/phpcs.bat" />
+   <ignore name="scripts/phpcbf.bat" />
   </filelist>
  </phprelease>
  <changelog>
