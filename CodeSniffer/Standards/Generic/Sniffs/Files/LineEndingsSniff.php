@@ -78,28 +78,61 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
 
         $phpcsFile->recordMetric($stackPtr, 'EOL char', $found);
 
-        if ($found !== $this->eolChar) {
-            // Check for single line files without an EOL. This is a very special
-            // case and the EOL char is set to \n when this happens.
-            if ($found === '\n') {
-                $tokens    = $phpcsFile->getTokens();
-                $lastToken = ($phpcsFile->numTokens - 1);
-                if ($tokens[$lastToken]['line'] === 1
-                    && $tokens[$lastToken]['content'] !== "\n"
-                ) {
-                    return;
-                }
+        if ($found === $this->eolChar) {
+            // Ignore the rest of the file.
+            return ($phpcsFile->numTokens + 1);
+        }
+
+        // Check for single line files without an EOL. This is a very special
+        // case and the EOL char is set to \n when this happens.
+        if ($found === '\n') {
+            $tokens    = $phpcsFile->getTokens();
+            $lastToken = ($phpcsFile->numTokens - 1);
+            if ($tokens[$lastToken]['line'] === 1
+                && $tokens[$lastToken]['content'] !== "\n"
+            ) {
+                return;
+            }
+        }
+
+        $error    = 'End of line character is invalid; expected "%s" but found "%s"';
+        $expected = $this->eolChar;
+        $expected = str_replace("\n", '\n', $expected);
+        $expected = str_replace("\r", '\r', $expected);
+        $data     = array(
+                     $expected,
+                     $found,
+                    );
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'InvalidEOLChar', $data);
+
+        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            $tokens = $phpcsFile->getTokens();
+            switch ($this->eolChar) {
+            case '\n':
+                $eolChar = "\n";
+                break;
+            case '\r':
+                $eolChar = "\r";
+                break;
+            case '\r\n':
+                $eolChar = "\r\n";
+                break;
+            default:
+                $eolChar = $this->eolChar;
+                break;
             }
 
-            $error    = 'End of line character is invalid; expected "%s" but found "%s"';
-            $expected = $this->eolChar;
-            $expected = str_replace("\n", '\n', $expected);
-            $expected = str_replace("\r", '\r', $expected);
-            $data     = array(
-                         $expected,
-                         $found,
-                        );
-            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar', $data);
+            for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
+                if (isset($tokens[($i + 1)]) === false
+                    || $tokens[($i + 1)]['line'] > $tokens[$i]['line']
+                ) {
+                    // Token is the last on a line.
+                    $newContent  = rtrim($tokens[$i]['content'], "\r\n");
+                    $newContent .= $eolChar;
+                    $phpcsFile->fixer->replaceToken($i, $newContent);
+                }
+            }
         }//end if
 
         // Ignore the rest of the file.

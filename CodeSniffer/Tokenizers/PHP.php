@@ -311,9 +311,11 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                 if ($tokenIsArray === true) {
                     $type = token_name($token[0]);
                     if ($isWin === true) {
-                        $content = str_replace($eolChar, '\n', $token[1]);
+                        $content = str_replace("\n", '\n', $token[1]);
+                        $content = str_replace("\r", '\r', $content);
                     } else {
-                        $content = str_replace($eolChar, "\033[30;1m\\n\033[0m", $token[1]);
+                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $token[1]);
+                        $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
                     }
                 } else {
                     $newToken = self::resolveSimpleToken($token[0]);
@@ -325,7 +327,42 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                     $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                 }
 
-                echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
+                echo "\tProcess token $stackPtr: $type => $content";
+            }//end if
+
+            /*
+                If we are using \r\n newline characters, the \r and \n are sometimes
+                split over two tokens. This normally occurs after comments. We need
+                to merge these two characters together so that our line endings are
+                consistent for all lines.
+            */
+
+            if ($tokenIsArray === true && substr($token[1], -1) === "\r") {
+                if (isset($tokens[($stackPtr + 1)]) === true
+                    && is_array($tokens[($stackPtr + 1)]) === true
+                    && $tokens[($stackPtr + 1)][1][0] === "\n"
+                ) {
+                    $token[1] .= "\n";
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if ($isWin === true) {
+                            echo '\n';
+                        } else {
+                            echo "\033[30;1m\\n\033[0m";
+                        }
+                    }
+
+                    if ($tokens[($stackPtr + 1)][1] === "\n") {
+                        // This token's content has been merged into the previous,
+                        // so we can skip it.
+                        $tokens[($stackPtr + 1)] = '';
+                    } else {
+                        $tokens[($stackPtr + 1)][1] = substr($tokens[($stackPtr + 1)][1], 1);
+                    }
+                }
+            }//end if
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo PHP_EOL;
             }
 
             /*

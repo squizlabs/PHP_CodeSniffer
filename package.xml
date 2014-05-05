@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-05-01</date>
  <time>13:17:00</time>
  <version>
-  <release>2.0.0a2</release>
-  <api>2.0.0a2</api>
+  <release>2.0.0a3</release>
+  <api>2.0.0a3</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -26,51 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added report type --report=info to show information about the checked code to make building a standard easier
-    -- Checks a number of things, such as what line length you use, and spacing are brackets, but not everything
-    -- Still highly experimental
-  - Generic LineLengthSniff now shows warnings for long lines referring to licence and VCS information
-    -- It previously ignored these lines, but at the expense of performance
-  - Generic DisallowTabIndent and DisallowSpaceIndent sniffs no longer error when detecting mixed indent types
-    -- Only the first type of indent found on a line (space or indent) is considered
-  - Lots of little performance improvements that can add up to a substantial saving over large code bases
-    -- Added a "length" array index to tokens so you don't need to call strlen() of them, or deal with encoding
-    -- Can now use isset() to find tokens inside the PHP_CodeSniffer_Tokens static vars instead of in_array()
-  - Custom reports can now specify a $recordErrors member var; this previously only worked for built-in reports
-    -- When set to FALSE, error messages will not be recorded and only totals will be returned
-    -- This can save significant memory while processing a large code base
-  - Removed dependence on PHP_Timer
-  - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
-  - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
-  - Squiz EchoedStringsSniff now supports statments without a semicolon, such as PHP embedded in HTML
-  - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
-  - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
-  - PSR1 CamelCapsMethodNameSniff now ignores magic methods
-    -- Thanks to Eser Ozvataf for the patch
-  - PSR1 SideEffectsSniff now ignores methods named define()
-  - PSR1 and PEAR ClassDeclarationSniffs now support traits (request #20208)
-  - PSR2 ControlStructureSpacingSniff now allows newlines before/after parentheses
-    -- Thanks to Maurus Cuelenaere for the patch
-  - PSR2 ControlStructureSpacingSniff now checks TRY and CATCH statements
-  - Squiz SuperfluousWhitespaceSniff now detects whitespace at the end of block comment lines
-    -- Thanks to Klaus Purer for the patch
-  - Squiz LowercasePHPFunctionsSniff no longer reports errors for namespaced functions
-    -- Thanks to Max Galbusera for the patch
-  - Squiz SwitchDeclarationSniff now allows exit() as a breaking statement for case/default
-  - Squiz ValidVariableNameSniff and Zend ValidVariableNameSniff now ignore additional PHP reserved vars
-    -- Thanks to Mikuláš Dítě and Adrian Crepaz for the patch
-  - Sniff code Squiz.WhiteSpace.MemberVarSpacing.After changed to Squiz.WhiteSpace.MemberVarSpacing.Incorrect (request #20241)
-  - Fixed bug #20200 : Invalid JSON produced with specific error message
-  - Fixed bug #20204 : Ruleset exclude checks are case sensitive
-  - Fixed bug #20213 : Invalid error, Inline IF must be declared on single line
-  - Fixed bug #20225 : array_merge() that takes more than one line generates error
-  - Fixed bug #20230 : Squiz ControlStructureSpacing sniff assumes specific condition formatting
-  - Fixed bug #20234 : phpcbf patch command absolute paths
-  - Fixed bug #20240 : Squiz block comment sniff fails when newline present
-  - Fixed bug #20247 : The Squiz.WhiteSpace.ControlStructureSpacing sniff and do-while
-    -- Thanks to Alexander Obuhovich for the patch
-  - Fixed bug #20248 : The Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff sniff and empty scope
-  - Fixed bug #20252 : Unitialized string offset when package name starts with underscore
+  - PHPCBF will now fix incorrect newline characters in a file
+  - PHPCBF now exists cleanly when there are no errors to fix
+  - Added phpcbf.bat file for Windows
+  - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
+  - Fixed bug #20261 : phpcbf has an endless fixing loop
  </notes>
  <contents>
   <dir name="/">
@@ -94,7 +54,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
      <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
+    </file>
+    <file baseinstalldir="" name="phpcbf.bat" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
+     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
     </file>
    </dir>
    <dir name="tests">
@@ -2227,9 +2191,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </os>
   </installconditions>
   <filelist>
-   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
+   <install as="phpcbf.bat" name="scripts/phpcbf.bat" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2242,8 +2207,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </phprelease>
  <phprelease>
   <filelist>
-   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs" name="scripts/phpcs" />
+   <install as="phpcbf" name="scripts/phpcbf" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2253,6 +2218,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="scripts/phpcs.bat" />
+   <ignore name="scripts/phpcbf.bat" />
   </filelist>
  </phprelease>
  <changelog>
