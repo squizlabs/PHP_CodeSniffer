@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF will now fix incorrect newline characters in a file
   - PHPCBF now exists cleanly when there are no errors to fix
   - Added phpcbf.bat file for Windows
+  - Diff report now produces relative paths on Windows, where possible (further fix for bug #20234)
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
   - Fixed bug #20261 : phpcbf has an endless fixing loop
  </notes>
