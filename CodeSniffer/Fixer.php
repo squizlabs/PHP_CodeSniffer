@@ -192,7 +192,7 @@ class PHP_CodeSniffer_Fixer
      */
     public function generateDiff()
     {
-        $cwd       = getcwd().'/';
+        $cwd       = getcwd().DIRECTORY_SEPARATOR;
         $filename  = str_replace($cwd, '', $this->_currentFile->getFilename());
         $fixedFile = $cwd.'phpcs-fixed.tmp';
         $contents  = $this->getContents();
