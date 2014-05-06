@@ -16,6 +16,7 @@
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
+require_once 'Tokenizers/PHPTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -66,6 +67,7 @@ class PHP_CodeSniffer_Core_AllTests
         $suite->addTestSuite('Core_IsCamelCapsTest');
         $suite->addTestSuite('Core_ErrorSuppressionTest');
         $suite->addTestSuite('Core_File_GetMethodParametersTest');
+        $suite->addTestSuite('Core_Tokenizers_PHP');
         return $suite;
 
     }//end suite()

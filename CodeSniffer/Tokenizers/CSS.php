@@ -11,7 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
+require_once dirname(dirname(__FILE__)).'/Tokenizer.php';
 if (class_exists('PHP_CodeSniffer_Tokenizers_PHP', true) === false) {
     throw new Exception('Class PHP_CodeSniffer_Tokenizers_PHP not found');
 }
@@ -41,9 +41,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      *
      * @return array
      */
-    public function tokenizeString($string, $eolChar='\n')
+    protected function tokenize($string, $eolChar='\n')
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if ($this->getVerbose() > 1) {
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
             $isWin = false;
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -59,8 +59,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $eolAdded = true;
         }
 
-        $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
-
+        $tokens         = parent::tokenize('<?php '.$string.'?'.'>', $eolChar);
         $finalTokens    = array();
         $finalTokens[0] = array(
                            'code'    => T_OPEN_TAG,
@@ -82,7 +81,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $token['code'] = T_STRING;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if ($this->getVerbose() > 1) {
                 $type = $token['type'];
                 if ($isWin === true) {
                     $content = str_replace($eolChar, '\n', $token['content']);
@@ -114,10 +113,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // have to add another closing tag here. If it is the last closing
                     // tag, this additional one would have been added during the
                     // original tokenize call.
-                    $content .= ' ?>';
+                    $content .= ' ?'.'>';
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if ($this->getVerbose() > 1) {
                     echo "\t\t=> Found premature closing tag at $stackPtr".PHP_EOL;
                     if ($isWin === true) {
                         $cleanContent = str_replace($eolChar, '\n', $content);
@@ -131,7 +130,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 // Tokenize the string and remove the extra PHP tags we don't need.
-                $moreTokens = parent::tokenizeString($content, $eolChar);
+                $moreTokens = parent::tokenize($content, $eolChar);
                 array_shift($moreTokens);
                 array_pop($moreTokens);
                 $lastSpace = array_pop($moreTokens);
@@ -146,7 +145,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 // Rebuild the tokens array.
                 array_splice($tokens, ($stackPtr + 1), ($x - $stackPtr), $moreTokens);
                 $numTokens = count($tokens);
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if ($this->getVerbose() > 1) {
                     $count = count($moreTokens);
                     $diff  = ($x - $stackPtr);
                     echo "\t\t* added $count tokens, replaced $diff; size changed from $oldNumTokens to $numTokens *".PHP_EOL;
@@ -198,7 +197,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             ) {
                 $content       = ltrim($token['content'], '#/');
                 $commentTokens
-                    = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
+                    = parent::tokenize('<?php '.$content.'?'.'>', $eolChar);
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
@@ -418,13 +417,13 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if ($this->getVerbose() > 1) {
             echo "\t*** END CSS TOKENIZING ***".PHP_EOL;
         }
 
         return $finalTokens;
 
-    }//end tokenizeString()
+    }//end tokenize()
 
 
     /**
@@ -435,7 +434,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      *
      * @return void
      */
-    public function processAdditional(&$tokens, $eolChar)
+    protected function processAdditional(&$tokens, $eolChar)
     {
         /*
             We override this method because we don't want the PHP version to

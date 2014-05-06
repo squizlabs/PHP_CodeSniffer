@@ -1687,6 +1687,35 @@ class PHP_CodeSniffer
 
 
     /**
+     * Takes a token produced from <code>token_get_all()</code> and produces a
+     * more uniform token.
+     *
+     * Note that this method also resolves T_STRING tokens into more discrete
+     * types, therefore there is no need to call resolveTstringToken()
+     *
+     * @param string|array $token The token to convert.
+     *
+     * @return array The new token.
+     */
+    public static function standardiseToken($token)
+    {
+        $newToken = array();
+        if (class_exists('PHP_CodeSniffer_Tokenizers_PHP') === true) {
+            $tokenizer = new PHP_CodeSniffer_Tokenizers_PHP();
+            $tokenizer->setVerbose(PHP_CODESNIFFER_VERBOSITY);
+            $tokenizer->setTabWidth(PHP_CODESNIFFER_TAB_WIDTH);
+            if (defined('PHP_CODESNIFFER_ENCODING') === true) {
+                $tokenizer->setEncoding(PHP_CODESNIFFER_ENCODING);
+            }
+
+            $newToken = $tokenizer->standardiseToken($token);
+        }//end if
+
+        return $newToken;
+
+    }//end standardiseToken()
+
+    /**
      * Returns true if the specified string is in the camel caps format.
      *
      * @param string  $string      The string the verify.
