@@ -343,7 +343,7 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                     && $tokens[($stackPtr + 1)][1][0] === "\n"
                 ) {
                     $token[1] .= "\n";
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if ($this->getVerbose() > 1) {
                         if ($isWin === true) {
                             echo '\n';
                         } else {
@@ -361,7 +361,7 @@ class PHP_CodeSniffer_Tokenizers_PHP extends PHP_CodeSniffer_Tokenizer
                 }
             }//end if
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if ($this->getVerbose() > 1) {
                 echo PHP_EOL;
             }
 
