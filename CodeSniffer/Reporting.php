@@ -240,7 +240,7 @@ class PHP_CodeSniffer_Reporting
             }
 
             $toScreen = true;
-        }
+        }//end if
 
         $reportClass->generate(
             $reportCache,
