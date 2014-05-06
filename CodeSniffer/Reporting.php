@@ -71,6 +71,13 @@ class PHP_CodeSniffer_Reporting
      */
     private $_reports = array();
 
+    /**
+     * A cache of opened tmp files.
+     *
+     * @var array
+     */
+    private $_tmpFiles = array();
+
 
     /**
      * Produce the appropriate report object based on $type parameter.
@@ -135,19 +142,26 @@ class PHP_CodeSniffer_Reporting
             $generatedReport = ob_get_contents();
             ob_end_clean();
 
-            if ($generatedReport !== '') {
+            if ($generatedReport === '') {
+                continue;
+            }
+
+            if ($output === null && $cliValues['reportFile'] !== null) {
+                $output = $cliValues['reportFile'];
+            }
+
+            if ($output === null) {
+                // Using a temp file.
+                if (isset($this->_tmpFiles[$report]) === false) {
+                    $this->_tmpFiles[$report] = tmpfile();
+                }
+
+                fwrite($this->_tmpFiles[$report], $generatedReport);
+            } else {
                 $flags = FILE_APPEND;
                 if (in_array($report, $this->_cachedReports) === false) {
                     $this->_cachedReports[] = $report;
                     $flags = null;
-                }
-
-                if ($output === null) {
-                    if ($cliValues['reportFile'] !== null) {
-                        $output = $cliValues['reportFile'];
-                    } else {
-                        $output = sys_get_temp_dir().'/phpcs-'.$report.'.tmp';
-                    }
                 }
 
                 file_put_contents($output, $generatedReport, $flags);
@@ -185,15 +199,24 @@ class PHP_CodeSniffer_Reporting
             $filename = $reportFile;
             $toScreen = false;
             ob_start();
-        } else {
-            $filename = sys_get_temp_dir().'/phpcs-'.$report.'.tmp';
-            $toScreen = true;
-        }
 
-        if (file_exists($filename) === true) {
-            $reportCache = file_get_contents($filename);
+            if (file_exists($filename) === true) {
+                $reportCache = file_get_contents($filename);
+            } else {
+                $reportCache = '';
+            }
         } else {
-            $reportCache = '';
+            if (isset($this->_tmpFiles[$report]) === true) {
+                $data        = stream_get_meta_data($this->_tmpFiles[$report]);
+                $filename    = $data['uri'];
+                $reportCache = file_get_contents($filename);
+                fclose($this->_tmpFiles[$report]);
+            } else {
+                $reportCache = '';
+                $filename    = null;
+            }
+
+            $toScreen = true;
         }
 
         $reportClass->generate(
@@ -216,7 +239,7 @@ class PHP_CodeSniffer_Reporting
 
             $generatedReport = trim($generatedReport);
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
-        } else if (file_exists($filename) === true) {
+        } else if ($filename !== null && file_exists($filename) === true) {
             unlink($filename);
         }
 
