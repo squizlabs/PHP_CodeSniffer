@@ -181,7 +181,8 @@ function generateReport($results, $repo=null)
     $html = '';
     $js   = 'var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
     $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
-    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"none",scaleLabel:"<%=value%>%",scaleFontSize:10,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var perfectTrendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};'.PHP_EOL;
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
@@ -399,25 +400,27 @@ function generateReport($results, $repo=null)
                 }
             }//end foreach
 
+/*
             if ($date !== $GLOBALS['today']) {
                 $trendData .= $percent.',';
                 if ((int) $percent !== 100) {
                     $perfectScore = false;
                 }
             }
+*/
 
             $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
             $valueNum++;
         }//end foreach
 
-        if ($perfectScore === true) {
-            // Add fake data so the perfect score line shows up.
-            $trendData .= '{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[';
-            $trendData .= str_repeat('0,', count($data['trends']));
-            $trendData  = rtrim($trendData, ',');
-            $trendData .= ']},';
-        }
+        #if ($perfectScore === true) {
+        #    // Add fake data so the perfect score line shows up.
+        #    $trendData .= '{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[';
+        #    $trendData .= str_repeat('0,', count($data['trends']));
+        #    $trendData  = rtrim($trendData, ',');
+        #    $trendData .= ']},';
+        #}
 
         $valsData  = substr($valsData, 0, -1);
         $valsData .= ']'.PHP_EOL;
@@ -437,12 +440,12 @@ function generateReport($results, $repo=null)
 
         $js      .= 'var data = {labels:[';
         $numDates = count($data['trends']);
-        $dateStep = ceil($numDates / 20);
+        $dateStep = ceil($numDates / 40);
         $dateNum  = 0;
         foreach (array_keys($data['trends']) as $date) {
             if ($dateNum === 0 || $dateNum % $dateStep === 0) {
                 $time = strtotime($date);
-                $js  .= '"'.date('d-M', $time).'",';
+                $js  .= '"'.date('d M', $time).'",';
             } else {
                 $js .= '"",';
             }
@@ -451,16 +454,20 @@ function generateReport($results, $repo=null)
             continue;
         }
 
-        if (strtotime($GLOBALS['today']) === $time) {
+        #if (strtotime($GLOBALS['today']) === $time) {
             $js = rtrim($js, ',');
-        } else {
-            $js .= '"'.date('d-M', strtotime($GLOBALS['today'])).'"';
-        }
+        #} else {
+        #    $js .= '"'.date('d M', strtotime($GLOBALS['today'])).'"';
+        #}
 
         $trendData = rtrim($trendData, ',');
         $js       .= "],datasets:[$trendData]};".PHP_EOL;
         $js       .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
-        $js       .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+        if ($perfectScore === true) {
+            $js .= 'new Chart(c).Line(data,perfectTrendOptions);'.PHP_EOL;
+        } else {
+            $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+        }
 
         if ($other > 0) {
             $percent = round($other / $data['total'] * 100, 2);
@@ -486,7 +493,7 @@ function generateReport($results, $repo=null)
         $html .= '  <div class="historicalData">'.PHP_EOL;
         $html .= '    <div class="tag">Historical</div>'.PHP_EOL;
         $html .= '    <div class="historicalChart">'.PHP_EOL;
-        $html .= '      <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="145"></canvas>'.PHP_EOL;
+        $html .= '      <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="185"></canvas>'.PHP_EOL;
         $html .= '    </div>'.PHP_EOL;
         $html .= '  </div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;

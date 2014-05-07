@@ -129,14 +129,15 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         $toScreen=true
     ) {
         foreach ($this->_metricCache['metrics'] as $metric => $data) {
-            asort($this->_metricCache['metrics'][$metric]['values']);
-            $this->_metricCache['metrics'][$metric]['values'] = array_reverse($this->_metricCache['metrics'][$metric]['values'], true);
+            ksort($this->_metricCache['metrics'][$metric]['values']);
 
             $this->_metricCache['metrics'][$metric]['percentages'] = array();
             foreach ($this->_metricCache['metrics'][$metric]['values'] as $value => $count) {
                 $percent = round(($count / $this->_metricCache['metrics'][$metric]['total'] * 100), 2);
                 $this->_metricCache['metrics'][$metric]['percentages'][$value] = $percent;
             }
+
+            ksort($this->_metricCache['metrics'][$metric]['percentages']);
         }//end foreach
 
         $output = array();

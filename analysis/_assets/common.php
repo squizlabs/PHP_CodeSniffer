@@ -88,7 +88,9 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $checkDir          = $cloneDir.'/'.$repo->path;
         $infoReportPath    = __DIR__.'/PHPCSInfoReport.php';
         $summaryReportPath = __DIR__.'/PHPCSSummaryReport.php';
-        $cmd  = 'phpcs -d memory_limit=256M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml';
+        //$cmd  = 'phpcs';
+        $cmd  = 'hhvm /Users/gsherwood/Sites/Projects/PHP_CodeSniffer/scripts/phpcs';
+        $cmd .= ' -d memory_limit=512M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd .= ' --runtime-set project '.$repo->url;
@@ -128,6 +130,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
             }
 
             foreach ($data['trends'] as $date => $values) {
+                ksort($values);
                 $newTotals['metrics'][$metric]['trends'][$date] = $values;
             }
 
