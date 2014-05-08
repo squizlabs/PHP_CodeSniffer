@@ -91,18 +91,18 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":4777,
+      "total":4788,
       "values":{
         "121-150":8,
         "151 or more":1,
-        "80 or less":4698,
-        "81-120":70
+        "80 or less":4708,
+        "81-120":71
       },
       "percentages":{
         "121-150":0.17,
         "151 or more":0.02,
-        "80 or less":98.35,
-        "81-120":1.47
+        "80 or less":98.33,
+        "81-120":1.48
       },
       "trends":{
         "2013-11-06":{
@@ -443,9 +443,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":3079,
+      "total":3090,
       "values":{
-        "spaces":3079
+        "spaces":3090
       },
       "percentages":{
         "spaces":100
@@ -998,9 +998,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":1938,
+      "total":1946,
       "values":{
-        "lower":1938
+        "lower":1946
       },
       "percentages":{
         "lower":100
@@ -1088,9 +1088,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":1203,
+      "total":1209,
       "values":{
-        "no":1203
+        "no":1209
       },
       "percentages":{
         "no":100
@@ -1928,9 +1928,9 @@
       "winner":"yes"
     },
     "PHP constant case":{
-      "total":271,
+      "total":272,
       "values":{
-        "lower":271
+        "lower":272
       },
       "percentages":{
         "lower":100
@@ -2198,14 +2198,14 @@
       "winner":0
     },
     "Control structure defined inline":{
-      "total":232,
+      "total":234,
       "values":{
-        "no":220,
-        "yes":12
+        "no":223,
+        "yes":11
       },
       "percentages":{
-        "no":94.83,
-        "yes":5.17
+        "no":95.3,
+        "yes":4.7
       },
       "trends":{
         "2013-11-06":{
@@ -2316,14 +2316,14 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":236,
+      "total":238,
       "values":{
-        "0":149,
-        "1":87
+        "0":150,
+        "1":88
       },
       "percentages":{
-        "0":63.14,
-        "1":36.86
+        "0":63.03,
+        "1":36.97
       },
       "trends":{
         "2013-11-06":{
@@ -2434,9 +2434,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":236,
+      "total":238,
       "values":{
-        "0":235,
+        "0":237,
         "1":1
       },
       "percentages":{
@@ -2528,9 +2528,9 @@
       "winner":0
     },
     "Space after operator":{
-      "total":696,
+      "total":700,
       "values":{
-        "1":695,
+        "1":699,
         "2":1
       },
       "percentages":{
@@ -2634,14 +2634,14 @@
       "winner":1
     },
     "Adjacent assignments aligned":{
-      "total":327,
+      "total":329,
       "values":{
-        "no":74,
-        "yes":253
+        "no":75,
+        "yes":254
       },
       "percentages":{
-        "no":22.63,
-        "yes":77.37
+        "no":22.8,
+        "yes":77.2
       },
       "trends":{
         "2013-11-06":{
@@ -3074,9 +3074,9 @@
       "winner":1
     },
     "Space before operator":{
-      "total":113,
+      "total":114,
       "values":{
-        "1":113
+        "1":114
       },
       "percentages":{
         "1":100
@@ -3543,6 +3543,6 @@
   },
   "project":{
     "path":"thephpleague\/flysystem",
-    "commitid":"ecb6e267d1773cbce4d949de689f35b601352e50"
+    "commitid":"558201705e7643ad399e2a31334d68ba2fb2ebb3"
   }
 }

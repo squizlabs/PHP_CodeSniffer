@@ -4035,9 +4035,9 @@
       "winner":"upper"
     },
     "Spacing after cast statement":{
-      "total":67,
+      "total":68,
       "values":{
-        "1":67
+        "1":68
       },
       "percentages":{
         "1":100
@@ -4397,6 +4397,6 @@
   },
   "project":{
     "path":"swiftmailer\/swiftmailer",
-    "commitid":"19a15a44b21d13f6c19beefc8e4b6c849558ec50"
+    "commitid":"8443b5ca82b360a62c0c8ba04598e476076bbe2d"
   }
 }

@@ -91,11 +91,11 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":261537,
+      "total":261541,
       "values":{
         "121-150":497,
         "151 or more":200,
-        "80 or less":242024,
+        "80 or less":242028,
         "81-120":18816
       },
       "percentages":{
@@ -473,9 +473,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":155756,
+      "total":155760,
       "values":{
-        "spaces":155756
+        "spaces":155760
       },
       "percentages":{
         "spaces":100
@@ -1052,9 +1052,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":90107,
+      "total":90109,
       "values":{
-        "lower":90098,
+        "lower":90100,
         "mixed":4,
         "upper":5
       },
@@ -1198,9 +1198,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":55520,
+      "total":55521,
       "values":{
-        "no":55504,
+        "no":55505,
         "yes":16
       },
       "percentages":{
@@ -2502,11 +2502,11 @@
       "winner":"yes"
     },
     "Space after operator":{
-      "total":43561,
+      "total":43562,
       "values":{
         "newline":19,
         "0":143,
-        "1":43356,
+        "1":43357,
         "2":43
       },
       "percentages":{
@@ -2794,9 +2794,9 @@
       "winner":"lower"
     },
     "Control structure defined inline":{
-      "total":15139,
+      "total":15141,
       "values":{
-        "no":15116,
+        "no":15118,
         "yes":23
       },
       "percentages":{
@@ -2912,9 +2912,9 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":14804,
+      "total":14805,
       "values":{
-        "0":14779,
+        "0":14780,
         "newline":18,
         "1":3,
         "3":4
@@ -3086,9 +3086,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":14804,
+      "total":14805,
       "values":{
-        "0":14801,
+        "0":14802,
         "1":3
       },
       "percentages":{
@@ -3204,11 +3204,11 @@
       "winner":0
     },
     "Space before operator":{
-      "total":9349,
+      "total":9350,
       "values":{
         "newline":149,
         "0":166,
-        "1":8961,
+        "1":8962,
         "2":15,
         "3":11,
         "4":11,
@@ -4958,6 +4958,6 @@
   },
   "project":{
     "path":"zendframework\/zf2",
-    "commitid":"afff582ce9b7da9e03fe1e90222fa1958fa82a9b"
+    "commitid":"369afb56483801245f66463958197f6493c2128a"
   }
 }

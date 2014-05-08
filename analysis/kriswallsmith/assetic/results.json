@@ -91,18 +91,18 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":7822,
+      "total":7828,
       "values":{
         "121-150":20,
         "151 or more":10,
-        "80 or less":7528,
-        "81-120":264
+        "80 or less":7532,
+        "81-120":266
       },
       "percentages":{
         "121-150":0.26,
         "151 or more":0.13,
-        "80 or less":96.24,
-        "81-120":3.38
+        "80 or less":96.22,
+        "81-120":3.4
       },
       "trends":{
         "2013-11-06":{
@@ -473,9 +473,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":4927,
+      "total":4932,
       "values":{
-        "spaces":4927
+        "spaces":4932
       },
       "percentages":{
         "spaces":100
@@ -1131,9 +1131,9 @@
       "winner":"\/\/ ..."
     },
     "PHP keyword case":{
-      "total":3339,
+      "total":3342,
       "values":{
-        "lower":3339
+        "lower":3342
       },
       "percentages":{
         "lower":100
@@ -1221,9 +1221,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":2154,
+      "total":2158,
       "values":{
-        "no":2152,
+        "no":2156,
         "yes":2
       },
       "percentages":{
@@ -2081,14 +2081,14 @@
       "winner":"no"
     },
     "Spacing before object operator":{
-      "total":1658,
+      "total":1663,
       "values":{
-        "0":1628,
+        "0":1633,
         "newline":30
       },
       "percentages":{
-        "0":98.19,
-        "newline":1.81
+        "0":98.2,
+        "newline":1.8
       },
       "trends":{
         "2013-11-06":{
@@ -2199,9 +2199,9 @@
       "winner":0
     },
     "Spacing after object operator":{
-      "total":1658,
+      "total":1663,
       "values":{
-        "0":1658
+        "0":1663
       },
       "percentages":{
         "0":100
@@ -2291,12 +2291,12 @@
     "Adjacent assignments aligned":{
       "total":697,
       "values":{
-        "no":91,
-        "yes":606
+        "no":92,
+        "yes":605
       },
       "percentages":{
-        "no":13.06,
-        "yes":86.94
+        "no":13.2,
+        "yes":86.8
       },
       "trends":{
         "2013-11-06":{
@@ -2407,10 +2407,10 @@
       "winner":"yes"
     },
     "Space after operator":{
-      "total":1266,
+      "total":1267,
       "values":{
         "0":1,
-        "1":1265
+        "1":1266
       },
       "percentages":{
         "0":0.08,
@@ -2643,9 +2643,9 @@
       "winner":"yes"
     },
     "PHP constant case":{
-      "total":262,
+      "total":263,
       "values":{
-        "lower":261,
+        "lower":262,
         "upper":1
       },
       "percentages":{
@@ -2761,9 +2761,9 @@
       "winner":"lower"
     },
     "Control structure defined inline":{
-      "total":489,
+      "total":490,
       "values":{
-        "no":489
+        "no":490
       },
       "percentages":{
         "no":100
@@ -2851,9 +2851,9 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":486,
+      "total":487,
       "values":{
-        "0":485,
+        "0":486,
         "newline":1
       },
       "percentages":{
@@ -2988,9 +2988,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":486,
+      "total":487,
       "values":{
-        "0":486
+        "0":487
       },
       "percentages":{
         "0":100
@@ -4182,6 +4182,6 @@
   },
   "project":{
     "path":"kriswallsmith\/assetic",
-    "commitid":"f2a5214034928d4c6849bc94cfd462ea832a50a8"
+    "commitid":"964340e69361802eddf51e8eaa85acbd1c621edf"
   }
 }

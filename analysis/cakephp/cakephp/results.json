@@ -91,12 +91,12 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":79561,
+      "total":79588,
       "values":{
         "121-150":409,
         "151 or more":67,
-        "80 or less":73929,
-        "81-120":5156
+        "80 or less":73954,
+        "81-120":5158
       },
       "percentages":{
         "121-150":0.51,
@@ -917,9 +917,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":27608,
+      "total":27613,
       "values":{
-        "lower":27608
+        "lower":27613
       },
       "percentages":{
         "lower":100
@@ -1007,9 +1007,9 @@
       "winner":"lower"
     },
     "Line indent":{
-      "total":43568,
+      "total":43575,
       "values":{
-        "tabs":43568
+        "tabs":43575
       },
       "percentages":{
         "tabs":100
@@ -1221,10 +1221,10 @@
       "winner":1
     },
     "Adjacent assignments aligned":{
-      "total":8662,
+      "total":8664,
       "values":{
         "no":1569,
-        "yes":7093
+        "yes":7095
       },
       "percentages":{
         "no":18.11,
@@ -1339,10 +1339,10 @@
       "winner":"yes"
     },
     "Space after operator":{
-      "total":20666,
+      "total":20668,
       "values":{
         "newline":7,
-        "1":20659
+        "1":20661
       },
       "percentages":{
         "newline":0.03,
@@ -1457,9 +1457,9 @@
       "winner":1
     },
     "Array keyword case":{
-      "total":3586,
+      "total":3587,
       "values":{
-        "lower":3586
+        "lower":3587
       },
       "percentages":{
         "lower":100
@@ -1547,9 +1547,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":18589,
+      "total":18592,
       "values":{
-        "no":18589
+        "no":18592
       },
       "percentages":{
         "no":100
@@ -1637,9 +1637,9 @@
       "winner":"no"
     },
     "PHP constant case":{
-      "total":4677,
+      "total":4676,
       "values":{
-        "lower":4677
+        "lower":4676
       },
       "percentages":{
         "lower":100
@@ -1963,9 +1963,9 @@
       "winner":"no"
     },
     "Control structure defined inline":{
-      "total":7515,
+      "total":7516,
       "values":{
-        "no":7515
+        "no":7516
       },
       "percentages":{
         "no":100
@@ -2053,9 +2053,9 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":7345,
+      "total":7346,
       "values":{
-        "0":7313,
+        "0":7314,
         "newline":32
       },
       "percentages":{
@@ -2190,9 +2190,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":7345,
+      "total":7346,
       "values":{
-        "0":7345
+        "0":7346
       },
       "percentages":{
         "0":100
@@ -2398,9 +2398,9 @@
       "winner":1
     },
     "Spacing before string concat":{
-      "total":3122,
+      "total":3124,
       "values":{
-        "1":3122
+        "1":3124
       },
       "percentages":{
         "1":100
@@ -2488,10 +2488,10 @@
       "winner":1
     },
     "Spacing after string concat":{
-      "total":3122,
+      "total":3124,
       "values":{
         "newline":54,
-        "1":3068
+        "1":3070
       },
       "percentages":{
         "newline":1.73,
@@ -3202,9 +3202,9 @@
       "winner":"yes"
     },
     "Function opening brace placement":{
-      "total":2455,
+      "total":2456,
       "values":{
-        "same line":2455
+        "same line":2456
       },
       "percentages":{
         "same line":100
@@ -3292,10 +3292,10 @@
       "winner":"same line"
     },
     "CamelCase method name":{
-      "total":2337,
+      "total":2338,
       "values":{
         "no":525,
-        "yes":1812
+        "yes":1813
       },
       "percentages":{
         "no":22.46,
@@ -3410,10 +3410,10 @@
       "winner":"yes"
     },
     "Function has doc comment":{
-      "total":2495,
+      "total":2496,
       "values":{
         "no":13,
-        "yes":2482
+        "yes":2483
       },
       "percentages":{
         "no":0.52,
@@ -3528,9 +3528,9 @@
       "winner":"yes"
     },
     "Spacing before object operator":{
-      "total":11137,
+      "total":11139,
       "values":{
-        "0":11106,
+        "0":11108,
         "newline":31
       },
       "percentages":{
@@ -3646,9 +3646,9 @@
       "winner":0
     },
     "Spacing after object operator":{
-      "total":11137,
+      "total":11139,
       "values":{
-        "0":11137
+        "0":11139
       },
       "percentages":{
         "0":100
@@ -4216,6 +4216,6 @@
   },
   "project":{
     "path":"cakephp\/cakephp",
-    "commitid":"279a86f3138c0a5fc3fed42de4e22c4bda950700"
+    "commitid":"751d2d8f2d34b2b700330ee43c841939c026d23f"
   }
 }

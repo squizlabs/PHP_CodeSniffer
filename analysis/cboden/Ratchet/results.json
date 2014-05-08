@@ -91,18 +91,18 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":3353,
+      "total":3347,
       "values":{
-        "121-150":28,
-        "151 or more":7,
-        "80 or less":3125,
+        "121-150":26,
+        "151 or more":8,
+        "80 or less":3120,
         "81-120":193
       },
       "percentages":{
-        "121-150":0.84,
-        "151 or more":0.21,
-        "80 or less":93.2,
-        "81-120":5.76
+        "121-150":0.78,
+        "151 or more":0.24,
+        "80 or less":93.22,
+        "81-120":5.77
       },
       "trends":{
         "2013-11-06":{
@@ -445,9 +445,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":2038,
+      "total":2032,
       "values":{
-        "spaces":2038
+        "spaces":2032
       },
       "percentages":{
         "spaces":100
@@ -1033,9 +1033,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":1529,
+      "total":1528,
       "values":{
-        "lower":1529
+        "lower":1528
       },
       "percentages":{
         "lower":100
@@ -1123,9 +1123,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":970,
+      "total":967,
       "values":{
-        "no":970
+        "no":967
       },
       "percentages":{
         "no":100
@@ -2136,14 +2136,14 @@
       "winner":0
     },
     "Adjacent assignments aligned":{
-      "total":245,
+      "total":243,
       "values":{
         "no":15,
-        "yes":230
+        "yes":228
       },
       "percentages":{
-        "no":6.12,
-        "yes":93.88
+        "no":6.17,
+        "yes":93.83
       },
       "trends":{
         "2013-11-06":{
@@ -2254,14 +2254,14 @@
       "winner":"yes"
     },
     "Space after operator":{
-      "total":525,
+      "total":522,
       "values":{
-        "1":520,
+        "1":517,
         "2":5
       },
       "percentages":{
-        "1":99.05,
-        "2":0.95
+        "1":99.04,
+        "2":0.96
       },
       "trends":{
         "2013-11-06":{
@@ -2580,9 +2580,9 @@
       "winner":"lower"
     },
     "Control structure defined inline":{
-      "total":191,
+      "total":190,
       "values":{
-        "no":191
+        "no":190
       },
       "percentages":{
         "no":100
@@ -2670,9 +2670,9 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":193,
+      "total":192,
       "values":{
-        "0":193
+        "0":192
       },
       "percentages":{
         "0":100
@@ -2760,9 +2760,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":193,
+      "total":192,
       "values":{
-        "0":193
+        "0":192
       },
       "percentages":{
         "0":100
@@ -2850,9 +2850,9 @@
       "winner":0
     },
     "Space before operator":{
-      "total":157,
+      "total":156,
       "values":{
-        "1":157
+        "1":156
       },
       "percentages":{
         "1":100
@@ -3446,14 +3446,14 @@
       "winner":"upper"
     },
     "Inline comment style":{
-      "total":43,
+      "total":42,
       "values":{
         "# ...":14,
-        "\/\/ ...":29
+        "\/\/ ...":28
       },
       "percentages":{
-        "# ...":32.56,
-        "\/\/ ...":67.44
+        "# ...":33.33,
+        "\/\/ ...":66.67
       },
       "trends":{
         "2013-11-06":{
@@ -3799,6 +3799,6 @@
   },
   "project":{
     "path":"cboden\/Ratchet",
-    "commitid":"f25e03077984728b88f3218642ebcbf3e32d4410"
+    "commitid":"02a63c180db5501f50e5d899484c0e0678e8e6ab"
   }
 }

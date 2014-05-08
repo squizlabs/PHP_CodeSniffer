@@ -91,11 +91,11 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":39355,
+      "total":39374,
       "values":{
         "121-150":78,
         "151 or more":16,
-        "80 or less":36036,
+        "80 or less":36055,
         "81-120":3225
       },
       "percentages":{
@@ -445,9 +445,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":24241,
+      "total":24256,
       "values":{
-        "spaces":24241
+        "spaces":24256
       },
       "percentages":{
         "spaces":100
@@ -1097,9 +1097,9 @@
       "winner":"yes"
     },
     "Control structure defined inline":{
-      "total":3692,
+      "total":3695,
       "values":{
-        "no":3692
+        "no":3695
       },
       "percentages":{
         "no":100
@@ -1187,9 +1187,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":10232,
+      "total":10240,
       "values":{
-        "lower":10232
+        "lower":10240
       },
       "percentages":{
         "lower":100
@@ -1277,9 +1277,9 @@
       "winner":"lower"
     },
     "Spaces after control structure open parenthesis":{
-      "total":3340,
+      "total":3342,
       "values":{
-        "0":3340
+        "0":3342
       },
       "percentages":{
         "0":100
@@ -1367,9 +1367,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":3340,
+      "total":3342,
       "values":{
-        "0":3339,
+        "0":3341,
         "1":1
       },
       "percentages":{
@@ -1474,9 +1474,9 @@
       "winner":0
     },
     "Spacing before string concat":{
-      "total":892,
+      "total":886,
       "values":{
-        "0":891,
+        "0":885,
         "1":1
       },
       "percentages":{
@@ -1592,9 +1592,9 @@
       "winner":0
     },
     "Spacing after string concat":{
-      "total":892,
+      "total":886,
       "values":{
-        "0":891,
+        "0":885,
         "1":1
       },
       "percentages":{
@@ -1710,10 +1710,10 @@
       "winner":0
     },
     "Space before operator":{
-      "total":5083,
+      "total":5087,
       "values":{
         "0":1,
-        "1":5082
+        "1":5086
       },
       "percentages":{
         "0":0.02,
@@ -1828,9 +1828,9 @@
       "winner":1
     },
     "Space after operator":{
-      "total":11463,
+      "total":11472,
       "values":{
-        "1":11463
+        "1":11472
       },
       "percentages":{
         "1":100
@@ -1918,9 +1918,9 @@
       "winner":1
     },
     "PHP constant case":{
-      "total":2648,
+      "total":2653,
       "values":{
-        "lower":2648
+        "lower":2653
       },
       "percentages":{
         "lower":100
@@ -2008,9 +2008,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":8769,
+      "total":8777,
       "values":{
-        "no":8769
+        "no":8777
       },
       "percentages":{
         "no":100
@@ -2548,10 +2548,10 @@
       "winner":"no"
     },
     "Adjacent assignments aligned":{
-      "total":4083,
+      "total":4086,
       "values":{
         "no":72,
-        "yes":4011
+        "yes":4014
       },
       "percentages":{
         "no":1.76,
@@ -2666,9 +2666,9 @@
       "winner":"yes"
     },
     "Array keyword case":{
-      "total":1135,
+      "total":1136,
       "values":{
-        "lower":1135
+        "lower":1136
       },
       "percentages":{
         "lower":100
@@ -3082,10 +3082,10 @@
       "winner":"yes"
     },
     "Inline comment style":{
-      "total":3359,
+      "total":3360,
       "values":{
         "\/* ... *\/":29,
-        "\/\/ ...":3330
+        "\/\/ ...":3331
       },
       "percentages":{
         "\/* ... *\/":0.86,
@@ -3380,9 +3380,9 @@
       "winner":1
     },
     "Spacing before object operator":{
-      "total":3217,
+      "total":3223,
       "values":{
-        "0":3217
+        "0":3223
       },
       "percentages":{
         "0":100
@@ -3470,9 +3470,9 @@
       "winner":0
     },
     "Spacing after object operator":{
-      "total":3217,
+      "total":3223,
       "values":{
-        "0":3217
+        "0":3223
       },
       "percentages":{
         "0":100
@@ -3923,6 +3923,6 @@
   },
   "project":{
     "path":"squizlabs\/PHP_CodeSniffer",
-    "commitid":"34903295738c66ad8ea87c04ad6eaa1477700868"
+    "commitid":"ba023ac64f09e747bb0aedf4294e7cde5ce7add3"
   }
 }

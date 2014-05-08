@@ -39,7 +39,7 @@ foreach ($repos as $repo) {
 
     $repoNum++;
     echo 'Processing '.$repo->name." ($repoNum / $repoCount)".PHP_EOL;
-    $resultFiles[] = processRepo($repo, $checkoutDate, $runPHPCS, $runGit);
+    $resultFiles[$repo->url] = processRepo($repo, $checkoutDate, $runPHPCS, $runGit);
     echo PHP_EOL;
 
     $GLOBALS['repoList'][$repo->url] = $repo->name;
@@ -57,6 +57,7 @@ $GLOBALS['colours']     = array(
 
 $GLOBALS['num_repos'] = count($resultFiles);
 natcasesort($GLOBALS['repoList']);
+ksort($resultFiles, SORT_NATURAL | SORT_FLAG_CASE);
 
 echo "Pre-processing result files".PHP_EOL;
 

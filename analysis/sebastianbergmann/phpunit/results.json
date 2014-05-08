@@ -91,18 +91,18 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":25793,
+      "total":25795,
       "values":{
         "121-150":71,
         "151 or more":49,
-        "80 or less":24918,
-        "81-120":755
+        "80 or less":24921,
+        "81-120":754
       },
       "percentages":{
         "121-150":0.28,
         "151 or more":0.19,
         "80 or less":96.61,
-        "81-120":2.93
+        "81-120":2.92
       },
       "trends":{
         "2013-11-06":{
@@ -473,9 +473,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":12125,
+      "total":12127,
       "values":{
-        "spaces":12125
+        "spaces":12127
       },
       "percentages":{
         "spaces":100
@@ -1097,9 +1097,9 @@
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":6196,
+      "total":6197,
       "values":{
-        "lower":6196
+        "lower":6197
       },
       "percentages":{
         "lower":100
@@ -1205,9 +1205,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":3478,
+      "total":3479,
       "values":{
-        "no":3478
+        "no":3479
       },
       "percentages":{
         "no":100
@@ -1413,10 +1413,10 @@
       "winner":"yes"
     },
     "Space after operator":{
-      "total":2618,
+      "total":2619,
       "values":{
         "0":3,
-        "1":2614,
+        "1":2615,
         "2":1
       },
       "percentages":{
@@ -2477,9 +2477,9 @@
       "winner":1
     },
     "PHP constant case":{
-      "total":825,
+      "total":826,
       "values":{
-        "lower":823,
+        "lower":824,
         "upper":2
       },
       "percentages":{
@@ -2877,9 +2877,9 @@
       "winner":1
     },
     "Spacing before object operator":{
-      "total":2173,
+      "total":2174,
       "values":{
-        "0":2173
+        "0":2174
       },
       "percentages":{
         "0":100
@@ -2967,9 +2967,9 @@
       "winner":0
     },
     "Spacing after object operator":{
-      "total":2173,
+      "total":2174,
       "values":{
-        "0":2173
+        "0":2174
       },
       "percentages":{
         "0":100
@@ -4780,6 +4780,6 @@
   },
   "project":{
     "path":"sebastianbergmann\/phpunit",
-    "commitid":"1dbd75bfb8de536c2e4906dd3841b5cabe1e95f6"
+    "commitid":"f284576f0345dffe3c25330be481c6240f5aa641"
   }
 }

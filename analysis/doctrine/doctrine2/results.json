@@ -91,18 +91,18 @@
       "winner":"\\n"
     },
     "Line length":{
-      "total":54711,
+      "total":54707,
       "values":{
         "121-150":401,
         "151 or more":62,
-        "80 or less":50485,
-        "81-120":3763
+        "80 or less":50483,
+        "81-120":3761
       },
       "percentages":{
         "121-150":0.73,
         "151 or more":0.11,
         "80 or less":92.28,
-        "81-120":6.88
+        "81-120":6.87
       },
       "trends":{
         "2013-11-06":{
@@ -445,9 +445,9 @@
       "winner":"no"
     },
     "Line indent":{
-      "total":29424,
+      "total":29420,
       "values":{
-        "spaces":29423,
+        "spaces":29419,
         "tabs":1
       },
       "percentages":{
@@ -1097,14 +1097,14 @@
       "winner":"no"
     },
     "Inline comment style":{
-      "total":1262,
+      "total":1261,
       "values":{
         "\/* ... *\/":388,
-        "\/\/ ...":874
+        "\/\/ ...":873
       },
       "percentages":{
-        "\/* ... *\/":30.74,
-        "\/\/ ...":69.26
+        "\/* ... *\/":30.77,
+        "\/\/ ...":69.23
       },
       "trends":{
         "2013-11-06":{
@@ -1215,9 +1215,9 @@
       "winner":"\/\/ ..."
     },
     "PHP keyword case":{
-      "total":17429,
+      "total":17427,
       "values":{
-        "lower":17429
+        "lower":17427
       },
       "percentages":{
         "lower":100
@@ -1305,9 +1305,9 @@
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":11332,
+      "total":11331,
       "values":{
-        "no":11326,
+        "no":11325,
         "yes":6
       },
       "percentages":{
@@ -2727,9 +2727,9 @@
       "winner":"yes"
     },
     "Spacing before object operator":{
-      "total":11109,
+      "total":11107,
       "values":{
-        "0":11003,
+        "0":11001,
         "newline":106
       },
       "percentages":{
@@ -2845,9 +2845,9 @@
       "winner":0
     },
     "Spacing after object operator":{
-      "total":11109,
+      "total":11107,
       "values":{
-        "0":11109
+        "0":11107
       },
       "percentages":{
         "0":100
@@ -2935,9 +2935,9 @@
       "winner":0
     },
     "Control structure defined inline":{
-      "total":3099,
+      "total":3098,
       "values":{
-        "no":3086,
+        "no":3085,
         "yes":13
       },
       "percentages":{
@@ -3053,14 +3053,14 @@
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":3022,
+      "total":3021,
       "values":{
-        "0":2571,
+        "0":2570,
         "newline":6,
         "1":445
       },
       "percentages":{
-        "0":85.08,
+        "0":85.07,
         "newline":0.2,
         "1":14.73
       },
@@ -3199,9 +3199,9 @@
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":3022,
+      "total":3021,
       "values":{
-        "0":3010,
+        "0":3009,
         "1":12
       },
       "percentages":{
@@ -4583,6 +4583,6 @@
   },
   "project":{
     "path":"doctrine\/doctrine2",
-    "commitid":"7a305475e35930749e15bad0d060f8a917b1992f"
+    "commitid":"94837a0105eec91f572ef18dc140779586f931a6"
   }
 }

@@ -50,7 +50,7 @@ function init()
 
     window.addEventListener('scroll', function(e){
         var distanceY = (window.pageYOffset || document.documentElement.scrollTop);
-        var height    = 480;
+        var height    = 479;
         if (document.getElementById("introductionWrap").className == "introductionWrap expanded") {
             height = (document.getElementById("introductionWrap").clientHeight + 20);
         }
