@@ -71,18 +71,26 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                 continue;
             }
 
-            if ($tokens[$i]['content'][0] === "\t") {
+            // If tabs are being converted to spaces, the original content
+            // should be used instead of the converted content.
+            if (isset($tokens[$i]['orig_content']) === true) {
+                $content = $tokens[$i]['orig_content'];
+            } else {
+                $content = $tokens[$i]['content'];
+            }
+
+            if ($content[0] === "\t") {
                 $error = 'Spaces must be used to indent lines; tabs are not allowed';
                 $fix   = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
                 $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
 
                 if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                    // Replace tabs with spaces, usign an indent of 4 spaces.
+                    // Replace tabs with spaces, using an indent of 4 spaces.
                     // Other sniffs can then correct the indent if they need to.
                     $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
                     $phpcsFile->fixer->replaceToken($i, $newContent);
                 }
-            } else if ($tokens[$i]['content'][0] === ' ') {
+            } else if ($content[0] === ' ') {
                 $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
             }
         }

@@ -1365,7 +1365,8 @@ class PHP_CodeSniffer_File
                     }//end if
                 }//end foreach
 
-                $tokens[$i]['content'] = $newContent;
+                $tokens[$i]['orig_content'] = $tokens[$i]['content'];
+                $tokens[$i]['content']      = $newContent;
             }//end if
 
             if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
