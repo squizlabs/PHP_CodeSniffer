@@ -1,4 +1,4 @@
-<documentation title="Class Comments">
+<documentation title="Function Comments">
     <standard>
     <![CDATA[
     Functions must have a non-empty doc comment.  The short description must be on the second line of the comment.  Each description must have one blank comment line before and after.  There must be one blank line before the tags in the comments.  There must be a tag for each of the parameters in the right order with the right variable names with a comment.  There must be a return tag.  Any throw tag must have an exception class.
