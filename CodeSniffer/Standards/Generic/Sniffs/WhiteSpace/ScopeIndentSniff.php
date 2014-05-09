@@ -377,7 +377,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                     $fix = $phpcsFile->addFixableError($error, $firstToken, $type, $data);
                     if ($fix === true && $phpcsFile->fixer->enabled === true) {
-                        $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
+                        if ($column === 1) {
+                            $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($firstToken - 1), str_repeat(' ', ($indent - 1)));
+                        }
                     }
                 }//end if
             }//end if

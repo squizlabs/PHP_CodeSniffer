@@ -109,7 +109,11 @@ class PHP_CodeSniffer_Fixer
         $tokens        = $phpcsFile->getTokens();
         $this->_tokens = array();
         foreach ($tokens as $index => $token) {
-            $this->_tokens[$index] = $token['content'];
+            if (isset($token['orig_content']) === true) {
+                $this->_tokens[$index] = $token['orig_content'];
+            } else {
+                $this->_tokens[$index] = $token['content'];
+            }
         }
 
     }//end startFile()
@@ -337,6 +341,12 @@ class PHP_CodeSniffer_Fixer
         if ($this->_inChangeset === false
             && isset($this->_fixedTokens[$stackPtr]) === true
         ) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                @ob_end_clean();
+                echo "\t* token $stackPtr has already been modified, skipping *".PHP_EOL;
+                ob_start();
+            }
+
             return;
         }
 

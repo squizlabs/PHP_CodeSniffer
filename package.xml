@@ -30,6 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF now exists cleanly when there are no errors to fix
   - Added phpcbf.bat file for Windows
   - Diff report now produces relative paths on Windows, where possible (further fix for bug #20234)
+  - Generic DisallowSpaceIndent and DisallowTabIndent sniffs now check original indent content even when tab-width is set
+    -- Previously, setting --tab-width would force both to check the indent as spaces
+  - Fixed a problem where PHPCBF could replace tabs with too many spaces when changing indents
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
   - Removed use of sys_get_temp_dir() as this is not supported by the min PHP version
   - Fixed bug #20261 : phpcbf has an endless fixing loop
