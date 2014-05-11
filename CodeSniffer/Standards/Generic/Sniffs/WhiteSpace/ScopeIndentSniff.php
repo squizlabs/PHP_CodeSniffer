@@ -429,6 +429,10 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         // Increase by 1 to indiciate that the code should start at a specific column.
         // E.g., code indented 4 spaces should start at column 5.
         $indent++;
+
+        // Take the indent of the open tag into account.
+        $indent += $this->_openTagIndent;
+
         return $indent;
 
     }//end calculateExpectedIndent()
