@@ -459,3 +459,14 @@ if ($myvar == 'test') {
 }
     ?>
 <div>
+<body>
+    <?php
+    if (isset($_GET["test"])) {
+        if ($_GET["test"] <> "") {
+            $test = true;
+        } else {
+            $test = true;
+        }
+    }
+    ?>
+</body>
