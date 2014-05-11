@@ -29,7 +29,7 @@ Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `
 
     {
         "require-dev": {
-            "squizlabs/php_codesniffer": "1.*"
+            "squizlabs/php_codesniffer": "2.*"
         }
     }
 
