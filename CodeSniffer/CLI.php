@@ -204,19 +204,15 @@ class PHP_CodeSniffer_CLI
                 unlink($diffFile);
             }//end if
         } else {
-            if ($numErrors === 0) {
-                // No errors left unfixed.
-                $exit = 0;
-            } else {
-                // Errors we can't fix.
-                $exit = 2;
-            }
+            // File are being patched manually, so we can't tell
+            // how many errors were fixed.
+            $exit = 1;
         }//end if
 
         if ($exit === 0) {
             echo 'No fixable errors were found'.PHP_EOL;
         } else if ($exit === 2) {
-            echo 'PHPCBF could not fix the errors found'.PHP_EOL;
+            echo 'PHPCBF could not fix all the errors found'.PHP_EOL;
         }
 
         PHP_CodeSniffer_Reporting::printRunTime();
