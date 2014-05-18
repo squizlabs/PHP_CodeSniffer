@@ -89,22 +89,26 @@
         },
         "2014-05-11":{
           "\\n":37
+        },
+        "2014-05-18":{
+          "\\n":37
         }
-      }
+      },
+      "winner":"\\n"
     },
     "Line length":{
       "total":6976,
       "values":{
         "121-150":14,
         "151 or more":2,
-        "80 or less":6757,
-        "81-120":203
+        "80 or less":6756,
+        "81-120":204
       },
       "percentages":{
         "121-150":0.2,
         "151 or more":0.03,
-        "80 or less":96.86,
-        "81-120":2.91
+        "80 or less":96.85,
+        "81-120":2.92
       },
       "trends":{
         "2013-11-06":{
@@ -268,8 +272,15 @@
           "151 or more":2,
           "80 or less":6757,
           "81-120":203
+        },
+        "2014-05-18":{
+          "121-150":14,
+          "151 or more":2,
+          "80 or less":6756,
+          "81-120":204
         }
-      }
+      },
+      "winner":"80 or less"
     },
     "Lowercase filename":{
       "total":37,
@@ -389,8 +400,13 @@
         "2014-05-11":{
           "no":35,
           "yes":2
+        },
+        "2014-05-18":{
+          "no":35,
+          "yes":2
         }
-      }
+      },
+      "winner":"no"
     },
     "PHP short open tag used":{
       "total":37,
@@ -481,8 +497,12 @@
         },
         "2014-05-11":{
           "no":37
+        },
+        "2014-05-18":{
+          "no":37
         }
-      }
+      },
+      "winner":"no"
     },
     "File has doc comment":{
       "total":37,
@@ -602,8 +622,13 @@
         "2014-05-11":{
           "no":2,
           "yes":35
+        },
+        "2014-05-18":{
+          "no":2,
+          "yes":35
         }
-      }
+      },
+      "winner":"yes"
     },
     "Declarations and side effects mixed":{
       "total":37,
@@ -694,8 +719,12 @@
         },
         "2014-05-11":{
           "no":37
+        },
+        "2014-05-18":{
+          "no":37
         }
-      }
+      },
+      "winner":"no"
     },
     "Number of newlines at EOF":{
       "total":37,
@@ -789,8 +818,12 @@
         },
         "2014-05-11":{
           "1":37
+        },
+        "2014-05-18":{
+          "1":37
         }
-      }
+      },
+      "winner":1
     },
     "File extension for non-class files":{
       "total":2,
@@ -881,8 +914,12 @@
         },
         "2014-05-11":{
           ".php":2
+        },
+        "2014-05-18":{
+          ".php":2
         }
-      }
+      },
+      "winner":".php"
     },
     "PHP closing tag at EOF":{
       "total":37,
@@ -973,8 +1010,12 @@
         },
         "2014-05-11":{
           "no":37
+        },
+        "2014-05-18":{
+          "no":37
         }
-      }
+      },
+      "winner":"no"
     },
     "Spacing before object operator":{
       "total":1125,
@@ -1065,8 +1106,12 @@
         },
         "2014-05-11":{
           "0":1125
+        },
+        "2014-05-18":{
+          "0":1125
         }
-      }
+      },
+      "winner":0
     },
     "Spacing after object operator":{
       "total":1125,
@@ -1157,8 +1202,12 @@
         },
         "2014-05-11":{
           "0":1125
+        },
+        "2014-05-18":{
+          "0":1125
         }
-      }
+      },
+      "winner":0
     },
     "Multiple statements on same line":{
       "total":1236,
@@ -1249,8 +1298,12 @@
         },
         "2014-05-11":{
           "no":1236
+        },
+        "2014-05-18":{
+          "no":1236
         }
-      }
+      },
+      "winner":"no"
     },
     "Adjacent assignments aligned":{
       "total":498,
@@ -1370,8 +1423,13 @@
         "2014-05-11":{
           "no":12,
           "yes":486
+        },
+        "2014-05-18":{
+          "no":12,
+          "yes":486
         }
-      }
+      },
+      "winner":"yes"
     },
     "Space after operator":{
       "total":1123,
@@ -1549,8 +1607,15 @@
           "newline":6,
           "1":1111,
           "2":1
+        },
+        "2014-05-18":{
+          "0":5,
+          "newline":6,
+          "1":1111,
+          "2":1
         }
-      }
+      },
+      "winner":1
     },
     "PHP keyword case":{
       "total":1725,
@@ -1641,8 +1706,12 @@
         },
         "2014-05-11":{
           "lower":1725
+        },
+        "2014-05-18":{
+          "lower":1725
         }
-      }
+      },
+      "winner":"lower"
     },
     "Spacing before string concat":{
       "total":142,
@@ -1791,8 +1860,14 @@
           "newline":2,
           "1":139,
           "2":1
+        },
+        "2014-05-18":{
+          "newline":2,
+          "1":139,
+          "2":1
         }
-      }
+      },
+      "winner":1
     },
     "Spacing after string concat":{
       "total":142,
@@ -1912,8 +1987,13 @@
         "2014-05-11":{
           "newline":6,
           "1":136
+        },
+        "2014-05-18":{
+          "newline":6,
+          "1":136
         }
-      }
+      },
+      "winner":1
     },
     "Line indent":{
       "total":3913,
@@ -2004,8 +2084,12 @@
         },
         "2014-05-11":{
           "spaces":3913
+        },
+        "2014-05-18":{
+          "spaces":3913
         }
-      }
+      },
+      "winner":"spaces"
     },
     "File extension for class files":{
       "total":35,
@@ -2096,8 +2180,12 @@
         },
         "2014-05-11":{
           ".php":35
+        },
+        "2014-05-18":{
+          ".php":35
         }
-      }
+      },
+      "winner":".php"
     },
     "Class opening brace placement":{
       "total":35,
@@ -2188,8 +2276,12 @@
         },
         "2014-05-11":{
           "new line":35
+        },
+        "2014-05-18":{
+          "new line":35
         }
-      }
+      },
+      "winner":"new line"
     },
     "Class has doc comment":{
       "total":35,
@@ -2295,8 +2387,12 @@
         },
         "2014-05-11":{
           "yes":35
+        },
+        "2014-05-18":{
+          "yes":35
         }
-      }
+      },
+      "winner":"yes"
     },
     "One class per file":{
       "total":35,
@@ -2387,8 +2483,12 @@
         },
         "2014-05-11":{
           "yes":35
+        },
+        "2014-05-18":{
+          "yes":35
         }
-      }
+      },
+      "winner":"yes"
     },
     "Class defined in namespace":{
       "total":35,
@@ -2479,8 +2579,12 @@
         },
         "2014-05-11":{
           "no":35
+        },
+        "2014-05-18":{
+          "no":35
         }
-      }
+      },
+      "winner":"no"
     },
     "CamelCase class name":{
       "total":35,
@@ -2571,8 +2675,12 @@
         },
         "2014-05-11":{
           "no":35
+        },
+        "2014-05-18":{
+          "no":35
         }
-      }
+      },
+      "winner":"no"
     },
     "Function opening brace placement":{
       "total":229,
@@ -2663,8 +2771,12 @@
         },
         "2014-05-11":{
           "new line":229
+        },
+        "2014-05-18":{
+          "new line":229
         }
-      }
+      },
+      "winner":"new line"
     },
     "CamelCase method name":{
       "total":228,
@@ -2755,8 +2867,12 @@
         },
         "2014-05-11":{
           "yes":228
+        },
+        "2014-05-18":{
+          "yes":228
         }
-      }
+      },
+      "winner":"yes"
     },
     "Function has doc comment":{
       "total":246,
@@ -2876,8 +2992,13 @@
         "2014-05-11":{
           "no":61,
           "yes":185
+        },
+        "2014-05-18":{
+          "no":61,
+          "yes":185
         }
-      }
+      },
+      "winner":"yes"
     },
     "Control structure defined inline":{
       "total":401,
@@ -2995,8 +3116,13 @@
         "2014-05-11":{
           "no":400,
           "yes":1
+        },
+        "2014-05-18":{
+          "no":400,
+          "yes":1
         }
-      }
+      },
+      "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
       "total":373,
@@ -3087,8 +3213,12 @@
         },
         "2014-05-11":{
           "0":373
+        },
+        "2014-05-18":{
+          "0":373
         }
-      }
+      },
+      "winner":0
     },
     "Spaces before control structure close parenthesis":{
       "total":373,
@@ -3179,8 +3309,12 @@
         },
         "2014-05-11":{
           "0":373
+        },
+        "2014-05-18":{
+          "0":373
         }
-      }
+      },
+      "winner":0
     },
     "PHP constant case":{
       "total":140,
@@ -3300,8 +3434,13 @@
         "2014-05-11":{
           "lower":139,
           "upper":1
+        },
+        "2014-05-18":{
+          "lower":139,
+          "upper":1
         }
-      }
+      },
+      "winner":"lower"
     },
     "Space before operator":{
       "total":230,
@@ -3448,8 +3587,14 @@
           "0":5,
           "1":224,
           "2":1
+        },
+        "2014-05-18":{
+          "0":5,
+          "1":224,
+          "2":1
         }
-      }
+      },
+      "winner":1
     },
     "Array keyword case":{
       "total":83,
@@ -3540,8 +3685,12 @@
         },
         "2014-05-11":{
           "lower":83
+        },
+        "2014-05-18":{
+          "lower":83
         }
-      }
+      },
+      "winner":"lower"
     },
     "Private method prefixed with underscore":{
       "total":30,
@@ -3628,8 +3777,12 @@
         },
         "2014-05-11":{
           "no":30
+        },
+        "2014-05-18":{
+          "no":30
         }
-      }
+      },
+      "winner":"no"
     },
     "Use of ELSE IF or ELSEIF":{
       "total":18,
@@ -3735,8 +3888,13 @@
         "2014-05-11":{
           "else if":6,
           "elseif":12
+        },
+        "2014-05-18":{
+          "else if":6,
+          "elseif":12
         }
-      }
+      },
+      "winner":"elseif"
     },
     "Inline comment style":{
       "total":28,
@@ -3856,8 +4014,13 @@
         "2014-05-11":{
           "\/* ... *\/":6,
           "\/\/ ...":22
+        },
+        "2014-05-18":{
+          "\/* ... *\/":6,
+          "\/\/ ...":22
         }
-      }
+      },
+      "winner":"\/\/ ..."
     },
     "Spacing after cast statement":{
       "total":7,
@@ -3949,8 +4112,12 @@
         },
         "2014-05-11":{
           "1":7
+        },
+        "2014-05-18":{
+          "1":7
         }
-      }
+      },
+      "winner":1
     },
     "Array end comma":{
       "total":2,
@@ -4056,8 +4223,12 @@
         },
         "2014-05-11":{
           "no":2
+        },
+        "2014-05-18":{
+          "no":2
         }
-      }
+      },
+      "winner":"no"
     },
     "Constant name case":{
       "total":5,
@@ -4117,12 +4288,16 @@
         },
         "2014-05-11":{
           "upper":5
+        },
+        "2014-05-18":{
+          "upper":5
         }
-      }
+      },
+      "winner":"upper"
     }
   },
   "project":{
     "path":"sebastianbergmann\/php-code-coverage",
-    "commitid":"a995604307026ed8693ffba8848765532030371b"
+    "commitid":"2b7576920b70702fe0cda90ea02606b4bc8fbdd8"
   }
 }
