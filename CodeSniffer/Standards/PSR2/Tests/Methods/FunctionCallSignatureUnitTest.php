@@ -43,8 +43,9 @@ class PSR2_Tests_Methods_FunctionCallSignatureUnitTest extends AbstractSniffUnit
     public function getErrorList()
     {
         return array(
-                14 => 3,
-                17 => 2,
+                18 => 3,
+                21 => 2,
+                48 => 1,
                );
 
     }//end getErrorList()
