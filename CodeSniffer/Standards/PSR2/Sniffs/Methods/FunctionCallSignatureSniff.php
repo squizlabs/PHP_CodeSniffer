@@ -69,6 +69,7 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
                 if ($tokens[$i + 1]['code'] === T_CONSTANT_ENCAPSED_STRING) {
                     $compareLine = $tokens[$i + 1]['line'];
                 }
+
                 continue;
             }
 
