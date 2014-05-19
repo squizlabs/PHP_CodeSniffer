@@ -17,8 +17,7 @@
  * Generic_Sniffs_Whitespace_ScopeIndentSniff.
  *
  * Checks that control structures are structured correctly, and their content
- * is indented correctly. This sniff will throw errors if tabs are used
- * for indentation rather than spaces.
+ * is indented correctly.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -33,7 +32,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 {
 
     /**
-     * The number of spaces code should be indented.
+     * The number of indent characters code should be indented.
      *
      * @var int
      */
@@ -42,12 +41,19 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     /**
      * Does the indent need to be exactly right.
      *
-     * If TRUE, indent needs to be exactly $indent spaces. If FALSE,
-     * indent needs to be at least $indent spaces (but can be more).
+     * If TRUE, indent needs to be exactly $indent characters. If FALSE,
+     * indent needs to be at least $indent characters (but can be more).
      *
      * @var bool
      */
     public $exact = false;
+
+    /**
+     * Whether indent character is tab.
+     *
+     * @var bool
+     */
+    public $tabs = false;
 
     /**
      * List of tokens not needing to be checked for indentation.
@@ -172,7 +178,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
 
             if ($exact === true || $tokens[$firstToken]['column'] < $expectedIndent) {
-                $error = 'Line indented incorrectly; expected %s spaces, found %s';
+                $error = 'Line indented incorrectly; expected %s '.($this->tabs ? 'tabs' : 'spaces').', found %s';
                 $data  = array(
                           ($expectedIndent - 1),
                           ($tokens[$firstToken]['column'] - 1),
@@ -342,7 +348,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             $type   = 'Incorrect';
                         }
 
-                        $error .= '%s spaces, found %s';
+                        $error .= '%s '.($this->tabs ? 'tabs' : 'spaces').', found %s';
                         $data = array(
                                  ($indent - 1),
                                  ($column - 1),

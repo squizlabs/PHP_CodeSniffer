@@ -29,11 +29,18 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
 {
 
     /**
-    * The number of spaces code should be indented.
+    * The number of indent characters code should be indented.
     *
     * @var int
     */
     public $indent = 4;
+    
+    /**
+    * Whether indent character is tab.
+    *
+    * @var bool
+    */
+    public $tabs = false;
 
 
     /**
@@ -94,7 +101,8 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             }
 
             if ($tokens[$nextCase]['column'] !== $caseAlignment) {
-                $error = strtoupper($type).' keyword must be indented '.$this->indent.' spaces from SWITCH keyword';
+                $error = strtoupper($type).' keyword must be indented '.$this->indent.
+                         ($this->tabs ? ' tabs' : ' spaces').' from SWITCH keyword';
                 $phpcsFile->addError($error, $nextCase, $type.'Indent');
             }
 
