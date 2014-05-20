@@ -67,7 +67,19 @@ function validateUrl(
     array $allowedSchemes=array(
                            'http',
                            'https',
-                          )
+                          ),
+    array $notAllowedSchemes=array('ftp', 'sftp')
+) {
+}
+
+function validateUrlShort(
+    $url,
+    $requireScheme=TRUE,
+    array $allowedSchemes=[
+        'http',
+        'https',
+    ],
+    array $notAllowedSchemes=['ftp', 'sftp']
 ) {
 }
 
