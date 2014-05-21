@@ -117,6 +117,17 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                   );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+
+        // If function call is directly preceded by a NS_SEPARATOR it points to the
+        // global namespace - so we should still catch it
+        if ($tokens[$prevToken]['code'] == T_NS_SEPARATOR) {
+            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($prevToken - 1), null, true);
+            if ($tokens[$prevToken]['code'] == T_STRING) {
+                // Not in the global namespace
+                return;
+            }
+        }
+
         if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
             // Not a call to a PHP function.
             return;
