@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ScopeIndentSniff now accounts for different open tag indents
   - PSR2 FunctionCallSignatureSniff now treats multi-line strings as a single-line argument, like arrays and closures
     -- Thanks to Dawid Nowak for the patch
+  - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
+    -- Thanks to Ole Martin Handeland for the patch
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
  </notes>
  <contents>
