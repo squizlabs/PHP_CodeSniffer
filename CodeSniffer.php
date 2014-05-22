@@ -1440,7 +1440,8 @@ class PHP_CodeSniffer
                 $testPath = $path;
             }
 
-            if (preg_match("|{$pattern}|i", $testPath) === 1) {
+            $pattern = '{'.$pattern.'}i';
+            if (preg_match($pattern, $testPath) === 1) {
                 return true;
             }
         }//end foreach

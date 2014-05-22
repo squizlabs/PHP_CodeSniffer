@@ -555,7 +555,8 @@ class PHP_CodeSniffer_File
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
                 foreach ($listenerData['ignore'] as $pattern) {
-                    if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+                    $pattern = '{'.$pattern.'}i';
+                    if (preg_match($pattern, $this->_file) === 1) {
                         continue(2);
                     }
                 }
@@ -860,8 +861,8 @@ class PHP_CodeSniffer_File
                              '*'   => '.*',
                             );
 
-            $pattern = strtr($pattern, $replacements);
-            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+            $pattern = '{'.strtr($pattern, $replacements).'}i';
+            if (preg_match($pattern, $this->_file) === 1) {
                 return false;
             }
         }
@@ -1006,8 +1007,8 @@ class PHP_CodeSniffer_File
                              '*'   => '.*',
                             );
 
-            $pattern = strtr($pattern, $replacements);
-            if (preg_match("|{$pattern}|i", $this->_file) === 1) {
+            $pattern = '{'.strtr($pattern, $replacements).'}i';
+            if (preg_match($pattern, $this->_file) === 1) {
                 return false;
             }
         }
