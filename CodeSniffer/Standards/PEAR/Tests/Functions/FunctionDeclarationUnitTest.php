@@ -42,33 +42,24 @@ class PEAR_Tests_Functions_FunctionDeclarationUnitTest extends AbstractSniffUnit
      */
     public function getErrorList()
     {
-        $errors = array(
-                   3   => 1,
-                   4   => 1,
-                   5   => 1,
-                   9   => 1,
-                   10  => 1,
-                   11  => 1,
-                   14  => 1,
-                   17  => 1,
-                   27  => 1,
-                   44  => 1,
-                   51  => 1,
-                   61  => 2,
-                   98  => 1,
-                   110 => 2,
-                   120 => 1,
-                   121 => 1,
-                  );
-
-        // The short array syntax test will only work in PHP versions where the syntax exists
-        // and will throw errors in earlier versions.
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $errors[79] = 1;
-            $errors[80] = 1;
-        }
-
-        return $errors;
+        return array(
+                3   => 1,
+                4   => 1,
+                5   => 1,
+                9   => 1,
+                10  => 1,
+                11  => 1,
+                14  => 1,
+                17  => 1,
+                27  => 1,
+                44  => 1,
+                51  => 1,
+                61  => 2,
+                98  => 1,
+                110 => 2,
+                120 => 1,
+                121 => 1,
+               );
 
     }//end getErrorList()
 
