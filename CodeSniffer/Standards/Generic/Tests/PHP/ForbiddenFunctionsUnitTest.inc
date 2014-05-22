@@ -3,6 +3,8 @@ $size = sizeof($array);
 $size = count($array);
 delete($filepath);
 unset($filepath);
+$size = \sizeof($array);
+$size = \my\ns\sizeof('abc');($array);
 
 // No errors thrown for class methods.
 $size = MyClass::sizeof($array);
