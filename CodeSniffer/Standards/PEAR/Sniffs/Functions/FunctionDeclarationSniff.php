@@ -279,9 +279,9 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 $lastLine = $tokens[$i]['line'];
             }//end if
 
-            if ($tokens[$i]['code'] === T_ARRAY) {
+            if ($tokens[$i]['code'] === T_ARRAY || $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                 // Skip arrays as they have their own indentation rules.
-                $i        = $tokens[$i]['parenthesis_closer'];
+                $i        = ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) ? $tokens[$i]['bracket_closer'] : $tokens[$i]['parenthesis_closer'];
                 $lastLine = $tokens[$i]['line'];
                 continue;
             }
