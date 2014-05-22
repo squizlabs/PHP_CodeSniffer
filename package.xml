@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Removed use of sys_get_temp_dir() as this is not supported by the min PHP version
   - Generic ScopeIndentSniff now accounts for different open tag indents
+  - PEAR FunctionDeclarationSniff now ignores short arrays when checking indent
+    -- Thanks to Daniel Tschinder for the patch
   - PSR2 FunctionCallSignatureSniff now treats multi-line strings as a single-line argument, like arrays and closures
     -- Thanks to Dawid Nowak for the patch
   - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
