@@ -63,23 +63,25 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $branch = substr($branch, (strpos($branch, 'origin/') + 7));
         echo "\t\t* using branch $branch *".PHP_EOL;
 
-        $cmd = "cd $cloneDir; ";
-        if ($checkoutDate !== date('Y-m-d')) {
-            echo "\t=> Checking out specific date: $checkoutDate".PHP_EOL;
-            $cmd .= "git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" $branch` 2>&1; ";
-        } else {
-            echo "\t=> Updating repository".PHP_EOL;
-            $cmd .= "git reset --hard; git clean -df; git checkout $branch 2>&1; git pull 2>&1; ";
-        }
-
+        echo "\t=> Updating repository".PHP_EOL;
+        $cmd  = "cd $cloneDir; git reset --hard; git clean -df; git checkout $branch 2>&1; git pull 2>&1; ";
         $cmd .= 'git submodule update --init --recursive 2>&1';
-
         echo "\t\tcmd: ";
         echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
-
         $output = trim(shell_exec($cmd));
         echo "\t\tout: ";
         echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+
+        if ($checkoutDate !== date('Y-m-d')) {
+            echo "\t=> Checking out specific date: $checkoutDate".PHP_EOL;
+            $cmd  = "cd $cloneDir; git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" $branch` 2>&1; ";
+            $cmd .= 'git submodule update --init --recursive 2>&1';
+            echo "\t\tcmd: ";
+            echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+            $output = trim(shell_exec($cmd));
+            echo "\t\tout: ";
+            echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+        }
     } else {
         echo "\t* skipping respository update step *".PHP_EOL;
     }//end if
