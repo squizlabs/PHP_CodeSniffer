@@ -158,7 +158,19 @@ class PHP_CodeSniffer
      *
      * @var array
      */
-    public $allowedFileExtensions = array(
+    public $allowedFileExtensions = array();
+
+    /**
+     * An array of default extensions and associated tokenizers.
+     *
+     * If no extensions are set, these will be used as the defaults.
+     * If extensions are set, these will be used when the correct tokenizer
+     * can not be determined, such as when checking a passed filename instead
+     * of files in a directory.
+     *
+     * @var array
+     */
+    public $defaultFileExtensions = array(
                                      'php' => 'PHP',
                                      'inc' => 'PHP',
                                      'js'  => 'JS',
@@ -563,6 +575,10 @@ class PHP_CodeSniffer
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Creating file list... ';
+        }
+
+        if (empty($this->allowedFileExtensions) === true) {
+            $this->allowedFileExtensions = $this->defaultFileExtensions;
         }
 
         $todo     = $this->getFilesToProcess($files, $local);
@@ -1333,7 +1349,7 @@ class PHP_CodeSniffer
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldProcessFile($path, dirname($path)) === false) {
+                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
                     continue;
                 }
 
@@ -1528,7 +1544,6 @@ class PHP_CodeSniffer
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
                 $this->_tokenListeners,
-                $this->allowedFileExtensions,
                 $this->ruleset,
                 $this
             );
@@ -1613,7 +1628,6 @@ class PHP_CodeSniffer
         $phpcsFile = new PHP_CodeSniffer_File(
             $file,
             $this->_tokenListeners,
-            $this->allowedFileExtensions,
             $this->ruleset,
             $this
         );

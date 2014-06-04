@@ -1015,7 +1015,9 @@ class PHP_CodeSniffer_CLI
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                      (only valid if checking a directory)'.PHP_EOL;
+        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
+        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
+        echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
@@ -1059,6 +1061,7 @@ class PHP_CodeSniffer_CLI
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
+        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;

@@ -30,6 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF now exists cleanly when there are no errors to fix
   - Added phpcbf.bat file for Windows
   - Exclude patterns now use {} delimiters, allowing the | special character to work correctly again
+  - The filtering component of the --extensions argument is now ignored again when passing filenames
+    -- Can still be used to specify a custom tokenizer for each extension when passing filenames
+    -- If no tokenizer is specified, default values will be used for common file extensions
   - Diff report now produces relative paths on Windows, where possible (further fix for bug #20234)
   - If a token's content has been modified by the tab-width setting, it will now have an orig_content in the tokens array
   - Generic DisallowSpaceIndent and DisallowTabIndent sniffs now check original indent content even when tab-width is set

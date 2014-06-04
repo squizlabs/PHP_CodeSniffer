@@ -271,15 +271,6 @@ class PHP_CodeSniffer_File
     private $_listenerTimes = array();
 
     /**
-     * An array of extensions mapping to the tokenizer to use.
-     *
-     * This value gets set by PHP_CodeSniffer when the object is created.
-     *
-     * @var array
-     */
-    protected $tokenizers = array();
-
-    /**
      * An array of rules from the ruleset.xml file.
      *
      * This value gets set by PHP_CodeSniffer when the object is created.
@@ -297,8 +288,6 @@ class PHP_CodeSniffer_File
      * @param string          $file       The absolute path to the file to process.
      * @param array(string)   $listeners  The initial listeners listening
      *                                    to processing of this file.
-     * @param array           $tokenizers An array of extensions mapping
-     *                                    to the tokenizer to use.
      * @param array           $ruleset    An array of rules from the
      *                                    ruleset.xml file.
      * @param PHP_CodeSniffer $phpcs      The PHP_CodeSniffer object controlling
@@ -310,13 +299,11 @@ class PHP_CodeSniffer_File
     public function __construct(
         $file,
         array $listeners,
-        array $tokenizers,
         array $ruleset,
         PHP_CodeSniffer $phpcs
     ) {
         $this->_file      = trim($file);
         $this->_listeners = $listeners;
-        $this->tokenizers = $tokenizers;
         $this->ruleset    = $ruleset;
         $this->phpcs      = $phpcs;
         $this->fixer      = new PHP_CodeSniffer_Fixer();
@@ -680,9 +667,12 @@ class PHP_CodeSniffer_File
         // Determine the tokenizer from the file extension.
         $fileParts = explode('.', $this->_file);
         $extension = array_pop($fileParts);
-        if (isset($this->tokenizers[$extension]) === true) {
-            $tokenizerClass      = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizers[$extension];
-            $this->tokenizerType = $this->tokenizers[$extension];
+        if (isset($this->phpcs->allowedFileExtensions[$extension]) === true) {
+            $tokenizerClass      = 'PHP_CodeSniffer_Tokenizers_'.$this->phpcs->allowedFileExtensions[$extension];
+            $this->tokenizerType = $this->phpcs->allowedFileExtensions[$extension];
+        } else if (isset($this->phpcs->defaultFileExtensions[$extension]) === true) {
+            $tokenizerClass      = 'PHP_CodeSniffer_Tokenizers_'.$this->phpcs->defaultFileExtensions[$extension];
+            $this->tokenizerType = $this->phpcs->defaultFileExtensions[$extension];
         } else {
             // Revert to default.
             $tokenizerClass = 'PHP_CodeSniffer_Tokenizers_'.$this->tokenizerType;
