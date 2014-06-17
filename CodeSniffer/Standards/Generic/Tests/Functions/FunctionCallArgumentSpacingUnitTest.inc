@@ -84,3 +84,5 @@ then
 THEN
 );
 
+if (in_array($arg1, ['foo','bar'])) {}
+if (in_array($arg1, array('foo','bar'))) {}

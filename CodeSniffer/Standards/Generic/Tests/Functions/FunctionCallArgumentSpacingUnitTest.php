@@ -42,21 +42,27 @@ class Generic_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends Abstra
      */
     public function getErrorList()
     {
-        return array(
-                5  => 1,
-                6  => 1,
-                7  => 2,
-                8  => 1,
-                11 => 2,
-                12 => 2,
-                13 => 3,
-                42 => 3,
-                43 => 3,
-                45 => 1,
-                46 => 2,
-                79 => 1,
-                82 => 1,
-               );
+        $errors = array(
+                   5  => 1,
+                   6  => 1,
+                   7  => 2,
+                   8  => 1,
+                   11 => 2,
+                   12 => 2,
+                   13 => 3,
+                   42 => 3,
+                   43 => 3,
+                   45 => 1,
+                   46 => 2,
+                   79 => 1,
+                   82 => 1,
+                  );
+
+        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+            $errors[87] = 1;
+        }
+
+        return $errors;
 
     }//end getErrorList()
 
@@ -77,5 +83,3 @@ class Generic_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends Abstra
 
 
 }//end class
-
-?>
