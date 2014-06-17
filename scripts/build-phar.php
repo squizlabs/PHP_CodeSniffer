@@ -48,7 +48,8 @@ foreach ($scripts as $script) {
     echo "\t=> adding stub... ";
     $stub  = '#!/usr/bin/env php'."\n";
     $stub .= '<?php'."\n";
-    $stub .= 'require_once "phar://".__FILE__."/CodeSniffer/CLI.php";'."\n";
+    $stub .= 'Phar::mapPhar(\''.$script.'.phar\');'."\n";
+    $stub .= 'require_once "phar://'.$script.'.phar/CodeSniffer/CLI.php";'."\n";
     $stub .= '$cli = new PHP_CodeSniffer_CLI();'."\n";
     $stub .= '$cli->run'.$script.'();'."\n";
     $stub .= '__HALT_COMPILER();';

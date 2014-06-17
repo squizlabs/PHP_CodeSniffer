@@ -2152,30 +2152,6 @@ class PHP_CodeSniffer
 
 
     /**
-     * Get the phar file from the path.
-     *
-     * @param string $path The path to use.
-     *
-     * @return mixed
-     */
-    public static function getPharFile($path)
-    {
-        if (self::isPharFile($path) === false) {
-            return false;
-        }
-
-        if (strpos($path, 'phar://') === 0) {
-            $path = substr($path, 7);
-        }
-
-        $endPos   = (strpos($path, '.phar') + 5);
-        $pharFile = substr($path, 0, $endPos);
-        return $pharFile;
-
-    }//end getPharFile()
-
-
-    /**
      * Return TRUE, if the path is a phar file.
      *
      * @param string $path The path to use.
@@ -2184,7 +2160,7 @@ class PHP_CodeSniffer
      */
     public static function isPharFile($path)
     {
-        if (strpos($path, '.phar') !== false) {
+        if (strpos($path, 'phar://') === 0) {
             return true;
         }
 
@@ -2208,22 +2184,21 @@ class PHP_CodeSniffer
             return realpath($path);
         }
 
-        $phar   = self::getPharFile($path);
-        $extra  = str_replace($phar, '', $path);
-        $prefix = false;
-        if (strpos($path, 'phar://') === 0) {
-            $prefix = true;
-            $extra  = str_replace('phar://', '', $extra);
+        // Before trying to break down the file path,
+        // check if it exists first because it will mostly not
+        // change after running the below code.
+        if (file_exists($path) === true) {
+            return $path;
         }
 
-        $path = realpath($phar);
-        if ($path !== false) {
-            $path .= $extra;
-            if ($prefix === true) {
-                $path = 'phar://'.$path;
-            }
+        $phar  = Phar::running(false);
+        $extra = str_replace('phar://'.$phar, '', $path);
+        $path  = realpath($phar);
+        if ($path === false) {
+            return false;
         }
 
+        $path = 'phar://'.$path.$extra;
         if (file_exists($path) === true) {
             return $path;
         }
@@ -2245,7 +2220,7 @@ class PHP_CodeSniffer
     public static function chdir($path)
     {
         if (self::isPharFile($path) === true) {
-            $phar = self::getPharFile($path);
+            $phar = Phar::running(false);
             chdir(dirname($phar));
         } else {
             chdir($path);
