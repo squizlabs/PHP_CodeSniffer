@@ -63,7 +63,6 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
                 198 => 1,
                 213 => 1,
                 232 => 1,
-                256 => 1,
                );
 
     }//end getErrorList()

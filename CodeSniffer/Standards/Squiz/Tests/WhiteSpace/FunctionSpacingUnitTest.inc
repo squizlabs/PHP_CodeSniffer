@@ -254,6 +254,3 @@ $callback = function ($bar) use ($foo)
 function test() {
 
 }//end test()
-
-
-
