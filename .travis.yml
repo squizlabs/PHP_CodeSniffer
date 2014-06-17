@@ -7,10 +7,6 @@ php:
   - 5.6
   - hhvm
 
-matrix:
-  allow_failures:
-    - php: hhvm
-
 script:
   - phpunit tests/AllTests.php
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
