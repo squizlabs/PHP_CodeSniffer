@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
     -- Thanks to Ole Martin Handeland for the patch
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
+  - Fixed bug #20296 : new array notion in function comma check fails
  </notes>
  <contents>
   <dir name="/">

@@ -76,12 +76,24 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
             return;
         }
 
-        $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-
+        $closeBracket  = $tokens[$openBracket]['parenthesis_closer'];
         $nextSeparator = $openBracket;
-        while (($nextSeparator = $phpcsFile->findNext(array(T_COMMA, T_VARIABLE, T_CLOSURE), ($nextSeparator + 1), $closeBracket)) !== false) {
+
+        $find = array(
+                 T_COMMA,
+                 T_VARIABLE,
+                 T_CLOSURE,
+                 T_OPEN_SHORT_ARRAY,
+                );
+
+        while (($nextSeparator = $phpcsFile->findNext($find, ($nextSeparator + 1), $closeBracket)) !== false) {
             if ($tokens[$nextSeparator]['code'] === T_CLOSURE) {
+                // Skip closures.
                 $nextSeparator = $tokens[$nextSeparator]['scope_closer'];
+                continue;
+            } else if ($tokens[$nextSeparator]['code'] === T_OPEN_SHORT_ARRAY) {
+                // Skips arrays using short notation.
+                $nextSeparator = $tokens[$nextSeparator]['bracket_closer'];
                 continue;
             }
 
@@ -139,5 +151,3 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
 
 
 }//end class
-
-?>
