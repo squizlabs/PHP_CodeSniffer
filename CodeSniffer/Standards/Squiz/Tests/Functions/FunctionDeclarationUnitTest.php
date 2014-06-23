@@ -44,6 +44,7 @@ class Squiz_Tests_Functions_FunctionDeclarationUnitTest extends AbstractSniffUni
     {
         return array(
                 55 => 1,
+                68 => 1,
                );
 
     }//end getErrorList()
