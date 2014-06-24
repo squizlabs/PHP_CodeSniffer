@@ -42,35 +42,43 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
      */
     public function getErrorList()
     {
-        return array(
-                3   => 1,
-                5   => 1,
-                10  => 1,
-                12  => 1,
-                15  => 1,
-                17  => 1,
-                20  => 1,
-                22  => 1,
-                25  => 1,
-                27  => 1,
-                31  => 1,
-                33  => 1,
-                36  => 1,
-                37  => 1,
-                39  => 1,
-                42  => 1,
-                44  => 1,
-                53  => 1,
-                58  => 1,
-                62  => 1,
-                63  => 1,
-                64  => 1,
-                67  => 1,
-                81  => 1,
-                106 => 1,
-                107 => 1,
-                108 => 1,
-               );
+        $errors = array(
+                   3   => 1,
+                   5   => 1,
+                   10  => 1,
+                   12  => 1,
+                   15  => 1,
+                   17  => 1,
+                   20  => 1,
+                   22  => 1,
+                   25  => 1,
+                   27  => 1,
+                   31  => 1,
+                   33  => 1,
+                   36  => 1,
+                   37  => 1,
+                   39  => 1,
+                   42  => 1,
+                   44  => 1,
+                   53  => 1,
+                   58  => 1,
+                   62  => 1,
+                   63  => 1,
+                   64  => 1,
+                   67  => 1,
+                   81  => 1,
+                   106 => 1,
+                   107 => 1,
+                   108 => 1,
+                   117 => 1,
+                  );
+
+        // The trait test will only work in PHP versions where traits exist.
+        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
+            $errors[118] = 1;
+        }
+
+        return $errors;
 
     }//end getErrorList()
 
@@ -91,5 +99,3 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
 
 
 }//end class
-
-?>
