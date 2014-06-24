@@ -110,4 +110,7 @@ final class MyClass
 trait MyTrait {
 
 }
-?>
+
+$foo = 'foo'; // Var set to foo.
+
+echo $foo;
