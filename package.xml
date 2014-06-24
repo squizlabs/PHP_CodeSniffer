@@ -50,11 +50,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Dawid Nowak for the patch
   - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
     -- Thanks to Ole Martin Handeland for the patch
+  - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
   - Fixed bug #20261 : phpcbf has an endless fixing loop
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
   - Fixed bug #20296 : new array notion in function comma check fails
   - Fixed bug #20297 : phar does not work when renamed it to phpcs
   - Fixed bug #20307 : PHP_CodeSniffer_Standards_AbstractVariableSniff analyze traits
+  - Fixed bug #20308 : Squiz.ValidVariableNameSniff - wrong variable usage
   - Fixed bug #20309 : Use "member variable" term in sniff "processMemberVar" method
   - Fixed bug #20310 : PSR2 does not check for space after function name
  </notes>

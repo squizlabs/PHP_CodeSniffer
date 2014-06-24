@@ -247,20 +247,23 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->addError($error, $stackPtr, 'InvalidEndChar', $data);
         }
 
-        // Finally, the line below the last comment cannot be empty.
-        $start = false;
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    return;
+        // Finally, the line below the last comment cannot be empty if this inline
+        // comment is on a line by itself.
+        if ($tokens[$previousContent]['line'] < $tokens[$stackPtr]['line']) {
+            $start = false;
+            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        return;
+                  }
+                } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
+                    break;
                 }
-            } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
-                break;
             }
-        }
 
-        $error = 'There must be no blank line following an inline comment';
-        $phpcsFile->addError($error, $stackPtr, 'SpacingAfter');
+            $error = 'There must be no blank line following an inline comment';
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfter');
+        }
 
     }//end process()
 

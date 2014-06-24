@@ -84,7 +84,7 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
             // Check to see if we are using a variable from an object.
             $var = $phpcsFile->findNext(array(T_WHITESPACE), ($objOperator + 1), null, true);
             if ($tokens[$var]['code'] === T_STRING) {
-                $bracket = $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
+                $bracket = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
                 if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                     $objVarName = $tokens[$var]['content'];
 
