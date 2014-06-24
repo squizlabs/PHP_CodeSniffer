@@ -61,21 +61,21 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
         $commentEnd = $phpcsFile->findPrevious($commentToken, $stackPtr);
         if ($commentEnd === false) {
-            $phpcsFile->addError('Missing variable doc comment', $stackPtr, 'Missing');
+            $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
             return;
         }
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr, 'WrongStyle');
+            $phpcsFile->addError('You must use "/**" style comments for a member variable comment', $stackPtr, 'WrongStyle');
             return;
         } else if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
-            $phpcsFile->addError('Missing variable doc comment', $stackPtr, 'Missing');
+            $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
             return;
         } else {
             // Make sure the comment we have found belongs to us.
             $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE), ($commentEnd + 1));
             if ($commentFor !== $stackPtr) {
-                $phpcsFile->addError('Missing variable doc comment', $stackPtr, 'Missing');
+                $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
                 return;
             }
         }
@@ -86,7 +86,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@var') {
                 if ($foundVar !== null) {
-                    $error = 'Only one @var tag is allowed in a variable comment';
+                    $error = 'Only one @var tag is allowed in a member variable comment';
                     $phpcsFile->addError($error, $tag, 'DuplicateVar');
                 } else {
                     $foundVar = $tag;
@@ -95,11 +95,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                 // Make sure the tag isn't empty.
                 $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
                 if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
-                    $error = 'Content missing for @see tag in variable comment';
+                    $error = 'Content missing for @see tag in member variable comment';
                     $phpcsFile->addError($error, $tag, 'EmptySees');
                 }
             } else {
-                $error = '%s tag is not allowed in variable comment';
+                $error = '%s tag is not allowed in member variable comment';
                 $data  = array($tokens[$tag]['content']);
                 $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
             }//end if
@@ -107,21 +107,21 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
 
         // The @var tag is the only one we require.
         if ($foundVar === null) {
-            $error = 'Missing @var tag in variable comment';
+            $error = 'Missing @var tag in member variable comment';
             $phpcsFile->addError($error, $commentEnd, 'MissingVar');
             return;
         }
 
         $firstTag = $tokens[$commentStart]['comment_tags'][0];
         if ($foundVar !== null && $tokens[$firstTag]['content'] !== '@var') {
-            $error = 'The @var tag must be the first tag in a variable comment';
+            $error = 'The @var tag must be the first tag in a member variable comment';
             $phpcsFile->addError($error, $foundVar, 'VarOrder');
         }
 
         // Make sure the tag isn't empty and has the correct padding.
         $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $foundVar, $commentEnd);
         if ($string === false || $tokens[$string]['line'] !== $tokens[$foundVar]['line']) {
-            $error = 'Content missing for @var tag in variable comment';
+            $error = 'Content missing for @var tag in member variable comment';
             $phpcsFile->addError($error, $foundVar, 'EmptyVar');
             return;
         }
@@ -129,7 +129,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         $varType       = $tokens[($foundVar + 2)]['content'];
         $suggestedType = PHP_CodeSniffer::suggestType($varType);
         if ($varType !== $suggestedType) {
-            $error = 'Expected "%s" but found "%s" for @var tag in variable comment';
+            $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
             $data  = array(
                       $suggestedType,
                       $varType,
