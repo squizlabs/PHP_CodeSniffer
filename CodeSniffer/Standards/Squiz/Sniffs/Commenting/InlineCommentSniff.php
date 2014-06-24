@@ -255,7 +255,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                 if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                     if ($tokens[$i]['code'] !== T_WHITESPACE) {
                         return;
-                  }
+                    }
                 } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
                     break;
                 }
