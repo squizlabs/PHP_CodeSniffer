@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
   - Fixed bug #20296 : new array notion in function comma check fails
   - Fixed bug #20297 : phar does not work when renamed it to phpcs
+  - Fixed bug #20307 : PHP_CodeSniffer_Standards_AbstractVariableSniff analyze traits
   - Fixed bug #20309 : Use "member variable" term in sniff "processMemberVar" method
   - Fixed bug #20310 : PSR2 does not check for space after function name
  </notes>

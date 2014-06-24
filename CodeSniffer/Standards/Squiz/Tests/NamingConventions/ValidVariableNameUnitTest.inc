@@ -111,3 +111,9 @@ class a
 var_dump($http_response_header);
 var_dump($HTTP_RAW_POST_DATA);
 var_dump($php_errormsg);
+
+trait MyTrait
+{
+    public $_varName = 'hello';
+    private $_varName = 'hello';
+}

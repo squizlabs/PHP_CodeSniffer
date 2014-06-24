@@ -68,6 +68,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     {
         $scopes = array(
                    T_CLASS,
+                   T_TRAIT,
                    T_INTERFACE,
                   );
 

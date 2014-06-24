@@ -2587,7 +2587,8 @@ class PHP_CodeSniffer_File
         $conditions = array_keys($this->_tokens[$stackPtr]['conditions']);
         $ptr        = array_pop($conditions);
         if (isset($this->_tokens[$ptr]) === false
-            || $this->_tokens[$ptr]['code'] !== T_CLASS
+            || ($this->_tokens[$ptr]['code'] !== T_CLASS
+            && $this->_tokens[$ptr]['code'] !== T_TRAIT)
         ) {
             if (isset($this->_tokens[$ptr]) === true
                 && $this->_tokens[$ptr]['code'] === T_INTERFACE
