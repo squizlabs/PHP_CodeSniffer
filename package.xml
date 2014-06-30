@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20308 : Squiz.ValidVariableNameSniff - wrong variable usage
   - Fixed bug #20309 : Use "member variable" term in sniff "processMemberVar" method
   - Fixed bug #20310 : PSR2 does not check for space after function name
+  - Fixed bug #20322 : Display rules set to type=error even when suppressing warnings
  </notes>
  <contents>
   <dir name="/">

@@ -733,12 +733,6 @@ class PHP_CodeSniffer_File
      */
     public function addError($error, $stackPtr, $code='', $data=array(), $severity=0)
     {
-        // Don't bother doing any processing if errors are just going to
-        // be hidden in the reports anyway.
-        if ($this->phpcs->cli->errorSeverity === 0) {
-            return;
-        }
-
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -776,6 +770,10 @@ class PHP_CodeSniffer_File
         ) {
             // Pass this off to the warning handler.
             $this->addWarning($error, $stackPtr, $code, $data, $severity);
+            return;
+        } else if ($this->phpcs->cli->errorSeverity === 0) {
+            // Don't bother doing any processing as errors are just going to
+            // be hidden in the reports anyway.
             return;
         }
 
@@ -865,12 +863,6 @@ class PHP_CodeSniffer_File
      */
     public function addWarning($warning, $stackPtr, $code='', $data=array(), $severity=0)
     {
-        // Don't bother doing any processing if warnings are just going to
-        // be hidden in the reports anyway.
-        if ($this->phpcs->cli->warningSeverity === 0) {
-            return;
-        }
-
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -908,6 +900,10 @@ class PHP_CodeSniffer_File
         ) {
             // Pass this off to the error handler.
             $this->addError($warning, $stackPtr, $code, $data, $severity);
+            return;
+        } else if ($this->phpcs->cli->warningSeverity === 0) {
+            // Don't bother doing any processing as warnings are just going to
+            // be hidden in the reports anyway.
             return;
         }
 
