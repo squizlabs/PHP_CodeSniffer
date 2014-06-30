@@ -637,7 +637,11 @@ class PHP_CodeSniffer
             }
         }
 
-        $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
+        // Check if we have selected a subset ruleset, so we don't include all standard sniffs
+        $includeOwnSniffs = preg_match('#[\\/]ruleset.xml$#', $rulesetPath) > 0;
+        if ($includeOwnSniffs) {
+            $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
+        }
         $excludedSniffs = array_unique($excludedSniffs);
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1974,6 +1978,15 @@ class PHP_CodeSniffer
                         // We found a coding standard directory.
                         $installedStandards[] = $filename;
                     }
+                    // Search for subset rulesets in root, ie: {subset}.ruleset.xml
+                    $subsets = glob($file->getPathname().'/*.ruleset.xml');
+                    if ( ! empty( $subsets ) ) {
+                        foreach ( $subsets as $subset ) {
+                            $subset_name = preg_match('#[\\/]([^\\/]*).ruleset.xml$#', $subset, $match) > 0
+                                ? $match[1] : null;
+                            $installedStandards[] = $filename.':'.$subset_name;
+                        }
+                    }
                 }
             }
         }//end foreach
@@ -2003,7 +2016,9 @@ class PHP_CodeSniffer
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
-            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
+            list($standard, $subset) = explode(':', $standard.':');
+            $ruleset = $subset ? $subset.'.ruleset.xml' : 'ruleset.xml';
+            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.$ruleset;
             if (is_file($ruleset) === true) {
                 return true;
             }
@@ -2035,6 +2050,9 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
+        list($standard, $subset) = explode(':', $standard.':');
+        $ruleset = $subset ? $subset . '.ruleset.xml' : 'ruleset.xml';
+
         $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
         if ($configPaths !== null) {
@@ -2042,7 +2060,7 @@ class PHP_CodeSniffer
         }
 
         foreach ($installedPaths as $installedPath) {
-            $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
+            $path = realpath($installedPath.'/'.$standard.'/'.$ruleset);
             if (is_file($path) === true) {
                 return $path;
             }
