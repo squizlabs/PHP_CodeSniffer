@@ -86,7 +86,10 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Class or namespace?
-        if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR) {
+        if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR
+            || $tokens[$prevPtr]['code'] === T_USE
+            || $tokens[$prevPtr]['code'] === T_NAMESPACE
+        ) {
             return;
         }
 

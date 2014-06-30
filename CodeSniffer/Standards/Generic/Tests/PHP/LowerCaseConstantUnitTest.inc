@@ -51,10 +51,13 @@ $x = new stdClass();
 $x->NULL = 7;
 
 use Zend\Log\Writer\NULL as NullWriter;
-new \Zend\Log\Writer\NULL()
+new \Zend\Log\Writer\NULL();
+
+namespace False;
 
 class True extends Null implements False {}
 
+use True\Something;
 use Something\True;
 class MyClass
 {
