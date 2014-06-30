@@ -50,7 +50,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Dawid Nowak for the patch
   - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
     -- Thanks to Ole Martin Handeland for the patch
+  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore namespaces beginning with TRUE/FALSE/NULL
+    -- Thanks to Renan Gonçalves for the patch
   - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
+  - Tab characters are now encoded in abstract pattern errors messages
+    -- Thanks to Blaine Schmeisser for the patch
   - Fixed bug #20261 : phpcbf has an endless fixing loop
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
   - Fixed bug #20296 : new array notion in function comma check fails

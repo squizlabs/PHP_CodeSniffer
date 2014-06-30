@@ -55,8 +55,8 @@ class Generic_Tests_PHP_UpperCaseConstantUnitTest extends AbstractSniffUnitTest
                 42 => 1,
                 47 => 1,
                 48 => 1,
-                67 => 1,
-                68 => 1,
+                70 => 1,
+                71 => 1,
                );
 
     }//end getErrorList()
