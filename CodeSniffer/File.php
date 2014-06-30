@@ -794,12 +794,6 @@ class PHP_CodeSniffer_File
         $severity=0,
         $fixable=false
     ) {
-        // Don't bother doing any processing if errors are just going to
-        // be hidden in the reports anyway.
-        if ($this->phpcs->cli->errorSeverity === 0) {
-            return false;
-        }
-
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -828,6 +822,10 @@ class PHP_CodeSniffer_File
         ) {
             // Pass this off to the warning handler.
             return $this->addWarning($error, $stackPtr, $code, $data, $severity);
+        } else if ($this->phpcs->cli->errorSeverity === 0) {
+            // Don't bother doing any processing as errors are just going to
+            // be hidden in the reports anyway.
+            return false;
         }
 
         // Make sure we are interested in this severity level.
@@ -940,12 +938,6 @@ class PHP_CodeSniffer_File
         $severity=0,
         $fixable=false
     ) {
-        // Don't bother doing any processing if warnings are just going to
-        // be hidden in the reports anyway.
-        if ($this->phpcs->cli->warningSeverity === 0) {
-            return false;
-        }
-
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -974,6 +966,10 @@ class PHP_CodeSniffer_File
         ) {
             // Pass this off to the error handler.
             return $this->addError($warning, $stackPtr, $code, $data, $severity);
+        } else if ($this->phpcs->cli->warningSeverity === 0) {
+            // Don't bother doing any processing as warnings are just going to
+            // be hidden in the reports anyway.
+            return false;
         }
 
         // Make sure we are interested in this severity level.
