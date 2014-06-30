@@ -721,6 +721,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $found    = str_replace("\r\n", '\n', $found);
         $found    = str_replace("\n", '\n', $found);
         $found    = str_replace("\r", '\n', $found);
+        $found    = str_replace("\t", '\t', $found);
         $found    = str_replace('EOL', '\n', $found);
         $expected = str_replace('EOL', '\n', $patternCode);
 
