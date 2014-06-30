@@ -21,7 +21,7 @@ The easiest way to install PHP\_CodeSniffer is to use the PEAR installer. This w
 
 If you prefer using [Composer](http://getcomposer.org/) you can easily install PHP_CodeSniffer system-wide with the following command:
 
-    composer global require 'squizlabs/php_codesniffer=*'
+    composer global require "squizlabs/php_codesniffer=*"
 
 Make sure you have `~/.composer/vendor/bin/` in your PATH.
 
