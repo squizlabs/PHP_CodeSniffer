@@ -824,25 +824,31 @@ class PHP_CodeSniffer
         $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
         foreach ($di as $file) {
-            $fileName = $file->getFilename();
+            $filename = $file->getFilename();
 
             // Skip hidden files.
-            if (substr($fileName, 0, 1) === '.') {
+            if (substr($filename, 0, 1) === '.') {
                 continue;
             }
 
             // We are only interested in PHP and sniff files.
-            $fileParts = explode('.', $fileName);
+            $fileParts = explode('.', $filename);
             if (array_pop($fileParts) !== 'php') {
                 continue;
             }
 
-            $basename = basename($fileName, '.php');
+            $basename = basename($filename, '.php');
             if (substr($basename, -5) !== 'Sniff') {
                 continue;
             }
 
             $path = $file->getPathname();
+
+            // Skip files in hidden directories.
+            if (strpos($path, DIRECTORY_SEPARATOR.'.') !== false) {
+                continue;
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> $path".PHP_EOL;
