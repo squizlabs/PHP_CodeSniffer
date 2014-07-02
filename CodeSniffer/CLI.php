@@ -331,8 +331,16 @@ class PHP_CodeSniffer_CLI
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
-                $sniffs = substr($arg, 7);
-                $values['sniffs'] = explode(',', $sniffs);
+                $sniffs = explode(',', substr($arg, 7));
+                foreach ($sniffs as $sniff) {
+                    if (substr_count($sniff, '.') !== 2) {
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid.'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+                }
+
+                $values['sniffs'] = $sniffs;
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $values['reportFile'] = realpath(substr($arg, 12));
 
