@@ -1401,7 +1401,9 @@ class PHP_CodeSniffer_File
             if (isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true) {
                 $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
             } else {
-                if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1') {
+                if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1'
+                    && function_exists('iconv_strlen') === true
+                ) {
                     // Not using the default encoding, so take a bit more care.
                     $length = iconv_strlen($tokens[$i]['content'], PHP_CODESNIFFER_ENCODING);
                     if ($length === false) {
