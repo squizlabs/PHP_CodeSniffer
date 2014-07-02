@@ -1964,6 +1964,9 @@ class PHP_CodeSniffer
         }
 
         foreach ($installedPaths as $standardsDir) {
+            if (substr($standardsDir, 0, 1) === '.') {
+                $standardsDir = dirname(__FILE__) . '/' . $standardsDir;
+            }
             $di = new DirectoryIterator($standardsDir);
             foreach ($di as $file) {
                 if ($file->isDir() === true && $file->isDot() === false) {
