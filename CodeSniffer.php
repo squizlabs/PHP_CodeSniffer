@@ -1966,6 +1966,8 @@ class PHP_CodeSniffer
         foreach ($installedPaths as $standardsDir) {
             if (substr($standardsDir, 0, 1) === '.') {
                 $standardsDir = dirname(__FILE__) . '/' . $standardsDir;
+            } else if (substr($standardsDir, 0, 2) === '~/') {
+                $standardsDir = $_SERVER['HOME'] . ltrim($standardsDir, '~');
             }
             $di = new DirectoryIterator($standardsDir);
             foreach ($di as $file) {
