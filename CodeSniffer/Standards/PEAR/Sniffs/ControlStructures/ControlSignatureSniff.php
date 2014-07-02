@@ -43,7 +43,7 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
     /**
      * Returns the patterns that this test wishes to verify.
      *
-     * @return array(string)
+     * @return string[]
      */
     protected function getPatterns()
     {

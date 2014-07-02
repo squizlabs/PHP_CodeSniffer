@@ -247,7 +247,7 @@ class MyClass() {
     /**
      * An abstract function.
      *
-     * @return array(string)
+     * @return string[]
      */
     abstract final protected function myFunction();
 }

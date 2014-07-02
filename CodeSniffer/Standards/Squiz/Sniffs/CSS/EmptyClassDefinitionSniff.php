@@ -39,7 +39,7 @@ class Squiz_Sniffs_CSS_EmptyClassDefinitionSniff implements PHP_CodeSniffer_Snif
     /**
      * Returns the token types that this sniff is interested in.
      *
-     * @return array(int)
+     * @return int[]
      */
     public function register()
     {

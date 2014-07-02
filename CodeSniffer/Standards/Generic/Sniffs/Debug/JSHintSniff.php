@@ -41,7 +41,7 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
     /**
      * Returns the token types that this sniff is interested in.
      *
-     * @return array(int)
+     * @return int[]
      */
     public function register()
     {

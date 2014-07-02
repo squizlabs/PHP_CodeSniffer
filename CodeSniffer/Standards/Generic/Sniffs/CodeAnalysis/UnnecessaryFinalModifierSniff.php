@@ -44,7 +44,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return array(integer)
+     * @return int[]
      */
     public function register()
     {

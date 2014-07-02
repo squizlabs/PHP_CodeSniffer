@@ -42,7 +42,7 @@ class Generic_Tests_Commenting_FixmeUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile The name of the file being tested.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getErrorList($testFile='FixmeUnitTest.inc')
     {
@@ -68,7 +68,7 @@ class Generic_Tests_Commenting_FixmeUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile The name of the file being tested.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getWarningList($testFile='FixmeUnitTest.inc')
     {

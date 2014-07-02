@@ -38,7 +38,7 @@ class PSR1_Tests_Files_SideEffectsUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile The name of the file being tested.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getErrorList($testFile='')
     {
@@ -55,7 +55,7 @@ class PSR1_Tests_Files_SideEffectsUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile The name of the file being tested.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getWarningList($testFile='')
     {

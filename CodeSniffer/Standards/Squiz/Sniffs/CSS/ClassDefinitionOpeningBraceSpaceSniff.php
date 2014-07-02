@@ -40,7 +40,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
     /**
      * Returns the token types that this sniff is interested in.
      *
-     * @return array(int)
+     * @return int[]
      */
     public function register()
     {

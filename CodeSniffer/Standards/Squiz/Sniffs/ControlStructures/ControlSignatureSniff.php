@@ -40,7 +40,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return int[]
      */
     public function register()
     {

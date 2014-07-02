@@ -37,7 +37,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return array(integer)
+     * @return int[]
      */
     public function register()
     {

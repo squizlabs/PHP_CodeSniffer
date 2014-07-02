@@ -56,7 +56,7 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
     /**
      * Returns the token types that this sniff is interested in.
      *
-     * @return array(int)
+     * @return int[]
      */
     public function register()
     {

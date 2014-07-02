@@ -127,7 +127,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      * sniffs (ie. $this->_sniffs is not empty) then all others sniffs will
      * be filtered from the results as well.
      *
-     * @return array(string)
+     * @return string[]
      */
     protected function getStandardFiles()
     {

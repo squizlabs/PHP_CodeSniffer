@@ -38,7 +38,7 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getErrorList()
     {
@@ -170,7 +170,7 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getWarningList()
     {

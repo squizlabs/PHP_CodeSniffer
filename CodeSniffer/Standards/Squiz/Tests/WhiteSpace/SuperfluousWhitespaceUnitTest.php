@@ -40,7 +40,7 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
      *
      * @param string $testFile The name of the file being tested.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getErrorList($testFile='SuperfluousWhitespaceUnitTest.inc')
     {
@@ -95,7 +95,7 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     public function getWarningList()
     {

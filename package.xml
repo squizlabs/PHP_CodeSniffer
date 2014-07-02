@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
   - Tab characters are now encoded in abstract pattern errors messages
     -- Thanks to Blaine Schmeisser for the patch
+  - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)
   - Fixed bug #20261 : phpcbf has an endless fixing loop
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
   - Fixed bug #20296 : new array notion in function comma check fails
