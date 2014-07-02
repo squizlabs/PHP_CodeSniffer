@@ -324,7 +324,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractDocElement implements PHP_C
      * Returns the sub element names that make up this element in the order they
      * appear in the element.
      *
-     * @return array(string)
+     * @return string[]
      * @see processSubElement()
      */
     abstract protected function getSubElements();

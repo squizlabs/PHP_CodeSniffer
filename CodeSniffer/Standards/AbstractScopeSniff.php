@@ -119,7 +119,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * DO NOT OVERRIDE THIS METHOD. Use the constructor of this class to register
      * for the desired tokens and scope.
      *
-     * @return array(int)
+     * @return int[]
      * @see __constructor()
      */
     public final function register()

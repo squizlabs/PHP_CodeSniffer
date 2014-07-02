@@ -119,7 +119,7 @@ class PHP_CodeSniffer_CommentParser_ParameterElement extends PHP_CodeSniffer_Com
      * Returns the element names that this tag is comprised of, in the order
      * that they appear in the tag.
      *
-     * @return array(string)
+     * @return string[]
      * @see processSubElement()
      */
     protected function getSubElements()

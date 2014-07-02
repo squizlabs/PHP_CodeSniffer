@@ -390,7 +390,7 @@ class PHP_CodeSniffer_File
     /**
      * Returns the token stack for this file.
      *
-     * @return array()
+     * @return array
      */
     public function getTokens()
     {
@@ -2146,7 +2146,7 @@ class PHP_CodeSniffer_File
      * @param int $stackPtr The position in the stack of the T_FUNCTION token
      *                      to acquire the parameters for.
      *
-     * @return array()
+     * @return array
      * @throws PHP_CodeSniffer_Exception If the specified $stackPtr is not of
      *                                   type T_FUNCTION.
      */

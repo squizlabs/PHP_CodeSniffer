@@ -1506,7 +1506,7 @@ class PHP_CodeSniffer
     /**
      * Gets the array of PHP_CodeSniffer_Sniff's.
      *
-     * @return array(PHP_CodeSniffer_Sniff)
+     * @return PHP_CodeSniffer_Sniff[]
      */
     public function getSniffs()
     {
@@ -1518,7 +1518,7 @@ class PHP_CodeSniffer
     /**
      * Gets the array of PHP_CodeSniffer_Sniff's indexed by token type.
      *
-     * @return array()
+     * @return array
      */
     public function getTokenSniffs()
     {

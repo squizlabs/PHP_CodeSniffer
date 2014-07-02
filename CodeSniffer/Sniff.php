@@ -48,7 +48,7 @@ interface PHP_CodeSniffer_Sniff
      *           );
      * </code>
      *
-     * @return array(int)
+     * @return int[]
      * @see    Tokens.php
      */
     public function register();

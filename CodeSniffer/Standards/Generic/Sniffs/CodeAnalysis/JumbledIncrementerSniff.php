@@ -51,7 +51,7 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return array(integer)
+     * @return int[]
      */
     public function register()
     {
@@ -115,7 +115,7 @@ class Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff implements PHP_CodeSni
      * @param array(integer=>array) $tokens Array with all code sniffer tokens.
      * @param array(string=>mixed)  $token  Current for loop token
      * 
-     * @return array(string) List of all found incrementer variables.
+     * @return string[] List of all found incrementer variables.
      */
     protected function findIncrementers(array $tokens, array $token)
     {
