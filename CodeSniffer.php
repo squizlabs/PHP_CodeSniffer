@@ -1931,27 +1931,30 @@ class PHP_CodeSniffer
 
 
     /**
-     * Collect list of standard installed_paths, resolving any relative paths as absolute.
+     * Get a list paths where standards are installed.
      *
      * @return array
      */
-    public static function getInstalledPaths() {
+    public static function getInstalledStandardPaths()
+    {
         $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }
+
         $resolvedInstalledPaths = array();
-        foreach ( $installedPaths as $installedPath ) {
+        foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
-                $installedPath = dirname(__FILE__) . '/' . $installedPath;
-            } else if (substr($installedPath, 0, 2) === '~/') {
-                $installedPath = $_SERVER['HOME'] . ltrim($installedPath, '~');
+                $installedPath = dirname(__FILE__).'/'.$installedPath;
             }
+
             $resolvedInstalledPaths[] = $installedPath;
         }
+
         return $resolvedInstalledPaths;
-    }
+
+    }//end getInstalledStandardPaths()
 
 
     /**
@@ -1978,7 +1981,7 @@ class PHP_CodeSniffer
         $installedStandards = array();
 
         if ($standardsDir === '') {
-            $installedPaths = self::getInstalledPaths();
+            $installedPaths = self::getInstalledStandardPaths();
         } else {
             $installedPaths = array($standardsDir);
         }
@@ -1994,10 +1997,9 @@ class PHP_CodeSniffer
                         continue;
                     }
 
-                    // Valid coding standard dirs include a standard class.
+                    // Valid coding standard dirs include a ruleset.
                     $csFile = $file->getPathname().'/ruleset.xml';
                     if (is_file($csFile) === true) {
-                        // We found a coding standard directory.
                         $installedStandards[] = $filename;
                     }
                 }
@@ -2061,7 +2063,7 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
-        $installedPaths = self::getInstalledPaths();
+        $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
             $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
             if (is_file($path) === true) {
