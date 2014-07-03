@@ -43,6 +43,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlSignatureSniff no longer uses the Abstract Pattern sniff
     -- If you are extending this sniff, you'll need to rewrite your code
     -- The rewrite allows this sniff to fix all control structure formatting issues it finds
+  - The installed_paths config var now accepts relative paths
+    -- The paths are relative to the PHP_CodeSniffer install directory
+    -- Thanks to Weston Ruter for the patch
   - Generic ScopeIndentSniff now accounts for different open tag indents
   - PEAR FunctionDeclarationSniff now ignores short arrays when checking indent
     -- Thanks to Daniel Tschinder for the patch
