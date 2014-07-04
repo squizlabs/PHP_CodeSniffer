@@ -397,6 +397,8 @@ class PHP_CodeSniffer
 
             if (isset($this->allowedFileExtensions[$ext]) === true) {
                 $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
+            } else if (isset($this->defaultFileExtensions[$ext]) === true) {
+                $newExtensions[$ext] = $this->defaultFileExtensions[$ext];
             } else {
                 $newExtensions[$ext] = 'PHP';
             }
