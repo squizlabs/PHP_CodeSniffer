@@ -35,6 +35,13 @@
         "extensions": ""
     },
     {
+        "name": "Yii Web Programming Framework",
+        "url": "yiisoft/yii",
+        "path": "",
+        "ignore": "*/vendors/*,*/views/*",
+        "extensions": ""
+    },
+    {
         "name": "Yii PHP Framework Version 2",
         "url": "yiisoft/yii2",
         "path": "",
