@@ -439,5 +439,152 @@
         "path": "classes",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Aura.Autoload",
+        "url": "auraphp/Aura.Autoload",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Cli",
+        "url": "auraphp/Aura.Cli",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Cli_Kernel",
+        "url": "auraphp/Aura.Cli_Kernel",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Di",
+        "url": "auraphp/Aura.Di",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Dispatcher",
+        "url": "auraphp/Aura.Dispatcher",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Html",
+        "url": "auraphp/Aura.Html",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Project_Kernel",
+        "url": "auraphp/Aura.Project_Kernel",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Router",
+        "url": "auraphp/Aura.Router",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Sql",
+        "url": "auraphp/Aura.Sql",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.SqlQuery",
+        "url": "auraphp/Aura.SqlQuery",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.SqlSchema",
+        "url": "auraphp/Aura.SqlSchema",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.View",
+        "url": "auraphp/Aura.View",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Web",
+        "url": "auraphp/Aura.Web",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Web_Kernel",
+        "url": "auraphp/Aura.Web_Kernel",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Filter",
+        "url": "auraphp/Aura.Filter",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Input",
+        "url": "auraphp/Aura.Input",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Intl",
+        "url": "auraphp/Aura.Intl",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Marshal",
+        "url": "auraphp/Aura.Marshal",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Session",
+        "url": "auraphp/Aura.Session",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Signal",
+        "url": "auraphp/Aura.Signal",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Aura.Uri",
+        "url": "auraphp/Aura.Uri",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
