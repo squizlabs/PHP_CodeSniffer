@@ -275,26 +275,33 @@ class PHP_CodeSniffer
             $newClassName = $className;
         }
 
-        $path = str_replace(array('_', '\\'), '/', $newClassName).'.php';
+        $path = str_replace(array('_', '\\'), DIRECTORY_SEPARATOR, $newClassName).'.php';
 
-        if (is_file(dirname(__FILE__).'/'.$path) === true) {
+        if (is_file(dirname(__FILE__).DIRECTORY_SEPARATOR.$path) === true) {
             // Check standard file locations based on class name.
-            include dirname(__FILE__).'/'.$path;
-        } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
-            // Check for included sniffs.
-            include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+            include dirname(__FILE__).DIRECTORY_SEPARATOR.$path;
+            return;
         } else {
-            // Check standard file locations based on the loaded rulesets.
-            foreach (self::$rulesetDirs as $rulesetDir) {
-                if (is_file(dirname($rulesetDir).'/'.$path) === true) {
-                    include_once dirname($rulesetDir).'/'.$path;
+            // Check for included sniffs.
+            $installedPaths = PHP_CodeSniffer::getInstalledStandardPaths();
+            foreach ($installedPaths as $installedPath) {
+                if (is_file($installedPath.DIRECTORY_SEPARATOR.$path) === true) {
+                    include $installedPath.DIRECTORY_SEPARATOR.$path;
                     return;
                 }
             }
 
-            // Everything else.
-            @include $path;
-        }
+            // Check standard file locations based on the loaded rulesets.
+            foreach (self::$rulesetDirs as $rulesetDir) {
+                if (is_file(dirname($rulesetDir).DIRECTORY_SEPARATOR.$path) === true) {
+                    include_once dirname($rulesetDir).DIRECTORY_SEPARATOR.$path;
+                    return;
+                }
+            }
+        }//end if
+
+        // Everything else.
+        @include $path;
 
     }//end autoload()
 

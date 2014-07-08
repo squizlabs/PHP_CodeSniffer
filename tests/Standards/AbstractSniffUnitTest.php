@@ -48,6 +48,13 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      */
     protected static $phpcs = null;
 
+    /**
+     * The PHP_CodeSniffer object used for testing.
+     *
+     * @var PHP_CodeSniffer
+     */
+    public $standardsDir = null;
+
 
     /**
      * Sets up this unit test.
@@ -98,14 +105,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         $parts     = explode('_', $basename);
         $sniffCode = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
-        if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
-            // We have not been installed.
-            $standardsDir = PHP_CodeSniffer::realpath(dirname(__FILE__).'/../../CodeSniffer/Standards');
-            $testFileBase = $standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
-        } else {
-            // The name of the dummy file we are testing.
-            $testFileBase = dirname(__FILE__).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
-        }
+        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
 
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.
