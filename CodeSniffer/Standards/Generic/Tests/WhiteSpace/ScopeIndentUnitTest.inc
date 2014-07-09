@@ -470,3 +470,23 @@ if ($myvar == 'test') {
     }
     ?>
 </body>
+<?php
+if (true) {
+    ?>
+    <div>
+        <div>
+            <div>
+            <?php
+                if (true) {
+                    echo 'hello';
+                } else {
+                    echo 'goodbye';
+                }
+            ?>
+            </div>
+        </div>
+    </div>
+    <?php
+} else {
+    echo 'else';
+}
