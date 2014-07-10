@@ -491,3 +491,7 @@ if (true) {
 } else {
     echo 'else';
 }
+?>
+<?php if (isset($param)) { ?>
+   <h3>some text</h3>
+<?php }

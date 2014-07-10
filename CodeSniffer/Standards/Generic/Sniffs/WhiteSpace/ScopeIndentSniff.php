@@ -321,8 +321,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
-                    $trimmedContentLength
-                        = strlen(ltrim($tokens[$firstToken]['content']));
+                    $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
                     if ($trimmedContentLength === 0) {
                         continue;
                     }
@@ -406,7 +405,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         if ($column === 1) {
                             $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
                         } else {
-                            $phpcsFile->fixer->replaceToken(($firstToken - 1), str_repeat(' ', ($indent - 1)));
+                            $spaces = str_repeat(' ', ($indent - 1));
+                            if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
+                                $newContent = $spaces.ltrim($tokens[$firstToken]['content']);
+                                $phpcsFile->fixer->replaceToken($firstToken, $newContent);
+                            } else {
+                                $phpcsFile->fixer->replaceToken(($firstToken - 1), $spaces);
+                            }
                         }
                     }
                 }//end if
