@@ -90,24 +90,45 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
                 // except if being used inside a closure.
                 if ($phpcsFile->hasCondition($stackPtr, T_CLOSURE) === false) {
                     $error = 'Must use "self::" for local static member reference';
-                    $phpcsFile->addError($error, $calledClassName, 'NotUsed');
+                    $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
+
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $prev = $phpcsFile->findPrevious(array(T_NS_SEPARATOR, T_STRING), ($stackPtr - 1), null, true);
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($prev + 1); $i < $stackPtr; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
+                        $phpcsFile->fixer->endChangeset();
+
+                    }//end if
+
                     return;
                 }
-            }
+            }//end if
         }//end if
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr - 1)]['content']);
             $error = 'Expected 0 spaces before double colon; %s found';
             $data  = array($found);
-            $phpcsFile->addError($error, $calledClassName, 'SpaceBefore', $data);
+            $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
+
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
         }
 
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr + 1)]['content']);
             $error = 'Expected 0 spaces after double colon; %s found';
             $data  = array($found);
-            $phpcsFile->addError($error, $calledClassName, 'SpaceAfter', $data);
+            $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
+
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+            }
         }
 
     }//end processTokenWithinScope()
