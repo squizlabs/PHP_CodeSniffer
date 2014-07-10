@@ -678,6 +678,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                             $content = str_replace("\n", "\033[30;1m\\n\033[0m", $lastContent);
                             $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
                         }
+
                         echo "\t=> Removed token $value ($content)".PHP_EOL;
                     }
 

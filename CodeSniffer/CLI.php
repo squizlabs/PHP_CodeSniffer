@@ -459,7 +459,6 @@ class PHP_CodeSniffer_CLI
             } else {
                 ini_set($ini[0], true);
             }
-
             break;
         case 'n' :
             $this->values['warningSeverity'] = 0;

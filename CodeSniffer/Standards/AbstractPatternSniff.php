@@ -124,7 +124,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
             }
 
             $this->_parsedPatterns[$tokenType][] = $patternArray;
-
         }//end foreach
 
         return array_unique(array_merge($listenTypes, $this->_supplementaryTokens));
@@ -794,7 +793,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $firstToken = 0;
 
         for ($i = 0; $i < $length; $i++) {
-
             $specialPattern = false;
             $isLastChar     = ($i === ($length - 1));
             $oldFirstToken  = $firstToken;

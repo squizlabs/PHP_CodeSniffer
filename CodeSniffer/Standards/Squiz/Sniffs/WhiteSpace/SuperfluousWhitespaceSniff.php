@@ -130,7 +130,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
 
                 $phpcsFile->fixer->endChangeset();
             }
-
         } else if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
             /*
                 Check for end of file whitespace.
@@ -180,7 +179,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                     $stackPtr = ($prev + 1);
                 }
-
             }//end if
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
@@ -258,7 +256,6 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                     }
                 }//end if
             }//end if
-
         }//end if
 
     }//end process()

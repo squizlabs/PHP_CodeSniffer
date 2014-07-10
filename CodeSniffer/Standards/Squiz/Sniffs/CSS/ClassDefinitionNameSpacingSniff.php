@@ -102,6 +102,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
                     $error = 'Blank lines are not allowed between class names';
                     $phpcsFile->addError($error, ($i + 1), 'BlankLinesFound');
                 }
+
                 break;
             }
 

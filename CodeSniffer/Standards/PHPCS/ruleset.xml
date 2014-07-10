@@ -16,6 +16,7 @@
  <rule ref="Squiz.Commenting.InlineComment" />
  <rule ref="Squiz.Commenting.LongConditionClosingComment" />
  <rule ref="Squiz.Commenting.PostStatementComment" />
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
  <rule ref="Generic.Commenting.Todo"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>

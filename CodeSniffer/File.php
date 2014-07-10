@@ -1472,7 +1472,6 @@ class PHP_CodeSniffer_File
                     echo str_repeat("\t", count($curlyOpeners));
                     echo "=> Found square bracket opener at $i".PHP_EOL;
                 }
-
                 break;
             case T_OPEN_CURLY_BRACKET:
                 if (isset($tokens[$i]['scope_closer']) === false) {
@@ -2417,14 +2416,12 @@ class PHP_CodeSniffer_File
                 if ($defaultStart === null) {
                     $typeHint .= $this->_tokens[$i]['content'];
                 }
-
                 break;
             case T_NS_SEPARATOR:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
                     $typeHint .= $this->_tokens[$i]['content'];
                 }
-
                 break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:

@@ -117,7 +117,6 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                     // The included system was used, so it is fine.
                     return;
                 }
-
                 break;
             case T_EXTENDS:
                 $classNameToken = $phpcsFile->findNext(T_STRING, ($i + 1));
@@ -126,7 +125,6 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                     // The included system was used, so it is fine.
                     return;
                 }
-
                 break;
             case T_IMPLEMENTS:
                 $endImplements = $phpcsFile->findNext(array(T_EXTENDS, T_OPEN_CURLY_BRACKET), ($i + 1));
@@ -139,7 +137,6 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
                         }
                     }
                 }
-
                 break;
             }//end switch
         }//end for

@@ -158,11 +158,8 @@ class PHP_CodeSniffer_Tokenizers_Comment
                 }
             }
 
-            /*
-                Now we are ready to process the actual content of the line.
-                So round we go.
-            */
-
+            // Now we are ready to process the actual content of the line.
+            // So round we go.
         }//end while
 
         $tokens[$stackPtr] = $closeTag;

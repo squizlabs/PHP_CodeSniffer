@@ -106,7 +106,6 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             return;
-
         }//end if
 
         $commentLines  = array($stackPtr);

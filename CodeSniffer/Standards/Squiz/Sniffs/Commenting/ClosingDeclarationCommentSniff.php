@@ -61,7 +61,6 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_FUNCTION) {
-
             $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
             // Abstract methods do not require a closing comment.

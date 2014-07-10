@@ -112,6 +112,7 @@ if (defined('T_CALLABLE') === false) {
 if (defined('T_FINALLY') === false) {
     define('T_FINALLY', 1063);
 }
+
 if (defined('T_YIELD') === false) {
     define('T_YIELD', 1064);
 }

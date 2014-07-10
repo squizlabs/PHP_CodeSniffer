@@ -107,7 +107,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
             }
         }
 
-        if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'] ) {
+        if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']) {
             $spaceBeforeClose = 0;
             if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
                 $spaceBeforeClose = strlen(ltrim($tokens[($parenCloser - 1)]['content'], $phpcsFile->eolChar));

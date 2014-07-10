@@ -150,7 +150,6 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
             }
 
             echo PHP_EOL;
-
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;

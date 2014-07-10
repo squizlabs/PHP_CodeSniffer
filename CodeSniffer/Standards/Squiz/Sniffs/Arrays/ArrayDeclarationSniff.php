@@ -210,6 +210,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         $phpcsFile->fixer->addNewlineBefore($arrayEnd);
                         $phpcsFile->fixer->endChangeset();
                     }
+
                     return;
                 }
 

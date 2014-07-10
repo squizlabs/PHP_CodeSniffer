@@ -101,8 +101,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
 
                         $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
                         $phpcsFile->fixer->endChangeset();
-
-                    }//end if
+                    }
 
                     return;
                 }
