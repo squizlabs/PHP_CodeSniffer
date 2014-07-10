@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore namespaces beginning with TRUE/FALSE/NULL
     -- Thanks to Renan Gonçalves for the patch
   - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
+  - Squiz SelfMemberReferenceSniff now works correctly with namespaces
   - Tab characters are now encoded in abstract pattern errors messages
     -- Thanks to Blaine Schmeisser for the patch
   - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)
