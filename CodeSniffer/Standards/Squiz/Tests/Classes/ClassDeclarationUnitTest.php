@@ -43,6 +43,7 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
+                5  => 1,
                 10 => 1,
                 15 => 2,
                 18 => 1,

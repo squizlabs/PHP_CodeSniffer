@@ -94,10 +94,14 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                                   $type,
                                   $spaces,
                                  );
-                        $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
+
+                        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
+                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+                        }
                     }
                 }
-            }
+            }//end if
         }//end if
 
     }//end processOpen()
