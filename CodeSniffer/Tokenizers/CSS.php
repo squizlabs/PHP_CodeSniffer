@@ -59,6 +59,8 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $eolAdded = true;
         }
 
+        $string = str_replace('<?php', '^PHPCS_CSS_T_OPEN_TAG^', $string);
+        $string = str_replace('?>', '^PHPCS_CSS_T_CLOSE_TAG^', $string);
         $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
 
         $finalTokens    = array();
@@ -94,31 +96,25 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
-            // Sometimes, there are PHP tags embedded in the code, which causes issues
-            // with how PHP tokenizeses the string. After the first closing tag is found,
-            // everything outside PHP tags is set as inline HTML tokens (1 for each line).
-            // So we need to go through and find these tokens so we can re-tokenize them.
-            if ($token['code'] === T_CLOSE_TAG && $stackPtr !== ($numTokens - 1)) {
-                $content = '<?php ';
-                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                    if ($tokens[$x]['code'] === T_INLINE_HTML) {
-                        $content .= $tokens[$x]['content'];
-                    } else {
-                        $x--;
+            if ($token['code'] === T_POWER
+                && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_OPEN_TAG'
+            ) {
+                $content = '<?php';
+                for ($stackPtr = ($stackPtr + 3); $stackPtr < $numTokens; $stackPtr++) {
+                    if ($tokens[$stackPtr]['code'] === T_POWER
+                        && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_CLOSE_TAG'
+                    ) {
+                        // Add the end tag and ignore the * we put at the end.
+                        $content  .= '?>';
+                        $stackPtr += 2;
                         break;
+                    } else {
+                        $content .= $tokens[$stackPtr]['content'];
                     }
                 }
 
-                if ($x < ($numTokens - 1)) {
-                    // This is not the last closing tag in the file, so we
-                    // have to add another closing tag here. If it is the last closing
-                    // tag, this additional one would have been added during the
-                    // original tokenize call.
-                    $content .= ' ?>';
-                }
-
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t\t=> Found premature closing tag at $stackPtr".PHP_EOL;
+                    echo "\t\t=> Found embedded PHP code: ";
                     if ($isWin === true) {
                         $cleanContent = str_replace($eolChar, '\n', $content);
                     } else {
@@ -126,31 +122,17 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         $cleanContent = str_replace(' ', "\033[30;1m·\033[0m", $cleanContent);
                     }
 
-                    echo "\t\tcontent: $cleanContent".PHP_EOL;
-                    $oldNumTokens = $numTokens;
+                    echo $cleanContent.PHP_EOL;
                 }
 
-                // Tokenize the string and remove the extra PHP tags we don't need.
-                $moreTokens = parent::tokenizeString($content, $eolChar);
-                array_shift($moreTokens);
-                array_pop($moreTokens);
-                $lastSpace = array_pop($moreTokens);
-                if ($lastSpace['content'] !== ' ') {
-                    // The space we added before the closing tag was not the only
-                    // space at the end of the content, so add the whitespace back,
-                    // minus our single space.
-                    $lastSpace['content'] = substr($lastSpace['content'], 0, -1);
-                    $moreTokens[]         = $lastSpace;
-                }
+                $finalTokens[$newStackPtr] = array(
+                                              'type'    => 'T_EMBEDDED_PHP',
+                                              'code'    => T_EMBEDDED_PHP,
+                                              'content' => $content,
+                                             );
 
-                // Rebuild the tokens array.
-                array_splice($tokens, ($stackPtr + 1), ($x - $stackPtr), $moreTokens);
-                $numTokens = count($tokens);
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $count = count($moreTokens);
-                    $diff  = ($x - $stackPtr);
-                    echo "\t\t* added $count tokens, replaced $diff; size changed from $oldNumTokens to $numTokens *".PHP_EOL;
-                }
+                $newStackPtr++;
+                continue;
             }//end if
 
             if ($token['code'] === T_GOTO_LABEL) {

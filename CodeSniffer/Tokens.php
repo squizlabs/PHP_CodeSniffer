@@ -68,51 +68,52 @@ define('T_END_NOWDOC', 1049);
 define('T_OPEN_SHORT_ARRAY', 1050);
 define('T_CLOSE_SHORT_ARRAY', 1051);
 define('T_GOTO_LABEL', 1052);
+define('T_EMBEDDED_PHP', 1053);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1053);
+    define('T_NAMESPACE', 1054);
 }
 
 if (defined('T_NS_C') === false) {
-    define('T_NS_C', 1054);
+    define('T_NS_C', 1055);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1055);
+    define('T_NS_SEPARATOR', 1056);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1056);
+    define('T_GOTO', 1057);
 }
 
 if (defined('T_DIR') === false) {
-    define('T_DIR', 1057);
+    define('T_DIR', 1058);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1058);
+    define('T_TRAIT', 1059);
 }
 
 if (defined('T_TRAIT_C') === false) {
-    define('T_TRAIT_C', 1059);
+    define('T_TRAIT_C', 1060);
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1060);
+    define('T_INSTEADOF', 1061);
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1061);
+    define('T_CALLABLE', 1062);
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1062);
+    define('T_FINALLY', 1063);
 }
 if (defined('T_YIELD') === false) {
-    define('T_YIELD', 1063);
+    define('T_YIELD', 1064);
 }
 
 // Tokens used for parsing doc blocks.
