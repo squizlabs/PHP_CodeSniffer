@@ -75,7 +75,11 @@ class Squiz_Sniffs_ControlStructures_LowercaseDeclarationSniff implements PHP_Co
                       strtolower($content),
                       $content,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
+
+            $fix = $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
+            }
         }
 
     }//end process()

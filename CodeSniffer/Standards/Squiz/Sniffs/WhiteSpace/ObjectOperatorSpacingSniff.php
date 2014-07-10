@@ -80,12 +80,18 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
 
         if ($before !== 0) {
             $error = 'Space found before object operator';
-            $phpcsFile->addError($error, $stackPtr, 'Before');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
         }
 
         if ($after !== 0) {
             $error = 'Space found after object operator';
-            $phpcsFile->addError($error, $stackPtr, 'After');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+            }
         }
 
     }//end process()

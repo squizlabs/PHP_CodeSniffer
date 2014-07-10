@@ -109,7 +109,11 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
                       strtolower($content),
                       $content,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'CallUppercase', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'CallUppercase', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
+            }
         }
 
     }//end process()

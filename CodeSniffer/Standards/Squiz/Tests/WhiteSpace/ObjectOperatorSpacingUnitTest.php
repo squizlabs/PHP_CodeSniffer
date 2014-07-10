@@ -46,6 +46,8 @@ class Squiz_Tests_WhiteSpace_ObjectOperatorSpacingUnitTest extends AbstractSniff
                 3 => 1,
                 4 => 2,
                 6 => 2,
+                8 => 1,
+                9 => 1,
                );
 
     }//end getErrorList()

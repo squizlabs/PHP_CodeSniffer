@@ -72,7 +72,10 @@ class Squiz_Sniffs_CSS_SemicolonSpacingSniff implements PHP_CodeSniffer_Sniff
             $length = strlen($tokens[($semicolon - 1)]['content']);
             $error  = 'Expected 0 spaces before semicolon in style definition; %s found';
             $data   = array($length);
-            $phpcsFile->addError($error, $stackPtr, 'SpaceFound', $data);
+            $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceFound', $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($semicolon - 1), '');
+            }
         }
 
     }//end process()

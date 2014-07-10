@@ -74,7 +74,10 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $error = 'There must be no space before a colon in a style definition';
-            $phpcsFile->addError($error, $stackPtr, 'Before');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+            }
         }
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
@@ -90,11 +93,17 @@ class Squiz_Sniffs_CSS_ColonSpacingSniff implements PHP_CodeSniffer_Sniff
                 if ($length !== 1) {
                     $error = 'Expected 1 space after colon in style definition; %s found';
                     $data  = array($length);
-                    $phpcsFile->addError($error, $stackPtr, 'After', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    }
                 }
             } else {
                 $error = 'Expected 1 space after colon in style definition; newline found';
-                $phpcsFile->addError($error, $stackPtr, 'AfterNewline');
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'AfterNewline');
+                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
             }
         }//end if
 
