@@ -91,11 +91,15 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                     if ($next !== $closeBracket) {
                         // Closing bracket is on the same line as a condition.
                         $error = 'Closing parenthesis of a multi-line IF statement must be on a new line';
-                        $phpcsFile->addError($error, $i, 'CloseBracketNewLine');
+                        $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketNewLine');
+                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            $phpcsFile->fixer->addNewlineBefore($closeBracket);
+                        }
+
                         $expectedIndent = ($statementIndent + $this->indent);
                     } else {
                         // Closing brace needs to be indented to the same level
-                        // as the function.
+                        // as the statement.
                         $expectedIndent = $statementIndent;
                     }
                 } else {
@@ -115,16 +119,40 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                               $expectedIndent,
                               $foundIndent,
                              );
-                    $phpcsFile->addError($error, $i, 'Alignment', $data);
+
+                    $fix = $phpcsFile->addFixableError($error, $i, 'Alignment', $data);
+                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        $spaces = str_repeat(' ', $expectedIndent);
+                        if ($foundIndent === 0) {
+                            $phpcsFile->fixer->addContentBefore($i, $spaces);
+                        } else {
+                            $phpcsFile->fixer->replaceToken($i, $spaces);
+                        }
+                    }
                 }
 
                 if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
                     if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
-                        $phpcsFile->addError($error, $i, 'StartWithBoolean');
+                        $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
+                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), $openBracket, true);
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($x = ($prev + 1); $x < $next; $x++) {
+                                $phpcsFile->fixer->replaceToken($x, '');
+                            }
+
+                            if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+                                $phpcsFile->fixer->addNewline($prev - 1);
+                                $phpcsFile->fixer->addContent($prev, ' ');
+                                $phpcsFile->fixer->addContentBefore($prev, str_repeat(' ', $expectedIndent));
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
                     }
-                }
+                }//end if
 
                 $lastLine = $tokens[$i]['line'];
             }//end if
@@ -168,8 +196,15 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 $error .= '%s spaces';
             }
 
-            $phpcsFile->addError($error, ($closeBracket + 1), $code, $data);
-        }
+            $fix = $phpcsFile->addFixableError($error, ($closeBracket + 1), $code, $data);
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($length === 0) {
+                    $phpcsFile->fixer->addContent($closeBracket, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($closeBracket + 1), ' ');
+                }
+            }
+        }//end if
 
         // And just in case they do something funny before the brace...
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
