@@ -111,35 +111,51 @@ class PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_S
 
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
-            $phpcsFile->addError($error, $scopeEnd, 'Line');
+            $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'Line');
+            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                $phpcsFile->fixer->addNewlineBefore($scopeEnd);
+            }
+
             return;
         }
 
         // Check now that the closing brace is lined up correctly.
-        $braceIndent = $tokens[$scopeEnd]['column'];
+        $fix         = false;
+        $braceIndent = ($tokens[$scopeEnd]['column'] - 1);
         if ($tokens[$stackPtr]['code'] === T_CASE
             || $tokens[$stackPtr]['code'] === T_DEFAULT
         ) {
             // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.
-            if ($braceIndent !== ($startColumn + $this->indent)) {
+            $expectedIndent = ($startColumn + $this->indent - 1);
+            if ($braceIndent !== $expectedIndent) {
                 $error = 'Case breaking statement indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn + $this->indent - 1),
-                          ($braceIndent - 1),
+                          $expectedIndent,
+                          $braceIndent,
                          );
-                $phpcsFile->addError($error, $scopeEnd, 'BreakIdent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'BreakIdent', $data);
             }
         } else {
-            if ($braceIndent !== $startColumn) {
+            $expectedIndent = ($startColumn - 1);
+            if ($braceIndent !== $expectedIndent) {
                 $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
-                          ($startColumn - 1),
-                          ($braceIndent - 1),
+                          $expectedIndent,
+                          $braceIndent,
                          );
-                $phpcsFile->addError($error, $scopeEnd, 'Indent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'Indent', $data);
             }
         }//end if
+
+        if ($fix === true && $phpcsFile->fixer->enabled == true) {
+            $spaces = str_repeat(' ', $expectedIndent);
+            if ($braceIndent === 0) {
+                $phpcsFile->fixer->addContentBefore($scopeEnd, $spaces);
+            } else {
+                $phpcsFile->fixer->replaceToken(($scopeEnd - 1), $spaces);
+            }
+        }
 
     }//end process()
 
