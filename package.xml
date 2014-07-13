@@ -73,6 +73,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20310 : PSR2 does not check for space after function name
   - Fixed bug #20322 : Display rules set to type=error even when suppressing warnings
   - Fixed bug #20323 : PHPCS tries to load sniffs from hidden directories
+  - Fixed bug #20346 : Fixer endless loop with Squiz.CSS sniffs
  </notes>
  <contents>
   <dir name="/">
