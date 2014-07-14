@@ -41,22 +41,23 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
     public function getErrorList()
     {
         return array(
-                2  => 1,
-                3  => 1,
-                4  => 3,
-                5  => 1,
-                7  => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                16 => 1,
-                33 => 1,
-                36 => 1,
-                43 => 2,
-                48 => 1,
-                81 => 1,
-                82 => 2,
-                88 => 2,
+                2   => 1,
+                3   => 1,
+                4   => 2,
+                5   => 1,
+                7   => 1,
+                11  => 1,
+                12  => 1,
+                13  => 1,
+                16  => 1,
+                33  => 1,
+                36  => 1,
+                43  => 2,
+                48  => 1,
+                81  => 1,
+                82  => 2,
+                88  => 1,
+                102 => 2,
                );
 
     }//end getErrorList()
@@ -78,5 +79,3 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
 
 
 }//end class
-
-?>

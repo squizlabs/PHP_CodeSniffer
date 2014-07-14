@@ -97,4 +97,8 @@ usort(
         // body
     }
 );
-?>
+
+function myFunction(
+    $firstParameter,$secondParameter=[1,2,3],$third=null
+) {
+}

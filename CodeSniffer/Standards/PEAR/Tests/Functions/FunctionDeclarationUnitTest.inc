@@ -117,7 +117,7 @@ $longArgs_longVars = function (
 
 $longArgs_longVars = function (
     $longArgument,
-    $muchLongerArgument) use (
+    $muchLongerArgument)use(
     $muchLongerVar3) {
     // body
 };
@@ -136,4 +136,13 @@ function test()
         // body
     };
 }
-?>
+
+function
+    myFunction()
+{
+}
+
+function
+myFunction()
+{
+}
