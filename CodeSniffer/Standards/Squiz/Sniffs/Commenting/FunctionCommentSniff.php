@@ -431,7 +431,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                              );
 
                     $fix = $phpcsFile->addFixableError($error, $param['tag'], 'IncorrectParamVarName', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $content  = $suggestedName;
                         $content .= str_repeat(' ', $param['type_space']);
                         $content .= $param['var'];
@@ -498,7 +498,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
 
                     $content  = $param['type'];
@@ -573,7 +573,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
 
                     $content  = $param['type'];

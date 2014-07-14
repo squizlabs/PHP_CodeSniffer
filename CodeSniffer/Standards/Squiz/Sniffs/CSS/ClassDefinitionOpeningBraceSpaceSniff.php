@@ -65,7 +65,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space before opening brace of class definition; 0 found';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoneBefore');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
         } else {
@@ -79,7 +79,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
                 $error = 'Expected 1 space before opening brace of class definition; %s found';
                 $data  = array($length);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
             }
@@ -105,7 +105,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
         if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Opening brace should be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBefore');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewline($stackPtr);
             }
         } else {
@@ -116,7 +116,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff implements PHP_Code
                     $data  = array($foundLines);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'AfterNesting', $data);
 
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         if ($foundLines === 0) {
                             $phpcsFile->fixer->addNewline($stackPtr);
                         } else {

@@ -304,7 +304,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
 
             $errorGenerated = true;
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true && $data['found'] !== null) {
+            if ($fix === true && $data['found'] !== null) {
                 $newContent = str_repeat(' ', $data['expected']);
                 if ($data['found'] === 0) {
                     $phpcsFile->fixer->addContentBefore($assignment, $newContent);

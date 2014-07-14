@@ -316,7 +316,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $spaces);
                     $content .= $param['var'];
@@ -372,7 +372,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $param['type_space']);
                     $content .= $param['var'];

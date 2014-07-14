@@ -167,7 +167,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                 $data  = array($expected);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Missing', $data);
 
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
                     if ($next !== false && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
                         $expected .= $phpcsFile->eolChar;
@@ -195,7 +195,7 @@ class Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff implements PHP_Co
                      );
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($comment, $expected.$phpcsFile->eolChar);
             }
 

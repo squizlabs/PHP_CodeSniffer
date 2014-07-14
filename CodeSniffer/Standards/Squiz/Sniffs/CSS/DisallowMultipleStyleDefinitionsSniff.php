@@ -73,7 +73,7 @@ class Squiz_Sniffs_CSS_DisallowMultipleStyleDefinitionsSniff implements PHP_Code
         if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Each style definition must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $next, 'Found');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewlineBefore($next);
             }
         }

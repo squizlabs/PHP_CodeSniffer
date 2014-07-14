@@ -95,7 +95,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                           ($tokens[$i]['column'] - 1),
                          );
                 $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceBeforeStar', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $padding = str_repeat(' ', ($requiredColumn - 1));
                     if ($tokens[$i]['column'] === 1) {
                         $phpcsFile->fixer->addContentBefore($i, $padding);
@@ -117,7 +117,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
             if ($tokens[($i + 1)]['code'] !== T_DOC_COMMENT_WHITESPACE) {
                 $error = 'Expected 1 space after asterisk; 0 found';
                 $fix   = $phpcsFile->addFixableError($error, $i, 'NoSpaceAfterStar');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addContent($i, ' ');
                 }
             } else if ($tokens[($i + 2)]['code'] === T_DOC_COMMENT_TAG
@@ -126,7 +126,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                 $error = 'Expected 1 space after asterisk; %s found';
                 $data  = array(strlen($tokens[($i + 1)]['content']));
                 $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceAfterStar', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($i + 1), ' ');
                 }
             }

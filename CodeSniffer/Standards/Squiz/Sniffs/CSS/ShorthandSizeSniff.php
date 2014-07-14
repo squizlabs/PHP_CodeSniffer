@@ -126,7 +126,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
             $data     = array($expected);
             $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 if (substr($origContent, -10) === '!important') {
                     $expected .= ' !important';
@@ -170,7 +170,7 @@ class Squiz_Sniffs_CSS_ShorthandSizeSniff implements PHP_CodeSniffer_Sniff
                  );
 
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             $phpcsFile->fixer->beginChangeset();
             if (substr($origContent, -10) === '!important') {
                 $expected .= ' !important';

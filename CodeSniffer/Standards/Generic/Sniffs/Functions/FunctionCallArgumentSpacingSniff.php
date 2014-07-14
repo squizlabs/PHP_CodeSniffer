@@ -110,7 +110,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                     if (isset(PHP_CodeSniffer_Tokens::$heredocTokens[$tokens[($nextSeparator - 2)]['code']]) === false) {
                         $error = 'Space found before comma in function call';
                         $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'SpaceBeforeComma');
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($nextSeparator - 1), '');
                         }
                     }
@@ -119,7 +119,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                 if ($tokens[($nextSeparator + 1)]['code'] !== T_WHITESPACE) {
                     $error = 'No space found after comma in function call';
                     $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'NoSpaceAfterComma');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->addContent($nextSeparator, ' ');
                     }
                 } else {
@@ -131,7 +131,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                             $error = 'Expected 1 space after comma in function call; %s found';
                             $data  = array($space);
                             $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
-                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            if ($fix === true) {
                                 $phpcsFile->fixer->replaceToken(($nextSeparator + 1), ' ');
                             }
                         }
@@ -145,7 +145,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                         if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
                             $error = 'Expected 1 space before = sign of default value';
                             $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeEquals');
-                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            if ($fix === true) {
                                 $phpcsFile->fixer->addContentBefore($nextToken, ' ');
                             }
                         }
@@ -153,7 +153,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                         if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
                             $error = 'Expected 1 space after = sign of default value';
                             $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceAfterEquals');
-                            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                            if ($fix === true) {
                                 $phpcsFile->fixer->addContent($nextToken, ' ');
                             }
                         }

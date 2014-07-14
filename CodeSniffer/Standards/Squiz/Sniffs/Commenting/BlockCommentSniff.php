@@ -92,7 +92,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
             $error = 'Block comments must be started with /*';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'WrongStart');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, '/*');
             }
 
@@ -100,7 +100,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$end]['content'] !== '*/') {
                 $error = 'Block comments must be ended with */';
                 $fix   = $phpcsFile->addFixableError($error, $end, 'WrongEnd');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($stackPtr, '*/');
                 }
             }
@@ -130,7 +130,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if ($commentText === '') {
             $error = 'Empty block comment not allowed';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($stackPtr, '');
                 $lastToken = array_pop($commentLines);
@@ -147,7 +147,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if (count($commentLines) === 1) {
             $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $comment = '// '.$commentText.$phpcsFile->eolChar;
                 $phpcsFile->fixer->replaceToken($stackPtr, $comment);
             }
@@ -159,7 +159,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if ($content !== '/*' && $content !== '/**') {
             $error = 'Block comment text must start on a new line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoNewLine');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $comment = preg_replace(
                     '/^(\s*\/\*\*?)/',
                     '$1'.$phpcsFile->eolChar.' ',
@@ -178,7 +178,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         if (trim($tokens[$commentLines[1]]['content']) === '') {
             $error = 'Empty line not allowed at start of comment';
             $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'HasEmptyLine');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($commentLines[1], '');
             }
         } else {
@@ -196,7 +196,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'First line of comment not aligned correctly; expected %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'FirstLineIndent', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $newContent = str_repeat(' ', $starColumn).ltrim($content);
                     $phpcsFile->fixer->replaceToken($commentLines[1], $newContent);
                 }
@@ -236,7 +236,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $error = 'Comment line indented incorrectly; expected at least %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $line, 'LineIndent', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $newContent = str_repeat(' ', $starColumn).ltrim($tokens[$line]['content']);
                     $phpcsFile->fixer->replaceToken($line, $newContent);
                 }

@@ -102,7 +102,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                       $spaceAfterOpen,
                      );
             $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
             }
         }
@@ -122,7 +122,7 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                           $spaceBeforeClose,
                          );
                 $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
                 }
             }

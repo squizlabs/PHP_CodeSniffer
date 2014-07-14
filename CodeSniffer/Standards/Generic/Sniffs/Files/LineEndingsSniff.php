@@ -106,7 +106,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
 
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'InvalidEOLChar', $data);
 
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             $tokens = $phpcsFile->getTokens();
             switch ($this->eolChar) {
             case '\n':

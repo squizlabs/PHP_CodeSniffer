@@ -62,7 +62,7 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
         if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
             $error = 'There must be a single space after the USE keyword';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
             }
         }
@@ -72,7 +72,7 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
         if ($tokens[$next]['code'] === T_COMMA) {
             $error = 'There must be one USE keyword per declaration';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
             }
         }
@@ -111,7 +111,7 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
             $error = 'There must be one blank line after the last USE statement; %s found;';
             $data  = array($diff);
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 if ($diff === 0) {
                     $phpcsFile->fixer->addNewline($end);
                 } else {

@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF will now fix incorrect newline characters in a file
   - PHPCBF now exists cleanly when there are no errors to fix
   - Added phpcbf.bat file for Windows
+  - addFixableError() and addFixableWarning() now only return true if the fixer is enabled
+    -- Saves checking ($phpcsFile->fixer->enabled === true) before every fix
   - CSS tokenizer now identifies embedded PHP code using the new T_EMBEDDED_PHP token type
     -- The entire string of PHP is contained in a single token
   - Unit test runner now also test any standards installed under the installed_paths config var

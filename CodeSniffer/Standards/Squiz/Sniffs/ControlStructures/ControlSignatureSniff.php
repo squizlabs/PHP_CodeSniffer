@@ -91,7 +91,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                      );
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 if ($found === 0) {
                     $phpcsFile->fixer->addContent($stackPtr, ' ');
                 } else {
@@ -112,7 +112,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 $error = 'Expected 1 space after closing parenthesis; found "%s"';
                 $data  = array(str_replace($phpcsFile->eolChar, '\n', $content));
                 $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseParenthesis', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     if ($closer === ($opener - 1)) {
                         $phpcsFile->fixer->addContent($closer, ' ');
                     } else {
@@ -137,7 +137,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 $error = 'Expected 1 newline after opening brace; %s found';
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineAfterOpenBrace', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($opener + 1); $i < $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
@@ -163,7 +163,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 $error = 'Expected 0 spaces before semicolon; %s found';
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceBeforeSemicolon', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($closer + 1), '');
                 }
             }
@@ -198,7 +198,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             $error = 'Expected 1 space after closing brace; %s found';
             $data  = array($found);
             $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseBrace', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 if ($found === 0) {
                     $phpcsFile->fixer->addContent($closer, ' ');
                 } else {

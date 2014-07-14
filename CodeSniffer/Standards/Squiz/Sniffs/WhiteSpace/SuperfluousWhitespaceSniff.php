@@ -122,7 +122,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }//end if
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = 0; $i < $stackPtr; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
@@ -182,7 +182,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }//end if
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
@@ -211,7 +211,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             if (empty($tokenContent) === false) {
                 if ($tokenContent !== rtrim($tokenContent)) {
                     $fix = $phpcsFile->addFixableError('Whitespace found at end of line', $stackPtr, 'EndLine');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken($stackPtr, rtrim($tokenContent).$phpcsFile->eolChar);
                     }
                 }
@@ -219,7 +219,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 && $tokens[($stackPtr - 1)]['line'] === $tokens[$stackPtr]['line']
             ) {
                 $fix = $phpcsFile->addFixableError('Whitespace found at end of line', ($stackPtr - 1), 'EndLine');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($stackPtr - 1, rtrim($tokens[($stackPtr - 1)]['content']));
                 }
             }
@@ -242,7 +242,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                         $data  = array($lines);
 
                         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
                             $i = $stackPtr;
                             while ($tokens[$i]['line'] !== $tokens[$next]['line']) {

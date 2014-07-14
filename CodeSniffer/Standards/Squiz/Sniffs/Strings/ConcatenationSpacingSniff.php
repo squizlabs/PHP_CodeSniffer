@@ -85,7 +85,7 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
 
         $message = 'Concat operator must not be surrounded by spaces';
         $fix     = $phpcsFile->addFixableError($message, $stackPtr, 'PaddingFound');
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
                 $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
             }

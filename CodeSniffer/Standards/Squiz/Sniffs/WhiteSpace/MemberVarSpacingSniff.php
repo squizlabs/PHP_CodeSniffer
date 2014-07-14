@@ -57,7 +57,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
                 $error = 'Expected 0 blank lines after member var comment; %s found';
                 $data  = array($foundLines);
                 $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($prev + 1); $i <= $stackPtr; $i++) {
                         if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
@@ -108,7 +108,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         $error = 'Expected 1 blank line before member var; %s found';
         $data  = array($foundLines);
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             if ($foundLines === 0) {
                 $phpcsFile->fixer->addNewline($prevLineToken);
             } else {

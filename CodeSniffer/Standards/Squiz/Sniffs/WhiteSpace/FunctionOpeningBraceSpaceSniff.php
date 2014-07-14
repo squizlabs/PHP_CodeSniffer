@@ -89,7 +89,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
             $error = 'Expected 0 blank lines after opening function brace; %s found';
             $data  = array($found);
             $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpacingAfter', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($openBrace + 1); $i < $nextContent; $i++) {
                     if ($tokens[$i]['line'] === $nextLine) {
@@ -115,7 +115,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
                 if ($lineDifference > 0) {
                     $error = 'Opening brace should be on the same line as the function keyword';
                     $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpacingAfterNested');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
                             if ($tokens[$i]['code'] !== T_WHITESPACE) {
@@ -133,7 +133,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
                 if ($lineDifference === 0) {
                     $error = 'Opening brace should be on a new line';
                     $fix   = $phpcsFile->addFixableError($error, $openBrace, 'ContentBefore');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->addNewlineBefore($openBrace);
                     }
 
@@ -145,7 +145,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
                     $data  = array(($lineDifference - 1));
                     $fix   = $phpcsFile->addError($error, $openBrace, 'SpacingBefore', $data);
 
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
                             if ($tokens[$i]['code'] !== T_WHITESPACE) {

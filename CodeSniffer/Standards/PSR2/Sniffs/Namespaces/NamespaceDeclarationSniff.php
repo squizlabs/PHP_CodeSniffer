@@ -77,7 +77,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
         $error = 'There must be one blank line after the namespace declaration';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'BlankLineAfter');
 
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             if ($diff === 0) {
                 $phpcsFile->fixer->addNewlineBefore($i);
             } else {

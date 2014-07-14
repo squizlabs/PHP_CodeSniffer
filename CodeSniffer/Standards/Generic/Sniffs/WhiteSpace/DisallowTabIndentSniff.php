@@ -84,7 +84,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                 $fix   = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
                 $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
 
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     // Replace tabs with spaces, using an indent of 4 spaces.
                     // Other sniffs can then correct the indent if they need to.
                     $newContent = str_replace("\t", '    ', $tokens[$i]['content']);

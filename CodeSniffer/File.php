@@ -1094,6 +1094,8 @@ class PHP_CodeSniffer_File
     /**
      * Adds a fixable error to the error stack.
      *
+     * Returns true if the error was recorded and should be fixed.
+     *
      * @param string $error    The error message.
      * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
@@ -1110,13 +1112,20 @@ class PHP_CodeSniffer_File
         $data=array(),
         $severity=0
     ) {
-        return $this->addError($error, $stackPtr, $code, $data, $severity, true);
+        $recorded = $this->addError($error, $stackPtr, $code, $data, $severity, true);
+        if ($recorded === true && $this->fixer->enabled === true) {
+            return true;
+        }
+
+        return false;
 
     }//end addFixableError()
 
 
     /**
      * Adds a fixable warning to the warning stack.
+     *
+     * Returns true if the warning was recorded and should be fixed.
      *
      * @param string $warning  The error message.
      * @param int    $stackPtr The stack position where the error occurred.
@@ -1134,7 +1143,12 @@ class PHP_CodeSniffer_File
         $data=array(),
         $severity=0
     ) {
-        return $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
+        $recorded = $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
+        if ($recorded === true && $this->fixer->enabled === true) {
+            return true;
+        }
+
+        return false;
 
     }//end addFixableWarning()
 

@@ -92,7 +92,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                             );
 
                 $fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($nextCase, $expected);
                 }
             }
@@ -103,7 +103,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             ) {
                 $error = 'CASE keyword must be followed by a single space';
                 $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addContent($nextCase, ' ');
                 }
             }
@@ -113,7 +113,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
                     $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
                     $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($opener - 1), '');
                     }
                 }
@@ -131,7 +131,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 if ($diff !== 0) {
                     $error = 'Terminating statement must be indented to the same level as the CASE body';
                     $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         if ($diff > 0) {
                             $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
                         } else {

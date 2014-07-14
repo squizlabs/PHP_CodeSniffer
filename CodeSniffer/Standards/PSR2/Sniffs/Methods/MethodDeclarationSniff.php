@@ -98,7 +98,7 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
         if ($static !== 0 && $static < $visibility) {
             $error = 'The static declaration must come after the visibility declaration';
             $fix   = $phpcsFile->addFixableError($error, $static, 'StaticBeforeVisibility');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($static, $tokens[$visibility]['content']);
                 $phpcsFile->fixer->replaceToken($visibility, $tokens[$static]['content']);
@@ -109,7 +109,7 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
         if ($visibility !== 0 && $final > $visibility) {
             $error = 'The final declaration must precede the visibility declaration';
             $fix   = $phpcsFile->addFixableError($error, $final, 'FinalAfterVisibility');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($final, $tokens[$visibility]['content']);
                 $phpcsFile->fixer->replaceToken($visibility, $tokens[$final]['content']);
@@ -120,7 +120,7 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
         if ($visibility !== 0 && $abstract > $visibility) {
             $error = 'The abstract declaration must precede the visibility declaration';
             $fix   = $phpcsFile->addFixableError($error, $abstract, 'AbstractAfterVisibility');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($abstract, $tokens[$visibility]['content']);
                 $phpcsFile->fixer->replaceToken($visibility, $tokens[$abstract]['content']);

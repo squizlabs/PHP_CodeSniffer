@@ -70,7 +70,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space before logical operator; 0 found';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
         } else {
@@ -82,7 +82,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
                 $error = 'Expected 1 space before logical operator; %s found';
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TooMuchSpaceBefore', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
             }
@@ -92,7 +92,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = 'Expected 1 space after logical operator; 0 found';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
         } else {
@@ -104,7 +104,7 @@ class Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff implements PHP_CodeSni
                 $error = 'Expected 1 space after logical operator; %s found';
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TooMuchSpaceAfter', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                 }
             }

@@ -92,7 +92,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                         // Closing bracket is on the same line as a condition.
                         $error = 'Closing parenthesis of a multi-line IF statement must be on a new line';
                         $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketNewLine');
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->addNewlineBefore($closeBracket);
                         }
 
@@ -121,7 +121,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                              );
 
                     $fix = $phpcsFile->addFixableError($error, $i, 'Alignment', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $spaces = str_repeat(' ', $expectedIndent);
                         if ($foundIndent === 0) {
                             $phpcsFile->fixer->addContentBefore($i, $spaces);
@@ -136,7 +136,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                     if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
                         $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), $openBracket, true);
                             $phpcsFile->fixer->beginChangeset();
                             for ($x = ($prev + 1); $x < $next; $x++) {
@@ -197,7 +197,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }
 
             $fix = $phpcsFile->addFixableError($error, ($closeBracket + 1), $code, $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 if ($length === 0) {
                     $phpcsFile->fixer->addContent($closeBracket, ' ');
                 } else {

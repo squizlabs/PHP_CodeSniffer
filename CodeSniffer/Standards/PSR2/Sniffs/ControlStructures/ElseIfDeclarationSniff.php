@@ -68,7 +68,7 @@ class PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
             $error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
             $fix   = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
                 for ($i = ($stackPtr + 1); $i <= $next; $i++) {

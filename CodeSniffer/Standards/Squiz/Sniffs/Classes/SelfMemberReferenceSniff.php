@@ -92,7 +92,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
                     $error = 'Must use "self::" for local static member reference';
                     $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
 
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $prev = $phpcsFile->findPrevious(array(T_NS_SEPARATOR, T_STRING), ($stackPtr - 1), null, true);
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($prev + 1); $i < $stackPtr; $i++) {
@@ -114,7 +114,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             $data  = array($found);
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
             }
         }
@@ -125,7 +125,7 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             $data  = array($found);
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
             }
         }

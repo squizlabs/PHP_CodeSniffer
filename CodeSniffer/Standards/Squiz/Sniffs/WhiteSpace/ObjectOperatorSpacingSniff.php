@@ -81,7 +81,7 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
         if ($before !== 0) {
             $error = 'Space found before object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
             }
         }
@@ -89,7 +89,7 @@ class Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff implements PHP_CodeSnif
         if ($after !== 0) {
             $error = 'Space found after object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
             }
         }

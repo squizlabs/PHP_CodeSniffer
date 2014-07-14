@@ -122,7 +122,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 if ($nestingLevel !== $indentLevel) {
                     $error = 'Blank lines are not allowed in class definitions';
                     $fix   = $phpcsFile->addFixableError($error, $i, 'BlankLine');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
                 }
@@ -134,7 +134,7 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $i, 'Incorrect', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $indent = str_repeat(' ', $expectedIndent);
                     if ($foundIndent === 0) {
                         $phpcsFile->fixer->addContentBefore($i, $indent);

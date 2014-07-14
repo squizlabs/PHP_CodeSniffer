@@ -82,7 +82,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'same line');
             $error = 'Opening brace of a %s must be on the line after the definition';
             $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 if ($tokens[($curlyBrace - 1)]['code'] === T_WHITESPACE) {
                     $phpcsFile->fixer->replaceToken(($curlyBrace - 1), '');
@@ -111,7 +111,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening %s brace must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNotAlone', $errorData);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewline($curlyBrace);
             }
         }
@@ -134,7 +134,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $curlyBrace, 'SpaceBeforeBrace', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $indent = str_repeat(' ', $expected);
                     if ($spaces === 0) {
                         $phpcsFile->fixer->addContentBefore($curlyBrace, $indent);

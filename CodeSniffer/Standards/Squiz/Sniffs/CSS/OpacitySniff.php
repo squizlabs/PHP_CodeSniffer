@@ -88,14 +88,14 @@ class Squiz_Sniffs_CSS_OpacitySniff implements PHP_CodeSniffer_Sniff
                 $error = 'Opacity value does not require decimal point; use %s instead';
                 $data  = array($value{0});
                 $fix   = $phpcsFile->addFixableError($error, $next, 'PointNotRequired', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($next, $value{0});
                 }
             } else if ($value{0} === '.') {
                 $error = 'Opacity values must not start with a decimal point; use 0%s instead';
                 $data  = array($value);
                 $fix   = $phpcsFile->addFixableError($error, $next, 'StartWithPoint', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($next, '0'.$value);
                 }
             } else if ($value{0} !== '0') {

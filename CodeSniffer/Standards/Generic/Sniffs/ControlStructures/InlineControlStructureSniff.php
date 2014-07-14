@@ -115,7 +115,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
 
         $phpcsFile->recordMetric($stackPtr, 'Control structure defined inline', 'yes');
 
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             $phpcsFile->fixer->beginChangeset();
             if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
                 $closer = $tokens[$stackPtr]['parenthesis_closer'];

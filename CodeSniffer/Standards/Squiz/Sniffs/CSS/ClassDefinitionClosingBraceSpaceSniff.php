@@ -73,7 +73,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterClose', $data);
 
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     if ($found === 0) {
                         $phpcsFile->fixer->addNewline($stackPtr);
                     } else {
@@ -111,7 +111,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff implements PHP_Code
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'Closing brace of class definition must be on new line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeClose');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewlineBefore($stackPtr);
             }
         }

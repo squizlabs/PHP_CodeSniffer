@@ -103,7 +103,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
                 $error = 'The first parameter of a multi-line '.$type.' declaration must be on the line after the opening bracket';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'FirstParamSpacing');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addNewline($openBracket);
                 }
             }
@@ -131,7 +131,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             if ($tokens[$next]['line'] !== ($tokens[$i]['line'] + 1)) {
                 $error = 'Multi-line '.$type.' declarations must define one parameter per line';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'OneParamPerLine');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addNewline($i);
                 }
             }

@@ -86,7 +86,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                                    );
 
                     $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                     }
                 }
@@ -102,7 +102,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                                );
 
                 $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NewlineBeforeKeyword', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
             }//end if
@@ -141,7 +141,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                      );
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
             }
         }
@@ -158,7 +158,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                          );
 
                 $fix = $phpcsFile->addFixableError($error, $className, 'SpaceAfterName', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($className + 1), ' ');
                 }
             }
@@ -172,7 +172,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     $error = 'The '.$keywordType.' keyword must be on the same line as the %s name';
                     $data  = array($classOrInterface);
                     $fix   = $phpcsFile->addFixableError($error, $keyword, ucfirst($keywordType).'Line', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($stackPtr + 1); $i < $keyword; $i++) {
                             if ($tokens[$i]['line'] !== $tokens[($i + 1)]['line']) {
@@ -192,7 +192,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                         $error = 'Expected 1 space before '.$keywordType.' keyword; %s found';
                         $data  = array($gap);
                         $fix   = $phpcsFile->addFixableError($error, $keyword, 'SpaceBefore'.ucfirst($keywordType), $data);
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($keyword - 1), ' ');
                         }
                     }
@@ -288,7 +288,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     $error = 'Expected 1 space before "%s"; 0 found';
                     $data  = array($tokens[$className]['content']);
                     $fix   = $phpcsFile->addFixableError($error, ($nextComma + 1), 'NoSpaceBeforeName', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->addContentBefore(($nextComma + 1), ' ');
                     }
                 } else {
@@ -307,7 +307,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                                  );
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeName', $data);
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->replaceToken($prev, ' ');
                         }
                     }
@@ -328,7 +328,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                                  );
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeComma', $data);
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($className + 1), '');
                         }
                     }
@@ -366,7 +366,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             $data  = array($tokens[$stackPtr]['content']);
             $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceAfterBody', $data);
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');

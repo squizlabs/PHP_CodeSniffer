@@ -123,7 +123,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space before "&" operator; 0 found';
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBeforeAmp');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
                 }
 
@@ -140,7 +140,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     $error = 'Expected 1 space before "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeAmp', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                     }
                 }
@@ -150,7 +150,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space after "&" operator; 0 found';
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterAmp');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addContent($stackPtr, ' ');
                 }
 
@@ -167,7 +167,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     $error = 'Expected 1 space after "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterAmp', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                     }
                 }
@@ -224,7 +224,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space before \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
 
@@ -246,7 +246,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                           $found,
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBefore', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
                 }
             }
@@ -255,7 +255,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space after \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
 
@@ -275,7 +275,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                           $found,
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                 }
             }

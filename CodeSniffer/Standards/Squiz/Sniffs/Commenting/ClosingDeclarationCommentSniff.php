@@ -113,7 +113,7 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
             if (rtrim($tokens[$next]['content']) === $comment) {
                 // The comment isn't really missing; it is just in the wrong place.
                 $fix = $phpcsFile->addFixableError($error.' directly after closing brace', $closingBracket, 'Misplaced');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($closingBracket + 1); $i < $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
@@ -126,7 +126,7 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
                 }
             } else {
                 $fix = $phpcsFile->addFixableError($error, $closingBracket, 'Missing');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($closingBracket, '}'.$comment.$phpcsFile->eolChar);
                 }
             }
@@ -136,7 +136,7 @@ class Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff implements PHP_Code
 
         if (rtrim($tokens[($closingBracket + 1)]['content']) !== $comment) {
             $fix = $phpcsFile->addFixableError($error, $closingBracket, 'Incorrect');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($closingBracket + 1), $comment.$phpcsFile->eolChar);
             }
 

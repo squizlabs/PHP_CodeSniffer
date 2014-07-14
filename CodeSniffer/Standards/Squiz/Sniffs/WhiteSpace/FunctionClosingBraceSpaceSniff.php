@@ -81,7 +81,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             if ($tokens[$stackPtr]['scope_closer'] !== ($tokens[$stackPtr]['scope_opener'] + 1)) {
                 $error = 'The opening and closing braces of empty functions must be directly next to each other; e.g., function () {}';
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBetween');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($tokens[$stackPtr]['scope_opener'] + 1); $i < $closeBrace; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
@@ -109,7 +109,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             if ($found < 0) {
                 $error = 'Closing brace of nested function must be on a new line';
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'ContentBeforeClose');
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->addNewlineBefore($closeBrace);
                 }
             } else if ($found > 0) {
@@ -117,7 +117,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
 
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
                         // Try and maintain indentation.
@@ -141,7 +141,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                 $data  = array($found);
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
 
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     if ($found > 1) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {

@@ -64,7 +64,7 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         if (substr($tokens[$lastToken]['content'], -1) !== "\n") {
             $error = 'Expected 1 newline at end of file; 0 found';
             $fix   = $phpcsFile->addFixableError($error, $lastToken, 'NoneFound');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewline($lastToken);
             }
 
@@ -89,7 +89,7 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
             $data  = array($blankLines);
             $fix   = $phpcsFile->addFixableError($error, $lastCode, 'TooMany', $data);
 
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($lastCode, rtrim($tokens[$lastCode]['content']));
                 for ($i = ($lastCode + 1); $i < $lastToken; $i++) {

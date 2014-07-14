@@ -78,7 +78,7 @@ class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeS
                 $error = 'Language constructs must be followed by a single space; expected 1 space but found %s';
                 $data  = array($contentLength);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectSingle', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                 }
             }
@@ -89,7 +89,7 @@ class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeS
                       $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
                      );
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
         }//end if

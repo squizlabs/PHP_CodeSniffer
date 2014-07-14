@@ -80,7 +80,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$short]['line'] === $tokens[$stackPtr]['line']) {
             $error = 'The open comment tag must be the only content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpen');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->addNewline($stackPtr);
                 $phpcsFile->fixer->addContentBefore($short, '* ');
             }
@@ -239,7 +239,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                              );
 
                     $fix = $phpcsFile->addFixableError($error, ($tag + 1), 'TagValueIndent', $data);
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($tag + 1), str_repeat(' ', $required));
                     }
                 }

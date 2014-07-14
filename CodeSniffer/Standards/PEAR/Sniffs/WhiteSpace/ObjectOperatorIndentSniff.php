@@ -146,7 +146,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                                  );
 
                         $fix = $phpcsFile->addFixableError($error, $next, 'Incorrect', $data);
-                        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                        if ($fix === true) {
                             $spaces = str_repeat(' ', $requiredIndent);
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($next, $spaces);
@@ -162,7 +162,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
                 if ($tokens[$content]['line'] !== $tokens[$next]['line']) {
                     $error = 'Object operator must be at the start of the line, not the end';
                     $fix   = $phpcsFile->addFixableError($error, $next, 'StartOfLine');
-                    if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                    if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($x = ($next + 1); $x < $content; $x++) {
                             $phpcsFile->fixer->replaceToken($x, '');

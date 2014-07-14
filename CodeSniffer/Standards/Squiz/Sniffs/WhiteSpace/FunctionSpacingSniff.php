@@ -121,7 +121,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                       );
 
             $fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1));
                 if ($foundLines < $this->spacing) {
                     if ($nextSpace === false || $foundLines === 0) {
@@ -230,7 +230,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
                       );
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 if ($prevContent === 0) {
                     $nextSpace = 0;
                 } else {

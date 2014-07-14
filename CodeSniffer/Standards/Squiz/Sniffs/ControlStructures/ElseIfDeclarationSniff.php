@@ -57,7 +57,7 @@ class Squiz_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeS
     {
         $error = 'Usage of ELSEIF not allowed; use ELSE IF instead';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed');
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             $phpcsFile->fixer->replaceToken($stackPtr, 'else if');
         }
 

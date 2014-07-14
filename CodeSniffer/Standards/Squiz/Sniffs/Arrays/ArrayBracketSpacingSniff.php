@@ -85,7 +85,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
                          $found,
                         );
             $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeBracket', $data);
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
             }
         }
@@ -103,7 +103,7 @@ class Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sn
                              $found,
                             );
                 $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterBracket', $data);
-                if ($fix === true && $phpcsFile->fixer->enabled === true) {
+                if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
                 }
             }

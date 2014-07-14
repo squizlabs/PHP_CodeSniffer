@@ -79,7 +79,7 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
             // There are no arithmetic operators in this.
             $error = 'Echoed strings should not be bracketed';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'HasBracket');
-            if ($fix === true && $phpcsFile->fixer->enabled === true) {
+            if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($firstContent, '');
                 $phpcsFile->fixer->replaceToken(($end - 1), '');
