@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Daniel Tschinder for the patch
   - PSR2 FunctionCallSignatureSniff now treats multi-line strings as a single-line argument, like arrays and closures
     -- Thanks to Dawid Nowak for the patch
+  - PSR2 UseDeclarationSniff now checks for a single space after the USE keyword
   - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
     -- Thanks to Ole Martin Handeland for the patch
   - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore namespaces beginning with TRUE/FALSE/NULL
