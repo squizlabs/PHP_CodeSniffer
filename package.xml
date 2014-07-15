@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed a problem where PHPCBF could replace tabs with too many spaces when changing indents
   - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
   - Removed use of sys_get_temp_dir() as this is not supported by the min PHP version
+  - Squiz ArrayDeclarationSniff now supports short array syntax
   - Squiz ControlSignatureSniff no longer uses the Abstract Pattern sniff
     -- If you are extending this sniff, you'll need to rewrite your code
     -- The rewrite allows this sniff to fix all control structure formatting issues it finds
@@ -1647,7 +1648,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ArrayBracketSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="ArrayDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

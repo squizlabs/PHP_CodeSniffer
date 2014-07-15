@@ -36,7 +36,10 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_ARRAY);
+        return array(
+                T_ARRAY,
+                T_OPEN_SHORT_ARRAY,
+               );
 
     }//end register()
 
@@ -54,44 +57,53 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Array keyword should be lower case.
-        if ($tokens[$stackPtr]['content'] !== strtolower($tokens[$stackPtr]['content'])) {
-            if ($tokens[$stackPtr]['content'] === strtoupper($tokens[$stackPtr]['content'])) {
-                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'upper');
-            } else {
-                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'mixed');
-            }
+        if ($tokens[$stackPtr]['code'] === T_ARRAY) {
+            $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'no');
 
-            $error = 'Array keyword should be lower case; expected "array" but found "%s"';
-            $data  = array($tokens[$stackPtr]['content']);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, 'array');
-            }
-        } else {
-            $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'lower');
-        }
-
-        $arrayStart   = $tokens[$stackPtr]['parenthesis_opener'];
-        $arrayEnd     = $tokens[$arrayStart]['parenthesis_closer'];
-        $keywordStart = $tokens[$stackPtr]['column'];
-
-        if ($arrayStart != ($stackPtr + 1)) {
-            $error = 'There must be no space between the Array keyword and the opening parenthesis';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
-
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
+            // Array keyword should be lower case.
+            if ($tokens[$stackPtr]['content'] !== strtolower($tokens[$stackPtr]['content'])) {
+                if ($tokens[$stackPtr]['content'] === strtoupper($tokens[$stackPtr]['content'])) {
+                    $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'upper');
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'mixed');
                 }
 
-                $phpcsFile->fixer->endChangeset();
+                $error = 'Array keyword should be lower case; expected "array" but found "%s"';
+                $data  = array($tokens[$stackPtr]['content']);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotLowerCase', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'array');
+                }
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Array keyword case', 'lower');
             }
-        }
+
+            $arrayStart = $tokens[$stackPtr]['parenthesis_opener'];
+            $arrayEnd   = $tokens[$arrayStart]['parenthesis_closer'];
+
+            if ($arrayStart != ($stackPtr + 1)) {
+                $error = 'There must be no space between the "array" keyword and the opening parenthesis';
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
+
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'yes');
+            $arrayStart = $stackPtr;
+            $arrayEnd   = $tokens[$stackPtr]['bracket_closer'];
+        }//end if
+
+        $keywordStart = $tokens[$stackPtr]['column'];
 
         // Check for empty arrays.
-        $content = $phpcsFile->findNext(array(T_WHITESPACE), ($arrayStart + 1), ($arrayEnd + 1), true);
+        $content = $phpcsFile->findNext(T_WHITESPACE, ($arrayStart + 1), ($arrayEnd + 1), true);
         if ($content === $arrayEnd) {
             // Empty array, but if the brackets aren't together, there's a problem.
             if (($arrayEnd - $arrayStart) !== 1) {
@@ -201,7 +213,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($valueCount > 0) {
                 $conditionCheck = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_SEMICOLON), ($stackPtr - 1), null, false);
 
-                if (($conditionCheck === false) || ($tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line'])) {
+                if ($conditionCheck === false
+                    || $tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line']
+                ) {
                     $error = 'Array with multiple values cannot be declared on a single line';
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLineNotAllowed');
                     if ($fix === true) {
@@ -303,6 +317,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
                 && $tokens[$nextToken]['code'] !== T_COMMA
                 && $tokens[$nextToken]['code'] !== T_ARRAY
+                && $tokens[$nextToken]['code'] !== T_OPEN_SHORT_ARRAY
             ) {
                 continue;
             }
@@ -316,13 +331,29 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
+            if ($tokens[$nextToken]['code'] === T_OPEN_SHORT_ARRAY) {
+                // Let subsequent calls of this test handle nested arrays.
+                $indices[] = array('value' => $nextToken);
+                $nextToken = $tokens[$nextToken]['bracket_closer'];
+                continue;
+            }
+
             if ($tokens[$nextToken]['code'] === T_COMMA) {
                 $stackPtrCount = 0;
                 if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
                     $stackPtrCount = count($tokens[$stackPtr]['nested_parenthesis']);
                 }
 
-                if (count($tokens[$nextToken]['nested_parenthesis']) > ($stackPtrCount + 1)) {
+                $commaCount = 0;
+                if (isset($tokens[$nextToken]['nested_parenthesis']) === true) {
+                    $commaCount = count($tokens[$nextToken]['nested_parenthesis']);
+                    if ($tokens[$stackPtr]['code'] === T_ARRAY) {
+                        // Remove parenthesis that are used to define the array.
+                        $commaCount--;
+                    }
+                }
+
+                if ($commaCount > $stackPtrCount) {
                     // This comma is inside more parenthesis than the ARRAY keyword,
                     // then there it is actually a comma used to separate arguments
                     // in a function call.
@@ -337,13 +368,18 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 if ($keyUsed === false) {
                     if ($tokens[($nextToken - 1)]['code'] === T_WHITESPACE) {
-                        $content     = $tokens[($nextToken - 2)]['content'];
-                        $spaceLength = $tokens[($nextToken - 1)]['length'];
-                        $error       = 'Expected 0 spaces between "%s" and comma; %s found';
-                        $data        = array(
-                                        $content,
-                                        $spaceLength,
-                                       );
+                        $content = $tokens[($nextToken - 2)]['content'];
+                        if ($tokens[($nextToken - 1)]['content'] === $phpcsFile->eolChar) {
+                            $spaceLength = 'newline';
+                        } else {
+                            $spaceLength = $tokens[($nextToken - 1)]['length'];
+                        }
+
+                        $error = 'Expected 0 spaces between "%s" and comma; %s found';
+                        $data  = array(
+                                  $content,
+                                  $spaceLength,
+                                 );
 
                         $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
                         if ($fix === true) {
@@ -530,6 +566,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                   'index'  => '2',
                  );
 
+            or
+
+            $a = [
+                  'index'  => '2',
+                 ];
+
             In this array, the double arrow is indented too far, but this
             will also cause an error in the value's alignment. If the arrow were
             to be moved back one space however, then both errors would be fixed.
@@ -545,7 +587,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         foreach ($indices as $index) {
             if (isset($index['index']) === false) {
                 // Array value only.
-                if (($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line']) && ($numValues > 1)) {
+                if ($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line'] && $numValues > 1) {
                     $error = 'The first value in a multi-value array must be on a new line';
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'FirstValueNoNewline');
                     if ($fix === true) {
@@ -654,7 +696,9 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }//end if
 
             // Check each line ends in a comma.
-            if ($tokens[$index['value']]['code'] !== T_ARRAY) {
+            if ($tokens[$index['value']]['code'] !== T_ARRAY
+                && $tokens[$index['value']]['code'] !== T_OPEN_SHORT_ARRAY
+            ) {
                 $valueLine = $tokens[$index['value']]['line'];
                 $nextComma = false;
                 for ($i = ($index['value'] + 1); $i < $arrayEnd; $i++) {

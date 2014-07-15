@@ -2,202 +2,206 @@
 
 function test()
 {
-    $a = array();
+    $a = [];
 
-    $b = Array ();
+    $b = [];
 
-    $c = Array(
+    $c = [
             'a' => 1,
-         );
+         ];
 }
 
 
 class TestClass
 {
-    public $good = array(
+    public $good = [
                     'width'  => '',
                     'height' => '',
-                   );
+                   ];
 
-    private $_bad = Array(
+    private $_bad = [
                     'width' => '',
                     'height' => ''
-                     );
+                     ];
 
 
     public function test()
     {
-        $truck = array(
+        $truck = [
                  'width' => '',
                   'height' => '',
-                 );
+                 ];
 
-        $plane = Array(
+        $plane = [
                 'width' => '',
                   'height' => '',
-                 );
+                 ];
 
-        $car = array(
+        $car = [
                 'width' => '',
                 'height' => '',
-               );
+               ];
 
-        $bus = array(
+        $bus = [
                 'width'  =>   '',
                 'height' => ''
-               );
+               ];
 
-        $train = array  (
+        $train = [
                    TRUE,
                   FALSE,
                   'aaa'
-                 );
+                 ];
 
-        $inline = array('aaa', 'bbb', 'ccc');
-        $inline = array('aaa');
-        $inline = Array('aaa');
+        $inline = ['aaa', 'bbb', 'ccc'];
+        $inline = ['aaa'];
+        $inline = ['aaa'];
 
-        $bigone = array(
+        $bigone = [
                    'name' => 'bigone',
-                   'children'   => Array(
+                   'children'   => [
                                     '1a' => 'child',
                                     '11b' => 'child',
                                     '111c'      => 'child',
-                                    'children'  => Array(
+                                    'children'  => [
                                                     'child' => 'aaa',
-                                                   ),
-                                   ),
+                                                   ],
+                                   ],
                    'short_name' => 'big'
-                  );
+                  ];
     }
 
 }//end class
 
-$value = array ( );
-$value = array(  );
-$value = array('1'=>$one, '2'  =>  $two, '3'=> $three, '4' =>$four);
-$value = array('1'=>$one);
+$value = [ ];
+$value = [  ];
+$value = ['1'=>$one, '2'  =>  $two, '3'=> $three, '4' =>$four];
+$value = ['1'=>$one];
 
-if (in_array('1', array('1','2','3')) === TRUE) {
-    $value = in_array('1', array('1'  ,   '2',     '3','4'));
+if (in_array('1', ['1','2','3']) === TRUE) {
+    $value = in_array('1', ['1'  ,   '2',     '3','4']);
 }
 
-$value = array(
+$value = [
           '1'=> TRUE,
           FALSE,
-          '3' => 'aaa',);
+          '3' => 'aaa',];
 
-$value = array(
+$value = [
           '1'=> TRUE,
           FALSE,
-         );
+         ];
 
-$value = array(
+$value = [
           TRUE,
           '1' => FALSE,
-         );
+         ];
 
-$value = array(1,
+$value = [1,
           2 ,
           3 ,
-         );
+         ];
 
-$value = array(1 => $one,
+$value = [1 => $one,
           2 => $two ,
           3 => $three ,
-         );
+         ];
 
-$value = array(
+$value = [
           'tag'   => $tag,
           'space' => $this->_getIndentation($tag, $tagElement),
-         );
+         ];
 
-$expected = array(
-             array(
+$expected = [
+             [
               '1' => 1,
               '1' => 2,
-             ),
-            );
+             ],
+            ];
 
-$expected = array(
-             array(
+$expected = [
+             [
               '1' => 1,
               '1' => 2
-             )
-            );
+             ]
+            ];
 
 // Space in second arg.
-$args = array(
+$args = [
          '"'.$this->id.'"',
          (int) $hasSessions,
-        );
+        ];
 
 // No errors.
-$paths = array(
+$paths = [
           Init::ROOT_DIR.'/Systems'   => 'Systems',
           Init::ROOT_DIR.'/Installer' => 'Systems',
-         );
+         ];
 
-$x = array(
-     );
+$x = [
+     ];
 
-$x = array('test'
-     );
-$x = array('test',
-     );
-$x = array('name' => 'test',
-     );
+$x = ['test'
+     ];
+$x = ['test',
+     ];
+$x = ['name' => 'test',
+     ];
 
-$x = array(
+$x = [
       $x,
-     );
+     ];
 
-$func = array(
+$func = [
          $x,
          'get'.$x.'Replacement'
-        );
+        ];
 
-$array = array(
+$array = [
           'input_one' => 'one',
           'inputTwo'  => 'two',
           'input_3'   => 3,
-         );
+         ];
 
-$array = array(
+$array = [
           'input_one',
           'inputTwo',
           'input_3',
-         );
+         ];
 
 // Malformed
-$foo = array(1
-, 2);
+$foo = [1
+, 2];
 
-$listItems[$aliasPath] = array('itemContent' => implode('<br/>', $aliases));
+$listItems[$aliasPath] = ['itemContent' => implode('<br/>', $aliases)];
 
-$listItems[$aliasPath] = array(
+$listItems[$aliasPath] = [
                           'itemContent' => implode('<br/>', $aliases)
-                         );
+                         ];
 
-$x = array
-  (
+$x = 
+     [
       $x,
       $y,
-     );
+     ];
 
-$x = array
-(
+$x =
+[
       $x,
       $y,
-     );
+     ];
 
-$test = array(
+$x = [
+
+      $x,
+      $y,
+     ];
+
+$test = [
          'test' => TestFunction::blah(
              $value1,
              $value2
          ),
-        );
+        ];
 
-$c = array('a' => 1,);
-
-?>
+$c = ['a' => 1,];
