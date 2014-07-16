@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Saves checking ($phpcsFile->fixer->enabled === true) before every fix
   - CSS tokenizer now identifies embedded PHP code using the new T_EMBEDDED_PHP token type
     -- The entire string of PHP is contained in a single token
+  - PHP tokenizer contains better detection of short array syntax
   - Unit test runner now also test any standards installed under the installed_paths config var
   - Exclude patterns now use {} delimiters, allowing the | special character to work correctly again
   - The filtering component of the --extensions argument is now ignored again when passing filenames

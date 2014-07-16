@@ -747,6 +747,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 $allowed = array(
+                            T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
                             T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
                             T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
                             T_VARIABLE             => T_VARIABLE,
