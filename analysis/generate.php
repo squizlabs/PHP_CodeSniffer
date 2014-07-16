@@ -290,6 +290,21 @@ function generateReport($results, $repo=null)
 
         $perfectScore = true;
 
+        // Some significant values in the trend data may not register any more, so they
+        // will be lost from the trend graph if they are not inserted back into
+        // the current value list.
+        foreach ($data['trends'] as $date => $trendValues) {
+            $trendTotal = array_sum($trendValues);
+            foreach ($trendValues as $trendValue => $trendCount) {
+                if (isset($data['values'][$trendValue]) === false) {
+                    $score = round(($trendCount / $trendTotal * 100), 2);
+                    if ($score > 1) {
+                        $data['values'][$trendValue] = 0;
+                    }
+                }
+            }
+        }
+
         ksort($data['values'], $sort);
         foreach ($data['values'] as $value => $count) {
             if (isset($GLOBALS['colours'][$valueNum]) === false) {
@@ -355,6 +370,12 @@ function generateReport($results, $repo=null)
             }
 
             $html .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
+
+            // Sometimes 0 doesn't really mean 0.
+            if ($count > 0 && $percent === 0.00) {
+                $percent = '< 0.01';
+            }
+
             $html .= '        <td class="value">'.$percent.'%';
             if ($repo === null) {
                 $html .= '<br/>';
