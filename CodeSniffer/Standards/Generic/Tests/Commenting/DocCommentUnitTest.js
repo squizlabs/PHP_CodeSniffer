@@ -162,3 +162,7 @@
  *        here
  * @three bar
  */
+
+ /**
+ * @ var Comment
+ */

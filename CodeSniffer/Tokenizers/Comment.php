@@ -207,19 +207,21 @@ class PHP_CodeSniffer_Tokenizers_Comment
             // The content up until the first whitespace is the tag name.
             $matches = array();
             preg_match('/@[^\s]+/', $string, $matches, 0, $start);
-            $tagName  = $matches[0];
-            $start   += strlen($tagName);
-            $tokens[] = array(
-                         'content' => $tagName,
-                         'code'    => T_DOC_COMMENT_TAG,
-                         'type'    => 'T_DOC_COMMENT_TAG',
-                        );
+            if (isset($matches[0]) === true) {
+                $tagName  = $matches[0];
+                $start   += strlen($tagName);
+                $tokens[] = array(
+                             'content' => $tagName,
+                             'code'    => T_DOC_COMMENT_TAG,
+                             'type'    => 'T_DOC_COMMENT_TAG',
+                            );
 
-            // Then there will be some whitespace.
-            $space = $this->_collectWhitespace($string, $start, $end);
-            if ($space !== null) {
-                $tokens[] = $space;
-                $start   += strlen($space['content']);
+                // Then there will be some whitespace.
+                $space = $this->_collectWhitespace($string, $start, $end);
+                if ($space !== null) {
+                    $tokens[] = $space;
+                    $start   += strlen($space['content']);
+                }
             }
         }//end if
 
