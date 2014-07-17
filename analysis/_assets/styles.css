@@ -180,7 +180,7 @@ table.statsTable {
     width: 10px;
 }
 
-.statsTable .keyPopular:after {
+.statsTable .keyPopular:after, {
     background-image: url(image_sprite_1x.png);
     content: "";
     width: 13px;
@@ -237,7 +237,7 @@ p.statsInfo {
 
 .tag:after {
     content: "";
-    border: 12px solid #fff;
+    border: 12px solid rgba(255,255,255,0);
     border-left: 12px solid #555a59;
     width:0px;
     height: 0px;
@@ -550,6 +550,11 @@ ul.reportInstructions {
     text-decoration: none;
 }
 
+.flyout .tdpop {
+    margin: 6px 6px 0 0;
+    width: 13px;
+}
+
 .flyout .td1,
 .flyout .td2,
 .flyout .td3 {
@@ -562,7 +567,7 @@ ul.reportInstructions {
 
 .flyout .td1 {
     color: #e4e9ed;
-    width: 228px;
+    width: 215px;
     text-decoration: none;
     font-size: 13px;
 }
@@ -586,6 +591,16 @@ ul.reportInstructions {
     left: 0;
     overflow-y: scroll;
     padding: 20px 20px 55px;
+}
+
+.flyoutList .popular {
+    background-image: url(image_sprite_1x.png);
+    content: "";
+    width: 13px;
+    height: 13px;
+    background-repeat: no-repeat;
+    background-position: 0 -78px;
+    display: block;
 }
 
 .flyoutControl {

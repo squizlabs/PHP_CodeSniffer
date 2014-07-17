@@ -216,11 +216,30 @@ function generateReport($results, $repo=null)
         $metrics = $results['metrics'];
     }
 
+    $consistency = array(
+                    'pos' => 0,
+                    'neg' => 0,
+                   );
+
     uasort($metrics, 'sortMetrics');
     $chartNum = 0;
     foreach ($metrics as $metric => $data) {
         if (empty($data['values']) === true || $data['total'] === 0) {
             continue;
+        }
+
+        $metricid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($metric));
+
+        // Add results to the consistency score.
+        // Skip line length as it is more informative only.
+        if ($metricid !== 'line-length') {
+            foreach ($data['values'] as $value => $count) {
+                if ($value === $data['winner']) {
+                    $consistency['pos'] += $count;
+                } else {
+                    $consistency['neg'] += $count;
+                }
+            }
         }
 
         $description = '';
@@ -234,7 +253,6 @@ function generateReport($results, $repo=null)
         }
 
         $chartNum++;
-        $metricid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($metric));
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
@@ -522,6 +540,37 @@ function generateReport($results, $repo=null)
         $html .= '</div>'.PHP_EOL;
     }//end foreach
 
+    $score = round(($consistency['pos'] / ($consistency['pos'] + $consistency['neg']) * 100), 2);
+    if ($score >= 97) {
+        $grade = 'A+';
+    } else if ($score >= 93) {
+        $grade = 'A';
+    } else if ($score >= 90) {
+        $grade = 'A-';
+    } else if ($score >= 87) {
+        $grade = 'B+';
+    } else if ($score >= 83) {
+        $grade = 'B';
+    } else if ($score >= 80) {
+        $grade = 'B-';
+    } else if ($score >= 77) {
+        $grade = 'C+';
+    } else if ($score >= 73) {
+        $grade = 'C';
+    } else if ($score >= 70) {
+        $grade = 'C-';
+    } else if ($score >= 67) {
+        $grade = 'D+';
+    } else if ($score >= 63) {
+        $grade = 'D';
+    } else if ($score >= 60) {
+        $grade = 'D-';
+    } else {
+        $grade = 'F';
+    }
+
+    echo "Score: $score ($grade)\n";
+
     ksort($metrics);
     $sidebar = '';
 
@@ -530,9 +579,22 @@ function generateReport($results, $repo=null)
             continue;
         }
 
+        $popular = '';
+        
+
         $metricid   = str_replace(' ', '-', strtolower($metric));
         $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
-        $sidebar   .= '<li><a href="#'.$metricid.'"><div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
+        $sidebar   .= '<li><a href="#'.$metricid.'">';
+
+        if ($repo !== null) {
+            if ($data['winner'] === $GLOBALS['totals'][$metric]['winner']) {
+                $sidebar .= '<div class="tdpop popular" title="This project is using the popular method for this convention"></div>';
+            } else {
+                $sidebar .= '<div class="tdpop"></div>';
+            }
+        }
+        
+        $sidebar .= '<div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
     }
 
     if ($repo === null) {
