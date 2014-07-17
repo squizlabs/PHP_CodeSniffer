@@ -8,6 +8,10 @@ $metricText = array(
                                                                        'description' => 'Does the last item end with a comma in a multi-line array definition?',
                                                                        'items'       => 'array definitions',
                                                                       ),
+               'Short array syntax used'                           => array(
+                                                                       'description' => 'Are arrays defined using the PHP 5.4+ short array syntax?',
+                                                                       'items'       => 'array definitions',
+                                                                      ),
                'One class per file'                                => array(
                                                                        'description' => 'Is each class defined in a file by itself?',
                                                                        'items'       => 'classes',

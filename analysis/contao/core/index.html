@@ -72,6 +72,7 @@
 <li><a href="#php-keyword-case"><div class="td1">PHP keyword case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#php-short-open-tag-used"><div class="td1">PHP short open tag used</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#private-method-prefixed-with-underscore"><div class="td1">Private method prefixed with underscore</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#short-array-syntax-used"><div class="td1">Short array syntax used</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#space-after-operator"><div class="td1">Space after operator</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>84.29%</div></a></li>
 <li><a href="#space-before-operator"><div class="td1">Space before operator</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>56.62%</div></a></li>
 <li><a href="#spaces-after-control-structure-open-parenthesis"><div class="td1">Spaces after control structure open parenthesis</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
@@ -192,10 +193,10 @@
   </div>
   </div>
   </div>
-<div id="class-opening-brace-placement" class="conventionWrap">
+<div id="one-class-per-file" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Class opening brace placement</h2>
-  <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
+  <h2>One class per file</h2>
+  <p>Is each class defined in a file by itself?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
       <p class="projectStatusText">This project is using the popular method for this convention</p>
@@ -213,15 +214,15 @@
             <th>Method</th>
             <th>Use</th>
           </tr>
-      <tr title="281 classes">
-        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
-        <td class="result">new line</td>
-        <td class="value">54.56%</td>
-      </tr>
       <tr title="234 classes">
-        <td class="key" style="background-color:#91A2B2"><span class="screenHide">same line</span></td>
-        <td class="result">same line</td>
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
         <td class="value">45.44%</td>
+      </tr>
+      <tr title="281 classes">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">54.56%</td>
       </tr>
         </table>
         <p class="statsInfo">Based on 515 classes</p>
@@ -236,10 +237,10 @@
   </div>
 </div>
 </div>
-<div id="one-class-per-file" class="conventionWrap">
+<div id="class-opening-brace-placement" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>One class per file</h2>
-  <p>Is each class defined in a file by itself?</p>
+  <h2>Class opening brace placement</h2>
+  <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
       <p class="projectStatusText">This project is using the popular method for this convention</p>
@@ -257,15 +258,15 @@
             <th>Method</th>
             <th>Use</th>
           </tr>
-      <tr title="234 classes">
-        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
-        <td class="result">no</td>
-        <td class="value">45.44%</td>
-      </tr>
       <tr title="281 classes">
-        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
-        <td class="result">yes</td>
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
+        <td class="result">new line</td>
         <td class="value">54.56%</td>
+      </tr>
+      <tr title="234 classes">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">same line</span></td>
+        <td class="result">same line</td>
+        <td class="value">45.44%</td>
       </tr>
         </table>
         <p class="statsInfo">Based on 515 classes</p>
@@ -1329,6 +1330,11 @@
         <td class="result">1</td>
         <td class="value">99.69%</td>
       </tr>
+      <tr title="0 files">
+        <td class="key" style="background-color:#D1D4DB"><span class="screenHide">2</span></td>
+        <td class="result">2</td>
+        <td class="value">0%</td>
+      </tr>
         </table>
         <p class="statsInfo">Based on 327 files</p>
       </div>
@@ -1368,8 +1374,13 @@
         <td class="result"># ...</td>
         <td class="value">0.12%</td>
       </tr>
+      <tr title="0 comments">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">/* ... */</span></td>
+        <td class="result">/* ... */</td>
+        <td class="value">0%</td>
+      </tr>
       <tr title="4,801 comments">
-        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">// ... - Most popular method</span></td>
+        <td class="key keyPopular" style="background-color:#D1D4DB" title="Most popular method"><span class="screenHide">// ... - Most popular method</span></td>
         <td class="result">// ...</td>
         <td class="value">99.88%</td>
       </tr>
@@ -1707,6 +1718,45 @@
   </div>
 </div>
 </div>
+<div id="short-array-syntax-used" class="conventionWrap">
+<div class="conventionDetails">
+  <h2>Short array syntax used</h2>
+  <p>Are arrays defined using the PHP 5.4+ short array syntax?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <canvas class="chart-value" id="chart35" width="290" height="290"></canvas>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="4,673 array definitions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 4,673 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <canvas class="chart-trend" id="chart35t" width="860" height="185"></canvas>
+    </div>
+  </div>
+</div>
+</div>
 <div id="brackets-around-echoed-strings" class="conventionWrap">
 <div class="conventionDetails">
   <h2>Brackets around echoed strings</h2>
@@ -1719,7 +1769,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart35" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart36" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1741,7 +1791,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart35t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart36t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1758,7 +1808,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart36" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart37" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1780,7 +1830,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart36t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart37t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1797,7 +1847,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart37" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart38" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1819,7 +1869,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart37t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart38t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1836,7 +1886,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart38" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart39" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1858,7 +1908,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart38t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart39t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1875,7 +1925,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart39" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart40" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1897,7 +1947,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart39t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart40t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1914,7 +1964,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart40" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart41" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1936,7 +1986,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart40t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart41t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1953,7 +2003,7 @@
     <div class="tag">Current</div>
     <div class="currentDataWrap">
       <div class="currentChart">
-        <canvas class="chart-value" id="chart41" width="290" height="290"></canvas>
+        <canvas class="chart-value" id="chart42" width="290" height="290"></canvas>
       </div>
       <div class="tableContainer">
         <table class="statsTable">
@@ -1967,6 +2017,11 @@
         <td class="result">no</td>
         <td class="value">100%</td>
       </tr>
+      <tr title="0 private methods">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">yes</span></td>
+        <td class="result">yes</td>
+        <td class="value">0%</td>
+      </tr>
         </table>
         <p class="statsInfo">Based on 11 private methods</p>
       </div>
@@ -1975,7 +2030,7 @@
   <div class="historicalData">
     <div class="tag">Historical</div>
     <div class="historicalChart">
-      <canvas class="chart-trend" id="chart41t" width="860" height="185"></canvas>
+      <canvas class="chart-trend" id="chart42t" width="860" height="185"></canvas>
     </div>
   </div>
 </div>
@@ -1983,7 +2038,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Mon, 14 Jul 2014 09:31:58 +1000<br/>Using master branch of <a href="https://github.com/contao/core">contao/core</a> @ commit <a href="https://github.com/contao/core/commit/16d1d433c7f12410727b8f976ea4fd587e37b783">16d1d433c7f12410727b8f976ea4fd587e37b783</a></div>
+    <div class="footer">Report generated on Thu, 17 Jul 2014 09:57:15 +1000<br/>Using master branch of <a href="https://github.com/contao/core">contao/core</a> @ commit <a href="https://github.com/contao/core/commit/16d1d433c7f12410727b8f976ea4fd587e37b783">16d1d433c7f12410727b8f976ea4fd587e37b783</a></div>
 </div>
 
 <script>
@@ -1991,16 +2046,16 @@
 var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};
 var trendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
 var perfectTrendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};
-var data = [{value:54.56,color:"#2D3F50"},{value:45.44,color:"#91A2B2"}]
+var data = [{value:45.44,color:"#2D3F50"},{value:54.56,color:"#91A2B2"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,54.78,54.56,54.56,54.56,54.56,54.56,54.56,54.56]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,45.22,45.44,45.44,45.44,45.44,45.44,45.44,45.44]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,45.22,45.44,45.44,45.44,45.44,45.44,45.44,45.44]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,54.78,54.56,54.56,54.56,54.56,54.56,54.56,54.56]}]};
 var c = document.getElementById("chart1t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:45.44,color:"#2D3F50"},{value:54.56,color:"#91A2B2"}]
+var data = [{value:54.56,color:"#2D3F50"},{value:45.44,color:"#91A2B2"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,32.58,45.22,45.44,45.44,45.44,45.44,45.44,45.44,45.44]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,67.42,54.78,54.56,54.56,54.56,54.56,54.56,54.56,54.56]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,67.13,54.78,54.56,54.56,54.56,54.56,54.56,54.56,54.56]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,32.87,45.22,45.44,45.44,45.44,45.44,45.44,45.44,45.44]}]};
 var c = document.getElementById("chart2t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:44.85,color:"#2D3F50"},{value:55.15,color:"#91A2B2"}]
@@ -2096,7 +2151,7 @@ new Chart(c).Line(data,trendOptions);
 var data = [{value:98.69,color:"#2D3F50"},{value:1.31,color:"#91A2B2"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.68,98.68,98.68,98.68,98.69,98.69,98.69,98.69]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.32,1.32,1.32,1.32,1.31,1.31,1.31,1.31]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.93,98.83,98.93,98.67,98.93,98.65,98.66,98.66,98.67,98.68,98.68,98.68,98.93,98.68,98.69,98.69,98.69,98.69,98.69]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.07,1.17,1.07,1.33,1.07,1.35,1.34,1.34,1.33,1.32,1.32,1.32,1.07,1.32,1.31,1.31,1.31,1.31,1.31]}]};
 var c = document.getElementById("chart18t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:98.79,color:"#2D3F50"},{value:1.21,color:"#91A2B2"}]
@@ -2135,16 +2190,16 @@ new Chart(c).Doughnut(data,valOptions);
 var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.71,99.68,99.69,99.68,99.68,99.68,99.68,99.68,99.68]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.32,0.31,0.32,0.32,0.32,0.32,0.32,0.32]}]};
 var c = document.getElementById("chart24t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:0.31,color:"#2D3F50"},{value:99.69,color:"#91A2B2"}]
+var data = [{value:0.31,color:"#2D3F50"},{value:99.69,color:"#91A2B2"},{value:0,color:"#D1D4DB"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,0.31,0.31,0.31,0.31,0.31,0.31,0.31,0.31]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,99.69,99.69,99.69,99.69,99.69,99.69,99.69,99.69]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,3.55,0.31,0.31,0.31,0.31,0.31,0.31,0.31,0.31]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,94.21,99.69,99.69,99.69,99.69,99.69,99.69,99.69,99.69]},{strokeColor:"#D1D4DB",pointStrokeColor:"#D1D4DB",pointColor:"#FFF",data:[2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,2.24,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00]}]};
 var c = document.getElementById("chart25t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
-var data = [{value:0.12,color:"#2D3F50"},{value:99.88,color:"#91A2B2"}]
+var data = [{value:0.12,color:"#2D3F50"},{value:0,color:"#91A2B2"},{value:99.88,color:"#D1D4DB"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[11.48,11.48,11.45,11.44,11.45,11.43,11.43,11.41,11.41,11.41,11.41,11.4,11.4,11.39,11.37,11.37,11.37,11.37,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,0.13,0.13,0.13,0.13,0.12,0.12,0.12,0.12]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[85.36,85.37,85.4,85.41,85.41,85.42,85.43,85.45,85.45,85.45,85.46,85.47,85.47,85.47,85.5,85.5,85.5,85.5,85.51,85.51,85.51,85.51,85.51,85.51,85.52,85.52,85.52,85.52,99.87,99.87,99.87,99.87,99.88,99.88,99.88,99.88]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[11.48,11.48,11.45,11.44,11.45,11.43,11.43,11.41,11.41,11.41,11.41,11.4,11.4,11.39,11.37,11.37,11.37,11.37,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,11.36,0.13,0.13,0.13,0.13,0.12,0.12,0.12,0.12]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[3.16,3.16,3.15,3.15,3.15,3.15,3.14,3.14,3.14,3.14,3.14,3.14,3.14,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,3.13,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00]},{strokeColor:"#D1D4DB",pointStrokeColor:"#D1D4DB",pointColor:"#FFF",data:[85.36,85.37,85.4,85.41,85.41,85.42,85.43,85.45,85.45,85.45,85.46,85.47,85.47,85.47,85.5,85.5,85.5,85.5,85.51,85.51,85.51,85.51,85.51,85.51,85.52,85.52,85.52,85.52,99.87,99.87,99.87,99.87,99.88,99.88,99.88,99.88]}]};
 var c = document.getElementById("chart26t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 var data = [{value:0.06,color:"#2D3F50"},{value:99.94,color:"#91A2B2"}]
@@ -2204,15 +2259,15 @@ new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart36").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart36t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart37").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart37t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart38").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
@@ -2222,20 +2277,26 @@ new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart39").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart39t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart40").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,99.26,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart40t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50"}]
 var c = document.getElementById("chart41").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart41t").getContext("2d");
+new Chart(c).Line(data,perfectTrendOptions);
+var data = [{value:100,color:"#2D3F50"},{value:0,color:"#91A2B2"}]
+var c = document.getElementById("chart42").getContext("2d");
+new Chart(c).Doughnut(data,valOptions);
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul"],datasets:[{strokeColor:"#2D3F50",pointStrokeColor:"#2D3F50",pointColor:"#FFF",data:[28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,28.21,100,100,100,100,100,100,100,100]},{strokeColor:"#91A2B2",pointStrokeColor:"#91A2B2",pointColor:"#FFF",data:[71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,71.79,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00]}]};
+var c = document.getElementById("chart42t").getContext("2d");
 new Chart(c).Line(data,trendOptions);
 
 
