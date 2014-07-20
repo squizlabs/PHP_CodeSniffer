@@ -574,13 +574,13 @@ function generateReport($results, $repo=null)
     ksort($metrics);
     $sidebar = '';
 
+    // Create the flyout sidebar.
     foreach ($metrics as $metric => $data) {
         if (empty($data['values']) === true || $data['total'] === 0) {
             continue;
         }
 
         $popular = '';
-        
 
         $metricid   = str_replace(' ', '-', strtolower($metric));
         $winPercent = round($data['values'][$data['winner']] / $data['total'] * 100, 2);
@@ -595,7 +595,7 @@ function generateReport($results, $repo=null)
         }
         
         $sidebar .= '<div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
-    }
+    }//end foreach
 
     if ($repo === null) {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
