@@ -733,6 +733,33 @@ class PHP_CodeSniffer_File
      */
     public function addError($error, $stackPtr, $code='', $data=array(), $severity=0)
     {
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
+        $this->addErrorOnLine($error, $lineNum, $column, $code, $data, $severity);
+    }
+
+    /**
+     * Adds an error to the error stack. Requires specifying line number and column
+     * instead of $stackPtr
+     *
+     * @param string $error    The error message.
+     * @param int    $lineNum  Line number where the error occurred.
+     * @param int    $column   Column number where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the error message.
+     * @param int    $severity The severity level for this error. A value of 0
+     *                         will be converted into the default severity level.
+     *
+     * @return void
+     */
+    public function addErrorOnLine($error, $lineNum, $column=1, $code='', $data=array(), $severity=0)
+    {
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -769,7 +796,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'warning'
         ) {
             // Pass this off to the warning handler.
-            $this->addWarning($error, $stackPtr, $code, $data, $severity);
+            $this->addWarningOnLine($error, $lineNum, $column, $code, $data, $severity);
             return;
         } else if ($this->phpcs->cli->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
@@ -802,14 +829,6 @@ class PHP_CodeSniffer_File
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
                 return;
             }
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
         }
 
         $this->_errorCount++;
@@ -863,6 +882,34 @@ class PHP_CodeSniffer_File
      */
     public function addWarning($warning, $stackPtr, $code='', $data=array(), $severity=0)
     {
+        if ($stackPtr === null) {
+            $lineNum = 1;
+            $column = 1;
+        } else {
+            $lineNum = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
+        $this->addWarningOnLine($warning, $lineNum, $column, $code, $data, $severity);
+    }
+
+
+    /**
+     * Adds an warning to the warning stack. Requires specifying line number and column
+     * instead of $stackPtr
+     *
+     * @param string $warning  The error message.
+     * @param int    $lineNum  Line number where the error occurred.
+     * @param int    $column   Column number where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the warning message.
+     * @param int    $severity The severity level for this warning. A value of 0
+     *                         will be converted into the default severity level.
+     *
+     * @return void
+     */
+    public function addWarningOnLine($warning, $lineNum, $column=1, $code='', $data=array(), $severity=0)
+    {
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -899,7 +946,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'error'
         ) {
             // Pass this off to the error handler.
-            $this->addError($warning, $stackPtr, $code, $data, $severity);
+            $this->addErrorOnLine($warning, $lineNum, $column, $code, $data, $severity);
             return;
         } else if ($this->phpcs->cli->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
@@ -932,14 +979,6 @@ class PHP_CodeSniffer_File
             if (preg_match("|{$pattern}|i", $this->_file) === 1) {
                 return;
             }
-        }
-
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
         }
 
         $this->_warningCount++;
