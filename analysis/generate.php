@@ -180,10 +180,10 @@ file_put_contents(__DIR__.'/index.html', $output);
 function generateReport($results, $repo=null)
 {
     $html = '';
-    $js   = 'var valOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
-    $js  .= 'var repoOptions = {animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
-    $js  .= 'var trendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
-    $js  .= 'var perfectTrendOptions = {animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};'.PHP_EOL;
+    $js   = 'var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
+    $js  .= 'var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
+    $js  .= 'var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#000",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var perfectTrendOptions = {pointHitDetectionRadius:5,tooltipTemplate:"<%=label%>: <%=value%>%",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};'.PHP_EOL;
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
@@ -367,7 +367,7 @@ function generateReport($results, $repo=null)
                     $percentRepos = 0;
                 }//end if
 
-                $repoData .= '{value:'.$percentRepos.',color:"'.$colour.'"},';
+                $repoData .= '{value:'.$percentRepos.',color:"'.$colour.'",label:"'.$value.'"},';
             }//end if
 
             $percent = round($count / $data['total'] * 100, 2);
@@ -377,7 +377,7 @@ function generateReport($results, $repo=null)
             }
 
             $count     = number_format($count, 0, '', ',');
-            $valsData .= '{value:'.$percent.',color:"'.$colour.'"},';
+            $valsData .= '{value:'.$percent.',color:"'.$colour.'",label:"'.$value.'"},';
 
             $html .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
 
@@ -414,7 +414,7 @@ function generateReport($results, $repo=null)
             $html .= '</td>'.PHP_EOL;
             $html .= '      </tr>'.PHP_EOL;
 
-            $trendData .= "{strokeColor:\"$colour\",pointStrokeColor:\"$colour\",pointColor:\"#FFF\",data:[";
+            $trendData .= "{label:\"$value\",strokeColor:\"$colour\",pointStrokeColor:\"#FFF\",pointColor:\"$colour\",pointHighlightFill:\"#FFF\",pointHighlightStroke:\"$colour\",data:[";
             ksort($data['trends']);
             foreach ($data['trends'] as $date => $trendValues) {
                 $trendTotal = array_sum($trendValues);
