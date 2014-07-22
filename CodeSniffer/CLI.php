@@ -123,7 +123,7 @@ class PHP_CodeSniffer_CLI
 
         $encoding = PHP_CodeSniffer::getConfigData('encoding');
         if ($encoding === null) {
-            $defaults['encoding'] = 'iso-8859-1';
+            $defaults['encoding'] = 'utf-8';
         } else {
             $defaults['encoding'] = strtolower($encoding);
         }
@@ -842,7 +842,7 @@ class PHP_CodeSniffer_CLI
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (only valid if checking a directory)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
-        echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
+        echo '        <encoding>    The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
