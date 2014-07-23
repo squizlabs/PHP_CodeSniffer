@@ -120,6 +120,45 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
 
         $tokens = $phpcsFile->getTokens();
 
+        $start = $phpcsFile->findNext(T_NAMESPACE, 0, null, false, 'namespace');
+        $end   = $phpcsFile->findNext(T_SEMICOLON, $start+1, null, false, ';');
+
+        $this->currentNamespace = '';
+        for ($i = ($start + 1); $i <= $end; $i++) {
+            switch ($tokens[$i]['code']) {
+                case T_STRING:
+                    if ($i == ($start + 2)) {
+                        $this->currentNamespace .= '\\';
+                    }
+                case T_NS_SEPARATOR:
+                    $this->currentNamespace .= $tokens[$i]['content'];
+                    break;
+            }
+        }
+
+        $start = 0;
+        $this->useStatements = array();
+        $use = '';
+        while (false !== ($start = $phpcsFile->findNext(T_USE, $start, null, false, 'use'))) {
+            $end = $phpcsFile->findNext(T_SEMICOLON, $start+1, null, false, ';');
+            for ($i = ($start + 1); $i <= $end; $i++) {
+                switch ($tokens[$i]['code']) {
+                    case T_STRING:
+                        if ($i == ($start + 2)) {
+                            $use .= '\\';
+                        }
+                    case T_NS_SEPARATOR:
+                        $use .= $tokens[$i]['content'];
+                        break;
+                    case T_SEMICOLON:
+                        $this->useStatements[] = $use;
+                        $use = '';
+                        break;
+                }
+            }
+            $start = $end + 1;
+        }
+
         $find = array(
                  T_COMMENT,
                  T_DOC_COMMENT,
@@ -668,7 +707,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                           $pos,
                                          );
                                 $this->currentFile->addError($error, ($commentEnd + 2), 'TypeHintMissing', $data);
-                            } else if ($typeHint !== $suggestedTypeHint) {
+                            } else if ($typeHint !== $suggestedTypeHint
+                                       && $suggestedTypeHint != $this->currentNamespace.'\\'.$typeHint
+                                       && !in_array($suggestedTypeHint, $this->useStatements)
+                            ) {
                                 $error = 'Expected type hint "%s"; found "%s" for %s at position %s';
                                 $data  = array(
                                           $suggestedTypeHint,
