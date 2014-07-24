@@ -772,9 +772,8 @@ class PHP_CodeSniffer_File
 
     }//end detectLineEndings()
 
-
     /**
-     * Adds an error to the error stack.
+     * Records an error against a specific token in the file.
      *
      * @param string  $error    The error message.
      * @param int     $stackPtr The stack position where the error occurred.
@@ -794,6 +793,179 @@ class PHP_CodeSniffer_File
         $severity=0,
         $fixable=false
     ) {
+        if ($stackPtr === null) {
+            $line   = 1;
+            $column = 1;
+        } else {
+            $line   = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
+        return $this->_addError($error, $line, $column, $code, $data, $severity, $fixable);
+
+    }//end addError()
+
+
+    /**
+     * Records a warning against a specific token in the file.
+     *
+     * @param string  $warning  The error message.
+     * @param int     $stackPtr The stack position where the error occurred.
+     * @param string  $code     A violation code unique to the sniff message.
+     * @param array   $data     Replacements for the warning message.
+     * @param int     $severity The severity level for this warning. A value of 0
+     *                          will be converted into the default severity level.
+     * @param boolean $fixable  Can the warning be fixed by the sniff?
+     *
+     * @return boolean
+     */
+    public function addWarning(
+        $warning,
+        $stackPtr,
+        $code='',
+        $data=array(),
+        $severity=0,
+        $fixable=false
+    ) {
+        if ($stackPtr === null) {
+            $line   = 1;
+            $column = 1;
+        } else {
+            $line   = $this->_tokens[$stackPtr]['line'];
+            $column = $this->_tokens[$stackPtr]['column'];
+        }
+
+        return $this->_addWarning($warning, $line, $column, $code, $data, $severity, $fixable);
+
+    }//end addWarning()
+
+
+    /**
+     * Records an error against a specific line in the file.
+     *
+     * @param string $error    The error message.
+     * @param int    $line     The line on which the error occured.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the error message.
+     * @param int    $severity The severity level for this error. A value of 0 will be converted into the default severity level.
+     *                          will be converted into the default severity level.
+     *
+     * @return boolean
+     */
+    public function addErrorOnLine(
+        $error,
+        $line,
+        $code='',
+        $data=array(),
+        $severity=0
+    ) {
+        return $this->_addError($error, $line, 1, $code, $data, $severity, false);
+
+    }//end addErrorOnLine()
+
+
+    /**
+     * Records a warning against a specific token in the file.
+     *
+     * @param string $warning  The error message.
+     * @param int    $line     The line on which the warning occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the warning message.
+     * @param int    $severity The severity level for this warning. A value of 0 will be converted into the default severity level.
+     *                          will be converted into the default severity level.
+     *
+     * @return boolean
+     */
+    public function addWarningOnLine(
+        $warning,
+        $line,
+        $code='',
+        $data=array(),
+        $severity=0
+    ) {
+        return $this->_addWarning($warning, $line, 1, $code, $data, $severity, false);
+
+    }//end addWarningOnLine()
+
+
+    /**
+     * Records a fixable error against a specific token in the file.
+     *
+     * Returns true if the error was recorded and should be fixed.
+     *
+     * @param string $error    The error message.
+     * @param int    $stackPtr The stack position where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the error message.
+     * @param int    $severity The severity level for this error. A value of 0
+     *                         will be converted into the default severity level.
+     *
+     * @return boolean
+     */
+    public function addFixableError(
+        $error,
+        $stackPtr,
+        $code='',
+        $data=array(),
+        $severity=0
+    ) {
+        $recorded = $this->addError($error, $stackPtr, $code, $data, $severity, true);
+        if ($recorded === true && $this->fixer->enabled === true) {
+            return true;
+        }
+
+        return false;
+
+    }//end addFixableError()
+
+
+    /**
+     * Records a fixable warning against a specific token in the file.
+     *
+     * Returns true if the warning was recorded and should be fixed.
+     *
+     * @param string $warning  The error message.
+     * @param int    $stackPtr The stack position where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the warning message.
+     * @param int    $severity The severity level for this warning. A value of 0
+     *                         will be converted into the default severity level.
+     *
+     * @return boolean
+     */
+    public function addFixableWarning(
+        $warning,
+        $stackPtr,
+        $code='',
+        $data=array(),
+        $severity=0
+    ) {
+        $recorded = $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
+        if ($recorded === true && $this->fixer->enabled === true) {
+            return true;
+        }
+
+        return false;
+
+    }//end addFixableWarning()
+
+
+    /**
+     * Adds an error to the error stack.
+     *
+     * @param string  $error    The error message.
+     * @param int     $line     The line on which the error occured.
+     * @param int     $column   The column at which the error occured.
+     * @param string  $code     A violation code unique to the sniff message.
+     * @param array   $data     Replacements for the error message.
+     * @param int     $severity The severity level for this error. A value of 0
+     *                          will be converted into the default severity level.
+     * @param boolean $fixable  Can the error be fixed by the sniff?
+     *
+     * @return boolean
+     */
+    private function _addError($error, $line, $column, $code, $data, $severity, $fixable)
+    {
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -821,7 +993,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'warning'
         ) {
             // Pass this off to the warning handler.
-            return $this->addWarning($error, $stackPtr, $code, $data, $severity);
+            return $this->_addWarning($error, $line, $column, $code, $data, $severity);
         } else if ($this->phpcs->cli->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
             // be hidden in the reports anyway.
@@ -855,25 +1027,17 @@ class PHP_CodeSniffer_File
             }
         }
 
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
-        }
-
         $this->_errorCount++;
         if ($fixable === true) {
             $this->_fixableCount++;
         }
 
         if ($this->_recordErrors === false) {
-            if (isset($this->_errors[$lineNum]) === false) {
-                $this->_errors[$lineNum] = 0;
+            if (isset($this->_errors[$line]) === false) {
+                $this->_errors[$line] = 0;
             }
 
-            $this->_errors[$lineNum]++;
+            $this->_errors[$line]++;
             return true;
         }
 
@@ -888,20 +1052,20 @@ class PHP_CodeSniffer_File
             $message = vsprintf($error, $data);
         }
 
-        if (isset($this->_errors[$lineNum]) === false) {
-            $this->_errors[$lineNum] = array();
+        if (isset($this->_errors[$line]) === false) {
+            $this->_errors[$line] = array();
         }
 
-        if (isset($this->_errors[$lineNum][$column]) === false) {
-            $this->_errors[$lineNum][$column] = array();
+        if (isset($this->_errors[$line][$column]) === false) {
+            $this->_errors[$line][$column] = array();
         }
 
-        $this->_errors[$lineNum][$column][] = array(
-                                               'message'  => $message,
-                                               'source'   => $sniffCode,
-                                               'severity' => $severity,
-                                               'fixable'  => $fixable,
-                                              );
+        $this->_errors[$line][$column][] = array(
+                                            'message'  => $message,
+                                            'source'   => $sniffCode,
+                                            'severity' => $severity,
+                                            'fixable'  => $fixable,
+                                           );
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
@@ -914,14 +1078,15 @@ class PHP_CodeSniffer_File
 
         return true;
 
-    }//end addError()
+    }//end _addError()
 
 
     /**
      * Adds an warning to the warning stack.
      *
      * @param string  $warning  The error message.
-     * @param int     $stackPtr The stack position where the error occurred.
+     * @param int     $line     The line on which the warning occured.
+     * @param int     $column   The column at which the warning occured.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the warning message.
      * @param int     $severity The severity level for this warning. A value of 0
@@ -930,14 +1095,8 @@ class PHP_CodeSniffer_File
      *
      * @return boolean
      */
-    public function addWarning(
-        $warning,
-        $stackPtr,
-        $code='',
-        $data=array(),
-        $severity=0,
-        $fixable=false
-    ) {
+    private function _addWarning($warning, $line, $column, $code, $data, $severity, $fixable)
+    {
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -965,7 +1124,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'error'
         ) {
             // Pass this off to the error handler.
-            return $this->addError($warning, $stackPtr, $code, $data, $severity);
+            return $this->_addError($warning, $line, $column, $code, $data, $severity);
         } else if ($this->phpcs->cli->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
             // be hidden in the reports anyway.
@@ -999,25 +1158,17 @@ class PHP_CodeSniffer_File
             }
         }
 
-        if ($stackPtr === null) {
-            $lineNum = 1;
-            $column  = 1;
-        } else {
-            $lineNum = $this->_tokens[$stackPtr]['line'];
-            $column  = $this->_tokens[$stackPtr]['column'];
-        }
-
         $this->_warningCount++;
         if ($fixable === true) {
             $this->_fixableCount++;
         }
 
         if ($this->_recordErrors === false) {
-            if (isset($this->_warnings[$lineNum]) === false) {
-                $this->_warnings[$lineNum] = 0;
+            if (isset($this->_warnings[$line]) === false) {
+                $this->_warnings[$line] = 0;
             }
 
-            $this->_warnings[$lineNum]++;
+            $this->_warnings[$line]++;
             return true;
         }
 
@@ -1032,20 +1183,20 @@ class PHP_CodeSniffer_File
             $message = vsprintf($warning, $data);
         }
 
-        if (isset($this->_warnings[$lineNum]) === false) {
-            $this->_warnings[$lineNum] = array();
+        if (isset($this->_warnings[$line]) === false) {
+            $this->_warnings[$line] = array();
         }
 
-        if (isset($this->_warnings[$lineNum][$column]) === false) {
-            $this->_warnings[$lineNum][$column] = array();
+        if (isset($this->_warnings[$line][$column]) === false) {
+            $this->_warnings[$line][$column] = array();
         }
 
-        $this->_warnings[$lineNum][$column][] = array(
-                                                 'message'  => $message,
-                                                 'source'   => $sniffCode,
-                                                 'severity' => $severity,
-                                                 'fixable'  => $fixable,
-                                                );
+        $this->_warnings[$line][$column][] = array(
+                                              'message'  => $message,
+                                              'source'   => $sniffCode,
+                                              'severity' => $severity,
+                                              'fixable'  => $fixable,
+                                             );
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
@@ -1058,7 +1209,7 @@ class PHP_CodeSniffer_File
 
         return true;
 
-    }//end addWarning()
+    }//end _addWarning()
 
 
     /**
@@ -1089,68 +1240,6 @@ class PHP_CodeSniffer_File
         return true;
 
     }//end recordMetric()
-
-
-    /**
-     * Adds a fixable error to the error stack.
-     *
-     * Returns true if the error was recorded and should be fixed.
-     *
-     * @param string $error    The error message.
-     * @param int    $stackPtr The stack position where the error occurred.
-     * @param string $code     A violation code unique to the sniff message.
-     * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of 0
-     *                         will be converted into the default severity level.
-     *
-     * @return boolean
-     */
-    public function addFixableError(
-        $error,
-        $stackPtr,
-        $code='',
-        $data=array(),
-        $severity=0
-    ) {
-        $recorded = $this->addError($error, $stackPtr, $code, $data, $severity, true);
-        if ($recorded === true && $this->fixer->enabled === true) {
-            return true;
-        }
-
-        return false;
-
-    }//end addFixableError()
-
-
-    /**
-     * Adds a fixable warning to the warning stack.
-     *
-     * Returns true if the warning was recorded and should be fixed.
-     *
-     * @param string $warning  The error message.
-     * @param int    $stackPtr The stack position where the error occurred.
-     * @param string $code     A violation code unique to the sniff message.
-     * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of 0
-     *                         will be converted into the default severity level.
-     *
-     * @return boolean
-     */
-    public function addFixableWarning(
-        $warning,
-        $stackPtr,
-        $code='',
-        $data=array(),
-        $severity=0
-    ) {
-        $recorded = $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
-        if ($recorded === true && $this->fixer->enabled === true) {
-            return true;
-        }
-
-        return false;
-
-    }//end addFixableWarning()
 
 
     /**
