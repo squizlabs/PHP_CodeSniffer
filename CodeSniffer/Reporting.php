@@ -361,6 +361,7 @@ class PHP_CodeSniffer_Reporting
 
     }//end prepareFileReport()
 
+
     /**
      * Start recording time for the run.
      *

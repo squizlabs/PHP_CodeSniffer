@@ -40,6 +40,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                                    'JS',
                                   );
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *

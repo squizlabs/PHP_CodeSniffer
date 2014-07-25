@@ -83,8 +83,6 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (is_array($output) === true) {
-            $tokens = $phpcsFile->getTokens();
-
             foreach ($output as $finding) {
                 // The first two lines of analyzer output contain
                 // something like this:
@@ -96,24 +94,14 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                     continue;
                 }
 
-                // Find the token at the start of the line.
-                $lineToken = null;
-                foreach ($tokens as $ptr => $info) {
-                    if ($info['line'] == $regs[1]) {
-                        $lineToken = $ptr;
-                        break;
-                    }
-                }
-
-                if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($regs[2]), $ptr, 'ExternalTool');
-                }
-            }//end foreach
-        }//end if
+                $phpcsFile->addWarningOnLine(trim($regs[2]), $regs[1], 'ExternalTool');
+            }
+        }
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);
 
     }//end process()
+
 
 }//end class

@@ -82,28 +82,15 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
 
 
         if (is_array($output) === true) {
-            $tokens = $phpcsFile->getTokens();
-
             foreach ($output as $finding) {
                 $split   = strpos($finding, ':');
                 $line    = substr($finding, 0, $split);
                 $message = substr($finding, ($split + 1));
-
-                // Find the token at the start of the line.
-                $lineToken = null;
-                foreach ($tokens as $ptr => $info) {
-                    if ($info['line'] == $line) {
-                        $lineToken = $ptr;
-                        break;
-                    }
-                }
-
-                if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($message), $ptr, 'ExternalTool');
-                }
-            }//end foreach
-        }//end if
+                $phpcsFile->addWarningOnLine(trim($message), $line, 'ExternalTool');
+            }
+        }
 
     }//end process()
+
 
 }//end class

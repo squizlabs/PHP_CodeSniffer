@@ -73,8 +73,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $tokens = $phpcsFile->getTokens();
-        $count  = count($output);
+        $count = count($output);
 
         for ($i = 0; $i < $count; $i++) {
             $matches    = array();
@@ -96,17 +95,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             // Fourth is empty line.
             $i += 4;
 
-            $lineToken = null;
-            foreach ($tokens as $ptr => $info) {
-                if ($info['line'] === $line) {
-                    $lineToken = $ptr;
-                    break;
-                }
-            }
-
-            if ($lineToken !== null) {
-                $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
-            }
+            $phpcsFile->addWarningOnLine($message, $line, 'ExternalTool');
         }//end for
 
     }//end process()

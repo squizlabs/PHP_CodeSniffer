@@ -31,6 +31,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added phpcbf.bat file for Windows
   - addFixableError() and addFixableWarning() now only return true if the fixer is enabled
     -- Saves checking ($phpcsFile->fixer->enabled === true) before every fix
+  - Added addErrorOnLine() and addWarningOnLine() to add a non-fixable violation to a line at column 1
+    -- Useful if you are generating errors using an external tool or parser and only know line numbers
+    -- Thanks to Ondřej Mirtes for the patch
   - CSS tokenizer now identifies embedded PHP code using the new T_EMBEDDED_PHP token type
     -- The entire string of PHP is contained in a single token
   - PHP tokenizer contains better detection of short array syntax
@@ -65,6 +68,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Renan Gonçalves for the patch
   - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
   - Squiz SelfMemberReferenceSniff now works correctly with namespaces
+  - Squiz FunctionCommentSniff is now more relaxed when checking namespaced type hints
   - Tab characters are now encoded in abstract pattern errors messages
     -- Thanks to Blaine Schmeisser for the patch
   - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)

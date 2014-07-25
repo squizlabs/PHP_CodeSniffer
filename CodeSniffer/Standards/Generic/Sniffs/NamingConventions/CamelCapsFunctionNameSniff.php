@@ -209,7 +209,6 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
             $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
-
     }//end processTokenOutsideScope()
 
 
