@@ -174,7 +174,7 @@ class PHP_CodeSniffer_Reporting
             if ($output === null) {
                 // Using a temp file.
                 if (isset($this->_tmpFiles[$report]) === false) {
-                     $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
+                    $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
                 }
 
                 fwrite($this->_tmpFiles[$report], $generatedReport);
