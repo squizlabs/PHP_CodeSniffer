@@ -459,7 +459,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                                       $param['var'],
                                      );
                             $phpcsFile->addError($error, $stackPtr, 'TypeHintMissing', $data);
-                        } else if ($typeHint !== $suggestedTypeHint) {
+                        } else if ($typeHint !== substr($suggestedTypeHint, (strlen($typeHint) * -1))) {
                             $error = 'Expected type hint "%s"; found "%s" for %s';
                             $data  = array(
                                       $suggestedTypeHint,

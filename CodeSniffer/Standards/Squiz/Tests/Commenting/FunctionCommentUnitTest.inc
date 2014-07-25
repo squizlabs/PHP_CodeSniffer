@@ -628,3 +628,16 @@ public function foo(array &$tokens, $tokenizer, $eolChar)
 {
 
 }//end foo()
+
+/**
+ * Some description.
+ *
+ * @param \Vendor\Package\SomeClass       $someclass  Some class.
+ * @param \OtherVendor\Package\SomeClass2 $someclass2 Some class.
+ * @param \OtherVendor\Package\SomeClass2 $someclass3 Some class.
+ *
+ * @return void
+ */
+public function foo(SomeClass $someclass, \OtherVendor\Package\SomeClass2 $someclass2, SomeClass3 $someclass3)
+{
+}
