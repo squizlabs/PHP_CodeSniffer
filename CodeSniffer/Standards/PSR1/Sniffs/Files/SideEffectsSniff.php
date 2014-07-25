@@ -29,6 +29,7 @@
 class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 {
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *

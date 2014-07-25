@@ -97,4 +97,5 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
 
     }//end process()
 
+
 }//end class

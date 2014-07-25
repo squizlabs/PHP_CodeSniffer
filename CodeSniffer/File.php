@@ -772,6 +772,7 @@ class PHP_CodeSniffer_File
 
     }//end detectLineEndings()
 
+
     /**
      * Records an error against a specific token in the file.
      *

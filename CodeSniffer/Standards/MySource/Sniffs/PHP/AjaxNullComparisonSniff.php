@@ -104,7 +104,6 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
             $phpcsFile->addError($error, $nullValue, 'Found');
         }//end for
 
-
     }//end process()
 
 

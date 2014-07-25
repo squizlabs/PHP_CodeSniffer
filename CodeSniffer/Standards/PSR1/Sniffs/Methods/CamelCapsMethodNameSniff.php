@@ -32,6 +32,7 @@ if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', 
 class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
 {
 
+
     /**
      * Constructs a PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
      */
@@ -93,7 +94,6 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
      */
     protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-
 
     }//end processTokenOutsideScope()
 
