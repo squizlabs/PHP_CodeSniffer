@@ -738,6 +738,12 @@ ul.reportInstructions {
     color: #6c7884;
 }
 
+.listBoxHeader p {
+    margin: 0 0 6px 0;
+    font-size: 13px;
+    color: #000;
+}
+
 .listBoxList {
     width: 100%; 
     border-collapse: collapse; 
@@ -838,8 +844,12 @@ ul.reportInstructions {
     width: 800px;
 }
 
+#gradeInstructionsWrap .listBoxHeader {
+    width: 745px;
+}
+
 #gradeInstructionsWrap .listBoxList {
-    margin-top: 60px;
+    margin-top: 80px;
 }
 
 #gradeInstructionsWrap .listBoxList .td1 {
