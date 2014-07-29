@@ -5,7 +5,7 @@ function getRepoDirs($repo)
     $dirs = array();
     list($orgName, $repoName) = explode('/', $repo->url);
 
-    $dirs['org']   = __DIR__."/../$orgName";
+    $dirs['org']   = realpath(__DIR__."/../$orgName");
     $dirs['repo']  = $dirs['org']."/$repoName";
     $dirs['clone'] = $dirs['repo'].'/src';
 

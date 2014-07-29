@@ -5,6 +5,8 @@ function init()
     document.getElementById("flyout").addEventListener('mouseout', hideFlyout);
     document.getElementById("flyoutFixed").addEventListener('mouseout', hideFlyout);
 
+    var consistencyColour = document.getElementById("consistency").className;
+
     var click = function(e) {
         if (document.getElementById("flyout").className == "flyout expanded pinned") {
             return;
@@ -48,11 +50,18 @@ function init()
         }
     });
 
-    window.addEventListener('scroll', function(e){
+    var scroll = function(e) {
         var distanceY = (window.pageYOffset || document.documentElement.scrollTop);
-        var height    = 479;
+        var height    = 449;
         if (document.getElementById("introductionWrap").className == "introductionWrap expanded") {
             height = (document.getElementById("introductionWrap").clientHeight + 20);
+        }
+
+        // Switch the consistency banner.
+        if (distanceY > 300) {
+            document.getElementById("consistency").className = consistencyColour + " small";
+        } else {
+            document.getElementById("consistency").className = consistencyColour;
         }
 
         if (distanceY > height) {
@@ -65,6 +74,7 @@ function init()
             }
 
             document.getElementById("fixedHeaderContent").style.opacity = "1";
+            
         } else {
             if (document.getElementById("reportInstructionsWrap").className == "reportInstructionsWrap expanded") {
                 document.getElementById("introductionWrap").className = "introductionWrap expanded";
@@ -75,16 +85,19 @@ function init()
             document.getElementById("contentWrap").className = "contentWrap";
             document.getElementById("fixedHeaderContent").style.opacity = "0";
         }
-    });
+    }
+
+    scroll();
+    window.addEventListener('scroll', scroll);
 
 }//end init()
-
-window.onload = init();
 
 var listClick = function(e) {
     var node = e.target;
     while (node.parentNode) {
-        if (node.id === 'listBoxWrap') {
+        if (node.id === 'listBoxWrap'
+            || node.id === 'gradeInstructionsWrap'
+        ) {
             return;
         }
 
@@ -139,7 +152,23 @@ function showListBox(id)
 function hideListBox()
 {
     document.getElementById('listBoxWrap').style.display ='none';
+    document.getElementById('gradeInstructionsWrap').style.display ='none';
     document.removeEventListener('mouseup', listClick);
+
+}//end hideListBox()
+
+
+function toggleGradeBox()
+{
+    if (document.getElementById("gradeInstructionsWrap").style.display == "none"
+        || document.getElementById("gradeInstructionsWrap").style.display == ""
+    ) {
+        document.getElementById('gradeInstructionsWrap').style.display ='block';
+        document.addEventListener('mouseup', listClick);
+    } else {
+        document.getElementById('gradeInstructionsWrap').style.display ='none';
+        document.removeEventListener('mouseup', listClick);
+    }
 
 }//end hideListBox()
 
@@ -159,3 +188,24 @@ function toggleInstructions()
     }
 
 }//end toggleInstructions()
+
+
+function highlightPoints(chart, labels)
+{
+    var numDatasets = chart.datasets.length;
+    var numPoints = chart.datasets[0].points.length;
+
+    for (d = 0; d < numDatasets; d++) {
+        for (p = 0; p < numPoints; p++) {
+            label = chart.datasets[d].points[p].label;
+            if (labels.indexOf(label) >= 0) {
+                point = chart.datasets[d].points[p];
+                point.strokeColor = point.highlightStroke;
+                point.save();
+            }
+        }
+    }
+
+    chart.update();
+
+}//end highlightPoints()

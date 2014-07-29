@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <title>((title))</title>
     <link rel="shortcut icon" type="image/png"  href="((assetPath))_assets/favicon.png">
     <link rel="stylesheet" type="text/css" href="((assetPath))_assets/styles.css" />
     <script src="((assetPath))_assets/Chart.min.js"></script>
+    <script src="((assetPath))_assets/scripts.js"></script>
 </head>
 <body>
+<div id="gradeInstructionsWrap" class="listBoxWrap">
+    <div class="listBoxContent">
+        <div class="listBoxClose" onclick="toggleGradeBox();"></div>
+        <div class="listBoxHeader">
+            <h2>Embed Instructions</h2>
+            <img src="((reportURL))/grade.svg" title="Code consistency">
+        </div>
+        <div class="listBoxListWrap">
+            <ul class="listBoxList">
+                <li>
+                    <div class="td1">Image URL</div>
+                    <div class="td2">((reportURL))/grade.svg</div>
+                </li>
+                <li>
+                    <div class="td1">Markdown</div>
+                    <div class="td2">[![Code consistency](((reportURL))/grade.svg)](((reportURL)))</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="listBoxWrap" class="listBoxWrap"></div>
+
+<div id="consistency" class="((gradeColour))" title="((gradeDescription))" onclick="toggleGradeBox();">
+    <span class="grade">((grade))</span>consistency
+</div>
 
 <div id="mainWrap" class="mainWrap">
     <div id="introductionWrap" class="introductionWrap">
@@ -47,7 +75,10 @@
 </div>
 
 <script>
+init();
     ((js))
+
+    
 
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -56,6 +87,5 @@
     ga('create', 'UA-359178-18', 'squizlabs.github.io');
     ga('send', 'pageview');
 </script>
-<script src="((assetPath))_assets/scripts.js"></script>
 </body>
 </html>

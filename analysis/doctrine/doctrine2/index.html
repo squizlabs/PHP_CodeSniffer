@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <title>Doctrine 2 ORM - Analysis of Coding Conventions</title>
     <link rel="shortcut icon" type="image/png"  href="../../_assets/favicon.png">
     <link rel="stylesheet" type="text/css" href="../../_assets/styles.css" />
     <script src="../../_assets/Chart.min.js"></script>
+    <script src="../../_assets/scripts.js"></script>
 </head>
 <body>
+<div id="gradeInstructionsWrap" class="listBoxWrap">
+    <div class="listBoxContent">
+        <div class="listBoxClose" onclick="toggleGradeBox();"></div>
+        <div class="listBoxHeader">
+            <h2>Embed Instructions</h2>
+            <img src="http://squizlabs.github.io/PHP_CodeSniffer/analysis/doctrine/doctrine2/grade.svg" title="Code consistency">
+        </div>
+        <div class="listBoxListWrap">
+            <ul class="listBoxList">
+                <li>
+                    <div class="td1">Image URL</div>
+                    <div class="td2">http://squizlabs.github.io/PHP_CodeSniffer/analysis/doctrine/doctrine2/grade.svg</div>
+                </li>
+                <li>
+                    <div class="td1">Markdown</div>
+                    <div class="td2">[![Code consistency](http://squizlabs.github.io/PHP_CodeSniffer/analysis/doctrine/doctrine2/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/doctrine/doctrine2)</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div id="listBoxWrap" class="listBoxWrap"></div>
+
+<div id="consistency" class="green" title="97.64% of the project's source code conforms to the same coding conventions" onclick="toggleGradeBox();">
+    <span class="grade">A</span>consistency
+</div>
 
 <div id="mainWrap" class="mainWrap">
     <div id="introductionWrap" class="introductionWrap">
         <div class="introduction">
             <div class="icon"></div>
-            <h1>Analysis of Coding Conventions for <span class="repoName">Doctrine 2 ORM</span></h1>
-            <p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across 85 PHP projects.</p>
+            <h1>Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/doctrine/doctrine2">Doctrine 2 ORM</a></span></h1>
+            <p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across 86 PHP projects.</p>
 <ul class="reportLinkList">
-  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (85 PHP Projects)</a></li>
+  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (86 PHP Projects)</a></li>
   <li><a href="" onclick="showListBox('all'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>
 </ul>
 <div class="divider"></div>
@@ -89,7 +117,7 @@
     <div id="fixedHeader" class="fixedHeader">
         <div id="fixedHeaderContent" class="introduction">
             <div class="icon"></div>
-            <h1>Analysis of Coding Conventions for <span class="repoName">Doctrine 2 ORM</span></h1>
+            <h1>Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/doctrine/doctrine2">Doctrine 2 ORM</a></span></h1>
              <a href="#" title="Return to the top of the report" class="backToTop"><span class="screenHide">Back to top</span></a>
         </div>
     </div>
@@ -102,99 +130,101 @@
             <h2>View project specific report</h2>
         </div>
         <div id="alllistBoxListWrap" class="listBoxListWrap">
+            <div class="td1Heading">Project</div><div class="td2Heading">Consistency</div>
             <ul class="listBoxList">
-<li><a href="../../anchorcms/anchor-cms/index.html"><div class="td1">Anchor CMS</div></a></li>
-<li><a href="../../kriswallsmith/assetic/index.html"><div class="td1">Assetic</div></a></li>
-<li><a href="../../auraphp/Aura.Autoload/index.html"><div class="td1">Aura.Autoload</div></a></li>
-<li><a href="../../auraphp/Aura.Cli/index.html"><div class="td1">Aura.Cli</div></a></li>
-<li><a href="../../auraphp/Aura.Cli_Kernel/index.html"><div class="td1">Aura.Cli_Kernel</div></a></li>
-<li><a href="../../auraphp/Aura.Di/index.html"><div class="td1">Aura.Di</div></a></li>
-<li><a href="../../auraphp/Aura.Dispatcher/index.html"><div class="td1">Aura.Dispatcher</div></a></li>
-<li><a href="../../auraphp/Aura.Filter/index.html"><div class="td1">Aura.Filter</div></a></li>
-<li><a href="../../auraphp/Aura.Html/index.html"><div class="td1">Aura.Html</div></a></li>
-<li><a href="../../auraphp/Aura.Input/index.html"><div class="td1">Aura.Input</div></a></li>
-<li><a href="../../auraphp/Aura.Intl/index.html"><div class="td1">Aura.Intl</div></a></li>
-<li><a href="../../auraphp/Aura.Marshal/index.html"><div class="td1">Aura.Marshal</div></a></li>
-<li><a href="../../auraphp/Aura.Project_Kernel/index.html"><div class="td1">Aura.Project_Kernel</div></a></li>
-<li><a href="../../auraphp/Aura.Router/index.html"><div class="td1">Aura.Router</div></a></li>
-<li><a href="../../auraphp/Aura.Session/index.html"><div class="td1">Aura.Session</div></a></li>
-<li><a href="../../auraphp/Aura.Signal/index.html"><div class="td1">Aura.Signal</div></a></li>
-<li><a href="../../auraphp/Aura.Sql/index.html"><div class="td1">Aura.Sql</div></a></li>
-<li><a href="../../auraphp/Aura.SqlQuery/index.html"><div class="td1">Aura.SqlQuery</div></a></li>
-<li><a href="../../auraphp/Aura.SqlSchema/index.html"><div class="td1">Aura.SqlSchema</div></a></li>
-<li><a href="../../auraphp/Aura.Uri/index.html"><div class="td1">Aura.Uri</div></a></li>
-<li><a href="../../auraphp/Aura.View/index.html"><div class="td1">Aura.View</div></a></li>
-<li><a href="../../auraphp/Aura.Web/index.html"><div class="td1">Aura.Web</div></a></li>
-<li><a href="../../auraphp/Aura.Web_Kernel/index.html"><div class="td1">Aura.Web_Kernel</div></a></li>
-<li><a href="../../aws/aws-sdk-php/index.html"><div class="td1">AWS SDK for PHP</div></a></li>
-<li><a href="../../kriswallsmith/Buzz/index.html"><div class="td1">Buzz</div></a></li>
-<li><a href="../../cakephp/cakephp/index.html"><div class="td1">CakePHP</div></a></li>
-<li><a href="../../EllisLab/CodeIgniter/index.html"><div class="td1">CodeIgniter</div></a></li>
-<li><a href="../../composer/composer/index.html"><div class="td1">Composer</div></a></li>
-<li><a href="../../contao/core/index.html"><div class="td1">Contao Open Source CMS</div></a></li>
-<li><a href="../../doctrine/doctrine2/index.html"><div class="td1">Doctrine 2 ORM</div></a></li>
-<li><a href="../../drupal/drupal/index.html"><div class="td1">Drupal</div></a></li>
-<li><a href="../../ezsystems/ezpublish-kernel/index.html"><div class="td1">eZ Publish 5.x Kernel</div></a></li>
-<li><a href="../../facebook/facebook-php-sdk/index.html"><div class="td1">Facebook PHP SDK</div></a></li>
-<li><a href="../../fzaninotto/Faker/index.html"><div class="td1">Faker</div></a></li>
-<li><a href="../../thephpleague/flysystem/index.html"><div class="td1">Flysystem</div></a></li>
-<li><a href="../../google/google-api-php-client/index.html"><div class="td1">Google APIs Client Library</div></a></li>
-<li><a href="../../guzzle/guzzle/index.html"><div class="td1">Guzzle</div></a></li>
-<li><a href="../../avalanche123/Imagine/index.html"><div class="td1">Imagine</div></a></li>
-<li><a href="../../jackalope/jackalope/index.html"><div class="td1">Jackalope</div></a></li>
-<li><a href="../../joomla/joomla-cms/index.html"><div class="td1">Joomla! CMS</div></a></li>
-<li><a href="../../chriso/klein.php/index.html"><div class="td1">Klein.php</div></a></li>
-<li><a href="../../laravel/framework/index.html"><div class="td1">Laravel Framework (Kernel)</div></a></li>
-<li><a href="../../leafo/lessphp/index.html"><div class="td1">lessphp</div></a></li>
-<li><a href="../../magento/magento2/index.html"><div class="td1">Magento</div></a></li>
-<li><a href="../../wikimedia/mediawiki-core/index.html"><div class="td1">MediaWiki</div></a></li>
-<li><a href="../../padraic/mockery/index.html"><div class="td1">Mockery</div></a></li>
-<li><a href="../../Seldaek/monolog/index.html"><div class="td1">Monolog</div></a></li>
-<li><a href="../../moodle/moodle/index.html"><div class="td1">Moodle</div></a></li>
-<li><a href="../../bobthecow/mustache.php/index.html"><div class="td1">Mustache.php</div></a></li>
-<li><a href="../../owncloud/core/index.html"><div class="td1">ownCloud</div></a></li>
-<li><a href="../../pear/pear-core/index.html"><div class="td1">PEAR - The PEAR Installer</div></a></li>
-<li><a href="../../phingofficial/phing/index.html"><div class="td1">Phing</div></a></li>
-<li><a href="../../phpbb/phpbb/index.html"><div class="td1">phpBB</div></a></li>
-<li><a href="../../phpDocumentor/phpDocumentor2/index.html"><div class="td1">phpDocumentor</div></a></li>
-<li><a href="../../PHPOffice/PHPExcel/index.html"><div class="td1">PHPExcel</div></a></li>
-<li><a href="../../PHPMailer/PHPMailer/index.html"><div class="td1">PHPMailer</div></a></li>
-<li><a href="../../phpmyadmin/phpmyadmin/index.html"><div class="td1">phpMyAdmin</div></a></li>
-<li><a href="../../sebastianbergmann/phpunit/index.html"><div class="td1">PHPUnit</div></a></li>
-<li><a href="../../sebastianbergmann/php-code-coverage/index.html"><div class="td1">PHP_CodeCoverage</div></a></li>
-<li><a href="../../squizlabs/PHP_CodeSniffer/index.html"><div class="td1">PHP_CodeSniffer</div></a></li>
-<li><a href="../../piwik/piwik/index.html"><div class="td1">Piwik</div></a></li>
-<li><a href="../../ppi/framework/index.html"><div class="td1">PPI Framework</div></a></li>
-<li><a href="../../PrestaShop/PrestaShop/index.html"><div class="td1">PrestaShop</div></a></li>
-<li><a href="../../propelorm/Propel/index.html"><div class="td1">Propel</div></a></li>
-<li><a href="../../pyrocms/pyrocms/index.html"><div class="td1">PyroCMS</div></a></li>
-<li><a href="../../cboden/Ratchet/index.html"><div class="td1">Ratchet</div></a></li>
-<li><a href="../../reactphp/react/index.html"><div class="td1">React</div></a></li>
-<li><a href="../../fruux/sabre-dav/index.html"><div class="td1">SabreDAV</div></a></li>
-<li><a href="../../sculpin/sculpin/index.html"><div class="td1">Sculpin</div></a></li>
-<li><a href="../../silexphp/Silex/index.html"><div class="td1">Silex</div></a></li>
-<li><a href="../../silverstripe/silverstripe-framework/index.html"><div class="td1">SilverStripe Framework</div></a></li>
-<li><a href="../../codeguy/Slim/index.html"><div class="td1">Slim Framework</div></a></li>
-<li><a href="../../solarphp/core/index.html"><div class="td1">Solar Framework</div></a></li>
-<li><a href="../../tedivm/Stash/index.html"><div class="td1">Stash</div></a></li>
-<li><a href="../../sugarcrm/sugarcrm_dev/index.html"><div class="td1">SugarCRM CE</div></a></li>
-<li><a href="../../swiftmailer/swiftmailer/index.html"><div class="td1">Swift Mailer</div></a></li>
-<li><a href="../../symfony/symfony/index.html"><div class="td1">Symfony2</div></a></li>
-<li><a href="../../ginatrapani/ThinkUp/index.html"><div class="td1">ThinkUp</div></a></li>
-<li><a href="../../fabpot/Twig/index.html"><div class="td1">Twig</div></a></li>
-<li><a href="../../TYPO3/TYPO3.CMS/index.html"><div class="td1">TYPO3 CMS</div></a></li>
-<li><a href="../../WordPress/WordPress/index.html"><div class="td1">WordPress</div></a></li>
-<li><a href="../../yiisoft/yii2/index.html"><div class="td1">Yii PHP Framework Version 2</div></a></li>
-<li><a href="../../yiisoft/yii/index.html"><div class="td1">Yii Web Programming Framework</div></a></li>
-<li><a href="../../zendframework/zf2/index.html"><div class="td1">Zend Framework</div></a></li>
-<li><a href="../../zikula/core/index.html"><div class="td1">Zikula</div></a></li>
+<li><a href="../../anchorcms/anchor-cms/index.html"><div class="td1">Anchor CMS</div><div class="td2 green" title="95.15% of the Anchor CMS source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../kriswallsmith/assetic/index.html"><div class="td1">Assetic</div><div class="td2 green" title="97.98% of the Assetic source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Autoload/index.html"><div class="td1">Aura.Autoload</div><div class="td2 green" title="99.3% of the Aura.Autoload source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Cli/index.html"><div class="td1">Aura.Cli</div><div class="td2 green" title="97.91% of the Aura.Cli source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Cli_Kernel/index.html"><div class="td1">Aura.Cli_Kernel</div><div class="td2 green" title="99.03% of the Aura.Cli_Kernel source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Di/index.html"><div class="td1">Aura.Di</div><div class="td2 green" title="99.31% of the Aura.Di source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Dispatcher/index.html"><div class="td1">Aura.Dispatcher</div><div class="td2 green" title="99.6% of the Aura.Dispatcher source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Filter/index.html"><div class="td1">Aura.Filter</div><div class="td2 green" title="99.56% of the Aura.Filter source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Html/index.html"><div class="td1">Aura.Html</div><div class="td2 green" title="99.4% of the Aura.Html source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Input/index.html"><div class="td1">Aura.Input</div><div class="td2 green" title="99.66% of the Aura.Input source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Intl/index.html"><div class="td1">Aura.Intl</div><div class="td2 green" title="99.21% of the Aura.Intl source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Marshal/index.html"><div class="td1">Aura.Marshal</div><div class="td2 green" title="99.53% of the Aura.Marshal source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Project_Kernel/index.html"><div class="td1">Aura.Project_Kernel</div><div class="td2 green" title="99.79% of the Aura.Project_Kernel source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Router/index.html"><div class="td1">Aura.Router</div><div class="td2 green" title="98.91% of the Aura.Router source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Session/index.html"><div class="td1">Aura.Session</div><div class="td2 green" title="99.85% of the Aura.Session source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Signal/index.html"><div class="td1">Aura.Signal</div><div class="td2 green" title="99.76% of the Aura.Signal source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Sql/index.html"><div class="td1">Aura.Sql</div><div class="td2 green" title="98.94% of the Aura.Sql source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.SqlQuery/index.html"><div class="td1">Aura.SqlQuery</div><div class="td2 green" title="98.76% of the Aura.SqlQuery source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.SqlSchema/index.html"><div class="td1">Aura.SqlSchema</div><div class="td2 green" title="97.57% of the Aura.SqlSchema source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Uri/index.html"><div class="td1">Aura.Uri</div><div class="td2 green" title="98.48% of the Aura.Uri source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.View/index.html"><div class="td1">Aura.View</div><div class="td2 green" title="99.79% of the Aura.View source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Web/index.html"><div class="td1">Aura.Web</div><div class="td2 green" title="98.52% of the Aura.Web source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Web_Kernel/index.html"><div class="td1">Aura.Web_Kernel</div><div class="td2 green" title="97.26% of the Aura.Web_Kernel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../aws/aws-sdk-php/index.html"><div class="td1">AWS SDK for PHP</div><div class="td2 green" title="99.63% of the AWS SDK for PHP source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../kriswallsmith/Buzz/index.html"><div class="td1">Buzz</div><div class="td2 green" title="98.17% of the Buzz source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../cakephp/cakephp/index.html"><div class="td1">CakePHP</div><div class="td2 green" title="98.76% of the CakePHP source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../EllisLab/CodeIgniter/index.html"><div class="td1">CodeIgniter</div><div class="td2 green" title="96.97% of the CodeIgniter source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../composer/composer/index.html"><div class="td1">Composer</div><div class="td2 green" title="96.49% of the Composer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../contao/core/index.html"><div class="td1">Contao Open Source CMS</div><div class="td2 blue" title="91.86% of the Contao Open Source CMS source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../doctrine/doctrine2/index.html"><div class="td1">Doctrine 2 ORM</div><div class="td2 green" title="97.64% of the Doctrine 2 ORM source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../drupal/drupal/index.html"><div class="td1">Drupal</div><div class="td2 green" title="96.92% of the Drupal source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ezsystems/ezpublish-kernel/index.html"><div class="td1">eZ Publish 5.x Kernel</div><div class="td2 green" title="98.59% of the eZ Publish 5.x Kernel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../facebook/facebook-php-sdk/index.html"><div class="td1">Facebook PHP SDK</div><div class="td2 green" title="98.01% of the Facebook PHP SDK source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../fzaninotto/Faker/index.html"><div class="td1">Faker</div><div class="td2 green" title="97.98% of the Faker source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../thephpleague/flysystem/index.html"><div class="td1">Flysystem</div><div class="td2 green" title="97.14% of the Flysystem source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../google/google-api-php-client/index.html"><div class="td1">Google APIs Client Library</div><div class="td2 green" title="99.05% of the Google APIs Client Library source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../guzzle/guzzle/index.html"><div class="td1">Guzzle</div><div class="td2 green" title="97.64% of the Guzzle source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../avalanche123/Imagine/index.html"><div class="td1">Imagine</div><div class="td2 green" title="99.23% of the Imagine source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../jackalope/jackalope/index.html"><div class="td1">Jackalope</div><div class="td2 green" title="97.8% of the Jackalope source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../joomla/joomla-cms/index.html"><div class="td1">Joomla! CMS</div><div class="td2 green" title="96.67% of the Joomla! CMS source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../chriso/klein.php/index.html"><div class="td1">Klein.php</div><div class="td2 green" title="99.19% of the Klein.php source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../laravel/framework/index.html"><div class="td1">Laravel Framework (Kernel)</div><div class="td2 green" title="98.58% of the Laravel Framework (Kernel) source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../leafo/lessphp/index.html"><div class="td1">lessphp</div><div class="td2 green" title="96.13% of the lessphp source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../magento/magento2/index.html"><div class="td1">Magento</div><div class="td2 green" title="98.38% of the Magento source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../wikimedia/mediawiki-core/index.html"><div class="td1">MediaWiki</div><div class="td2 green" title="97.54% of the MediaWiki source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../padraic/mockery/index.html"><div class="td1">Mockery</div><div class="td2 green" title="96.79% of the Mockery source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../Seldaek/monolog/index.html"><div class="td1">Monolog</div><div class="td2 green" title="97.24% of the Monolog source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../moodle/moodle/index.html"><div class="td1">Moodle</div><div class="td2 green" title="95.17% of the Moodle source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../bobthecow/mustache.php/index.html"><div class="td1">Mustache.php</div><div class="td2 green" title="98.96% of the Mustache.php source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../owncloud/core/index.html"><div class="td1">ownCloud</div><div class="td2 green" title="96.03% of the ownCloud source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../pear/pear-core/index.html"><div class="td1">PEAR - The PEAR Installer</div><div class="td2 green" title="97.38% of the PEAR - The PEAR Installer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phingofficial/phing/index.html"><div class="td1">Phing</div><div class="td2 green" title="95.75% of the Phing source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../phpbb/phpbb/index.html"><div class="td1">phpBB</div><div class="td2 green" title="96.63% of the phpBB source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phpDocumentor/phpDocumentor2/index.html"><div class="td1">phpDocumentor</div><div class="td2 green" title="98.55% of the phpDocumentor source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../PHPOffice/PHPExcel/index.html"><div class="td1">PHPExcel</div><div class="td2 blue" title="90.73% of the PHPExcel source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../PHPMailer/PHPMailer/index.html"><div class="td1">PHPMailer</div><div class="td2 green" title="96.03% of the PHPMailer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phpmyadmin/phpmyadmin/index.html"><div class="td1">phpMyAdmin</div><div class="td2 green" title="95.64% of the phpMyAdmin source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../nikic/PHP-Parser/index.html"><div class="td1">PHP Parser</div><div class="td2 blue" title="92.36% of the PHP Parser source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../sebastianbergmann/phpunit/index.html"><div class="td1">PHPUnit</div><div class="td2 green" title="99.43% of the PHPUnit source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../sebastianbergmann/php-code-coverage/index.html"><div class="td1">PHP_CodeCoverage</div><div class="td2 green" title="99.15% of the PHP_CodeCoverage source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../squizlabs/PHP_CodeSniffer/index.html"><div class="td1">PHP_CodeSniffer</div><div class="td2 green" title="99.74% of the PHP_CodeSniffer source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../piwik/piwik/index.html"><div class="td1">Piwik</div><div class="td2 green" title="97.49% of the Piwik source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ppi/framework/index.html"><div class="td1">PPI Framework</div><div class="td2 green" title="98.77% of the PPI Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../PrestaShop/PrestaShop/index.html"><div class="td1">PrestaShop</div><div class="td2 green" title="94.79% of the PrestaShop source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../propelorm/Propel/index.html"><div class="td1">Propel</div><div class="td2 green" title="98.6% of the Propel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../pyrocms/pyrocms/index.html"><div class="td1">PyroCMS</div><div class="td2 blue" title="90.4% of the PyroCMS source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../cboden/Ratchet/index.html"><div class="td1">Ratchet</div><div class="td2 green" title="98.97% of the Ratchet source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../reactphp/react/index.html"><div class="td1">React</div><div class="td2 green" title="97.94% of the React source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../fruux/sabre-dav/index.html"><div class="td1">SabreDAV</div><div class="td2 green" title="96.25% of the SabreDAV source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../sculpin/sculpin/index.html"><div class="td1">Sculpin</div><div class="td2 green" title="96.97% of the Sculpin source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../silexphp/Silex/index.html"><div class="td1">Silex</div><div class="td2 green" title="98.68% of the Silex source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../silverstripe/silverstripe-framework/index.html"><div class="td1">SilverStripe Framework</div><div class="td2 green" title="94.4% of the SilverStripe Framework source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../codeguy/Slim/index.html"><div class="td1">Slim Framework</div><div class="td2 green" title="99% of the Slim Framework source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../solarphp/core/index.html"><div class="td1">Solar Framework</div><div class="td2 green" title="98% of the Solar Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../tedivm/Stash/index.html"><div class="td1">Stash</div><div class="td2 green" title="98.54% of the Stash source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../sugarcrm/sugarcrm_dev/index.html"><div class="td1">SugarCRM CE</div><div class="td2 yellow" title="79.5% of the SugarCRM CE source code conforms to the same coding conventions">C</div></a></li>
+<li><a href="../../swiftmailer/swiftmailer/index.html"><div class="td1">Swift Mailer</div><div class="td2 green" title="96.01% of the Swift Mailer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../symfony/symfony/index.html"><div class="td1">Symfony2</div><div class="td2 green" title="98.13% of the Symfony2 source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ginatrapani/ThinkUp/index.html"><div class="td1">ThinkUp</div><div class="td2 green" title="93.26% of the ThinkUp source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../fabpot/Twig/index.html"><div class="td1">Twig</div><div class="td2 green" title="96.78% of the Twig source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../TYPO3/TYPO3.CMS/index.html"><div class="td1">TYPO3 CMS</div><div class="td2 green" title="94.47% of the TYPO3 CMS source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../WordPress/WordPress/index.html"><div class="td1">WordPress</div><div class="td2 green" title="95.33% of the WordPress source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../yiisoft/yii2/index.html"><div class="td1">Yii PHP Framework Version 2</div><div class="td2 green" title="98.68% of the Yii PHP Framework Version 2 source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../yiisoft/yii/index.html"><div class="td1">Yii Web Programming Framework</div><div class="td2 blue" title="92.36% of the Yii Web Programming Framework source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../zendframework/zf2/index.html"><div class="td1">Zend Framework</div><div class="td2 green" title="98.38% of the Zend Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../zikula/core/index.html"><div class="td1">Zikula</div><div class="td2 green" title="97.29% of the Zikula source code conforms to the same coding conventions">A</div></a></li>
     </ul>
   </div>
   </div>
   </div>
 <div id="spacing-after-cast-statement" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spacing after cast statement</h2>
+  <h2><a href="#spacing-after-cast-statement">Spacing after cast statement</a></h2>
   <p>How many spaces are there between a cast statement and the variable?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -232,12 +262,28 @@
     <div class="historicalChart">
       <canvas class="chart-trend" id="chart1t" width="860" height="185"></canvas>
     </div>
+    <div class="historicalEvents">
+      <ul>
+        <li class="historicalDate"><strong>18 Dec 2013</strong>: there was a 4.49% swing from <em>0</em> to <em>1</em>
+          <ul>
+          </ul>
+        </li>
+        <li class="historicalDate"><strong>25 Dec 2013</strong>: there was a 5.92% swing from <em>1</em> to <em>0</em>
+          <ul>
+          </ul>
+        </li>
+        <li class="historicalDate"><strong>05 Jan 2014</strong>: there was a 5.92% swing from <em>0</em> to <em>1</em>
+          <ul>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </div>
 <div id="use-of-else-if-or-elseif" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Use of ELSE IF or ELSEIF</h2>
+  <h2><a href="#use-of-else-if-or-elseif">Use of ELSE IF or ELSEIF</a></h2>
   <p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project false">
@@ -280,7 +326,7 @@
 </div>
 <div id="array-end-comma" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Array end comma</h2>
+  <h2><a href="#array-end-comma">Array end comma</a></h2>
   <p>Does the last item end with a comma in a multi-line array definition?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -324,7 +370,7 @@
 </div>
 <div id="inline-comment-style" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Inline comment style</h2>
+  <h2><a href="#inline-comment-style">Inline comment style</a></h2>
   <p>What comment style is used for non docblock comments?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -368,7 +414,7 @@
 </div>
 <div id="spacing-before-string-concat" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spacing before string concat</h2>
+  <h2><a href="#spacing-before-string-concat">Spacing before string concat</a></h2>
   <p>How many spaces precede the string concatenation operator?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -422,7 +468,7 @@
 </div>
 <div id="space-before-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Space before operator</h2>
+  <h2><a href="#space-before-operator">Space before operator</a></h2>
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -471,7 +517,7 @@
 </div>
 <div id="spacing-after-string-concat" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spacing after string concat</h2>
+  <h2><a href="#spacing-after-string-concat">Spacing after string concat</a></h2>
   <p>How many spaces follow the string concatenation operator?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -525,7 +571,7 @@
 </div>
 <div id="spaces-after-control-structure-open-parenthesis" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spaces after control structure open parenthesis</h2>
+  <h2><a href="#spaces-after-control-structure-open-parenthesis">Spaces after control structure open parenthesis</a></h2>
   <p>How many spaces follow the opening parenthesis of a control structure?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -574,7 +620,7 @@
 </div>
 <div id="adjacent-assignments-aligned" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Adjacent assignments aligned</h2>
+  <h2><a href="#adjacent-assignments-aligned">Adjacent assignments aligned</a></h2>
   <p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -618,7 +664,7 @@
 </div>
 <div id="camelcase-method-name" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>CamelCase method name</h2>
+  <h2><a href="#camelcase-method-name">CamelCase method name</a></h2>
   <p>Are class method names defined using CamelCase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -662,7 +708,7 @@
 </div>
 <div id="private-method-prefixed-with-underscore" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Private method prefixed with underscore</h2>
+  <h2><a href="#private-method-prefixed-with-underscore">Private method prefixed with underscore</a></h2>
   <p>Are private methods prefixed with an underscore?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -706,7 +752,7 @@
 </div>
 <div id="line-length" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Line length</h2>
+  <h2><a href="#line-length">Line length</a></h2>
   <p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -760,7 +806,7 @@
 </div>
 <div id="constant-name-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Constant name case</h2>
+  <h2><a href="#constant-name-case">Constant name case</a></h2>
   <p>What case are user-defined constants defined in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -804,7 +850,7 @@
 </div>
 <div id="number-of-newlines-at-eof" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Number of newlines at EOF</h2>
+  <h2><a href="#number-of-newlines-at-eof">Number of newlines at EOF</a></h2>
   <p>How many newline characters appear at the end of the file?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -853,7 +899,7 @@
 </div>
 <div id="class-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Class has doc comment</h2>
+  <h2><a href="#class-has-doc-comment">Class has doc comment</a></h2>
   <p>Does each class have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -897,7 +943,7 @@
 </div>
 <div id="spacing-before-object-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spacing before object operator</h2>
+  <h2><a href="#spacing-before-object-operator">Spacing before object operator</a></h2>
   <p>How many spaces precede the object operator (->)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -941,7 +987,7 @@
 </div>
 <div id="space-after-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Space after operator</h2>
+  <h2><a href="#space-after-operator">Space after operator</a></h2>
   <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -995,7 +1041,7 @@
 </div>
 <div id="file-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>File has doc comment</h2>
+  <h2><a href="#file-has-doc-comment">File has doc comment</a></h2>
   <p>Does each PHP file have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1039,7 +1085,7 @@
 </div>
 <div id="function-has-doc-comment" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Function has doc comment</h2>
+  <h2><a href="#function-has-doc-comment">Function has doc comment</a></h2>
   <p>Does each function have a docblock comment to describe its purpose?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1083,7 +1129,7 @@
 </div>
 <div id="control-structure-defined-inline" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Control structure defined inline</h2>
+  <h2><a href="#control-structure-defined-inline">Control structure defined inline</a></h2>
   <p>Are control structures defined inline (without braces)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1127,7 +1173,7 @@
 </div>
 <div id="spaces-before-control-structure-close-parenthesis" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spaces before control structure close parenthesis</h2>
+  <h2><a href="#spaces-before-control-structure-close-parenthesis">Spaces before control structure close parenthesis</a></h2>
   <p>How many spaces precede the closing parenthesis of a control structure?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1171,7 +1217,7 @@
 </div>
 <div id="function-opening-brace-placement" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Function opening brace placement</h2>
+  <h2><a href="#function-opening-brace-placement">Function opening brace placement</a></h2>
   <p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1215,7 +1261,7 @@
 </div>
 <div id="multiple-statements-on-same-line" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Multiple statements on same line</h2>
+  <h2><a href="#multiple-statements-on-same-line">Multiple statements on same line</a></h2>
   <p>Are multiple statements defined on the same line of code?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1259,7 +1305,7 @@
 </div>
 <div id="line-indent" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Line indent</h2>
+  <h2><a href="#line-indent">Line indent</a></h2>
   <p>Are lines indented using spaces or tabs?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1303,7 +1349,7 @@
 </div>
 <div id="file-extension-for-non-class-files" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>File extension for non-class files</h2>
+  <h2><a href="#file-extension-for-non-class-files">File extension for non-class files</a></h2>
   <p>For files that do not contain classes, what extension does the file use?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1342,7 +1388,7 @@
 </div>
 <div id="spacing-after-object-operator" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Spacing after object operator</h2>
+  <h2><a href="#spacing-after-object-operator">Spacing after object operator</a></h2>
   <p>How many spaces follow the object operator (->)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1381,7 +1427,7 @@
 </div>
 <div id="eol-char" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>EOL char</h2>
+  <h2><a href="#eol-char">EOL char</a></h2>
   <p>What character is used for line breaks?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1420,7 +1466,7 @@
 </div>
 <div id="php-constant-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>PHP constant case</h2>
+  <h2><a href="#php-constant-case">PHP constant case</a></h2>
   <p>What case are PHP constants (true, false, null) written in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1459,7 +1505,7 @@
 </div>
 <div id="array-keyword-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Array keyword case</h2>
+  <h2><a href="#array-keyword-case">Array keyword case</a></h2>
   <p>When defining an array, how is the <em>array</em> keyword written?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1498,7 +1544,7 @@
 </div>
 <div id="short-array-syntax-used" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Short array syntax used</h2>
+  <h2><a href="#short-array-syntax-used">Short array syntax used</a></h2>
   <p>Are arrays defined using the PHP 5.4+ short array syntax?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1537,7 +1583,7 @@
 </div>
 <div id="camelcase-class-name" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>CamelCase class name</h2>
+  <h2><a href="#camelcase-class-name">CamelCase class name</a></h2>
   <p>Are class names defined using CamelCase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1576,7 +1622,7 @@
 </div>
 <div id="class-defined-in-namespace" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Class defined in namespace</h2>
+  <h2><a href="#class-defined-in-namespace">Class defined in namespace</a></h2>
   <p>Is each class defined in a namespace of at least 1 level?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1615,7 +1661,7 @@
 </div>
 <div id="one-class-per-file" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>One class per file</h2>
+  <h2><a href="#one-class-per-file">One class per file</a></h2>
   <p>Is each class defined in a file by itself?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1654,7 +1700,7 @@
 </div>
 <div id="class-opening-brace-placement" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Class opening brace placement</h2>
+  <h2><a href="#class-opening-brace-placement">Class opening brace placement</a></h2>
   <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1693,7 +1739,7 @@
 </div>
 <div id="php-keyword-case" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>PHP keyword case</h2>
+  <h2><a href="#php-keyword-case">PHP keyword case</a></h2>
   <p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1732,7 +1778,7 @@
 </div>
 <div id="php-closing-tag-at-eof" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>PHP closing tag at EOF</h2>
+  <h2><a href="#php-closing-tag-at-eof">PHP closing tag at EOF</a></h2>
   <p>Is there a PHP closing tag at the end of the file?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1771,7 +1817,7 @@
 </div>
 <div id="file-extension-for-class-files" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>File extension for class files</h2>
+  <h2><a href="#file-extension-for-class-files">File extension for class files</a></h2>
   <p>For files that contain classes, what extension does the file use?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1810,7 +1856,7 @@
 </div>
 <div id="declarations-and-side-effects-mixed" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Declarations and side effects mixed</h2>
+  <h2><a href="#declarations-and-side-effects-mixed">Declarations and side effects mixed</a></h2>
   <p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1849,7 +1895,7 @@
 </div>
 <div id="php-short-open-tag-used" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>PHP short open tag used</h2>
+  <h2><a href="#php-short-open-tag-used">PHP short open tag used</a></h2>
   <p>Is the PHP short open tag syntax used?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1888,7 +1934,7 @@
 </div>
 <div id="lowercase-filename" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Lowercase filename</h2>
+  <h2><a href="#lowercase-filename">Lowercase filename</a></h2>
   <p>Are PHP filenames lowercase?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1927,7 +1973,7 @@
 </div>
 <div id="brackets-around-echoed-strings" class="conventionWrap">
 <div class="conventionDetails">
-  <h2>Brackets around echoed strings</h2>
+  <h2><a href="#brackets-around-echoed-strings">Brackets around echoed strings</a></h2>
   <p>Are parenthesis placed around <em>echo</em>'d strings?</p>
   <div class="currentData">
     <div class="conventionStatusInProject project true">
@@ -1967,261 +2013,265 @@
 
     </div>
 
-    <div class="footer">Report generated on Mon, 21 Jul 2014 15:20:59 +1000<br/>Using master branch of <a href="https://github.com/doctrine/doctrine2">doctrine/doctrine2</a> @ commit <a href="https://github.com/doctrine/doctrine2/commit/499f09fc997466fd513def80ae2eeadf7aaa66a7">499f09fc997466fd513def80ae2eeadf7aaa66a7</a></div>
+    <div class="footer">Report generated on Wed, 30 Jul 2014 09:06:09 +1000<br/>Using master branch of <a href="https://github.com/doctrine/doctrine2">doctrine/doctrine2</a> @ commit <a href="https://github.com/doctrine/doctrine2/commit/089cca636e0e44a70dd9167b7d813762ea80daca">089cca636e0e44a70dd9167b7d813762ea80daca</a></div>
 </div>
 
 <script>
+init();
     var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
 var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};
-var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#000",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
+var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#E9E9E9",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:" <%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
 var perfectTrendOptions = {pointHitDetectionRadius:5,tooltipTemplate:"<%=label%>: <%=value%>%",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};
 var data = [{value:46.03,color:"#2D3F50",label:"0"},{value:53.97,color:"#91A2B2",label:"1"}]
 var c = document.getElementById("chart1").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[56.49,56.49,56.49,56.49,56.49,55.06,50.57,56.49,50.57,50.57,50.57,50.57,50.57,50,48.89,48.89,48.89,47.83,47.83,47.83,47.83,47.83,47.83,47.83,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[43.51,43.51,43.51,43.51,43.51,44.94,49.43,43.51,49.43,49.43,49.43,49.43,49.43,50,51.11,51.11,51.11,52.17,52.17,52.17,52.17,52.17,52.17,52.17,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[56.49,56.49,56.49,56.49,56.49,55.06,50.57,56.49,50.57,50.57,50.57,50.57,50.57,50,48.89,48.89,48.89,47.83,47.83,47.83,47.83,47.83,47.83,47.83,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03,46.03]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[43.51,43.51,43.51,43.51,43.51,44.94,49.43,43.51,49.43,49.43,49.43,49.43,49.43,50,51.11,51.11,51.11,52.17,52.17,52.17,52.17,52.17,52.17,52.17,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97,53.97]}]};
 var c = document.getElementById("chart1t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
+highlightPoints(chart, ["18 Dec","25 Dec","05 Jan"]);
 var data = [{value:54.46,color:"#2D3F50",label:"else if"},{value:45.54,color:"#91A2B2",label:"elseif"}]
 var c = document.getElementById("chart2").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"else if",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[55.34,55.34,55.34,55.34,55.34,57.41,55.34,55.34,54.29,54.29,54.29,54.29,54.29,53.77,55.86,55.86,55.86,55.86,55.36,55.36,54.95,54.95,54.95,54.95,54.95,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.95,54.95,54.46]},{label:"elseif",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[44.66,44.66,44.66,44.66,44.66,42.59,44.66,44.66,45.71,45.71,45.71,45.71,45.71,46.23,44.14,44.14,44.14,44.14,44.64,44.64,45.05,45.05,45.05,45.05,45.05,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.05,45.05,45.54]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"else if",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[55.34,55.34,55.34,55.34,55.34,57.41,55.34,55.34,54.29,54.29,54.29,54.29,54.29,53.77,55.86,55.86,55.86,55.86,55.36,55.36,54.95,54.95,54.95,54.95,54.95,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.55,54.95,54.95,54.46,54.46]},{label:"elseif",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[44.66,44.66,44.66,44.66,44.66,42.59,44.66,44.66,45.71,45.71,45.71,45.71,45.71,46.23,44.14,44.14,44.14,44.14,44.64,44.64,45.05,45.05,45.05,45.05,45.05,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.45,45.05,45.05,45.54,45.54]}]};
 var c = document.getElementById("chart2t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:66.67,color:"#2D3F50",label:"no"},{value:33.33,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart3").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67,66.67]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33,33.33]}]};
 var c = document.getElementById("chart3t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:30.78,color:"#2D3F50",label:"/* ... */"},{value:69.22,color:"#91A2B2",label:"// ..."}]
 var c = document.getElementById("chart4").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"/* ... */",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[28.25,28.25,28.25,28.31,28.31,28.43,30.5,28.25,30.42,30.42,30.42,30.42,30.42,30.39,30.68,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.7,30.74,30.77,30.8,30.8,30.8,30.8,30.8,30.78,30.78,30.8,30.78,30.78]},{label:"// ...",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[71.75,71.75,71.75,71.69,71.69,71.57,69.5,71.75,69.58,69.58,69.58,69.58,69.58,69.61,69.32,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.3,69.26,69.23,69.2,69.2,69.2,69.2,69.2,69.22,69.22,69.2,69.22,69.22]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"/* ... */",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[28.25,28.25,28.25,28.31,28.31,28.43,30.5,28.25,30.42,30.42,30.42,30.42,30.42,30.39,30.68,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.73,30.7,30.74,30.77,30.8,30.8,30.8,30.8,30.8,30.78,30.78,30.8,30.78,30.78,30.78]},{label:"// ...",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[71.75,71.75,71.75,71.69,71.69,71.57,69.5,71.75,69.58,69.58,69.58,69.58,69.58,69.61,69.32,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.27,69.3,69.26,69.23,69.2,69.2,69.2,69.2,69.2,69.22,69.22,69.2,69.22,69.22,69.22]}]};
 var c = document.getElementById("chart4t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:14.56,color:"#2D3F50",label:"0"},{value:79.63,color:"#91A2B2",label:"1"},{value:0.23,color:"#D1D4DB",label:"2"},{value:5.59,color:"#E5E5E5",label:"newline"}]
 var c = document.getElementById("chart5").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[15.46,15.46,15.46,15.45,15.45,15.79,15.21,15.46,15.12,15.12,15.12,15.12,15.15,15.03,15.35,15.05,15.05,15.05,15.05,14.97,14.92,14.92,14.92,14.92,14.75,14.79,14.79,14.64,14.65,14.65,14.65,14.65,14.64,14.63,14.65,14.62,14.56]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[78.51,78.51,78.51,78.52,78.52,78.21,78.92,78.51,79.06,79.06,79.06,79.06,79.08,79.39,79.16,79.46,79.46,79.46,79.46,79.35,79.41,79.41,79.41,79.41,79.65,79.6,79.6,79.51,79.5,79.5,79.5,79.5,79.51,79.54,79.5,79.55,79.63]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[5.85,5.85,5.85,5.85,5.85,5.81,5.69,5.85,5.63,5.63,5.63,5.63,5.59,5.4,5.31,5.31,5.31,5.31,5.31,5.45,5.44,5.44,5.44,5.44,5.37,5.39,5.39,5.62,5.62,5.62,5.62,5.62,5.62,5.61,5.62,5.61,5.59]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[15.46,15.46,15.46,15.45,15.45,15.79,15.21,15.46,15.12,15.12,15.12,15.12,15.15,15.03,15.35,15.05,15.05,15.05,15.05,14.97,14.92,14.92,14.92,14.92,14.75,14.79,14.79,14.64,14.65,14.65,14.65,14.65,14.64,14.63,14.65,14.62,14.56,14.56]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[78.51,78.51,78.51,78.52,78.52,78.21,78.92,78.51,79.06,79.06,79.06,79.06,79.08,79.39,79.16,79.46,79.46,79.46,79.46,79.35,79.41,79.41,79.41,79.41,79.65,79.6,79.6,79.51,79.5,79.5,79.5,79.5,79.51,79.54,79.5,79.55,79.63,79.63]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23,0.23]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[5.85,5.85,5.85,5.85,5.85,5.81,5.69,5.85,5.63,5.63,5.63,5.63,5.59,5.4,5.31,5.31,5.31,5.31,5.31,5.45,5.44,5.44,5.44,5.44,5.37,5.39,5.39,5.62,5.62,5.62,5.62,5.62,5.62,5.61,5.62,5.61,5.59,5.59]}]};
 var c = document.getElementById("chart5t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:0.76,color:"#2D3F50",label:"0"},{value:81.79,color:"#91A2B2",label:"1"},{value:17.45,color:"#D1D4DB",label:"newline"}]
 var c = document.getElementById("chart6").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.89,0.89,0.89,0.89,0.89,0.88,0.8,0.89,0.8,0.8,0.8,0.8,0.8,0.8,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.77,0.77,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[84.15,84.15,84.15,84.16,84.16,84.08,83.32,84.15,83.41,83.42,83.42,83.43,83.42,83.32,83.35,83.37,83.3,83.3,83.41,83.44,83.31,83.31,83.31,83.31,82.81,82.5,82.5,81.64,81.64,81.65,81.66,81.66,81.69,81.69,81.76,81.78,81.79]},{label:"newline",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[14.96,14.96,14.96,14.95,14.95,15.04,15.87,14.96,15.8,15.79,15.79,15.78,15.79,15.88,15.87,15.85,15.92,15.92,15.81,15.78,15.91,15.91,15.91,15.91,16.42,16.73,16.73,17.6,17.6,17.59,17.58,17.58,17.56,17.56,17.48,17.46,17.45]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.89,0.89,0.89,0.89,0.89,0.88,0.8,0.89,0.8,0.8,0.8,0.8,0.8,0.8,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.77,0.77,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[84.15,84.15,84.15,84.16,84.16,84.08,83.32,84.15,83.41,83.42,83.42,83.43,83.42,83.32,83.35,83.37,83.3,83.3,83.41,83.44,83.31,83.31,83.31,83.31,82.81,82.5,82.5,81.64,81.64,81.65,81.66,81.66,81.69,81.69,81.76,81.78,81.79,81.79]},{label:"newline",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[14.96,14.96,14.96,14.95,14.95,15.04,15.87,14.96,15.8,15.79,15.79,15.78,15.79,15.88,15.87,15.85,15.92,15.92,15.81,15.78,15.91,15.91,15.91,15.91,16.42,16.73,16.73,17.6,17.6,17.59,17.58,17.58,17.56,17.56,17.48,17.46,17.45,17.45]}]};
 var c = document.getElementById("chart6t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:11.85,color:"#2D3F50",label:"0"},{value:82.73,color:"#91A2B2",label:"1"},{value:0.17,color:"#D1D4DB",label:"2"},{value:5.25,color:"#E5E5E5",label:"newline"}]
 var c = document.getElementById("chart7").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[12.62,12.62,12.62,12.62,12.62,12.97,12.34,12.62,12.28,12.28,12.28,12.28,12.3,12.16,12.49,12.25,12.25,12.25,12.25,12.18,12.15,12.15,12.15,12.15,12.01,12.03,12.03,11.92,11.93,11.93,11.93,11.93,11.92,11.9,11.93,11.9,11.85]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[81.71,81.71,81.71,81.72,81.72,81.4,82.04,81.71,82.15,82.15,82.15,82.15,82.06,82.27,81.96,82.26,82.26,82.26,82.26,82.37,82.36,82.36,82.36,82.36,82.56,82.52,82.52,82.69,82.68,82.68,82.68,82.68,82.69,82.65,82.68,82.66,82.73]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.12,0.12,0.12,0.12,0.12,0.12,0.18,0.12,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[5.54,5.54,5.54,5.54,5.54,5.51,5.45,5.54,5.4,5.4,5.4,5.4,5.47,5.4,5.37,5.31,5.31,5.31,5.31,5.28,5.32,5.32,5.32,5.32,5.26,5.27,5.27,5.22,5.22,5.22,5.22,5.22,5.22,5.27,5.22,5.27,5.25]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[12.62,12.62,12.62,12.62,12.62,12.97,12.34,12.62,12.28,12.28,12.28,12.28,12.3,12.16,12.49,12.25,12.25,12.25,12.25,12.18,12.15,12.15,12.15,12.15,12.01,12.03,12.03,11.92,11.93,11.93,11.93,11.93,11.92,11.9,11.93,11.9,11.85,11.85]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[81.71,81.71,81.71,81.72,81.72,81.4,82.04,81.71,82.15,82.15,82.15,82.15,82.06,82.27,81.96,82.26,82.26,82.26,82.26,82.37,82.36,82.36,82.36,82.36,82.56,82.52,82.52,82.69,82.68,82.68,82.68,82.68,82.69,82.65,82.68,82.66,82.73,82.73]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.12,0.12,0.12,0.12,0.12,0.12,0.18,0.12,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.18,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[5.54,5.54,5.54,5.54,5.54,5.51,5.45,5.54,5.4,5.4,5.4,5.4,5.47,5.4,5.37,5.31,5.31,5.31,5.31,5.28,5.32,5.32,5.32,5.32,5.26,5.27,5.27,5.22,5.22,5.22,5.22,5.22,5.22,5.27,5.22,5.27,5.25,5.25]}]};
 var c = document.getElementById("chart7t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:85.1,color:"#2D3F50",label:"0"},{value:14.7,color:"#91A2B2",label:"1"},{value:0.2,color:"#D1D4DB",label:"newline"}]
 var c = document.getElementById("chart8").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[85.67,85.67,85.67,85.66,85.66,85.7,84.89,85.67,84.92,84.92,84.92,84.9,84.92,84.97,85.01,85.04,85.06,85.05,85.06,85.08,85.08,85.08,85.08,85.08,84.96,85.08,85.07,85.1,85.1,85.1,85.1,85.1,85.11,85.12,85.08,85.09,85.1]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[14.11,14.11,14.11,14.12,14.12,14.08,14.9,14.1,14.88,14.88,14.88,14.9,14.88,14.83,14.79,14.76,14.74,14.75,14.74,14.72,14.72,14.72,14.72,14.72,14.84,14.73,14.73,14.71,14.71,14.7,14.7,14.7,14.69,14.69,14.72,14.71,14.7]},{label:"newline",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.22,0.22,0.22,0.22,0.22,0.22,0.2,0.22,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[85.67,85.67,85.67,85.66,85.66,85.7,84.89,85.67,84.92,84.92,84.92,84.9,84.92,84.97,85.01,85.04,85.06,85.05,85.06,85.08,85.08,85.08,85.08,85.08,84.96,85.08,85.07,85.1,85.1,85.1,85.1,85.1,85.11,85.12,85.08,85.09,85.1,85.1]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[14.11,14.11,14.11,14.12,14.12,14.08,14.9,14.1,14.88,14.88,14.88,14.9,14.88,14.83,14.79,14.76,14.74,14.75,14.74,14.72,14.72,14.72,14.72,14.72,14.84,14.73,14.73,14.71,14.71,14.7,14.7,14.7,14.69,14.69,14.72,14.71,14.7,14.7]},{label:"newline",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.22,0.22,0.22,0.22,0.22,0.22,0.2,0.22,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2]}]};
 var c = document.getElementById("chart8t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:11.93,color:"#2D3F50",label:"no"},{value:88.07,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart9").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[11.73,11.73,11.73,11.71,11.71,11.76,11.76,11.72,11.75,11.75,11.75,11.75,11.75,11.97,12.04,12.03,12.02,12.01,12,12.01,12.01,12.01,12.01,12.01,11.96,11.95,11.95,11.85,11.85,11.84,11.84,11.84,11.91,11.91,11.84,11.91,11.93]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[88.27,88.27,88.27,88.29,88.29,88.24,88.24,88.28,88.25,88.25,88.25,88.25,88.25,88.03,87.96,87.97,87.98,87.99,88,87.99,87.99,87.99,87.99,87.99,88.04,88.05,88.05,88.15,88.15,88.16,88.16,88.16,88.09,88.09,88.16,88.09,88.07]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[11.73,11.73,11.73,11.71,11.71,11.76,11.76,11.72,11.75,11.75,11.75,11.75,11.75,11.97,12.04,12.03,12.02,12.01,12,12.01,12.01,12.01,12.01,12.01,11.96,11.95,11.95,11.85,11.85,11.84,11.84,11.84,11.91,11.91,11.84,11.91,11.93,11.93]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[88.27,88.27,88.27,88.29,88.29,88.24,88.24,88.28,88.25,88.25,88.25,88.25,88.25,88.03,87.96,87.97,87.98,87.99,88,87.99,87.99,87.99,87.99,87.99,88.04,88.05,88.05,88.15,88.15,88.16,88.16,88.16,88.09,88.09,88.16,88.09,88.07,88.07]}]};
 var c = document.getElementById("chart9t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:9.27,color:"#2D3F50",label:"no"},{value:90.73,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart10").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[10.55,10.55,10.55,10.54,10.54,10.49,9.31,10.55,9.3,9.3,9.3,9.3,9.3,9.28,9.19,9.19,9.18,9.14,9.14,9.16,9.14,9.14,9.14,9.14,9.16,9.16,9.16,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.27]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[89.45,89.45,89.45,89.46,89.46,89.51,90.69,89.45,90.7,90.7,90.7,90.7,90.7,90.72,90.81,90.81,90.82,90.86,90.86,90.84,90.86,90.86,90.86,90.86,90.84,90.84,90.84,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.73]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[10.55,10.55,10.55,10.54,10.54,10.49,9.31,10.55,9.3,9.3,9.3,9.3,9.3,9.28,9.19,9.19,9.18,9.14,9.14,9.16,9.14,9.14,9.14,9.14,9.16,9.16,9.16,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.28,9.27,9.27]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[89.45,89.45,89.45,89.46,89.46,89.51,90.69,89.45,90.7,90.7,90.7,90.7,90.7,90.72,90.81,90.81,90.82,90.86,90.86,90.84,90.86,90.86,90.86,90.86,90.84,90.84,90.84,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.72,90.73,90.73]}]};
 var c = document.getElementById("chart10t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:90.85,color:"#2D3F50",label:"no"},{value:9.15,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart11").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[89.31,89.31,89.31,89.31,89.31,89.47,90.28,89.31,90.34,90.34,90.34,90.41,90.34,90.48,90.73,90.73,90.67,90.67,90.67,90.73,90.73,90.73,90.73,90.73,90.91,90.79,90.79,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[10.69,10.69,10.69,10.69,10.69,10.53,9.72,10.69,9.66,9.66,9.66,9.59,9.66,9.52,9.27,9.27,9.33,9.33,9.33,9.27,9.27,9.27,9.27,9.27,9.09,9.21,9.21,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[89.31,89.31,89.31,89.31,89.31,89.47,90.28,89.31,90.34,90.34,90.34,90.41,90.34,90.48,90.73,90.73,90.67,90.67,90.67,90.73,90.73,90.73,90.73,90.73,90.91,90.79,90.79,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85,90.85]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[10.69,10.69,10.69,10.69,10.69,10.53,9.72,10.69,9.66,9.66,9.66,9.59,9.66,9.52,9.27,9.27,9.33,9.33,9.33,9.27,9.27,9.27,9.27,9.27,9.09,9.21,9.21,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15,9.15]}]};
 var c = document.getElementById("chart11t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:92.27,color:"#2D3F50",label:"80 or less"},{value:6.88,color:"#91A2B2",label:"81-120"},{value:0.73,color:"#D1D4DB",label:"121-150"},{value:0.11,color:"#E5E5E5",label:"151 or more"}]
 var c = document.getElementById("chart12").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"80 or less",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[92.22,92.22,92.22,92.22,92.22,92.23,92.25,92.22,92.23,92.22,92.22,92.21,92.23,92.2,92.2,92.2,92.2,92.21,92.22,92.21,92.22,92.22,92.22,92.22,92.26,92.28,92.28,92.28,92.28,92.29,92.28,92.28,92.28,92.28,92.28,92.28,92.27]},{label:"81-120",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[6.98,6.98,6.98,6.98,6.98,6.97,6.9,6.98,6.92,6.93,6.93,6.94,6.92,6.95,6.95,6.95,6.95,6.93,6.92,6.93,6.92,6.92,6.92,6.92,6.89,6.88,6.87,6.87,6.87,6.87,6.88,6.88,6.88,6.88,6.88,6.88,6.88]},{label:"121-150",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.69,0.69,0.69,0.69,0.69,0.7,0.73,0.69,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.74,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73]},{label:"151 or more",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.12,0.12,0.12,0.12,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"80 or less",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[92.22,92.22,92.22,92.22,92.22,92.23,92.25,92.22,92.23,92.22,92.22,92.21,92.23,92.2,92.2,92.2,92.2,92.21,92.22,92.21,92.22,92.22,92.22,92.22,92.26,92.28,92.28,92.28,92.28,92.29,92.28,92.28,92.28,92.28,92.28,92.28,92.27,92.27]},{label:"81-120",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[6.98,6.98,6.98,6.98,6.98,6.97,6.9,6.98,6.92,6.93,6.93,6.94,6.92,6.95,6.95,6.95,6.95,6.93,6.92,6.93,6.92,6.92,6.92,6.92,6.89,6.88,6.87,6.87,6.87,6.87,6.88,6.88,6.88,6.88,6.88,6.88,6.88,6.88]},{label:"121-150",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.69,0.69,0.69,0.69,0.69,0.7,0.73,0.69,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.74,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.74,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73,0.73]},{label:"151 or more",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.12,0.12,0.12,0.12,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11]}]};
 var c = document.getElementById("chart12t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:7.22,color:"#2D3F50",label:"mixed"},{value:92.78,color:"#91A2B2",label:"upper"}]
 var c = document.getElementById("chart13").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"mixed",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[7.69,7.69,7.69,7.69,7.69,7.69,7.22,7.69,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22]},{label:"upper",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[92.31,92.31,92.31,92.31,92.31,92.31,92.78,92.31,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"mixed",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[7.69,7.69,7.69,7.69,7.69,7.69,7.22,7.69,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22,7.22]},{label:"upper",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[92.31,92.31,92.31,92.31,92.31,92.31,92.78,92.31,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78,92.78]}]};
 var c = document.getElementById("chart13t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:3.64,color:"#2D3F50",label:"0"},{value:94.96,color:"#91A2B2",label:"1"},{value:1.4,color:"#D1D4DB",label:"2"}]
 var c = document.getElementById("chart14").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[3.7,3.7,3.37,3.36,3.36,3.33,3.42,3.7,3.44,3.44,3.44,3.44,3.44,3.44,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.65,3.65,3.65,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[94.61,94.61,94.95,94.97,94.97,95,95.16,94.61,95.13,95.13,95.13,95.13,95.13,95.13,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.94,94.94,94.94,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[1.68,1.68,1.68,1.68,1.68,1.67,1.42,1.68,1.43,1.43,1.43,1.43,1.43,1.43,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[3.7,3.7,3.37,3.36,3.36,3.33,3.42,3.7,3.44,3.44,3.44,3.44,3.44,3.44,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.67,3.65,3.65,3.65,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64,3.64]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[94.61,94.61,94.95,94.97,94.97,95,95.16,94.61,95.13,95.13,95.13,95.13,95.13,95.13,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.92,94.94,94.94,94.94,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96,94.96]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[1.68,1.68,1.68,1.68,1.68,1.67,1.42,1.68,1.43,1.43,1.43,1.43,1.43,1.43,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.41,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4]}]};
 var c = document.getElementById("chart14t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:2.81,color:"#2D3F50",label:"no"},{value:97.19,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart15").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[3.38,3.38,3.38,3.37,3.37,3.34,2.86,3.38,2.87,2.87,2.87,2.87,2.87,2.87,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.82,2.82,2.82,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[96.62,96.62,96.62,96.63,96.63,96.66,97.14,96.62,97.13,97.13,97.13,97.13,97.13,97.13,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.18,97.18,97.18,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[3.38,3.38,3.38,3.37,3.37,3.34,2.86,3.38,2.87,2.87,2.87,2.87,2.87,2.87,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.82,2.82,2.82,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81,2.81]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[96.62,96.62,96.62,96.63,96.63,96.66,97.14,96.62,97.13,97.13,97.13,97.13,97.13,97.13,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.17,97.18,97.18,97.18,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19,97.19]}]};
 var c = document.getElementById("chart15t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:99.03,color:"#2D3F50",label:"0"},{value:0.97,color:"#91A2B2",label:"newline"}]
 var c = document.getElementById("chart16").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.27,99.27,99.27,99.27,99.27,99.28,99.1,99.27,99.04,99.04,99.04,99.05,99.04,99.05,99.06,99.06,99.05,99.05,99.04,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.03,99.05,99.03,99.03]},{label:"newline",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.73,0.73,0.73,0.73,0.73,0.72,0.9,0.73,0.96,0.96,0.96,0.95,0.96,0.95,0.94,0.94,0.95,0.95,0.96,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.97,0.95,0.97,0.97]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.27,99.27,99.27,99.27,99.27,99.28,99.1,99.27,99.04,99.04,99.04,99.05,99.04,99.05,99.06,99.06,99.05,99.05,99.04,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.05,99.03,99.05,99.03,99.03,99.03]},{label:"newline",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.73,0.73,0.73,0.73,0.73,0.72,0.9,0.73,0.96,0.96,0.96,0.95,0.96,0.95,0.94,0.94,0.95,0.95,0.96,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.97,0.95,0.97,0.97,0.97]}]};
 var c = document.getElementById("chart16t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:0.15,color:"#2D3F50",label:"0"},{value:99.25,color:"#91A2B2",label:"1"},{value:0.06,color:"#D1D4DB",label:"2"},{value:0.54,color:"#E5E5E5",label:"newline"}]
 var c = document.getElementById("chart17").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.17,0.17,0.17,0.17,0.17,0.17,0.15,0.17,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[99.11,99.11,99.11,99.12,99.12,99.12,99.19,99.11,99.19,99.19,99.19,99.19,99.19,99.19,99.2,99.2,99.21,99.21,99.21,99.21,99.21,99.21,99.21,99.21,99.22,99.24,99.24,99.24,99.24,99.24,99.24,99.24,99.24,99.25,99.24,99.24,99.25]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.07,0.07,0.07,0.07,0.07,0.07,0.06,0.07,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[0.65,0.65,0.65,0.65,0.65,0.64,0.59,0.65,0.59,0.59,0.59,0.59,0.59,0.59,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.57,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.54,0.54,0.55,0.54,0.54]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.17,0.17,0.17,0.17,0.17,0.17,0.15,0.17,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[99.11,99.11,99.11,99.12,99.12,99.12,99.19,99.11,99.19,99.19,99.19,99.19,99.19,99.19,99.2,99.2,99.21,99.21,99.21,99.21,99.21,99.21,99.21,99.21,99.22,99.24,99.24,99.24,99.24,99.24,99.24,99.24,99.24,99.25,99.24,99.24,99.25,99.25]},{label:"2",strokeColor:"#D1D4DB",pointStrokeColor:"#FFF",pointColor:"#D1D4DB",pointHighlightFill:"#FFF",pointHighlightStroke:"#D1D4DB",data:[0.07,0.07,0.07,0.07,0.07,0.07,0.06,0.07,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06]},{label:"newline",strokeColor:"#E5E5E5",pointStrokeColor:"#FFF",pointColor:"#E5E5E5",pointHighlightFill:"#FFF",pointHighlightStroke:"#E5E5E5",data:[0.65,0.65,0.65,0.65,0.65,0.64,0.59,0.65,0.59,0.59,0.59,0.59,0.59,0.59,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.58,0.57,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.54,0.54,0.55,0.54,0.54,0.54]}]};
 var c = document.getElementById("chart17t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:0.56,color:"#2D3F50",label:"no"},{value:99.44,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart18").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.67,0.67,0.67,0.67,0.67,0.67,0.57,0.67,0.57,0.57,0.57,0.57,0.57,0.57,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[99.33,99.33,99.33,99.33,99.33,99.33,99.43,99.33,99.43,99.43,99.43,99.43,99.43,99.43,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[0.67,0.67,0.67,0.67,0.67,0.67,0.57,0.67,0.57,0.57,0.57,0.57,0.57,0.57,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56,0.56]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[99.33,99.33,99.33,99.33,99.33,99.33,99.43,99.33,99.43,99.43,99.43,99.43,99.43,99.43,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44,99.44]}]};
 var c = document.getElementById("chart18t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:0.55,color:"#2D3F50",label:"no"},{value:99.45,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart19").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[1.48,1.48,1.48,1.48,1.48,1.73,0.13,1.48,0.17,0.17,0.17,0.17,0.17,0.22,0.56,0.56,0.56,0.56,0.56,0.56,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[98.52,98.52,98.52,98.52,98.52,98.27,99.87,98.52,99.83,99.83,99.83,99.83,99.83,99.78,99.44,99.44,99.44,99.44,99.44,99.44,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[1.48,1.48,1.48,1.48,1.48,1.73,0.13,1.48,0.17,0.17,0.17,0.17,0.17,0.22,0.56,0.56,0.56,0.56,0.56,0.56,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[98.52,98.52,98.52,98.52,98.52,98.27,99.87,98.52,99.83,99.83,99.83,99.83,99.83,99.78,99.44,99.44,99.44,99.44,99.44,99.44,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45,99.45]}]};
 var c = document.getElementById("chart19t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:99.58,color:"#2D3F50",label:"no"},{value:0.42,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart20").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.53,99.53,99.53,99.53,99.53,99.53,99.57,99.53,99.57,99.57,99.57,99.57,99.57,99.57,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.47,0.47,0.47,0.47,0.47,0.47,0.43,0.47,0.43,0.43,0.43,0.43,0.43,0.43,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.53,99.53,99.53,99.53,99.53,99.53,99.57,99.53,99.57,99.57,99.57,99.57,99.57,99.57,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58,99.58]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.47,0.47,0.47,0.47,0.47,0.47,0.43,0.47,0.43,0.43,0.43,0.43,0.43,0.43,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42]}]};
 var c = document.getElementById("chart20t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:99.6,color:"#2D3F50",label:"0"},{value:0.4,color:"#91A2B2",label:"1"}]
 var c = document.getElementById("chart21").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.55,99.55,99.55,99.55,99.55,99.56,99.59,99.55,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.45,0.45,0.45,0.45,0.45,0.44,0.41,0.45,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.55,99.55,99.55,99.55,99.55,99.56,99.59,99.55,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6,99.6]},{label:"1",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.45,0.45,0.45,0.45,0.45,0.44,0.41,0.45,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4]}]};
 var c = document.getElementById("chart21t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:99.91,color:"#2D3F50",label:"new line"},{value:0.09,color:"#91A2B2",label:"same line"}]
 var c = document.getElementById("chart22").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"new line",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.89,99.89,99.89,99.89,99.89,99.89,99.9,99.89,99.9,99.9,99.9,99.9,99.9,99.9,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91]},{label:"same line",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.11,0.11,0.11,0.11,0.11,0.11,0.1,0.11,0.1,0.1,0.1,0.1,0.1,0.1,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"new line",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.89,99.89,99.89,99.89,99.89,99.89,99.9,99.89,99.9,99.9,99.9,99.9,99.9,99.9,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91,99.91]},{label:"same line",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.11,0.11,0.11,0.11,0.11,0.11,0.1,0.11,0.1,0.1,0.1,0.1,0.1,0.1,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09]}]};
 var c = document.getElementById("chart22t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:99.95,color:"#2D3F50",label:"no"},{value:0.05,color:"#91A2B2",label:"yes"}]
 var c = document.getElementById("chart23").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95,99.95]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05]}]};
 var c = document.getElementById("chart23t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50",label:"spaces"},{value:0,color:"#91A2B2",label:"tabs"}]
 var c = document.getElementById("chart24").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"spaces",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{label:"tabs",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"spaces",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]},{label:"tabs",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]};
 var c = document.getElementById("chart24t").getContext("2d");
-new Chart(c).Line(data,trendOptions);
+var chart = new Chart(c).Line(data,trendOptions);
 var data = [{value:100,color:"#2D3F50",label:".php"}]
 var c = document.getElementById("chart25").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:".php",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:".php",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart25t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"0"}]
 var c = document.getElementById("chart26").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"0",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart26t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"\n"}]
 var c = document.getElementById("chart27").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"\n",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"\n",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart27t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"lower"}]
 var c = document.getElementById("chart28").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart28t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"lower"}]
 var c = document.getElementById("chart29").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart29t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart30").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart30t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"yes"}]
 var c = document.getElementById("chart31").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart31t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"yes"}]
 var c = document.getElementById("chart32").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart32t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"yes"}]
 var c = document.getElementById("chart33").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"yes",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart33t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"new line"}]
 var c = document.getElementById("chart34").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"new line",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"new line",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart34t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"lower"}]
 var c = document.getElementById("chart35").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"lower",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart35t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart36").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart36t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:".php"}]
 var c = document.getElementById("chart37").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:".php",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:".php",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart37t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart38").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart38t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart39").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart39t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart40").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart40t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 var data = [{value:100,color:"#2D3F50",label:"no"}]
 var c = document.getElementById("chart41").getContext("2d");
 new Chart(c).Doughnut(data,valOptions);
-var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
+var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec","25 Dec","05 Jan","12 Jan","19 Jan","26 Jan","02 Feb","09 Feb","16 Feb","23 Feb","02 Mar","09 Mar","16 Mar","23 Mar","30 Mar","06 Apr","13 Apr","20 Apr","27 Apr","04 May","11 May","18 May","25 May","01 Jun","08 Jun","15 Jun","22 Jun","29 Jun","06 Jul","13 Jul","20 Jul","27 Jul"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]}]};
 var c = document.getElementById("chart41t").getContext("2d");
-new Chart(c).Line(data,perfectTrendOptions);
+var chart = new Chart(c).Line(data,perfectTrendOptions);
 
+
+    
 
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -2230,6 +2280,5 @@ new Chart(c).Line(data,perfectTrendOptions);
     ga('create', 'UA-359178-18', 'squizlabs.github.io');
     ga('send', 'pageview');
 </script>
-<script src="../../_assets/scripts.js"></script>
 </body>
 </html>

@@ -59,7 +59,7 @@ $GLOBALS['num_repos'] = count($resultFiles);
 natcasesort($GLOBALS['repoList']);
 ksort($resultFiles, SORT_NATURAL | SORT_FLAG_CASE);
 
-echo "Pre-processing result files".PHP_EOL;
+echo 'Pre-processing result files... ';
 
 $totals = array();
 foreach ($resultFiles as $file) {
@@ -149,18 +149,32 @@ foreach ($totals as $metric => $data) {
     }
 }
 
+echo 'done'.PHP_EOL;
+
+echo 'Generating trend data... ';
+// Imports a var called $trends.
+require __DIR__.'/trends.php';
+echo 'done'.PHP_EOL;
+
+echo 'Generating grade data... ';
+// Imports a var called $grades.
+require __DIR__.'/grades.php';
+echo 'done'.PHP_EOL;
+
+
 $GLOBALS['totals'] = $totals;
+$GLOBALS['trends'] = $trends;
+$GLOBALS['grades'] = $grades;
 
 echo "Generating HTML files".PHP_EOL;
 
 foreach ($resultFiles as $file) {
     $results = json_decode(file_get_contents($file), true);
     $repo    = $results['project']['path'];
-    echo "\t=> Processing result file for $repo: $file".PHP_EOL;
+    echo "=> Processing $file".PHP_EOL;
     $output = generateReport($results, $repo);
     file_put_contents(__DIR__.'/'.$repo.'/index.html', $output);
 }
-
 
 if (empty($filterRepos) === false) {
     exit;
@@ -169,7 +183,7 @@ if (empty($filterRepos) === false) {
 $filename = __DIR__.'/results.json';
 file_put_contents($filename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
 
-echo "\t=> Processing main result file: $filename".PHP_EOL;
+echo "=> Processing $filename".PHP_EOL;
 $output = generateReport($totals);
 file_put_contents(__DIR__.'/index.html', $output);
 
@@ -182,7 +196,7 @@ function generateReport($results, $repo=null)
     $html = '';
     $js   = 'var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
     $js  .= 'var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
-    $js  .= 'var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#000",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
+    $js  .= 'var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#E9E9E9",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:" <%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
     $js  .= 'var perfectTrendOptions = {pointHitDetectionRadius:5,tooltipTemplate:"<%=label%>: <%=value%>%",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};'.PHP_EOL;
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
@@ -192,6 +206,7 @@ function generateReport($results, $repo=null)
     $html .= '            <h2>View project specific report</h2>'.PHP_EOL;
     $html .= '        </div>'.PHP_EOL;
     $html .= '        <div id="alllistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+    $html .= '            <div class="td1Heading">Project</div><div class="td2Heading">Consistency</div>'.PHP_EOL;
     $html .= '            <ul class="listBoxList">'.PHP_EOL;
 
     foreach ($GLOBALS['repoList'] as $repoURL => $repoName) {
@@ -200,7 +215,8 @@ function generateReport($results, $repo=null)
             $href = '../../'.$href;
         }
 
-        $html .= '<li><a href="'.$href.'"><div class="td1">'.$repoName.'</div></a></li>'.PHP_EOL;
+        $gradeDescription = $GLOBALS['grades'][$repoURL]['score'].'% of the '.$repoName.' source code conforms to the same coding conventions';
+        $html .= '<li><a href="'.$href.'"><div class="td1">'.$repoName.'</div><div class="td2 '.$GLOBALS['grades'][$repoURL]['colour'].'" title="'.$gradeDescription.'">'.$GLOBALS['grades'][$repoURL]['grade'].'</div></a></li>'.PHP_EOL;
     }
 
     $html .= '    </ul>'.PHP_EOL;
@@ -216,11 +232,6 @@ function generateReport($results, $repo=null)
         $metrics = $results['metrics'];
     }
 
-    $consistency = array(
-                    'pos' => 0,
-                    'neg' => 0,
-                   );
-
     uasort($metrics, 'sortMetrics');
     $chartNum = 0;
     foreach ($metrics as $metric => $data) {
@@ -229,18 +240,6 @@ function generateReport($results, $repo=null)
         }
 
         $metricid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($metric));
-
-        // Add results to the consistency score.
-        // Skip line length as it is more informative only.
-        if ($metricid !== 'line-length') {
-            foreach ($data['values'] as $value => $count) {
-                if ($value === $data['winner']) {
-                    $consistency['pos'] += $count;
-                } else {
-                    $consistency['neg'] += $count;
-                }
-            }
-        }
 
         $description = '';
         if (isset($GLOBALS['metric_text'][$metric]['description']) === true) {
@@ -256,7 +255,7 @@ function generateReport($results, $repo=null)
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
-        $html .= '  <h2>'.$metric.'</h2>'.PHP_EOL;
+        $html .= '  <h2><a href="#'.$metricid.'">'.$metric.'</a></h2>'.PHP_EOL;
         $html .= '  <p>'.$description.'</p>'.PHP_EOL;
         $html .= '  <div class="currentData">'.PHP_EOL;
 
@@ -437,6 +436,7 @@ function generateReport($results, $repo=null)
                 if ($addedValue === false) {
                     // Percentage must have been 0 as no values recorded.
                     $trendData .= '0.00,';
+                    $perfectScore = false;
                 }
             }//end foreach
 
@@ -500,13 +500,33 @@ function generateReport($results, $repo=null)
         #    $js .= '"'.date('d M', strtotime($GLOBALS['today'])).'"';
         #}
 
+        $trendEvents = array();
+        if ($repo === null) {
+            if (isset($GLOBALS['trends']['global'][$metric]) === true) {
+                $trendEvents = $GLOBALS['trends']['global'][$metric];
+            }
+        } else if (isset($GLOBALS['trends'][$repo][$metric]) === true) {
+            $trendEvents = $GLOBALS['trends'][$repo][$metric];
+        }
+
         $trendData = rtrim($trendData, ',');
         $js       .= "],datasets:[$trendData]};".PHP_EOL;
         $js       .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
         if ($perfectScore === true) {
-            $js .= 'new Chart(c).Line(data,perfectTrendOptions);'.PHP_EOL;
+            $js .= 'var chart = new Chart(c).Line(data,perfectTrendOptions);'.PHP_EOL;
         } else {
-            $js .= 'new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+            $js .= 'var chart = new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+        }
+
+        if (empty($trendEvents) === false) {
+            $js .= 'highlightPoints(chart, [';
+            foreach (array_keys($trendEvents) as $date) {
+                $time = strtotime($date);
+                $js  .= '"'.date('d M', $time).'",';
+            }
+
+            $js = rtrim($js, ',');
+            $js .= ']);'.PHP_EOL;
         }
 
         if ($other > 0) {
@@ -535,41 +555,34 @@ function generateReport($results, $repo=null)
         $html .= '    <div class="historicalChart">'.PHP_EOL;
         $html .= '      <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="185"></canvas>'.PHP_EOL;
         $html .= '    </div>'.PHP_EOL;
+
+        if (empty($trendEvents) === false) {
+            $html .= '    <div class="historicalEvents">'.PHP_EOL;
+            $html .= '      <ul>'.PHP_EOL;
+            foreach ($trendEvents as $date => $events) {
+                $mainEvent = $events[0];
+                unset($events[0]);
+
+                $time = strtotime($date);
+                $html .= '        <li class="historicalDate"><strong>'.date('d M Y', $time)."</strong>: $mainEvent".PHP_EOL;
+                $html .= '          <ul>'.PHP_EOL;
+
+                foreach($events as $event) {
+                    $html .= '            <li>'.$event.'</li>'.PHP_EOL;
+                }
+
+                $html .= '          </ul>'.PHP_EOL;
+                $html .= '        </li>'.PHP_EOL;
+            }
+
+            $html .= '      </ul>'.PHP_EOL;
+            $html .= '    </div>'.PHP_EOL;
+        }
+
         $html .= '  </div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
     }//end foreach
-
-    $score = round(($consistency['pos'] / ($consistency['pos'] + $consistency['neg']) * 100), 2);
-    if ($score >= 97) {
-        $grade = 'A+';
-    } else if ($score >= 93) {
-        $grade = 'A';
-    } else if ($score >= 90) {
-        $grade = 'A-';
-    } else if ($score >= 87) {
-        $grade = 'B+';
-    } else if ($score >= 83) {
-        $grade = 'B';
-    } else if ($score >= 80) {
-        $grade = 'B-';
-    } else if ($score >= 77) {
-        $grade = 'C+';
-    } else if ($score >= 73) {
-        $grade = 'C';
-    } else if ($score >= 70) {
-        $grade = 'C-';
-    } else if ($score >= 67) {
-        $grade = 'D+';
-    } else if ($score >= 63) {
-        $grade = 'D';
-    } else if ($score >= 60) {
-        $grade = 'D-';
-    } else {
-        $grade = 'F';
-    }
-
-    echo "Score: $score ($grade)\n";
 
     ksort($metrics);
     $sidebar = '';
@@ -616,6 +629,9 @@ function generateReport($results, $repo=null)
         $title     = 'Analysis of Coding Conventions';
         $heading   = 'Analysis of Coding Conventions';
         $assetPath = '';
+        $reportURL = 'http://squizlabs.github.io/PHP_CodeSniffer/analysis';
+
+        $gradeDescription = 'Across all '.$GLOBALS['num_repos'].' projects, '.$GLOBALS['grades'][$repo]['score'].'% of the source code conforms to the same coding conventions';
     } else {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<ul class="reportLinkList">'.PHP_EOL;
@@ -635,19 +651,29 @@ function generateReport($results, $repo=null)
         $commitid  = $results['project']['commitid'];
         $footer    = 'Report generated on '.date('r')."<br/>Using master branch of <a href=\"https://github.com/$repo\">$repo</a> @ commit <a href=\"https://github.com/$repo/commit/$commitid\">$commitid</a>";
         $title     = $GLOBALS['repoList'][$repo].' - Analysis of Coding Conventions';
-        $heading   = 'Analysis of Coding Conventions for <span class="repoName">'.$GLOBALS['repoList'][$repo].'</span>';
+        $heading   = 'Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/'.$repo.'">'.$GLOBALS['repoList'][$repo].'</a></span>';
         $assetPath = '../../';
+        $reportURL = 'http://squizlabs.github.io/PHP_CodeSniffer/analysis/'.$repo;
+
+        $gradeDescription = $GLOBALS['grades'][$repo]['score'].'% of the project\'s source code conforms to the same coding conventions';
     }//end if
 
     $output = file_get_contents(__DIR__.'/_assets/index.html.template');
     $output = str_replace('((title))', $title, $output);
     $output = str_replace('((heading))', $heading, $output);
     $output = str_replace('((intro))', $intro, $output);
+    $output = str_replace('((grade))', $GLOBALS['grades'][$repo]['grade'], $output);
+    $output = str_replace('((gradeColour))', $GLOBALS['grades'][$repo]['colour'], $output);
+    $output = str_replace('((gradeDescription))', $gradeDescription, $output);
     $output = str_replace('((sidebar))', $sidebar, $output);
     $output = str_replace('((html))', $html, $output);
     $output = str_replace('((footer))', $footer, $output);
     $output = str_replace('((js))', $js, $output);
     $output = str_replace('((assetPath))', $assetPath, $output);
+    $output = str_replace('((reportURL))', $reportURL, $output);
+
+    copy(__DIR__.'/_assets/grades/'.$GLOBALS['grades'][$repo]['img'], __DIR__.'/'.$repo.'/grade.svg');
+
     return $output;
 
 }//end generateReport()

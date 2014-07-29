@@ -593,5 +593,12 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "PHP Parser",
+        "url": "nikic/PHP-Parser",
+        "path": "lib",
+        "ignore": "",
+        "extensions": ""
     }
 ]

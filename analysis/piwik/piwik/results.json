@@ -1,9 +1,9 @@
 {
   "metrics":{
     "EOL char":{
-      "total":1013,
+      "total":1011,
       "values":{
-        "\\n":1013
+        "\\n":1011
       },
       "percentages":{
         "\\n":100
@@ -119,23 +119,26 @@
         },
         "2014-07-20":{
           "\\n":1013
+        },
+        "2014-07-27":{
+          "\\n":1011
         }
       },
       "winner":"\\n"
     },
     "Line length":{
-      "total":125400,
+      "total":125394,
       "values":{
-        "121-150":1086,
-        "151 or more":417,
-        "80 or less":113076,
-        "81-120":10821
+        "121-150":1081,
+        "151 or more":408,
+        "80 or less":113044,
+        "81-120":10861
       },
       "percentages":{
-        "121-150":0.87,
+        "121-150":0.86,
         "151 or more":0.33,
-        "80 or less":90.17,
-        "81-120":8.63
+        "80 or less":90.15,
+        "81-120":8.66
       },
       "trends":{
         "2013-11-06":{
@@ -359,19 +362,25 @@
           "151 or more":417,
           "80 or less":113076,
           "81-120":10821
+        },
+        "2014-07-27":{
+          "121-150":1081,
+          "151 or more":408,
+          "80 or less":113044,
+          "81-120":10861
         }
       },
       "winner":"80 or less"
     },
     "Lowercase filename":{
-      "total":1013,
+      "total":1011,
       "values":{
-        "no":877,
+        "no":875,
         "yes":136
       },
       "percentages":{
-        "no":86.57,
-        "yes":13.43
+        "no":86.55,
+        "yes":13.45
       },
       "trends":{
         "2013-11-06":{
@@ -521,14 +530,18 @@
         "2014-07-20":{
           "no":877,
           "yes":136
+        },
+        "2014-07-27":{
+          "no":875,
+          "yes":136
         }
       },
       "winner":"no"
     },
     "PHP short open tag used":{
-      "total":1019,
+      "total":1017,
       "values":{
-        "no":1019
+        "no":1017
       },
       "percentages":{
         "no":100
@@ -644,19 +657,22 @@
         },
         "2014-07-20":{
           "no":1019
+        },
+        "2014-07-27":{
+          "no":1017
         }
       },
       "winner":"no"
     },
     "File has doc comment":{
-      "total":1013,
+      "total":1011,
       "values":{
-        "no":7,
-        "yes":1006
+        "no":6,
+        "yes":1005
       },
       "percentages":{
-        "no":0.69,
-        "yes":99.31
+        "no":0.59,
+        "yes":99.41
       },
       "trends":{
         "2013-11-06":{
@@ -806,19 +822,23 @@
         "2014-07-20":{
           "no":7,
           "yes":1006
+        },
+        "2014-07-27":{
+          "no":6,
+          "yes":1005
         }
       },
       "winner":"yes"
     },
     "Declarations and side effects mixed":{
-      "total":1013,
+      "total":1011,
       "values":{
         "no":922,
-        "yes":91
+        "yes":89
       },
       "percentages":{
-        "no":91.02,
-        "yes":8.98
+        "no":91.2,
+        "yes":8.8
       },
       "trends":{
         "2013-11-06":{
@@ -968,14 +988,18 @@
         "2014-07-20":{
           "no":922,
           "yes":91
+        },
+        "2014-07-27":{
+          "no":922,
+          "yes":89
         }
       },
       "winner":"no"
     },
     "File extension for non-class files":{
-      "total":33,
+      "total":32,
       "values":{
-        ".php":33
+        ".php":32
       },
       "percentages":{
         ".php":100
@@ -1091,19 +1115,22 @@
         },
         "2014-07-20":{
           ".php":33
+        },
+        "2014-07-27":{
+          ".php":32
         }
       },
       "winner":".php"
     },
     "PHP closing tag at EOF":{
-      "total":1013,
+      "total":1011,
       "values":{
-        "no":1009,
+        "no":1007,
         "yes":4
       },
       "percentages":{
-        "no":99.61,
-        "yes":0.39
+        "no":99.6,
+        "yes":0.4
       },
       "trends":{
         "2013-11-06":{
@@ -1253,21 +1280,25 @@
         "2014-07-20":{
           "no":1009,
           "yes":4
+        },
+        "2014-07-27":{
+          "no":1007,
+          "yes":4
         }
       },
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":46008,
+      "total":45975,
       "values":{
-        "lower":45954,
+        "lower":45967,
         "mixed":1,
-        "upper":53
+        "upper":7
       },
       "percentages":{
-        "lower":99.88,
+        "lower":99.98,
         "mixed":0,
-        "upper":0.12
+        "upper":0.02
       },
       "trends":{
         "2013-11-06":{
@@ -1454,14 +1485,19 @@
           "lower":45954,
           "mixed":1,
           "upper":53
+        },
+        "2014-07-27":{
+          "lower":45967,
+          "mixed":1,
+          "upper":7
         }
       },
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":34845,
+      "total":34740,
       "values":{
-        "no":34840,
+        "no":34735,
         "yes":5
       },
       "percentages":{
@@ -1616,15 +1652,19 @@
         "2014-07-20":{
           "no":34840,
           "yes":5
+        },
+        "2014-07-27":{
+          "no":34735,
+          "yes":5
         }
       },
       "winner":"no"
     },
     "Line indent":{
-      "total":79911,
+      "total":79877,
       "values":{
-        "spaces":79689,
-        "tabs":222
+        "spaces":79657,
+        "tabs":220
       },
       "percentages":{
         "spaces":99.72,
@@ -1778,24 +1818,26 @@
         "2014-07-20":{
           "spaces":79689,
           "tabs":222
+        },
+        "2014-07-27":{
+          "spaces":79657,
+          "tabs":220
         }
       },
       "winner":"spaces"
     },
     "Number of newlines at EOF":{
-      "total":1009,
+      "total":1007,
       "values":{
-        "0":152,
+        "0":151,
         "1":811,
-        "2":42,
-        "3":3,
+        "2":44,
         "4":1
       },
       "percentages":{
-        "0":15.06,
-        "1":80.38,
-        "2":4.16,
-        "3":0.3,
+        "0":15,
+        "1":80.54,
+        "2":4.37,
         "4":0.1
       },
       "trends":{
@@ -2057,14 +2099,20 @@
           "2":42,
           "3":3,
           "4":1
+        },
+        "2014-07-27":{
+          "0":151,
+          "1":811,
+          "2":44,
+          "4":1
         }
       },
       "winner":1
     },
     "File extension for class files":{
-      "total":980,
+      "total":979,
       "values":{
-        ".php":980
+        ".php":979
       },
       "percentages":{
         ".php":100
@@ -2180,14 +2228,17 @@
         },
         "2014-07-20":{
           ".php":980
+        },
+        "2014-07-27":{
+          ".php":979
         }
       },
       "winner":".php"
     },
     "Class opening brace placement":{
-      "total":994,
+      "total":993,
       "values":{
-        "new line":991,
+        "new line":990,
         "same line":3
       },
       "percentages":{
@@ -2329,19 +2380,23 @@
         "2014-07-20":{
           "new line":991,
           "same line":3
+        },
+        "2014-07-27":{
+          "new line":990,
+          "same line":3
         }
       },
       "winner":"new line"
     },
     "Class has doc comment":{
-      "total":994,
+      "total":993,
       "values":{
         "no":349,
-        "yes":645
+        "yes":644
       },
       "percentages":{
-        "no":35.11,
-        "yes":64.89
+        "no":35.15,
+        "yes":64.85
       },
       "trends":{
         "2013-11-06":{
@@ -2491,15 +2546,19 @@
         "2014-07-20":{
           "no":349,
           "yes":645
+        },
+        "2014-07-27":{
+          "no":349,
+          "yes":644
         }
       },
       "winner":"yes"
     },
     "One class per file":{
-      "total":994,
+      "total":993,
       "values":{
         "no":14,
-        "yes":980
+        "yes":979
       },
       "percentages":{
         "no":1.41,
@@ -2653,19 +2712,23 @@
         "2014-07-20":{
           "no":14,
           "yes":980
+        },
+        "2014-07-27":{
+          "no":14,
+          "yes":979
         }
       },
       "winner":"yes"
     },
     "Class defined in namespace":{
-      "total":994,
+      "total":993,
       "values":{
-        "no":31,
+        "no":30,
         "yes":963
       },
       "percentages":{
-        "no":3.12,
-        "yes":96.88
+        "no":3.02,
+        "yes":96.98
       },
       "trends":{
         "2013-11-06":{
@@ -2815,19 +2878,23 @@
         "2014-07-20":{
           "no":31,
           "yes":963
+        },
+        "2014-07-27":{
+          "no":30,
+          "yes":963
         }
       },
       "winner":"yes"
     },
     "CamelCase class name":{
-      "total":994,
+      "total":993,
       "values":{
-        "no":131,
+        "no":130,
         "yes":863
       },
       "percentages":{
-        "no":13.18,
-        "yes":86.82
+        "no":13.09,
+        "yes":86.91
       },
       "trends":{
         "2013-11-06":{
@@ -2977,19 +3044,23 @@
         "2014-07-20":{
           "no":131,
           "yes":863
+        },
+        "2014-07-27":{
+          "no":130,
+          "yes":863
         }
       },
       "winner":"yes"
     },
     "Adjacent assignments aligned":{
-      "total":11942,
+      "total":11930,
       "values":{
-        "no":2390,
-        "yes":9552
+        "no":2383,
+        "yes":9547
       },
       "percentages":{
-        "no":20.01,
-        "yes":79.99
+        "no":19.97,
+        "yes":80.03
       },
       "trends":{
         "2013-11-06":{
@@ -3139,16 +3210,20 @@
         "2014-07-20":{
           "no":2390,
           "yes":9552
+        },
+        "2014-07-27":{
+          "no":2383,
+          "yes":9547
         }
       },
       "winner":"yes"
     },
     "Space after operator":{
-      "total":27019,
+      "total":26979,
       "values":{
         "newline":56,
         "0":2,
-        "1":26948,
+        "1":26908,
         "2":13
       },
       "percentages":{
@@ -3379,14 +3454,20 @@
           "0":2,
           "1":26948,
           "2":13
+        },
+        "2014-07-27":{
+          "newline":56,
+          "0":2,
+          "1":26908,
+          "2":13
         }
       },
       "winner":1
     },
     "PHP constant case":{
-      "total":4418,
+      "total":4404,
       "values":{
-        "lower":4398,
+        "lower":4384,
         "upper":20
       },
       "percentages":{
@@ -3541,14 +3622,18 @@
         "2014-07-20":{
           "lower":4398,
           "upper":20
+        },
+        "2014-07-27":{
+          "lower":4384,
+          "upper":20
         }
       },
       "winner":"lower"
     },
     "Function opening brace placement":{
-      "total":5920,
+      "total":5927,
       "values":{
-        "new line":5910,
+        "new line":5917,
         "same line":10
       },
       "percentages":{
@@ -3703,15 +3788,19 @@
         "2014-07-20":{
           "new line":5910,
           "same line":10
+        },
+        "2014-07-27":{
+          "new line":5917,
+          "same line":10
         }
       },
       "winner":"new line"
     },
     "CamelCase method name":{
-      "total":5791,
+      "total":5797,
       "values":{
         "no":238,
-        "yes":5553
+        "yes":5559
       },
       "percentages":{
         "no":4.11,
@@ -3865,19 +3954,23 @@
         "2014-07-20":{
           "no":238,
           "yes":5553
+        },
+        "2014-07-27":{
+          "no":238,
+          "yes":5559
         }
       },
       "winner":"yes"
     },
     "Function has doc comment":{
-      "total":6036,
+      "total":6043,
       "values":{
-        "no":2852,
-        "yes":3184
+        "no":2848,
+        "yes":3195
       },
       "percentages":{
-        "no":47.25,
-        "yes":52.75
+        "no":47.13,
+        "yes":52.87
       },
       "trends":{
         "2013-11-06":{
@@ -4027,14 +4120,18 @@
         "2014-07-20":{
           "no":2852,
           "yes":3184
+        },
+        "2014-07-27":{
+          "no":2848,
+          "yes":3195
         }
       },
       "winner":"yes"
     },
     "Control structure defined inline":{
-      "total":7388,
+      "total":7387,
       "values":{
-        "no":7329,
+        "no":7328,
         "yes":59
       },
       "percentages":{
@@ -4189,22 +4286,26 @@
         "2014-07-20":{
           "no":7329,
           "yes":59
+        },
+        "2014-07-27":{
+          "no":7328,
+          "yes":59
         }
       },
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":7130,
+      "total":7129,
       "values":{
         "0":7116,
         "newline":1,
-        "1":11,
+        "1":10,
         "3":2
       },
       "percentages":{
-        "0":99.8,
+        "0":99.82,
         "newline":0.01,
-        "1":0.15,
+        "1":0.14,
         "3":0.03
       },
       "trends":{
@@ -4415,14 +4516,20 @@
           "newline":1,
           "1":11,
           "3":2
+        },
+        "2014-07-27":{
+          "0":7116,
+          "newline":1,
+          "1":10,
+          "3":2
         }
       },
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":7130,
+      "total":7129,
       "values":{
-        "0":7115,
+        "0":7114,
         "1":13,
         "2":2
       },
@@ -4586,21 +4693,26 @@
           "0":7115,
           "1":13,
           "2":2
+        },
+        "2014-07-27":{
+          "0":7114,
+          "1":13,
+          "2":2
         }
       },
       "winner":0
     },
     "Space before operator":{
-      "total":3878,
+      "total":3867,
       "values":{
         "newline":109,
         "0":2,
-        "1":3767
+        "1":3756
       },
       "percentages":{
-        "newline":2.81,
+        "newline":2.82,
         "0":0.05,
-        "1":97.14
+        "1":97.13
       },
       "trends":{
         "2013-11-06":{
@@ -4787,14 +4899,19 @@
           "newline":109,
           "0":2,
           "1":3767
+        },
+        "2014-07-27":{
+          "newline":109,
+          "0":2,
+          "1":3756
         }
       },
       "winner":1
     },
     "Short array syntax used":{
-      "total":4323,
+      "total":4325,
       "values":{
-        "no":4323
+        "no":4325
       },
       "percentages":{
         "no":100
@@ -4910,14 +5027,17 @@
         },
         "2014-07-20":{
           "no":4323
+        },
+        "2014-07-27":{
+          "no":4325
         }
       },
       "winner":"no"
     },
     "Array keyword case":{
-      "total":4323,
+      "total":4325,
       "values":{
-        "lower":4322,
+        "lower":4324,
         "mixed":1
       },
       "percentages":{
@@ -5072,14 +5192,18 @@
         "2014-07-20":{
           "lower":4322,
           "mixed":1
+        },
+        "2014-07-27":{
+          "lower":4324,
+          "mixed":1
         }
       },
       "winner":"lower"
     },
     "Spacing before object operator":{
-      "total":16847,
+      "total":16843,
       "values":{
-        "0":16753,
+        "0":16749,
         "newline":94
       },
       "percentages":{
@@ -5234,14 +5358,18 @@
         "2014-07-20":{
           "0":16753,
           "newline":94
+        },
+        "2014-07-27":{
+          "0":16749,
+          "newline":94
         }
       },
       "winner":0
     },
     "Spacing after object operator":{
-      "total":16847,
+      "total":16843,
       "values":{
-        "0":16847
+        "0":16843
       },
       "percentages":{
         "0":100
@@ -5366,20 +5494,23 @@
         },
         "2014-07-20":{
           "0":16847
+        },
+        "2014-07-27":{
+          "0":16843
         }
       },
       "winner":0
     },
     "Inline comment style":{
-      "total":3909,
+      "total":3915,
       "values":{
         "# ...":15,
         "\/* ... *\/":71,
-        "\/\/ ...":3823
+        "\/\/ ...":3829
       },
       "percentages":{
         "# ...":0.38,
-        "\/* ... *\/":1.82,
+        "\/* ... *\/":1.81,
         "\/\/ ...":97.8
       },
       "trends":{
@@ -5567,22 +5698,27 @@
           "# ...":15,
           "\/* ... *\/":71,
           "\/\/ ...":3823
+        },
+        "2014-07-27":{
+          "# ...":15,
+          "\/* ... *\/":71,
+          "\/\/ ...":3829
         }
       },
       "winner":"\/\/ ..."
     },
     "Spacing before string concat":{
-      "total":4365,
+      "total":4319,
       "values":{
         "newline":341,
         "0":75,
-        "1":3948,
+        "1":3902,
         "2":1
       },
       "percentages":{
-        "newline":7.81,
-        "0":1.72,
-        "1":90.45,
+        "newline":7.9,
+        "0":1.74,
+        "1":90.34,
         "2":0.02
       },
       "trends":{
@@ -5791,22 +5927,28 @@
           "0":75,
           "1":3948,
           "2":1
+        },
+        "2014-07-27":{
+          "newline":341,
+          "0":75,
+          "1":3902,
+          "2":1
         }
       },
       "winner":1
     },
     "Spacing after string concat":{
-      "total":4365,
+      "total":4319,
       "values":{
         "newline":104,
         "0":60,
-        "1":4191,
+        "1":4145,
         "2":10
       },
       "percentages":{
-        "newline":2.38,
-        "0":1.37,
-        "1":96.01,
+        "newline":2.41,
+        "0":1.39,
+        "1":95.97,
         "2":0.23
       },
       "trends":{
@@ -6031,6 +6173,12 @@
           "0":60,
           "1":4191,
           "2":10
+        },
+        "2014-07-27":{
+          "newline":104,
+          "0":60,
+          "1":4145,
+          "2":10
         }
       },
       "winner":1
@@ -6038,12 +6186,12 @@
     "Array end comma":{
       "total":272,
       "values":{
-        "no":198,
-        "yes":74
+        "no":196,
+        "yes":76
       },
       "percentages":{
-        "no":72.79,
-        "yes":27.21
+        "no":72.06,
+        "yes":27.94
       },
       "trends":{
         "2013-11-06":{
@@ -6193,14 +6341,18 @@
         "2014-07-20":{
           "no":198,
           "yes":74
+        },
+        "2014-07-27":{
+          "no":196,
+          "yes":76
         }
       },
       "winner":"no"
     },
     "Private method prefixed with underscore":{
-      "total":913,
+      "total":914,
       "values":{
-        "no":912,
+        "no":913,
         "yes":1
       },
       "percentages":{
@@ -6355,15 +6507,19 @@
         "2014-07-20":{
           "no":912,
           "yes":1
+        },
+        "2014-07-27":{
+          "no":913,
+          "yes":1
         }
       },
       "winner":"no"
     },
     "Constant name case":{
-      "total":833,
+      "total":825,
       "values":{
         "mixed":1,
-        "upper":832
+        "upper":824
       },
       "percentages":{
         "mixed":0.12,
@@ -6517,6 +6673,10 @@
         "2014-07-20":{
           "mixed":1,
           "upper":832
+        },
+        "2014-07-27":{
+          "mixed":1,
+          "upper":824
         }
       },
       "winner":"upper"
@@ -6524,12 +6684,12 @@
     "Spacing after cast statement":{
       "total":275,
       "values":{
-        "0":202,
-        "1":73
+        "0":201,
+        "1":74
       },
       "percentages":{
-        "0":73.45,
-        "1":26.55
+        "0":73.09,
+        "1":26.91
       },
       "trends":{
         "2013-11-06":{
@@ -6679,6 +6839,10 @@
         "2014-07-20":{
           "0":202,
           "1":73
+        },
+        "2014-07-27":{
+          "0":201,
+          "1":74
         }
       },
       "winner":0
@@ -6841,19 +7005,23 @@
         "2014-07-20":{
           "else if":88,
           "elseif":116
+        },
+        "2014-07-27":{
+          "else if":88,
+          "elseif":116
         }
       },
       "winner":"elseif"
     },
     "Brackets around echoed strings":{
-      "total":58,
+      "total":57,
       "values":{
-        "no":57,
+        "no":56,
         "yes":1
       },
       "percentages":{
-        "no":98.28,
-        "yes":1.72
+        "no":98.25,
+        "yes":1.75
       },
       "trends":{
         "2013-11-06":{
@@ -7002,6 +7170,10 @@
         "2014-07-20":{
           "no":57,
           "yes":1
+        },
+        "2014-07-27":{
+          "no":56,
+          "yes":1
         }
       },
       "winner":"no"
@@ -7125,6 +7297,9 @@
         },
         "2014-07-20":{
           "no":8
+        },
+        "2014-07-27":{
+          "no":8
         }
       },
       "winner":"no"
@@ -7132,6 +7307,6 @@
   },
   "project":{
     "path":"piwik\/piwik",
-    "commitid":"5d799ee1a434ce97921b412bc34568b7241870ea"
+    "commitid":"cfd98f76f211353c7be49de59d7d628c8505c608"
   }
 }
