@@ -194,10 +194,7 @@ file_put_contents(__DIR__.'/index.html', $output);
 function generateReport($results, $repo=null)
 {
     $html = '';
-    $js   = 'var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};'.PHP_EOL;
-    $js  .= 'var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};'.PHP_EOL;
-    $js  .= 'var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#E9E9E9",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:" <%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};'.PHP_EOL;
-    $js  .= 'var perfectTrendOptions = {pointHitDetectionRadius:5,tooltipTemplate:"<%=label%>: <%=value%>%",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};'.PHP_EOL;
+    $js   = '';
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
@@ -606,7 +603,7 @@ function generateReport($results, $repo=null)
                 $sidebar .= '<div class="tdpop"></div>';
             }
         }
-        
+
         $sidebar .= '<div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
     }//end foreach
 

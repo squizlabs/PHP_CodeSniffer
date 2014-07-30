@@ -82,7 +82,7 @@ foreach ($gradeFiles as $file) {
     } else if ($score >= 78) {
         $grade  = 'C';
         $colour = 'yellow';
-        $img    = 'fc.svg';
+        $img    = 'c.svg';
     } else if ($score >= 75) {
         $grade  = 'C-';
         $colour = 'yellow';
