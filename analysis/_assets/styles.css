@@ -116,11 +116,11 @@ h2 a {
 }
 
 .conventionStatus {
-    width: 29px; 
+    width: 29px;
     height: 38px;
-    position: absolute; 
-    top: 0; 
-    right:0; 
+    position: absolute;
+    top: 0;
+    right:0;
     margin-top: -1px;
     background-image: url(image_sprite_1x.png);
     background-repeat: no-repeat;
@@ -165,7 +165,7 @@ table.statsTable {
     color: #2e374d;
 }
 
-.statsTable td a {
+.statsTable td a, .preferredByLink {
     font-size: 13px;
     font-weight: normal;
     text-decoration: none; 
@@ -362,7 +362,7 @@ p.statsInfo {
     margin-top: 10px;
 }
 
-.introduction .repoName a {
+.introduction .repoName, .introduction .repoName a {
     color: #ccf3f2;
 }
 
@@ -815,23 +815,23 @@ ul.reportInstructions {
     font-weight: bold;
 }
 
-.listBoxList .td2.green {
+.listBoxList .td2.green, .green {
     color: #36AD64;
 }
 
-.listBoxList .td2.blue {
+.listBoxList .td2.blue, .blue {
     color: #3690AC;
 }
 
-.listBoxList .td2.yellow {
+.listBoxList .td2.yellow, .yellow {
     color: #F19A2A;
 }
 
-.listBoxList .td2.orange {
+.listBoxList .td2.orange, .orange {
     color: #D86B2F;
 }
 
-.listBoxList .td2.red {
+.listBoxList .td2.red, .red {
     color: #CD443C;
 }
 

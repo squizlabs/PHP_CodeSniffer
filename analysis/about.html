@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>About - Analysis of Coding Conventions</title>
+    <link rel="shortcut icon" type="image/png"  href="_assets/favicon.png">
+    <link rel="stylesheet" type="text/css" href="_assets/styles.css?v=1.2" />
+    <script src="_assets/Chart.min.js?v=2.0"></script>
+    <script src="_assets/scripts.js?v=1.1"></script>
+</head>
+<body>
+
+<div id="mainWrap" class="mainWrap">
+    <div id="introductionWrap" class="introductionWrap" style="height:370px;">
+        <div class="introduction">
+            <div class="icon"></div>
+            <h1>Analysis of Coding Conventions <span class="repoName">About the reports</span></h1>
+            <p>An ongoing <a href="./index.html">analysis of coding conventions</a> is being conducted across a range of PHP projects. This document explains how to read the combined and individual project reports that have been produced.</p>
+        </div>
+    </div>
+
+    <div id="types" class="contentWrap">
+        <div id="section1" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2>Types of Reports</h2>
+                <p>The analysis of coding conventions produces both a <strong>combined report</strong> and then an individual <strong>project report</strong> for each project that has been analysed.</p>
+                <p>While the reports look similar, the combined report includes features that help find trends and popular coding conventions across a wide range of PHP projects, while the project reports include features to determine how consistently a project applies their preferred coding conventions.</p>
+            </div>
+        </div>
+        <div id="conventions" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2>Coding Conventions</h2>
+                <p>Content goes here.</p>
+            </div>
+        </div>
+        <div id="graphs" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2>Style Variation Graphs</h2>
+                <div style="margin-top:40px;">
+                    <p style="width:290px;display:table-cell;vertical-align:top">
+                        <canvas style="position:relative;" id="pie1" width="150" height="150"></canvas>
+                    </p>
+                    <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
+                        For each coding convention, the different style variations that have been found within are determined and displayed in a pie graph. The most popular style variation is marked with a star in the graph legend.<br/><br/>
+                        For the combined report, each section of the pie graph represents the percentage of all analysed PHP code that conforms to a specific style variation.<br/><br/>
+                        For individual project reports, each section of the pie graph represents the percentage of project code that conforms to a specific style variation.
+                    </p>
+                </div>
+                <div style="margin:40px 0;">
+                    <p style="width:290px;display:table-cell;vertical-align:top">
+                        <canvas style="position:relative;" id="pie2" width="150" height="150"></canvas>
+                        <canvas style="position:relative;left:36px;top:-119px;" id="pie3" width="80" height="80"></canvas>
+                    </p>
+                    <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
+                        When viewing the combined report, a second pie graph is displayed within the main one. This inner pie graph shows the percentage of PHP projects that are using each style variation.<br/><br/>
+                        If the inner and outer pie graphs do not align, it is likely that a large PHP project is skewing the results. In the example on the left, the winning style variation is used in 50% of all PHP code, but it is the not the preferred variation for most PHP projects. For this reason, it is also important to look at the percentage of projects that prefer each style variation, which is displayed in the graph legend and looks like this:<br/><br/>
+                        <a class="preferredByLink" href="" onclick="return false;">preferred by 40% of projects</a><br/><br/>
+                        Clicking the link will show a list of the PHP projects that prefer that style variation. Clicking a project in that list will take you to the coding convention on the project's individual report.
+                    </p>
+                </div>
+                <div style="margin-bottom:40px;">
+                    <p style="width:290px;display:table-cell;vertical-align:top">
+                        <div class="conventionStatusInProject project true" style="position:relative;width:39px;padding:0;">
+                            <span title="This project is using the popular method for this convention" class="conventionStatus" style="left:3px;top:15px;"></span>
+                        </div>
+                        <div class="conventionStatusInProject project false" style="position:relative;width:39px;padding:0;">
+                            <span title="This project is not using the popular method for this convention" class="conventionStatus" style="left:117px;top:15px;"></span>
+                        </div>
+                    </p>
+                    <p style="width:100%;display:table-cell;padding-left:200px;vertical-align:top;">
+                        When viewing a project report, a flag is shown to the top right of the graph legend. A blue flag with a white star indicates that the project prefers the most commonly used style variation across all PHP projects, while a white flag indicates that the project prefers a different variation.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="teends" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2>Trends</h2>
+                <p>Content goes here.</p>
+            </div>
+        </div>
+        <div id="grades" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2>Code Consistency Grades</h2>
+                <p>Each project is given a grade that indicates how consistently the project's preferred coding conventions are applied throughout the project. The grades available are <strong><span class="green">A(+/-)</span></strong>, <strong><span class="blue">B(+/-)</span></strong>, <strong><span class="yellow">C(+/-)</span></strong>, <strong><span class="orange">D(+/-)</span></strong> and <strong><span class="red">F</span></strong> and each is displayed inside a sash at the top right corner of the project report.</p>
+                <p>Clicking on the sash will display the percentage of code consistency across the    as well as instructions for embedding a badge that can be used to display a project's grade and link to the project's report. The badges look like this:</p>
+                <p><img src="./_assets/grades/a-plus.svg"/> <img src="./_assets/grades/b.svg"/> <img src="./_assets/grades/c-minus.svg"/> <img src="./_assets/grades/d.svg"/> <img src="./_assets/grades/f.svg"/></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
+    var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};
+    var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#E9E9E9",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:" <%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
+
+    var data = [{value:50,color:"#2D3F50",label:"0"},{value:30,color:"#91A2B2",label:"1"},{value:20,color:"#D1D4DB",label:"2"}]
+    var c = document.getElementById("pie1").getContext("2d");
+    new Chart(c).Doughnut(data,valOptions);
+    var c = document.getElementById("pie2").getContext("2d");
+    new Chart(c).Doughnut(data,valOptions);
+    var data = [{value:35,color:"#2D3F50",label:"0"},{value:40,color:"#91A2B2",label:"1"},{value:25,color:"#D1D4DB",label:"2"}]
+    var c = document.getElementById("pie3").getContext("2d");
+    new Chart(c).Doughnut(data,repoOptions);
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-359178-18', 'squizlabs.github.io');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>
