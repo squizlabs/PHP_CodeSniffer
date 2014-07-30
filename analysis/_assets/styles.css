@@ -646,7 +646,7 @@ ul.reportInstructions {
     width: 13px;
     height: 13px;
     background-repeat: no-repeat;
-    background-position: 0 -78px;
+    background-position: 0 -366px;
     display: block;
 }
 
@@ -836,7 +836,7 @@ ul.reportInstructions {
 }
 
 #gradeInstructionsWrap {
-    margin-left: -410px;
+    margin-left: -310px;
 }
 
 #gradeInstructionsWrap, #gradeInstructionsWrap .listBoxContent {
@@ -1009,7 +1009,7 @@ a.reportLink, a.reportLink:visited {
 (-webkit-min-device-pixel-ratio: 2) { 
     .icon, small.icon, .conventionStatus, .reportLink:before, .statsTable .keyPopular:after, .instructionItem:before {
         background-image: url(image_sprite_2x.png);
-        background-size: 65px 367px; 
+        background-size: 65px 380px; 
         background-repeat: no-repeat;
     }
 }
