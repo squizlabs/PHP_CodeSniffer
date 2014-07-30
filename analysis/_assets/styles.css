@@ -579,12 +579,11 @@ ul.reportInstructions {
 }
 
 .flyout li {
-    display: table-row;
     text-decoration: none;
+    list-style-type: none;
 }
 
 .flyout li:hover {
-    display: table-row;
     background-color: #2d3d4f;
 }
 
@@ -615,7 +614,7 @@ ul.reportInstructions {
 
 .flyout .td1 {
     color: #e4e9ed;
-    width: 215px;
+    width: 230px;
     text-decoration: none;
     font-size: 13px;
 }
@@ -624,13 +623,13 @@ ul.reportInstructions {
     text-align: right;
     font-weight: bold;
     color: #e4e9ed;
-    width: 62px;
+    width: 75px;
     max-width: 62px;
 }
 
 .flyout .td3 {
     color: #ced2d6;
-    width: 46px;
+    width: 60px;
     max-width: 46px;
 }
 
