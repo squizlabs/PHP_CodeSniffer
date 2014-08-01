@@ -45,10 +45,23 @@
                     <div style="margin-left:60px;margin-top:-25px;">The title of each coding convention is a bookmark to its place within the report. Copy the link location to link directly to the coding convention within the report.</div>
                 </div>
                 <p>Coding conventions are ordered inside a report based on how consistently they are applied. The coding conventions at the top of the report have the most variation in styles while the ones at the bottom are typically applied consistently 100% of the time.</p>
-                <p>This method causes the order of coding conventions to differ between the various reports, which can make coding conventions hard to find or compare between projects. To solve this, an alphabetical listing of all coding conventions within a report is available in a left-side flyout menu. The menu also provides a quick overview of coding convention consistency and, for <abbr title="The report showing an analysis for a single PHP project">project reports</abbr>, places a blue star next to coding conventions that follow the most commonly used style variation across all analysed PHP projects.</p>
+                <p>This method causes the order of coding conventions to differ between the various reports, which can make coding conventions hard to find or compare between projects. To assist, an alphabetical listing of all coding conventions within a report is available in a left-side flyout menu. The menu also provides a quick overview of coding convention consistency and, for <abbr title="The report showing an analysis for a single PHP project">project reports</abbr>, places a blue star next to coding conventions that follow the most commonly used style variation across all analysed PHP projects.</p>
+                <div id="flyoutFixed" class="flyoutFixed" style="position:relative;left:250px;">
+                    <div id="flyoutControl" class="flyoutControl" style="position:relative;left:350px;"></div>
+                    <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open" style="position:relative;left:315px;top:0"></div>
+                    <div class="flyoutHeader">
+                        <h1 style="top:-20px;">Conventions</h1>
+                    </div>
+                </div>
+                <div id="flyout" class="flyout expanded" style="position:relative;left:250px;height:85px;width:400px;overflow:hidden;padding-top:0;margin-bottom:20px;">
+                    <ul class="flyoutList" style="margin-top:10px;">
+                        <li><a href="#" onclick="return false;"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">A yes/no style coding convention</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>80%</div></a></li>
+                        <li><a href="#" onclick="return false;"><div class="tdpop"></div><div class="td1">Coding convention about spaces</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>94%</div></a></li>
+                    </ul>
+                </div>
                 <div style="border-top:1px solid #BFBFBF;padding-top:20px;">
                     <div class="tag" style="padding-right:5px;letter-spacing:1px;">Tip</div>
-                    <div style="margin-left:60px;margin-top:-25px;">The flyout menu can be pinned to the left hand side of the report by clicking the <strong>Pin sidebar open</strong> icon.</div>
+                    <div style="margin-left:60px;margin-top:-25px;">The flyout menu can be pinned to the left hand side of the report by clicking the <strong style="cursor:help;" onmouseover="document.getElementById('flyoutPin').className='flyoutPin active';" onmouseout="document.getElementById('flyoutPin').className='flyoutPin';">Pin sidebar open</strong> icon.</div>
                 </div>
             </div>
         </div>
@@ -60,7 +73,7 @@
                         <canvas style="position:relative;" id="pie1" width="150" height="150"></canvas>
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
-                        For each coding convention, the different style variations that have been found within are determined and displayed in a pie graph. The most popular style variation is marked with a star in the graph legend.<br/><br/>
+                        The different style variations that have been found for each coding convention are displayed in a pie graph. The most popular style variation is marked with a star in the graph legend.<br/><br/>
                         For the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, each section of the pie graph represents the percentage of all analysed PHP code that conforms to a specific style variation.<br/><br/>
                         For <abbr title="The report showing an analysis for a single PHP project">project reports</abbr>, each section of the pie graph represents the percentage of project code that conforms to a specific style variation.
                     </p>
@@ -134,7 +147,8 @@
                 <h2><a href="#grades">Code Consistency Grades</a></h2>
                 <div style="margin-top:40px;">
                     <p style="width:100%;display:table-cell;vertical-align:top;">
-                        Each project is given a grade that indicates how consistently the project's preferred coding conventions are applied throughout the project. The grades available are <strong><span class="green">A(+/-)</span></strong>, <strong><span class="blue">B(+/-)</span></strong>, <strong><span class="yellow">C(+/-)</span></strong>, <strong><span class="orange">D(+/-)</span></strong> and <strong><span class="red">F</span></strong> and each is displayed inside a sash at the top right corner of the <abbr title="The report showing an analysis for a single PHP project">project report</abbr>.<br/><br/>
+                        Each project is given a grade that indicates how consistently the project's preferred coding conventions are applied throughout the code base. The grades available are <strong><span class="green">A(+/-)</span></strong>, <strong><span class="blue">B(+/-)</span></strong>,<br/>
+                        <strong><span class="yellow">C(+/-)</span></strong>, <strong><span class="orange">D(+/-)</span></strong> and <strong><span class="red">F</span></strong>. The project's grade is displayed inside a sash at the top right corner of the <abbr title="The report showing an analysis for a single PHP project">project report</abbr>.<br/><br/>
                         On the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, the grade indicates how consistent PHP code is across all analysed projects. A high consistency score here indicates that most PHP projects follow the same coding standard.<br/><br/>
                         Clicking on the sash will display the percentage of code consistency across the project as well as instructions for embedding a badge that can display a project's grade and link to the project's report. The badges look like this:<br/><br/>
                         <img src="./_assets/grades/a-plus.svg"/> <img src="./_assets/grades/b.svg"/> <img src="./_assets/grades/c-minus.svg"/> <img src="./_assets/grades/d.svg"/> <img src="./_assets/grades/f.svg"/>
