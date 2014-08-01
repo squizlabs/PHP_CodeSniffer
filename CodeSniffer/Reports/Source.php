@@ -208,10 +208,12 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                     // Uppercase.
                     if ($lastWasUpper === false) {
                         $friendlyName .= ' ';
-                        $next = $name[($i + 1)];
-                        if (strtolower($next) === $next) {
-                            // Next char is lowercase so it is a word boundary.
-                            $name[$i] = strtolower($name[$i]);
+                        if ($i < ($length - 1)) {
+                            $next = $name[($i + 1)];
+                            if (strtolower($next) === $next) {
+                                // Next char is lowercase so it is a word boundary.
+                                $name[$i] = strtolower($name[$i]);
+                            }
                         }
                     }
 
