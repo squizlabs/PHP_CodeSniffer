@@ -10,6 +10,11 @@ h2 a {
     text-decoration: none;
 }
 
+abbr {
+    cursor: help;
+    border-bottom: 1px dotted #000;
+}
+
 #mainWrap {
     min-width: 1100px;
 }
@@ -411,7 +416,7 @@ p.statsInfo {
     width: 690px;
 }
 
-.introduction a {
+.introduction a, .reportLinkList a {
     color: #80dfdd;
     text-decoration: none;
     font-weight: bold;

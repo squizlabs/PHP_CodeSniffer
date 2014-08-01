@@ -26,13 +26,30 @@
                 <p>The analysis of coding conventions produces both a <strong>combined report</strong> and then an individual <strong>project report</strong> for each project that has been analysed.</p>
                 <p>While the reports look similar, the combined report includes features that help find trends and popular coding conventions across a wide range of PHP projects, while the project reports include features to determine how consistently a project applies their preferred coding conventions.</p>
                 <p>If you are viewing the combined report, you can click the <strong>View Project Specific Report</strong> link at the top of the page to display a list of all projects that have been analysed. Clicking any of these projects will take you to its individual report page. If you are viewing a project report, an additional <strong>View Combined Report</strong> link is available to take you back to the combined report. The link also displays the number of PHP projects that have been analysed.</p>
+                <div class="introductionWrap" style="height:50px;border-radius:15px;width:680px;margin-left:100px;margin-top:-10px;">
+                    <ul class="reportLinkList" style="padding:16px 25px 15px 50px;">
+                      <li><a href="#" onclick="return false;" class="reportLink reportCombined">View Combined Report (123 PHP Projects)</a></li>
+                      <li><a href="#" onclick="return false;" class="reportLink reportProject">View Project Specific Report</a></li>
+                    </ul>
+                </div>
                 <p>The footer of the report shows the date that it was last generated. Project reports additionally show the Github repository and branch they are generated from, and the commit ID of the last commit that was included in the report.</p>
             </div>
         </div>
         <div id="conventions" class="conventionWrap">
             <div class="conventionDetails">
                 <h2><a href="#conventions">Coding Conventions</a></h2>
-                <p>A coding standard is made up of a number of coding conventions, each with a preferred style. </p>
+                <p>A coding standard is made up of a number of coding conventions, which are a specific method of writing or formatting source code. Even PHP projects that do not follow a formal coding standard may end up adhering to a set of coding conventions due to the influence of the most common contributors or from new contributors changing their style to match that of existing code when submitting patches.</p>
+                <p>Each report in the analysis is a list of coding conventions. Each coding convention will have 1 or more style variations that a project follows. For example, a coding convention such as <strong>Private method prefixed with underscore</strong> will have 2 style variations; <strong>yes</strong> and <strong>no</strong>. A project may prefer one variation over the other, or may use both. Ideally, each coding convention will have a strongly preferred style variation within a project, indicating a high level of <a href="#grades">code consistency</a>.</p>
+                <div style="border-top:1px solid #BFBFBF;padding-top:20px;border-bottom:1px solid #BFBFBF;padding-bottom:20px;">
+                    <div class="tag" style="padding-right:5px;letter-spacing:1px;">Tip</div>
+                    <div style="margin-left:60px;margin-top:-25px;">The title of each coding convention is a bookmark to its place within the report. Copy the link location to link directly to the coding convention within the report.</div>
+                </div>
+                <p>Coding conventions are ordered inside a report based on how consistently they are applied. The coding conventions at the top of the report have the most variation in styles while the ones at the bottom are typically applied consistently 100% of the time.</p>
+                <p>This method causes the order of coding conventions to differ between the various reports, which can make coding conventions hard to find or compare between projects. To solve this, an alphabetical listing of all coding conventions within a report is available in a left-side flyout menu. The menu also provides a quick overview of coding convention consistency and, for <abbr title="The report showing an analysis for a single PHP project">project reports</abbr>, places a blue star next to coding conventions that follow the most commonly used style variation across all analysed PHP projects.</p>
+                <div style="border-top:1px solid #BFBFBF;padding-top:20px;">
+                    <div class="tag" style="padding-right:5px;letter-spacing:1px;">Tip</div>
+                    <div style="margin-left:60px;margin-top:-25px;">The flyout menu can be pinned to the left hand side of the report by clicking the <strong>Pin sidebar open</strong> icon.</div>
+                </div>
             </div>
         </div>
         <div id="graphs" class="conventionWrap">
@@ -44,8 +61,8 @@
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
                         For each coding convention, the different style variations that have been found within are determined and displayed in a pie graph. The most popular style variation is marked with a star in the graph legend.<br/><br/>
-                        For the combined report, each section of the pie graph represents the percentage of all analysed PHP code that conforms to a specific style variation.<br/><br/>
-                        For individual project reports, each section of the pie graph represents the percentage of project code that conforms to a specific style variation.
+                        For the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, each section of the pie graph represents the percentage of all analysed PHP code that conforms to a specific style variation.<br/><br/>
+                        For <abbr title="The report showing an analysis for a single PHP project">project reports</abbr>, each section of the pie graph represents the percentage of project code that conforms to a specific style variation.
                     </p>
                 </div>
                 <div style="margin:40px 0;">
@@ -54,7 +71,7 @@
                         <canvas style="position:relative;left:36px;top:-119px;" id="pie3" width="80" height="80"></canvas>
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
-                        When viewing the combined report, a second pie graph is displayed within the main one. This inner pie graph shows the percentage of PHP projects that are using each style variation.<br/><br/>
+                        When viewing the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, a second pie graph is displayed within the main one. This inner pie graph shows the percentage of PHP projects that are using each style variation.<br/><br/>
                         If the inner and outer pie graphs do not align, it is likely that a large PHP project is skewing the results. In the example on the left, the winning style variation is used in 50% of all PHP code, but it is the not the preferred variation for most PHP projects. For this reason, it is also important to look at the percentage of projects that prefer each style variation, which is displayed in the graph legend and looks like this:<br/><br/>
                         <a class="preferredByLink" href="" onclick="return false;">preferred by 40% of projects</a><br/><br/>
                         Clicking the link will show a list of the PHP projects that prefer that style variation. Clicking a project in that list will take you to the coding convention on the project's individual report.
@@ -70,7 +87,7 @@
                         </div>
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:200px;vertical-align:top;">
-                        When viewing a project report, a flag is shown to the top right of the graph legend. A blue flag with a white star indicates that the project prefers the most commonly used style variation across all PHP projects, while a white flag indicates that the project prefers a different variation.
+                        When viewing a <abbr title="The report showing an analysis for a single PHP project">project report</abbr>, a flag is shown to the top right of the graph legend. A blue flag with a white star indicates that the project prefers the most commonly used style variation across all analysed PHP projects, while a white flag indicates that the project prefers a different variation.
                     </p>
                 </div>
             </div>
@@ -91,13 +108,13 @@
                   <ul>
                     <li class="historicalDate"><strong>13 Nov 2013</strong>: there was a 10% swing from <em>no</em> to <em>yes</em>
                       <ul>
-                        <li><a href="#">Project A</a> removed 20 lines of code using <em>no</em></li>
-                        <li><a href="#">Project B</a> added 420 lines of code using <em>yes</em></li>
+                        <li><a href="#" onclick="return false;">Project A</a> removed 20 lines of code using <em>no</em></li>
+                        <li><a href="#" onclick="return false;">Project B</a> added 420 lines of code using <em>yes</em></li>
                       </ul>
                     </li>
                     <li class="historicalDate"><strong>18 Dec 2013</strong>: there was a 10% swing from <em>yes</em> to <em>no</em>
                       <ul>
-                        <li><a href="#">Project A</a> saw a 70% swing from <em>yes</em> to <em>no</em></li>
+                        <li><a href="#" onclick="return false;">Project A</a> saw a 70% swing from <em>yes</em> to <em>no</em></li>
                       </ul>
                     </li>
                   </ul>
@@ -108,20 +125,27 @@
                         <li>A project changed their preferred style variation</li>
                         <li>A project added or removed lines of code that apply to the coding convention</li>
                     </ul>
-                    When viewing the combined report, the project that caused each event will be displayed and linked to. This information is omitted from project reports as the trend data displayed there is specific to the individual project's code and is not influenced by any other projects.
+                    When viewing the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, the project that caused each event will be displayed and linked to. This information is omitted from <abbr title="The report showing an analysis for a single PHP project">project reports</abbr> as the trend data displayed there is specific to the individual project's code and is not influenced by any other projects.
                 </p>
             </div>
         </div>
         <div id="grades" class="conventionWrap">
             <div class="conventionDetails">
                 <h2><a href="#grades">Code Consistency Grades</a></h2>
-                <p>
-                    Each project is given a grade that indicates how consistently the project's preferred coding conventions are applied throughout the project. The grades available are <strong><span class="green">A(+/-)</span></strong>, <strong><span class="blue">B(+/-)</span></strong>, <strong><span class="yellow">C(+/-)</span></strong>, <strong><span class="orange">D(+/-)</span></strong> and <strong><span class="red">F</span></strong> and each is displayed inside a sash at the top right corner of the project report.
-                </p>
-                <p>
-                    Clicking on the sash will display the percentage of code consistency across the as well as instructions for embedding a badge that can be used to display a project's grade and link to the project's report. The badges look like this:
-                </p>
-                <p><img src="./_assets/grades/a-plus.svg"/> <img src="./_assets/grades/b.svg"/> <img src="./_assets/grades/c-minus.svg"/> <img src="./_assets/grades/d.svg"/> <img src="./_assets/grades/f.svg"/></p>
+                <div style="margin-top:40px;">
+                    <p style="width:100%;display:table-cell;vertical-align:top;">
+                        Each project is given a grade that indicates how consistently the project's preferred coding conventions are applied throughout the project. The grades available are <strong><span class="green">A(+/-)</span></strong>, <strong><span class="blue">B(+/-)</span></strong>, <strong><span class="yellow">C(+/-)</span></strong>, <strong><span class="orange">D(+/-)</span></strong> and <strong><span class="red">F</span></strong> and each is displayed inside a sash at the top right corner of the <abbr title="The report showing an analysis for a single PHP project">project report</abbr>.<br/><br/>
+                        On the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, the grade indicates how consistent PHP code is across all analysed projects. A high consistency score here indicates that most PHP projects follow the same coding standard.<br/><br/>
+                        Clicking on the sash will display the percentage of code consistency across the project as well as instructions for embedding a badge that can display a project's grade and link to the project's report. The badges look like this:<br/><br/>
+                        <img src="./_assets/grades/a-plus.svg"/> <img src="./_assets/grades/b.svg"/> <img src="./_assets/grades/c-minus.svg"/> <img src="./_assets/grades/d.svg"/> <img src="./_assets/grades/f.svg"/>
+                    </p>
+                    <div style="height:170px;display:table-cell;vertical-align:top;overflow:hidden;">
+                        <div id="consistency" class="green" style="position:relative;" title="Across all projects, 99% of the source code conforms to the same coding conventions">
+                            <span class="grade">A+</span>consistency
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
