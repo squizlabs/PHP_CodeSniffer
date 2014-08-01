@@ -15,6 +15,11 @@ abbr {
     border-bottom: 1px dotted #000;
 }
 
+pre {
+    border-left: 3px solid #e2e2e2;
+    padding-left: 10px;
+}
+
 #mainWrap {
     min-width: 1100px;
 }
@@ -1011,7 +1016,7 @@ a.reportLink, a.reportLink:visited {
 
 
 @media 
-(-webkit-min-device-pixel-ratio: 2) { 
+(-webkit-min-device-pixel-ratio: 2) {
     .icon, small.icon, .conventionStatus, .reportLink:before, .statsTable .keyPopular:after, .instructionItem:before {
         background-image: url(image_sprite_2x.png);
         background-size: 65px 380px; 

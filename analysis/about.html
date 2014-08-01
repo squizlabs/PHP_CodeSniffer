@@ -159,7 +159,73 @@
                         </div>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+        <div id="data" class="conventionWrap">
+            <div class="conventionDetails">
+                <h2><a href="#data">Using Report Data</a></h2>
+                <p>The raw data used to generate the reports is stored in a <strong>results.json</strong> file in the same directly as the <strong>index.html</strong> file. You are free to download and use this data in whatever way you choose. While it doesn't contain some of the calculated data values such as trend events and grades, it does contain all the current and past raw values for each style variation and coding convention.</p>
+                <p>The format of the JOSN file for the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr> is an array of metrics (coding conventions). Each metric contains information about the style variations that have been detected, the repositories that prefer each style variation, and the trend values for each date that has been analysed:</p>
+<pre>
+{
+  "EOL char":{
+    "total":2468,
+    "total_repos":2,
+    "values":{
+      "style1":1234,
+      "style2":1234
+    },
+    "repos":{
+      "style1":{
+        "project1":100,
+      },
+      "style2":{
+        "project2":100,
+      }
+    },
+    "trends":{
+      "YYYY-MM-DD":{
+        "style1":1234,
+        "style2":1234
+      },
+      ...
+    },
+    "winner":"style1"
+  },
+  ...
+}
+</pre>
+                <p>The format of the JOSN file for a <abbr title="The report showing an analysis for a single PHP project">project report</abbr> is similar, but metric data is contained within a <strong>metrics</strong> array index and an additional <strong>project</strong> index is added to store the project path and the ID of the last commit analysed. Each metric also contains slightly different data as it is now project-specific:</p>
+<pre>
+{
+  "metrics":{
+    "EOL char":{
+      "total":2468,
+      "values":{
+        "style1":1234,
+        "style2":1234
+      },
+      "percentages":{
+        "style1":50,
+        "style2":50
+      },
+      "trends":{
+        "YYYY-MM-DD":{
+          "style1":1234,
+          "style2":1234
+        },
+        ...
+      },
+      "winner":"style1"
+    },
+    ...
+  },
+  "project":{
+    "path":"projectPath",
+    "commitid":"commitID"
+  }
+}
+</pre>
             </div>
         </div>
     </div>
