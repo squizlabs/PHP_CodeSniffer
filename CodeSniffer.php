@@ -690,13 +690,13 @@ class PHP_CodeSniffer
         $rulesetDir          = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
-        if (is_dir($rulesetDir.'/Sniffs') === true) {
+        if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\tAdding sniff files from \"/.../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
             }
 
-            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.'/Sniffs', $depth);
+            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs', $depth);
         }
 
         foreach ($ruleset->rule as $rule) {
@@ -943,10 +943,10 @@ class PHP_CodeSniffer
                         $path = '';
                     } else if (count($parts) === 2) {
                         // A directory of sniffs?
-                        $path = '/Sniffs/'.$parts[1];
+                        $path = DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[1];
                     } else {
                         // A single sniff?
-                        $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
+                        $path = DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[1].DIRECTORY_SEPARATOR.$parts[2].'Sniff.php';
                     }
                 }
 
@@ -993,14 +993,14 @@ class PHP_CodeSniffer
         }//end if
 
         if (is_dir($ref) === true) {
-            if (is_file($ref.'/ruleset.xml') === true) {
+            if (is_file($ref.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                 // We are referencing an external coding standard.
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a standard using directory name; processing *".PHP_EOL;
                 }
 
-                return $this->processRuleset($ref.'/ruleset.xml', ($depth + 2));
+                return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
             } else {
                 // We are referencing a whole directory of sniffs.
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
