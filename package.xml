@@ -73,6 +73,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Tab characters are now encoded in abstract pattern errors messages
     -- Thanks to Blaine Schmeisser for the patch
   - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)
+  - Generic LineLengthSniff now shows a warning if the iconv module is disabled (request #20314)
+  - Source report no longer shows errors if category or sniff names ends in an uppercase error
+    -- Thanks to Jonathan Marcil for the patch
   - Fixed bug #20261 : phpcbf has an endless fixing loop
   - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
   - Fixed bug #20296 : new array notion in function comma check fails
