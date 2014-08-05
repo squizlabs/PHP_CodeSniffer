@@ -174,7 +174,12 @@ class PHP_CodeSniffer_Reporting
             if ($output === null) {
                 // Using a temp file.
                 if (isset($this->_tmpFiles[$report]) === false) {
-                    $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
+                    if (function_exists('sys_get_temp_dir') === true) {
+                        // This is needed for HHVM support, but only available from 5.2.1.
+                        $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
+                    } else {
+                        $this->_tmpFiles[$report] = tmpfile();
+                    }
                 }
 
                 fwrite($this->_tmpFiles[$report], $generatedReport);
@@ -186,7 +191,7 @@ class PHP_CodeSniffer_Reporting
                 }
 
                 file_put_contents($output, $generatedReport, $flags);
-            }
+            }//end if
         }//end foreach
 
         if ($errorsShown === true) {

@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF now exists cleanly when there are no errors to fix
   - Added phpcbf.bat file for Windows
   - Verbose option no longer errors when using a phar file with a space in the path
+  - Fixed a reporting error when using HHVM
+    -- Thanks to Martins Sipenko for the patch
   - addFixableError() and addFixableWarning() now only return true if the fixer is enabled
     -- Saves checking ($phpcsFile->fixer->enabled === true) before every fix
   - Added addErrorOnLine() and addWarningOnLine() to add a non-fixable violation to a line at column 1
