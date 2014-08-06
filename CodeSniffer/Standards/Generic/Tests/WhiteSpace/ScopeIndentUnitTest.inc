@@ -506,3 +506,33 @@ $list = [
                 }
     }
 ];
+
+if ($foo) {
+    foreach ($bar as $baz) {
+        if ($baz) {
+            ?>
+            <div>
+                <div>
+                    <div>
+            <?php
+            if ($baz > 1) {
+                echo '1';
+            }
+            ?>
+                    </div>
+                    <?php
+                if ($baz > 1) {
+                    echo '1';
+                }
+                    ?>
+                </div>
+                <?php
+                if ($baz > 1) {
+                    echo '1';
+                }
+                ?>
+            </div>
+            <?php
+        }
+    }
+}

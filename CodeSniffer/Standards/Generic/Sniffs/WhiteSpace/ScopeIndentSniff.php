@@ -357,7 +357,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }//end if
                 }//end if
 
-                // The token at the start of the line, needs to have its' column
+                // The token at the start of the line, needs to have its column
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
                 if ($column !== $indent) {
@@ -452,12 +452,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             $indent += $this->indent;
         }//end foreach
 
+        // Take the indent of the open tag into account.
+        if ($this->_openTagIndents[0] > $indent) {
+            $indent = $this->_openTagIndents[0];
+        } else {
+            $indent += $this->_openTagIndents[0];
+        }
+
         // Increase by 1 to indiciate that the code should start at a specific column.
         // E.g., code indented 4 spaces should start at column 5.
         $indent++;
-
-        // Take the indent of the open tag into account.
-        $indent += $this->_openTagIndents[0];
 
         return $indent;
 
