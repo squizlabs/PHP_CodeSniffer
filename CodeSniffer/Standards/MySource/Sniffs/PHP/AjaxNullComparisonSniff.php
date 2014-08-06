@@ -100,8 +100,8 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
                 continue;
             }
 
-            $error = 'Values submitted via Ajax requests must not be compared directly to NULL; use empty() instead';
-            $phpcsFile->addError($error, $nullValue, 'Found');
+            $error = 'Values submitted via Ajax requests should not be compared directly to NULL; use empty() instead';
+            $phpcsFile->addWarning($error, $nullValue, 'Found');
         }//end for
 
     }//end process()

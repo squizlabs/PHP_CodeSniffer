@@ -40,14 +40,7 @@ class MySource_Tests_PHP_AjaxNullComparisonUnitTest extends AbstractSniffUnitTes
      */
     public function getErrorList()
     {
-        return array(
-                37  => 1,
-                49  => 1,
-                60  => 1,
-                73  => 1,
-                88  => 1,
-                118 => 1,
-               );
+        return array();
 
     }//end getErrorList()
 
@@ -62,7 +55,14 @@ class MySource_Tests_PHP_AjaxNullComparisonUnitTest extends AbstractSniffUnitTes
      */
     public function getWarningList()
     {
-        return array();
+        return array(
+                37  => 1,
+                49  => 1,
+                60  => 1,
+                73  => 1,
+                88  => 1,
+                118 => 1,
+               );
 
     }//end getWarningList()
 
