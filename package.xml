@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-08-06</date>
  <time>09:58:00</time>
  <version>
-  <release>2.0.0RC1</release>
-  <api>2.0.0RC1</api>
+  <release>2.0.0RC2</release>
+  <api>2.0.0RC2</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,70 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHPCBF will now fix incorrect newline characters in a file
-  - PHPCBF now exists cleanly when there are no errors to fix
-  - Added phpcbf.bat file for Windows
-  - Verbose option no longer errors when using a phar file with a space in the path
-  - Fixed a reporting error when using HHVM
-    -- Thanks to Martins Sipenko for the patch
-  - addFixableError() and addFixableWarning() now only return true if the fixer is enabled
-    -- Saves checking ($phpcsFile->fixer->enabled === true) before every fix
-  - Added addErrorOnLine() and addWarningOnLine() to add a non-fixable violation to a line at column 1
-    -- Useful if you are generating errors using an external tool or parser and only know line numbers
-    -- Thanks to Ondřej Mirtes for the patch
-  - CSS tokenizer now identifies embedded PHP code using the new T_EMBEDDED_PHP token type
-    -- The entire string of PHP is contained in a single token
-  - PHP tokenizer contains better detection of short array syntax
-  - Unit test runner now also test any standards installed under the installed_paths config var
-  - Exclude patterns now use {} delimiters, allowing the | special character to work correctly again
-  - The filtering component of the --extensions argument is now ignored again when passing filenames
-    -- Can still be used to specify a custom tokenizer for each extension when passing filenames
-    -- If no tokenizer is specified, default values will be used for common file extensions
-  - Diff report now produces relative paths on Windows, where possible (further fix for bug #20234)
-  - If a token's content has been modified by the tab-width setting, it will now have an orig_content in the tokens array
-  - Generic DisallowSpaceIndent and DisallowTabIndent sniffs now check original indent content even when tab-width is set
-    -- Previously, setting --tab-width would force both to check the indent as spaces
-  - Fixed a problem where PHPCBF could replace tabs with too many spaces when changing indents
-  - Fixed a problem that could occur with line numbers when using HHVM to check files with Windows newline characters
-  - Removed use of sys_get_temp_dir() as this is not supported by the min PHP version
-  - Squiz ArrayDeclarationSniff now supports short array syntax
-  - Squiz ControlSignatureSniff no longer uses the Abstract Pattern sniff
-    -- If you are extending this sniff, you'll need to rewrite your code
-    -- The rewrite allows this sniff to fix all control structure formatting issues it finds
-  - The installed_paths config var now accepts relative paths
-    -- The paths are relative to the PHP_CodeSniffer install directory
-    -- Thanks to Weston Ruter for the patch
-  - Generic ScopeIndentSniff now accounts for different open tag indents
-  - PEAR FunctionDeclarationSniff now ignores short arrays when checking indent
-    -- Thanks to Daniel Tschinder for the patch
-  - PSR2 FunctionCallSignatureSniff now treats multi-line strings as a single-line argument, like arrays and closures
-    -- Thanks to Dawid Nowak for the patch
-  - PSR2 UseDeclarationSniff now checks for a single space after the USE keyword
-  - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
-    -- Thanks to Ole Martin Handeland for the patch
-  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore namespaces beginning with TRUE/FALSE/NULL
-    -- Thanks to Renan Gonçalves for the patch
-  - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
-  - Squiz SelfMemberReferenceSniff now works correctly with namespaces
-  - Squiz FunctionCommentSniff is now more relaxed when checking namespaced type hints
-  - Tab characters are now encoded in abstract pattern errors messages
-    -- Thanks to Blaine Schmeisser for the patch
-  - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)
-  - Generic LineLengthSniff now shows a warning if the iconv module is disabled (request #20314)
-  - Source report no longer shows errors if category or sniff names ends in an uppercase error
-    -- Thanks to Jonathan Marcil for the patch
-  - Fixed bug #20261 : phpcbf has an endless fixing loop
-  - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
-  - Fixed bug #20296 : new array notion in function comma check fails
-  - Fixed bug #20297 : phar does not work when renamed it to phpcs
-  - Fixed bug #20307 : PHP_CodeSniffer_Standards_AbstractVariableSniff analyze traits
-  - Fixed bug #20308 : Squiz.ValidVariableNameSniff - wrong variable usage
-  - Fixed bug #20309 : Use "member variable" term in sniff "processMemberVar" method
-  - Fixed bug #20310 : PSR2 does not check for space after function name
-  - Fixed bug #20322 : Display rules set to type=error even when suppressing warnings
-  - Fixed bug #20323 : PHPCS tries to load sniffs from hidden directories
-  - Fixed bug #20346 : Fixer endless loop with Squiz.CSS sniffs
-  - Fixed bug #20355 : No sniffs are registered with PHAR on Windows
+  - Improved closure support in Generic ScopeIndentSniff
  </notes>
  <contents>
   <dir name="/">

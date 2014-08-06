@@ -495,3 +495,19 @@ if (true) {
 <?php if (isset($param)) { ?>
    <h3>some text</h3>
 <?php }
+
+$list = [
+    'fn' => function ($a) {
+        if ($a === true) {
+            echo 'hi';
+        }
+    }
+];
+
+$list = [
+    'fn' => function ($a) {
+                if ($a === true) {
+                    echo 'hi';
+                }
+    }
+];
