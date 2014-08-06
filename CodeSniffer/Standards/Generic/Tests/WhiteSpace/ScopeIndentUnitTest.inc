@@ -490,3 +490,19 @@ if (true) {
 } else {
     echo 'else';
 }
+
+$list = [
+    'fn' => function ($a) {
+        if ($a === true) {
+            echo 'hi';
+        }
+    }
+];
+
+$list = [
+    'fn' => function ($a) {
+                if ($a === true) {
+                    echo 'hi';
+                }
+    }
+];

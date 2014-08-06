@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-08-06</date>
  <time>09:51:00</time>
  <version>
-  <release>1.5.4</release>
-  <api>1.5.4</api>
+  <release>1.5.5</release>
+  <api>1.5.5</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,35 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Removed use of sys_get_temp_dir() as this is not supported by the min PHP version
-  - The installed_paths config var now accepts relative paths
-    -- The paths are relative to the PHP_CodeSniffer install directory
-    -- Thanks to Weston Ruter for the patch
-  - Generic ScopeIndentSniff now accounts for different open tag indents
-  - PEAR FunctionDeclarationSniff now ignores short arrays when checking indent
-    -- Thanks to Daniel Tschinder for the patch
-  - PSR2 FunctionCallSignatureSniff now treats multi-line strings as a single-line argument, like arrays and closures
-    -- Thanks to Dawid Nowak for the patch
-  - Generic ForbiddenFunctionsSniff now detects calls to functions in the global namespace
-    -- Thanks to Ole Martin Handeland for the patch
-  - Generic LowerCaseConstantSniff and UpperCaseConstantSniff now ignore namespaces beginning with TRUE/FALSE/NULL
-    -- Thanks to Renan Gonçalves for the patch
-  - Squiz InlineCommentSniff no longer requires a blank line after post-statement comments (request #20299)
-  - Squiz SelfMemberReferenceSniff now works correctly with namespaces
-  - Tab characters are now encoded in abstract pattern errors messages
-    -- Thanks to Blaine Schmeisser for the patch
-  - Invalid sniff codes passed to --sniffs now show a friendly error message (request #20313)
-  - Generic LineLengthSniff now shows a warning if the iconv module is disabled (request #20314)
-  - Source report no longer shows errors if category or sniff names ends in an uppercase error
-    -- Thanks to Jonathan Marcil for the patch
-  - Fixed bug #20268 : Incorrect documentation titles in PEAR documentation
-  - Fixed bug #20296 : new array notion in function comma check fails
-  - Fixed bug #20307 : PHP_CodeSniffer_Standards_AbstractVariableSniff analyze traits
-  - Fixed bug #20308 : Squiz.ValidVariableNameSniff - wrong variable usage
-  - Fixed bug #20309 : Use "member variable" term in sniff "processMemberVar" method
-  - Fixed bug #20310 : PSR2 does not check for space after function name
-  - Fixed bug #20322 : Display rules set to type=error even when suppressing warnings
-  - Fixed bug #20323 : PHPCS tries to load sniffs from hidden directories
+  - Improved closure support in Generic ScopeIndentSniff
  </notes>
  <contents>
   <dir name="/">

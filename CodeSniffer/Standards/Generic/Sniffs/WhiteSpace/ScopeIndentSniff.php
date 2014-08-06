@@ -428,9 +428,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 continue;
             }
 
-            if ($condition === T_CLOSURE && $inParenthesis === true) {
-                // Closures cause problems with indents when they are
-                // used as function arguments because the code inside them
+            if ($condition === T_CLOSURE) {
+                // Closures cause problems with indents because the code inside them
                 // is not technically inside the function yet, so the indent
                 // is always off by one. So instead, use the
                 // indent of the closure as the base value.
