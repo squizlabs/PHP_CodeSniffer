@@ -145,6 +145,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         if ($methodName === '_'.$className) {
             return;
         }
+        
+        // Ignore first underscore in methods prefixed with "_"
+        $methodName = ltrim($methodName, '_');
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
         if (PHP_CodeSniffer::isCamelCaps($methodName, false, true, $this->strict) === false) {
@@ -195,6 +198,9 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
             return;
         }
+        
+        // Ignore first underscore in functions prefixed with "_"
+        $functionName = ltrim($functionName, '_');
 
         if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, $this->strict) === false) {
             $error = 'Function name "%s" is not in camel caps format';
