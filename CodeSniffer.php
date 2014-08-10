@@ -1282,7 +1282,7 @@ class PHP_CodeSniffer
                 $testPath = $path;
             }
 
-            if (preg_match("|{$pattern}|i", $testPath) === 1) {
+            if (preg_match("`{$pattern}`i", $testPath) === 1) {
                 return true;
             }
         }//end foreach
