@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
+  - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
+    -- Thanks to Alexey for the patch
  </notes>
  <contents>
   <dir name="/">
