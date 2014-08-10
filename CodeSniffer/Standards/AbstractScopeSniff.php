@@ -80,7 +80,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                               the scope, by calling the
      *                               processTokenOutsideScope method.
      *
-     * @see PHP_CodeSniffer.getValidScopeTokeners()
+     * @see    PHP_CodeSniffer.getValidScopeTokeners()
      * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
      */
     public function __construct(
@@ -106,7 +106,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         }
 
         $this->_listenOutside = $listenOutside;
-        $this->_scopeTokens   = $scopeTokens;
+        $this->_scopeTokens   = array_flip($scopeTokens);
         $this->_tokens        = $tokens;
 
     }//end __construct()
@@ -120,7 +120,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * for the desired tokens and scope.
      *
      * @return int[]
-     * @see __constructor()
+     * @see    __constructor()
      */
     public final function register()
     {
@@ -137,7 +137,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      *                                        token was found.
      *
      * @return void
-     * @see processTokenWithinScope()
+     * @see    processTokenWithinScope()
      */
     public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
@@ -145,7 +145,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
         $foundScope = false;
         foreach ($tokens[$stackPtr]['conditions'] as $scope => $code) {
-            if (in_array($code, $this->_scopeTokens) === true) {
+            if (isset($this->_scopeTokens[$code]) === true) {
                 $this->processTokenWithinScope($phpcsFile, $stackPtr, $scope);
                 $foundScope = true;
             }
@@ -197,5 +197,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

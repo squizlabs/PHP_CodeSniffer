@@ -68,9 +68,12 @@ class PEAR_Tests_Functions_FunctionCallSignatureUnitTest extends AbstractSniffUn
                 137 => 1,
                 142 => 2,
                 171 => 1,
-                203 => 1,
-                211 => 2,
+                180 => 1,
+                181 => 1,
+                194 => 1,
+                205 => 1,
                 213 => 2,
+                215 => 2,
                );
 
     }//end getErrorList()

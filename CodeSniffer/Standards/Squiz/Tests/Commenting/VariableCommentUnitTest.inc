@@ -3,9 +3,9 @@ class VariableCommentUnitTest
 {
 
     /**
-     * short description of the member variable.
+     * Short description of the member variable.
      *
-     * long description of member variable. Can span over multiple
+     * Long description of member variable. Can span over multiple
      * lines and can have multiple paragraphs.
      *
      * @var array
@@ -38,7 +38,7 @@ class VariableCommentUnitTest
      *
      *
      *
-     * - Long description,
+     * Long description.
      *
      * @var string
      */

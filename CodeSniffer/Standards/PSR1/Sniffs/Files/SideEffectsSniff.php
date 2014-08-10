@@ -29,6 +29,7 @@
 class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 {
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -69,6 +70,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                       $tokens[$result['effect']]['line'],
                      );
             $phpcsFile->addWarning($error, 0, 'FoundWithSymbols', $data);
+            $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'yes');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'no');
         }
 
     }//end process()
@@ -92,23 +96,23 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
     private function _searchForConflict(PHP_CodeSniffer_File $phpcsFile, $start, $end, $tokens)
     {
         $symbols = array(
-                    T_CLASS,
-                    T_INTERFACE,
-                    T_TRAIT,
-                    T_FUNCTION,
+                    T_CLASS     => T_CLASS,
+                    T_INTERFACE => T_INTERFACE,
+                    T_TRAIT     => T_TRAIT,
+                    T_FUNCTION  => T_FUNCTION,
                    );
 
         $conditions = array(
-                       T_IF,
-                       T_ELSE,
-                       T_ELSEIF,
+                       T_IF     => T_IF,
+                       T_ELSE   => T_ELSE,
+                       T_ELSEIF => T_ELSEIF,
                       );
 
         $firstSymbol = null;
         $firstEffect = null;
         for ($i = $start; $i <= $end; $i++) {
             // Ignore whitespace and comments.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                 continue;
             }
 
@@ -142,12 +146,12 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Ignore function/class prefixes.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$methodPrefixes) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$methodPrefixes[$tokens[$i]['code']]) === true) {
                 continue;
             }
 
             // Detect and skip over symbols.
-            if (in_array($tokens[$i]['code'], $symbols) === true
+            if (isset($symbols[$tokens[$i]['code']]) === true
                 && isset($tokens[$i]['scope_closer']) === true
             ) {
                 if ($firstSymbol === null) {
@@ -173,7 +177,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             // Conditional statements are allowed in symbol files as long as the
             // contents is only a symbol definition. So don't count these as effects
             // in this case.
-            if (in_array($tokens[$i]['code'], $conditions) === true) {
+            if (isset($conditions[$tokens[$i]['code']]) === true) {
                 if (isset($tokens[$i]['scope_opener']) === false) {
                     // Probably an "else if", so just ignore.
                     continue;
@@ -225,5 +229,3 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

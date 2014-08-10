@@ -116,7 +116,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($tokens[$next]['code'] === T_SEMICOLON) {
-            if (in_array($tokens[($closeBracket + 1)]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[($closeBracket + 1)]['code']]) === true) {
                 $error = 'Space after closing parenthesis of function call prohibited';
                 $phpcsFile->addError($error, $closeBracket, 'SpaceAfterCloseBracket');
             }
@@ -246,27 +246,49 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
-        // Each line between the parenthesis should be indented n spaces.
+        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+            $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
+            if ($fix === true) {
+                $phpcsFile->fixer->addContent(
+                    $openBracket,
+                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                );
+            }
+        }
+
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-        $lastLine     = $tokens[$openBracket]['line'];
+        $prev         = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
+        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+            $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
+            $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');
+            if ($fix === true) {
+                $phpcsFile->fixer->addContentBefore(
+                    $closeBracket,
+                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                );
+            }
+        }
+
+        // Each line between the parenthesis should be indented n spaces.
+        $lastLine = $tokens[$openBracket]['line'];
+        $exact    = true;
+        $exactEnd = null;
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            // Skip nested function calls.
-            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $i        = $tokens[$i]['parenthesis_closer'];
-                $lastLine = $tokens[$i]['line'];
-                continue;
+            if ($i === $exactEnd) {
+                $exact = true;
             }
 
             if ($tokens[$i]['line'] !== $lastLine) {
                 $lastLine = $tokens[$i]['line'];
 
                 // Ignore heredoc indentation.
-                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$heredocTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$heredocTokens[$tokens[$i]['code']]) === true) {
                     continue;
                 }
 
                 // Ignore multi-line string indentation.
-                if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
                     if ($tokens[$i]['code'] === $tokens[($i - 1)]['code']) {
                         continue;
                     }
@@ -278,8 +300,14 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 if ($tokens[$i]['code'] === T_WHITESPACE) {
                     $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), ($closeBracket + 1), true);
                     if ($tokens[$nextCode]['line'] !== $lastLine) {
-                        $error = 'Empty lines are not allowed in multi-line function calls';
-                        $phpcsFile->addError($error, $i, 'EmptyLine');
+                        if ($exact === true) {
+                            $error = 'Empty lines are not allowed in multi-line function calls';
+                            $fix   = $phpcsFile->addFixableError($error, $i, 'EmptyLine');
+                            if ($fix === true) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+                        }
+
                         continue;
                     }
                 } else {
@@ -315,27 +343,42 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $foundIndent = strlen($tokens[$i]['content']);
                 }
 
-                if ($expectedIndent !== $foundIndent) {
+                if ($foundIndent < $expectedIndent
+                    || ($exact === true
+                    && $expectedIndent !== $foundIndent)
+                ) {
                     $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
                     $data  = array(
                               $expectedIndent,
                               $foundIndent,
                              );
-                    $phpcsFile->addError($error, $i, 'Indent', $data);
-                }
+
+                    $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
+                    if ($fix === true) {
+                        $padding = str_repeat(' ', $expectedIndent);
+                        if ($foundIndent === 0) {
+                            $phpcsFile->fixer->addContentBefore($i, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken($i, $padding);
+                        }
+                    }
+                }//end if
             }//end if
 
-            // Skip the rest of a closure.
-            if ($tokens[$i]['code'] === T_CLOSURE) {
-                $i        = $tokens[$i]['scope_closer'];
-                $lastLine = $tokens[$i]['line'];
-                continue;
-            }
-
-            // Skip the rest of a short array.
-            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
-                $i        = $tokens[$i]['bracket_closer'];
-                $lastLine = $tokens[$i]['line'];
+            // Turn off exact indent matching for some structures that typically
+            // define their own indentation rules.
+            if ($exact === true) {
+                if ($tokens[$i]['code'] === T_CLOSURE) {
+                    $exact    = false;
+                    $exactEnd = $tokens[$i]['scope_closer'];
+                } else if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
+                    $exact    = false;
+                    $exactEnd = $tokens[$i]['bracket_closer'];
+                } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+                    $exact    = false;
+                    $exactEnd = $tokens[$i]['parenthesis_closer'];
+                }
+            } else {
                 continue;
             }
 
@@ -350,17 +393,6 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 }
             }
         }//end for
-
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
-            $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
-        }
-
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
-            $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
-            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
-        }
 
     }//end processMultiLineCall()
 

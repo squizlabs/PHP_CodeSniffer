@@ -52,15 +52,14 @@ class Squiz_Tests_Commenting_FileCommentUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 1  => 1,
-                6  => 3,
-                8  => 1,
-                10 => 1,
-                21 => 1,
                 22 => 2,
                 23 => 1,
                 24 => 2,
+                25 => 2,
                 26 => 1,
-                30 => 2,
+                27 => 2,
+                28 => 2,
+                32 => 2,
                );
 
     }//end getErrorList()

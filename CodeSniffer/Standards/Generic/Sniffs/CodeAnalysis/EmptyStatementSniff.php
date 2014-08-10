@@ -102,7 +102,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
 
         $emptyBody = true;
         for (; $next <= $end; ++$next) {
-            if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$next]['code']]) === false) {
                 $emptyBody = false;
                 break;
             }
@@ -124,5 +124,3 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
 
 
 }//end class
-
-?>

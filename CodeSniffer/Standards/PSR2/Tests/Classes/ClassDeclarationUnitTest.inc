@@ -119,4 +119,9 @@ interface MyInterface extends
 {
 }
 
+abstract
+class Test
+{
+}
+
 ?>

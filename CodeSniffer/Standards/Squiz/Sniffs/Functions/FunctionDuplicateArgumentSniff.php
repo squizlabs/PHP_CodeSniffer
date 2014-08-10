@@ -77,5 +77,3 @@ class Squiz_Sniffs_Functions_FunctionDuplicateArgumentSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

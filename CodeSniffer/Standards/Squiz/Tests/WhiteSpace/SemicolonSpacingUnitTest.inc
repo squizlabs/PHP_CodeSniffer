@@ -7,4 +7,6 @@ for ($var = 1   ; $var < 10  ; $var++) {
 }
 $test = $this->testThis()  /* comment here */;
 $test = $this->testThis()  /* comment here */  ;
-?>
+
+$hello ='foo';
+;

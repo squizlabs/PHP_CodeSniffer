@@ -69,7 +69,11 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
                       $expected,
                       $colour,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'NotUpper', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUpper', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            }
         }
 
         // Now check if shorthand can be used.
@@ -84,10 +88,14 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
                          $expected,
                          $colour,
                         );
-            $phpcsFile->addError($error, $stackPtr, 'Shorthand', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Shorthand', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            }
         }
 
     }//end process()
 
+
 }//end class
-?>

@@ -3,7 +3,7 @@ About
 
 PHP\_CodeSniffer is a PHP5 script that tokenises PHP, JavaScript and CSS files to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers.
 
-[![Build Status](https://travis-ci.org/squizlabs/PHP_CodeSniffer.svg?branch=master)](https://travis-ci.org/squizlabs/PHP_CodeSniffer) [![Code consistency](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer)
+[![Build Status](https://travis-ci.org/squizlabs/PHP_CodeSniffer.svg?branch=phpcs-fixer)](https://travis-ci.org/squizlabs/PHP_CodeSniffer) [![Code consistency](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer)
 
 Requirements
 ------------
@@ -29,7 +29,7 @@ Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `
 
     {
         "require-dev": {
-            "squizlabs/php_codesniffer": "1.*"
+            "squizlabs/php_codesniffer": "2.*"
         }
     }
 

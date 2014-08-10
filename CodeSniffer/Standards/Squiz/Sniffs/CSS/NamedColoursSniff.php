@@ -44,24 +44,24 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
      * @var array
      */
     public $colourNames = array(
-                           'aqua',
-                           'black',
-                           'blue',
-                           'fuchsia',
-                           'gray',
-                           'green',
-                           'lime',
-                           'maroon',
-                           'navy',
-                           'olive',
-                           'orange',
-                           'purple',
-                           'red',
-                           'silver',
-                           'teal',
-                           'white',
-                           'yellow',
-                           );
+                           'aqua'    => 'aqua',
+                           'black'   => 'black',
+                           'blue'    => 'blue',
+                           'fuchsia' => 'fuchsia',
+                           'gray'    => 'gray',
+                           'green'   => 'green',
+                           'lime'    => 'lime',
+                           'maroon'  => 'maroon',
+                           'navy'    => 'navy',
+                           'olive'   => 'olive',
+                           'orange'  => 'orange',
+                           'purple'  => 'purple',
+                           'red'     => 'red',
+                           'silver'  => 'silver',
+                           'teal'    => 'teal',
+                           'white'   => 'white',
+                           'yellow'  => 'yellow',
+                          );
 
 
     /**
@@ -96,12 +96,12 @@ class Squiz_Sniffs_CSS_NamedColoursSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        if (in_array(strtolower($tokens[$stackPtr]['content']), $this->colourNames) === true) {
+        if (isset($this->colourNames[strtolower($tokens[$stackPtr]['content'])]) === true) {
             $error = 'Named colours are forbidden; use hex, rgb, or rgba values instead';
             $phpcsFile->addError($error, $stackPtr, 'Forbidden');
         }
 
     }//end process()
 
+
 }//end class
-?>

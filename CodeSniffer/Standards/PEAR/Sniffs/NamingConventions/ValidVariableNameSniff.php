@@ -89,7 +89,9 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      */
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariable()
 
@@ -104,11 +106,11 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      */
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We don't care about normal variables.
+        /*
+            We don't care about normal variables.
+        */
 
     }//end processVariableInString()
 
 
 }//end class
-
-?>

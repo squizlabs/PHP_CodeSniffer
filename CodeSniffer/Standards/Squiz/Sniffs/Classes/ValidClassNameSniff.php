@@ -84,12 +84,12 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
                       $name,
                      );
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'yes');
         }
 
     }//end process()
 
 
 }//end class
-
-
-?>

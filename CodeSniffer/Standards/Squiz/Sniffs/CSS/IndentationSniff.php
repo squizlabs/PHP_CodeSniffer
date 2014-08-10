@@ -36,10 +36,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
     public $supportedTokenizers = array('CSS');
 
     /**
-    * The number of spaces code should be indented.
-    *
-    * @var int
-    */
+     * The number of spaces code should be indented.
+     *
+     * @var int
+     */
     public $indent = 4;
 
 
@@ -81,16 +81,26 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 $indentLevel++;
 
                 // Check for nested class definitions.
-                $found  = $phpcsFile->findNext(
+                $found = $phpcsFile->findNext(
                     T_OPEN_CURLY_BRACKET,
                     ($i + 1),
                     $tokens[$i]['bracket_closer']
                 );
+
                 if ($found !== false) {
                     $nestingLevel = $indentLevel;
                 }
-            } else if ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET) {
+            }
+
+            if (($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                && $tokens[$i]['line'] !== $tokens[($i - 1)]['line'])
+                || ($tokens[($i + 1)]['code'] === T_CLOSE_CURLY_BRACKET
+                && $tokens[$i]['line'] === $tokens[($i + 1)]['line'])
+            ) {
                 $indentLevel--;
+                if ($indentLevel === 0) {
+                    $nestingLevel = 0;
+                }
             }
 
             if ($tokens[$i]['column'] !== 1) {
@@ -111,7 +121,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
             ) {
                 if ($nestingLevel !== $indentLevel) {
                     $error = 'Blank lines are not allowed in class definitions';
-                    $phpcsFile->addError($error, $i, 'BlankLine');
+                    $fix   = $phpcsFile->addFixableError($error, $i, 'BlankLine');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
                 }
             } else if ($foundIndent !== $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
@@ -119,10 +132,20 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                           $expectedIndent,
                           $foundIndent,
                          );
-                $phpcsFile->addError($error, $i, 'Incorrect', $data);
-            }
-        }//end foreach
+
+                $fix = $phpcsFile->addFixableError($error, $i, 'Incorrect', $data);
+                if ($fix === true) {
+                    $indent = str_repeat(' ', $expectedIndent);
+                    if ($foundIndent === 0) {
+                        $phpcsFile->fixer->addContentBefore($i, $indent);
+                    } else {
+                        $phpcsFile->fixer->replaceToken($i, $indent);
+                    }
+                }
+            }//end if
+        }//end for
+
     }//end process()
 
+
 }//end class
-?>

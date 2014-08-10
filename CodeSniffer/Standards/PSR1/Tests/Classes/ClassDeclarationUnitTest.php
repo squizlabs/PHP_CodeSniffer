@@ -36,10 +36,16 @@ class PSR1_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
+        if ($testFile === 'ClassDeclarationUnitTest.2.inc') {
+            return array();
+        }
+
         if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
             return array(
                     2 => 1,
@@ -70,5 +76,3 @@ class PSR1_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

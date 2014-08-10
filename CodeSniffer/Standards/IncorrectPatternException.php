@@ -31,5 +31,3 @@ class PHP_CodeSniffer_Standards_IncorrectPatternException extends Exception
 {
 
 }//end class
-
-?>
