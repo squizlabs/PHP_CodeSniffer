@@ -37,7 +37,7 @@ foreach ($trendFiles as $file) {
         $repo      = null;
         $metrics   = $results;
         $minChange = 0.55;
-        $totals    = $results;
+        #$totals    = $results;
         #echo "Processing main result file: $file\n";
     } else {
         $repo      = $results['project']['path'];
