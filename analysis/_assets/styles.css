@@ -3,6 +3,7 @@ body {
     margin: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    font-size: 1em;
 }
 
 h2 a {
@@ -47,8 +48,8 @@ pre {
 
 .chart-repo {
     position: absolute;
-    top: 123px;
-    left: 133px;
+    top: 68px;
+    left: 68px;
 }
 
 .chart-data {
@@ -71,15 +72,8 @@ pre {
     margin: 0 auto;
 }
 
-.conventionDetails h1 {
-    color: #354a5d;
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
-}
-
 .conventionDetails p {
-    font-size: 16px;
+    font-size: 1em;
     color: #1d2329;
     margin: 14px 0;
 }
@@ -89,7 +83,6 @@ pre {
 .currentData {
     border-top: 1px solid #bfbfbf;
     padding: 25px 0;
-    position: relative;
 }
 
 .currentDataWrap {
@@ -102,6 +95,7 @@ pre {
     width: 290px;
     height: 290px;
     display: table-cell;
+    position: relative;
 }
 
 /* Convention status in project */
@@ -120,7 +114,7 @@ pre {
 
 .conventionStatusInProject p.projectStatusText {
     color: #2d3e4f;
-    font-size: 13px;
+    font-size: 0.8em;
     font-style: italic;
     margin: 0;
 }
@@ -163,20 +157,20 @@ table.statsTable {
     margin: 0;
     border-top: 1px solid #969fa7;
     border-left: 1px solid #969fa7;
-    font-size: 17px;
+    font-size: 1em;
     color: #2e374d;
     font-weight: bold;
 }
 
 .preferrNone {
-    font-size: 13px;
+    font-size: 0.8em;
     font-weight: normal;
     text-decoration: none;
     color: #2e374d;
 }
 
 .statsTable td a, .preferredByLink {
-    font-size: 13px;
+    font-size: 0.8em;
     font-weight: normal;
     text-decoration: none; 
     border-bottom: 1px solid #78c9cf;
@@ -219,7 +213,7 @@ p.statsInfo {
     margin-left: 65px;
     text-align: center;
     color: #2e374d;
-    font-size: 13px;
+    font-size: 0.8em;
     font-style: italic;
     margin-top: 20px;
 }
@@ -243,7 +237,8 @@ p.statsInfo {
     width: 900px;
     margin-left: 25px;
     display: inline-block;
-    font-size: 15px;
+    font-size: 0.9em;
+    margin-top: 20px;
 }
 
 .historicalDate {
@@ -366,7 +361,7 @@ p.statsInfo {
 
 .introduction h1 {
     color: #ffffff;
-    font-size: 40px;
+    font-size: 2.5em;
     line-height: 46px;
     font-weight: bold;
     margin-top: 10px;
@@ -390,7 +385,7 @@ p.statsInfo {
 }
 
 .reportInstructionsWrap a h2 {
-    font-size: 18px;
+    font-size: 1.1em;
     color: #ffffff;
     position: relative;
 }
@@ -413,7 +408,7 @@ p.statsInfo {
 
 .introduction p {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 21px;
 }
 
@@ -429,7 +424,7 @@ p.statsInfo {
 
 .instructionItem {
     padding-left: 25px;
-    font-size: 15px;
+    font-size: 0.9em;
     line-height: 20px;
 }
 
@@ -501,7 +496,7 @@ ul.reportInstructions {
 
 .fixedHeader .introduction h1,
 .small .introduction h1 {
-    font-size: 20px;
+    font-size: 1.2em;
     line-height: 20px;
     display: inline-block;
     position: relative;
@@ -583,7 +578,7 @@ ul.reportInstructions {
     top: 50%;
     color: #d9d9d9;
     position: absolute;
-    font-size: 18px;
+    font-size: 1.1em;
     padding-left: 25px;
     margin-top: 0px;
 }
@@ -615,7 +610,7 @@ ul.reportInstructions {
 .flyout .td1,
 .flyout .td2,
 .flyout .td3 {
-    font-size: 13px;
+    font-size: 0.8em;
     border-bottom: 1px solid #2b3540;
     padding: 6px;
     display: table-cell;
@@ -626,7 +621,7 @@ ul.reportInstructions {
     color: #e4e9ed;
     width: 230px;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 0.8em;
 }
 
 .flyout .td2 {
@@ -743,13 +738,13 @@ ul.reportInstructions {
 
 .listBoxHeader h3, .listBoxHeader h2 {
     margin: 0 0 10px 0;
-    font-size: 17px;
+    font-size: 1.1em;
     color: #6c7884;
 }
 
 .listBoxHeader p {
     margin: 0 0 6px 0;
-    font-size: 13px;
+    font-size: 0.8em;
     color: #000;
 }
 
@@ -781,7 +776,7 @@ ul.reportInstructions {
 .listBoxList .td1, .listBoxList .td2 {
     color: #000000;
     display: table-cell;
-    font-size: 13px;
+    font-size: 0.8em;
     border-bottom: 1px solid #dedede;
     padding: 4px;
 }
@@ -789,7 +784,7 @@ ul.reportInstructions {
 #alllistBoxListWrap .td1Heading, #alllistBoxListWrap .td2Heading {
     color: #000000;
     display: table-cell;
-    font-size: 13px;
+    font-size: 0.8em;
     border-bottom: 1px solid #dedede;
     padding: 4px;
     background-color: #D6D6D6;
@@ -891,7 +886,7 @@ a.reportLink, a.reportLink:visited {
     color: #80dfdd;
     margin-left: 25px;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 0.9em;
     position: relative;
 }
 
@@ -921,7 +916,7 @@ a.reportLink, a.reportLink:visited {
     padding: 20px 0;
     background: #f5f5f5;
     box-shadow: 0 1px 6px rgba(0,0,0,0.1) inset;
-    font-size: 14px;
+    font-size: 0.9em;
     color: #2d3f50;
 }
 
@@ -961,7 +956,7 @@ a.reportLink, a.reportLink:visited {
     text-align: center;
     color: #2C3E4F;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1em;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     letter-spacing: 1px;
     text-shadow: 0 1px 0 rgba(0,0,0,0.05);
@@ -980,12 +975,12 @@ a.reportLink, a.reportLink:visited {
     height: 30px;
     top: 4px;
     right: -25px;
-    font-size: 0px;
+    font-size: 0em;
 }
 
 #consistency .grade, #consistency.small .grade {
     display: block;
-    font-size: 22px;
+    font-size: 1.4em;
     color: #fff;
     padding-top: 6px;
 }
