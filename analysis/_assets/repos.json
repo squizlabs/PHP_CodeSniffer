@@ -600,5 +600,12 @@
         "path": "lib",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Scabbia2 PHP Framework Code",
+        "url": "scabbiafw/scabbia2-fw",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
