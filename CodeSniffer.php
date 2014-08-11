@@ -853,8 +853,11 @@ class PHP_CodeSniffer
 
             $path = $file->getPathname();
 
-            // Skip files in hidden directories.
-            if (strpos($path, DIRECTORY_SEPARATOR.'.') !== false) {
+            // Skip files in hidden directories within the Sniffs directory of this
+            // standard. We use the offset with strpos() to allow hidden directories
+            // before, valid example:
+            // /home/klausi/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs
+            if (strpos($path, DIRECTORY_SEPARATOR.'.', strlen($directory)) !== false) {
                 continue;
             }
 
