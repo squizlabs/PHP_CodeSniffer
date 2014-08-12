@@ -832,6 +832,8 @@ class PHP_CodeSniffer
 
         $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
+        $dirLen = strlen($directory);
+
         foreach ($di as $file) {
             $filename = $file->getFilename();
 
@@ -856,8 +858,8 @@ class PHP_CodeSniffer
             // Skip files in hidden directories within the Sniffs directory of this
             // standard. We use the offset with strpos() to allow hidden directories
             // before, valid example:
-            // /home/klausi/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs
-            if (strpos($path, DIRECTORY_SEPARATOR.'.', strlen($directory)) !== false) {
+            // /home/foo/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs/...
+            if (strpos($path, DIRECTORY_SEPARATOR.'.', $dirLen) !== false) {
                 continue;
             }
 
