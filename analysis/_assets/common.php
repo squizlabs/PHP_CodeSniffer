@@ -15,6 +15,7 @@ function getRepoDirs($repo)
     $dirs['clone'] = $dirs['repo'].'/src';
 
     return $dirs;
+
 }//end getRepoDirs()
 
 

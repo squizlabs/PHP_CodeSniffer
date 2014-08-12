@@ -441,6 +441,27 @@
         "extensions": ""
     },
     {
+        "name": "PHP OAuth 2.0 Server",
+        "url": "thephpleague/oauth2-server",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "OAuth 2.0 Client",
+        "url": "thephpleague/oauth2-client",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Fractal",
+        "url": "thephpleague/fractal",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
         "name": "Phing",
         "url": "phingofficial/phing",
         "path": "classes",
