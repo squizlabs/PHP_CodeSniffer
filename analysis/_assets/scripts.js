@@ -1,5 +1,6 @@
 var valOptions = {
     pieHole:0.55,
+    backgroundColor:'transparent',
     legend:{position:'none'},
     enableInteractivity:false,
     pieSliceText:'none',
@@ -7,15 +8,7 @@ var valOptions = {
     colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5']
 };
 
-var repoOptions = {
-    pieHole:0.55,
-    backgroundColor:'transparent',
-    legend:{position:'none'},
-    enableInteractivity: false,
-    pieSliceText:'none',
-    chartArea:{left:0,top:0,width:'100%',height:'100%'},
-    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5']
-};
+var repoOptions = valOptions;
 
 var trendOptions = {
     backgroundColor:"transparent",
@@ -25,23 +18,15 @@ var trendOptions = {
     fontName:"arial",
     fontSize:"11",
     hAxis:{slantedText:true,slantedTextAngle:60,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11}},
-    vAxis:{textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"#'%'"},
+    vAxis:{textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"#'%'",baseline:"transparent"},
     focusTarget:"category",
     tooltip:{textStyle:{fontName:"arial",fontSize:13}},
-    pointSize:6
+    pointSize:6,
+    crosshair:{trigger:"both",orientation:"vertical",opacity:0.2}
 };
 
-var perfectTrendOptions = {
-    backgroundColor:"transparent",
-    legend:{position:'none'},
-    chartArea:{left:40,top:20,width:'820',height:'100'},
-    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5'],
-    fontName:"arial",
-    fontSize:"11",
-    hAxis:{slantedText:true,slantedTextAngle:60,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11}},
-    vAxis:{textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"#'%'",ticks:[0,20,40,60,80,100]},
-    pointSize:6
-};
+var perfectTrendOptions = JSON.parse(JSON.stringify(trendOptions));
+perfectTrendOptions.vAxis.ticks = [0,20,40,60,80,100];
 
 function init()
 {
