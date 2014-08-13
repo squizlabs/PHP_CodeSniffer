@@ -270,7 +270,7 @@
     </div>
     <div class="historicalEvents">
       <ul>
-        <li class="historicalDate"><strong>23 Feb 2014</strong>: there was a 7.76% swing from <em>new line</em> to <em>same line</em>
+        <li onmouseover="ct1.setSelection([{row:15,column:null}]);" onmouseout="ct1.setSelection([]);" class="historicalDate"><strong>23 Feb 2014</strong>: there was a 7.76% swing from <em>new line</em> to <em>same line</em>
           <ul>
           </ul>
         </li>
@@ -322,7 +322,7 @@
     </div>
     <div class="historicalEvents">
       <ul>
-        <li class="historicalDate"><strong>20 Apr 2014</strong>: there was a 3.58% swing from <em>no</em> to <em>yes</em>
+        <li onmouseover="ct2.setSelection([{row:23,column:null}]);" onmouseout="ct2.setSelection([]);" class="historicalDate"><strong>20 Apr 2014</strong>: there was a 3.58% swing from <em>no</em> to <em>yes</em>
           <ul>
           </ul>
         </li>
@@ -374,7 +374,7 @@
     </div>
     <div class="historicalEvents">
       <ul>
-        <li class="historicalDate"><strong>20 Apr 2014</strong>: there was a 5.26% swing from <em>yes</em> to <em>no</em>
+        <li onmouseover="ct3.setSelection([{row:23,column:null}]);" onmouseout="ct3.setSelection([]);" class="historicalDate"><strong>20 Apr 2014</strong>: there was a 5.26% swing from <em>yes</em> to <em>no</em>
           <ul>
           </ul>
         </li>
@@ -1565,14 +1565,47 @@
 
     </div>
 
-    <div class="footer">Report generated on Wed, 13 Aug 2014 20:49:25 +1000<br/>Using master branch of <a href="https://github.com/auraphp/Aura.Sql">auraphp/Aura.Sql</a> @ commit <a href="https://github.com/auraphp/Aura.Sql/commit/e24c91791eb5ac5edd889b9770a036bfb77fe67a">e24c91791eb5ac5edd889b9770a036bfb77fe67a</a></div>
+    <div class="footer">Report generated on Thu, 14 Aug 2014 09:12:17 +1000<br/>Using master branch of <a href="https://github.com/auraphp/Aura.Sql">auraphp/Aura.Sql</a> @ commit <a href="https://github.com/auraphp/Aura.Sql/commit/e24c91791eb5ac5edd889b9770a036bfb77fe67a">e24c91791eb5ac5edd889b9770a036bfb77fe67a</a></div>
 </div>
 
 <script>
     init();
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart1);
-    function drawChart1() {
+    var ct1 = null;
+var ct2 = null;
+var ct3 = null;
+var ct4 = null;
+var ct5 = null;
+var ct6 = null;
+var ct7 = null;
+var ct8 = null;
+var ct9 = null;
+var ct10 = null;
+var ct11 = null;
+var ct12 = null;
+var ct13 = null;
+var ct14 = null;
+var ct15 = null;
+var ct16 = null;
+var ct17 = null;
+var ct18 = null;
+var ct19 = null;
+var ct20 = null;
+var ct21 = null;
+var ct22 = null;
+var ct23 = null;
+var ct24 = null;
+var ct25 = null;
+var ct26 = null;
+var ct27 = null;
+var ct28 = null;
+var ct29 = null;
+var ct30 = null;
+var ct31 = null;
+var ct32 = null;
+var ct33 = null;
+function drawChart1() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['new line',82.14],['same line',17.86]]);
 var c = new google.visualization.PieChart(document.getElementById("chart1"));
 c.draw(data, valOptions);
@@ -1583,8 +1616,8 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn('number', 'same line');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',87.76,false,12.24,false],['13 Nov',87.76,false,12.24,false],['20 Nov',87.76,false,12.24,false],['27 Nov',87.76,false,12.24,false],['04 Dec',87.76,false,12.24,false],['11 Dec',87.76,false,12.24,false],['18 Dec',87.76,false,12.24,false],['25 Dec',87.76,false,12.24,false],['05 Jan',87.76,false,12.24,false],['12 Jan',87.76,false,12.24,false],['19 Jan',87.76,false,12.24,false],['26 Jan',87.76,false,12.24,false],['02 Feb',87.76,false,12.24,false],['09 Feb',87.76,false,12.24,false],['16 Feb',87.76,false,12.24,false],['23 Feb',80,true,20,true],['02 Mar',80,false,20,false],['09 Mar',80,false,20,false],['16 Mar',80,false,20,false],['23 Mar',80,false,20,false],['30 Mar',80.77,false,19.23,false],['06 Apr',80.77,false,19.23,false],['13 Apr',80,false,20,false],['20 Apr',81.82,false,18.18,false],['27 Apr',81.82,false,18.18,false],['04 May',81.82,false,18.18,false],['11 May',81.82,false,18.18,false],['18 May',81.82,false,18.18,false],['25 May',81.82,false,18.18,false],['01 Jun',81.82,false,18.18,false],['08 Jun',81.82,false,18.18,false],['15 Jun',81.82,false,18.18,false],['22 Jun',81.82,false,18.18,false],['29 Jun',81.82,false,18.18,false],['06 Jul',81.82,false,18.18,false],['13 Jul',81.82,false,18.18,false],['20 Jul',81.82,false,18.18,false],['27 Jul',82.14,false,17.86,false],['03 Aug',82.14,false,17.86,false],['10 Aug',82.14,false,17.86,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart1t"));
-c.draw(data, trendOptions);
+ct1 = new google.visualization.LineChart(document.getElementById("chart1t"));
+ct1.draw(data, trendOptions);
 window.setTimeout(function(){drawChart2()}, 10);}
 function drawChart2() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',15.94],['yes',84.06]]);
@@ -1597,8 +1630,8 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',20,false,80,false],['13 Nov',20,false,80,false],['20 Nov',20,false,80,false],['27 Nov',20,false,80,false],['04 Dec',20,false,80,false],['11 Dec',20,false,80,false],['18 Dec',20,false,80,false],['25 Dec',20,false,80,false],['05 Jan',20,false,80,false],['12 Jan',20,false,80,false],['19 Jan',20,false,80,false],['26 Jan',20,false,80,false],['02 Feb',20,false,80,false],['09 Feb',20,false,80,false],['16 Feb',20,false,80,false],['23 Feb',19.44,false,80.56,false],['02 Mar',19.44,false,80.56,false],['09 Mar',19.44,false,80.56,false],['16 Mar',19.44,false,80.56,false],['23 Mar',19.44,false,80.56,false],['30 Mar',19.72,false,80.28,false],['06 Apr',19.72,false,80.28,false],['13 Apr',20,false,80,false],['20 Apr',16.42,true,83.58,true],['27 Apr',16.42,false,83.58,false],['04 May',16.42,false,83.58,false],['11 May',16.42,false,83.58,false],['18 May',16.42,false,83.58,false],['25 May',16.42,false,83.58,false],['01 Jun',16.42,false,83.58,false],['08 Jun',16.42,false,83.58,false],['15 Jun',16.42,false,83.58,false],['22 Jun',16.42,false,83.58,false],['29 Jun',16.18,false,83.82,false],['06 Jul',16.18,false,83.82,false],['13 Jul',16.18,false,83.82,false],['20 Jul',16.18,false,83.82,false],['27 Jul',15.94,false,84.06,false],['03 Aug',15.94,false,84.06,false],['10 Aug',15.94,false,84.06,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart2t"));
-c.draw(data, trendOptions);
+ct2 = new google.visualization.LineChart(document.getElementById("chart2t"));
+ct2.draw(data, trendOptions);
 window.setTimeout(function(){drawChart3()}, 10);}
 function drawChart3() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',5.21],['yes',94.79]]);
@@ -1611,8 +1644,8 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',0.00,false,100,false],['13 Nov',0.00,false,100,false],['20 Nov',0.00,false,100,false],['27 Nov',0.00,false,100,false],['04 Dec',0.00,false,100,false],['11 Dec',0.00,false,100,false],['18 Dec',0.00,false,100,false],['25 Dec',0.00,false,100,false],['05 Jan',0.00,false,100,false],['12 Jan',0.00,false,100,false],['19 Jan',0.00,false,100,false],['26 Jan',0.00,false,100,false],['02 Feb',0.00,false,100,false],['09 Feb',0.00,false,100,false],['16 Feb',0.00,false,100,false],['23 Feb',0.00,false,100,false],['02 Mar',0.00,false,100,false],['09 Mar',0.00,false,100,false],['16 Mar',0.00,false,100,false],['23 Mar',0.00,false,100,false],['30 Mar',0.00,false,100,false],['06 Apr',0.00,false,100,false],['13 Apr',0.00,false,100,false],['20 Apr',5.26,true,94.74,true],['27 Apr',5.26,false,94.74,false],['04 May',5.26,false,94.74,false],['11 May',5.26,false,94.74,false],['18 May',5.26,false,94.74,false],['25 May',5.26,false,94.74,false],['01 Jun',5.26,false,94.74,false],['08 Jun',5.26,false,94.74,false],['15 Jun',5.26,false,94.74,false],['22 Jun',5.26,false,94.74,false],['29 Jun',5.26,false,94.74,false],['06 Jul',5.26,false,94.74,false],['13 Jul',5.26,false,94.74,false],['20 Jul',5.26,false,94.74,false],['27 Jul',5.21,false,94.79,false],['03 Aug',5.21,false,94.79,false],['10 Aug',5.21,false,94.79,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart3t"));
-c.draw(data, trendOptions);
+ct3 = new google.visualization.LineChart(document.getElementById("chart3t"));
+ct3.draw(data, trendOptions);
 window.setTimeout(function(){drawChart4()}, 10);}
 function drawChart4() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',99.59],['yes',0.41]]);
@@ -1625,8 +1658,8 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false,0.00,false],['13 Nov',100,false,0.00,false],['20 Nov',100,false,0.00,false],['27 Nov',100,false,0.00,false],['04 Dec',100,false,0.00,false],['11 Dec',100,false,0.00,false],['18 Dec',100,false,0.00,false],['25 Dec',100,false,0.00,false],['05 Jan',100,false,0.00,false],['12 Jan',100,false,0.00,false],['19 Jan',100,false,0.00,false],['26 Jan',100,false,0.00,false],['02 Feb',100,false,0.00,false],['09 Feb',100,false,0.00,false],['16 Feb',100,false,0.00,false],['23 Feb',100,false,0.00,false],['02 Mar',100,false,0.00,false],['09 Mar',100,false,0.00,false],['16 Mar',100,false,0.00,false],['23 Mar',100,false,0.00,false],['30 Mar',100,false,0.00,false],['06 Apr',100,false,0.00,false],['13 Apr',100,false,0.00,false],['20 Apr',99.57,false,0.43,false],['27 Apr',99.57,false,0.43,false],['04 May',99.57,false,0.43,false],['11 May',99.57,false,0.43,false],['18 May',99.57,false,0.43,false],['25 May',99.57,false,0.43,false],['01 Jun',99.57,false,0.43,false],['08 Jun',99.57,false,0.43,false],['15 Jun',99.57,false,0.43,false],['22 Jun',99.57,false,0.43,false],['29 Jun',99.58,false,0.42,false],['06 Jul',99.58,false,0.42,false],['13 Jul',99.58,false,0.42,false],['20 Jul',99.58,false,0.42,false],['27 Jul',99.59,false,0.41,false],['03 Aug',99.59,false,0.41,false],['10 Aug',99.59,false,0.41,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart4t"));
-c.draw(data, trendOptions);
+ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
+ct4.draw(data, trendOptions);
 window.setTimeout(function(){drawChart5()}, 10);}
 function drawChart5() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['80 or less',99.79],['81-120',0.21]]);
@@ -1639,8 +1672,8 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn('number', '81-120');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',99.54,false,0.46,false],['13 Nov',99.54,false,0.46,false],['20 Nov',99.54,false,0.46,false],['27 Nov',99.54,false,0.46,false],['04 Dec',99.54,false,0.46,false],['11 Dec',99.54,false,0.46,false],['18 Dec',99.54,false,0.46,false],['25 Dec',99.54,false,0.46,false],['05 Jan',99.54,false,0.46,false],['12 Jan',99.54,false,0.46,false],['19 Jan',99.54,false,0.46,false],['26 Jan',99.44,false,0.56,false],['02 Feb',99.44,false,0.56,false],['09 Feb',99.44,false,0.56,false],['16 Feb',99.44,false,0.56,false],['23 Feb',99.8,false,0.2,false],['02 Mar',99.8,false,0.2,false],['09 Mar',99.8,false,0.2,false],['16 Mar',99.8,false,0.2,false],['23 Mar',99.8,false,0.2,false],['30 Mar',99.8,false,0.2,false],['06 Apr',99.8,false,0.2,false],['13 Apr',99.8,false,0.2,false],['20 Apr',99.8,false,0.2,false],['27 Apr',99.8,false,0.2,false],['04 May',99.8,false,0.2,false],['11 May',99.8,false,0.2,false],['18 May',99.8,false,0.2,false],['25 May',99.8,false,0.2,false],['01 Jun',99.79,false,0.21,false],['08 Jun',99.79,false,0.21,false],['15 Jun',99.79,false,0.21,false],['22 Jun',99.79,false,0.21,false],['29 Jun',99.79,false,0.21,false],['06 Jul',99.79,false,0.21,false],['13 Jul',99.79,false,0.21,false],['20 Jul',99.79,false,0.21,false],['27 Jul',99.79,false,0.21,false],['03 Aug',99.79,false,0.21,false],['10 Aug',99.79,false,0.21,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart5t"));
-c.draw(data, trendOptions);
+ct5 = new google.visualization.LineChart(document.getElementById("chart5t"));
+ct5.draw(data, trendOptions);
 window.setTimeout(function(){drawChart6()}, 10);}
 function drawChart6() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1651,8 +1684,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart6t"));
-c.draw(data, perfectTrendOptions);
+ct6 = new google.visualization.LineChart(document.getElementById("chart6t"));
+ct6.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart7()}, 10);}
 function drawChart7() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',100]]);
@@ -1663,8 +1696,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'lower');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart7t"));
-c.draw(data, perfectTrendOptions);
+ct7 = new google.visualization.LineChart(document.getElementById("chart7t"));
+ct7.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart8()}, 10);}
 function drawChart8() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
@@ -1675,8 +1708,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '1');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart8t"));
-c.draw(data, perfectTrendOptions);
+ct8 = new google.visualization.LineChart(document.getElementById("chart8t"));
+ct8.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart9()}, 10);}
 function drawChart9() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
@@ -1687,8 +1720,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '1');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart9t"));
-c.draw(data, perfectTrendOptions);
+ct9 = new google.visualization.LineChart(document.getElementById("chart9t"));
+ct9.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart10()}, 10);}
 function drawChart10() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['// ...',100]]);
@@ -1699,8 +1732,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '// ...');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart10t"));
-c.draw(data, perfectTrendOptions);
+ct10 = new google.visualization.LineChart(document.getElementById("chart10t"));
+ct10.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart11()}, 10);}
 function drawChart11() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1711,8 +1744,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart11t"));
-c.draw(data, perfectTrendOptions);
+ct11 = new google.visualization.LineChart(document.getElementById("chart11t"));
+ct11.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart12()}, 10);}
 function drawChart12() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
@@ -1723,8 +1756,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '0');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart12t"));
-c.draw(data, perfectTrendOptions);
+ct12 = new google.visualization.LineChart(document.getElementById("chart12t"));
+ct12.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart13()}, 10);}
 function drawChart13() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
@@ -1735,8 +1768,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '0');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart13t"));
-c.draw(data, perfectTrendOptions);
+ct13 = new google.visualization.LineChart(document.getElementById("chart13t"));
+ct13.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart14()}, 10);}
 function drawChart14() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
@@ -1747,8 +1780,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '0');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart14t"));
-c.draw(data, perfectTrendOptions);
+ct14 = new google.visualization.LineChart(document.getElementById("chart14t"));
+ct14.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart15()}, 10);}
 function drawChart15() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
@@ -1759,8 +1792,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '0');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart15t"));
-c.draw(data, perfectTrendOptions);
+ct15 = new google.visualization.LineChart(document.getElementById("chart15t"));
+ct15.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart16()}, 10);}
 function drawChart16() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1771,8 +1804,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart16t"));
-c.draw(data, perfectTrendOptions);
+ct16 = new google.visualization.LineChart(document.getElementById("chart16t"));
+ct16.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart17()}, 10);}
 function drawChart17() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1783,8 +1816,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart17t"));
-c.draw(data, perfectTrendOptions);
+ct17 = new google.visualization.LineChart(document.getElementById("chart17t"));
+ct17.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart18()}, 10);}
 function drawChart18() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',100]]);
@@ -1795,8 +1828,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'lower');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart18t"));
-c.draw(data, perfectTrendOptions);
+ct18 = new google.visualization.LineChart(document.getElementById("chart18t"));
+ct18.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart19()}, 10);}
 function drawChart19() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
@@ -1807,8 +1840,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '1');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart19t"));
-c.draw(data, perfectTrendOptions);
+ct19 = new google.visualization.LineChart(document.getElementById("chart19t"));
+ct19.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart20()}, 10);}
 function drawChart20() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1819,8 +1852,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart20t"));
-c.draw(data, perfectTrendOptions);
+ct20 = new google.visualization.LineChart(document.getElementById("chart20t"));
+ct20.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart21()}, 10);}
 function drawChart21() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['spaces',100]]);
@@ -1831,8 +1864,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'spaces');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart21t"));
-c.draw(data, perfectTrendOptions);
+ct21 = new google.visualization.LineChart(document.getElementById("chart21t"));
+ct21.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart22()}, 10);}
 function drawChart22() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1843,8 +1876,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart22t"));
-c.draw(data, perfectTrendOptions);
+ct22 = new google.visualization.LineChart(document.getElementById("chart22t"));
+ct22.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart23()}, 10);}
 function drawChart23() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1855,8 +1888,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart23t"));
-c.draw(data, perfectTrendOptions);
+ct23 = new google.visualization.LineChart(document.getElementById("chart23t"));
+ct23.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart24()}, 10);}
 function drawChart24() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1867,8 +1900,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart24t"));
-c.draw(data, perfectTrendOptions);
+ct24 = new google.visualization.LineChart(document.getElementById("chart24t"));
+ct24.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart25()}, 10);}
 function drawChart25() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1879,8 +1912,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart25t"));
-c.draw(data, perfectTrendOptions);
+ct25 = new google.visualization.LineChart(document.getElementById("chart25t"));
+ct25.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart26()}, 10);}
 function drawChart26() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['new line',100]]);
@@ -1891,8 +1924,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'new line');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart26t"));
-c.draw(data, perfectTrendOptions);
+ct26 = new google.visualization.LineChart(document.getElementById("chart26t"));
+ct26.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart27()}, 10);}
 function drawChart27() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',100]]);
@@ -1903,8 +1936,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'lower');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart27t"));
-c.draw(data, perfectTrendOptions);
+ct27 = new google.visualization.LineChart(document.getElementById("chart27t"));
+ct27.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart28()}, 10);}
 function drawChart28() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1915,8 +1948,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart28t"));
-c.draw(data, perfectTrendOptions);
+ct28 = new google.visualization.LineChart(document.getElementById("chart28t"));
+ct28.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart29()}, 10);}
 function drawChart29() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['.php',100]]);
@@ -1927,8 +1960,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '.php');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart29t"));
-c.draw(data, perfectTrendOptions);
+ct29 = new google.visualization.LineChart(document.getElementById("chart29t"));
+ct29.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart30()}, 10);}
 function drawChart30() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
@@ -1939,8 +1972,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '1');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart30t"));
-c.draw(data, perfectTrendOptions);
+ct30 = new google.visualization.LineChart(document.getElementById("chart30t"));
+ct30.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart31()}, 10);}
 function drawChart31() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
@@ -1951,8 +1984,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'no');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart31t"));
-c.draw(data, perfectTrendOptions);
+ct31 = new google.visualization.LineChart(document.getElementById("chart31t"));
+ct31.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart32()}, 10);}
 function drawChart32() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
@@ -1963,8 +1996,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', 'yes');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart32t"));
-c.draw(data, perfectTrendOptions);
+ct32 = new google.visualization.LineChart(document.getElementById("chart32t"));
+ct32.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart33()}, 10);}
 function drawChart33() {
 var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['\n',100]]);
@@ -1975,8 +2008,8 @@ data.addColumn("string", "Date")
 data.addColumn('number', '\n');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false]]);
-var c = new google.visualization.LineChart(document.getElementById("chart33t"));
-c.draw(data, perfectTrendOptions);
+ct33 = new google.visualization.LineChart(document.getElementById("chart33t"));
+ct33.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart34()}, 10);}
 
 </script>

@@ -196,6 +196,8 @@ function generateReport($results, $repo=null)
     $html = '';
     $js   = '';
 
+    $jsTrendList = '';
+
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
     $html .= '    <div class="listBoxContent">'.PHP_EOL;
     $html .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
@@ -251,6 +253,8 @@ function generateReport($results, $repo=null)
         }
 
         $chartNum++;
+
+        $jsTrendList .= 'var ct'.$chartNum.' = null;'.PHP_EOL;
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
@@ -436,11 +440,16 @@ function generateReport($results, $repo=null)
         }
 
         $trendData .= 'data.addRows([';
+        $trendPos   = array();
+        $pos        = 0;
 
         $perfectScore = true;
 
         ksort($data['trends']);
         foreach ($data['trends'] as $date => $trendValues) {
+            $trendPos[$date] = $pos;
+            $pos++;
+
             $trendTotal = array_sum($trendValues);
             $time       = strtotime($date);
             $trendData .= "['".date('d M', $time)."',";
@@ -488,11 +497,11 @@ function generateReport($results, $repo=null)
         }
 
         $js .= $trendData.PHP_EOL;
-        $js .= 'var c = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
+        $js .= 'ct'.$chartNum.' = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
         if ($perfectScore === true) {
-            $js .= 'c.draw(data, perfectTrendOptions);'.PHP_EOL;
+            $js .= 'ct'.$chartNum.'.draw(data, perfectTrendOptions);'.PHP_EOL;
         } else {
-            $js .= 'c.draw(data, trendOptions);'.PHP_EOL;
+            $js .= 'ct'.$chartNum.'.draw(data, trendOptions);'.PHP_EOL;
         }
 
         if ($chartNum !== $numMetrics) {
@@ -536,7 +545,7 @@ function generateReport($results, $repo=null)
                 unset($events[0]);
 
                 $time = strtotime($date);
-                $html .= '        <li class="historicalDate"><strong>'.date('d M Y', $time)."</strong>: $mainEvent".PHP_EOL;
+                $html .= '        <li onmouseover="ct'.$chartNum.'.setSelection([{row:'.$trendPos[$date].',column:null}]);" onmouseout="ct'.$chartNum.'.setSelection([]);" class="historicalDate"><strong>'.date('d M Y', $time)."</strong>: $mainEvent".PHP_EOL;
                 $html .= '          <ul>'.PHP_EOL;
 
                 foreach($events as $event) {
@@ -581,6 +590,8 @@ function generateReport($results, $repo=null)
 
         $sidebar .= '<div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
     }//end foreach
+
+    $js = $jsTrendList.$js;
 
     if ($repo === null) {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
