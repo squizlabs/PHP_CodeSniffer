@@ -359,9 +359,9 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
 
                     uksort($data['repos'][$value], 'sortRepos');
-                    foreach ($data['repos'][$value] as $repoURL => $percent) {
+                    foreach ($data['repos'][$value] as $repoURL => $repoPercent) {
                         $href      = $repoURL.'/index.html#'.$metricid;
-                        $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.$percent.'%</div></a></li>'.PHP_EOL;
+                        $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.$repoPercent.'%</div></a></li>'.PHP_EOL;
                     }
 
                     $repoHTML .= '    </ul>'.PHP_EOL;
