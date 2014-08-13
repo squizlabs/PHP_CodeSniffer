@@ -229,6 +229,8 @@ function generateReport($results, $repo=null)
         $metrics = $results['metrics'];
     }
 
+    $numMetrics = count($metrics);
+
     uasort($metrics, 'sortMetrics');
     $chartNum = 0;
     foreach ($metrics as $metric => $data) {
@@ -272,10 +274,10 @@ function generateReport($results, $repo=null)
         $html .= '    <div class="tag">Current</div>'.PHP_EOL;
         $html .= '    <div class="currentDataWrap">'.PHP_EOL;
         $html .= '      <div class="currentChart">'.PHP_EOL;
-        $html .= '        <canvas class="chart-value" id="chart'.$chartNum.'" width="290" height="290"></canvas>'.PHP_EOL;
+        $html .= '        <div class="chart-value" id="chart'.$chartNum.'" style="width:290px;height:290px;"><div class="placeholder"></div></div>'.PHP_EOL;
 
         if ($repo === null) {
-            $html .= '        <canvas class="chart-repo" id="chart'.$chartNum.'r" width="154" height="154"></canvas>'.PHP_EOL;
+            $html .= '        <div class="chart-repo" id="chart'.$chartNum.'r" style="width:154px;height:154px;"></div>'.PHP_EOL;
         }
 
         $html .= '      </div>'.PHP_EOL;
@@ -287,8 +289,8 @@ function generateReport($results, $repo=null)
         $html .= '            <th>Use</th>'.PHP_EOL;
         $html .= '          </tr>'.PHP_EOL;
 
-        $valsData      = 'var data = [';
-        $repoData      = 'var data = [';
+        $valsData      = "var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],";
+        $repoData      = "var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],";
         $trendData     = '';
         $repoHTML      = '';
         $repoResetCode = '';
@@ -301,8 +303,6 @@ function generateReport($results, $repo=null)
         if (isset($GLOBALS['metric_text'][$metric]['sort']) === true) {
             $sort = $GLOBALS['metric_text'][$metric]['sort'];
         }
-
-        $perfectScore = true;
 
         // Some significant values in the trend data may not register any more, so they
         // will be lost from the trend graph if they are not inserted back into
@@ -319,8 +319,18 @@ function generateReport($results, $repo=null)
             }
         }
 
+        $sigValues = array();
+
         ksort($data['values'], $sort);
         foreach ($data['values'] as $value => $count) {
+            $percent = round($count / $data['total'] * 100, 2);
+            if ($numValues > 4 && $percent < 1) {
+                $other += $count;
+                continue;
+            }
+
+            $sigValues[] = $value;
+
             if (isset($GLOBALS['colours'][$valueNum]) === false) {
                 $colour = '#FFFFFF';
             } else {
@@ -363,17 +373,11 @@ function generateReport($results, $repo=null)
                     $percentRepos = 0;
                 }//end if
 
-                $repoData .= '{value:'.$percentRepos.',color:"'.$colour.'",label:"'.$value.'"},';
+                $repoData .= "['$value',$percentRepos],";
             }//end if
 
-            $percent = round($count / $data['total'] * 100, 2);
-            if ($numValues > 4 && $percent < 1) {
-                $other += $count;
-                continue;
-            }
-
             $count     = number_format($count, 0, '', ',');
-            $valsData .= '{value:'.$percent.',color:"'.$colour.'",label:"'.$value.'"},';
+            $valsData .= "['$value',$percent],";
 
             $html .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
 
@@ -410,92 +414,10 @@ function generateReport($results, $repo=null)
             $html .= '</td>'.PHP_EOL;
             $html .= '      </tr>'.PHP_EOL;
 
-            $trendData .= "{label:\"$value\",strokeColor:\"$colour\",pointStrokeColor:\"#FFF\",pointColor:\"$colour\",pointHighlightFill:\"#FFF\",pointHighlightStroke:\"$colour\",data:[";
-            ksort($data['trends']);
-            foreach ($data['trends'] as $date => $trendValues) {
-                $trendTotal = array_sum($trendValues);
-                $addedValue = false;
-                foreach ($trendValues as $trendValue => $trendCount) {
-                    if ($trendValue !== $value) {
-                        continue;
-                    }
-
-                    $score      = round(($trendCount / $trendTotal * 100), 2);
-                    $trendData .= $score.',';
-                    $addedValue = true;
-                    if ((int) $score !== 100) {
-                        $perfectScore = false;
-                    }
-
-                    break;
-                }
-
-                if ($addedValue === false) {
-                    // Percentage must have been 0 as no values recorded.
-                    $trendData .= '0.00,';
-                    $perfectScore = false;
-                }
-            }//end foreach
-
-/*
-            if ($date !== $GLOBALS['today']) {
-                $trendData .= $percent.',';
-                if ((int) $percent !== 100) {
-                    $perfectScore = false;
-                }
-            }
-*/
-
             $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
             $valueNum++;
         }//end foreach
-
-        #if ($perfectScore === true) {
-        #    // Add fake data so the perfect score line shows up.
-        #    $trendData .= '{strokeColor:"#FFF",pointStrokeColor:"#FFF",pointColor:"#FFF",data:[';
-        #    $trendData .= str_repeat('0,', count($data['trends']));
-        #    $trendData  = rtrim($trendData, ',');
-        #    $trendData .= ']},';
-        #}
-
-        $valsData  = substr($valsData, 0, -1);
-        $valsData .= ']'.PHP_EOL;
-
-        $js .= $valsData;
-        $js .= 'var c = document.getElementById("chart'.$chartNum.'").getContext("2d");'.PHP_EOL;
-        $js .= 'new Chart(c).Doughnut(data,valOptions);'.PHP_EOL;
-
-        if ($repo === null) {
-            $html      = str_replace('((repoResetCode))', $repoResetCode, $html);
-            $repoData  = substr($repoData, 0, -1);
-            $repoData .= ']'.PHP_EOL;
-            $js       .= $repoData;
-            $js       .= 'var c = document.getElementById("chart'.$chartNum.'r").getContext("2d");'.PHP_EOL;
-            $js       .= 'new Chart(c).Doughnut(data,repoOptions);'.PHP_EOL;
-        }
-
-        $js      .= 'var data = {labels:[';
-        $numDates = count($data['trends']);
-        $dateStep = ceil($numDates / 40);
-        $dateNum  = 0;
-        foreach (array_keys($data['trends']) as $date) {
-            if ($dateNum === 0 || $dateNum % $dateStep === 0) {
-                $time = strtotime($date);
-                $js  .= '"'.date('d M', $time).'",';
-            } else {
-                $js .= '"",';
-            }
-
-            $dateNum++;
-            continue;
-        }
-
-        #if (strtotime($GLOBALS['today']) === $time) {
-            $js = rtrim($js, ',');
-        #} else {
-        #    $js .= '"'.date('d M', strtotime($GLOBALS['today'])).'"';
-        #}
 
         $trendEvents = array();
         if ($repo === null) {
@@ -506,24 +428,77 @@ function generateReport($results, $repo=null)
             $trendEvents = $GLOBALS['trends'][$repo][$metric];
         }
 
-        $trendData = rtrim($trendData, ',');
-        $js       .= "],datasets:[$trendData]};".PHP_EOL;
-        $js       .= 'var c = document.getElementById("chart'.$chartNum.'t").getContext("2d");'.PHP_EOL;
-        if ($perfectScore === true) {
-            $js .= 'var chart = new Chart(c).Line(data,perfectTrendOptions);'.PHP_EOL;
-        } else {
-            $js .= 'var chart = new Chart(c).Line(data,trendOptions);'.PHP_EOL;
+        $trendData  = 'var data = new google.visualization.DataTable();'.PHP_EOL;
+        $trendData .= 'data.addColumn("string", "Date")'.PHP_EOL;
+        foreach ($sigValues as $value) {
+            $trendData .= "data.addColumn('number', '$value');".PHP_EOL;
+            $trendData .= "data.addColumn({type:'boolean',role:'emphasis'});".PHP_EOL;
         }
 
-        if (empty($trendEvents) === false) {
-            $js .= 'highlightPoints(chart, [';
-            foreach (array_keys($trendEvents) as $date) {
-                $time = strtotime($date);
-                $js  .= '"'.date('d M', $time).'",';
+        $trendData .= 'data.addRows([';
+
+        $perfectScore = true;
+
+        ksort($data['trends']);
+        foreach ($data['trends'] as $date => $trendValues) {
+            $trendTotal = array_sum($trendValues);
+            $time       = strtotime($date);
+            $trendData .= "['".date('d M', $time)."',";
+            foreach ($sigValues as $value) {
+                if (isset($trendValues[$value]) === false) {
+                    $trendData .= '0.00,';
+                } else {
+                    $score = round(($trendValues[$value] / $trendTotal * 100), 2);
+                    $trendData .= $score.',';
+
+                    if ((int) $score !== 100) {
+                        $perfectScore = false;
+                    }
+                }
+
+                if (isset($trendEvents[$date]) === true) {
+                    $trendData .= 'true,';
+                } else {
+                    $trendData .= 'false,';
+                }
             }
 
-            $js = rtrim($js, ',');
-            $js .= ']);'.PHP_EOL;
+            $trendData  = rtrim($trendData, ',');
+            $trendData .= '],';
+        }//end foreach
+
+        $trendData  = rtrim($trendData, ',');
+        $trendData .= ']);';
+
+        $valsData  = substr($valsData, 0, -1);
+        $valsData .= ']);'.PHP_EOL;
+
+        $js .= 'function drawChart'.$chartNum.'() {'.PHP_EOL;
+        $js .= $valsData;
+        $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'"));'.PHP_EOL;
+        $js .= 'c.draw(data, valOptions);'.PHP_EOL;
+
+        if ($repo === null) {
+            $html      = str_replace('((repoResetCode))', $repoResetCode, $html);
+            $repoData  = substr($repoData, 0, -1);
+            $repoData .= ']);'.PHP_EOL;
+            $js       .= $repoData;
+            $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'r"));'.PHP_EOL;
+            $js .= 'c.draw(data, repoOptions);'.PHP_EOL;
+        }
+
+        $js .= $trendData.PHP_EOL;
+        $js .= 'var c = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
+        if ($perfectScore === true) {
+            $js .= 'c.draw(data, perfectTrendOptions);'.PHP_EOL;
+        } else {
+            $js .= 'c.draw(data, trendOptions);'.PHP_EOL;
+        }
+
+        if ($chartNum !== $numMetrics) {
+            $js .= 'window.setTimeout(function(){drawChart'.($chartNum + 1).'()}, 10);}'.PHP_EOL;
+        } else {
+            $js .= '}';
         }
 
         if ($other > 0) {
@@ -550,7 +525,7 @@ function generateReport($results, $repo=null)
         $html .= '  <div class="historicalData">'.PHP_EOL;
         $html .= '    <div class="tag">Historical</div>'.PHP_EOL;
         $html .= '    <div class="historicalChart">'.PHP_EOL;
-        $html .= '      <canvas class="chart-trend" id="chart'.$chartNum.'t" width="860" height="185"></canvas>'.PHP_EOL;
+        $html .= '      <div class="chart-trend" id="chart'.$chartNum.'t" style="width:860px;height:185px;"><div class="placeholder"></div></div>'.PHP_EOL;
         $html .= '    </div>'.PHP_EOL;
 
         if (empty($trendEvents) === false) {

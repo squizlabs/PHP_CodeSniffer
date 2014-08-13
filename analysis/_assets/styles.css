@@ -231,6 +231,7 @@ p.statsInfo {
     margin-left: 65px;
     margin-top: 6px;
     display: inline-block;
+    position: relative;
 }
 
 .historicalEvents {
@@ -357,6 +358,18 @@ p.statsInfo {
     background-position: 0 -91px;
     background-image: url(image_sprite_1x.png);
     display: block;
+}
+
+.placeholder {
+    z-index: -1;
+    color: #9F9F9F;
+    position: absolute;
+    top: 60px;
+    left:30px;
+}
+
+.placeholder:after {
+    content: "Loading chart...";
 }
 
 .introduction h1 {

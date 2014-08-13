@@ -1,7 +1,47 @@
-var valOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:55};
-var repoOptions = {showTooltips:false,animation:false,segmentStrokeWidth:3,percentageInnerCutout:50};
-var trendOptions = {pointHitDetectionRadius:5,multiTooltipTemplate:"<%=datasetLabel%>: <%=value%>%",tooltipFillColor:"#E9E9E9",tooltipFontColor:"#000",tooltipFontFamily:"arial",tooltipTitleFontFamily:"arial",tooltipTitleFontColor:"#000",tooltipCornerRadius:0,multiTooltipKeyBackground:"#E9E9E9",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:" <%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false};
-var perfectTrendOptions = {pointHitDetectionRadius:5,tooltipTemplate:"<%=label%>: <%=value%>%",animation:false,scaleLineColor:"#C5C5C5",scaleLabel:"<%=value%>%",scaleFontSize:11,scaleFontFamily:"arial",scaleGridLineColor:"#C5C5C5",bezierCurve:false,pointDot:true,datasetFill:false,scaleOverride:true,scaleSteps:5,scaleStepWidth:20,scaleStartValue:0};
+var valOptions = {
+    pieHole:0.55,
+    legend:{position:'none'},
+    enableInteractivity:false,
+    pieSliceText:'none',
+    chartArea:{left:0,top:0,width:'100%',height:'100%'},
+    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5']
+};
+
+var repoOptions = {
+    pieHole:0.55,
+    backgroundColor:'transparent',
+    legend:{position:'none'},
+    enableInteractivity: false,
+    pieSliceText:'none',
+    chartArea:{left:0,top:0,width:'100%',height:'100%'},
+    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5']
+};
+
+var trendOptions = {
+    backgroundColor:"transparent",
+    legend:{position:'none'},
+    chartArea:{left:40,top:20,width:'820',height:'100'},
+    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5'],
+    fontName:"arial",
+    fontSize:"11",
+    hAxis:{slantedText:true,slantedTextAngle:60,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11}},
+    vAxis:{textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"#'%'"},
+    focusTarget:"category",
+    tooltip:{textStyle:{fontName:"arial",fontSize:13}},
+    pointSize:6
+};
+
+var perfectTrendOptions = {
+    backgroundColor:"transparent",
+    legend:{position:'none'},
+    chartArea:{left:40,top:20,width:'820',height:'100'},
+    colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5'],
+    fontName:"arial",
+    fontSize:"11",
+    hAxis:{slantedText:true,slantedTextAngle:60,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11}},
+    vAxis:{textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"#'%'",ticks:[0,20,40,60,80,100]},
+    pointSize:6
+};
 
 function init()
 {
@@ -193,24 +233,3 @@ function toggleInstructions()
     }
 
 }//end toggleInstructions()
-
-
-function highlightPoints(chart, labels)
-{
-    var numDatasets = chart.datasets.length;
-    var numPoints = chart.datasets[0].points.length;
-
-    for (d = 0; d < numDatasets; d++) {
-        for (p = 0; p < numPoints; p++) {
-            label = chart.datasets[d].points[p].label;
-            if (labels.indexOf(label) >= 0) {
-                point = chart.datasets[d].points[p];
-                point.strokeColor = point.highlightStroke;
-                point.save();
-            }
-        }
-    }
-
-    chart.update();
-
-}//end highlightPoints()
