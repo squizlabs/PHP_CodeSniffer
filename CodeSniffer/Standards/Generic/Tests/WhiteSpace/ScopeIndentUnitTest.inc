@@ -541,3 +541,6 @@ if ($foo) {
         }
     }
 }
+
+?>
+<title><?= CHtml::encode($this->pageTitle); ?></title>

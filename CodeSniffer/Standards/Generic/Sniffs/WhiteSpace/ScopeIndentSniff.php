@@ -100,6 +100,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     {
         $tokens   = PHP_CodeSniffer_Tokens::$scopeOpeners;
         $tokens[] = T_OPEN_TAG;
+        $tokens[] = T_OPEN_TAG_WITH_ECHO;
         $tokens[] = T_CLOSE_TAG;
         return $tokens;
 
@@ -120,7 +121,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         // We only want to record the indent of open tags, not process them.
-        if ($tokens[$stackPtr]['code'] == T_OPEN_TAG) {
+        if ($tokens[$stackPtr]['code'] == T_OPEN_TAG
+            || $tokens[$stackPtr]['code'] == T_OPEN_TAG_WITH_ECHO
+        ) {
             $indent = ($tokens[$stackPtr]['column'] - 1);
             if (empty($this->_closeTagIndents) === false
                 && $indent === $this->_closeTagIndents[0]
