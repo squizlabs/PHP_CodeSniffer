@@ -28,6 +28,8 @@ var trendOptions = {
 var perfectTrendOptions = JSON.parse(JSON.stringify(trendOptions));
 perfectTrendOptions.vAxis.ticks = [0,20,40,60,80,100];
 
+var undecidedColour = "#3690AC";
+
 function init()
 {
     document.getElementById("flyout").addEventListener('mouseover', showFlyout);

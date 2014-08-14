@@ -254,7 +254,7 @@ function generateReport($results, $repo=null)
 
         $chartNum++;
 
-        $jsTrendList .= 'var ct'.$chartNum.' = null;'.PHP_EOL;
+        $jsTrendList .= 'var ct'.$chartNum.' = null;';
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
@@ -323,7 +323,8 @@ function generateReport($results, $repo=null)
             }
         }
 
-        $sigValues = array();
+        $sigValues      = array();
+        $undecidedRepos = array();
 
         ksort($data['values'], $sort);
         foreach ($data['values'] as $value => $count) {
@@ -344,7 +345,17 @@ function generateReport($results, $repo=null)
             if ($repo === null) {
                 $valueid = preg_replace('/[^0-9a-zA-Z]/', '-', strtolower($value));
                 if (isset($data['repos'][$value]) === true) {
-                    $numRepos     = count($data['repos'][$value]);
+                    // Repos need to have at least x% consistency to count.
+                    $numRepos = 0;
+                    foreach ($data['repos'][$value] as $repoURL => $repoPercent) {
+                        if ($repoPercent < 70) {
+                            $undecidedRepos[$repoURL] = $repoPercent;
+                            continue;
+                        }
+
+                        $numRepos++;
+                    }
+
                     $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
 
                     if ($numRepos === 1) {
@@ -364,8 +375,12 @@ function generateReport($results, $repo=null)
 
                     uksort($data['repos'][$value], 'sortRepos');
                     foreach ($data['repos'][$value] as $repoURL => $repoPercent) {
+                        if (isset($undecidedRepos[$repoURL]) === true) {
+                            continue;
+                        }
+
                         $href      = $repoURL.'/index.html#'.$metricid;
-                        $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.$repoPercent.'%</div></a></li>'.PHP_EOL;
+                        $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.floor($repoPercent).'%</div></a></li>'.PHP_EOL;
                     }
 
                     $repoHTML .= '    </ul>'.PHP_EOL;
@@ -487,13 +502,69 @@ function generateReport($results, $repo=null)
         $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'"));'.PHP_EOL;
         $js .= 'c.draw(data, valOptions);'.PHP_EOL;
 
+        if ($other > 0) {
+            $percent = round($other / $data['total'] * 100, 2);
+            $other   = number_format($other, 0, '', ',');
+            $html   .= '<tr title="'.$other.' '.$items.'">'.PHP_EOL;
+            $html   .= '  <td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
+            $html   .= '  <td class="result">other</td>'.PHP_EOL;
+            $html   .= '  <td class="value">'.$percent.'%</td>'.PHP_EOL;
+            $html   .= '</tr>'.PHP_EOL;
+        }
+
         if ($repo === null) {
+            if (empty($undecidedRepos) === false) {
+                $numRepos     = count($undecidedRepos);
+                $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
+                $repoData    .= "['undecided',$percentRepos],";
+
+                $html .= '    </table>'.PHP_EOL;
+                $html .= '    <table class="statsTable undecided">'.PHP_EOL;
+                $html .= '      <tr>'.PHP_EOL;
+                $html .= '        <td class="key"><span class="screenHide">undecided</span></td>'.PHP_EOL;
+                $html .= '        <td class="value"><a href="" onclick="showListBox(\''.$metricid.'-undecided-repos\');return false;">'.$percentRepos.'% of projects are undecided</a></td>'.PHP_EOL;
+                $html .= '      </tr>'.PHP_EOL;
+
+                if ($numRepos > 1) {
+                    $title = $numRepos.' projects are undecided';
+                } else {
+                    $title = '1 project is undecided';
+                }
+
+                $repoHTML .= '<div id="'.$metricid.'-undecided-repos" class="listBoxWrap">'.PHP_EOL;
+                $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
+                $repoHTML .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
+                $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
+                $repoHTML .= '            <h3>'.$title.'</h3>'.PHP_EOL;
+                $repoHTML .= '        </div>'.PHP_EOL;
+                $repoHTML .= '        <div id="'.$metricid.'-undecided-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+                $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
+
+                uksort($undecidedRepos, 'sortRepos');
+                foreach ($undecidedRepos as $repoURL => $repoPercent) {
+                    $href      = $repoURL.'/index.html#'.$metricid;
+                    $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.floor($repoPercent).'%</div></a></li>'.PHP_EOL;
+                }
+
+                $repoHTML .= '    </ul>'.PHP_EOL;
+                $repoHTML .= '  </div>'.PHP_EOL;
+                $repoHTML .= '  </div>'.PHP_EOL;
+                $repoHTML .= '  </div>'.PHP_EOL;
+            }
+
             $html      = str_replace('((repoResetCode))', $repoResetCode, $html);
             $repoData  = substr($repoData, 0, -1);
             $repoData .= ']);'.PHP_EOL;
             $js       .= $repoData;
+
             $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'r"));'.PHP_EOL;
-            $js .= 'c.draw(data, repoOptions);'.PHP_EOL;
+            if (empty($undecidedRepos) === false) {
+                $js .= 'var options = JSON.parse(JSON.stringify(repoOptions));'.PHP_EOL;
+                $js .= 'options.slices = {'.count($sigValues).':{color:undecidedColour}};'.PHP_EOL;
+                $js .= 'c.draw(data, options);'.PHP_EOL;
+            } else {
+                $js .= 'c.draw(data, repoOptions);'.PHP_EOL;
+            }
         }
 
         $js .= $trendData.PHP_EOL;
@@ -508,16 +579,6 @@ function generateReport($results, $repo=null)
             $js .= 'window.setTimeout(function(){drawChart'.($chartNum + 1).'()}, 10);}'.PHP_EOL;
         } else {
             $js .= '}';
-        }
-
-        if ($other > 0) {
-            $percent = round($other / $data['total'] * 100, 2);
-            $other   = number_format($other, 0, '', ',');
-            $html   .= '<tr title="'.$other.' '.$items.'">'.PHP_EOL;
-            $html   .= '  <td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
-            $html   .= '  <td class="result">other</td>'.PHP_EOL;
-            $html   .= '  <td class="value">'.$percent.'%</td>'.PHP_EOL;
-            $html   .= '</tr>'.PHP_EOL;
         }
 
         $totalItems = number_format($data['total'], 0, '', ',').' '.$items;
@@ -591,7 +652,7 @@ function generateReport($results, $repo=null)
         $sidebar .= '<div class="td1">'.$metric.'</div><div class="td2"><span class="screenHide">Method: </span>'.$data['winner'].'</div><div class="td3"><span class="screenHide">Value: </span>'.$winPercent.'%</div></a></li>'.PHP_EOL;
     }//end foreach
 
-    $js = $jsTrendList.$js;
+    $js = $jsTrendList.PHP_EOL.$js;
 
     if ($repo === null) {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;

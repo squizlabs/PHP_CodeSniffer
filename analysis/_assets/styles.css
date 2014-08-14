@@ -206,7 +206,26 @@ table.statsTable {
 .statsTable .result {
     width: 75px;
     text-align: center;
-}   
+}
+
+.statsTable.undecided {
+    margin-top: 10px;
+}
+
+.statsTable.undecided td {
+    padding: 5px;
+}
+
+.statsTable.undecided .key {
+    background-color: #3690AC;
+    width: 27px;
+}
+
+.statsTable.undecided .value {
+    font-size: 1em;
+    padding-left: 12px;
+    width: 332px;
+}
 
 p.statsInfo {
     width: 386px;
