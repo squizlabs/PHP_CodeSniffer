@@ -93,3 +93,6 @@ dfx.stripTags = function(content, allowedTags)
 
 var contents  += 'if (';
 var conditions = array();
+
+var foo  = {};
+foo.blah = 'blah';

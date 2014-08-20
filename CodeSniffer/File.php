@@ -1486,6 +1486,7 @@ class PHP_CodeSniffer_File
         $squareOpeners = array();
         $curlyOpeners  = array();
         $numTokens     = count($tokens);
+        $tokenizerType = get_class($tokenizer);
 
         $openers   = array();
         $openOwner = null;
@@ -1502,7 +1503,9 @@ class PHP_CodeSniffer_File
             $tokens[$i]['line']   = $lineNumber;
             $tokens[$i]['column'] = $currColumn;
 
-            if (isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true) {
+            if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
+                && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
+            ) {
                 $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
             } else {
                 if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1'
