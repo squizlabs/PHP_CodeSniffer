@@ -1476,7 +1476,7 @@ class PHP_CodeSniffer
                 $testPath = $path;
             }
 
-            $pattern = '{'.$pattern.'}i';
+            $pattern = '`'.$pattern.'`i';
             if (preg_match($pattern, $testPath) === 1) {
                 return true;
             }

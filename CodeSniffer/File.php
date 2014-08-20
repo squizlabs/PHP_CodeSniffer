@@ -1022,7 +1022,14 @@ class PHP_CodeSniffer_File
                              '*'   => '.*',
                             );
 
-            $pattern = '{'.strtr($pattern, $replacements).'}i';
+            // We assume a / directory separator, as do the exclude rules
+            // most developers write, so we need a special case for any system
+            // that is different.
+            if (DIRECTORY_SEPARATOR === '\\') {
+                $replacements['/'] = '\\\\';
+            }
+
+            $pattern = '`'.strtr($pattern, $replacements).'`i';
             if (preg_match($pattern, $this->_file) === 1) {
                 return false;
             }
