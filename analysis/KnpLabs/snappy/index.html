@@ -1,0 +1,2307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Snappy - Analysis of Coding Conventions</title>
+    <link rel="shortcut icon" type="image/png"  href="../../_assets/favicon.png">
+    <link rel="stylesheet" type="text/css" href="../../_assets/styles.css?v=2.0" />
+    <script src="../../_assets/scripts.js?v=2.0"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-359178-18', 'auto');
+      ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<div id="gradeInstructionsWrap" class="listBoxWrap">
+    <div class="listBoxContent">
+        <div class="listBoxClose" onclick="toggleGradeBox();"></div>
+        <div class="listBoxHeader">
+            <h2>Embed Instructions</h2>
+            <p>99.09% of the project's source code conforms to the same coding conventions</p>
+            <p><img src="http://squizlabs.github.io/PHP_CodeSniffer/analysis/KnpLabs/snappy/grade.svg" title="Code consistency"></p>
+        </div>
+        <div class="listBoxListWrap">
+            <ul class="listBoxList">
+                <li>
+                    <div class="td1">Image URL</div>
+                    <div class="td2">http://squizlabs.github.io/PHP_CodeSniffer/analysis/KnpLabs/snappy/grade.svg</div>
+                </li>
+                <li>
+                    <div class="td1">Markdown</div>
+                    <div class="td2">[![Code consistency](http://squizlabs.github.io/PHP_CodeSniffer/analysis/KnpLabs/snappy/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/KnpLabs/snappy)</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="listBoxWrap" class="listBoxWrap"></div>
+
+<div id="consistency" class="green" title="99.09% of the project's source code conforms to the same coding conventions" onclick="toggleGradeBox();">
+    <span class="grade">A+</span>consistency
+</div>
+
+<div id="mainWrap" class="mainWrap">
+    <div id="introductionWrap" class="introductionWrap">
+        <div class="introduction">
+            <div class="icon"></div>
+            <h1>Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/KnpLabs/snappy">Snappy</a></span></h1>
+            <p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across 100 PHP projects.</p>
+<ul class="reportLinkList">
+  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report (100 PHP Projects)</a></li>
+  <li><a href="" onclick="showListBox('all'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>
+</ul>
+<div class="divider"></div>
+<div id="reportInstructionsWrap" class="reportInstructionsWrap collapsed">
+  <a href="" onclick="toggleInstructions(); return false;"><h2>How to read this report</h2></a>
+  <ul class="reportInstructions">
+    <li class="instructionItem graphInstructions">The graphs for each coding convention show the percentage of each style variation used throughout the project.</li>
+    <li class="instructionItem overviewPanel"><a href="" onclick="showFlyout(); return false;">See an overview</a> of the most popular methods for coding conventions in this project</li>
+    <li class="instructionItem rawData">You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</li>
+  </ul>
+</div>
+
+        </div>
+    </div>
+
+    <div id="flyoutFixed" class="flyoutFixed">
+        <div id="flyoutControl" class="flyoutControl"></div>
+        <div id="flyoutPin" class="flyoutPin" title="Pin sidebar open"></div>
+        <div class="flyoutHeader">
+            <h1>Conventions</h1>
+        </div>
+    </div>
+    <div id="flyout" class="flyout">
+        <ul class="flyoutList">
+            <li><a href="#adjacent-assignments-aligned"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Adjacent assignments aligned</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>95.92%</div></a></li>
+<li><a href="#array-end-comma"><div class="tdpop"></div><div class="td1">Array end comma</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#array-keyword-case"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Array keyword case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#camelcase-class-name"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">CamelCase class name</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#camelcase-method-name"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">CamelCase method name</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#class-defined-in-namespace"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Class defined in namespace</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#class-has-doc-comment"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Class has doc comment</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>83.33%</div></a></li>
+<li><a href="#class-opening-brace-placement"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Class opening brace placement</div><div class="td2"><span class="screenHide">Method: </span>new line</div><div class="td3"><span class="screenHide">Value: </span>83.33%</div></a></li>
+<li><a href="#control-structure-defined-inline"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Control structure defined inline</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#declarations-and-side-effects-mixed"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Declarations and side effects mixed</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#eol-char"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">EOL char</div><div class="td2"><span class="screenHide">Method: </span>\n</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#file-extension-for-class-files"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">File extension for class files</div><div class="td2"><span class="screenHide">Method: </span>.php</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#file-extension-for-non-class-files"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">File extension for non-class files</div><div class="td2"><span class="screenHide">Method: </span>.php</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#file-has-doc-comment"><div class="tdpop"></div><div class="td1">File has doc comment</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>85.71%</div></a></li>
+<li><a href="#function-has-doc-comment"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Function has doc comment</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#function-opening-brace-placement"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Function opening brace placement</div><div class="td2"><span class="screenHide">Method: </span>new line</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#inline-comment-style"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Inline comment style</div><div class="td2"><span class="screenHide">Method: </span>// ...</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#line-indent"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Line indent</div><div class="td2"><span class="screenHide">Method: </span>spaces</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#line-length"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Line length</div><div class="td2"><span class="screenHide">Method: </span>80 or less</div><div class="td3"><span class="screenHide">Value: </span>92.26%</div></a></li>
+<li><a href="#lowercase-filename"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Lowercase filename</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>85.71%</div></a></li>
+<li><a href="#multiple-statements-on-same-line"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Multiple statements on same line</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#number-of-newlines-at-eof"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Number of newlines at EOF</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#one-class-per-file"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">One class per file</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#php-closing-tag-at-eof"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">PHP closing tag at EOF</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#php-constant-case"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">PHP constant case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>99.49%</div></a></li>
+<li><a href="#php-keyword-case"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">PHP keyword case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#php-short-open-tag-used"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">PHP short open tag used</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#short-array-syntax-used"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Short array syntax used</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#space-after-operator"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Space after operator</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#space-before-operator"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Space before operator</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spaces-after-control-structure-open-parenthesis"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Spaces after control structure open parenthesis</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spaces-before-control-structure-close-parenthesis"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Spaces before control structure close parenthesis</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spacing-after-cast-statement"><div class="tdpop"></div><div class="td1">Spacing after cast statement</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spacing-after-object-operator"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Spacing after object operator</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spacing-after-string-concat"><div class="tdpop"></div><div class="td1">Spacing after string concat</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>84.85%</div></a></li>
+<li><a href="#spacing-before-object-operator"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Spacing before object operator</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+<li><a href="#spacing-before-string-concat"><div class="tdpop"></div><div class="td1">Spacing before string concat</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>75.76%</div></a></li>
+<li><a href="#use-of-else-if-or-elseif"><div class="tdpop popular" title="This project is using the popular method for this convention"></div><div class="td1">Use of ELSE IF or ELSEIF</div><div class="td2"><span class="screenHide">Method: </span>elseif</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
+
+        </ul>
+    </div>
+
+    <div id="fixedHeader" class="fixedHeader">
+        <div id="fixedHeaderContent" class="introduction">
+            <div class="icon"></div>
+            <h1>Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/KnpLabs/snappy">Snappy</a></span></h1>
+             <a href="#" title="Return to the top of the report" class="backToTop"><span class="screenHide">Back to top</span></a>
+        </div>
+    </div>
+
+    <div id="contentWrap" class="contentWrap">
+    <div id="all" class="listBoxWrap">
+    <div class="listBoxContent">
+        <div class="listBoxClose" onclick="hideListBox();"></div>
+        <div class="listBoxHeader">
+            <h2>View project specific report</h2>
+        </div>
+        <div id="alllistBoxListWrap" class="listBoxListWrap">
+            <div class="td1Heading">Project</div><div class="td2Heading">Consistency</div>
+            <ul class="listBoxList">
+<li><a href="../../anchorcms/anchor-cms/index.html"><div class="td1">Anchor CMS</div><div class="td2 green" title="95.16% of the Anchor CMS source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../kriswallsmith/assetic/index.html"><div class="td1">Assetic</div><div class="td2 green" title="97.98% of the Assetic source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Autoload/index.html"><div class="td1">Aura.Autoload</div><div class="td2 green" title="99.3% of the Aura.Autoload source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Cli/index.html"><div class="td1">Aura.Cli</div><div class="td2 green" title="97.91% of the Aura.Cli source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Cli_Kernel/index.html"><div class="td1">Aura.Cli_Kernel</div><div class="td2 green" title="99.03% of the Aura.Cli_Kernel source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Di/index.html"><div class="td1">Aura.Di</div><div class="td2 green" title="99.26% of the Aura.Di source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Dispatcher/index.html"><div class="td1">Aura.Dispatcher</div><div class="td2 green" title="99.6% of the Aura.Dispatcher source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Filter/index.html"><div class="td1">Aura.Filter</div><div class="td2 green" title="99.56% of the Aura.Filter source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Html/index.html"><div class="td1">Aura.Html</div><div class="td2 green" title="99.4% of the Aura.Html source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Input/index.html"><div class="td1">Aura.Input</div><div class="td2 green" title="99.66% of the Aura.Input source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Intl/index.html"><div class="td1">Aura.Intl</div><div class="td2 green" title="99.21% of the Aura.Intl source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Marshal/index.html"><div class="td1">Aura.Marshal</div><div class="td2 green" title="99.53% of the Aura.Marshal source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Project_Kernel/index.html"><div class="td1">Aura.Project_Kernel</div><div class="td2 green" title="99.81% of the Aura.Project_Kernel source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Router/index.html"><div class="td1">Aura.Router</div><div class="td2 green" title="98.92% of the Aura.Router source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Session/index.html"><div class="td1">Aura.Session</div><div class="td2 green" title="99.85% of the Aura.Session source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Signal/index.html"><div class="td1">Aura.Signal</div><div class="td2 green" title="99.76% of the Aura.Signal source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Sql/index.html"><div class="td1">Aura.Sql</div><div class="td2 green" title="98.95% of the Aura.Sql source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.SqlQuery/index.html"><div class="td1">Aura.SqlQuery</div><div class="td2 green" title="98.77% of the Aura.SqlQuery source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.SqlSchema/index.html"><div class="td1">Aura.SqlSchema</div><div class="td2 green" title="97.57% of the Aura.SqlSchema source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Uri/index.html"><div class="td1">Aura.Uri</div><div class="td2 green" title="98.48% of the Aura.Uri source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.View/index.html"><div class="td1">Aura.View</div><div class="td2 green" title="99.79% of the Aura.View source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../auraphp/Aura.Web/index.html"><div class="td1">Aura.Web</div><div class="td2 green" title="98.52% of the Aura.Web source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../auraphp/Aura.Web_Kernel/index.html"><div class="td1">Aura.Web_Kernel</div><div class="td2 green" title="97.26% of the Aura.Web_Kernel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../aws/aws-sdk-php/index.html"><div class="td1">AWS SDK for PHP</div><div class="td2 green" title="99.63% of the AWS SDK for PHP source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../box-project/box2/index.html"><div class="td1">Box</div><div class="td2 green" title="98.93% of the Box source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../kriswallsmith/Buzz/index.html"><div class="td1">Buzz</div><div class="td2 green" title="98.17% of the Buzz source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../cakephp/cakephp/index.html"><div class="td1">CakePHP</div><div class="td2 green" title="99.02% of the CakePHP source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../Codeception/Codeception/index.html"><div class="td1">Codeception</div><div class="td2 green" title="96.43% of the Codeception source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../EllisLab/CodeIgniter/index.html"><div class="td1">CodeIgniter</div><div class="td2 green" title="96.87% of the CodeIgniter source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../composer/composer/index.html"><div class="td1">Composer</div><div class="td2 green" title="96.49% of the Composer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../contao/core/index.html"><div class="td1">Contao Open Source CMS</div><div class="td2 blue" title="91.87% of the Contao Open Source CMS source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../doctrine/doctrine2/index.html"><div class="td1">Doctrine 2 ORM</div><div class="td2 green" title="97.66% of the Doctrine 2 ORM source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../dropbox/dropbox-sdk-php/index.html"><div class="td1">Dropbox SDK for PHP 5.3+</div><div class="td2 green" title="95.69% of the Dropbox SDK for PHP 5.3+ source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../drupal/drupal/index.html"><div class="td1">Drupal</div><div class="td2 green" title="96.93% of the Drupal source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ezsystems/ezpublish-kernel/index.html"><div class="td1">eZ Publish 5.x Kernel</div><div class="td2 green" title="98.6% of the eZ Publish 5.x Kernel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../facebook/facebook-php-sdk/index.html"><div class="td1">Facebook PHP SDK</div><div class="td2 green" title="98.09% of the Facebook PHP SDK source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../fzaninotto/Faker/index.html"><div class="td1">Faker</div><div class="td2 green" title="97.98% of the Faker source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../thephpleague/flysystem/index.html"><div class="td1">Flysystem</div><div class="td2 green" title="97.32% of the Flysystem source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../thephpleague/fractal/index.html"><div class="td1">Fractal</div><div class="td2 green" title="98.37% of the Fractal source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../google/google-api-php-client/index.html"><div class="td1">Google APIs Client Library</div><div class="td2 green" title="99.04% of the Google APIs Client Library source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../fabpot/Goutte/index.html"><div class="td1">Goutte</div><div class="td2 green" title="98.91% of the Goutte source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../guzzle/guzzle/index.html"><div class="td1">Guzzle</div><div class="td2 green" title="97.61% of the Guzzle source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../avalanche123/Imagine/index.html"><div class="td1">Imagine</div><div class="td2 green" title="99.23% of the Imagine source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../jackalope/jackalope/index.html"><div class="td1">Jackalope</div><div class="td2 green" title="97.8% of the Jackalope source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../joomla/joomla-cms/index.html"><div class="td1">Joomla! CMS</div><div class="td2 green" title="96.71% of the Joomla! CMS source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../chriso/klein.php/index.html"><div class="td1">Klein.php</div><div class="td2 green" title="99.19% of the Klein.php source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../laravel/framework/index.html"><div class="td1">Laravel Framework (Kernel)</div><div class="td2 green" title="98.83% of the Laravel Framework (Kernel) source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../leafo/lessphp/index.html"><div class="td1">lessphp</div><div class="td2 green" title="96.13% of the lessphp source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../magento/magento2/index.html"><div class="td1">Magento</div><div class="td2 green" title="98.78% of the Magento source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../wikimedia/mediawiki-core/index.html"><div class="td1">MediaWiki</div><div class="td2 green" title="97.54% of the MediaWiki source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../padraic/mockery/index.html"><div class="td1">Mockery</div><div class="td2 green" title="97.01% of the Mockery source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../Seldaek/monolog/index.html"><div class="td1">Monolog</div><div class="td2 green" title="97.23% of the Monolog source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../moodle/moodle/index.html"><div class="td1">Moodle</div><div class="td2 green" title="95.21% of the Moodle source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../bobthecow/mustache.php/index.html"><div class="td1">Mustache.php</div><div class="td2 green" title="98.96% of the Mustache.php source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../thephpleague/oauth2-client/index.html"><div class="td1">OAuth 2.0 Client</div><div class="td2 green" title="98.46% of the OAuth 2.0 Client source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../owncloud/core/index.html"><div class="td1">ownCloud</div><div class="td2 green" title="96.06% of the ownCloud source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../erusev/parsedown/index.html"><div class="td1">Parsedown</div><div class="td2 green" title="97.81% of the Parsedown source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../pear/pear-core/index.html"><div class="td1">PEAR - The PEAR Installer</div><div class="td2 green" title="97.57% of the PEAR - The PEAR Installer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phingofficial/phing/index.html"><div class="td1">Phing</div><div class="td2 green" title="98.5% of the Phing source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phpbb/phpbb/index.html"><div class="td1">phpBB</div><div class="td2 green" title="96.63% of the phpBB source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../fabpot/PHP-CS-Fixer/index.html"><div class="td1">PHP Coding Standards Fixer</div><div class="td2 green" title="97.54% of the PHP Coding Standards Fixer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../phpDocumentor/phpDocumentor2/index.html"><div class="td1">phpDocumentor</div><div class="td2 green" title="98.67% of the phpDocumentor source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../PHPOffice/PHPExcel/index.html"><div class="td1">PHPExcel</div><div class="td2 blue" title="90.93% of the PHPExcel source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../PHPMailer/PHPMailer/index.html"><div class="td1">PHPMailer</div><div class="td2 green" title="96.1% of the PHPMailer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../michelf/php-markdown/index.html"><div class="td1">PHP Markdown</div><div class="td2 green" title="94.75% of the PHP Markdown source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../phpmyadmin/phpmyadmin/index.html"><div class="td1">phpMyAdmin</div><div class="td2 green" title="95.74% of the phpMyAdmin source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../thephpleague/oauth2-server/index.html"><div class="td1">PHP OAuth 2.0 Server</div><div class="td2 green" title="97.31% of the PHP OAuth 2.0 Server source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../nikic/PHP-Parser/index.html"><div class="td1">PHP Parser</div><div class="td2 blue" title="92.37% of the PHP Parser source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../sebastianbergmann/phpunit/index.html"><div class="td1">PHPUnit</div><div class="td2 green" title="99.49% of the PHPUnit source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../sebastianbergmann/php-code-coverage/index.html"><div class="td1">PHP_CodeCoverage</div><div class="td2 green" title="99.15% of the PHP_CodeCoverage source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../squizlabs/PHP_CodeSniffer/index.html"><div class="td1">PHP_CodeSniffer</div><div class="td2 green" title="99.77% of the PHP_CodeSniffer source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../piwik/piwik/index.html"><div class="td1">Piwik</div><div class="td2 green" title="97.5% of the Piwik source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ppi/framework/index.html"><div class="td1">PPI Framework</div><div class="td2 green" title="98.77% of the PPI Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../PrestaShop/PrestaShop/index.html"><div class="td1">PrestaShop</div><div class="td2 green" title="94.75% of the PrestaShop source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../propelorm/Propel/index.html"><div class="td1">Propel</div><div class="td2 green" title="98.62% of the Propel source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../c9s/Pux/index.html"><div class="td1">Pux</div><div class="td2 green" title="95.41% of the Pux source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../pyrocms/pyrocms/index.html"><div class="td1">PyroCMS</div><div class="td2 blue" title="90.39% of the PyroCMS source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../cboden/Ratchet/index.html"><div class="td1">Ratchet</div><div class="td2 green" title="98.97% of the Ratchet source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../reactphp/react/index.html"><div class="td1">React</div><div class="td2 green" title="97.94% of the React source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../Codegyre/Robo/index.html"><div class="td1">RoboTask</div><div class="td2 green" title="95.24% of the RoboTask source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../fruux/sabre-dav/index.html"><div class="td1">SabreDAV</div><div class="td2 green" title="96.25% of the SabreDAV source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../scabbiafw/scabbia2-fw/index.html"><div class="td1">Scabbia2 PHP Framework Code</div><div class="td2 green" title="99.05% of the Scabbia2 PHP Framework Code source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../sculpin/sculpin/index.html"><div class="td1">Sculpin</div><div class="td2 green" title="96.97% of the Sculpin source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../silexphp/Silex/index.html"><div class="td1">Silex</div><div class="td2 green" title="98.68% of the Silex source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../silverstripe/silverstripe-framework/index.html"><div class="td1">SilverStripe Framework</div><div class="td2 green" title="94.42% of the SilverStripe Framework source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../codeguy/Slim/index.html"><div class="td1">Slim Framework</div><div class="td2 green" title="99% of the Slim Framework source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../KnpLabs/snappy/index.html"><div class="td1">Snappy</div><div class="td2 green" title="99.09% of the Snappy source code conforms to the same coding conventions">A+</div></a></li>
+<li><a href="../../solarphp/core/index.html"><div class="td1">Solar Framework</div><div class="td2 green" title="98.61% of the Solar Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../tedivm/Stash/index.html"><div class="td1">Stash</div><div class="td2 green" title="98.54% of the Stash source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../sugarcrm/sugarcrm_dev/index.html"><div class="td1">SugarCRM CE</div><div class="td2 yellow" title="79.52% of the SugarCRM CE source code conforms to the same coding conventions">C</div></a></li>
+<li><a href="../../swiftmailer/swiftmailer/index.html"><div class="td1">Swift Mailer</div><div class="td2 green" title="96.35% of the Swift Mailer source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../symfony/symfony/index.html"><div class="td1">Symfony2</div><div class="td2 green" title="98.12% of the Symfony2 source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../ginatrapani/ThinkUp/index.html"><div class="td1">ThinkUp</div><div class="td2 green" title="93.27% of the ThinkUp source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../fabpot/Twig/index.html"><div class="td1">Twig</div><div class="td2 green" title="96.78% of the Twig source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../TYPO3/TYPO3.CMS/index.html"><div class="td1">TYPO3 CMS</div><div class="td2 green" title="94.49% of the TYPO3 CMS source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../WordPress/WordPress/index.html"><div class="td1">WordPress</div><div class="td2 green" title="95.34% of the WordPress source code conforms to the same coding conventions">A-</div></a></li>
+<li><a href="../../yiisoft/yii2/index.html"><div class="td1">Yii PHP Framework Version 2</div><div class="td2 green" title="98.69% of the Yii PHP Framework Version 2 source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../yiisoft/yii/index.html"><div class="td1">Yii Web Programming Framework</div><div class="td2 blue" title="92.36% of the Yii Web Programming Framework source code conforms to the same coding conventions">B+</div></a></li>
+<li><a href="../../zendframework/zf2/index.html"><div class="td1">Zend Framework</div><div class="td2 green" title="98.42% of the Zend Framework source code conforms to the same coding conventions">A</div></a></li>
+<li><a href="../../zikula/core/index.html"><div class="td1">Zikula</div><div class="td2 green" title="97.32% of the Zikula source code conforms to the same coding conventions">A</div></a></li>
+    </ul>
+  </div>
+  </div>
+  </div>
+<div id="spacing-before-string-concat" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spacing-before-string-concat">Spacing before string concat</a></h2>
+  <p>How many spaces precede the string concatenation operator?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart1" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="25 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">75.76%</td>
+      </tr>
+      <tr title="5 operators">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">1</span></td>
+        <td class="result">1</td>
+        <td class="value">15.15%</td>
+      </tr>
+      <tr title="3 operators">
+        <td class="key" style="background-color:#D1D4DB"><span class="screenHide">newline</span></td>
+        <td class="result">newline</td>
+        <td class="value">9.09%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 33 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart1t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="class-has-doc-comment" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#class-has-doc-comment">Class has doc comment</a></h2>
+  <p>Does each class have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart2" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="1 classes">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">16.67%</td>
+      </tr>
+      <tr title="5 classes">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">83.33%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart2t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+    <div class="historicalEvents">
+      <ul>
+        <li onmouseover="ct2.setSelection([{row:15,column:null}]);" onmouseout="ct2.setSelection([]);" class="historicalDate"><strong>23 Feb 2014</strong>: there was a 16.67% swing from <em>no</em> to <em>yes</em>
+          <ul>
+          </ul>
+        </li>
+        <li onmouseover="ct2.setSelection([{row:17,column:null}]);" onmouseout="ct2.setSelection([]);" class="historicalDate"><strong>09 Mar 2014</strong>: there was a 16.67% swing from <em>yes</em> to <em>no</em>
+          <ul>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+<div id="class-opening-brace-placement" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#class-opening-brace-placement">Class opening brace placement</a></h2>
+  <p>Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart3" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="5 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
+        <td class="result">new line</td>
+        <td class="value">83.33%</td>
+      </tr>
+      <tr title="1 classes">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">same line</span></td>
+        <td class="result">same line</td>
+        <td class="value">16.67%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart3t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+    <div class="historicalEvents">
+      <ul>
+        <li onmouseover="ct3.setSelection([{row:15,column:null}]);" onmouseout="ct3.setSelection([]);" class="historicalDate"><strong>23 Feb 2014</strong>: there was a 16.67% swing from <em>same line</em> to <em>new line</em>
+          <ul>
+          </ul>
+        </li>
+        <li onmouseover="ct3.setSelection([{row:17,column:null}]);" onmouseout="ct3.setSelection([]);" class="historicalDate"><strong>09 Mar 2014</strong>: there was a 16.67% swing from <em>new line</em> to <em>same line</em>
+          <ul>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spacing-after-string-concat" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spacing-after-string-concat">Spacing after string concat</a></h2>
+  <p>How many spaces follow the string concatenation operator?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart4" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="28 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">84.85%</td>
+      </tr>
+      <tr title="5 operators">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">1</span></td>
+        <td class="result">1</td>
+        <td class="value">15.15%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 33 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart4t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="file-has-doc-comment" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#file-has-doc-comment">File has doc comment</a></h2>
+  <p>Does each PHP file have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart5" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">85.71%</td>
+      </tr>
+      <tr title="1 files">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">yes</span></td>
+        <td class="result">yes</td>
+        <td class="value">14.29%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart5t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="lowercase-filename" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#lowercase-filename">Lowercase filename</a></h2>
+  <p>Are PHP filenames lowercase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart6" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">85.71%</td>
+      </tr>
+      <tr title="1 files">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">yes</span></td>
+        <td class="result">yes</td>
+        <td class="value">14.29%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart6t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="line-length" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#line-length">Line length</a></h2>
+  <p>Including whitespace and comments, how many characters are in non-empty code lines?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart7" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="858 lines">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">80 or less - Most popular method</span></td>
+        <td class="result">80 or less</td>
+        <td class="value">92.26%</td>
+      </tr>
+      <tr title="60 lines">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">81-120</span></td>
+        <td class="result">81-120</td>
+        <td class="value">6.45%</td>
+      </tr>
+      <tr title="11 lines">
+        <td class="key" style="background-color:#D1D4DB"><span class="screenHide">121-150</span></td>
+        <td class="result">121-150</td>
+        <td class="value">1.18%</td>
+      </tr>
+      <tr title="1 lines">
+        <td class="key" style="background-color:#E5E5E5"><span class="screenHide">151 or more</span></td>
+        <td class="result">151 or more</td>
+        <td class="value">0.11%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 930 lines</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart7t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="adjacent-assignments-aligned" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#adjacent-assignments-aligned">Adjacent assignments aligned</a></h2>
+  <p>For a block of assignments, are the assignment operators (equals, plus-equals etc.) aligned?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart8" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="2 assignment blocks">
+        <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
+        <td class="result">no</td>
+        <td class="value">4.08%</td>
+      </tr>
+      <tr title="47 assignment blocks">
+        <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">95.92%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 49 assignment blocks</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart8t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+    <div class="historicalEvents">
+      <ul>
+        <li onmouseover="ct8.setSelection([{row:40,column:null}]);" onmouseout="ct8.setSelection([]);" class="historicalDate"><strong>17 Aug 2014</strong>: there was a 3.92% swing from <em>no</em> to <em>yes</em>
+          <ul>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+<div id="php-constant-case" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#php-constant-case">PHP constant case</a></h2>
+  <p>What case are PHP constants (true, false, null) written in?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart9" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="194 constants">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">99.49%</td>
+      </tr>
+      <tr title="1 constants">
+        <td class="key" style="background-color:#91A2B2"><span class="screenHide">upper</span></td>
+        <td class="result">upper</td>
+        <td class="value">0.51%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 195 constants</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart9t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="use-of-else-if-or-elseif" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#use-of-else-if-or-elseif">Use of ELSE IF or ELSEIF</a></h2>
+  <p>Are elseif statements defined using <em>elseif</em> or <em>else if</em>?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart10" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="4 elseif statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">elseif - Most popular method</span></td>
+        <td class="result">elseif</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 4 elseif statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart10t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="one-class-per-file" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#one-class-per-file">One class per file</a></h2>
+  <p>Is each class defined in a file by itself?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart11" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart11t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="class-defined-in-namespace" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#class-defined-in-namespace">Class defined in namespace</a></h2>
+  <p>Is each class defined in a namespace of at least 1 level?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart12" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart12t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="camelcase-class-name" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#camelcase-class-name">CamelCase class name</a></h2>
+  <p>Are class names defined using CamelCase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart13" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 classes">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart13t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="array-keyword-case" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#array-keyword-case">Array keyword case</a></h2>
+  <p>When defining an array, how is the <em>array</em> keyword written?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart14" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="28 array definitions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 28 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart14t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="short-array-syntax-used" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#short-array-syntax-used">Short array syntax used</a></h2>
+  <p>Are arrays defined using the PHP 5.4+ short array syntax?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart15" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="28 array definitions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 28 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart15t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="function-opening-brace-placement" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#function-opening-brace-placement">Function opening brace placement</a></h2>
+  <p>Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart16" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="42 functions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">new line - Most popular method</span></td>
+        <td class="result">new line</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 42 functions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart16t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spacing-after-cast-statement" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spacing-after-cast-statement">Spacing after cast statement</a></h2>
+  <p>How many spaces are there between a cast statement and the variable?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart17" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="1 cast statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1 cast statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart17t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spacing-before-object-operator" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spacing-before-object-operator">Spacing before object operator</a></h2>
+  <p>How many spaces precede the object operator (->)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart18" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="78 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 78 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart18t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spacing-after-object-operator" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spacing-after-object-operator">Spacing after object operator</a></h2>
+  <p>How many spaces follow the object operator (->)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart19" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="78 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 78 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart19t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="camelcase-method-name" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#camelcase-method-name">CamelCase method name</a></h2>
+  <p>Are class method names defined using CamelCase?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart20" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="43 methods">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 43 methods</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart20t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="inline-comment-style" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#inline-comment-style">Inline comment style</a></h2>
+  <p>What comment style is used for non docblock comments?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart21" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="62 comments">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">// ... - Most popular method</span></td>
+        <td class="result">// ...</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 62 comments</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart21t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="function-has-doc-comment" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#function-has-doc-comment">Function has doc comment</a></h2>
+  <p>Does each function have a docblock comment to describe its purpose?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart22" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="47 functions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 47 functions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart22t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="eol-char" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#eol-char">EOL char</a></h2>
+  <p>What character is used for line breaks?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart23" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="7 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">\n - Most popular method</span></td>
+        <td class="result">\n</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart23t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="file-extension-for-class-files" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#file-extension-for-class-files">File extension for class files</a></h2>
+  <p>For files that contain classes, what extension does the file use?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart24" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="6 class files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">.php - Most popular method</span></td>
+        <td class="result">.php</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 6 class files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart24t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="space-before-operator" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#space-before-operator">Space before operator</a></h2>
+  <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart25" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="21 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 21 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart25t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spaces-before-control-structure-close-parenthesis" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spaces-before-control-structure-close-parenthesis">Spaces before control structure close parenthesis</a></h2>
+  <p>How many spaces precede the closing parenthesis of a control structure?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart26" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="41 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 41 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart26t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="spaces-after-control-structure-open-parenthesis" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#spaces-after-control-structure-open-parenthesis">Spaces after control structure open parenthesis</a></h2>
+  <p>How many spaces follow the opening parenthesis of a control structure?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart27" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="41 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">0 - Most popular method</span></td>
+        <td class="result">0</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 41 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart27t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="php-keyword-case" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#php-keyword-case">PHP keyword case</a></h2>
+  <p>What case are PHP keywords (function, echo, foreach etc.) written in?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart28" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="258 keywords">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">lower - Most popular method</span></td>
+        <td class="result">lower</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 258 keywords</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart28t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="control-structure-defined-inline" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#control-structure-defined-inline">Control structure defined inline</a></h2>
+  <p>Are control structures defined inline (without braces)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart29" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="44 control structures">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 44 control structures</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart29t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="multiple-statements-on-same-line" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#multiple-statements-on-same-line">Multiple statements on same line</a></h2>
+  <p>Are multiple statements defined on the same line of code?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart30" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="136 statements">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 136 statements</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart30t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="space-after-operator" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#space-after-operator">Space after operator</a></h2>
+  <p>How many spaces precede comparison, arithmetic and assignment operators?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart31" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="248 operators">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 248 operators</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart31t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="php-closing-tag-at-eof" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#php-closing-tag-at-eof">PHP closing tag at EOF</a></h2>
+  <p>Is there a PHP closing tag at the end of the file?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart32" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="7 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart32t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="file-extension-for-non-class-files" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#file-extension-for-non-class-files">File extension for non-class files</a></h2>
+  <p>For files that do not contain classes, what extension does the file use?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart33" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="1 non-class files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">.php - Most popular method</span></td>
+        <td class="result">.php</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1 non-class files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart33t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="number-of-newlines-at-eof" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#number-of-newlines-at-eof">Number of newlines at EOF</a></h2>
+  <p>How many newline characters appear at the end of the file?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart34" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="7 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+        <td class="result">1</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart34t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="declarations-and-side-effects-mixed" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#declarations-and-side-effects-mixed">Declarations and side effects mixed</a></h2>
+  <p>Do files both declare symbols (classes, functions, constants, etc.) and cause side-effects (e.g. generate output, change .ini settings, etc.)?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart35" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="7 files">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 files</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart35t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="line-indent" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#line-indent">Line indent</a></h2>
+  <p>Are lines indented using spaces or tabs?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart36" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="605 lines">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">spaces - Most popular method</span></td>
+        <td class="result">spaces</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 605 lines</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart36t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="php-short-open-tag-used" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#php-short-open-tag-used">PHP short open tag used</a></h2>
+  <p>Is the PHP short open tag syntax used?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project true">
+      <p class="projectStatusText">This project is using the popular method for this convention</p>
+      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart37" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="7 open tags">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">no - Most popular method</span></td>
+        <td class="result">no</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 7 open tags</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart37t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="array-end-comma" class="conventionWrap">
+<div class="conventionDetails">
+  <h2><a href="#array-end-comma">Array end comma</a></h2>
+  <p>Does the last item end with a comma in a multi-line array definition?</p>
+  <div class="currentData">
+    <div class="conventionStatusInProject project false">
+      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>
+    </div>
+    <div class="tag">Current</div>
+    <div class="currentDataWrap">
+      <div class="currentChart">
+        <div class="chart-value" id="chart38" style="width:290px;height:290px;"><div class="placeholder"></div></div>
+      </div>
+      <div class="tableContainer">
+        <table class="statsTable">
+          <tr class="screenHide">
+            <th>Key</th>
+            <th>Method</th>
+            <th>Use</th>
+          </tr>
+      <tr title="1 array definitions">
+        <td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
+        <td class="result">yes</td>
+        <td class="value">100%</td>
+      </tr>
+        </table>
+        <p class="statsInfo">Based on 1 array definitions</p>
+      </div>
+    </div>
+  </div>
+  <div class="historicalData">
+    <div class="tag">Historical</div>
+    <div class="historicalChart">
+      <div class="chart-trend" id="chart38t" style="width:860px;height:185px;"><div class="placeholder"></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+    </div>
+
+    <div class="footer">Report generated on Fri, 22 Aug 2014 20:45:01 +1000<br/>Using master branch of <a href="https://github.com/KnpLabs/snappy">KnpLabs/snappy</a> @ commit <a href="https://github.com/KnpLabs/snappy/commit/6808b99d583e860c5c2169db8f614b2003392406">6808b99d583e860c5c2169db8f614b2003392406</a></div>
+</div>
+
+<script>
+    init();
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart1);
+    var ct1 = null;var ct2 = null;var ct3 = null;var ct4 = null;var ct5 = null;var ct6 = null;var ct7 = null;var ct8 = null;var ct9 = null;var ct10 = null;var ct11 = null;var ct12 = null;var ct13 = null;var ct14 = null;var ct15 = null;var ct16 = null;var ct17 = null;var ct18 = null;var ct19 = null;var ct20 = null;var ct21 = null;var ct22 = null;var ct23 = null;var ct24 = null;var ct25 = null;var ct26 = null;var ct27 = null;var ct28 = null;var ct29 = null;var ct30 = null;var ct31 = null;var ct32 = null;var ct33 = null;var ct34 = null;var ct35 = null;var ct36 = null;var ct37 = null;var ct38 = null;
+function drawChart1() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',75.76],['1',15.15],['newline',9.09]]);
+var c = new google.visualization.PieChart(document.getElementById("chart1"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'newline');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',70.37,false,18.52,false,11.11,false],['13 Nov',70.37,false,18.52,false,11.11,false],['20 Nov',70.37,false,18.52,false,11.11,false],['27 Nov',70.37,false,18.52,false,11.11,false],['04 Dec',70.37,false,18.52,false,11.11,false],['11 Dec',70.37,false,18.52,false,11.11,false],['18 Dec',70.37,false,18.52,false,11.11,false],['25 Dec',70.37,false,18.52,false,11.11,false],['05 Jan',70.37,false,18.52,false,11.11,false],['12 Jan',70.37,false,18.52,false,11.11,false],['19 Jan',70.37,false,18.52,false,11.11,false],['26 Jan',70.37,false,18.52,false,11.11,false],['02 Feb',70.37,false,18.52,false,11.11,false],['09 Feb',70.37,false,18.52,false,11.11,false],['16 Feb',70.37,false,18.52,false,11.11,false],['23 Feb',72.41,false,17.24,false,10.34,false],['02 Mar',72.41,false,17.24,false,10.34,false],['09 Mar',72.41,false,17.24,false,10.34,false],['16 Mar',72.41,false,17.24,false,10.34,false],['23 Mar',72.41,false,17.24,false,10.34,false],['30 Mar',72.41,false,17.24,false,10.34,false],['06 Apr',72.41,false,17.24,false,10.34,false],['13 Apr',72.41,false,17.24,false,10.34,false],['20 Apr',72.41,false,17.24,false,10.34,false],['27 Apr',72.41,false,17.24,false,10.34,false],['04 May',72.41,false,17.24,false,10.34,false],['11 May',72.41,false,17.24,false,10.34,false],['18 May',72.41,false,17.24,false,10.34,false],['25 May',72.41,false,17.24,false,10.34,false],['01 Jun',72.41,false,17.24,false,10.34,false],['08 Jun',72.41,false,17.24,false,10.34,false],['15 Jun',72.41,false,17.24,false,10.34,false],['22 Jun',72.41,false,17.24,false,10.34,false],['29 Jun',72.41,false,17.24,false,10.34,false],['06 Jul',72.41,false,17.24,false,10.34,false],['13 Jul',72.41,false,17.24,false,10.34,false],['20 Jul',72.41,false,17.24,false,10.34,false],['27 Jul',74.19,false,16.13,false,9.68,false],['03 Aug',75.76,false,15.15,false,9.09,false],['10 Aug',75.76,false,15.15,false,9.09,false],['17 Aug',75.76,false,15.15,false,9.09,false]]);
+ct1 = new google.visualization.LineChart(document.getElementById("chart1t"));
+ct1.draw(data, trendOptions);
+window.setTimeout(function(){drawChart2()}, 10);}
+function drawChart2() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',16.67],['yes',83.33]]);
+var c = new google.visualization.PieChart(document.getElementById("chart2"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',16.67,false,83.33,false],['13 Nov',16.67,false,83.33,false],['20 Nov',16.67,false,83.33,false],['27 Nov',16.67,false,83.33,false],['04 Dec',16.67,false,83.33,false],['11 Dec',16.67,false,83.33,false],['18 Dec',16.67,false,83.33,false],['25 Dec',16.67,false,83.33,false],['05 Jan',16.67,false,83.33,false],['12 Jan',16.67,false,83.33,false],['19 Jan',16.67,false,83.33,false],['26 Jan',16.67,false,83.33,false],['02 Feb',16.67,false,83.33,false],['09 Feb',16.67,false,83.33,false],['16 Feb',16.67,false,83.33,false],['23 Feb',0.00,true,100,true],['02 Mar',0.00,false,100,false],['09 Mar',16.67,true,83.33,true],['16 Mar',16.67,false,83.33,false],['23 Mar',16.67,false,83.33,false],['30 Mar',16.67,false,83.33,false],['06 Apr',16.67,false,83.33,false],['13 Apr',16.67,false,83.33,false],['20 Apr',16.67,false,83.33,false],['27 Apr',16.67,false,83.33,false],['04 May',16.67,false,83.33,false],['11 May',16.67,false,83.33,false],['18 May',16.67,false,83.33,false],['25 May',16.67,false,83.33,false],['01 Jun',16.67,false,83.33,false],['08 Jun',16.67,false,83.33,false],['15 Jun',16.67,false,83.33,false],['22 Jun',16.67,false,83.33,false],['29 Jun',16.67,false,83.33,false],['06 Jul',16.67,false,83.33,false],['13 Jul',16.67,false,83.33,false],['20 Jul',16.67,false,83.33,false],['27 Jul',16.67,false,83.33,false],['03 Aug',16.67,false,83.33,false],['10 Aug',16.67,false,83.33,false],['17 Aug',16.67,false,83.33,false]]);
+ct2 = new google.visualization.LineChart(document.getElementById("chart2t"));
+ct2.draw(data, trendOptions);
+window.setTimeout(function(){drawChart3()}, 10);}
+function drawChart3() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['new line',83.33],['same line',16.67]]);
+var c = new google.visualization.PieChart(document.getElementById("chart3"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'new line');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'same line');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',83.33,false,16.67,false],['13 Nov',83.33,false,16.67,false],['20 Nov',83.33,false,16.67,false],['27 Nov',83.33,false,16.67,false],['04 Dec',83.33,false,16.67,false],['11 Dec',83.33,false,16.67,false],['18 Dec',83.33,false,16.67,false],['25 Dec',83.33,false,16.67,false],['05 Jan',83.33,false,16.67,false],['12 Jan',83.33,false,16.67,false],['19 Jan',83.33,false,16.67,false],['26 Jan',83.33,false,16.67,false],['02 Feb',83.33,false,16.67,false],['09 Feb',83.33,false,16.67,false],['16 Feb',83.33,false,16.67,false],['23 Feb',100,true,0.00,true],['02 Mar',100,false,0.00,false],['09 Mar',83.33,true,16.67,true],['16 Mar',83.33,false,16.67,false],['23 Mar',83.33,false,16.67,false],['30 Mar',83.33,false,16.67,false],['06 Apr',83.33,false,16.67,false],['13 Apr',83.33,false,16.67,false],['20 Apr',83.33,false,16.67,false],['27 Apr',83.33,false,16.67,false],['04 May',83.33,false,16.67,false],['11 May',83.33,false,16.67,false],['18 May',83.33,false,16.67,false],['25 May',83.33,false,16.67,false],['01 Jun',83.33,false,16.67,false],['08 Jun',83.33,false,16.67,false],['15 Jun',83.33,false,16.67,false],['22 Jun',83.33,false,16.67,false],['29 Jun',83.33,false,16.67,false],['06 Jul',83.33,false,16.67,false],['13 Jul',83.33,false,16.67,false],['20 Jul',83.33,false,16.67,false],['27 Jul',83.33,false,16.67,false],['03 Aug',83.33,false,16.67,false],['10 Aug',83.33,false,16.67,false],['17 Aug',83.33,false,16.67,false]]);
+ct3 = new google.visualization.LineChart(document.getElementById("chart3t"));
+ct3.draw(data, trendOptions);
+window.setTimeout(function(){drawChart4()}, 10);}
+function drawChart4() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',84.85],['1',15.15]]);
+var c = new google.visualization.PieChart(document.getElementById("chart4"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',81.48,false,18.52,false],['13 Nov',81.48,false,18.52,false],['20 Nov',81.48,false,18.52,false],['27 Nov',81.48,false,18.52,false],['04 Dec',81.48,false,18.52,false],['11 Dec',81.48,false,18.52,false],['18 Dec',81.48,false,18.52,false],['25 Dec',81.48,false,18.52,false],['05 Jan',81.48,false,18.52,false],['12 Jan',81.48,false,18.52,false],['19 Jan',81.48,false,18.52,false],['26 Jan',81.48,false,18.52,false],['02 Feb',81.48,false,18.52,false],['09 Feb',81.48,false,18.52,false],['16 Feb',81.48,false,18.52,false],['23 Feb',82.76,false,17.24,false],['02 Mar',82.76,false,17.24,false],['09 Mar',82.76,false,17.24,false],['16 Mar',82.76,false,17.24,false],['23 Mar',82.76,false,17.24,false],['30 Mar',82.76,false,17.24,false],['06 Apr',82.76,false,17.24,false],['13 Apr',82.76,false,17.24,false],['20 Apr',82.76,false,17.24,false],['27 Apr',82.76,false,17.24,false],['04 May',82.76,false,17.24,false],['11 May',82.76,false,17.24,false],['18 May',82.76,false,17.24,false],['25 May',82.76,false,17.24,false],['01 Jun',82.76,false,17.24,false],['08 Jun',82.76,false,17.24,false],['15 Jun',82.76,false,17.24,false],['22 Jun',82.76,false,17.24,false],['29 Jun',82.76,false,17.24,false],['06 Jul',82.76,false,17.24,false],['13 Jul',82.76,false,17.24,false],['20 Jul',82.76,false,17.24,false],['27 Jul',83.87,false,16.13,false],['03 Aug',84.85,false,15.15,false],['10 Aug',84.85,false,15.15,false],['17 Aug',84.85,false,15.15,false]]);
+ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
+ct4.draw(data, trendOptions);
+window.setTimeout(function(){drawChart5()}, 10);}
+function drawChart5() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',85.71],['yes',14.29]]);
+var c = new google.visualization.PieChart(document.getElementById("chart5"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',85.71,false,14.29,false],['13 Nov',85.71,false,14.29,false],['20 Nov',85.71,false,14.29,false],['27 Nov',85.71,false,14.29,false],['04 Dec',85.71,false,14.29,false],['11 Dec',85.71,false,14.29,false],['18 Dec',85.71,false,14.29,false],['25 Dec',85.71,false,14.29,false],['05 Jan',85.71,false,14.29,false],['12 Jan',85.71,false,14.29,false],['19 Jan',85.71,false,14.29,false],['26 Jan',85.71,false,14.29,false],['02 Feb',85.71,false,14.29,false],['09 Feb',85.71,false,14.29,false],['16 Feb',85.71,false,14.29,false],['23 Feb',83.33,false,16.67,false],['02 Mar',83.33,false,16.67,false],['09 Mar',85.71,false,14.29,false],['16 Mar',85.71,false,14.29,false],['23 Mar',85.71,false,14.29,false],['30 Mar',85.71,false,14.29,false],['06 Apr',85.71,false,14.29,false],['13 Apr',85.71,false,14.29,false],['20 Apr',85.71,false,14.29,false],['27 Apr',85.71,false,14.29,false],['04 May',85.71,false,14.29,false],['11 May',85.71,false,14.29,false],['18 May',85.71,false,14.29,false],['25 May',85.71,false,14.29,false],['01 Jun',85.71,false,14.29,false],['08 Jun',85.71,false,14.29,false],['15 Jun',85.71,false,14.29,false],['22 Jun',85.71,false,14.29,false],['29 Jun',85.71,false,14.29,false],['06 Jul',85.71,false,14.29,false],['13 Jul',85.71,false,14.29,false],['20 Jul',85.71,false,14.29,false],['27 Jul',85.71,false,14.29,false],['03 Aug',85.71,false,14.29,false],['10 Aug',85.71,false,14.29,false],['17 Aug',85.71,false,14.29,false]]);
+ct5 = new google.visualization.LineChart(document.getElementById("chart5t"));
+ct5.draw(data, trendOptions);
+window.setTimeout(function(){drawChart6()}, 10);}
+function drawChart6() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',85.71],['yes',14.29]]);
+var c = new google.visualization.PieChart(document.getElementById("chart6"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',85.71,false,14.29,false],['13 Nov',85.71,false,14.29,false],['20 Nov',85.71,false,14.29,false],['27 Nov',85.71,false,14.29,false],['04 Dec',85.71,false,14.29,false],['11 Dec',85.71,false,14.29,false],['18 Dec',85.71,false,14.29,false],['25 Dec',85.71,false,14.29,false],['05 Jan',85.71,false,14.29,false],['12 Jan',85.71,false,14.29,false],['19 Jan',85.71,false,14.29,false],['26 Jan',85.71,false,14.29,false],['02 Feb',85.71,false,14.29,false],['09 Feb',85.71,false,14.29,false],['16 Feb',85.71,false,14.29,false],['23 Feb',83.33,false,16.67,false],['02 Mar',83.33,false,16.67,false],['09 Mar',85.71,false,14.29,false],['16 Mar',85.71,false,14.29,false],['23 Mar',85.71,false,14.29,false],['30 Mar',85.71,false,14.29,false],['06 Apr',85.71,false,14.29,false],['13 Apr',85.71,false,14.29,false],['20 Apr',85.71,false,14.29,false],['27 Apr',85.71,false,14.29,false],['04 May',85.71,false,14.29,false],['11 May',85.71,false,14.29,false],['18 May',85.71,false,14.29,false],['25 May',85.71,false,14.29,false],['01 Jun',85.71,false,14.29,false],['08 Jun',85.71,false,14.29,false],['15 Jun',85.71,false,14.29,false],['22 Jun',85.71,false,14.29,false],['29 Jun',85.71,false,14.29,false],['06 Jul',85.71,false,14.29,false],['13 Jul',85.71,false,14.29,false],['20 Jul',85.71,false,14.29,false],['27 Jul',85.71,false,14.29,false],['03 Aug',85.71,false,14.29,false],['10 Aug',85.71,false,14.29,false],['17 Aug',85.71,false,14.29,false]]);
+ct6 = new google.visualization.LineChart(document.getElementById("chart6t"));
+ct6.draw(data, trendOptions);
+window.setTimeout(function(){drawChart7()}, 10);}
+function drawChart7() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['80 or less',92.26],['81-120',6.45],['121-150',1.18],['151 or more',0.11]]);
+var c = new google.visualization.PieChart(document.getElementById("chart7"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '80 or less');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', '81-120');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', '121-150');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', '151 or more');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',92.08,false,6.58,false,1.23,false,0.11,false],['13 Nov',92.08,false,6.58,false,1.23,false,0.11,false],['20 Nov',92.08,false,6.58,false,1.23,false,0.11,false],['27 Nov',92.08,false,6.58,false,1.23,false,0.11,false],['04 Dec',92.08,false,6.58,false,1.23,false,0.11,false],['11 Dec',92.08,false,6.58,false,1.23,false,0.11,false],['18 Dec',92.08,false,6.58,false,1.23,false,0.11,false],['25 Dec',92.08,false,6.58,false,1.23,false,0.11,false],['05 Jan',92.08,false,6.58,false,1.23,false,0.11,false],['12 Jan',92.08,false,6.58,false,1.23,false,0.11,false],['19 Jan',92.08,false,6.58,false,1.23,false,0.11,false],['26 Jan',92.08,false,6.58,false,1.23,false,0.11,false],['02 Feb',92.08,false,6.58,false,1.23,false,0.11,false],['09 Feb',92.08,false,6.58,false,1.23,false,0.11,false],['16 Feb',92.08,false,6.58,false,1.23,false,0.11,false],['23 Feb',92.14,false,6.53,false,1.22,false,0.11,false],['02 Mar',91.99,false,6.67,false,1.22,false,0.11,false],['09 Mar',92.03,false,6.64,false,1.22,false,0.11,false],['16 Mar',92.03,false,6.64,false,1.22,false,0.11,false],['23 Mar',92.03,false,6.64,false,1.22,false,0.11,false],['30 Mar',92.03,false,6.64,false,1.22,false,0.11,false],['06 Apr',92.03,false,6.64,false,1.22,false,0.11,false],['13 Apr',92.03,false,6.64,false,1.22,false,0.11,false],['20 Apr',92.03,false,6.64,false,1.22,false,0.11,false],['27 Apr',92.03,false,6.64,false,1.22,false,0.11,false],['04 May',92.03,false,6.64,false,1.22,false,0.11,false],['11 May',92.04,false,6.64,false,1.22,false,0.11,false],['18 May',92.04,false,6.64,false,1.22,false,0.11,false],['25 May',92.04,false,6.63,false,1.22,false,0.11,false],['01 Jun',92.04,false,6.63,false,1.22,false,0.11,false],['08 Jun',92.04,false,6.63,false,1.22,false,0.11,false],['15 Jun',92.04,false,6.63,false,1.22,false,0.11,false],['22 Jun',92.21,false,6.49,false,1.19,false,0.11,false],['29 Jun',92.21,false,6.49,false,1.19,false,0.11,false],['06 Jul',92.21,false,6.49,false,1.19,false,0.11,false],['13 Jul',92.21,false,6.49,false,1.19,false,0.11,false],['20 Jul',92.21,false,6.49,false,1.19,false,0.11,false],['27 Jul',92.29,false,6.42,false,1.18,false,0.11,false],['03 Aug',92.29,false,6.42,false,1.18,false,0.11,false],['10 Aug',92.29,false,6.42,false,1.18,false,0.11,false],['17 Aug',92.26,false,6.45,false,1.18,false,0.11,false]]);
+ct7 = new google.visualization.LineChart(document.getElementById("chart7t"));
+ct7.draw(data, trendOptions);
+window.setTimeout(function(){drawChart8()}, 10);}
+function drawChart8() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',4.08],['yes',95.92]]);
+var c = new google.visualization.PieChart(document.getElementById("chart8"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',9.09,false,90.91,false],['13 Nov',9.09,false,90.91,false],['20 Nov',9.09,false,90.91,false],['27 Nov',9.09,false,90.91,false],['04 Dec',9.09,false,90.91,false],['11 Dec',9.09,false,90.91,false],['18 Dec',9.09,false,90.91,false],['25 Dec',9.09,false,90.91,false],['05 Jan',9.09,false,90.91,false],['12 Jan',9.09,false,90.91,false],['19 Jan',9.09,false,90.91,false],['26 Jan',9.09,false,90.91,false],['02 Feb',9.09,false,90.91,false],['09 Feb',9.09,false,90.91,false],['16 Feb',9.09,false,90.91,false],['23 Feb',8.7,false,91.3,false],['02 Mar',8.7,false,91.3,false],['09 Mar',8.7,false,91.3,false],['16 Mar',8.7,false,91.3,false],['23 Mar',8.7,false,91.3,false],['30 Mar',8.7,false,91.3,false],['06 Apr',8.7,false,91.3,false],['13 Apr',8.7,false,91.3,false],['20 Apr',8.7,false,91.3,false],['27 Apr',8.7,false,91.3,false],['04 May',8.7,false,91.3,false],['11 May',8.7,false,91.3,false],['18 May',8.7,false,91.3,false],['25 May',8.7,false,91.3,false],['01 Jun',8.7,false,91.3,false],['08 Jun',8.7,false,91.3,false],['15 Jun',8.7,false,91.3,false],['22 Jun',8.33,false,91.67,false],['29 Jun',8.33,false,91.67,false],['06 Jul',8.33,false,91.67,false],['13 Jul',8.33,false,91.67,false],['20 Jul',8.33,false,91.67,false],['27 Jul',8,false,92,false],['03 Aug',8,false,92,false],['10 Aug',8,false,92,false],['17 Aug',4.08,true,95.92,true]]);
+ct8 = new google.visualization.LineChart(document.getElementById("chart8t"));
+ct8.draw(data, trendOptions);
+window.setTimeout(function(){drawChart9()}, 10);}
+function drawChart9() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',99.49],['upper',0.51]]);
+var c = new google.visualization.PieChart(document.getElementById("chart9"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'lower');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn('number', 'upper');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false,0.00,false],['13 Nov',100,false,0.00,false],['20 Nov',100,false,0.00,false],['27 Nov',100,false,0.00,false],['04 Dec',100,false,0.00,false],['11 Dec',100,false,0.00,false],['18 Dec',100,false,0.00,false],['25 Dec',100,false,0.00,false],['05 Jan',100,false,0.00,false],['12 Jan',100,false,0.00,false],['19 Jan',100,false,0.00,false],['26 Jan',100,false,0.00,false],['02 Feb',100,false,0.00,false],['09 Feb',100,false,0.00,false],['16 Feb',100,false,0.00,false],['23 Feb',100,false,0.00,false],['02 Mar',100,false,0.00,false],['09 Mar',100,false,0.00,false],['16 Mar',99.49,false,0.51,false],['23 Mar',99.49,false,0.51,false],['30 Mar',99.49,false,0.51,false],['06 Apr',99.49,false,0.51,false],['13 Apr',99.49,false,0.51,false],['20 Apr',99.49,false,0.51,false],['27 Apr',99.49,false,0.51,false],['04 May',99.49,false,0.51,false],['11 May',99.49,false,0.51,false],['18 May',99.49,false,0.51,false],['25 May',99.5,false,0.5,false],['01 Jun',99.5,false,0.5,false],['08 Jun',99.5,false,0.5,false],['15 Jun',99.5,false,0.5,false],['22 Jun',99.5,false,0.5,false],['29 Jun',99.5,false,0.5,false],['06 Jul',99.5,false,0.5,false],['13 Jul',99.5,false,0.5,false],['20 Jul',99.5,false,0.5,false],['27 Jul',99.5,false,0.5,false],['03 Aug',99.5,false,0.5,false],['10 Aug',99.5,false,0.5,false],['17 Aug',99.49,false,0.51,false]]);
+ct9 = new google.visualization.LineChart(document.getElementById("chart9t"));
+ct9.draw(data, trendOptions);
+window.setTimeout(function(){drawChart10()}, 10);}
+function drawChart10() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['elseif',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart10"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'elseif');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct10 = new google.visualization.LineChart(document.getElementById("chart10t"));
+ct10.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart11()}, 10);}
+function drawChart11() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart11"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct11 = new google.visualization.LineChart(document.getElementById("chart11t"));
+ct11.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart12()}, 10);}
+function drawChart12() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart12"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct12 = new google.visualization.LineChart(document.getElementById("chart12t"));
+ct12.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart13()}, 10);}
+function drawChart13() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart13"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct13 = new google.visualization.LineChart(document.getElementById("chart13t"));
+ct13.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart14()}, 10);}
+function drawChart14() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart14"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'lower');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct14 = new google.visualization.LineChart(document.getElementById("chart14t"));
+ct14.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart15()}, 10);}
+function drawChart15() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart15"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct15 = new google.visualization.LineChart(document.getElementById("chart15t"));
+ct15.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart16()}, 10);}
+function drawChart16() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['new line',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart16"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'new line');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct16 = new google.visualization.LineChart(document.getElementById("chart16t"));
+ct16.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart17()}, 10);}
+function drawChart17() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart17"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct17 = new google.visualization.LineChart(document.getElementById("chart17t"));
+ct17.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart18()}, 10);}
+function drawChart18() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart18"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct18 = new google.visualization.LineChart(document.getElementById("chart18t"));
+ct18.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart19()}, 10);}
+function drawChart19() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart19"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct19 = new google.visualization.LineChart(document.getElementById("chart19t"));
+ct19.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart20()}, 10);}
+function drawChart20() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart20"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct20 = new google.visualization.LineChart(document.getElementById("chart20t"));
+ct20.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart21()}, 10);}
+function drawChart21() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['// ...',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart21"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '// ...');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct21 = new google.visualization.LineChart(document.getElementById("chart21t"));
+ct21.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart22()}, 10);}
+function drawChart22() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart22"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct22 = new google.visualization.LineChart(document.getElementById("chart22t"));
+ct22.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart23()}, 10);}
+function drawChart23() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['\n',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart23"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '\n');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct23 = new google.visualization.LineChart(document.getElementById("chart23t"));
+ct23.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart24()}, 10);}
+function drawChart24() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['.php',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart24"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '.php');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct24 = new google.visualization.LineChart(document.getElementById("chart24t"));
+ct24.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart25()}, 10);}
+function drawChart25() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart25"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct25 = new google.visualization.LineChart(document.getElementById("chart25t"));
+ct25.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart26()}, 10);}
+function drawChart26() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart26"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct26 = new google.visualization.LineChart(document.getElementById("chart26t"));
+ct26.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart27()}, 10);}
+function drawChart27() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['0',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart27"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct27 = new google.visualization.LineChart(document.getElementById("chart27t"));
+ct27.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart28()}, 10);}
+function drawChart28() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['lower',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart28"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'lower');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct28 = new google.visualization.LineChart(document.getElementById("chart28t"));
+ct28.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart29()}, 10);}
+function drawChart29() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart29"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct29 = new google.visualization.LineChart(document.getElementById("chart29t"));
+ct29.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart30()}, 10);}
+function drawChart30() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart30"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',99.26,false],['13 Nov',99.26,false],['20 Nov',99.26,false],['27 Nov',99.26,false],['04 Dec',99.26,false],['11 Dec',99.26,false],['18 Dec',99.26,false],['25 Dec',99.26,false],['05 Jan',99.26,false],['12 Jan',99.26,false],['19 Jan',99.26,false],['26 Jan',99.26,false],['02 Feb',99.26,false],['09 Feb',99.26,false],['16 Feb',99.26,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct30 = new google.visualization.LineChart(document.getElementById("chart30t"));
+ct30.draw(data, trendOptions);
+window.setTimeout(function(){drawChart31()}, 10);}
+function drawChart31() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart31"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct31 = new google.visualization.LineChart(document.getElementById("chart31t"));
+ct31.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart32()}, 10);}
+function drawChart32() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart32"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct32 = new google.visualization.LineChart(document.getElementById("chart32t"));
+ct32.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart33()}, 10);}
+function drawChart33() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['.php',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart33"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '.php');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct33 = new google.visualization.LineChart(document.getElementById("chart33t"));
+ct33.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart34()}, 10);}
+function drawChart34() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['1',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart34"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', '1');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct34 = new google.visualization.LineChart(document.getElementById("chart34t"));
+ct34.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart35()}, 10);}
+function drawChart35() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart35"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct35 = new google.visualization.LineChart(document.getElementById("chart35t"));
+ct35.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart36()}, 10);}
+function drawChart36() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['spaces',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart36"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'spaces');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct36 = new google.visualization.LineChart(document.getElementById("chart36t"));
+ct36.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart37()}, 10);}
+function drawChart37() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['no',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart37"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'no');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct37 = new google.visualization.LineChart(document.getElementById("chart37t"));
+ct37.draw(data, perfectTrendOptions);
+window.setTimeout(function(){drawChart38()}, 10);}
+function drawChart38() {
+var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],['yes',100]]);
+var c = new google.visualization.PieChart(document.getElementById("chart38"));
+c.draw(data, valOptions);
+var data = new google.visualization.DataTable();
+data.addColumn("string", "Date")
+data.addColumn('number', 'yes');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addRows([['06 Nov',100,false],['13 Nov',100,false],['20 Nov',100,false],['27 Nov',100,false],['04 Dec',100,false],['11 Dec',100,false],['18 Dec',100,false],['25 Dec',100,false],['05 Jan',100,false],['12 Jan',100,false],['19 Jan',100,false],['26 Jan',100,false],['02 Feb',100,false],['09 Feb',100,false],['16 Feb',100,false],['23 Feb',100,false],['02 Mar',100,false],['09 Mar',100,false],['16 Mar',100,false],['23 Mar',100,false],['30 Mar',100,false],['06 Apr',100,false],['13 Apr',100,false],['20 Apr',100,false],['27 Apr',100,false],['04 May',100,false],['11 May',100,false],['18 May',100,false],['25 May',100,false],['01 Jun',100,false],['08 Jun',100,false],['15 Jun',100,false],['22 Jun',100,false],['29 Jun',100,false],['06 Jul',100,false],['13 Jul',100,false],['20 Jul',100,false],['27 Jul',100,false],['03 Aug',100,false],['10 Aug',100,false],['17 Aug',100,false]]);
+ct38 = new google.visualization.LineChart(document.getElementById("chart38t"));
+ct38.draw(data, perfectTrendOptions);
+}
+</script>
+</body>
+</html>

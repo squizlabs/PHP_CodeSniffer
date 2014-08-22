@@ -628,5 +628,75 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "PHP Coding Standards Fixer",
+        "url": "fabpot/PHP-CS-Fixer",
+        "path": "Symfony/CS",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Box",
+        "url": "box-project/box2",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "RoboTask",
+        "url": "Codegyre/Robo",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Dropbox SDK for PHP 5.3+",
+        "url": "dropbox/dropbox-sdk-php",
+        "path": "lib",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Parsedown",
+        "url": "erusev/parsedown",
+        "path": "",
+        "ignore": "*/test/*",
+        "extensions": ""
+    },
+    {
+        "name": "PHP Markdown",
+        "url": "michelf/php-markdown",
+        "path": "Michelf",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Snappy",
+        "url": "KnpLabs/snappy",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Codeception",
+        "url": "Codeception/Codeception",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Goutte",
+        "url": "fabpot/Goutte",
+        "path": "",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Pux",
+        "url": "c9s/Pux",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
