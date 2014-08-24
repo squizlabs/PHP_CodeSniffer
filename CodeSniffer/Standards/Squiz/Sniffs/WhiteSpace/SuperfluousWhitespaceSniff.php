@@ -142,6 +142,13 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             if ($phpcsFile->tokenizerType === 'PHP') {
                 if (isset($tokens[($stackPtr + 1)]) === false) {
                     // The close PHP token is the last in the file.
+                    // However, if it contains a newline character we still need
+                    // to report the error.
+                    $content = $tokens[$stackPtr]['content'];
+                    if ($content != rtrim($content)) {
+                        $phpcsFile->addError('Additional whitespace found at end of file',
+                                             $stackPtr, 'EndFile');
+                    }
                     return;
                 }
 
