@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ConcatenationSpacingSniff now has a setting to specify how many spaces there should around concat operators
       -- Default remains at 0
       -- Override the "spacing" setting in a ruleset.xml file to change
+  - Fixed bug #20373 : Inline comment sniff tab handling way
  </notes>
  <contents>
   <dir name="/">

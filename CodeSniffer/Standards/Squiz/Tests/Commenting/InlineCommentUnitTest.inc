@@ -114,3 +114,6 @@ trait MyTrait {
 $foo = 'foo'; // Var set to foo.
 
 echo $foo;
+
+//	Comment here.
+echo $foo;
