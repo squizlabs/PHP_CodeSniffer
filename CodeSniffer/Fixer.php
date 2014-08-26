@@ -69,6 +69,16 @@ class PHP_CodeSniffer_Fixer
     private $_fixedTokens = array();
 
     /**
+     * The last value of each fixed token.
+     *
+     * If a token is being "fixed" back to its last value, the fix is
+     * probably conflicting with another.
+     *
+     * @var array(int => string)
+     */
+    private $_oldTokenValues = array();
+
+    /**
      * A list of tokens that have been fixed during a changeset.
      *
      * All changes in changeset must be able to be applied, or else
@@ -379,6 +389,31 @@ class PHP_CodeSniffer_Fixer
 
             return;
         }
+
+        if (isset($this->_oldTokenValues[$stackPtr]) === false) {
+            $this->_oldTokenValues[$stackPtr] = array(
+                                                 1 => $content,
+                                                 2 => $this->_tokens[$stackPtr],
+                                                );
+        } else {
+            if ($this->_oldTokenValues[$stackPtr][2] === $content) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $indent = "\t";
+                    if (empty($this->_changeset) === false) {
+                        $indent .= "\t";
+                    }
+
+                    @ob_end_clean();
+                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff; ignoring change ****".PHP_EOL;
+                    ob_start();
+                }
+
+                return;
+            }
+
+            $this->_oldTokenValues[$stackPtr][2] = $this->_oldTokenValues[$stackPtr][1];
+            $this->_oldTokenValues[$stackPtr][1] = $content;
+        }//end if
 
         $this->_tokens[$stackPtr] = $content;
         $this->_numFixes++;

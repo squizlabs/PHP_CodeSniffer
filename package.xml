@@ -29,16 +29,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed incorrect length of JS object operator tokens
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
+  - Added conflict detection to the file fixer
+    -- If 2 sniffs look to be conflicting, one change will be ignored to allow a fix to occur
   - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
     -- Thanks to Alex Slobodiskiy for the patch
   - Standards can now be located within hidden directories (further fix for bug #20323)
     -- Thanks to Klaus Purer for the patch
-  - Sniff ignore patterns now replace Win dir seperators like file ignore patterns already did
+  - Sniff ignore patterns now replace Win dir separators like file ignore patterns already did
   - Exclude patterns now use backtick delimiters, allowing all special characters to work correctly again
     -- Thanks to Jeremy Edgell for the patch
   - Squiz ConcatenationSpacingSniff now has a setting to specify how many spaces there should around concat operators
       -- Default remains at 0
       -- Override the "spacing" setting in a ruleset.xml file to change
+  - Added auto-fixes for Squiz InlineCommentSniff
   - Fixed bug #20373 : Inline comment sniff tab handling way
  </notes>
  <contents>

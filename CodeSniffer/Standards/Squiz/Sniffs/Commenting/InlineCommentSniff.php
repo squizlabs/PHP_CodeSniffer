@@ -132,7 +132,11 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
             $error = 'Perl-style comments are not allowed; use "// Comment" instead';
-            $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'WrongStyle');
+            if ($fix === true) {
+                $comment = ltrim($tokens[$stackPtr]['content'], "# \t");
+                $phpcsFile->fixer->replaceToken($stackPtr, "// $comment");
+            }
         }
 
         // We don't want end of block comments. If the last comment is a closing
@@ -161,53 +165,62 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $spaceCount = 0;
-        $tabFound   = false;
+        if (trim(substr($comment, 2)) !== '') {
+            $spaceCount = 0;
+            $tabFound   = false;
 
-        $commentLength = strlen($comment);
-        for ($i = 2; $i < $commentLength; $i++) {
-            if ($comment[$i] === "\t") {
-                $tabFound = true;
-                break;
+            $commentLength = strlen($comment);
+            for ($i = 2; $i < $commentLength; $i++) {
+                if ($comment[$i] === "\t") {
+                    $tabFound = true;
+                    break;
+                }
+
+                if ($comment[$i] !== ' ') {
+                    break;
+                }
+
+                $spaceCount++;
             }
 
-            if ($comment[$i] !== ' ') {
-                break;
+            $fix = false;
+            if ($tabFound === true) {
+                $error = 'Tab found before comment text; expected "// %s" but found "%s"';
+                $data  = array(
+                          ltrim(substr($comment, 2)),
+                          $comment,
+                         );
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TabBefore', $data);
+            } else if ($spaceCount === 0) {
+                $error = 'No space before comment text; expected "// %s" but found "%s"';
+                $data  = array(
+                          substr($comment, 2),
+                          $comment,
+                         );
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore', $data);
+            } else if ($spaceCount > 1) {
+                $error = 'Expected 1 space before comment text but found %s; use block comment if you need indentation';
+                $data  = array(
+                          $spaceCount,
+                          substr($comment, (2 + $spaceCount)),
+                          $comment,
+                         );
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBefore', $data);
+            }//end if
+
+            if ($fix === true) {
+                $newComment = '// '.ltrim($tokens[$stackPtr]['content'], "/\t ");
+                $phpcsFile->fixer->replaceToken($stackPtr, $newComment);
             }
-
-            $spaceCount++;
-        }
-
-        if ($tabFound === true) {
-            $error = 'Tab found before comment text; expected "// %s" but found "%s"';
-            $data  = array(
-                      ltrim(substr($comment, 2)),
-                      $comment,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'TabBefore', $data);
-        } else if ($spaceCount === 0) {
-            $error = 'No space before comment text; expected "// %s" but found "%s"';
-            $data  = array(
-                      substr($comment, 2),
-                      $comment,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore', $data);
-        } else if ($spaceCount > 1) {
-            $error = 'Expected 1 space before comment text but found %s; use block comment if you need indentation';
-            $data  = array(
-                      $spaceCount,
-                      substr($comment, (2 + $spaceCount)),
-                      $comment,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
         }//end if
 
         // The below section determines if a comment block is correctly capitalised,
         // and ends in a full-stop. It will find the last comment in a block, and
         // work its way up.
         $nextComment = $phpcsFile->findNext(array(T_COMMENT), ($stackPtr + 1), null, false);
-
-        if (($nextComment !== false) && (($tokens[$nextComment]['line']) === ($tokens[$stackPtr]['line'] + 1))) {
+        if (($nextComment !== false)
+            && (($tokens[$nextComment]['line']) === ($tokens[$stackPtr]['line'] + 1))
+        ) {
             return;
         }
 
@@ -232,7 +245,11 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
         if ($commentText === '') {
             $error = 'Blank comments are not allowed';
-            $phpcsFile->addError($error, $stackPtr, 'Empty');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, '');
+            }
+
             return;
         }
 
@@ -275,8 +292,21 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             }
 
             $error = 'There must be no blank line following an inline comment';
-            $phpcsFile->addError($error, $stackPtr, 'SpacingAfter');
-        }
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter');
+            if ($fix === true) {
+                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($stackPtr + 1); $i < $next; $i++) {
+                    if ($tokens[$i]['line'] === $tokens[$next]['line']) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+        }//end if
 
     }//end process()
 
