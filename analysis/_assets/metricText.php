@@ -123,7 +123,7 @@ $metricText = array(
                                                                       ),
                'Spacing after string concat'                       => array(
                                                                        'description' => 'How many spaces follow the string concatenation operator?',
-                                                                       'items'       => 'operators',
+                                                                       'items'       => 'concat operators',
                                                                       ),
                'Brackets around echoed strings'                    => array(
                                                                        'description' => 'Are parenthesis placed around <em>echo</em>\'d strings?',
@@ -143,11 +143,11 @@ $metricText = array(
                                                                       ),
                'Spacing before object operator'                    => array(
                                                                        'description' => 'How many spaces precede the object operator (->)?',
-                                                                       'items'       => 'operators',
+                                                                       'items'       => 'object operators',
                                                                       ),
                'Spacing after object operator'                     => array(
                                                                        'description' => 'How many spaces follow the object operator (->)?',
-                                                                       'items'       => 'operators',
+                                                                       'items'       => 'object operators',
                                                                       ),
                'File has doc comment'                              => array(
                                                                        'description' => 'Does each PHP file have a docblock comment to describe its purpose?',
@@ -167,6 +167,6 @@ $metricText = array(
                                                                       ),
                'Inline comment style'                              => array(
                                                                        'description' => 'What comment style is used for non docblock comments?',
-                                                                       'items'       => 'comments',
+                                                                       'items'       => 'inline comments',
                                                                       ),
               );

@@ -448,11 +448,15 @@ function generateReport($results, $repo=null)
         }
 
         $trendData  = 'var data = new google.visualization.DataTable();'.PHP_EOL;
-        $trendData .= 'data.addColumn("string", "Date")'.PHP_EOL;
+        $trendData .= 'data.addColumn("string", "Date");'.PHP_EOL;
         foreach ($sigValues as $value) {
             $trendData .= "data.addColumn('number', '$value');".PHP_EOL;
             $trendData .= "data.addColumn({type:'boolean',role:'emphasis'});".PHP_EOL;
+            $trendData .= "data.addColumn({type:'string',role:'tooltip'});".PHP_EOL;
         }
+
+        $trendData .= 'data.addColumn("number", "'.$items.'");'.PHP_EOL;
+        $trendData .= "data.addColumn({type:'string',role:'tooltip'});".PHP_EOL;
 
         $trendData .= 'data.addRows([';
         $trendPos   = array();
@@ -470,6 +474,7 @@ function generateReport($results, $repo=null)
             $trendData .= "['".date('d M', $time)."',";
             foreach ($sigValues as $value) {
                 if (isset($trendValues[$value]) === false) {
+                    $score = '0';
                     $trendData .= '0.00,';
                 } else {
                     $score = round(($trendValues[$value] / $trendTotal * 100), 2);
@@ -485,10 +490,11 @@ function generateReport($results, $repo=null)
                 } else {
                     $trendData .= 'false,';
                 }
+
+                $trendData .= "'{$score}%',";
             }
 
-            $trendData  = rtrim($trendData, ',');
-            $trendData .= '],';
+            $trendData .= $trendTotal.',"'.number_format($trendTotal).'"],';
         }//end foreach
 
         $trendData  = rtrim($trendData, ',');
@@ -570,8 +576,10 @@ function generateReport($results, $repo=null)
         $js .= $trendData.PHP_EOL;
         $js .= 'ct'.$chartNum.' = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
         if ($perfectScore === true) {
+            $js .= 'perfectTrendOptions.series = {'.count($sigValues).':itemSeries};'.PHP_EOL;
             $js .= 'ct'.$chartNum.'.draw(data, perfectTrendOptions);'.PHP_EOL;
         } else {
+            $js .= 'trendOptions.series = {'.count($sigValues).':itemSeries};'.PHP_EOL;
             $js .= 'ct'.$chartNum.'.draw(data, trendOptions);'.PHP_EOL;
         }
 
@@ -595,7 +603,7 @@ function generateReport($results, $repo=null)
         $html .= '  <div class="historicalData">'.PHP_EOL;
         $html .= '    <div class="tag">Historical</div>'.PHP_EOL;
         $html .= '    <div class="historicalChart">'.PHP_EOL;
-        $html .= '      <div class="chart-trend" id="chart'.$chartNum.'t" style="width:860px;height:185px;"><div class="placeholder"></div></div>'.PHP_EOL;
+        $html .= '      <div class="chart-trend" id="chart'.$chartNum.'t" style="width:860px;height:250px;"><div class="placeholder"></div></div>'.PHP_EOL;
         $html .= '    </div>'.PHP_EOL;
 
         if (empty($trendEvents) === false) {

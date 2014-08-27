@@ -67,7 +67,7 @@ pre {
 }
 
 .conventionDetails {
-    padding: 45px 0;
+    padding: 15px 0;
     width: 920px;
     margin: 0 auto;
 }
@@ -246,7 +246,7 @@ p.statsInfo {
 
 .historicalChart {
     width: 860px;
-    height: 150px;
+    height: 250px;
     margin-left: 65px;
     margin-top: 6px;
     display: inline-block;
@@ -258,7 +258,6 @@ p.statsInfo {
     margin-left: 25px;
     display: inline-block;
     font-size: 0.9em;
-    margin-top: 20px;
 }
 
 .historicalDate {
