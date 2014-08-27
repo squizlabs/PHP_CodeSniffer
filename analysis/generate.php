@@ -577,9 +577,11 @@ function generateReport($results, $repo=null)
         $js .= 'ct'.$chartNum.' = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
         if ($perfectScore === true) {
             $js .= 'perfectTrendOptions.series = {'.count($sigValues).':itemSeries};'.PHP_EOL;
+            $js .= 'perfectTrendOptions.vAxes[1].title = "'.$items.'";'.PHP_EOL;
             $js .= 'ct'.$chartNum.'.draw(data, perfectTrendOptions);'.PHP_EOL;
         } else {
             $js .= 'trendOptions.series = {'.count($sigValues).':itemSeries};'.PHP_EOL;
+            $js .= 'trendOptions.vAxes[1].title = "'.$items.'";'.PHP_EOL;
             $js .= 'ct'.$chartNum.'.draw(data, trendOptions);'.PHP_EOL;
         }
 

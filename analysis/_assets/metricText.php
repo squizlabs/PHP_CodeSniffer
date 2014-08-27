@@ -115,11 +115,11 @@ $metricText = array(
                                                                       ),
                'PHP constant case'                                 => array(
                                                                        'description' => 'What case are PHP constants (true, false, null) written in?',
-                                                                       'items'       => 'constants',
+                                                                       'items'       => 'PHP constants',
                                                                       ),
                'Spacing before string concat'                      => array(
                                                                        'description' => 'How many spaces precede the string concatenation operator?',
-                                                                       'items'       => 'operators',
+                                                                       'items'       => 'concat operators',
                                                                       ),
                'Spacing after string concat'                       => array(
                                                                        'description' => 'How many spaces follow the string concatenation operator?',
