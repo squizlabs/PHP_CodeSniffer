@@ -104,6 +104,10 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
             $lastLine       = $tokens[$nextComment]['line'];
             $commentLines[] = $nextComment;
+            if (strpos($tokens[$nextComment]['content'], '*/') !== false) {
+                // we found block comment close
+                break;
+            }
         }
 
         if (count($commentLines) <= 2) {
