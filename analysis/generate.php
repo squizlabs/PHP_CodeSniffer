@@ -578,19 +578,22 @@ function generateReport($results, $repo=null)
         $html .= '    <div class="currentDataWrap">'.PHP_EOL;
 
 
-        $chartHtml = ' <div class="currentChart">'.PHP_EOL;
-        $chartHtml .= '<div class="chart-value" id="chart'.$chartNum.'" style="width:290px;height:290px;">'.PHP_EOL;
-        $chartHtml .= drawDonut(290, 0.55, $valPercentages);
-        $chartHtml .= '</div>'.PHP_EOL;
-        if ($repo === null) {
-            $chartHtml .= '<div class="chart-repo" id="chart'.$chartNum.'r" style="width:154px;height:154px;">'.PHP_EOL;
-            $chartHtml .= drawDonut(154, 0.55, $repoPercentages);
+        if (count($valPercentages) > 1 || count($repoPercentages) > 1) {
+            $chartHtml = ' <div class="currentChart">'.PHP_EOL;
+            $chartHtml .= '<div class="chart-value" id="chart'.$chartNum.'" style="width:290px;height:290px;">'.PHP_EOL;
+            $chartHtml .= drawDonut(290, 0.55, $valPercentages);
             $chartHtml .= '</div>'.PHP_EOL;
+            if ($repo === null) {
+                $chartHtml .= '<div class="chart-repo" id="chart'.$chartNum.'r" style="width:154px;height:154px;">'.PHP_EOL;
+                $chartHtml .= drawDonut(154, 0.55, $repoPercentages);
+                $chartHtml .= '</div>'.PHP_EOL;
+            }
+
+            $chartHtml .= '      </div>'.PHP_EOL;
+
+            $html .= $chartHtml;
         }
 
-        $chartHtml .= '      </div>'.PHP_EOL;
-
-        $html .= $chartHtml;
         $html .= $tableHtml;
 
         $html .= '    </div>'.PHP_EOL;
