@@ -215,4 +215,60 @@ function jsonpp($json, $istr='  ')
         }
     }
     return $result;
-}
+
+}//end jsonpp()
+
+
+function drawDonut($width, $donut, $slices) 
+{
+    $output = '<svg width="'.$width.'" height="'.$width.'" style="overflow: hidden;">'.PHP_EOL;
+
+    $outerRadius = ($width / 2);
+    $innerRadius = $outerRadius * $donut;
+
+    $innerX = $outerRadius;
+    $innerY = $outerRadius * (1 - $donut);
+    $outerX = $outerRadius;
+    $outerY = 0;
+
+    $total = 0;
+    $numSlices = count($slices);
+
+    if ($numSlices === 1) {
+        // 100%, full circle.
+        $output .= '<path d="M'.$outerX.',0 A'.$outerRadius.','.$outerRadius.',0,0,1,'.$outerX.','.$width.' A'.$outerRadius.','.$outerRadius.',0,0,1,'.$outerX.',0 M'.$innerX.','.$innerY.' A'.$innerRadius.','.$innerRadius.',0,0,0,'.$innerX.','.($width - $innerY).' A'.$innerRadius.','.$innerRadius.',0,0,0,'.$innerX.','.$innerY.' Z" stroke="#ffffff" stroke-width="1" fill="'.$slices[0]['colour'].'"></path>'.PHP_EOL;
+    } else {
+        foreach ($slices as $i => $slice) {
+            if ($i === ($numSlices - 1)) {
+                // Just in case the last slice doesn't make 100%.
+                $total = 100;
+            } else {
+                $total  += $slice['percent'];
+            }
+
+            $radians = (($total / 100) * 360 * pi() / 180);
+
+            $x1 = round((($innerRadius * sin($radians)) + $outerRadius), 1);
+            $y1 = round(($outerRadius - ($innerRadius * cos($radians))), 1);
+
+            $x2 = round((($outerRadius * sin($radians)) + $outerRadius), 1);
+            $y2 = round(($outerRadius - ($outerRadius * cos($radians))), 1);
+
+            $large = 0;
+            if ($slice['percent'] > 50) {
+                $large = 1;
+            }
+
+            $output .= '<path d="M'.$innerX.','.$innerY.' L'.$outerX.','.$outerY.' A'.$outerRadius.','.$outerRadius.',0,'.$large.',1,'.$x2.','.$y2.' L'.$x1.','.$y1.' A'.$innerRadius.','.$innerRadius.',0,'.$large.',0,'.$innerX.','.$innerY.'" stroke="#ffffff" stroke-width="1" fill="'.$slice['colour'].'"></path>'.PHP_EOL;
+
+            $innerX = $x1;
+            $innerY = $y1;
+            $outerX = $x2;
+            $outerY = $y2;
+        }//end foreach
+    }//end if
+
+    $output .= '</svg>'.PHP_EOL;
+    return $output;
+
+}//end drawDonut()

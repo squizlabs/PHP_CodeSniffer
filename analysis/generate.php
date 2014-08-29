@@ -256,45 +256,17 @@ function generateReport($results, $repo=null)
 
         $jsTrendList .= 'var ct'.$chartNum.' = null;';
 
-        $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
-        $html .= '<div class="conventionDetails">'.PHP_EOL;
-        $html .= '  <h2><a href="#'.$metricid.'">'.$metric.'</a></h2>'.PHP_EOL;
-        $html .= '  <p>'.$description.'</p>'.PHP_EOL;
-        $html .= '  <div class="currentData">'.PHP_EOL;
 
-        if ($repo !== null) {
-            if ($data['winner'] === $GLOBALS['totals'][$metric]['winner']) {
-                $html .= '    <div class="conventionStatusInProject project true">'.PHP_EOL;
-                $html .= '      <p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
-                $html .= '      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
-                $html .= '    </div>'.PHP_EOL;
-            } else {
-                $html .= '    <div class="conventionStatusInProject project false">'.PHP_EOL;
-                $html .= '      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
-                $html .= '    </div>'.PHP_EOL;
-            }
-        }
+        $tableHtml = '      <div class="tableContainer">'.PHP_EOL;
+        $tableHtml .= '        <table class="statsTable">'.PHP_EOL;
+        $tableHtml .= '          <tr class="screenHide">'.PHP_EOL;
+        $tableHtml .= '            <th>Key</th>'.PHP_EOL;
+        $tableHtml .= '            <th>Method</th>'.PHP_EOL;
+        $tableHtml .= '            <th>Use</th>'.PHP_EOL;
+        $tableHtml .= '          </tr>'.PHP_EOL;
 
-        $html .= '    <div class="tag">Current</div>'.PHP_EOL;
-        $html .= '    <div class="currentDataWrap">'.PHP_EOL;
-        $html .= '      <div class="currentChart">'.PHP_EOL;
-        $html .= '        <div class="chart-value" id="chart'.$chartNum.'" style="width:290px;height:290px;"><div class="placeholder"></div></div>'.PHP_EOL;
-
-        if ($repo === null) {
-            $html .= '        <div class="chart-repo" id="chart'.$chartNum.'r" style="width:154px;height:154px;"></div>'.PHP_EOL;
-        }
-
-        $html .= '      </div>'.PHP_EOL;
-        $html .= '      <div class="tableContainer">'.PHP_EOL;
-        $html .= '        <table class="statsTable">'.PHP_EOL;
-        $html .= '          <tr class="screenHide">'.PHP_EOL;
-        $html .= '            <th>Key</th>'.PHP_EOL;
-        $html .= '            <th>Method</th>'.PHP_EOL;
-        $html .= '            <th>Use</th>'.PHP_EOL;
-        $html .= '          </tr>'.PHP_EOL;
-
-        $valsData      = "var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],";
-        $repoData      = "var data = google.visualization.arrayToDataTable([['Convention', 'Percentage'],";
+        $valPercentages = array();
+        $repoPercentages = array();
         $trendData     = '';
         $repoHTML      = '';
         $repoResetCode = '';
@@ -356,8 +328,6 @@ function generateReport($results, $repo=null)
                         $numRepos++;
                     }
 
-                    $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
-
                     if ($numRepos === 1) {
                         $title = '1 project prefers';
                     } else {
@@ -387,51 +357,54 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '  </div>'.PHP_EOL;
                     $repoHTML .= '  </div>'.PHP_EOL;
                     $repoHTML .= '  </div>'.PHP_EOL;
+
+                    $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
+                    $repoPercentages[] = array('percent' => $percentRepos, 'colour' => $colour);
                 } else {
                     $numRepos     = 0;
                     $percentRepos = 0;
                 }//end if
-
-                $repoData .= "['$value',$percentRepos],";
             }//end if
 
-            $count     = number_format($count, 0, '', ',');
-            $valsData .= "['$value',$percent],";
-
-            $html .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
-
-            if ($value === $data['winner']) {
-                $html .= '        <td class="key keyPopular" style="background-color:'.$colour.'" title="Most popular method"><span class="screenHide">'.$value.' - Most popular method</span></td>'.PHP_EOL;
-            } else {
-                $html .= '        <td class="key" style="background-color:'.$colour.'"><span class="screenHide">'.$value.'</span></td>'.PHP_EOL;
+            $count = number_format($count, 0, '', ',');
+            if ($percent > 0.5) {
+                $valPercentages[] = array('percent' => $percent, 'colour' => $colour);
             }
 
-            $html .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
+            $tableHtml .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
+
+            if ($value === $data['winner']) {
+                $tableHtml .= '        <td class="key keyPopular" style="background-color:'.$colour.'" title="Most popular method"><span class="screenHide">'.$value.' - Most popular method</span></td>'.PHP_EOL;
+            } else {
+                $tableHtml .= '        <td class="key" style="background-color:'.$colour.'"><span class="screenHide">'.$value.'</span></td>'.PHP_EOL;
+            }
+
+            $tableHtml .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
 
             // Sometimes 0 doesn't really mean 0.
             if ($count > 0 && $percent === 0.00) {
                 $percent = '< 0.01';
             }
 
-            $html .= '        <td class="value">'.$percent.'%';
+            $tableHtml .= '        <td class="value">'.$percent.'%';
             if ($repo === null) {
-                $html .= '<br/>';
+                $tableHtml .= '<br/>';
                 if ($numRepos > 0) {
-                    $html .= '<a href="" onclick="showListBox(\''.$metricid.'-'.$valueid.'-repos\');return false;">';
+                    $tableHtml .= '<a href="" onclick="showListBox(\''.$metricid.'-'.$valueid.'-repos\');return false;">';
                 } else {
-                    $html .= '<span class="preferrNone">';
+                    $tableHtml .= '<span class="preferrNone">';
                 }
 
-                $html .= 'preferred by '.$percentRepos.'% of projects';
+                $tableHtml .= 'preferred by '.$percentRepos.'% of projects';
                 if ($numRepos > 0) {
-                    $html .= '</a>';
+                    $tableHtml .= '</a>';
                 } else {
-                    $html .= '</span>';
+                    $tableHtml .= '</span>';
                 }
             }
 
-            $html .= '</td>'.PHP_EOL;
-            $html .= '      </tr>'.PHP_EOL;
+            $tableHtml .= '</td>'.PHP_EOL;
+            $tableHtml .= '      </tr>'.PHP_EOL;
 
             $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
@@ -500,36 +473,30 @@ function generateReport($results, $repo=null)
         $trendData  = rtrim($trendData, ',');
         $trendData .= ']);';
 
-        $valsData  = substr($valsData, 0, -1);
-        $valsData .= ']);'.PHP_EOL;
-
         $js .= 'function drawChart'.$chartNum.'() {'.PHP_EOL;
-        $js .= $valsData;
-        $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'"));'.PHP_EOL;
-        $js .= 'c.draw(data, valOptions);'.PHP_EOL;
 
         if ($other > 0) {
             $percent = round($other / $data['total'] * 100, 2);
             $other   = number_format($other, 0, '', ',');
-            $html   .= '<tr title="'.$other.' '.$items.'">'.PHP_EOL;
-            $html   .= '  <td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
-            $html   .= '  <td class="result">other</td>'.PHP_EOL;
-            $html   .= '  <td class="value">'.$percent.'%</td>'.PHP_EOL;
-            $html   .= '</tr>'.PHP_EOL;
+            $tableHtml   .= '<tr title="'.$other.' '.$items.'">'.PHP_EOL;
+            $tableHtml   .= '  <td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
+            $tableHtml   .= '  <td class="result">other</td>'.PHP_EOL;
+            $tableHtml   .= '  <td class="value">'.$percent.'%</td>'.PHP_EOL;
+            $tableHtml   .= '</tr>'.PHP_EOL;
         }
 
         if ($repo === null) {
             if (empty($undecidedRepos) === false) {
                 $numRepos     = count($undecidedRepos);
                 $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
-                $repoData    .= "['undecided',$percentRepos],";
+                $repoPercentages[] = array('percent' => $percentRepos, 'colour' => '#3690AC');
 
-                $html .= '    </table>'.PHP_EOL;
-                $html .= '    <table class="statsTable undecided">'.PHP_EOL;
-                $html .= '      <tr>'.PHP_EOL;
-                $html .= '        <td class="key"><span class="screenHide">undecided</span></td>'.PHP_EOL;
-                $html .= '        <td class="value"><a href="" onclick="showListBox(\''.$metricid.'-undecided-repos\');return false;">'.$percentRepos.'% of projects are undecided</a></td>'.PHP_EOL;
-                $html .= '      </tr>'.PHP_EOL;
+                $tableHtml .= '    </table>'.PHP_EOL;
+                $tableHtml .= '    <table class="statsTable undecided">'.PHP_EOL;
+                $tableHtml .= '      <tr>'.PHP_EOL;
+                $tableHtml .= '        <td class="key"><span class="screenHide">undecided</span></td>'.PHP_EOL;
+                $tableHtml .= '        <td class="value"><a href="" onclick="showListBox(\''.$metricid.'-undecided-repos\');return false;">'.$percentRepos.'% of projects are undecided</a></td>'.PHP_EOL;
+                $tableHtml .= '      </tr>'.PHP_EOL;
 
                 if ($numRepos > 1) {
                     $title = $numRepos.' projects are undecided';
@@ -558,20 +525,8 @@ function generateReport($results, $repo=null)
                 $repoHTML .= '  </div>'.PHP_EOL;
             }
 
-            $html      = str_replace('((repoResetCode))', $repoResetCode, $html);
-            $repoData  = substr($repoData, 0, -1);
-            $repoData .= ']);'.PHP_EOL;
-            $js       .= $repoData;
-
-            $js .= 'var c = new google.visualization.PieChart(document.getElementById("chart'.$chartNum.'r"));'.PHP_EOL;
-            if (empty($undecidedRepos) === false) {
-                $js .= 'var options = JSON.parse(JSON.stringify(repoOptions));'.PHP_EOL;
-                $js .= 'options.slices = {'.count($sigValues).':{color:undecidedColour}};'.PHP_EOL;
-                $js .= 'c.draw(data, options);'.PHP_EOL;
-            } else {
-                $js .= 'c.draw(data, repoOptions);'.PHP_EOL;
-            }
-        }
+            $tableHtml      = str_replace('((repoResetCode))', $repoResetCode, $tableHtml);
+        }//end if
 
         $js .= $trendData.PHP_EOL;
         $js .= 'ct'.$chartNum.' = new google.visualization.LineChart(document.getElementById("chart'.$chartNum.'t"));'.PHP_EOL;
@@ -596,9 +551,48 @@ function generateReport($results, $repo=null)
             $totalItems .= ' in '.$data['total_repos'].' projects';
         }
 
-        $html .= '        </table>'.PHP_EOL;
-        $html .= "        <p class=\"statsInfo\">Based on $totalItems</p>".PHP_EOL;
-        $html .= '      </div>'.PHP_EOL;
+        $tableHtml .= '        </table>'.PHP_EOL;
+        $tableHtml .= "        <p class=\"statsInfo\">Based on $totalItems</p>".PHP_EOL;
+        $tableHtml .= '      </div>'.PHP_EOL;
+
+        $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
+        $html .= '<div class="conventionDetails">'.PHP_EOL;
+        $html .= '  <h2><a href="#'.$metricid.'">'.$metric.'</a></h2>'.PHP_EOL;
+        $html .= '  <p>'.$description.'</p>'.PHP_EOL;
+        $html .= '  <div class="currentData">'.PHP_EOL;
+
+        if ($repo !== null) {
+            if ($data['winner'] === $GLOBALS['totals'][$metric]['winner']) {
+                $html .= '    <div class="conventionStatusInProject project true">'.PHP_EOL;
+                $html .= '      <p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
+                $html .= '      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '    </div>'.PHP_EOL;
+            } else {
+                $html .= '    <div class="conventionStatusInProject project false">'.PHP_EOL;
+                $html .= '      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '    </div>'.PHP_EOL;
+            }
+        }
+
+        $html .= '    <div class="tag">Current</div>'.PHP_EOL;
+        $html .= '    <div class="currentDataWrap">'.PHP_EOL;
+
+
+        $chartHtml = ' <div class="currentChart">'.PHP_EOL;
+        $chartHtml .= '<div class="chart-value" id="chart'.$chartNum.'" style="width:290px;height:290px;">'.PHP_EOL;
+        $chartHtml .= drawDonut(290, 0.55, $valPercentages);
+        $chartHtml .= '</div>'.PHP_EOL;
+        if ($repo === null) {
+            $chartHtml .= '<div class="chart-repo" id="chart'.$chartNum.'r" style="width:154px;height:154px;">'.PHP_EOL;
+            $chartHtml .= drawDonut(154, 0.55, $repoPercentages);
+            $chartHtml .= '</div>'.PHP_EOL;
+        }
+
+        $chartHtml .= '      </div>'.PHP_EOL;
+
+        $html .= $chartHtml;
+        $html .= $tableHtml;
+
         $html .= '    </div>'.PHP_EOL;
         $html .= $repoHTML;
         $html .= '  </div>'.PHP_EOL;
