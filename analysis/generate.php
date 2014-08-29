@@ -199,14 +199,14 @@ function generateReport($results, $repo=null)
     $jsTrendList = '';
 
     $html .= '<div id="all" class="listBoxWrap">'.PHP_EOL;
-    $html .= '    <div class="listBoxContent">'.PHP_EOL;
-    $html .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
-    $html .= '        <div class="listBoxHeader">'.PHP_EOL;
-    $html .= '            <h2>View project specific report</h2>'.PHP_EOL;
-    $html .= '        </div>'.PHP_EOL;
-    $html .= '        <div id="alllistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
-    $html .= '            <div class="td1Heading">Project</div><div class="td2Heading">Consistency</div>'.PHP_EOL;
-    $html .= '            <ul class="listBoxList">'.PHP_EOL;
+    $html .= '<div class="listBoxContent">'.PHP_EOL;
+    $html .= '<div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
+    $html .= '<div class="listBoxHeader">'.PHP_EOL;
+    $html .= '<h2>View project specific report</h2>'.PHP_EOL;
+    $html .= '</div>'.PHP_EOL;
+    $html .= '<div id="alllistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+    $html .= '<div class="td1Heading">Project</div><div class="td2Heading">Consistency</div>'.PHP_EOL;
+    $html .= '<ul class="listBoxList">'.PHP_EOL;
 
     foreach ($GLOBALS['repoList'] as $repoURL => $repoName) {
         $href = $repoURL.'/index.html';
@@ -218,10 +218,10 @@ function generateReport($results, $repo=null)
         $html .= '<li><a href="'.$href.'"><div class="td1">'.$repoName.'</div><div class="td2 '.$GLOBALS['grades'][$repoURL]['colour'].'" title="'.$gradeDescription.'">'.$GLOBALS['grades'][$repoURL]['grade'].'</div></a></li>'.PHP_EOL;
     }
 
-    $html .= '    </ul>'.PHP_EOL;
-    $html .= '  </div>'.PHP_EOL;
-    $html .= '  </div>'.PHP_EOL;
-    $html .= '  </div>'.PHP_EOL;
+    $html .= '</ul>'.PHP_EOL;
+    $html .= '</div>'.PHP_EOL;
+    $html .= '</div>'.PHP_EOL;
+    $html .= '</div>'.PHP_EOL;
 
     $metricTable = '';
 
@@ -257,13 +257,13 @@ function generateReport($results, $repo=null)
         $jsTrendList .= 'var ct'.$chartNum.' = null;';
 
 
-        $tableHtml = '      <div class="tableContainer">'.PHP_EOL;
-        $tableHtml .= '        <table class="statsTable">'.PHP_EOL;
-        $tableHtml .= '          <tr class="screenHide">'.PHP_EOL;
-        $tableHtml .= '            <th>Key</th>'.PHP_EOL;
-        $tableHtml .= '            <th>Method</th>'.PHP_EOL;
-        $tableHtml .= '            <th>Use</th>'.PHP_EOL;
-        $tableHtml .= '          </tr>'.PHP_EOL;
+        $tableHtml  = '<div class="tableContainer">'.PHP_EOL;
+        $tableHtml .= '<table class="statsTable">'.PHP_EOL;
+        $tableHtml .= '<tr class="screenHide">'.PHP_EOL;
+        $tableHtml .= '<th>Key</th>'.PHP_EOL;
+        $tableHtml .= '<th>Method</th>'.PHP_EOL;
+        $tableHtml .= '<th>Use</th>'.PHP_EOL;
+        $tableHtml .= '</tr>'.PHP_EOL;
 
         $valPercentages = array();
         $repoPercentages = array();
@@ -335,13 +335,13 @@ function generateReport($results, $repo=null)
                     }
 
                     $repoHTML .= '<div id="'.$metricid.'-'.$valueid.'-repos" class="listBoxWrap">'.PHP_EOL;
-                    $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
-                    $repoHTML .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
-                    $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
-                    $repoHTML .= '            <h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
-                    $repoHTML .= '        </div>'.PHP_EOL;
-                    $repoHTML .= '        <div id="'.$metricid.'-'.$valueid.'-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
-                    $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
+                    $repoHTML .= '<div class="listBoxContent">'.PHP_EOL;
+                    $repoHTML .= '<div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
+                    $repoHTML .= '<div class="listBoxHeader">'.PHP_EOL;
+                    $repoHTML .= '<h3>'.$title.' <i>'.$value.'</i></h3>'.PHP_EOL;
+                    $repoHTML .= '</div>'.PHP_EOL;
+                    $repoHTML .= '<div id="'.$metricid.'-'.$valueid.'-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+                    $repoHTML .= '<ul class="listBoxList">'.PHP_EOL;
 
                     uksort($data['repos'][$value], 'sortRepos');
                     foreach ($data['repos'][$value] as $repoURL => $repoPercent) {
@@ -353,10 +353,10 @@ function generateReport($results, $repo=null)
                         $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.floor($repoPercent).'%</div></a></li>'.PHP_EOL;
                     }
 
-                    $repoHTML .= '    </ul>'.PHP_EOL;
-                    $repoHTML .= '  </div>'.PHP_EOL;
-                    $repoHTML .= '  </div>'.PHP_EOL;
-                    $repoHTML .= '  </div>'.PHP_EOL;
+                    $repoHTML .= '</ul>'.PHP_EOL;
+                    $repoHTML .= '</div>'.PHP_EOL;
+                    $repoHTML .= '</div>'.PHP_EOL;
+                    $repoHTML .= '</div>'.PHP_EOL;
 
                     $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
                     $repoPercentages[] = array('percent' => $percentRepos, 'colour' => $colour);
@@ -371,22 +371,22 @@ function generateReport($results, $repo=null)
                 $valPercentages[] = array('percent' => $percent, 'colour' => $colour);
             }
 
-            $tableHtml .= '      <tr title="'.$count.' '.$items.'">'.PHP_EOL;
+            $tableHtml .= '<tr title="'.$count.' '.$items.'">'.PHP_EOL;
 
             if ($value === $data['winner']) {
-                $tableHtml .= '        <td class="key keyPopular" style="background-color:'.$colour.'" title="Most popular method"><span class="screenHide">'.$value.' - Most popular method</span></td>'.PHP_EOL;
+                $tableHtml .= '<td class="key keyPopular" style="background-color:'.$colour.'" title="Most popular method"><span class="screenHide">'.$value.' - Most popular method</span></td>'.PHP_EOL;
             } else {
-                $tableHtml .= '        <td class="key" style="background-color:'.$colour.'"><span class="screenHide">'.$value.'</span></td>'.PHP_EOL;
+                $tableHtml .= '<td class="key" style="background-color:'.$colour.'"><span class="screenHide">'.$value.'</span></td>'.PHP_EOL;
             }
 
-            $tableHtml .= '        <td class="result">'.$value.'</td>'.PHP_EOL;
+            $tableHtml .= '<td class="result">'.$value.'</td>'.PHP_EOL;
 
             // Sometimes 0 doesn't really mean 0.
             if ($count > 0 && $percent === 0.00) {
                 $percent = '< 0.01';
             }
 
-            $tableHtml .= '        <td class="value">'.$percent.'%';
+            $tableHtml .= '<td class="value">'.$percent.'%';
             if ($repo === null) {
                 $tableHtml .= '<br/>';
                 if ($numRepos > 0) {
@@ -404,7 +404,7 @@ function generateReport($results, $repo=null)
             }
 
             $tableHtml .= '</td>'.PHP_EOL;
-            $tableHtml .= '      </tr>'.PHP_EOL;
+            $tableHtml .= '</tr>'.PHP_EOL;
 
             $trendData  = rtrim($trendData, ',');
             $trendData .= ']},';
@@ -479,9 +479,9 @@ function generateReport($results, $repo=null)
             $percent = round($other / $data['total'] * 100, 2);
             $other   = number_format($other, 0, '', ',');
             $tableHtml   .= '<tr title="'.$other.' '.$items.'">'.PHP_EOL;
-            $tableHtml   .= '  <td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
-            $tableHtml   .= '  <td class="result">other</td>'.PHP_EOL;
-            $tableHtml   .= '  <td class="value">'.$percent.'%</td>'.PHP_EOL;
+            $tableHtml   .= '<td class="key"><span class="screenHide">Other</span></td>'.PHP_EOL;
+            $tableHtml   .= '<td class="result">other</td>'.PHP_EOL;
+            $tableHtml   .= '<td class="value">'.$percent.'%</td>'.PHP_EOL;
             $tableHtml   .= '</tr>'.PHP_EOL;
         }
 
@@ -491,12 +491,12 @@ function generateReport($results, $repo=null)
                 $percentRepos = round($numRepos / $data['total_repos'] * 100, 2);
                 $repoPercentages[] = array('percent' => $percentRepos, 'colour' => '#3690AC');
 
-                $tableHtml .= '    </table>'.PHP_EOL;
-                $tableHtml .= '    <table class="statsTable undecided">'.PHP_EOL;
-                $tableHtml .= '      <tr>'.PHP_EOL;
-                $tableHtml .= '        <td class="key"><span class="screenHide">undecided</span></td>'.PHP_EOL;
-                $tableHtml .= '        <td class="value"><a href="" onclick="showListBox(\''.$metricid.'-undecided-repos\');return false;">'.$percentRepos.'% of projects are undecided</a></td>'.PHP_EOL;
-                $tableHtml .= '      </tr>'.PHP_EOL;
+                $tableHtml .= '</table>'.PHP_EOL;
+                $tableHtml .= '<table class="statsTable undecided">'.PHP_EOL;
+                $tableHtml .= '<tr>'.PHP_EOL;
+                $tableHtml .= '<td class="key"><span class="screenHide">undecided</span></td>'.PHP_EOL;
+                $tableHtml .= '<td class="value"><a href="" onclick="showListBox(\''.$metricid.'-undecided-repos\');return false;">'.$percentRepos.'% of projects are undecided</a></td>'.PHP_EOL;
+                $tableHtml .= '</tr>'.PHP_EOL;
 
                 if ($numRepos > 1) {
                     $title = $numRepos.' projects are undecided';
@@ -505,13 +505,11 @@ function generateReport($results, $repo=null)
                 }
 
                 $repoHTML .= '<div id="'.$metricid.'-undecided-repos" class="listBoxWrap">'.PHP_EOL;
-                $repoHTML .= '    <div class="listBoxContent">'.PHP_EOL;
-                $repoHTML .= '        <div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
-                $repoHTML .= '        <div class="listBoxHeader">'.PHP_EOL;
-                $repoHTML .= '            <h3>'.$title.'</h3>'.PHP_EOL;
-                $repoHTML .= '        </div>'.PHP_EOL;
-                $repoHTML .= '        <div id="'.$metricid.'-undecided-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
-                $repoHTML .= '            <ul class="listBoxList">'.PHP_EOL;
+                $repoHTML .= '<div class="listBoxContent">'.PHP_EOL;
+                $repoHTML .= '<div class="listBoxClose" onclick="hideListBox();"></div>'.PHP_EOL;
+                $repoHTML .= '<div class="listBoxHeader"><h3>'.$title.'</h3></div>'.PHP_EOL;
+                $repoHTML .= '<div id="'.$metricid.'-undecided-reposlistBoxListWrap" class="listBoxListWrap">'.PHP_EOL;
+                $repoHTML .= '<ul class="listBoxList">'.PHP_EOL;
 
                 uksort($undecidedRepos, 'sortRepos');
                 foreach ($undecidedRepos as $repoURL => $repoPercent) {
@@ -519,10 +517,10 @@ function generateReport($results, $repo=null)
                     $repoHTML .= '<li><a href="'.$href.'"><div class="td1">'.$GLOBALS['repoList'][$repoURL].'</div><div class="td2">'.floor($repoPercent).'%</div></a></li>'.PHP_EOL;
                 }
 
-                $repoHTML .= '    </ul>'.PHP_EOL;
-                $repoHTML .= '  </div>'.PHP_EOL;
-                $repoHTML .= '  </div>'.PHP_EOL;
-                $repoHTML .= '  </div>'.PHP_EOL;
+                $repoHTML .= '</ul>'.PHP_EOL;
+                $repoHTML .= '</div>'.PHP_EOL;
+                $repoHTML .= '</div>'.PHP_EOL;
+                $repoHTML .= '</div>'.PHP_EOL;
             }
 
             $tableHtml      = str_replace('((repoResetCode))', $repoResetCode, $tableHtml);
@@ -551,31 +549,31 @@ function generateReport($results, $repo=null)
             $totalItems .= ' in '.$data['total_repos'].' projects';
         }
 
-        $tableHtml .= '        </table>'.PHP_EOL;
-        $tableHtml .= "        <p class=\"statsInfo\">Based on $totalItems</p>".PHP_EOL;
-        $tableHtml .= '      </div>'.PHP_EOL;
+        $tableHtml .= '</table>'.PHP_EOL;
+        $tableHtml .= "<p class=\"statsInfo\">Based on $totalItems</p>".PHP_EOL;
+        $tableHtml .= '</div>'.PHP_EOL;
 
         $html .= '<div id="'.$metricid.'" class="conventionWrap">'.PHP_EOL;
         $html .= '<div class="conventionDetails">'.PHP_EOL;
-        $html .= '  <h2><a href="#'.$metricid.'">'.$metric.'</a></h2>'.PHP_EOL;
-        $html .= '  <p>'.$description.'</p>'.PHP_EOL;
-        $html .= '  <div class="currentData">'.PHP_EOL;
+        $html .= '<h2><a href="#'.$metricid.'">'.$metric.'</a></h2>'.PHP_EOL;
+        $html .= '<p>'.$description.'</p>'.PHP_EOL;
+        $html .= '<div class="currentData">'.PHP_EOL;
 
         if ($repo !== null) {
             if ($data['winner'] === $GLOBALS['totals'][$metric]['winner']) {
-                $html .= '    <div class="conventionStatusInProject project true">'.PHP_EOL;
-                $html .= '      <p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
-                $html .= '      <span title="This project is using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
-                $html .= '    </div>'.PHP_EOL;
+                $html .= '<div class="conventionStatusInProject project true">'.PHP_EOL;
+                $html .= '<p class="projectStatusText">This project is using the popular method for this convention</p>'.PHP_EOL;
+                $html .= '<span title="This project is using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '</div>'.PHP_EOL;
             } else {
-                $html .= '    <div class="conventionStatusInProject project false">'.PHP_EOL;
-                $html .= '      <span title="This project is not using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
-                $html .= '    </div>'.PHP_EOL;
+                $html .= '<div class="conventionStatusInProject project false">'.PHP_EOL;
+                $html .= '<span title="This project is not using the popular method for this convention" class="conventionStatus"></span>'.PHP_EOL;
+                $html .= '</div>'.PHP_EOL;
             }
         }
 
-        $html .= '    <div class="tag">Current</div>'.PHP_EOL;
-        $html .= '    <div class="currentDataWrap">'.PHP_EOL;
+        $html .= '<div class="tag">Current</div>'.PHP_EOL;
+        $html .= '<div class="currentDataWrap">'.PHP_EOL;
 
 
         if (count($valPercentages) > 1 || count($repoPercentages) > 1) {
@@ -589,46 +587,46 @@ function generateReport($results, $repo=null)
                 $chartHtml .= '</div>'.PHP_EOL;
             }
 
-            $chartHtml .= '      </div>'.PHP_EOL;
+            $chartHtml .= '</div>'.PHP_EOL;
 
             $html .= $chartHtml;
         }
 
         $html .= $tableHtml;
 
-        $html .= '    </div>'.PHP_EOL;
+        $html .= '</div>'.PHP_EOL;
         $html .= $repoHTML;
-        $html .= '  </div>'.PHP_EOL;
-        $html .= '  <div class="historicalData">'.PHP_EOL;
-        $html .= '    <div class="tag">Historical</div>'.PHP_EOL;
-        $html .= '    <div class="historicalChart">'.PHP_EOL;
-        $html .= '      <div class="chart-trend" id="chart'.$chartNum.'t" style="width:860px;height:250px;"><div class="placeholder"></div></div>'.PHP_EOL;
-        $html .= '    </div>'.PHP_EOL;
+        $html .= '</div>'.PHP_EOL;
+        $html .= '<div class="historicalData">'.PHP_EOL;
+        $html .= '<div class="tag">Historical</div>'.PHP_EOL;
+        $html .= '<div class="historicalChart">'.PHP_EOL;
+        $html .= '<div class="chart-trend" id="chart'.$chartNum.'t" style="width:860px;height:250px;"><div class="placeholder"></div></div>'.PHP_EOL;
+        $html .= '</div>'.PHP_EOL;
 
         if (empty($trendEvents) === false) {
-            $html .= '    <div class="historicalEvents">'.PHP_EOL;
-            $html .= '      <ul>'.PHP_EOL;
+            $html .= '<div class="historicalEvents">'.PHP_EOL;
+            $html .= '<ul>'.PHP_EOL;
             foreach ($trendEvents as $date => $events) {
                 $mainEvent = $events[0];
                 unset($events[0]);
 
                 $time = strtotime($date);
-                $html .= '        <li onmouseover="ct'.$chartNum.'.setSelection([{row:'.$trendPos[$date].',column:null}]);" onmouseout="ct'.$chartNum.'.setSelection([]);" class="historicalDate"><strong>'.date('d M Y', $time)."</strong>: $mainEvent".PHP_EOL;
-                $html .= '          <ul>'.PHP_EOL;
+                $html .= '<li onmouseover="ct'.$chartNum.'.setSelection([{row:'.$trendPos[$date].',column:null}]);" onmouseout="ct'.$chartNum.'.setSelection([]);" class="historicalDate"><strong>'.date('d M Y', $time)."</strong>: $mainEvent".PHP_EOL;
+                $html .= '<ul>'.PHP_EOL;
 
                 foreach($events as $event) {
-                    $html .= '            <li>'.$event.'</li>'.PHP_EOL;
+                    $html .= '<li>'.$event.'</li>'.PHP_EOL;
                 }
 
-                $html .= '          </ul>'.PHP_EOL;
-                $html .= '        </li>'.PHP_EOL;
+                $html .= '</ul>'.PHP_EOL;
+                $html .= '</li>'.PHP_EOL;
             }
 
-            $html .= '      </ul>'.PHP_EOL;
-            $html .= '    </div>'.PHP_EOL;
+            $html .= '</ul>'.PHP_EOL;
+            $html .= '</div>'.PHP_EOL;
         }
 
-        $html .= '  </div>'.PHP_EOL;
+        $html .= '</div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
         $html .= '</div>'.PHP_EOL;
     }//end foreach
@@ -664,16 +662,16 @@ function generateReport($results, $repo=null)
     if ($repo === null) {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<ul class="reportLinkList">'.PHP_EOL;
-        $intro .= '  <li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
+        $intro .= '<li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
         $intro .= '</ul>'.PHP_EOL;
         $intro .= '<div class="divider"></div>'.PHP_EOL;
         $intro .= '<div id="reportInstructionsWrap" class="reportInstructionsWrap collapsed">'.PHP_EOL;
-        $intro .= '  <a href="" onclick="toggleInstructions(); return false;"><h2>How to read this report</h2></a>'.PHP_EOL;
-        $intro .= '  <ul class="reportInstructions">'.PHP_EOL;
-        $intro .= '    <li class="instructionItem graphInstructions">The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</li>'.PHP_EOL;
-        $intro .= '    <li class="instructionItem overviewPanel"><a href="" onclick="showFlyout(); return false;">See an overview</a> of the most popular methods for coding conventions in this report</li>'.PHP_EOL;
-        $intro .= '    <li class="instructionItem rawData">You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</li>'.PHP_EOL;
-        $intro .= '  </ul>'.PHP_EOL;
+        $intro .= '<a href="" onclick="toggleInstructions(); return false;"><h2>How to read this report</h2></a>'.PHP_EOL;
+        $intro .= '<ul class="reportInstructions">'.PHP_EOL;
+        $intro .= '<li class="instructionItem graphInstructions">The graphs for each coding convention show the percentage of each style variation used across all projects (the outer ring) and the percentage of projects that primarily use each variation (the inner ring). Clicking the <em>preferred by</em> line under each style variation will show a list of projects that primarily use it, with the ability to click through and see a coding convention report for the project.</li>'.PHP_EOL;
+        $intro .= '<li class="instructionItem overviewPanel"><a href="" onclick="showFlyout(); return false;">See an overview</a> of the most popular methods for coding conventions in this report</li>'.PHP_EOL;
+        $intro .= '<li class="instructionItem rawData">You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</li>'.PHP_EOL;
+        $intro .= '</ul>'.PHP_EOL;
         $intro .= '</div>'.PHP_EOL;
 
         $footer    = 'Report generated on '.date('r');
@@ -686,17 +684,17 @@ function generateReport($results, $repo=null)
     } else {
         $intro  = '<p class="overviewText"><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a>, using a custom coding standard and report, was used to record various coding conventions across '.$GLOBALS['num_repos'].' PHP projects.</p>'.PHP_EOL;
         $intro .= '<ul class="reportLinkList">'.PHP_EOL;
-        $intro .= '  <li><a href="../../index.html" class="reportLink reportCombined">View Combined Report ('.$GLOBALS['num_repos'].' PHP Projects)</a></li>'.PHP_EOL;
-        $intro .= '  <li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
+        $intro .= '<li><a href="../../index.html" class="reportLink reportCombined">View Combined Report ('.$GLOBALS['num_repos'].' PHP Projects)</a></li>'.PHP_EOL;
+        $intro .= '<li><a href="" onclick="showListBox(\'all\'); return false;" class="reportLink reportProject">View Project Specific Report</a></li>'.PHP_EOL;
         $intro .= '</ul>'.PHP_EOL;
         $intro .= '<div class="divider"></div>'.PHP_EOL;
         $intro .= '<div id="reportInstructionsWrap" class="reportInstructionsWrap collapsed">'.PHP_EOL;
-        $intro .= '  <a href="" onclick="toggleInstructions(); return false;"><h2>How to read this report</h2></a>'.PHP_EOL;
-        $intro .= '  <ul class="reportInstructions">'.PHP_EOL;
-        $intro .= '    <li class="instructionItem graphInstructions">The graphs for each coding convention show the percentage of each style variation used throughout the project.</li>'.PHP_EOL;
-        $intro .= '    <li class="instructionItem overviewPanel"><a href="" onclick="showFlyout(); return false;">See an overview</a> of the most popular methods for coding conventions in this project</li>'.PHP_EOL;
-        $intro .= '    <li class="instructionItem rawData">You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</li>'.PHP_EOL;
-        $intro .= '  </ul>'.PHP_EOL;
+        $intro .= '<a href="" onclick="toggleInstructions(); return false;"><h2>How to read this report</h2></a>'.PHP_EOL;
+        $intro .= '<ul class="reportInstructions">'.PHP_EOL;
+        $intro .= '<li class="instructionItem graphInstructions">The graphs for each coding convention show the percentage of each style variation used throughout the project.</li>'.PHP_EOL;
+        $intro .= '<li class="instructionItem overviewPanel"><a href="" onclick="showFlyout(); return false;">See an overview</a> of the most popular methods for coding conventions in this project</li>'.PHP_EOL;
+        $intro .= '<li class="instructionItem rawData">You can <a href="./results.json">view the raw data</a> used to generate this report, and use it in any way you want.</li>'.PHP_EOL;
+        $intro .= '</ul>'.PHP_EOL;
         $intro .= '</div>'.PHP_EOL;
 
         $commitid  = $results['project']['commitid'];
