@@ -359,6 +359,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         }
                     }//end if
                 }//end if
+                
+                //Doc comment star & close tag but have 1 more space 
+                if (in_array($tokens[$firstToken]['code'], array(T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG), true)) {
+                    if ($column - 1 === $indent) {
+                        continue;
+                    }
+                }//end if
 
                 // The token at the start of the line, needs to have its column
                 // greater than the relative indent we set above. If it is less,
