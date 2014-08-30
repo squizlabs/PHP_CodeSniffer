@@ -698,5 +698,152 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Nette Application MVC",
+        "url": "nette/application",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Bootstrap",
+        "url": "nette/bootstrap",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Caching",
+        "url": "nette/caching",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Component Model",
+        "url": "nette/component-model",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Database",
+        "url": "nette/database",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Dependency Injection",
+        "url": "nette/di",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Finder: Files Searching",
+        "url": "nette/finder",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Forms: greatly facilitates web forms",
+        "url": "nette/forms",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette HTTP Component",
+        "url": "nette/http",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Mail: Sending E-mails",
+        "url": "nette/mail",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette PHP Generator",
+        "url": "nette/php-generator",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette PHP Reflection",
+        "url": "nette/reflection",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette SafeStream: Atomic Operations",
+        "url": "nette/safe-stream",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Security: Access Control",
+        "url": "nette/security",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Tokenizer",
+        "url": "nette/tokenizer",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Utility Classes",
+        "url": "nette/utils",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "RobotLoader: comfortable autoloading",
+        "url": "nette/robot-loader",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Latte: amazing template engine for PHP",
+        "url": "nette/latte",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Tracy - PHP debugger",
+        "url": "nette/tracy",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "NEON",
+        "url": "nette/neon",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Nette Tester: enjoyable unit testing",
+        "url": "nette/tester",
+        "path": "Tester",
+        "ignore": "",
+        "extensions": ""
     }
 ]
