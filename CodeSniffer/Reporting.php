@@ -163,10 +163,6 @@ class PHP_CodeSniffer_Reporting
             $generatedReport = ob_get_contents();
             ob_end_clean();
 
-            if ($generatedReport === '') {
-                continue;
-            }
-
             if ($output === null && $cliValues['reportFile'] !== null) {
                 $output = $cliValues['reportFile'];
             }
