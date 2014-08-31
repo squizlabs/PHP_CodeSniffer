@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Default remains at 0
       -- Override the "spacing" setting in a ruleset.xml file to change
   - Added auto-fixes for Squiz InlineCommentSniff
+  - Generic DocCommentSniff now correctly fixes additional blank lines at the end of a comment
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20377 : Error when trying to execute phpcs with report=json
   - Fixed bug #20378 : Report appended to existing file if no errors found in run

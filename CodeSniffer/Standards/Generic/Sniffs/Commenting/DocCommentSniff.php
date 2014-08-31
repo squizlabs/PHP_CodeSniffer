@@ -94,7 +94,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'SpacingAfter');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                for ($i = $prev; $i < $commentEnd; $i++) {
+                for ($i = ($prev + 1); $i < $commentEnd; $i++) {
                     if ($tokens[($i + 1)]['line'] === $tokens[$commentEnd]['line']) {
                         break;
                     }
