@@ -87,8 +87,6 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
      *
      * @param string  $cachedData    Any partial report data that was returned from
      *                               generateFileReport during the run.
-     * @param string  $cachedData    Any partial report data that was returned from
-     *                               generateFileReport during the run.
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
