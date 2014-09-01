@@ -269,7 +269,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         $i = $nextToken;
                     }
                 } else {
-                    // If this token does not have a scope_opener indice, then
+                    // If this token does not have a scope_opener index, then
                     // it's probably an inline scope, so let's skip to the next
                     // semicolon. Inline scopes include inline if's, abstract
                     // methods etc.

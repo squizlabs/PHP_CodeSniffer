@@ -38,7 +38,7 @@
  *    'level'      => 2          // the depth a token is within the scopes open
  *    'conditions' => array(     // a list of scope condition token
  *                               // positions => codes that
- *                     2 => 50,  // openened the scopes that this token exists
+ *                     2 => 50,  // opened the scopes that this token exists
  *                     9 => 353, // in (see conditional tokens section below)
  *                    ),
  *   );
@@ -88,7 +88,7 @@
  *   );
  * </code>
  *
- * Each token within a set of parenthesis also has an array indice
+ * Each token within a set of parenthesis also has an array index
  * 'nested_parenthesis' which is an array of the
  * left parenthesis => right parenthesis token positions.
  *
@@ -845,7 +845,7 @@ class PHP_CodeSniffer_File
      * Records an error against a specific line in the file.
      *
      * @param string $error    The error message.
-     * @param int    $line     The line on which the error occured.
+     * @param int    $line     The line on which the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
      * @param int    $severity The severity level for this error. A value of 0 will be converted into the default severity level.
@@ -955,8 +955,8 @@ class PHP_CodeSniffer_File
      * Adds an error to the error stack.
      *
      * @param string  $error    The error message.
-     * @param int     $line     The line on which the error occured.
-     * @param int     $column   The column at which the error occured.
+     * @param int     $line     The line on which the error occurred.
+     * @param int     $column   The column at which the error occurred.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the error message.
      * @param int     $severity The severity level for this error. A value of 0
@@ -1093,8 +1093,8 @@ class PHP_CodeSniffer_File
      * Adds an warning to the warning stack.
      *
      * @param string  $warning  The error message.
-     * @param int     $line     The line on which the warning occured.
-     * @param int     $column   The column at which the warning occured.
+     * @param int     $line     The line on which the warning occurred.
+     * @param int     $column   The column at which the warning occurred.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the warning message.
      * @param int     $severity The severity level for this warning. A value of 0
@@ -2105,9 +2105,9 @@ class PHP_CodeSniffer_File
     /**
      * Constructs the level map.
      *
-     * The level map adds a 'level' indice to each token which indicates the
+     * The level map adds a 'level' index to each token which indicates the
      * depth that a token within a set of scope blocks. It also adds a
-     * 'condition' indice which is an array of the scope conditions that opened
+     * 'condition' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
      * @param array  &$tokens   The array of tokens to process.
