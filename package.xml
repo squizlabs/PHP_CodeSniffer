@@ -46,6 +46,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20377 : Error when trying to execute phpcs with report=json
   - Fixed bug #20378 : Report appended to existing file if no errors found in run
+  - Fixed bug #20381 : Invalid "Comment closer must be on a new line"
+    -- Thanks to Brad Kent for the patch
  </notes>
  <contents>
   <dir name="/">

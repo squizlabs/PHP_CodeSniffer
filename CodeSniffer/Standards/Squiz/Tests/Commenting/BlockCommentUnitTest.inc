@@ -183,3 +183,7 @@ if (Permission::hasPermission($projectid, 'project.metadata.add') === FALSE) {
     throw new PermissionException(_('You do not have permission to add metadata field'));
 }*/
 
+/*
+    Comment goes here
+*/
+$two = (1 + 1);  // I'm not a comment closer!
