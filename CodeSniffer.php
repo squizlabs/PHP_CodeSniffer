@@ -1255,7 +1255,7 @@ class PHP_CodeSniffer
         }
 
         foreach ($this->ignorePatterns as $pattern => $type) {
-            if (is_array($pattern) === true) {
+            if (is_array($type) === true) {
                 // A sniff specific ignore pattern.
                 continue;
             }
