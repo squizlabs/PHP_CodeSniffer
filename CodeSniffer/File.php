@@ -994,7 +994,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'warning'
         ) {
             // Pass this off to the warning handler.
-            return $this->_addWarning($error, $line, $column, $code, $data, $severity);
+            return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
         } else if ($this->phpcs->cli->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
             // be hidden in the reports anyway.
@@ -1132,7 +1132,7 @@ class PHP_CodeSniffer_File
             && $this->ruleset[$sniffCode]['type'] === 'error'
         ) {
             // Pass this off to the error handler.
-            return $this->_addError($warning, $line, $column, $code, $data, $severity);
+            return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
         } else if ($this->phpcs->cli->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
             // be hidden in the reports anyway.
