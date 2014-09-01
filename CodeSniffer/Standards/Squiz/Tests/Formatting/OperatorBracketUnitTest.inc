@@ -136,4 +136,4 @@ $value = (int) isset($blah) + (int) isset($foo) + (int) isset($bar);
 
 doSomething(getValue($var, 2)) - $y;
 
-?>
+$codeFiles = array($global => $codeFiles[$global]) + $codeFiles;

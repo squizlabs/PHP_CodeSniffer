@@ -266,15 +266,16 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         $tokens = $phpcsFile->getTokens();
 
         $allowed = array(
-                    T_VARIABLE,
-                    T_LNUMBER,
-                    T_DNUMBER,
-                    T_STRING,
-                    T_WHITESPACE,
-                    T_THIS,
-                    T_OBJECT_OPERATOR,
-                    T_MODULUS,
-                    T_ISSET,
+                    T_VARIABLE        => true,
+                    T_LNUMBER         => true,
+                    T_DNUMBER         => true,
+                    T_STRING          => true,
+                    T_WHITESPACE      => true,
+                    T_THIS            => true,
+                    T_OBJECT_OPERATOR => true,
+                    T_MODULUS         => true,
+                    T_ISSET           => true,
+                    T_ARRAY           => true,
                    );
 
         // Find the first token in the expression.
@@ -285,10 +286,10 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 break;
             }
 
-            if (in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
-                || in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$operators) === true
-                || in_array($tokens[$before]['code'], PHP_CodeSniffer_Tokens::$castTokens) === true
-                || in_array($tokens[$before]['code'], $allowed) === true
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$before]['code']]) === true
+                || isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$before]['code']]) === true
+                || isset(PHP_CodeSniffer_Tokens::$castTokens[$tokens[$before]['code']]) === true
+                || isset($allowed[$tokens[$before]['code']]) === true
             ) {
                 continue;
             }
@@ -316,10 +317,10 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 break;
             }
 
-            if (in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
-                || in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$operators) === true
-                || in_array($tokens[$after]['code'], PHP_CodeSniffer_Tokens::$castTokens) === true
-                || in_array($tokens[$after]['code'], $allowed) === true
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$after]['code']]) === true
+                || isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$after]['code']]) === true
+                || isset(PHP_CodeSniffer_Tokens::$castTokens[$tokens[$after]['code']]) === true
+                || isset($allowed[$tokens[$after]['code']]) === true
             ) {
                 continue;
             }
