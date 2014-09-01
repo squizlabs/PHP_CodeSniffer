@@ -151,7 +151,7 @@ class PHP_CodeSniffer_Reporting
         $errorsShown = false;
 
         foreach ($cliValues['reports'] as $report => $output) {
-            $reportClass = self::factory($report);
+            $reportClass = $this->factory($report);
             $report      = get_class($reportClass);
 
             ob_start();
@@ -216,7 +216,7 @@ class PHP_CodeSniffer_Reporting
         $reportFile='',
         $reportWidth=80
     ) {
-        $reportClass = self::factory($report);
+        $reportClass = $this->factory($report);
         $report      = get_class($reportClass);
 
         if ($reportFile !== null) {
