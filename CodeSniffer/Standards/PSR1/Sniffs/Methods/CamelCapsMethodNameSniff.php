@@ -32,6 +32,7 @@ if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', 
 class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
 {
 
+
     /**
      * Constructs a PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
      */
@@ -62,7 +63,9 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
 
         // Ignore magic methods.
         $magicPart = strtolower(substr($methodName, 2));
-        if (in_array($magicPart, array_merge($this->magicMethods, $this->methodsDoubleUnderscore)) !== false) {
+        if (isset($this->magicMethods[$magicPart]) === true
+            || isset($this->methodsDoubleUnderscore[$magicPart]) === true
+        ) {
             return;
         }
 
@@ -72,6 +75,9 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
             $className = $phpcsFile->getDeclarationName($currScope);
             $errorData = array($className.'::'.$methodName);
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'yes');
         }
 
     }//end processTokenWithinScope()
@@ -89,10 +95,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
     protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-
     }//end processTokenOutsideScope()
 
 
 }//end class
-
-?>

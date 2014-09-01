@@ -1,4 +1,4 @@
-<?php
+
 
 if ($something) echo 'hello';
 
@@ -17,5 +17,3 @@ while ($something) echo 'hello';
 do {
     $i--;
 } while ($something);
-
-?>

@@ -47,7 +47,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
      */
     public function register()
     {
-        return array(T_WHITESPACE);
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -64,23 +64,34 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+            if ($tokens[$i]['column'] !== 1 || $tokens[$i]['code'] !== T_WHITESPACE) {
+                continue;
+            }
 
-        // Make sure this is whitespace used for indentation.
-        $line = $tokens[$stackPtr]['line'];
-        if ($stackPtr > 0 && $tokens[($stackPtr - 1)]['line'] === $line) {
-            return;
-        }
+            // If tabs are being converted to spaces, the original content
+            // should be used instead of the converted content.
+            if (isset($tokens[$i]['orig_content']) === true) {
+                $content = $tokens[$i]['orig_content'];
+            } else {
+                $content = $tokens[$i]['content'];
+            }
 
-        if (strpos($tokens[$stackPtr]['content'], ' ') !== false) {
-            // Space are considered ok if they are proceeded by tabs and not followed
-            // by tabs, as is the case with standard docblock comments.
-            $error = 'Tabs must be used to indent lines; spaces are not allowed';
-            $phpcsFile->addError($error, $stackPtr, 'TabsUsed');
-        }
+            if ($content[0] === ' ') {
+                // Space are considered ok if they are proceeded by tabs and not followed
+                // by tabs, as is the case with standard docblock comments.
+                $error = 'Tabs must be used to indent lines; spaces are not allowed';
+                $phpcsFile->addError($error, $i, 'SpacesUsed');
+                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+            } else if ($content[0] === "\t") {
+                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+            }
+        }//end for
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
 
 }//end class
-
-?>

@@ -153,7 +153,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
 
         // Initialize PHP_CodeSniffer listeners but don't process any files.
         $phpcs->setCli($this);
-        $phpcs->process(array(), $values['standard'], $values['sniffs']);
+        $phpcs->initStandard($values['standard'], $values['sniffs']);
 
         // Need double quotes around the following regex beause the vertical whitespace
         // char is not always treated correctly for whatever reason.

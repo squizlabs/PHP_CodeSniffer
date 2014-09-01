@@ -58,6 +58,7 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
                 89  => 1,
                 90  => 1,
                 96  => 2,
+                101 => 1,
                 109 => 2,
                 125 => 1,
                );

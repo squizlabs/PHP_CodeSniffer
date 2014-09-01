@@ -1,7 +1,8 @@
 <?php
 namespace bug;
 
-use someNS\A;
+use
+    someNS\A;
 use someNS\B;
 class Bug
 {

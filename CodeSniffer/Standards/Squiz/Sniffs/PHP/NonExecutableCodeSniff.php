@@ -75,7 +75,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 $i = $tokens[$i]['parenthesis_opener'];
                 continue;
-            } else if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            } else if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                 continue;
             }
 
@@ -126,7 +126,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     $end      = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 1));
                     $lastLine = $tokens[$end]['line'];
                     for ($i = ($stackPtr + 1); $i < $next; $i++) {
-                        if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                             continue;
                         }
 
@@ -143,7 +143,7 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
                 // That's all we have to check for these types of statements.
                 return;
-            }
+            }//end if
         }//end if
 
         // This token may be part of an inline condition.
@@ -153,11 +153,11 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
         if (isset($tokens[$prev]['parenthesis_owner']) === true) {
             $owner  = $tokens[$prev]['parenthesis_owner'];
             $ignore = array(
-                       T_IF,
-                       T_ELSE,
-                       T_ELSEIF,
+                       T_IF     => true,
+                       T_ELSE   => true,
+                       T_ELSEIF => true,
                       );
-            if (in_array($tokens[$owner]['code'], $ignore) === true) {
+            if (isset($ignore[$tokens[$owner]['code']]) === true) {
                 return;
             }
         }
@@ -238,8 +238,8 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true
-                || in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$bracketTokens) === true
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true
+                || isset(PHP_CodeSniffer_Tokens::$bracketTokens[$tokens[$i]['code']]) === true
             ) {
                 continue;
             }
@@ -268,5 +268,3 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

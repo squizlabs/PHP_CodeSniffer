@@ -40,6 +40,7 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
                                    'JS',
                                   );
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -97,19 +98,30 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $keyword = $tokens[$stackPtr]['content'];
-        if (strtolower($keyword) !== $keyword) {
+        $keyword  = $tokens[$stackPtr]['content'];
+        $expected = strtolower($keyword);
+        if ($keyword !== $expected) {
+            if ($keyword === strtoupper($keyword)) {
+                $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'upper');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'mixed');
+            }
+
             $error = 'TRUE, FALSE and NULL must be lowercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtolower($keyword),
+                      $expected,
                       $keyword,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
+            }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'lower');
         }
 
     }//end process()
 
 
 }//end class
-
-?>

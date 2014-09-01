@@ -2,7 +2,7 @@
 
 
 
-class ClassDeclaration
+ class ClassDeclaration
 {
 
 }

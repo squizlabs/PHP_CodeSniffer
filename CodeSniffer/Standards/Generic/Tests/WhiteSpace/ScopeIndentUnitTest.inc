@@ -10,7 +10,7 @@ class Test
    function hello() // error here
     { // no error here as brackets can be put anywhere in the pear standard
         echo 'hello';
-    }
+}//end hello()
 
     function hello2()
     {
@@ -470,6 +470,7 @@ if ($myvar == 'test') {
     }
     ?>
 </body>
+
 <?php
 if (true) {
     ?>
@@ -490,6 +491,10 @@ if (true) {
 } else {
     echo 'else';
 }
+?>
+<?php if (isset($param)) { ?>
+   <h3>some text</h3>
+<?php }
 
 $list = [
     'fn' => function ($a) {

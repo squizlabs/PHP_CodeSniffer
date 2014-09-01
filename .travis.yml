@@ -5,8 +5,11 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - hhvm
 
 script:
   - phpunit tests/AllTests.php
-  - pear package-validate package.xml
-  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PEAR --report=summary --ignore=*/tests/* -np
+  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
+  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then pear package-validate package.xml; fi;'
+  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php scripts/build-phar.php; fi;'
+  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np; fi;'

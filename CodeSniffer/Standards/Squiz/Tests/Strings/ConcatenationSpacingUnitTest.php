@@ -43,9 +43,13 @@ class Squiz_Tests_Strings_ConcatenationSpacingUnitTest extends AbstractSniffUnit
     public function getErrorList()
     {
         return array(
-                4 => 5,
-                6 => 1,
-                7 => 1,
+                3  => 5,
+                5  => 1,
+                6  => 1,
+                10 => 5,
+                12 => 1,
+                13 => 1,
+                14 => 1,
                );
 
     }//end getErrorList()

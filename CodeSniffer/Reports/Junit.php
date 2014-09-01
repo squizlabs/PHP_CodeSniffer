@@ -45,14 +45,16 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -118,6 +120,7 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -129,6 +132,7 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -143,5 +147,3 @@ class PHP_CodeSniffer_Reports_Junit implements PHP_CodeSniffer_Report
 
 
 }//end class
-
-?>

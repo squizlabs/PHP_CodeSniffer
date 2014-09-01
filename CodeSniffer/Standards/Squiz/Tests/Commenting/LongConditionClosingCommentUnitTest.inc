@@ -693,4 +693,9 @@ switch ($foo) {
         // some code here.
     break;
 }//end switch
-?>
+
+// Yes, code like this does exist.
+if ($foo) {
+    return $foo;
+} elseif ($bar)
+    return $bar;

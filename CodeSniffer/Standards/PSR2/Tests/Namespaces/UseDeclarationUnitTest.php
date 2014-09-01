@@ -48,19 +48,21 @@ class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
             // and will throw errors in earlier versions.
             if (version_compare(PHP_VERSION, '5.4.0') < 0) {
                 return array(
-                        30  => 2,
+                        30 => 2,
                        );
             }
 
             return array();
         case 'UseDeclarationUnitTest.2.inc':
             return array(
+                    4  => 1,
                     5  => 1,
                     10 => 2,
                    );
         case 'UseDeclarationUnitTest.3.inc':
             return array(
-                    5  => 1,
+                    4 => 1,
+                    6 => 1,
                    );
         default:
             return array();

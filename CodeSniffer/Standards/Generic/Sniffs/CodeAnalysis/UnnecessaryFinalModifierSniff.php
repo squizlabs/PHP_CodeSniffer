@@ -94,5 +94,3 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
 
 
 }//end class
-
-?>

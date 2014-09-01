@@ -27,9 +27,9 @@ class Test2
 public function test2()
 {
     if ($str{0}) {
-        $chr = $str{0};
-    }
-    
+        $chr = $str{0}; }
+
+
     if (!class_exists($class_name)) {
         echo $error;
     }
@@ -107,5 +107,5 @@ if ($foo):
 endif;
 
 if ($foo):
-else if ($baz): $foo = 2;
+elseif ($baz): $foo = 2;
 endif;

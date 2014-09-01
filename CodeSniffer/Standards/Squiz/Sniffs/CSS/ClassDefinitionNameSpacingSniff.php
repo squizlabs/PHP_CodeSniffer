@@ -69,18 +69,17 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
 
         // Find the first blank line before this opening brace, unless we get
         // to another style definition, comment or the start of the file.
-        $endTokens = array(
-                      T_OPEN_CURLY_BRACKET,
-                      T_CLOSE_CURLY_BRACKET,
-                      T_COMMENT,
-                      T_DOC_COMMENT,
-                      T_OPEN_TAG,
-                     );
+        $endTokens  = array(
+                       T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+                       T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+                       T_OPEN_TAG            => T_OPEN_TAG,
+                      );
+        $endTokens += PHP_CodeSniffer_Tokens::$commentTokens;
 
         $foundContent = false;
         $currentLine  = $tokens[$stackPtr]['line'];
         for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-            if (in_array($tokens[$i]['code'], $endTokens) === true) {
+            if (isset($endTokens[$tokens[$i]['code']]) === true) {
                 break;
             }
 
@@ -98,11 +97,12 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
                 // at a gap before the style definition.
                 $prev = $phpcsFile->findPrevious(T_WHITESPACE, $i, null, true);
                 if ($prev !== false
-                    && in_array($tokens[$prev]['code'], $endTokens) === false
+                    && isset($endTokens[$tokens[$prev]['code']]) === false
                 ) {
                     $error = 'Blank lines are not allowed between class names';
                     $phpcsFile->addError($error, ($i + 1), 'BlankLinesFound');
                 }
+
                 break;
             }
 
@@ -114,5 +114,3 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

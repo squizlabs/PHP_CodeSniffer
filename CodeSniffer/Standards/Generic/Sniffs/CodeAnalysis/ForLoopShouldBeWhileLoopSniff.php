@@ -86,7 +86,7 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
             $code = $tokens[$next]['code'];
             if ($code === T_SEMICOLON) {
                 ++$index;
-            } else if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            } else if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === false) {
                 ++$parts[$index];
             }
         }
@@ -100,5 +100,3 @@ class Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff implements PHP_C
 
 
 }//end class
-
-?>

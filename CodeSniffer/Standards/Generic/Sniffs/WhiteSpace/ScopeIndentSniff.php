@@ -171,7 +171,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $firstToken = $stackPtr;
         for ($i = $stackPtr; $i >= 0; $i--) {
             // Record the first code token on the line.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $firstToken = $i;
             }
 
@@ -180,6 +180,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 break;
             }
         }
+
+        $scopeOpener = $tokens[$stackPtr]['scope_opener'];
+        $scopeCloser = $tokens[$stackPtr]['scope_closer'];
 
         // Based on the conditions that surround this token, determine the
         // indent that we expect this current content to be.
@@ -207,12 +210,35 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                           ($expectedIndent - 1),
                           ($tokens[$firstToken]['column'] - 1),
                          );
-                $phpcsFile->addError($error, $stackPtr, 'Incorrect', $data);
-            }
-        }//end if
 
-        $scopeOpener = $tokens[$stackPtr]['scope_opener'];
-        $scopeCloser = $tokens[$stackPtr]['scope_closer'];
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+                if ($fix === true) {
+                    $diff = ($expectedIndent - $tokens[$firstToken]['column']);
+                    if ($diff > 0) {
+                        $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', $diff));
+                    } else {
+                        // We need to remove some padding, but we'll do it for all lines
+                        // until the end of this code block if the exact flag is not on
+                        // or else the rest of the block will look out of place, but
+                        // not cause any errors to be generated. But do not change the
+                        // indent of the closing brace as other sniffs check this.
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->substrToken(($firstToken - 1), 0, $diff);
+                        if ($this->exact === false) {
+                            for ($i = $firstToken; $i < ($scopeCloser - 1); $i++) {
+                                if ($tokens[$i]['code'] === T_WHITESPACE
+                                    && $tokens[$i]['column'] === 1
+                                ) {
+                                    $phpcsFile->fixer->substrToken($i, 0, $diff);
+                                }
+                            }
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
+            }//end if
+        }//end if
 
         // Some scopes are expected not to have indents.
         if (in_array($tokens[$firstToken]['code'], $this->nonIndentingScopes) === false) {
@@ -228,10 +254,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         // Only loop over the content between the opening and closing brace, not
         // the braces themselves.
         for ($i = ($scopeOpener + 1); $i < $scopeCloser; $i++) {
-
             // If this token is another scope, skip it as it will be handled by
             // another call to this sniff.
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$scopeOpeners[$tokens[$i]['code']]) === true) {
                 if (isset($tokens[$i]['scope_opener']) === true) {
                     $i = $tokens[$i]['scope_closer'];
 
@@ -244,7 +269,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         $i = $nextToken;
                     }
                 } else {
-                    // If this token does not have a scope_opener indice, then
+                    // If this token does not have a scope_opener index, then
                     // it's probably an inline scope, so let's skip to the next
                     // semicolon. Inline scopes include inline if's, abstract
                     // methods etc.
@@ -252,8 +277,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     if ($nextToken !== false) {
                         $i = $nextToken;
                     }
-                }
+                }//end if
 
+                $newline = false;
                 continue;
             }//end if
 
@@ -280,7 +306,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $newline = true;
             }
 
-            if ($newline === true && $tokens[$i]['code'] !== T_WHITESPACE) {
+            if ($newline === true && $tokens[$i]['code'] !== T_WHITESPACE && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE) {
                 // If we started a newline and we find a token that is not
                 // whitespace, then this must be the first token on the line that
                 // must be indented.
@@ -298,8 +324,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Special case for non-PHP code.
                 if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
-                    $trimmedContentLength
-                        = strlen(ltrim($tokens[$firstToken]['content']));
+                    $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
                     if ($trimmedContentLength === 0) {
                         continue;
                     }
@@ -311,8 +336,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // Check to see if this constant string spans multiple lines.
                 // If so, then make sure that the strings on lines other than the
                 // first line are indented appropriately, based on their whitespace.
-                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
-                    if (in_array($tokens[($firstToken - 1)]['code'], PHP_CodeSniffer_Tokens::$stringTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$firstToken]['code']]) === true) {
+                    if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[($firstToken - 1)]['code']]) === true) {
                         // If we find a string that directly follows another string
                         // then its just a string that spans multiple lines, so we
                         // don't need to check for indenting.
@@ -320,9 +345,9 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
                 }
 
-                // This is a special condition for T_DOC_COMMENT and C-style
-                // comments, which contain whitespace between each line.
-                if (in_array($tokens[$firstToken]['code'], PHP_CodeSniffer_Tokens::$commentTokens) === true) {
+                // This is a special condition for C-style comments, which
+                // contain whitespace between each line.
+                if ($tokens[$firstToken]['code'] === T_COMMENT) {
                     $content = trim($tokens[$firstToken]['content']);
                     if (preg_match('|^/\*|', $content) !== 0) {
                         // Check to see if the end of the comment is on the same line
@@ -341,9 +366,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             continue;
                         }
 
-                        $contentLength = strlen($tokens[$firstToken]['content']);
-                        $trimmedContentLength
-                            = strlen(ltrim($tokens[$firstToken]['content']));
+                        $contentLength        = strlen($tokens[$firstToken]['content']);
+                        $trimmedContentLength = strlen(ltrim($tokens[$firstToken]['content']));
 
                         $column = ($contentLength - $trimmedContentLength + 1);
                         if (preg_match('|\*/$|', $content) !== 0) {
@@ -363,21 +387,35 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // The token at the start of the line, needs to have its column
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
-                if ($column !== $indent) {
-                    if ($this->exact === true || $column < $indent) {
-                        $type  = 'IncorrectExact';
-                        $error = 'Line indented incorrectly; expected ';
-                        if ($this->exact === false) {
-                            $error .= 'at least ';
-                            $type   = 'Incorrect';
-                        }
+                if ($column !== $indent
+                    && ($this->exact === true || $column < $indent)
+                ) {
+                    $type  = 'IncorrectExact';
+                    $error = 'Line indented incorrectly; expected ';
+                    if ($this->exact === false) {
+                        $error .= 'at least ';
+                        $type   = 'Incorrect';
+                    }
 
-                        $error .= '%s spaces, found %s';
-                        $data = array(
-                                 ($indent - 1),
-                                 ($column - 1),
-                                );
-                        $phpcsFile->addError($error, $firstToken, $type, $data);
+                    $error .= '%s spaces, found %s';
+                    $data   = array(
+                               ($indent - 1),
+                               ($column - 1),
+                              );
+
+                    $fix = $phpcsFile->addFixableError($error, $firstToken, $type, $data);
+                    if ($fix === true) {
+                        if ($column === 1) {
+                            $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', ($indent - $column)));
+                        } else {
+                            $spaces = str_repeat(' ', ($indent - 1));
+                            if ($tokens[$firstToken]['code'] === T_INLINE_HTML) {
+                                $newContent = $spaces.ltrim($tokens[$firstToken]['content']);
+                                $phpcsFile->fixer->replaceToken($firstToken, $newContent);
+                            } else {
+                                $phpcsFile->fixer->replaceToken(($firstToken - 1), $spaces);
+                            }
+                        }
                     }
                 }//end if
             }//end if
@@ -450,7 +488,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 $indent = ($tokens[$lastContent]['column'] - 1);
-            }
+            }//end if
 
             $indent += $this->indent;
         }//end foreach
@@ -472,5 +510,3 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

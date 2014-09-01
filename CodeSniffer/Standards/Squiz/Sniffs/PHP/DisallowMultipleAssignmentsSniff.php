@@ -58,7 +58,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ($stackPtr - 1));
+        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ($stackPtr - 1), null, false, null, true);
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];
@@ -97,7 +97,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 // We found our variable.
                 break;
             }
-        }
+        }//end for
 
         if ($varToken <= 0) {
             // Didn't find a variable.
@@ -124,7 +124,7 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
         // Ignore member var definitions.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($varToken - 1), null, true);
-        if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$scopeModifiers) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$scopeModifiers[$tokens[$prev]['code']]) === true) {
             return;
         }
 
@@ -151,11 +151,11 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 return;
             }
 
-            if (in_array($tokens[$i]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
             }
-        }
+        }//end for
 
         // Ignore the first part of FOR loops as we are allowed to
         // assign variables there even though the variable is not the
@@ -176,5 +176,3 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
 
 
 }//end class
-
-?>

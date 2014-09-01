@@ -50,19 +50,11 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
      * @param int                  $stackPtr  The position in the stack where
      *                                        the token was found.
      *
-     * @return void
+     * @return int
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // Because we are analyzing the whole file in one step, execute this method
-        // only on first occurrence of a T_OPEN_TAG.
-        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
-        if ($prevOpenTag !== false) {
-            return;
-        }
-
-        $fileName = $phpcsFile->getFilename();
-
+        $fileName     = $phpcsFile->getFilename();
         $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {
             return;
@@ -79,9 +71,9 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         // error-code-labels. So for a start we go for cleartext output.
         $exitCode = exec($cmd, $output, $retval);
 
-        // $exitCode is the last line of $output if no error occures, on error it
-        // is numeric. Try to handle various error conditions and provide useful
-        // error reporting.
+        // Variable $exitCode is the last line of $output if no error occures, on
+        // error it is numeric. Try to handle various error conditions and
+        // provide useful error reporting.
         if (is_numeric($exitCode) === true && $exitCode > 0) {
             if (is_array($output) === true) {
                 $msg = join('\n', $output);
@@ -91,8 +83,6 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         }
 
         if (is_array($output) === true) {
-            $tokens = $phpcsFile->getTokens();
-
             foreach ($output as $finding) {
                 // The first two lines of analyzer output contain
                 // something like this:
@@ -104,22 +94,14 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                     continue;
                 }
 
-                // Find the token at the start of the line.
-                $lineToken = null;
-                foreach ($tokens as $ptr => $info) {
-                    if ($info['line'] == $regs[1]) {
-                        $lineToken = $ptr;
-                        break;
-                    }
-                }
+                $phpcsFile->addWarningOnLine(trim($regs[2]), $regs[1], 'ExternalTool');
+            }
+        }
 
-                if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($regs[2]), $ptr, 'ExternalTool');
-                }
-            }//end foreach
-        }//end if
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
+
 }//end class
-?>

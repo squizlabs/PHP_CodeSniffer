@@ -130,4 +130,10 @@ $expectedPermission = array(
                        'blockerdenied'  => - 3,
                        'effective'      => TRUE,
                       );
-?>
+
+$value = (int) isset($blah) + 2;
+$value = (int) isset($blah) + (int) isset($foo) + (int) isset($bar);
+
+doSomething(getValue($var, 2)) - $y;
+
+$codeFiles = array($global => $codeFiles[$global]) + $codeFiles;

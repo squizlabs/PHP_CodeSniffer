@@ -312,4 +312,3 @@ array_map(
     },
     $array
 );
-?>
