@@ -178,4 +178,7 @@ trait MyTrait {
     这是一条测试评论.
 */
 
-?>
+/*
+    Comment goes here
+*/
+$two = (1 + 1);  // I'm not a comment closer!

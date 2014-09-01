@@ -71,6 +71,7 @@ class Squiz_Tests_Commenting_BlockCommentUnitTest extends AbstractSniffUnitTest
                    92  => 1,
                    111 => 1,
                    159 => 1,
+                   183 => 1,
                   );
 
         // The trait tests will only work in PHP version where traits exist and
