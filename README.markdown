@@ -67,4 +67,4 @@ Which should give you no failures or errors. You can ignore any skipped tests as
 Issues
 ------
 
-Bug reports and feature requests can be submitted on the [PEAR bug tracker](http://pear.php.net/package/PHP_CodeSniffer/bugs).
+Bug reports and feature requests can be submitted on the [Github Issue Tracker](https://github.com/squizlabs/PHP_CodeSniffer/issues) or the [PEAR bug tracker](http://pear.php.net/package/PHP_CodeSniffer/bugs).
