@@ -70,7 +70,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         echo "\t\t* using branch $branch *".PHP_EOL;
 
         echo "\t=> Updating repository".PHP_EOL;
-        $cmd  = "cd $cloneDir; git reset --hard; git clean -df; git checkout $branch 2>&1; git pull 2>&1; ";
+        $cmd  = "cd $cloneDir; git reset --hard; git clean -df; git checkout -f $branch 2>&1; git pull 2>&1; ";
         $cmd .= 'git submodule update --init --recursive 2>&1';
         echo "\t\tcmd: ";
         echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
