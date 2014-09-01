@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff ignore patterns now replace Win dir separators like file ignore patterns already did
   - Exclude patterns now use backtick delimiters, allowing all special characters to work correctly again
     -- Thanks to Jeremy Edgell for the patch
+  - Errors converted to warnings in a ruleset (and vice versa) now retain their fixable status
+    -- Thanks to Alexander Obuhovich for the patch
   - Squiz ConcatenationSpacingSniff now has a setting to specify how many spaces there should around concat operators
       -- Default remains at 0
       -- Override the "spacing" setting in a ruleset.xml file to change
