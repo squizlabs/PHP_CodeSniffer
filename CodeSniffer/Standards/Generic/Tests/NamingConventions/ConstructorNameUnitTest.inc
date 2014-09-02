@@ -41,4 +41,12 @@ abstract class MyAbstractClass extends \MyNamespace\SomeClass
 {
     abstract public function __construct();
 }
+
+class OldClass
+{
+    function OldClass()
+    {
+
+    }
+}
 ?>

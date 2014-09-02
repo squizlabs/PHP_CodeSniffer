@@ -34,6 +34,9 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
+    private $currentClass = '';
+
+    private $functionList = array();
 
     /**
      * Constructs the test with the tokens it wishes to listen for.
@@ -63,11 +66,19 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
         $currScope
     ) {
         $className  = $phpcsFile->getDeclarationName($currScope);
+
+        if ($className != $this->currentClass) {
+            $this->loadFunctionNamesInScope($phpcsFile, $currScope);
+            $this->currentClass = $className;
+        }
+
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         if (strcasecmp($methodName, $className) === 0) {
-            $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
-            $phpcsFile->addError($error, $stackPtr, 'OldStyle');
+            if (! $this->hasRegularConstructor()) {
+                $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
+                $phpcsFile->addError($error, $stackPtr, 'OldStyle');
+            }
         } else if (strcasecmp($methodName, '__construct') !== 0) {
             // Not a constructor.
             return;
@@ -100,7 +111,44 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
     }//end processTokenWithinScope()
 
+    /**
+     * Checks whether a __construct function is present
+     *
+     * @param PHP_CodeSniffer_File $file      The current file being scanned.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
+     * @param int                  $currScope A pointer to the start of the scope.
+     *
+     * @return bool
+     */
+    protected function hasRegularConstructor()
+    {
+        return in_array('__construct', $this->functionList);
+    }
 
+    /**
+     * Extracts all the function names found in the given scope
+     *
+     * @param PHP_CodeSniffer_File $file      The current file being scanned.
+     * @param int                  $currScope A pointer to the start of the scope.
+     *
+     * @return void
+     */
+    protected function loadFunctionNamesInScope(PHP_CodeSniffer_File $file, $currScope)
+    {
+        $this->functionList = array();
+
+        $tokens = $file->getTokens();
+        $functionPtr = $tokens[$currScope]['scope_opener'] - 1;
+        $scopeEndPtr = $tokens[$currScope]['scope_closer'];
+
+        while ($functionPtr = $file->findNext(T_FUNCTION, $functionPtr + 1, $scopeEndPtr)) {
+            $namePtr = $file->findNext(T_STRING, $functionPtr, $scopeEndPtr);
+            $functionName = trim($tokens[$namePtr]['content']);
+
+            $this->functionList[] = $functionName;
+        }
+    }
 }//end class
 
 ?>
