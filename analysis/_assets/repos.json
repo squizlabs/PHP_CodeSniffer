@@ -845,5 +845,12 @@
         "path": "Tester",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Phred",
+        "url": "nazariyg/Phred",
+        "path": "PhredParty",
+        "ignore": "",
+        "extensions": ""
     }
 ]
