@@ -38,10 +38,16 @@ class Zend_Tests_Files_ClosingTagUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
+        if ($testFile !== 'ClosingTagUnitTest.1.inc') {
+            return array();
+        }
+
         return array(
                 11 => 1,
                );
