@@ -1849,7 +1849,7 @@ class PHP_CodeSniffer_File
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
                         echo str_repeat("\t", $depth);
-                        echo "=> Ignoring non-culry scope closer for $stackPtr:$type".PHP_EOL;
+                        echo "=> Ignoring non-curly scope closer for $stackPtr:$type".PHP_EOL;
                     }
                 } else {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
