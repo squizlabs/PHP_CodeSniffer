@@ -66,3 +66,9 @@ function recurseCreateTree(
 
 
 function test ( ){}
+
+function parent() {}
+function self() {}
+function false() {}
+function true() {}
+function null() {}
