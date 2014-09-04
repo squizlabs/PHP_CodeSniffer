@@ -26,7 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+<<<<<<< HEAD
   - Fixed incorrect length of JS object operator tokens
+  - PHP tokenizer no longer converts class/function names to special tokens types
+    -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
   - Added conflict detection to the file fixer
@@ -48,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz OperatorBracketSniff now correctly fixes operations that include arrays
   - Zend ClosingTagSniff fix now correctly leaves closing tags when followed by HTML
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+  - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #243 : Missing DocBlock not detected
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20377 : Error when trying to execute phpcs with report=json

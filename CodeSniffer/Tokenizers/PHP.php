@@ -294,8 +294,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
         $tokens      = @token_get_all($string);
         $finalTokens = array();
 
-        $newStackPtr = 0;
-        $numTokens   = count($tokens);
+        $newStackPtr       = 0;
+        $numTokens         = count($tokens);
+        $lastNotEmptyToken = 0;
 
         $insideInlineIf = false;
 
@@ -327,6 +328,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 echo "\tProcess token $stackPtr: $type => $content";
             }//end if
+
+            if ($newStackPtr > 0 && $finalTokens[($newStackPtr - 1)]['code'] !== T_WHITESPACE) {
+                $lastNotEmptyToken = ($newStackPtr - 1);
+            }
 
             /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
@@ -452,8 +457,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if ($tokenIsArray === true && $token[0] === T_START_HEREDOC) {
                 // Add the start heredoc token to the final array.
-                $finalTokens[$newStackPtr]
-                    = self::standardiseToken($token);
+                $finalTokens[$newStackPtr] = self::standardiseToken($token);
 
                 // Check if this is actually a nowdoc and use a different token
                 // to help the sniffs.
@@ -514,8 +518,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }//end for
 
                 // Add the end heredoc token to the final array.
-                $finalTokens[$newStackPtr]
-                    = self::standardiseToken($tokens[$stackPtr]);
+                $finalTokens[$newStackPtr] = self::standardiseToken($tokens[$stackPtr]);
 
                 if ($nowdoc === true) {
                     $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
@@ -605,6 +608,33 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $newStackPtr++;
                 }
             } else {
+                if ($tokenIsArray === true && $token[0] === T_STRING) {
+                    // Some T_STRING tokens should remain that way
+                    // due to their context.
+                    $context = array(
+                                T_OBJECT_OPERATOR      => true,
+                                T_FUNCTION             => true,
+                                T_CLASS                => true,
+                                T_EXTENDS              => true,
+                                T_IMPLEMENTS           => true,
+                                T_NEW                  => true,
+                                T_CONST                => true,
+                                T_NS_SEPARATOR         => true,
+                                T_USE                  => true,
+                                T_NAMESPACE            => true,
+                                T_PAAMAYIM_NEKUDOTAYIM => true,
+                               );
+                    if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                        $finalTokens[$newStackPtr] = array(
+                                                      'content' => $token[1],
+                                                      'code'    => T_STRING,
+                                                      'type'    => 'T_STRING',
+                                                     );
+                        $newStackPtr++;
+                        continue;
+                    }
+                }//end if
+
                 $newToken = null;
                 if ($tokenIsArray === false) {
                     if (isset(self::$_resolveTokenCache[$token[0]]) === true) {
