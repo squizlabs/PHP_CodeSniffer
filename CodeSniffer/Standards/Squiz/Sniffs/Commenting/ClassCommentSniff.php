@@ -115,6 +115,9 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
                 if ($prevTokenEnd !== false) {
                     $blankLineBefore = 0;
+                    if ($tokens[$prevTokenEnd]['code'] === T_OPEN_TAG) {
+                        $blankLineBefore++;
+                    }
                     for ($i = ($prevTokenEnd + 1); $i < $commentStart; $i++) {
                         if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === $phpcsFile->eolChar) {
                             $blankLineBefore++;
