@@ -26,7 +26,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-<<<<<<< HEAD
   - Fixed incorrect length of JS object operator tokens
   - PHP tokenizer no longer converts class/function names to special tokens types
     -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
