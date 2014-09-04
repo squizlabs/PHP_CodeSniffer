@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PHP tokenizer no longer converts class/function names to special tokens types
+    -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
   - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
@@ -33,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Standards can now be located within hidden directories (further fix for bug #20323)
     -- Thanks to Klaus Purer for the patch
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+  - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20378 : Report appended to existing file if no errors found in run
   - Fixed bug #20381 : Invalid "Comment closer must be on a new line"

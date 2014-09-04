@@ -67,36 +67,7 @@ class Generic_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        // Is this a member var name?
-        $prevPtr = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($tokens[$prevPtr]['code'] === T_OBJECT_OPERATOR) {
-            return;
-        }
-
-        // Is this a class name?
-        if ($tokens[$prevPtr]['code'] === T_CLASS
-            || $tokens[$prevPtr]['code'] === T_EXTENDS
-            || $tokens[$prevPtr]['code'] === T_IMPLEMENTS
-            || $tokens[$prevPtr]['code'] === T_NEW
-            || $tokens[$prevPtr]['code'] === T_CONST
-        ) {
-            return;
-        }
-
-        // Class or namespace?
-        if ($tokens[($stackPtr - 1)]['code'] === T_NS_SEPARATOR
-            || $tokens[$prevPtr]['code'] === T_USE
-            || $tokens[$prevPtr]['code'] === T_NAMESPACE
-        ) {
-            return;
-        }
-
-        if ($tokens[($stackPtr - 1)]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
-            return;
-        }
-
+        $tokens  = $phpcsFile->getTokens();
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
             $error = 'TRUE, FALSE and NULL must be lowercase; expected "%s" but found "%s"';

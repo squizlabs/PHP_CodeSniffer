@@ -77,3 +77,5 @@ class MyClass
 }
 
 var_dump(MyClass::TRUE);
+
+function tRUE() {}
