@@ -113,20 +113,10 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
                 // Exactly one blank line before the class comment.
                 $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
-                if ($prevTokenEnd !== false) {
-                    $blankLineBefore = 0;
-                    for ($i = ($prevTokenEnd + 1); $i < $commentStart; $i++) {
-                        if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === $phpcsFile->eolChar) {
-                            $blankLineBefore++;
-                        }
-                    }
-
-                    if ($blankLineBefore !== 2) {
-                        $error = 'There must be exactly one blank line before the class comment';
-                        $phpcsFile->addError($error, ($commentStart - 1), 'SpacingBefore');
-                    }
+                if ($tokens[$prevTokenEnd]['line'] !== ($tokens[$commentStart]['line'] - 2)) {
+                    $error = 'There must be exactly one blank line before the class comment';
+                    $phpcsFile->addError($error, ($commentStart - 1), 'SpacingBefore');
                 }
-
             }//end if
         }//end if
 
