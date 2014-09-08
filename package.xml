@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Alex Slobodiskiy for the patch
   - Standards can now be located within hidden directories (further fix for bug #20323)
     -- Thanks to Klaus Purer for the patch
+  - Added Generic SyntaxSniff to check for syntax errors in PHP files
+    -- Thanks to Blaine Schmeisser for the contribution
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
   - PEAR ValidFunctionNameSniff no longer throws an error for _()
   - Squiz and PEAR FunctionCommentSnif now support _()
@@ -437,6 +439,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SAPIUsageSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SyntaxSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -681,6 +686,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SAPIUsageUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SAPIUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SyntaxUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />

@@ -6,8 +6,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
+ * @author    Blaine Schmeisser <blainesch@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -21,8 +21,8 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
+ * @author    Blaine Schmeisser <blainesch@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
@@ -30,6 +30,19 @@
  */
 class Generic_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
 {
+
+    /**
+     * Should this test be skipped for some reason.
+     *
+     * @return void
+     */
+    protected function shouldSkipTest()
+    {
+        $phpPath = PHP_CodeSniffer::getConfigData('php_path');
+        return (is_null($phpPath));
+
+    }//end shouldSkipTest()
+
 
     /**
      * Returns the lines where errors should occur.
@@ -42,7 +55,7 @@ class Generic_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                3  => 1,
+                3 => 1,
                );
 
     }//end getErrorList()

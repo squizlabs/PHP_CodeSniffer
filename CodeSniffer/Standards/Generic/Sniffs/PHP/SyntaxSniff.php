@@ -6,6 +6,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
+ * @author    Blaine Schmeisser <blainesch@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -19,6 +20,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
+ * @author    Blaine Schmeisser <blainesch@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -52,23 +54,34 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $phpPath = PHP_CodeSniffer::getConfigData('php_path') ?: 'php';
-        $output = shell_exec("{$phpPath} -l {$phpcsFile->getFilename()} 2>/dev/null");
+        $phpPath = PHP_CodeSniffer::getConfigData('php_path');
+        if ($phpPath === null) {
+            return;
+        }
+
+        $fileName = $phpcsFile->getFilename();
+        $cmd      = "$phpPath -l \"$fileName\" 2>&1";
+        $output   = shell_exec($cmd);
+
         $matches = array();
-        if (preg_match('/on line ([0-9]+)/', $output, $matches)) {
-            $error = 'PHP Syntax error found.';
-            $tokens = $phpcsFile->getTokens();
-            $line = (int) $matches[1];
+        if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', $output, $matches)) {
+            $error = trim($matches[1]);
+            $line  = (int) $matches[2];
+
+            $tokens   = $phpcsFile->getTokens();
             $numLines = $tokens[($phpcsFile->numTokens - 1)]['line'];
             if ($line > $numLines) {
-                return $phpcsFile->addError($error, $phpcsFile->numTokens - 1, 'PHPSyntax');
+                $line = $numLines;
             }
-            foreach ($phpcsFile->getTokens() as $id => $token) {
+
+            foreach ($tokens as $id => $token) {
                 if ($token['line'] === $line) {
-                    return $phpcsFile->addError($error, $id, 'PHPSyntax');
+                    $phpcsFile->addError("PHP syntax error: $error", $id, 'PHPSyntax');
+                    break;
                 }
             }
         }
+
     }//end process()
 
 
