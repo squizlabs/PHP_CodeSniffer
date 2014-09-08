@@ -152,15 +152,15 @@ class PHP_CodeSniffer_File
 /**
  * A simple function comment
  *
- * @param string $str The string passed in by reference
+ * @param string &$str The string passed in by reference
+ * @param string $foo  The string passed in by reference
  *
  * @return void
  */
-public function functionOutsideClass(&$str)
+public function functionOutsideClass(&$str, &$foo)
 {
     return;
 }//end functionOutsideClass()
-
 
 function missingCommentOutsideClass()
 {
@@ -255,7 +255,7 @@ class MyClass() {
 /**
  * Creates a map of tokens => line numbers for each token.
  *
- * @param array  &$tokens   The array of tokens to process.
+ * @param array  $tokens    The array of tokens to process.
  * @param object $tokenizer The tokenizer being used to process this file.
  * @param string $eolChar   The EOL character to use for splitting strings.
  *

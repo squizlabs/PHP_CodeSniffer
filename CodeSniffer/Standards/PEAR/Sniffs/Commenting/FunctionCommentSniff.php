@@ -344,12 +344,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
                 $realName = $realParams[$pos]['name'];
-
-                // Append ampersand to name if passing by reference.
-                if ($realParams[$pos]['pass_by_reference'] === true) {
-                    $realName = '&'.$realName;
-                }
-
                 if ($realName !== $param['var']) {
                     $code = 'ParamNameNoMatch';
                     $data = array(
@@ -400,10 +394,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         $realNames = array();
         foreach ($realParams as $realParam) {
-            if ($realParam['pass_by_reference'] === true) {
-                $realParam['name'] = '&'.$realParam['name'];
-            }
-
             $realNames[] = $realParam['name'];
         }
 
