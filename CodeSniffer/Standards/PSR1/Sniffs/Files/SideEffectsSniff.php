@@ -53,13 +53,6 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // We are only interested if this is the first open tag.
-        if ($stackPtr !== 0) {
-            if ($phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== false) {
-                return;
-            }
-        }
-
         $tokens = $phpcsFile->getTokens();
         $result = $this->_searchForConflict($phpcsFile, 0, ($phpcsFile->numTokens - 1), $tokens);
 
@@ -74,6 +67,9 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
         } else {
             $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'no');
         }
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
