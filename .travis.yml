@@ -8,6 +8,7 @@ php:
   - hhvm
 
 script:
+  - php scripts/phpcs --config-set php_path php
   - phpunit tests/AllTests.php
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then pear package-validate package.xml; fi;'
