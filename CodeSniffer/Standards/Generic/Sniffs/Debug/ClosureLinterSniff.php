@@ -118,6 +118,9 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
             }
         }//end foreach
 
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
+
     }//end process()
 
 

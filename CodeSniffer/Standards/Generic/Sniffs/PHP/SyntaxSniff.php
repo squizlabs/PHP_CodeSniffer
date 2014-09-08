@@ -70,6 +70,9 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax');
         }
 
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
+
     }//end process()
 
 

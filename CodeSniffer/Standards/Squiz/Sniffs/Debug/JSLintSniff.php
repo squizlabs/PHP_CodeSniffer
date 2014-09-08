@@ -85,6 +85,9 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
+
     }//end process()
 
 

@@ -98,6 +98,9 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addWarningOnLine($message, $line, 'ExternalTool');
         }//end for
 
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
+
     }//end process()
 
 
