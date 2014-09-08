@@ -64,7 +64,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     /**
      * Any scope openers that should not cause an indent.
      *
-     * @var array(int)
+     * @var int[]
      */
     protected $nonIndentingScopes = array();
 
@@ -89,6 +89,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      * @var int[]
      */
     private $_closeTagIndents = array();
+
+    /**
+     * The current file that we are processing.
+     *
+     * @var string
+     */
+    protected $currentFile = '';
 
 
     /**
@@ -118,6 +125,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $fileName = $phpcsFile->getFilename();
+        if ($this->currentFile !== $fileName) {
+            $this->currentFile      = $fileName;
+            $this->_openTagIndents  = array();
+            $this->_closeTagIndents = array();
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         // We only want to record the indent of open tags, not process them.
