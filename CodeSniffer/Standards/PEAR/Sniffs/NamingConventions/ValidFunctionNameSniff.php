@@ -187,6 +187,11 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             return;
         }
 
+        if (ltrim($functionName, '_') === '') {
+            // Ignore special functions.
+            return;
+        }
+
         $errorData = array($functionName);
 
         // Is this a magic function. i.e., it is prefixed with "__".
