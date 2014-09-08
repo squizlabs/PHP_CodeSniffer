@@ -75,7 +75,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 
         $methodName      = $phpcsFile->getDeclarationName($stackPtr);
         $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
-        $methodName      = strtolower(ltrim($methodName, '_'));
+        if ($methodName !== '_') {
+            $methodName = strtolower(ltrim($methodName, '_'));
+        }
 
         $return = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {

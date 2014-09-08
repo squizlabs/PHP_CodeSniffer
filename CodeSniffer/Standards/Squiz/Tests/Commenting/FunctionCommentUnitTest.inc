@@ -641,3 +641,12 @@ public function foo(array &$tokens, $tokenizer, $eolChar)
 public function foo(SomeClass $someclass, \OtherVendor\Package\SomeClass2 $someclass2, SomeClass3 $someclass3)
 {
 }
+
+/**
+ * Gettext.
+ *
+ * @return string
+ */
+public function _() {
+    return $foo;
+}

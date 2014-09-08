@@ -265,3 +265,11 @@ public function foo(&$tokens, $tokenizer, $eolChar)
 {
 
 }//end foo()
+
+/**
+ * Gettext.
+ *
+ */
+public function _() {
+    return $foo;
+}

@@ -147,7 +147,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         $methodName      = $phpcsFile->getDeclarationName($stackPtr);
         $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
-        $methodName      = strtolower(ltrim($methodName, '_'));
+        if ($methodName !== '_') {
+            $methodName = strtolower(ltrim($methodName, '_'));
+        }
 
         $return = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {

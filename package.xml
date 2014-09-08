@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz OperatorBracketSniff now correctly fixes operations that include arrays
   - Zend ClosingTagSniff fix now correctly leaves closing tags when followed by HTML
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+  - Squiz and PEAR FunctionCommentSnif now support _()
   - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #243 : Missing DocBlock not detected
   - Fixed bug #20373 : Inline comment sniff tab handling way
