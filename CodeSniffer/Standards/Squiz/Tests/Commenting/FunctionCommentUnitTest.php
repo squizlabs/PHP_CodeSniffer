@@ -69,7 +69,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                 139 => 3,
                 143 => 2,
                 155 => 2,
-                158 => 1,
+                159 => 1,
                 166 => 1,
                 173 => 1,
                 180 => 1,

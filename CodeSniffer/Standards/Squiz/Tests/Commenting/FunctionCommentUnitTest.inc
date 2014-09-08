@@ -152,16 +152,16 @@ class PHP_CodeSniffer_File
 /**
  * A simple function comment.
  *
- * @param string $str The string passed in by reference
+ * @param string &$str The string passed in by reference
+ * @param string $foo  The string passed in by reference.
  *
  * @return void
  * @return
  */
-public function functionOutsideClass(&$str)
+public function functionOutsideClass(&$str, &$foo)
 {
     return;
 }//end functionOutsideClass()
-
 
 function missingCommentOutsideClass()
 {

@@ -703,11 +703,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sn
                     $realName      = $realParams[($pos - 1)]['name'];
                     $foundParams[] = $realName;
 
-                    // Append ampersand to name if passing by reference.
-                    if ($realParams[($pos - 1)]['pass_by_reference'] === true) {
-                        $realName = '&'.$realName;
-                    }
-
                     if ($realName !== $paramName) {
                         $code = 'ParamNameNoMatch';
                         $data = array(
