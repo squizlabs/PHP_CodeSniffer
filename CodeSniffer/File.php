@@ -1400,7 +1400,7 @@ class PHP_CodeSniffer_File
      * Each tab can represent between 1 and $width spaces, so
      * this cannot be a straight string replace.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
@@ -1478,7 +1478,7 @@ class PHP_CodeSniffer_File
     /**
      * Creates a map of brackets positions.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
@@ -1645,7 +1645,7 @@ class PHP_CodeSniffer_File
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
@@ -1690,7 +1690,7 @@ class PHP_CodeSniffer_File
     /**
      * Creates a scope map of tokens that open scopes.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
@@ -1743,14 +1743,14 @@ class PHP_CodeSniffer_File
     /**
      * Recurses though the scope openers to build a scope map.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param int    $numTokens The size of the tokens array.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      * @param int    $stackPtr  The position in the stack of the token that
      *                          opened the scope (eg. an IF token or FOR token).
      * @param int    $depth     How many scope levels down we are.
-     * @param int    &$ignore   How many curly braces we are ignoring.
+     * @param int    $ignore    How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
      */
@@ -2110,7 +2110,7 @@ class PHP_CodeSniffer_File
      * 'condition' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
-     * @param array  &$tokens   The array of tokens to process.
+     * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *

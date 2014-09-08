@@ -717,7 +717,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * detects short array syntax and converts those square brackets into new tokens.
      * It also corrects some usage of the static and class keywords.
      *
-     * @param array  &$tokens The array of tokens to process.
+     * @param array  $tokens  The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
