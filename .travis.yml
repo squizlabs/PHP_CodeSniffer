@@ -7,7 +7,7 @@ php:
   - 5.6
 
 script:
+  - php scripts/phpcs --config-set php_path php
   - phpunit tests/AllTests.php
   - pear package-validate package.xml
-  - php scripts/phpcs --config-set php_path php
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PEAR --report=summary --ignore=*/tests/* -np
