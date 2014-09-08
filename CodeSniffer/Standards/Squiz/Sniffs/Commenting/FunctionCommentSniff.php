@@ -472,12 +472,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
                 $realName = $realParams[$pos]['name'];
-
-                // Append ampersand to name if passing by reference.
-                if ($realParams[$pos]['pass_by_reference'] === true) {
-                    $realName = '&'.$realName;
-                }
-
                 if ($realName !== $param['var']) {
                     $code = 'ParamNameNoMatch';
                     $data = array(
@@ -560,10 +554,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 
         $realNames = array();
         foreach ($realParams as $realParam) {
-            if ($realParam['pass_by_reference'] === true) {
-                $realParam['name'] = '&'.$realParam['name'];
-            }
-
             $realNames[] = $realParam['name'];
         }
 
