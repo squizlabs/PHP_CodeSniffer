@@ -612,4 +612,12 @@ public function usesCallable(callable $cb) {
     $cb();
 }
 
-?>
+/**
+ * Gettext.
+ *
+ * @return string
+ */
+public function _() {
+    return $foo;
+}
+

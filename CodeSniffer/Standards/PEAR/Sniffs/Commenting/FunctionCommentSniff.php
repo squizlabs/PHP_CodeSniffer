@@ -281,7 +281,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $className = strtolower(ltrim($className, '_'));
         }
 
-        $methodName      = strtolower(ltrim($this->_methodName, '_'));
+        $methodName = strtolower(ltrim($this->_methodName, '_'));
+        if ($methodName === '') {
+            $methodName = $this->_methodName;
+        }
+
         $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
 
         if ($isSpecialMethod === false && $methodName !== $className) {

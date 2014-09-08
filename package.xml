@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Standards can now be located within hidden directories (further fix for bug #20323)
     -- Thanks to Klaus Purer for the patch
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+  - Squiz and PEAR FunctionCommentSnif now support _()
   - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20378 : Report appended to existing file if no errors found in run

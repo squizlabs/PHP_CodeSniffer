@@ -251,4 +251,11 @@ class MyClass() {
      */
     abstract final protected function myFunction();
 }
-?>
+
+/**
+ * Gettext.
+ *
+ */
+public function _() {
+    return $foo;
+}
