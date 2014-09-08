@@ -966,7 +966,7 @@ class PHP_CodeSniffer_Tokenizers_JS
      *
      * This additional processing looks for properties, labels and objects.
      *
-     * @param array  &$tokens The array of tokens to process.
+     * @param array  $tokens  The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
      *
      * @return void
