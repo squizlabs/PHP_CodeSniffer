@@ -202,4 +202,4 @@ class Magic_Case_Test {
     function __tostring() {}
 }
 function __autoLoad() {}
-?>
+function _() {}
