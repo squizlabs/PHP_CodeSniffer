@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic DocCommentSniff now correctly fixes additional blank lines at the end of a comment
   - Squiz OperatorBracketSniff now correctly fixes operations that include arrays
   - Zend ClosingTagSniff fix now correctly leaves closing tags when followed by HTML
+  - Added Generic SyntaxSniff to check for syntax errors in PHP files
+    -- Thanks to Blaine Schmeisser for the contribution
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
   - PEAR ValidFunctionNameSniff no longer throws an error for _()
   - Squiz and PEAR FunctionCommentSnif now support _()
@@ -436,6 +438,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SAPIUsageSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SyntaxSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -685,6 +690,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SAPIUsageUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SAPIUsageUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SyntaxUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="UpperCaseConstantUnitTest.inc" role="test" />
