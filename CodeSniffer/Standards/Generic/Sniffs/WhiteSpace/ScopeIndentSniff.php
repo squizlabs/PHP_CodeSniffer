@@ -359,6 +359,31 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         }
                     }//end if
                 }//end if
+                
+                //Doc comment star & close tag but have 1 more space 
+                if (in_array($tokens[$firstToken]['code'], array(T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG), true)) {
+                    $expectedColumn = $column - 1;
+                    if ($expectedColumn === $indent) {
+                        continue;
+                    }
+                    else {
+                        if ($this->exact === true || $expectedColumnn < $indent) {
+                            $type  = 'IncorrectExact';
+                            $error = 'Line indented incorrectly; expected ';
+                            if ($this->exact === false) {
+                                $error .= 'at least ';
+                                $type   = 'Incorrect';
+                            }
+    
+                            $error .= '%s spaces, found %s';
+                            $data = array(
+                                 ($indent - 1),
+                                 ($expectedColumn - 1),
+                            );
+                            $phpcsFile->addError($error, $firstToken, $type, $data);
+                        }
+                    }
+                }//end if
 
                 // The token at the start of the line, needs to have its column
                 // greater than the relative indent we set above. If it is less,
