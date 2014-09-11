@@ -852,5 +852,19 @@
         "path": "PhredParty",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "PhpMetrics",
+        "url": "Halleck45/PhpMetrics",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Stringy",
+        "url": "danielstjules/Stringy",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
