@@ -1,4 +1,5 @@
 <?php
+$repoDates = array();
 
 function getRepoDirs($repo)
 {
@@ -79,8 +80,33 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
 
         if ($checkoutDate !== date('Y-m-d')) {
+            if (isset($GLOBALS['repoDates'][$repo->url]) === false) {
+                echo "\t=> Determining checkout dates".PHP_EOL;
+                $cmd  = "cd $cloneDir; git log --graph --pretty=format:'%cd:%H' --after=\"2013-11-05\" --date=short $branch | sed  -E '/^[^*]/d;s/^\*[ |\\/]+//'";
+                echo "\t\tcmd: ";
+                echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+                $output = trim(shell_exec($cmd));
+                echo "\t\tout: ";
+                echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+
+                $GLOBALS['repoDates'][$repo->url] = array();
+                foreach (explode(PHP_EOL, $output) as $line) {
+                    list($date, $hash) = explode(':', $line);
+                    $GLOBALS['repoDates'][$repo->url][strtotime($date)] = $hash;
+                }
+            }
+
+            // Figure out the hash to use for the selected date.
+            $checkoutTime = strtotime($checkoutDate);
+            foreach ($GLOBALS['repoDates'][$repo->url] as $time => $hash) {
+                if ($time === $checkoutTime || $time < $checkoutTime) {
+                    break;
+                }
+            }
+
             echo "\t=> Checking out specific date: $checkoutDate".PHP_EOL;
-            $cmd  = "cd $cloneDir; git checkout `git rev-list -n 1 --before=\"$checkoutDate 00:00\" $branch` 2>&1; ";
+            //$cmd  = "cd $cloneDir; git checkout $hash . 2>&1; ";
+            $cmd  = "cd $cloneDir; git reset --hard $hash 2>&1; git checkout -f $branch 2>&1; ";
             $cmd .= 'git submodule update --init --recursive 2>&1';
             echo "\t\tcmd: ";
             echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;

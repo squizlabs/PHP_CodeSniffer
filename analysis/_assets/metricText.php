@@ -139,7 +139,7 @@ $metricText = array(
                                                                       ),
                'Line indent'                                       => array(
                                                                        'description' => 'Are lines indented using spaces or tabs?',
-                                                                       'items'       => 'lines',
+                                                                       'items'       => 'indented lines',
                                                                       ),
                'Spacing before object operator'                    => array(
                                                                        'description' => 'How many spaces precede the object operator (->)?',

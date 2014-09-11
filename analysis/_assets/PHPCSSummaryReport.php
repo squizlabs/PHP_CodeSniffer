@@ -63,7 +63,11 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $showSources=false,
         $width=80
     ) {
-        $this->_files[$phpcsFile->getFilename()] = $phpcsFile->numTokens;
+        $tokens = $phpcsFile->getTokens();
+        $this->_files[$phpcsFile->getFilename()] = array(
+                                                    'tokens' => $phpcsFile->numTokens,
+                                                    'lines'  => $tokens[($phpcsFile->numTokens - 1)]['line'],
+                                                    );
         return true;
 
     }//end generateFileReport()
@@ -94,7 +98,16 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $width=80,
         $toScreen=true
     ) {
-        echo 'Processed '.count($this->_files).' files containing '.array_sum($this->_files).' tokens'.PHP_EOL;
+        $numTokens = 0;
+        $numLines  = 0;
+        $numFiles  = 0;
+        foreach ($this->_files as $file => $data) {
+            $numFiles++;
+            $numTokens += $data['tokens'];
+            $numLines  += $data['lines'];
+        }
+
+        echo "Processed $numFiles files containing $numTokens tokens across $numLines lines".PHP_EOL;
         PHP_CodeSniffer_Reporting::printRunTime();
 
     }//end generate()

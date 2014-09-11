@@ -311,7 +311,7 @@
         "name": "Contao Open Source CMS",
         "url": "contao/core",
         "path": "system",
-        "ignore": "*/tcpdf/*",
+        "ignore": "*/vendor/*",
         "extensions": ""
     },
     {
