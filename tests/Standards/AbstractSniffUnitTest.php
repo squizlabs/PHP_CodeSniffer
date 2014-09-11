@@ -192,7 +192,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
                 $errorsTemp = array();
                 foreach ($errors as $foundError) {
-                    $errorsTemp[] = $foundError['message'];
+                    $errorsTemp[] = $foundError['message'].' ('.$foundError['source'].')';
                 }
 
                 $allProblems[$line]['found_errors'] = array_merge($foundErrorsTemp, $errorsTemp);
@@ -238,7 +238,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
                 $warningsTemp = array();
                 foreach ($warnings as $warning) {
-                    $warningsTemp[] = $warning['message'];
+                    $warningsTemp[] = $warning['message'].' ('.$warning['source'].')';
                 }
 
                 $allProblems[$line]['found_warnings'] = array_merge($foundWarningsTemp, $warningsTemp);
