@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Zend ClosingTagSniff fix now correctly leaves closing tags when followed by HTML
   - Added Generic SyntaxSniff to check for syntax errors in PHP files
     -- Thanks to Blaine Schmeisser for the contribution
+  - Added Generic OneTraitPerFileSniff to check that only one trait is defined in each file
+      -- Thanks to Alexander Obuhovich for the contribution
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
   - PEAR ValidFunctionNameSniff no longer throws an error for _()
   - Squiz and PEAR FunctionCommentSnif now support _()
@@ -363,6 +365,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="OneInterfacePerFileSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="OneTraitPerFileSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP" name="DisallowMultipleStatementsSniff.php" role="php">
@@ -595,6 +600,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="OneInterfacePerFileUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="OneInterfacePerFileUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OneTraitPerFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OneTraitPerFileUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>

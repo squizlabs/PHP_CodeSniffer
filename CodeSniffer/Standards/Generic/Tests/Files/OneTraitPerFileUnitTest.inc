@@ -10,4 +10,3 @@ trait bar {
 trait baz {
 
 }
-?>
