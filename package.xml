@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #20378 : Report appended to existing file if no errors found in run
   - Fixed bug #20381 : Invalid "Comment closer must be on a new line"
     -- Thanks to Brad Kent for the patch
+  - Fixed bug #20402 : SVN pre-commit hook fails due to unknown argument error
  </notes>
  <contents>
   <dir name="/">

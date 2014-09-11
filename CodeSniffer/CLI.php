@@ -470,9 +470,7 @@ class PHP_CodeSniffer_CLI
             if ($this->dieOnUnknownArg === false) {
                 $this->values[$arg] = $arg;
             } else {
-                echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(2);
+                $this->processUnknownArgument('-'.$arg, $pos);
             }
         }//end switch
 
@@ -643,9 +641,7 @@ class PHP_CodeSniffer_CLI
                         $this->values[$arg] = $value;
                     }
                 } else {
-                    echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
+                    $this->processUnknownArgument('--'.$arg, $pos);
                 }
             }//end if
 
@@ -667,6 +663,17 @@ class PHP_CodeSniffer_CLI
      */
     public function processUnknownArgument($arg, $pos)
     {
+        // We don't know about any additional switches; just files.
+        if ($arg{0} === '-') {
+            if ($this->dieOnUnknownArg === false) {
+                return;
+            }
+
+            echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
+            $this->printUsage();
+            exit(2);
+        }
+
         $file = PHP_CodeSniffer::realpath($arg);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
