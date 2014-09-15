@@ -82,8 +82,10 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'The open comment tag must be the only content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpen');
             if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addNewline($stackPtr);
                 $phpcsFile->fixer->addContentBefore($short, '* ');
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
