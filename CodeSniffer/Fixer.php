@@ -153,9 +153,7 @@ class PHP_CodeSniffer_Fixer
             /*
                 Useful for debugging fixed contents.
                 @ob_end_clean();
-                $debugContent = str_replace("\n", "\033[30;1m\\n\n\033[0m", $contents);
-                $debugContent = str_replace("\t", "\033[30;1m»\t\033[0m", $debugContent);
-                $debugContent = str_replace(' ', "\033[30;1m·\033[0m", $debugContent);
+                $debugContent = PHP_CodeSniffer::prepareForOutput($contents);
                 echo $debugContent;
             */
 
@@ -372,10 +370,8 @@ class PHP_CodeSniffer_Fixer
 
             $tokens     = $this->_currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = str_replace($this->_currentFile->eolChar, "\033[30;1m\\n\033[0m", $tokens[$stackPtr]['content']);
-            $newContent = str_replace($this->_currentFile->eolChar, "\033[30;1m\\n\033[0m", $content);
-            $oldContent = str_replace(' ', "\033[30;1m·\033[0m", $oldContent);
-            $newContent = str_replace(' ', "\033[30;1m·\033[0m", $newContent);
+            $oldContent = PHP_CodeSniffer::prepareForOutput($tokens[$stackPtr]['content']);
+            $newContent = PHP_CodeSniffer::prepareForOutput($content);
         }
 
         if ($this->_inChangeset === true) {
