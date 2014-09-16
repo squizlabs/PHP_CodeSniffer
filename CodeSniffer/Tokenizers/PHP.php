@@ -308,22 +308,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 if ($tokenIsArray === true) {
-                    $type = token_name($token[0]);
-                    if ($isWin === true) {
-                        $content = str_replace("\n", '\n', $token[1]);
-                        $content = str_replace("\r", '\r', $content);
-                    } else {
-                        $content = str_replace("\n", "\033[30;1m\\n\033[0m", $token[1]);
-                        $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
-                    }
+                    $type    = token_name($token[0]);
+                    $content = PHP_CodeSniffer::prepareForOutput($token[1]);
                 } else {
                     $newToken = self::resolveSimpleToken($token[0]);
                     $type     = $newToken['type'];
-                    $content  = $token[0];
-                }
-
-                if ($isWin === false) {
-                    $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+                    $content  = PHP_CodeSniffer::prepareForOutput($token[0]);
                 }
 
                 echo "\tProcess token $stackPtr: $type => $content";

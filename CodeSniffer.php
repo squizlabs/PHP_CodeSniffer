@@ -1915,6 +1915,34 @@ class PHP_CodeSniffer
 
 
     /**
+     * Prepares token content for output to screen.
+     *
+     * Replaces invisible characters so they are visible. On non-Windows
+     * OSes it will also colour the invisble characters.
+     *
+     * @param string $content The content to prepare.
+     *
+     * @return string
+     */
+    public static function prepareForOutput($content)
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $content = str_replace("\r", '\r', $content);
+            $content = str_replace("\n", '\n', $content);
+            $content = str_replace("\t", '\t', $content);
+        } else {
+            $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
+            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $content);
+            $content = str_replace("\t", "\033[30;1m\\t\033[0m", $content);
+            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+        }
+
+        return $content;
+
+    }//end prepareForOutput()
+
+
+    /**
      * Get a list paths where standards are installed.
      *
      * @return array
