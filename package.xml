@@ -57,7 +57,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Thanks to Alexander Obuhovich for the contribution
   - Squiz DiscouragedFunctionsSniff now warns about var_dump()
   - PEAR ValidFunctionNameSniff no longer throws an error for _()
-  - Squiz and PEAR FunctionCommentSnif now support _()
+  - Squiz and PEAR FunctionCommentSniffs now support _()
+  - Generic DisallowTabIndentSniff now checks for, and fixes, mixed indents again
   - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #243 : Missing DocBlock not detected
   - Fixed bug #248 : FunctionCommentSniff expects ampersand on param name
