@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Minified JS and CSS files are now detected and skipped (fixes bug #252 and bug #19899)
+    -- A warning will be added to the file so it can be found in the report and ignored in the future
   - Fixed incorrect length of JS object operator tokens
   - PHP tokenizer no longer converts class/function names to special tokens types
     -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE

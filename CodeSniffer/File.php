@@ -611,7 +611,7 @@ class PHP_CodeSniffer_File
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML
         // and nothing will be checked. So try and handle this case.
-        if ($foundCode === false) {
+        if ($foundCode === false && $this->tokenizerType === 'PHP') {
             $shortTags = (bool) ini_get('short_open_tag');
             if ($shortTags === false) {
                 $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
@@ -685,7 +685,20 @@ class PHP_CodeSniffer_File
             $contents = file_get_contents($this->_file);
         }
 
-        $this->_tokens   = self::tokenizeString($contents, $tokenizer, $this->eolChar);
+        try {
+            $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar);
+        } catch (PHP_CodeSniffer_Exception $e) {
+            $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo "[$this->tokenizerType => tokenizer error]... ";
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo PHP_EOL;
+                }
+            }
+
+            return;
+        }
+
         $this->numTokens = count($this->_tokens);
 
         // Check for mixed line endings as these can cause tokenizer errors and we
@@ -1368,10 +1381,22 @@ class PHP_CodeSniffer_File
      * @param object $tokenizer A tokenizer class to use to tokenize the string.
      * @param string $eolChar   The EOL character to use for splitting strings.
      *
+     * @throws PHP_CodeSniffer_Exception If the file cannot be processed.
      * @return array
      */
     public static function tokenizeString($string, $tokenizer, $eolChar='\n')
     {
+        // Minified files often have a very large number of characters per line
+        // and cause issues when tokenizing.
+        if (get_class($tokenizer) !== 'PHP_CodeSniffer_Tokenizers_PHP') {
+            $numChars = strlen($string);
+            $numLines = (substr_count($string, $eolChar) + 1);
+            $average  = ($numChars / $numLines);
+            if ($average > 100) {
+                throw new PHP_CodeSniffer_Exception('File appears to be minified and cannot be processed');
+            }
+        }
+
         $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
         // If we know the width of each tab, convert tabs
@@ -1942,6 +1967,17 @@ class PHP_CodeSniffer_File
                     if (isset($tokenizer->scopeOpeners[$tokenType]['end'][T_CLOSE_CURLY_BRACKET]) === true) {
                         $oldIgnore = $ignore;
                         $ignore    = 0;
+                    }
+
+                    // PHP has a max nesting level for functions. Stop before we hit that limit
+                    // because too many loops means we've run into trouble anyway.
+                    if ($depth > 50) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo '* reached maximum nesting level; aborting *'.PHP_EOL;
+                        }
+
+                        throw new PHP_CodeSniffer_Exception('Maximum nesting level reached; file could not be processed');
                     }
 
                     $i = self::_recurseScopeMap(
