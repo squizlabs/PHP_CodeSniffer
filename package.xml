@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
+  - Improved fixing of mixed line indents in Generic ScopeIndentSniff
   - Added conflict detection to the file fixer
     -- If 2 sniffs look to be conflicting, one change will be ignored to allow a fix to occur
   - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore

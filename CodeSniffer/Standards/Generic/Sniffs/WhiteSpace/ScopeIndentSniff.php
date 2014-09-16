@@ -229,7 +229,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 if ($fix === true) {
                     $diff = ($expectedIndent - $tokens[$firstToken]['column']);
                     if ($diff > 0) {
-                        $phpcsFile->fixer->addContentBefore($firstToken, str_repeat(' ', $diff));
+                        $spaces = str_repeat(' ', ($expectedIndent - 1));
+                        $phpcsFile->fixer->replaceToken(($firstToken - 1), $spaces);
                     } else {
                         // We need to remove some padding, but we'll do it for all lines
                         // until the end of this code block if the exact flag is not on

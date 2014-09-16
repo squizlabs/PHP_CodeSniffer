@@ -411,6 +411,21 @@ STRING
     );
 }
 
+class MyClass
+{
+    public static function myFunction()
+    {
+        if (empty($keywords) === FALSE) {
+    	    $keywords = 'foo';
+    	    $existing = 'foo';
+        }
+
+        return $keywords;
+
+    }//end myFunction()
+
+}//end class
+
 $var = call_user_func(
     $new_var = function () use (&$a) {
         if ($a > 0) {
