@@ -52,21 +52,21 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      *
      * @var string
      */
-    private $_methodName = '';
+    protected $_methodName = '';
 
     /**
      * The position in the stack where the function token was found.
      *
      * @var int
      */
-    private $_functionToken = null;
+    protected $_functionToken = null;
 
     /**
      * The position in the stack where the class token was found.
      *
      * @var int
      */
-    private $_classToken = null;
+    protected $_classToken = null;
 
     /**
      * The function comment parser for the current method.
