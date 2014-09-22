@@ -217,13 +217,6 @@
         "extensions": ""
     },
     {
-        "name": "Solar Framework",
-        "url": "solarphp/core",
-        "path": "Solar",
-        "ignore": "",
-        "extensions": ""
-    },
-    {
         "name": "Propel",
         "url": "propelorm/Propel",
         "path": "runtime/lib",

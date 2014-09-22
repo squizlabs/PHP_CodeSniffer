@@ -64,9 +64,17 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $width=80
     ) {
         $tokens = $phpcsFile->getTokens();
+        if ($phpcsFile->numTokens === 0) {
+            $lines = 1;
+        } else if (isset($tokens[($phpcsFile->numTokens - 1)]) === true) {
+            $lines = $tokens[($phpcsFile->numTokens - 1)]['line'];
+        } else {
+            $lines = 0;
+        }
+
         $this->_files[$phpcsFile->getFilename()] = array(
                                                     'tokens' => $phpcsFile->numTokens,
-                                                    'lines'  => $tokens[($phpcsFile->numTokens - 1)]['line'],
+                                                    'lines'  => $lines,
                                                     );
         return true;
 
