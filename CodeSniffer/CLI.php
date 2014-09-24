@@ -869,7 +869,7 @@ class PHP_CodeSniffer_CLI
 
             $errors   = $result['errors'];
             $warnings = $result['warnings'];
-        }
+        }//end foreach
 
         // Only print timer output if no reports were
         // printed to the screen so we don't put additional output
