@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Default remains at exiting with 0 only if no errors and no warnings were found
     -- Also changes return value of PHP_CodeSniffer_Reporting::printReport()
   - Rulesets can now set associative array properties
-    -- < property name="[property]" type="array" value="foo=>bar,baz=>qux"/ >
+    -- property name="[property]" type="array" value="foo=>bar,baz=>qux"
   - Generic ForbiddenFunctionsSniff now has a public property called forbiddenFunctions (request #263)
     -- Override the property in a ruleset.xml file to define forbidden functions and their replacements
     -- A replacement of NULL indicates that no replacement is available
