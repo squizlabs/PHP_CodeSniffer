@@ -201,14 +201,17 @@ class PHP_CodeSniffer_Reporting
 
 
     /**
-     * Actually generates the report.
+     * Generates and prints a final report.
+     *
+     * Returns an array with the number of errors and the number of
+     * warnings, in the form ['errors' => int, 'warnings' => int].
      *
      * @param string  $report      Report type.
      * @param boolean $showSources Show sources?
      * @param string  $reportFile  Report file to generate.
      * @param integer $reportWidth Report max width.
      *
-     * @return integer
+     * @return int[]
      */
     public function printReport(
         $report,
@@ -267,7 +270,10 @@ class PHP_CodeSniffer_Reporting
             unlink($filename);
         }
 
-        return ($this->totalErrors + $this->totalWarnings);
+        return array(
+                'errors'   => $this->totalErrors,
+                'warnings' => $this->totalWarnings,
+               );
 
     }//end printReport()
 

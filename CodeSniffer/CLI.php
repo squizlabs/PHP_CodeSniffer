@@ -845,6 +845,7 @@ class PHP_CodeSniffer_CLI
         }
 
         $errors   = 0;
+        $warnings = 0;
         $toScreen = false;
 
         foreach ($reports as $report => $output) {
@@ -859,12 +860,15 @@ class PHP_CodeSniffer_CLI
             // We don't add errors here because the number of
             // errors reported by each report type will always be the
             // same, so we really just need 1 number.
-            $errors = $phpcs->reporting->printReport(
+            $result = $phpcs->reporting->printReport(
                 $report,
                 $showSources,
                 $output,
                 $reportWidth
             );
+
+            $errors   = $result['errors'];
+            $warnings = $result['warnings'];
         }
 
         // Only print timer output if no reports were
@@ -878,7 +882,15 @@ class PHP_CodeSniffer_CLI
 
         // They should all return the same value, so it
         // doesn't matter which return value we end up using.
-        return $errors;
+        $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
+        if ($ignoreWarnings !== null) {
+            $ignoreWarnings = (bool) $ignoreWarnings;
+            if ($ignoreWarnings === true) {
+                return $errors;
+            }
+        }
+
+        return ($errors + $warnings);
 
     }//end printErrorReport()
 

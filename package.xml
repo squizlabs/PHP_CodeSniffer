@@ -31,6 +31,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed incorrect length of JS object operator tokens
   - PHP tokenizer no longer converts class/function names to special tokens types
     -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
+  - PHPCS can now exit with 0 if only warnings were found (request #262)
+    -- Set the ignore_warnings_on_exit config variable to 1 to set this behaviour
+    -- Default remains at exiting with 0 only if no errors and no warnings were found
+    -- Also changes return value of PHP_CodeSniffer_Reporting::printReport()
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
   - Improved fixing of mixed line indents in Generic ScopeIndentSniff
