@@ -1107,8 +1107,20 @@ class PHP_CodeSniffer
                 if (isset($prop['type']) === true
                     && (string) $prop['type'] === 'array'
                 ) {
-                    $value = (string) $prop['value'];
-                    $this->ruleset[$code]['properties'][$name] = explode(',', $value);
+                    $value  = (string) $prop['value'];
+                    $values = array();
+                    foreach (explode(',', $value) as $val) {
+                        $v = '';
+
+                        list($k,$v) = explode('=>', $val.'=>');
+                        if ($v !== '') {
+                            $values[$k] = $v;
+                        } else {
+                            $values[] = $k;
+                        }
+                    }
+
+                    $this->ruleset[$code]['properties'][$name] = $values;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> array property \"$name\" set to \"$value\"".PHP_EOL;
@@ -1119,7 +1131,7 @@ class PHP_CodeSniffer
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"'.PHP_EOL;
                     }
-                }
+                }//end if
             }//end foreach
         }//end if
 

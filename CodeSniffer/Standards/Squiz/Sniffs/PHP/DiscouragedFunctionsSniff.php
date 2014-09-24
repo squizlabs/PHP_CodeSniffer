@@ -40,11 +40,11 @@ class Squiz_Sniffs_PHP_DiscouragedFunctionsSniff extends Generic_Sniffs_PHP_Forb
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
-                                     'error_log' => null,
-                                     'print_r'   => null,
-                                     'var_dump'  => null,
-                                    );
+    public $forbiddenFunctions = array(
+                                  'error_log' => null,
+                                  'print_r'   => null,
+                                  'var_dump'  => null,
+                                 );
 
     /**
      * If true, an error will be thrown; otherwise a warning.

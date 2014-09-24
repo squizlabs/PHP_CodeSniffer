@@ -39,10 +39,10 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
-                                    );
+    public $forbiddenFunctions = array(
+                                  'sizeof' => 'count',
+                                  'delete' => 'unset',
+                                 );
 
     /**
      * A cache of forbidden function names, for faster lookups.
@@ -81,9 +81,28 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             foreach ($this->forbiddenFunctionNames as $i => $name) {
                 $this->forbiddenFunctionNames[$i] = '/'.$name.'/i';
             }
+
+            return array(T_STRING);
         }
 
-        return array(T_STRING);
+        // If we are not pattern matching, we need to work out what
+        // tokens to listen for.
+        $string = '<?php ';
+        foreach ($this->forbiddenFunctionNames as $name) {
+            $string .= $name.'();';
+        }
+
+        $register = array();
+
+        $tokens = token_get_all($string);
+        array_shift($tokens);
+        foreach ($tokens as $token) {
+            if (is_array($token) === true) {
+                $register[] = $token[0];
+            }
+        }
+
+        return array_unique($register);
 
     }//end register()
 

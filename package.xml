@@ -35,6 +35,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the ignore_warnings_on_exit config variable to 1 to set this behaviour
     -- Default remains at exiting with 0 only if no errors and no warnings were found
     -- Also changes return value of PHP_CodeSniffer_Reporting::printReport()
+  - Rulesets can now set associative array properties
+    -- < property name="[property]" type="array" value="foo=>bar,baz=>qux"/ >
+  - Generic ForbiddenFunctionsSniff now has a public property called forbiddenFunctions (request #263)
+    -- Override the property in a ruleset.xml file to define forbidden functions and their replacements
+    -- A replacement of NULL indicates that no replacement is available
+    -- e.g., value="delete=>unset,print=>echo,create_function=>null"
+    -- Custom sniffs overriding this one will need to change the visbility of their member var
   - Improved closure support in Generic ScopeIndentSniff
   - Improved indented PHP tag support in Generic ScopeIndentSniff
   - Improved fixing of mixed line indents in Generic ScopeIndentSniff
