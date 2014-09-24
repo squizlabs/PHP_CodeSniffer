@@ -74,6 +74,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
   - Fixed bug #243 : Missing DocBlock not detected
   - Fixed bug #248 : FunctionCommentSniff expects ampersand on param name
+  - Fixed bug #265 : False positives with type hints in ForbiddenFunctionsSniff
   - Fixed bug #20373 : Inline comment sniff tab handling way
   - Fixed bug #20377 : Error when trying to execute phpcs with report=json
   - Fixed bug #20378 : Report appended to existing file if no errors found in run
