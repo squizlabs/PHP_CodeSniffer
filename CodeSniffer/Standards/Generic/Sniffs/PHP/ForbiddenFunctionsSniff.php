@@ -139,6 +139,11 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
+        if ($tokens[$stackPtr]['code'] === T_STRING && $tokens[$nextToken]['code'] !== T_OPEN_PARENTHESIS) {
+            // Not a call to a PHP function.
+            return;
+        }
+
         $function = strtolower($tokens[$stackPtr]['content']);
         $pattern  = null;
 

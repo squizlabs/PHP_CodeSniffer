@@ -51,4 +51,7 @@ namespace Something\sizeof;
 $var = new Sizeof();
 class SizeOf implements Something {}
 
+function mymodule_form_callback(SizeOf $sizeof) {
+}
+
 ?>
