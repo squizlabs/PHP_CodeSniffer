@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2014-08-06</date>
- <time>09:58:00</time>
+ <date>2014-09-26</date>
+ <time>08:36:00</time>
  <version>
   <release>2.0.0RC2</release>
   <api>2.0.0RC2</api>
@@ -2290,6 +2290,75 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>2.0.0RC2</release>
+    <api>2.0.0RC2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2014-09-26</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Minified JS and CSS files are now detected and skipped (fixes bug #252 and bug #19899)
+      -- A warning will be added to the file so it can be found in the report and ignored in the future
+    - Fixed incorrect length of JS object operator tokens
+    - PHP tokenizer no longer converts class/function names to special tokens types
+      -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
+    - PHPCS can now exit with 0 if only warnings were found (request #262)
+      -- Set the ignore_warnings_on_exit config variable to 1 to set this behaviour
+      -- Default remains at exiting with 0 only if no errors and no warnings were found
+      -- Also changes return value of PHP_CodeSniffer_Reporting::printReport()
+    - Rulesets can now set associative array properties
+      -- property name="[property]" type="array" value="foo=>bar,baz=>qux"
+    - Generic ForbiddenFunctionsSniff now has a public property called forbiddenFunctions (request #263)
+      -- Override the property in a ruleset.xml file to define forbidden functions and their replacements
+      -- A replacement of NULL indicates that no replacement is available
+      -- e.g., value="delete=>unset,print=>echo,create_function=>null"
+      -- Custom sniffs overriding this one will need to change the visbility of their member var
+    - Improved closure support in Generic ScopeIndentSniff
+    - Improved indented PHP tag support in Generic ScopeIndentSniff
+    - Improved fixing of mixed line indents in Generic ScopeIndentSniff
+    - Added conflict detection to the file fixer
+      -- If 2 sniffs look to be conflicting, one change will be ignored to allow a fix to occur
+    - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
+      -- Thanks to Alex Slobodiskiy for the patch
+    - Standards can now be located within hidden directories (further fix for bug #20323)
+      -- Thanks to Klaus Purer for the patch
+    - Sniff ignore patterns now replace Win dir separators like file ignore patterns already did
+    - Exclude patterns now use backtick delimiters, allowing all special characters to work correctly again
+      -- Thanks to Jeremy Edgell for the patch
+    - Errors converted to warnings in a ruleset (and vice versa) now retain their fixable status
+      -- Thanks to Alexander Obuhovich for the patch
+    - Squiz ConcatenationSpacingSniff now has a setting to specify how many spaces there should around concat operators
+        -- Default remains at 0
+        -- Override the "spacing" setting in a ruleset.xml file to change
+    - Added auto-fixes for Squiz InlineCommentSniff
+    - Generic DocCommentSniff now correctly fixes additional blank lines at the end of a comment
+    - Squiz OperatorBracketSniff now correctly fixes operations that include arrays
+    - Zend ClosingTagSniff fix now correctly leaves closing tags when followed by HTML
+    - Added Generic SyntaxSniff to check for syntax errors in PHP files
+      -- Thanks to Blaine Schmeisser for the contribution
+    - Added Generic OneTraitPerFileSniff to check that only one trait is defined in each file
+        -- Thanks to Alexander Obuhovich for the contribution
+    - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+    - PEAR ValidFunctionNameSniff no longer throws an error for _()
+    - Squiz and PEAR FunctionCommentSniffs now support _()
+    - Generic DisallowTabIndentSniff now checks for, and fixes, mixed indents again
+    - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
+    - Fixed bug #243 : Missing DocBlock not detected
+    - Fixed bug #248 : FunctionCommentSniff expects ampersand on param name
+    - Fixed bug #265 : False positives with type hints in ForbiddenFunctionsSniff
+    - Fixed bug #20373 : Inline comment sniff tab handling way
+    - Fixed bug #20377 : Error when trying to execute phpcs with report=json
+    - Fixed bug #20378 : Report appended to existing file if no errors found in run
+    - Fixed bug #20381 : Invalid "Comment closer must be on a new line"
+      -- Thanks to Brad Kent for the patch
+    - Fixed bug #20402 : SVN pre-commit hook fails due to unknown argument error
+    </notes>
+  </release>
+  <release>
+   <version>
     <release>2.0.0RC1</release>
     <api>2.0.0RC1</api>
    </version>
@@ -2486,6 +2555,41 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz ControlStructureSpacingSniff now checks TRY and CATCH statements as well
     - Removed MySource ChannelExceptionSniff
     </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.5</release>
+    <api>1.5.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-09-25</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - PHP tokenizer no longer converts class/function names to special tokens types
+      -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
+    - Improved closure support in Generic ScopeIndentSniff
+    - Improved indented PHP tag support in Generic ScopeIndentSniff
+    - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
+      -- Thanks to Alex Slobodiskiy for the patch
+    - Standards can now be located within hidden directories (further fix for bug #20323)
+      -- Thanks to Klaus Purer for the patch
+    - Added Generic SyntaxSniff to check for syntax errors in PHP files
+      -- Thanks to Blaine Schmeisser for the contribution
+    - Squiz DiscouragedFunctionsSniff now warns about var_dump()
+    - PEAR ValidFunctionNameSniff no longer throws an error for _()
+    - Squiz and PEAR FunctionCommentSnif now support _()
+    - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
+    - Fixed bug #248 : FunctionCommentSniff expects ampersand on param name
+    - Fixed bug #265 : False positives with type hints in ForbiddenFunctionsSniff
+    - Fixed bug #20373 : Inline comment sniff tab handling way
+    - Fixed bug #20378 : Report appended to existing file if no errors found in run
+    - Fixed bug #20381 : Invalid "Comment closer must be on a new line"
+      -- Thanks to Brad Kent for the patch
+    - Fixed bug #20386 : Squiz.Commenting.ClassComment.SpacingBefore thrown if first block comment
+   </notes>
   </release>
   <release>
    <version>
