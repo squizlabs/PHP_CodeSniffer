@@ -17,9 +17,9 @@ EOF;
 class MyClass
 {
     /**
-	 * Short description.
+	 * Short	description.
 	 *
-	 * @return void
+	 * @return	void
 	 */
     public function myFunction() {}
 }

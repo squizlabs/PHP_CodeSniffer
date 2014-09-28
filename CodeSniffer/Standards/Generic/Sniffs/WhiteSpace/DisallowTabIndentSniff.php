@@ -69,12 +69,20 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
         $error  = 'Spaces must be used to indent lines; tabs are not allowed';
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['column'] !== 1
-                || ($tokens[$i]['code'] !== T_WHITESPACE
-                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
-                && $tokens[$i]['code'] !== T_CONSTANT_ENCAPSED_STRING)
+            // We always checks doc comments for tabs, but only whitespace
+            // at the start of a line for everything else.
+            $inComment = false;
+            if ($tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
+                && $tokens[$i]['code'] !== T_DOC_COMMENT_STRING
             ) {
-                continue;
+                if ($tokens[$i]['column'] !== 1
+                    || ($tokens[$i]['code'] !== T_WHITESPACE
+                    && $tokens[$i]['code'] !== T_CONSTANT_ENCAPSED_STRING)
+                ) {
+                    continue;
+                }
+            } else {
+                $inComment = true;
             }
 
             // If tabs are being converted to spaces by PHPCS, the
@@ -86,17 +94,26 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
             }
 
             $tabFound = false;
-            if ($content[0] === "\t") {
-                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
-                $tabFound = true;
-            } else if ($content[0] === ' ') {
-                if (strpos($content, "\t") !== false) {
-                    $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+            if ($tokens[$i]['column'] === 1) {
+                if ($content[0] === "\t") {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                     $tabFound = true;
-                } else {
-                    $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+                } else if ($content[0] === ' ') {
+                    if (strpos($content, "\t") !== false) {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        $tabFound = true;
+                    } else {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+                    }
                 }
-            }
+            } else {
+                // Look for tabs so we can report and replace, but don't
+                // record any metrics about them because they aren't
+                // line indent tokens.
+                if (strpos($content, "\t") !== false) {
+                    $tabFound = true;
+                }
+            }//end if
  
             if ($tabFound === false) {
                 continue;
