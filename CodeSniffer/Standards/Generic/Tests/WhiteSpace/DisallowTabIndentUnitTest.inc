@@ -23,3 +23,6 @@ class MyClass
 	 */
     public function myFunction() {}
 }
+
+$str = 'hello
+		there';

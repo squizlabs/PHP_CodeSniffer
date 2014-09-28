@@ -67,7 +67,8 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] !== 1
                 || ($tokens[$i]['code'] !== T_WHITESPACE
-                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE)
+                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
+                && $tokens[$i]['code'] !== T_CONSTANT_ENCAPSED_STRING)
             ) {
                 continue;
             }

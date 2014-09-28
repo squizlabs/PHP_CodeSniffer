@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
+  - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
  </notes>
  <contents>
   <dir name="/">

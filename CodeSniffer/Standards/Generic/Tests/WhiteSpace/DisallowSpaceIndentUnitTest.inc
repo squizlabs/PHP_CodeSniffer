@@ -34,3 +34,6 @@ EOF;
 	/**
      *
 	*/
+
+$str = 'hello
+        there';

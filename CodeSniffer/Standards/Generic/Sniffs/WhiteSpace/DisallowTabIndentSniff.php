@@ -71,13 +71,14 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] !== 1
                 || ($tokens[$i]['code'] !== T_WHITESPACE
-                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE)
+                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
+                && $tokens[$i]['code'] !== T_CONSTANT_ENCAPSED_STRING)
             ) {
                 continue;
             }
 
-            // If tabs are being converted to spaces, the original content
-            // should be used instead of the converted content.
+            // If tabs are being converted to spaces by PHPCS, the
+            // original content should be used instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];
             } else {
@@ -103,10 +104,15 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
 
             $fix = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
             if ($fix === true) {
-                // Replace tabs with spaces, using an indent of 4 spaces.
-                // Other sniffs can then correct the indent if they need to.
-                $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
-                $phpcsFile->fixer->replaceToken($i, $newContent);
+                if (isset($tokens[$i]['orig_content']) === true) {
+                    // Use the replacement that PHPCS has already done.
+                    $phpcsFile->fixer->replaceToken($i, $tokens[$i]['content']);
+                } else {
+                    // Replace tabs with spaces, using an indent of 4 spaces.
+                    // Other sniffs can then correct the indent if they need to.
+                    $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
+                    $phpcsFile->fixer->replaceToken($i, $newContent);
+                }
             }
         }//end for
 
