@@ -14,4 +14,12 @@ EOF;
     $correctVar = true;
 	$correctVar = false;
 
-?>
+class MyClass
+{
+    /**
+	 * Short description.
+	 *
+	 * @return void
+	 */
+    public function myFunction() {}
+}

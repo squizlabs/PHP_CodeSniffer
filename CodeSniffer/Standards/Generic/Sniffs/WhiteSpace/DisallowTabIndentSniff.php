@@ -69,7 +69,10 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
         $error  = 'Spaces must be used to indent lines; tabs are not allowed';
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['column'] !== 1 || $tokens[$i]['code'] !== T_WHITESPACE) {
+            if ($tokens[$i]['column'] !== 1
+                || ($tokens[$i]['code'] !== T_WHITESPACE
+                && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE)
+            ) {
                 continue;
             }
 

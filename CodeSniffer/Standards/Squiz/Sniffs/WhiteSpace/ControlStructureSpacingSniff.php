@@ -259,11 +259,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $error = 'No blank line found after control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
             if ($fix === true) {
-                for ($i = $scopeCloser; $i <= $trailingContent; $i++) {
-                    if ($tokens[$i]['line'] > $tokens[$scopeCloser]['line']) {
-                        $phpcsFile->fixer->addNewline(($i - 1));
-                    }
-                }
+                $phpcsFile->fixer->addNewline($scopeCloser);
             }
         }//end if
 
