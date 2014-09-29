@@ -204,15 +204,32 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                         // a single blank line, or the end switch brace.
                         if ($nextLine !== ($breakLine + 2) && $i !== $tokens[$stackPtr]['scope_closer']) {
                             $error = 'Case breaking statements must be followed by a single blank line';
-                            $phpcsFile->addError($error, $nextBreak, 'SpacingAfterBreak');
-                        }
+                            $fix   = $phpcsFile->addFixableError($error, $nextBreak, 'SpacingAfterBreak');
+                            if ($fix === true) {
+                                $phpcsFile->fixer->beginChangeset();
+                                for ($i = ($semicolon + 1); $i <= $tokens[$tokens[$stackPtr]['scope_closer']]; $i++) {
+                                    if ($tokens[$i]['line'] === $tokens[$semicolon]['line']) {
+                                        continue;
+                                    }
+
+                                    if ($tokens[$i]['line'] === $nextLine) {
+                                        $phpcsFile->fixer->addNewlineBefore($i);
+                                        break;
+                                    }
+
+                                    $phpcsFile->fixer->replaceToken($i, '');
+                                }
+
+                                $phpcsFile->fixer->endChangeset();
+                            }
+                        }//end if
                     } else {
                         // Ensure the BREAK statement is not followed by a blank line.
                         if ($nextLine !== ($breakLine + 1)) {
                             $error = 'Blank lines are not allowed after the DEFAULT case\'s breaking statement';
                             $phpcsFile->addError($error, $nextBreak, 'SpacingAfterDefaultBreak');
                         }
-                    }
+                    }//end if
 
                     $caseLine = $tokens[$nextCase]['line'];
                     $nextLine = $tokens[$nextBreak]['line'];
