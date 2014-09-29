@@ -122,40 +122,21 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
 
             $fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
             if ($fix === true) {
-                $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1));
-                if ($foundLines < $this->spacing) {
-                    if ($nextSpace === false || $foundLines === 0) {
-                        // Account for a comment after the closing brace.
-                        $nextSpace = $closer;
-                        if (isset($tokens[($closer + 1)]) === true
-                            && $tokens[($closer + 1)]['code'] === T_COMMENT
-                        ) {
-                            $nextSpace++;
-                        }
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($closer + 1); $i < $nextContent; $i++) {
+                    if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
+                        continue;
                     }
 
-                    $padding = str_repeat($phpcsFile->eolChar, ($this->spacing - $foundLines));
-                    $phpcsFile->fixer->addContent($nextSpace, $padding);
-                } else {
-                    $spacing = $this->spacing;
-                    if ($tokens[($closer + 1)]['code'] === T_COMMENT) {
-                        // Account for a comment after the closing brace.
-                        $nextSpace++;
-                        $spacing--;
+                    if ($tokens[$i]['line'] === $tokens[$nextContent]['line']) {
+                        $phpcsFile->fixer->addContentBefore($i, str_repeat($phpcsFile->eolChar, $this->spacing));
+                        break;
                     }
 
-                    if ($nextContent === ($phpcsFile->numTokens - 1)) {
-                        $spacing--;
-                    }
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
 
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
-
-                    $phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $spacing));
-                    $phpcsFile->fixer->endChangeset();
-                }//end if
+                $phpcsFile->fixer->endChangeset();
             }//end if
         }//end if
 
