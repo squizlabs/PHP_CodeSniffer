@@ -22,17 +22,17 @@ class Test
 
         while (TRUE) {
            echo 'hello'; // error here
-         }// no error here as its handled by another test.
+         }
 
        do { // error here
          echo 'hello'; // error here
-       } while (TRUE); // no error here as its aligned with the do.
-   }// no error here as its handled by another test.
+       } while (TRUE);
+   }
 
     function hello3()
     {
         switch ($hello) {
-        case 'hello': // no error here as switch statements shouldn't be indented ???
+        case 'hello':
             break;
         }
     }

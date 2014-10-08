@@ -8,7 +8,7 @@ class Test
     }
 
    function hello() // error here
-    { // no error here as brackets can be put anywhere in the pear standard
+    {
         echo 'hello';
 }//end hello()
 
@@ -22,12 +22,12 @@ class Test
 
         while (TRUE) {
            echo 'hello'; // error here
-         }// no error here as its handled by another test.
+         }
 
        do { // error here
          echo 'hello'; // error here
-       } while (TRUE); // no error here as its aligned with the do.
-   }// no error here as its handled by another test.
+       } while (TRUE);
+   }
 
     function hello3()
     {
@@ -116,17 +116,17 @@ class Test2
       This is another c style comment 5.
     */
 
-    /*
+    /* This is a T_COMMENT
     *
     *
     *
    */
 
-    /**
+    /** This is a T_DOC_COMMENT
    */
 
     /*
-      This comment has a newline in it.
+      This T_COMMENT has a newline in it.
 
     */
 
@@ -267,7 +267,7 @@ function temp($foo, $bar) {
         case 1:
             switch ($bar) {
                 default:
-                    return $foo;
+                return $foo;
             }
         break;
     }
@@ -559,3 +559,19 @@ if ($foo) {
 
 ?>
 <title><?= CHtml::encode($this->pageTitle); ?></title>
+
+<?php
+if ($foo) {
+    echo '1';
+        echo '2';
+            echo '3';
+}
+
+$array = array();
+array_map(
+    function($x)
+    {
+        return trim($x);
+    },
+    $array
+);
