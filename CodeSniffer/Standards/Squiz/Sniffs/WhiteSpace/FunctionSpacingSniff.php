@@ -70,28 +70,26 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
         */
 
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            // Must be an interface method, so the closer is the semi-colon.
+            // Must be an interface method, so the closer is the semicolon.
             $closer = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
         } else {
             $closer = $tokens[$stackPtr]['scope_closer'];
         }
 
-        $nextLineToken = null;
-        for ($i = $closer; $i < $phpcsFile->numTokens; $i++) {
-            if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
-                continue;
-            } else {
-                $nextLineToken = ($i + 1);
-                if (isset($tokens[$nextLineToken]) === false) {
-                    $nextLineToken = null;
-                }
-
+        // Allow for comments on the same line as the closer.
+        for ($nextLineToken = ($closer + 1); $nextLineToken < $phpcsFile->numTokens; $nextLineToken++) {
+            if ($tokens[$nextLineToken]['line'] !== $tokens[$closer]['line']) {
                 break;
             }
         }
 
         $foundLines = 0;
-        if (is_null($nextLineToken) === false) {
+        if ($nextLineToken === ($phpcsFile->numTokens - 1)) {
+            // We are at the end of the file.
+            // Don't check spacing after the function because this
+            // should be done by an EOF sniff.
+            $foundLines = $this->spacing;
+        } else {
             $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextLineToken + 1), null, true);
             if ($nextContent === false) {
                 // We are at the end of the file.
@@ -101,11 +99,6 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             } else {
                 $foundLines += ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
             }
-        } else {
-            // We are at the end of the file.
-            // Don't check spacing after the function because this
-            // should be done by an EOF sniff.
-            $foundLines = $this->spacing;
         }
 
         if ($foundLines !== $this->spacing) {
@@ -123,11 +116,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                for ($i = ($closer + 1); $i < $nextContent; $i++) {
-                    if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
-                        continue;
-                    }
-
+                for ($i = $nextLineToken; $i <= $nextContent; $i++) {
                     if ($tokens[$i]['line'] === $tokens[$nextContent]['line']) {
                         $phpcsFile->fixer->addContentBefore($i, str_repeat($phpcsFile->eolChar, $this->spacing));
                         break;
