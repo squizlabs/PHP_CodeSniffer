@@ -875,6 +875,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             $tokens[$x]['scope_condition']         = $i;
             $tokens[$newCloser]['scope_condition'] = $i;
             $tokens[$newCloser]['scope_opener']    = $x;
+            $tokens[$newCloser]['scope_closer']    = $newCloser;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $line      = $tokens[$i]['line'];
                 $tokenType = $tokens[$i]['type'];
