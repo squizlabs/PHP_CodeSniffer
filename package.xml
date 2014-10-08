@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Improved default output for PHPCBF and removed the option to print verbose output
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
   - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments

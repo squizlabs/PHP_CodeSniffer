@@ -685,7 +685,7 @@ class PHP_CodeSniffer_File
             $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar);
         } catch (PHP_CodeSniffer_Exception $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo PHP_EOL;
@@ -711,7 +711,7 @@ class PHP_CodeSniffer_File
             $this->addWarning($error, 0, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {

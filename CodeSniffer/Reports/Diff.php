@@ -49,12 +49,48 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
         $showSources=false,
         $width=80
     ) {
+        $errors = $phpcsFile->getFixableCount();
+        if ($errors === 0) {
+            return false;
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             ob_end_clean();
             echo "\t*** START FILE FIXING ***".PHP_EOL;
         }
 
+        if (PHP_CODESNIFFER_CBF === true) {
+            ob_end_clean();
+            $startTime = microtime(true);
+            echo "\t=> Fixing file: $errors/$errors violations remaining";
+        }
+
         $fixed = $phpcsFile->fixer->fixFile();
+
+        if (PHP_CODESNIFFER_CBF === true) {
+            if ($fixed === false) {
+                echo 'ERROR';
+            } else {
+                echo 'DONE';
+            }
+
+            $timeTaken = ((microtime(true) - $startTime) * 1000);
+            if ($timeTaken < 1000) {
+                $timeTaken = round($timeTaken);
+                echo " in {$timeTaken}ms".PHP_EOL;
+            } else {
+                $timeTaken = round(($timeTaken / 1000), 2);
+                echo " in $timeTaken secs".PHP_EOL;
+            }
+
+            ob_start();
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t*** END FILE FIXING ***".PHP_EOL;
+            ob_start();
+        }
+
         if ($fixed === false) {
             return false;
         }
@@ -63,11 +99,6 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
         if ($diff === '') {
             // Nothing to print.
             return false;
-        }
-
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** END FILE FIXING ***".PHP_EOL;
-            ob_start();
         }
 
         echo $diff;

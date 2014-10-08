@@ -1649,7 +1649,7 @@ class PHP_CodeSniffer
      */
     private function _processFile($file, $contents)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1666,7 +1666,7 @@ class PHP_CodeSniffer
 
         $phpcsFile->start($contents);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
             $timeTaken = ((microtime(true) - $startTime) * 1000);
             if ($timeTaken < 1000) {
                 $timeTaken = round($timeTaken);
@@ -1676,9 +1676,14 @@ class PHP_CodeSniffer
                 echo "DONE in $timeTaken secs";
             }
 
-            $errors   = $phpcsFile->getErrorCount();
-            $warnings = $phpcsFile->getWarningCount();
-            echo " ($errors errors, $warnings warnings)".PHP_EOL;
+            if (PHP_CODESNIFFER_CBF === true) {
+                $errors = $phpcsFile->getFixableCount();
+                echo " ($errors fixable violations)".PHP_EOL;
+            } else {
+                $errors   = $phpcsFile->getErrorCount();
+                $warnings = $phpcsFile->getWarningCount();
+                echo " ($errors errors, $warnings warnings)".PHP_EOL;
+            }
         }
 
         return $phpcsFile;

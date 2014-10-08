@@ -155,6 +155,7 @@ class PHP_CodeSniffer_Fixer
                 @ob_end_clean();
                 $debugContent = PHP_CodeSniffer::prepareForOutput($contents);
                 echo $debugContent;
+                ob_start();
             */
 
             $this->_currentFile->refreshTokenListeners();
@@ -172,11 +173,21 @@ class PHP_CodeSniffer_Fixer
 
             $loops++;
 
+            if (PHP_CODESNIFFER_CBF === true) {
+                echo "\r".str_repeat(' ', 80)."\r";
+                echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $loops pass";
+                if ($loops > 1) {
+                    echo 'es';
+                }
+
+                echo ']... ';
+            }
+
             if ($this->_numFixes === 0) {
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t* fixed $this->_numFixes violations, starting over *".PHP_EOL;
+                echo "\t* fixed $this->_numFixes violations, starting loop ".($loops + 1).' *'.PHP_EOL;
             }
         }//end while
 
@@ -372,7 +383,13 @@ class PHP_CodeSniffer_Fixer
             $type       = $tokens[$stackPtr]['type'];
             $oldContent = PHP_CodeSniffer::prepareForOutput($tokens[$stackPtr]['content']);
             $newContent = PHP_CodeSniffer::prepareForOutput($content);
-        }
+            if (trim($tokens[$stackPtr]['content']) === '' && isset($tokens[($stackPtr + 1)]) === true) {
+                // Add some context for whitespace only changes.
+                $append      = PHP_CodeSniffer::prepareForOutput($tokens[($stackPtr + 1)]['content']);
+                $oldContent .= $append;
+                $newContent .= $append;
+            }
+        }//end if
 
         if ($this->_inChangeset === true) {
             $this->_changeset[$stackPtr] = $content;
