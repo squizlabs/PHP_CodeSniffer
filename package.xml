@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
   - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments
   - Squiz ControlStructureSpacingSniff error codes have been corrected; they were reversed
+  - Squiz EmbeddedPhpSniff now checks open and close tag indents and fixes some errors
  </notes>
  <contents>
   <dir name="/">
