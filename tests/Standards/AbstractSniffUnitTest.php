@@ -117,7 +117,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         foreach ($di as $file) {
             $path = $file->getPathname();
             if (substr($path, 0, strlen($testFileBase)) === $testFileBase) {
-                if ($path !== $testFileBase.'php') {
+                if ($path !== $testFileBase.'php' && substr($path, -5) !== 'fixed') {
                     $testFiles[] = $path;
                 }
             }
@@ -147,6 +147,17 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 if ($fixable > 0) {
                     $filename          = basename($testFile);
                     $failureMessages[] = "Failed to fix $fixable fixable violations in $filename";
+                } else {
+                    // Check for a .fixed file to check for accuracy of fixes.
+                    $fixedFile = $testFile.'.fixed';
+                    if (file_exists($fixedFile) === true) {
+                        $diff = $phpcsFile->fixer->generateDiff($fixedFile);
+                        if ($diff !== '') {
+                            $filename          = basename($testFile);
+                            $fixedFilename     = basename($fixedFile);
+                            $failureMessages[] = "Fixed version of $filename does not match expected version in $fixedFilename; the diff is\n$diff";
+                        }
+                    }
                 }
             }
         }//end foreach

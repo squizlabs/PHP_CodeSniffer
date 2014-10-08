@@ -211,12 +211,20 @@ class PHP_CodeSniffer_Fixer
     /**
      * Generates a text diff of the original file and the new content.
      *
+     * @param string $filePath Optional file path to diff the file against.
+     *                         If not specified, the original version of the
+     *                         file will be used.
+     *
      * @return string
      */
-    public function generateDiff()
+    public function generateDiff($filePath=null)
     {
+        if ($filePath === null) {
+            $filePath = $this->_currentFile->getFilename();
+        }
+
         $cwd       = getcwd().DIRECTORY_SEPARATOR;
-        $filename  = str_replace($cwd, '', $this->_currentFile->getFilename());
+        $filename  = str_replace($cwd, '', $filePath);
         $fixedFile = $cwd.'phpcs-fixed.tmp';
         $contents  = $this->getContents();
 
@@ -228,7 +236,7 @@ class PHP_CodeSniffer_Fixer
         $diff = shell_exec($cmd);
         unlink($fixedFile);
 
-        return $diff;
+        return trim($diff);
 
     }//end generateDiff()
 
