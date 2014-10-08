@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
   - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments
+  - Squiz ControlStructureSpacingSniff error codes have been corrected; they were reversed
  </notes>
  <contents>
   <dir name="/">
