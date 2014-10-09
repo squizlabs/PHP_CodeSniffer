@@ -361,7 +361,7 @@ class PHP_CodeSniffer_Fixer
      * @param int    $stackPtr The position of the token in the token stack.
      * @param string $content  The new content of the token.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function replaceToken($stackPtr, $content)
     {
@@ -374,7 +374,7 @@ class PHP_CodeSniffer_Fixer
                 ob_start();
             }
 
-            return;
+            return false;
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -408,7 +408,7 @@ class PHP_CodeSniffer_Fixer
                 ob_start();
             }
 
-            return;
+            return true;
         }
 
         if (isset($this->_oldTokenValues[$stackPtr]) === false) {
@@ -429,7 +429,7 @@ class PHP_CodeSniffer_Fixer
                     ob_start();
                 }
 
-                return;
+                return false;
             }
 
             $this->_oldTokenValues[$stackPtr][2] = $this->_oldTokenValues[$stackPtr][1];
@@ -451,6 +451,8 @@ class PHP_CodeSniffer_Fixer
             ob_start();
         }
 
+        return true;
+
     }//end replaceToken()
 
 
@@ -462,7 +464,7 @@ class PHP_CodeSniffer_Fixer
      * @param int $length   The number of chacters to keep. If NULL, the content of
      *                      the token from $start to the end of the content is kept.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function substrToken($stackPtr, $start, $length=null)
     {
@@ -474,7 +476,7 @@ class PHP_CodeSniffer_Fixer
             $newContent = substr($current, $start, $length);
         }
 
-        $this->replaceToken($stackPtr, $newContent);
+        return $this->replaceToken($stackPtr, $newContent);
 
     }//end substrToken()
 
@@ -484,12 +486,12 @@ class PHP_CodeSniffer_Fixer
      *
      * @param int $stackPtr The position of the token in the token stack.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function addNewline($stackPtr)
     {
         $current = $this->getTokenContent($stackPtr);
-        $this->replaceToken($stackPtr, $current.$this->_currentFile->eolChar);
+        return $this->replaceToken($stackPtr, $current.$this->_currentFile->eolChar);
 
     }//end addNewline()
 
@@ -499,12 +501,12 @@ class PHP_CodeSniffer_Fixer
      *
      * @param int $stackPtr The position of the token in the token stack.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function addNewlineBefore($stackPtr)
     {
         $current = $this->getTokenContent($stackPtr);
-        $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$current);
+        return $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$current);
 
     }//end addNewlineBefore()
 
@@ -515,12 +517,12 @@ class PHP_CodeSniffer_Fixer
      * @param int    $stackPtr The position of the token in the token stack.
      * @param string $content  The content to add.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function addContent($stackPtr, $content)
     {
         $current = $this->getTokenContent($stackPtr);
-        $this->replaceToken($stackPtr, $current.$content);
+        return $this->replaceToken($stackPtr, $current.$content);
 
     }//end addContent()
 
@@ -531,12 +533,12 @@ class PHP_CodeSniffer_Fixer
      * @param int    $stackPtr The position of the token in the token stack.
      * @param string $content  The content to add.
      *
-     * @return void
+     * @return bool If the change was accepted.
      */
     public function addContentBefore($stackPtr, $content)
     {
         $current = $this->getTokenContent($stackPtr);
-        $this->replaceToken($stackPtr, $content.$current);
+        return $this->replaceToken($stackPtr, $content.$current);
 
     }//end addContentBefore()
 
