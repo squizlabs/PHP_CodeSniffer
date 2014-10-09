@@ -34,14 +34,14 @@
 
     echo $moreBody;
 
-    ?>
+        ?>
 
     <?php
     echo $moreBody; ?>
     <?php echo $moreBody;
     ?>
 
-        <?php
+            <?php
         echo 'hi';
             ?>
 
@@ -51,6 +51,44 @@ echo 'hi';
 </body>
 </html>
 <?php
-// Not embedded. Do not check here.
+function test()
+{
+    foreach ($root->section as $section) {
+        ?>
+        <table>
+            <?php if ($foo) {
+            ?>
+            <tr>
+            </tr>
+            <?php }
+            ?>
+        <?php
+        foreach ($bar as $bar) {
+            echo $bar;
+        }
+    }
+
+    foreach ($root->section as $section) {
+        ?>
+        <table>
+            <?php
+            if ($foo) {
+            ?>
+            <tr>
+            </tr>
+            <?php
+}
+            ?>
+        <?php
+        foreach ($bar as $bar) {
+            echo $bar;
+        }
+    }
+}
+
 echo 'goodbye';
+
+
 ?>
+
+</html>
