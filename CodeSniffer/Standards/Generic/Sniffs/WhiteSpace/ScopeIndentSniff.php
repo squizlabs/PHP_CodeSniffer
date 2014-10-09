@@ -268,13 +268,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 if ($fix === true) {
                     $padding = str_repeat(' ', $currentIndent);
                     if ($checkToken === $i) {
-                        $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
+                        $accepted = $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
                     } else {
                         // Easier to just replace the entire indent.
-                        $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                        $accepted = $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
                     }
 
-                    $adjustments[$checkToken] = ($currentIndent - $tokenIndent);
+                    if ($accepted === true) {
+                        $adjustments[$checkToken] = ($currentIndent - $tokenIndent);
+                    }
                 }
             }//end if
 
