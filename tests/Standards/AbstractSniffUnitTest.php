@@ -152,7 +152,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                     $fixedFile = $testFile.'.fixed';
                     if (file_exists($fixedFile) === true) {
                         $diff = $phpcsFile->fixer->generateDiff($fixedFile);
-                        if ($diff !== '') {
+                        if (trim($diff) !== '') {
                             $filename          = basename($testFile);
                             $fixedFilename     = basename($fixedFile);
                             $failureMessages[] = "Fixed version of $filename does not match expected version in $fixedFilename; the diff is\n$diff";

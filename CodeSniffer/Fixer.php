@@ -236,7 +236,7 @@ class PHP_CodeSniffer_Fixer
         $diff = shell_exec($cmd);
         unlink($fixedFile);
 
-        return trim($diff);
+        return $diff;
 
     }//end generateDiff()
 
