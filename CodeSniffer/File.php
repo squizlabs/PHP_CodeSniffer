@@ -1089,7 +1089,7 @@ class PHP_CodeSniffer_File
             && $fixable === true
         ) {
             @ob_end_clean();
-            echo "\tE: $message ($sniffCode)".PHP_EOL;
+            echo "\tE: [Line $line] $message ($sniffCode)".PHP_EOL;
             ob_start();
         }
 
