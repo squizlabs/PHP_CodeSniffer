@@ -126,13 +126,14 @@ class PHP_CodeSniffer_CLI
 
         // Override some of the command line settings that might break the fixes.
         $cliValues = $this->getCommandLineValues();
-        $cliValues['verbosity']   = 0;
-        $cliValues['generator']   = '';
-        $cliValues['explain']     = false;
-        $cliValues['interactive'] = false;
-        $cliValues['showSources'] = false;
-        $cliValues['reportFile']  = null;
-        $cliValues['reports']     = array();
+        $cliValues['verbosity']    = 0;
+        $cliValues['showProgress'] = false;
+        $cliValues['generator']    = '';
+        $cliValues['explain']      = false;
+        $cliValues['interactive']  = false;
+        $cliValues['showSources']  = false;
+        $cliValues['reportFile']   = null;
+        $cliValues['reports']      = array();
 
         $suffix = '';
         if (isset($cliValues['suffix']) === true) {
@@ -1073,7 +1074,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwlpi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
@@ -1081,7 +1082,6 @@ class PHP_CodeSniffer_CLI
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
-        echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
