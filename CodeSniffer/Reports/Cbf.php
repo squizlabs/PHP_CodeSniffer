@@ -58,7 +58,15 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $width=80
     ) {
         $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-        $changed   = $phpcsFile->fixer->fixFile();
+
+        if (empty($cliValues['files']) === false) {
+            ob_end_clean();
+            $errors    = $phpcsFile->getFixableCount();
+            $startTime = microtime(true);
+            echo "\t=> Fixing file: $errors/$errors violations remaining";
+        }
+
+        $fixed = $phpcsFile->fixer->fixFile();
 
         if (empty($cliValues['files']) === true) {
             // Replacing STDIN, so output current file to STDOUT
@@ -69,20 +77,36 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
             exit(1);
         }
 
-        if ($changed === true) {
+        if ($fixed === false) {
+            echo 'ERROR';
+        } else {
+            echo 'DONE';
+        }
+
+        $timeTaken = ((microtime(true) - $startTime) * 1000);
+        if ($timeTaken < 1000) {
+            $timeTaken = round($timeTaken);
+            echo " in {$timeTaken}ms".PHP_EOL;
+        } else {
+            $timeTaken = round(($timeTaken / 1000), 2);
+            echo " in $timeTaken secs".PHP_EOL;
+        }
+
+        if ($fixed === true) {
             $newFilename = $report['filename'].$cliValues['phpcbf-suffix'];
             $newContent  = $phpcsFile->fixer->getContents();
             file_put_contents($newFilename, $newContent);
 
-            echo 'Fixed '.$report['fixable'].' sniff violations in '.$report['filename'].PHP_EOL;
             if ($newFilename === $report['filename']) {
-                echo "\t=> file was overwritten".PHP_EOL;
+                echo "\t=> File was overwritten".PHP_EOL;
             } else {
-                echo "\t=> fixed file written to ".basename($newFilename).PHP_EOL;
+                echo "\t=> Fixed file written to ".basename($newFilename).PHP_EOL;
             }
         }
 
-        return $changed;
+        ob_start();
+
+        return $fixed;
 
     }//end generateFileReport()
 
