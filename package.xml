@@ -30,6 +30,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - If a .fixed file is supplied for a unit test file, the auto fixes will be checked against it during testing
     -- See Generic ScopeIndentUnitTest.inc and ScopeIndentUnitTest.inc.fixed for an example
   - Fixer token replacement methods now return TRUE if the change was accepted and FALSE if rejected
+  - The --config-show command now pretty-prints the config values
+    -- Thanks to Ken Guest for the patch
+  - Setting and removing config values now catches exceptions if the config file is not writable
+    -- Thanks to Ken Guest for the patch
+  - Setting and removing config values now prints a message to confirm the action and show old values
   - Generic ScopeIndentSniff has been completly rewritten to improve fixing and embedded PHP detection
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
   - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
@@ -44,6 +49,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
    <file baseinstalldir="PHP" name="CodeSniffer.conf.dist" role="data" />
+   <file baseinstalldir="PHP" name="README.md" role="doc" />
+   <file baseinstalldir="PHP" name="CONTRIBUTING.md" role="doc" />
+   <file baseinstalldir="PHP" name="licence.txt" role="doc" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcbf" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
@@ -2218,6 +2226,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpcbf" name="scripts/phpcbf" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
    <install as="phpcbf.bat" name="scripts/phpcbf.bat" />
+   <install as="README" name="README.md" />
+   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
+   <install as="LICENCE" name="licence.txt" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2232,6 +2243,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <filelist>
    <install as="phpcs" name="scripts/phpcs" />
    <install as="phpcbf" name="scripts/phpcbf" />
+   <install as="README" name="README.md" />
+   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
+   <install as="LICENCE" name="licence.txt" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
