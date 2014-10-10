@@ -310,22 +310,37 @@ class PHP_CodeSniffer_CLI
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
         case 'config-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
-            $value = $_SERVER['argv'][($pos + 2)];
+            $key     = $_SERVER['argv'][($pos + 1)];
+            $value   = $_SERVER['argv'][($pos + 2)];
+            $current = PHP_CodeSniffer::getConfigData($key);
+
             try {
                 PHP_CodeSniffer::setConfigData($key, $value);
             } catch (Exception $e) {
                 echo $e->getMessage().PHP_EOL;
                 exit(2);
             }
+
+            if ($current === null) {
+                echo "Config value \"$key\" added successfully".PHP_EOL;
+            } else {
+                echo "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
+            }
             exit(0);
         case 'config-delete':
-            $key = $_SERVER['argv'][($pos + 1)];
-            try {
-                PHP_CodeSniffer::setConfigData($key, null);
-            } catch (Exception $e) {
-                echo $e->getMessage().PHP_EOL;
-                exit(2);
+            $key     = $_SERVER['argv'][($pos + 1)];
+            $current = PHP_CodeSniffer::getConfigData($key);
+            if ($current === null) {
+                echo "Config value \"$key\" has not been set".PHP_EOL;
+            } else {
+                try {
+                    PHP_CodeSniffer::setConfigData($key, null);
+                } catch (Exception $e) {
+                    echo $e->getMessage().PHP_EOL;
+                    exit(2);
+                }
+
+                echo "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
             }
             exit(0);
         case 'config-show':
