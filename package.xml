@@ -39,6 +39,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
    <file baseinstalldir="PHP" name="CodeSniffer.conf.dist" role="data" />
+   <file baseinstalldir="PHP" name="README.md" role="doc" />
+   <file baseinstalldir="PHP" name="CONTRIBUTING.md" role="doc" />
+   <file baseinstalldir="PHP" name="licence.txt" role="doc" />
    <dir name="scripts">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
@@ -2214,6 +2217,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <filelist>
    <install as="phpcs" name="scripts/phpcs" />
    <install as="phpcs.bat" name="scripts/phpcs.bat" />
+   <install as="README" name="README.md" />
+   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
+   <install as="LICENCE" name="licence.txt" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
@@ -2227,6 +2233,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease>
   <filelist>
    <install as="phpcs" name="scripts/phpcs" />
+   <install as="README" name="README.md" />
+   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
+   <install as="LICENCE" name="licence.txt" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
