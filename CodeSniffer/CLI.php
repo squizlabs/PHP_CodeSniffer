@@ -312,15 +312,25 @@ class PHP_CodeSniffer_CLI
         case 'config-set':
             $key   = $_SERVER['argv'][($pos + 1)];
             $value = $_SERVER['argv'][($pos + 2)];
-            PHP_CodeSniffer::setConfigData($key, $value);
+            try {
+                PHP_CodeSniffer::setConfigData($key, $value);
+            } catch (Exception $ex) {
+                echo $ex->getMessage() . PHP_EOL;
+                exit(2);
+            }
             exit(0);
         case 'config-delete':
             $key = $_SERVER['argv'][($pos + 1)];
-            PHP_CodeSniffer::setConfigData($key, null);
+            try {
+                PHP_CodeSniffer::setConfigData($key, null);
+            } catch (Exception $ex) {
+                echo $ex->getMessage() . PHP_EOL;
+                exit(2);
+            }
             exit(0);
         case 'config-show':
             $data = PHP_CodeSniffer::getAllConfigData();
-            print_r($data);
+            $this->printConfigData($data);
             exit(0);
         case 'runtime-set':
             $key   = $_SERVER['argv'][($pos + 1)];
@@ -810,6 +820,33 @@ class PHP_CodeSniffer_CLI
 
     }//end explainStandard()
 
+
+    /**
+     * Prints out the gathered config data
+     *
+     * @param array $data Config data.
+     *
+     * @return void
+     */
+    public function printConfigData($data)
+    {
+        $max = 0;
+        $keys = array_keys($data);
+        foreach ($keys as $key) {
+            $len = strlen($key);
+            if (strlen($key) > $max) {
+                $max = $len;
+            }
+        }
+        if ($max == 0) {
+            return;
+        }
+        $max += 2;
+        asort($data);
+        foreach ($data as $name => $value) {
+            echo str_pad($name . ': ', $max) . $value . PHP_EOL;
+        }
+    }
 
     /**
      * Prints out the usage information for this script.
