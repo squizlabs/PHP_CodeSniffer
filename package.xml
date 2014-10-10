@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments
   - Squiz ControlStructureSpacingSniff error codes have been corrected; they were reversed
   - Squiz EmbeddedPhpSniff now checks open and close tag indents and fixes some errors
+  - Squiz FileCommentSniff no longer throws incorrect blank line before comment errors in JS files
  </notes>
  <contents>
   <dir name="/">
@@ -1689,7 +1690,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FileCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP" name="FileCommentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP" name="FileCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

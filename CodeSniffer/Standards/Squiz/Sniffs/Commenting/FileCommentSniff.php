@@ -91,7 +91,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         $commentEnd = $tokens[$commentStart]['comment_closer'];
 
         // No blank line between the open tag and the file comment.
-        if ($tokens[$commentStart]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+        if ($tokens[$commentStart]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
             $error = 'There must be no blank lines before the file comment';
             $phpcsFile->addError($error, $stackPtr, 'SpacingAfterOpen');
         }
