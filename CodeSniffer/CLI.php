@@ -314,8 +314,8 @@ class PHP_CodeSniffer_CLI
             $value = $_SERVER['argv'][($pos + 2)];
             try {
                 PHP_CodeSniffer::setConfigData($key, $value);
-            } catch (Exception $ex) {
-                echo $ex->getMessage() . PHP_EOL;
+            } catch (Exception $e) {
+                echo $e->getMessage().PHP_EOL;
                 exit(2);
             }
             exit(0);
@@ -323,8 +323,8 @@ class PHP_CodeSniffer_CLI
             $key = $_SERVER['argv'][($pos + 1)];
             try {
                 PHP_CodeSniffer::setConfigData($key, null);
-            } catch (Exception $ex) {
-                echo $ex->getMessage() . PHP_EOL;
+            } catch (Exception $e) {
+                echo $e->getMessage().PHP_EOL;
                 exit(2);
             }
             exit(0);
@@ -822,15 +822,15 @@ class PHP_CodeSniffer_CLI
 
 
     /**
-     * Prints out the gathered config data
+     * Prints out the gathered config data.
      *
-     * @param array $data Config data.
+     * @param array $data The config data to print.
      *
      * @return void
      */
     public function printConfigData($data)
     {
-        $max = 0;
+        $max  = 0;
         $keys = array_keys($data);
         foreach ($keys as $key) {
             $len = strlen($key);
@@ -838,15 +838,19 @@ class PHP_CodeSniffer_CLI
                 $max = $len;
             }
         }
+
         if ($max == 0) {
             return;
         }
+
         $max += 2;
-        asort($data);
+        ksort($data);
         foreach ($data as $name => $value) {
-            echo str_pad($name . ': ', $max) . $value . PHP_EOL;
+            echo str_pad($name.': ', $max).$value.PHP_EOL;
         }
-    }
+
+    }//end printConfigData()
+
 
     /**
      * Prints out the usage information for this script.

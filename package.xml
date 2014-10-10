@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-09-25</date>
  <time>13:32:00</time>
  <version>
-  <release>1.5.5</release>
-  <api>1.5.5</api>
+  <release>1.5.6</release>
+  <api>1.5.6</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,27 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHP tokenizer no longer converts class/function names to special tokens types
-    -- Class/function names such as parent and true would become special tokens such as T_PARENT and T_TRUE
-  - Improved closure support in Generic ScopeIndentSniff
-  - Improved indented PHP tag support in Generic ScopeIndentSniff
-  - Generic CamelCapsFunctionNameSniff now ignores a single leading underscore
-    -- Thanks to Alex Slobodiskiy for the patch
-  - Standards can now be located within hidden directories (further fix for bug #20323)
-    -- Thanks to Klaus Purer for the patch
-  - Added Generic SyntaxSniff to check for syntax errors in PHP files
-    -- Thanks to Blaine Schmeisser for the contribution
-  - Squiz DiscouragedFunctionsSniff now warns about var_dump()
-  - PEAR ValidFunctionNameSniff no longer throws an error for _()
-  - Squiz and PEAR FunctionCommentSnif now support _()
-  - Generic UpperCaseConstantSniff and LowerCaseConstantSniff now ignore function names
-  - Fixed bug #248 : FunctionCommentSniff expects ampersand on param name
-  - Fixed bug #265 : False positives with type hints in ForbiddenFunctionsSniff
-  - Fixed bug #20373 : Inline comment sniff tab handling way
-  - Fixed bug #20378 : Report appended to existing file if no errors found in run
-  - Fixed bug #20381 : Invalid "Comment closer must be on a new line"
-    -- Thanks to Brad Kent for the patch
-  - Fixed bug #20386 : Squiz.Commenting.ClassComment.SpacingBefore thrown if first block comment
+  - The --config-show command now pretty-prints the config values
+    -- Thanks to Ken Guest for the patch
+  - Setting and removing config values now catches exceptions if the config file is not writable
+    -- Thanks to Ken Guest for the patch
  </notes>
  <contents>
   <dir name="/">
