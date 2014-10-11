@@ -166,3 +166,9 @@
 /**
  * @ var Comment
  */
+
+/** @var TheClass $test */
+$test = 'value';
+
+/** @type TheClass $test */
+$test = 'value';
