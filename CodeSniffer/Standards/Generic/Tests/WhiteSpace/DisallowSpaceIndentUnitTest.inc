@@ -37,3 +37,10 @@ EOF;
 
 $str = 'hello
         there';
+
+/**
+ * This PHP DocBlock should be fine, even though there is a single space at the beginning.
+ *
+ * @var int $x
+ */
+$x = 1;
