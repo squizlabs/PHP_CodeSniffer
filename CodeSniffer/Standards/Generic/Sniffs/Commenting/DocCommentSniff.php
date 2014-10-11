@@ -64,6 +64,15 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
         $commentEnd   = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
         $commentStart = $tokens[$commentEnd]['comment_opener'];
 
+        if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']) {
+            $commentText = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+
+            if (strpos($commentText, '@var') !== false || strpos($commentText, '@type') !== false) {
+                // Skip inline block comments with variable type definition.
+                return;
+            }
+        }
+
         $empty = array(
                   T_DOC_COMMENT_WHITESPACE,
                   T_DOC_COMMENT_STAR,
