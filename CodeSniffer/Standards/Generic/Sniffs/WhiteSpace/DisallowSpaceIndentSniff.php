@@ -82,15 +82,16 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
             }
 
             if ($content[0] === ' ') {
-                $isRootDocBlockSpace = ( $tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && strlen( $content ) === 1 );
+                if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
+                    // Ignore file/class-level DocBlock.
+                    continue;
+                }
 
                 // Space are considered ok if they are proceeded by tabs and not followed
                 // by tabs, as is the case with standard docblock comments.
-                if ( ! $isRootDocBlockSpace ) {
-                    $error = 'Tabs must be used to indent lines; spaces are not allowed';
-                    $phpcsFile->addError($error, $i, 'SpacesUsed');
-                    $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
-                }
+                $error = 'Tabs must be used to indent lines; spaces are not allowed';
+                $phpcsFile->addError($error, $i, 'SpacesUsed');
+                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
             } else if ($content[0] === "\t") {
                 $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
             }
