@@ -117,3 +117,9 @@ echo $foo;
 
 //	Comment here.
 echo $foo;
+
+/** @var TheClass $bar */
+$bar = 5;
+
+/** @type TheClass $bar2 */
+$bar2 = 5;

@@ -124,8 +124,13 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 if ($tokens[$stackPtr]['content'] === '/**') {
-                    $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
-                    $phpcsFile->addError($error, $stackPtr, 'DocBlock');
+                    $commentEnd  = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
+                    $commentText = $phpcsFile->getTokensAsString($stackPtr, (($commentEnd - $stackPtr) + 1));
+
+                    if (strpos($commentText, '@var') === false && strpos($commentText, '@type') === false) {
+                        $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                        $phpcsFile->addError($error, $stackPtr, 'DocBlock');
+                    }
                 }
             }//end if
         }//end if
