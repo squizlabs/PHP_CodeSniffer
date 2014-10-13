@@ -56,6 +56,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public $requiredSpacesBeforeClose = 0;
 
+    /**
+     * Enable validation of multiline function call parenthesis being respectively last and first on their lines
+     * 
+     * @var boolean
+     */
+    public $multilineCallParenthesis = true;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -351,16 +357,18 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             }
         }//end for
 
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
-            $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
-            $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
-        }
+        if ($this->multilineCallParenthesis) {
+            if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+                $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
+                $phpcsFile->addError($error, $stackPtr, 'ContentAfterOpenBracket');
+            }
 
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
-            $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
-            $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
-        }
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
+            if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+                $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
+                $phpcsFile->addError($error, $closeBracket, 'CloseBracketLine');
+            }
+        }//end if
 
     }//end processMultiLineCall()
 
