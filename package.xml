@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff error codes have been corrected; they were reversed
   - Squiz EmbeddedPhpSniff now checks open and close tag indents and fixes some errors
   - Squiz FileCommentSniff no longer throws incorrect blank line before comment errors in JS files
+  - Fixed bug #280 : The --config-show option generates error when there is no config file
  </notes>
  <contents>
   <dir name="/">
