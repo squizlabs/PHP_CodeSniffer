@@ -98,3 +98,8 @@ class CorrectClassDeclaration
 {
 
 }//end class
+
+// Class comment here, but wrong comment type.
+class testing
+{
+}//end class

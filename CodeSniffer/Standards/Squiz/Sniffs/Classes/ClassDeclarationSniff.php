@@ -140,8 +140,17 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
         }
 
         // Check that the closing brace has one blank line after it.
-        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
-        if ($nextContent !== false) {
+        for ($nextContent = ($closeBrace + 1); $nextContent < $phpcsFile->numTokens; $nextContent++) {
+            if ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']) {
+                continue;
+            }
+
+            if ($tokens[$nextContent]['code'] !== T_WHITESPACE) {
+                break;
+            }
+        }
+
+        if ($nextContent < $phpcsFile->numTokens) {
             $nextLine  = $tokens[$nextContent]['line'];
             $braceLine = $tokens[$closeBrace]['line'];
             if ($braceLine === $nextLine) {
