@@ -99,6 +99,11 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                     $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                     $tabFound = true;
                 } else if ($content[0] === ' ') {
+                    if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
+                        // Ignore file/class-level DocBlock.
+                        continue;
+                    }
+
                     if (strpos($content, "\t") !== false) {
                         $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                         $tabFound = true;
