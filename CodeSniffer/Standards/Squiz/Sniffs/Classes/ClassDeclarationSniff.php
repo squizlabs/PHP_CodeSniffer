@@ -151,14 +151,8 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
         }
 
         if ($nextContent < $phpcsFile->numTokens) {
-            $nextLine  = $tokens[$nextContent]['line'];
-            $braceLine = $tokens[$closeBrace]['line'];
-            if ($braceLine === $nextLine) {
-                $error = 'Closing brace of a %s must be followed by a single blank line';
-                $data  = array($tokens[$stackPtr]['content']);
-                $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
-            } else if ($nextLine !== ($braceLine + 2)) {
-                $difference = ($nextLine - $braceLine - 1);
+            $difference = ($tokens[$nextContent]['line'] - $tokens[$closeBrace]['line'] - 1);
+            if ($difference !== 1) {
                 $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
                 $data       = array(
                                $tokens[$stackPtr]['content'],
@@ -166,7 +160,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                               );
                 $phpcsFile->addError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
             }
-        }//end if
+        }
 
         // Check the closing brace is on it's own line, but allow
         // for comments like "//end class".

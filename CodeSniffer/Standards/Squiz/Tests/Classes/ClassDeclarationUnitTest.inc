@@ -102,4 +102,4 @@ class CorrectClassDeclaration
 // Class comment here, but wrong comment type.
 class testing
 {
-}//end class
+} /* end class */ echo 'hi';
