@@ -2178,7 +2178,7 @@ class PHP_CodeSniffer
     /**
      * Get all config data in an array.
      *
-     * @return string
+     * @return array<string, string>
      * @see getConfigData()
      */
     public static function getAllConfigData()
@@ -2193,7 +2193,7 @@ class PHP_CodeSniffer
         }
 
         if (is_file($configFile) === false) {
-            return null;
+            return array();
         }
 
         include $configFile;

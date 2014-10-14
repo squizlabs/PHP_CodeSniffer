@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Setting and removing config values now catches exceptions if the config file is not writable
     -- Thanks to Ken Guest for the patch
   - Setting and removing config values now prints a message to confirm the action and show old values
+  - Fixed bug #280 : The --config-show option generates error when there is no config file
  </notes>
  <contents>
   <dir name="/">
