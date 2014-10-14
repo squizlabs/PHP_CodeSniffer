@@ -153,11 +153,11 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
         if ($nextContent < $phpcsFile->numTokens) {
             $difference = ($tokens[$nextContent]['line'] - $tokens[$closeBrace]['line'] - 1);
             if ($difference !== 1) {
-                $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
-                $data       = array(
-                               $tokens[$stackPtr]['content'],
-                               $difference,
-                              );
+                $error = 'Closing brace of a %s must be followed by a single blank line; found %s';
+                $data  = array(
+                          $tokens[$stackPtr]['content'],
+                          $difference,
+                         );
                 $phpcsFile->addError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
             }
         }
