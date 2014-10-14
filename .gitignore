@@ -1,3 +1,4 @@
 /CodeSniffer.conf
 .idea/*
 /vendor/
+/build/
