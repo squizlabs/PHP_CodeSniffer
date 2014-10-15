@@ -1209,6 +1209,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="SwitchDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -2310,8 +2311,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Errors converted to warnings in a ruleset (and vice versa) now retain their fixable status
       -- Thanks to Alexander Obuhovich for the patch
     - Squiz ConcatenationSpacingSniff now has a setting to specify how many spaces there should around concat operators
-        -- Default remains at 0
-        -- Override the "spacing" setting in a ruleset.xml file to change
+      -- Default remains at 0
+      -- Override the "spacing" setting in a ruleset.xml file to change
     - Added auto-fixes for Squiz InlineCommentSniff
     - Generic DocCommentSniff now correctly fixes additional blank lines at the end of a comment
     - Squiz OperatorBracketSniff now correctly fixes operations that include arrays
@@ -2319,7 +2320,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added Generic SyntaxSniff to check for syntax errors in PHP files
       -- Thanks to Blaine Schmeisser for the contribution
     - Added Generic OneTraitPerFileSniff to check that only one trait is defined in each file
-        -- Thanks to Alexander Obuhovich for the contribution
+      -- Thanks to Alexander Obuhovich for the contribution
     - Squiz DiscouragedFunctionsSniff now warns about var_dump()
     - PEAR ValidFunctionNameSniff no longer throws an error for _()
     - Squiz and PEAR FunctionCommentSniffs now support _()

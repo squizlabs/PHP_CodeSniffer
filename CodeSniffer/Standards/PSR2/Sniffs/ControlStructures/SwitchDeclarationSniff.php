@@ -104,7 +104,11 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $error = 'CASE keyword must be followed by a single space';
                 $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
                 if ($fix === true) {
-                    $phpcsFile->fixer->addContent($nextCase, ' ');
+                    if ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE) {
+                        $phpcsFile->fixer->addContent($nextCase, ' ');
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
+                    }
                 }
             }
 
