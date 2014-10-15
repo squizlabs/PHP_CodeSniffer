@@ -42,6 +42,7 @@ class PSR2_Tests_Namespaces_NamespaceDeclarationUnitTest extends AbstractSniffUn
     {
         return array(
                 6  => 1,
+                9 => 1,
                );
 
     }//end getErrorList()
