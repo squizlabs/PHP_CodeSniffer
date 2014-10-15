@@ -118,7 +118,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 return;
-            }
+            }//end if
         }//end if
 
         if ($tokens[($curlyBrace + 1)]['content'] !== $phpcsFile->eolChar) {

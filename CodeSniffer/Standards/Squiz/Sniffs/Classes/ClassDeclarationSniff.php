@@ -140,7 +140,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
             // Ignore the line check as this is the very end of the file.
             $difference = 1;
         } else {
-            $difference  = ($tokens[$nextContent]['line'] - $tokens[$closeBrace]['line'] - 1);
+            $difference = ($tokens[$nextContent]['line'] - $tokens[$closeBrace]['line'] - 1);
         }
 
         $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), $stackPtr, true);
