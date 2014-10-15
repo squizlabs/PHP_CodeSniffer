@@ -23,7 +23,7 @@ switch ($expr) {
     case 1 :
         echo 'Second case';
         // no break
-case 2:
+    case 2:
     case 3:
         echo 'Third case';
     return;

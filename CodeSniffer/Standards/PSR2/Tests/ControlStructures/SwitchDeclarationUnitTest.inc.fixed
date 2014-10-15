@@ -7,7 +7,7 @@ switch ($expr) {
         echo 'Second case, which falls through';
         // no break
     case 2:
-    case   3:
+    case 3:
     case 4:
         echo 'Third case, return instead of break';
         return;
