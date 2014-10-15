@@ -2,7 +2,7 @@
 <phpunit>
     <testsuites>
         <testsuite name="PHP_CodeSniffer Test Suite">
-            <directory>tests/AllTests.php</directory>
+            <file>tests/AllTests.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
