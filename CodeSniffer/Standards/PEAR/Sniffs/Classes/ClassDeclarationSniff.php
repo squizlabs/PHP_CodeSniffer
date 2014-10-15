@@ -103,7 +103,20 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                           $tokens[$stackPtr]['content'],
                           ($braceLine - $classLine - 1),
                          );
-                $phpcsFile->addError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
+                $fix   = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceWrongLine', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($curlyBrace - 1); $i > $lastContent; $i--) {
+                        if ($tokens[$i]['line'] === ($tokens[$curlyBrace]['line'] + 1)) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+
                 return;
             }
         }//end if

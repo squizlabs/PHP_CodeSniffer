@@ -2,7 +2,7 @@
 
 
 
- class ClassDeclaration
+class ClassDeclaration
 {
 
 }
@@ -12,42 +12,51 @@ abstract class CorrectClassDeclarationWithExtends extends correctClassDeclaratio
 
 }
 
-final  class CorrectClassDeclarationWithImplements implements correctClassDeclaration
+final class CorrectClassDeclarationWithImplements implements correctClassDeclaration
 {
 
 }
 
-
 // Incorrect placement of opening/closing braces, including indent.
-class IncorrectBracePlacement {}
-class IncorrectBracePlacementWithExtends extends correctClassDeclaration {}
-class IncorrectBracePlacementWithImplements implements correctClassDeclaration {}
+class IncorrectBracePlacement
+{
+}
 
+class IncorrectBracePlacementWithExtends extends correctClassDeclaration
+{
+}
 
-    class IncorrectIndentedClass
-    {
+class IncorrectBracePlacementWithImplements implements correctClassDeclaration
+{
+}
 
-    }//end class
+class IncorrectIndentedClass
+{
 
+}//end class
 
 // Incorrect code placement for opening/closing brace.
 class IncorrectCodeAfterOpeningBrace
-{ echo phpinfo();
+{
+ echo phpinfo();
 
 }//end class
 
 class IncorrectCodeAfterClosingBrace
 {
 
-} echo phpinfo();
+} 
+
+echo phpinfo();
 
 
 class IncorrectCodeBeforeClosingBrace
 {
 
-echo phpinfo(); }
+echo phpinfo(); 
+}
 
-    class IncorrectIndentedClass
+class IncorrectIndentedClass
 {
 
 }
@@ -56,33 +65,31 @@ class ClassOne implements ClassTwo, ClassThree
 {
 }//end class
 
-class ClassOne implements ClassFour   ,ClassFive,  ClassSix
+class ClassOne implements ClassFour, ClassFive, ClassSix
 {
 }//end class
 
 class CorrectClassDeclarationWithExtends extends correctClassDeclaration
-
 {
 
 }
 
-class CorrectClassDeclarationWithExtends   extends correctClassDeclaration
+class CorrectClassDeclarationWithExtends extends correctClassDeclaration
 {
 
 }//end class
 
-class   CorrectClassDeclaration
+class CorrectClassDeclaration
 {
 
 }//end class
-
 
 class CorrectClassDeclaration extends CorrectClassDeclaration2 implements ICorrectClassDeclaration
 {
 
 }//end class
 
-class File implements \Zend_Auth_Storage_Interface,\Zend_Auth_Storage,  \Zend_Foo
+class File implements \Zend_Auth_Storage_Interface, \Zend_Auth_Storage, \Zend_Foo
 {
 }
 
@@ -90,6 +97,7 @@ interface MyInterface
 {
 
 }
+
 ?>
 
 <?php
@@ -102,9 +110,12 @@ class CorrectClassDeclaration
 // Class comment here, but wrong comment type.
 class testing
 {
-} /* end class */ echo 'hi';
+} /* end class */ 
+
+echo 'hi';
 
 class IncorrectCodeBeforeClosingBrace
 {
 
-echo phpinfo();}
+echo phpinfo();
+}
