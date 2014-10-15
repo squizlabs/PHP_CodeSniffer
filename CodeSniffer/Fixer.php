@@ -223,18 +223,31 @@ class PHP_CodeSniffer_Fixer
             $filePath = $this->_currentFile->getFilename();
         }
 
-        $cwd       = getcwd().DIRECTORY_SEPARATOR;
-        $filename  = str_replace($cwd, '', $filePath);
-        $fixedFile = $cwd.'phpcs-fixed.tmp';
-        $contents  = $this->getContents();
+        $cwd      = getcwd().DIRECTORY_SEPARATOR;
+        $filename = str_replace($cwd, '', $filePath);
+        $contents = $this->getContents();
 
-        file_put_contents($fixedFile, $contents);
+        if (function_exists('sys_get_temp_dir') === true) {
+            // This is needed for HHVM support, but only available from 5.2.1.
+            $tempName  = tempnam(sys_get_temp_dir(), 'phpcs-fixer');
+            $fixedFile = fopen($tempName, 'w');
+        } else {
+            $fixedFile = tmpfile();
+            $data      = stream_get_meta_data($fixedFile);
+            $tempName  = $data['uri'];
+        }
+
+        fwrite($fixedFile, $contents);
 
         // We must use something like shell_exec() because whitespace at the end
         // of lines is critical to diff files.
-        $cmd  = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$fixedFile\"";
+        $cmd  = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$tempName\"";
         $diff = shell_exec($cmd);
-        unlink($fixedFile);
+
+        fclose($fixedFile);
+        if (is_file($tempName) === true) {
+            unlink($tempName);
+        }
 
         return $diff;
 
