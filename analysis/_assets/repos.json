@@ -611,7 +611,14 @@
     {
         "name": "PHP Parser",
         "url": "nikic/PHP-Parser",
-        "path": "lib",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "FastRoute",
+        "url": "nikic/FastRoute",
+        "path": "src",
         "ignore": "",
         "extensions": ""
     },
@@ -812,7 +819,7 @@
         "extensions": ""
     },
     {
-        "name": "Latte: amazing template engine for PHP",
+        "name": "Latte",
         "url": "nette/latte",
         "path": "src",
         "ignore": "",
@@ -858,6 +865,20 @@
         "url": "danielstjules/Stringy",
         "path": "src",
         "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Orno\\Route",
+        "url": "orno/route",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "concrete5",
+        "url": "concrete5/concrete5",
+        "path": "web/concrete",
+        "ignore": "*/3rdparty/*",
         "extensions": ""
     }
 ]

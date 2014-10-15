@@ -1,4 +1,5 @@
 <?php
+ini_set('memory_limit', '512M');
 require_once __DIR__.'/_assets/common.php';
 $resultFiles = array();
 $repos       = json_decode(file_get_contents(__DIR__.'/_assets/repos.json'));
