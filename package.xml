@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-10-16</date>
  <time>10:22:00</time>
  <version>
-  <release>2.0.0RC3</release>
-  <api>2.0.0RC3</api>
+  <release>2.0.0RC4</release>
+  <api>2.0.0RC4</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,27 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Improved default output for PHPCBF and removed the options to print verbose and progress output
-  - Fixer now uses temporary system files for diffing rather than creating them in the current working dir
-  - If a .fixed file is supplied for a unit test file, the auto fixes will be checked against it during testing
-    -- See Generic ScopeIndentUnitTest.inc and ScopeIndentUnitTest.inc.fixed for an example
-  - Fixer token replacement methods now return TRUE if the change was accepted and FALSE if rejected
-  - The --config-show command now pretty-prints the config values
-    -- Thanks to Ken Guest for the patch
-  - Setting and removing config values now catches exceptions if the config file is not writable
-    -- Thanks to Ken Guest for the patch
-  - Setting and removing config values now prints a message to confirm the action and show old values
-  - Generic ScopeIndentSniff has been completly rewritten to improve fixing and embedded PHP detection
-  - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
-  - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
-  - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments
-  - Squiz ControlStructureSpacingSniff error codes have been corrected; they were reversed
-  - Squiz EmbeddedPhpSniff now checks open and close tag indents and fixes some errors
-  - Squiz FileCommentSniff no longer throws incorrect blank line before comment errors in JS files
-  - Squiz ClassDeclarationSniff now has better checking for blank lines after a closing brace
-  - Removed error Squiz.Classes.ClassDeclaration.NoNewlineAfterCloseBrace (request #285)
-    -- already handled by Squiz.Classes.ClassDeclaration.CloseBraceSameLine
-  - Fixed bug #280 : The --config-show option generates error when there is no config file
+  - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
  </notes>
  <contents>
   <dir name="/">

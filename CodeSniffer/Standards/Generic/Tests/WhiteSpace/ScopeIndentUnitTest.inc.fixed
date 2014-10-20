@@ -575,3 +575,5 @@ array_map(
     },
     $array
 );
+
+function foo(){return function(){};}

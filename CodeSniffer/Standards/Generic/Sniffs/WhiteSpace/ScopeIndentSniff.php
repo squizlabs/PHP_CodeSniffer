@@ -381,7 +381,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $parens = key($tokens[$i]['nested_parenthesis']);
                     $prev   = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($parens - 1), null, true);
                 } else {
-                    $prev = $phpcsFile->findPrevious(T_EQUAL, ($tokens[$i]['scope_condition'] - 1));
+                    $prev = $phpcsFile->findPrevious(array(T_EQUAL, T_RETURN), ($tokens[$i]['scope_condition'] - 1));
+                }
+
+                if ($prev === false) {
+                    $prev = $i;
                 }
 
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
