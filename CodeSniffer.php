@@ -700,7 +700,9 @@ class PHP_CodeSniffer
         }
 
         foreach ($ruleset->rule as $rule) {
-            if (isset($rule['ref']) === false) {
+            if (isset($rule['ref']) === false
+                || $this->_shouldProcessElement($rule) === false
+            ) {
                 continue;
             }
 
@@ -716,6 +718,10 @@ class PHP_CodeSniffer
 
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
+                    if ($this->_shouldProcessElement($exclude) === false) {
+                        continue;
+                    }
+
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
@@ -745,6 +751,10 @@ class PHP_CodeSniffer
         // Process custom command line arguments.
         $cliArgs = array();
         foreach ($ruleset->{'arg'} as $arg) {
+            if ($this->_shouldProcessElement($arg) === false) {
+                continue;
+            }
+
             if (isset($arg['name']) === true) {
                 $argString = '--'.(string) $arg['name'].'='.(string) $arg['value'];
             } else {
@@ -765,6 +775,10 @@ class PHP_CodeSniffer
 
         // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
+            if ($this->_shouldProcessElement($config) === false) {
+                continue;
+            }
+
             $this->setConfigData((string) $config['name'], (string) $config['value'], true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
@@ -774,6 +788,10 @@ class PHP_CodeSniffer
 
         // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
+            if ($this->_shouldProcessElement($pattern) === false) {
+                continue;
+            }
+
             if (isset($pattern['type']) === false) {
                 $pattern['type'] = 'absolute';
             }
@@ -1054,7 +1072,9 @@ class PHP_CodeSniffer
         $code = (string) $rule['ref'];
 
         // Custom severity.
-        if (isset($rule->severity) === true) {
+        if (isset($rule->severity) === true
+            && $this->_shouldProcessElement($rule->severity) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -1067,7 +1087,9 @@ class PHP_CodeSniffer
         }
 
         // Custom message type.
-        if (isset($rule->type) === true) {
+        if (isset($rule->type) === true
+            && $this->_shouldProcessElement($rule->type) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -1080,7 +1102,9 @@ class PHP_CodeSniffer
         }
 
         // Custom message.
-        if (isset($rule->message) === true) {
+        if (isset($rule->message) === true
+            && $this->_shouldProcessElement($rule->message) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -1093,8 +1117,14 @@ class PHP_CodeSniffer
         }
 
         // Custom properties.
-        if (isset($rule->properties) === true) {
+        if (isset($rule->properties) === true
+            && $this->_shouldProcessElement($rule->properties) === true
+        ) {
             foreach ($rule->properties->property as $prop) {
+                if ($this->_shouldProcessElement($prop) === false) {
+                    continue;
+                }
+
                 if (isset($this->ruleset[$code]) === false) {
                     $this->ruleset[$code] = array(
                                              'properties' => array(),
@@ -1137,6 +1167,10 @@ class PHP_CodeSniffer
 
         // Ignore patterns.
         foreach ($rule->{'exclude-pattern'} as $pattern) {
+            if ($this->_shouldProcessElement($pattern) === false) {
+                continue;
+            }
+
             if (isset($this->ignorePatterns[$code]) === false) {
                 $this->ignorePatterns[$code] = array();
             }
@@ -1153,6 +1187,43 @@ class PHP_CodeSniffer
         }
 
     }//end _processRule()
+
+
+    /**
+     * Determine if an element should be processed or ignored.
+     *
+     * @param SimpleXMLElement $element An object from a ruleset XML file.
+     * @param int              $depth   How many nested processing steps we are in.
+     *                                  This is only used for debug output.
+     *
+     * @return bool
+     */
+    private function _shouldProcessElement($element, $depth=0)
+    {
+        if (isset($element['phpcbf-only']) === false
+            && isset($element['phpcs-only']) === false
+        ) {
+            // No exceptions are being made.
+            return true;
+        }
+
+        if (PHP_CODESNIFFER_CBF === true
+            && isset($element['phpcbf-only']) === true
+            && (string) $element['phpcbf-only'] === 'true'
+        ) {
+            return true;
+        }
+
+        if (PHP_CODESNIFFER_CBF === false
+            && isset($element['phpcs-only']) === true
+            && (string) $element['phpcs-only'] === 'true'
+        ) {
+            return true;
+        }
+
+        return false;
+
+    }//_shouldProcessElement()
 
 
     /**

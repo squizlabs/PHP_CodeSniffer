@@ -26,9 +26,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
+  - Support for phpcs-only and phpcbf-only attributes has been added to all ruleset.xml elements
+    -- Allows parts of the ruleset to only apply when using a specific tool
+    -- Useful for doing things like excluding indent fixes but still reporting indent errors
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
+  - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
  </notes>
  <contents>
   <dir name="/">
