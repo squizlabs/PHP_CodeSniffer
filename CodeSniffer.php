@@ -1223,7 +1223,7 @@ class PHP_CodeSniffer
 
         return false;
 
-    }//_shouldProcessElement()
+    }//end _shouldProcessElement()
 
 
     /**
