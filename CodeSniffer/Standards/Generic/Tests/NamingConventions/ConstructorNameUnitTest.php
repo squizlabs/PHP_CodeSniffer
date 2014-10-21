@@ -41,10 +41,9 @@ class Generic_Tests_NamingConventions_ConstructorNameUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
-                5  => 1,
                 6  => 1,
                 11 => 1,
-                20 => 1,
+                47 => 1,
                );
 
     }//end getErrorList()
