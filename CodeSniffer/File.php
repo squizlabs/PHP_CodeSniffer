@@ -474,7 +474,11 @@ class PHP_CodeSniffer_File
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
-            if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
+            if ($token['code'] === T_COMMENT
+                || $token['code'] === T_DOC_COMMENT
+                || (defined('PHP_CODESNIFFER_IN_TESTS') === true
+                && $token['code'] === T_INLINE_HTML)
+            ) {
                 if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
                     $ignoring = true;
                 } else if ($ignoring === true && strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
@@ -682,7 +686,15 @@ class PHP_CodeSniffer_File
         }
 
         try {
-            $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar);
+            $tabWidth = null;
+            if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+                $cliValues = $this->phpcs->cli->getCommandLineValues();
+                if (isset($cliValues['tabWidth']) === true) {
+                    $tabWidth = $cliValues['tabWidth'];
+                }
+            }
+
+            $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth);
         } catch (PHP_CodeSniffer_Exception $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
@@ -693,7 +705,7 @@ class PHP_CodeSniffer_File
             }
 
             return;
-        }
+        }//end try
 
         $this->numTokens = count($this->_tokens);
 
@@ -1376,11 +1388,12 @@ class PHP_CodeSniffer_File
      * @param string $string    The string to tokenize.
      * @param object $tokenizer A tokenizer class to use to tokenize the string.
      * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param int    $tabWidth  The number of spaces each tab respresents.
      *
      * @throws PHP_CodeSniffer_Exception If the file cannot be processed.
      * @return array
      */
-    public static function tokenizeString($string, $tokenizer, $eolChar='\n')
+    public static function tokenizeString($string, $tokenizer, $eolChar='\n', $tabWidth=null)
     {
         // Minified files often have a very large number of characters per line
         // and cause issues when tokenizing.
@@ -1397,8 +1410,12 @@ class PHP_CodeSniffer_File
 
         // If we know the width of each tab, convert tabs
         // into spaces so sniffs can use one method of checking.
-        if (PHP_CODESNIFFER_TAB_WIDTH > 0) {
-            self::_convertTabs($tokens, $tokenizer, $eolChar);
+        if ($tabWidth === null) {
+            $tabWidth = PHP_CODESNIFFER_TAB_WIDTH;
+        }
+
+        if ($tabWidth > 0) {
+            self::_convertTabs($tokens, $tokenizer, $eolChar, $tabWidth);
         }
 
         self::_createTokenMap($tokens, $tokenizer, $eolChar);
@@ -1424,10 +1441,11 @@ class PHP_CodeSniffer_File
      * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param int    $tabWidth  The number of spaces that each tab represents.
      *
      * @return void
      */
-    private static function _convertTabs(&$tokens, $tokenizer, $eolChar)
+    private static function _convertTabs(&$tokens, $tokenizer, $eolChar, $tabWidth)
     {
         $currColumn = 1;
         $count      = count($tokens);
@@ -1466,13 +1484,13 @@ class PHP_CodeSniffer_File
                         $tabNum++;
 
                         // Move the pointer to the next tab stop.
-                        if (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) === 0) {
+                        if (($currColumn % $tabWidth) === 0) {
                             // This is the first tab, and we are already at a
                             // tab stop, so this tab counts as a single space.
                             $currColumn++;
                         } else {
                             $currColumn++;
-                            while (($currColumn % PHP_CODESNIFFER_TAB_WIDTH) != 0) {
+                            while (($currColumn % $tabWidth) != 0) {
                                 $currColumn++;
                             }
 

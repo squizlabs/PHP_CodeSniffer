@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Support for phpcs-only and phpcbf-only attributes has been added to all ruleset.xml elements
     -- Allows parts of the ruleset to only apply when using a specific tool
     -- Useful for doing things like excluding indent fixes but still reporting indent errors
+  - File-wide sniff properties can now be set using T_INLINE_HTML content during unit test runs
+    -- Sniffs that start checking at the open tag can only, normally, have properties set using a ruleset
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
