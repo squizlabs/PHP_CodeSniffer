@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
+  - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
  </notes>
  <contents>
   <dir name="/">

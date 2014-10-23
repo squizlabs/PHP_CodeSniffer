@@ -577,3 +577,25 @@ array_map(
 );
 
 function foo(){return function(){};}
+
+$mockedDatabase->expects($this->at(2))
+	->with($this->callback(
+			function ($subject)
+			{
+			}
+		)
+	);
+
+/** @var Database $mockedDatabase */
+/** @var Container $mockedContainer */
+
+echo $string->append('foo')
+			->appaend('bar')
+			->appaend('baz')
+			->outputUsing(
+				function ()
+				{
+				}
+			);
+
+echo PHP_EOL;

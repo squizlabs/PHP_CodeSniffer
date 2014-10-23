@@ -439,12 +439,20 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $prev = $i;
                 }
 
-                $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                if ($tokens[$first]['code'] === T_OBJECT_OPERATOR) {
+                    // This is not the start of the statement.
+                    $prev = $phpcsFile->findPrevious(T_VARIABLE, $first);
+                    if ($prev !== false) {
+                        $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                    }
+                }
+
                 $currentIndent = ($tokens[$first]['column'] - 1);
 
                 // Make sure it is divisable by our expected indent.
                 $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
-            }
+            }//end if
         }//end for
 
         // Don't process the rest of the file.
