@@ -379,7 +379,9 @@ class PHP_CodeSniffer_CLI
      */
     public function setCommandLineValues($args)
     {
-        if (empty($this->values) === true) {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            $this->values = array();
+        } else if (empty($this->values) === true) {
             $this->values = $this->getDefaults();
         }
 

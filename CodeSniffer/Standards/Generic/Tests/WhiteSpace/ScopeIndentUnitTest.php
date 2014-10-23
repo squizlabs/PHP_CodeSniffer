@@ -46,7 +46,7 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
             return array('--tabWidth=4');
         }
 
-        return array('--tabWidth=0');
+        return array();
 
     }//end getCliValues()
 
