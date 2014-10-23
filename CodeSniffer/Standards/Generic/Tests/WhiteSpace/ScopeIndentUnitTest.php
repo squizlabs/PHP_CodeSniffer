@@ -33,6 +33,25 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Get a list of CLI values to set befor the file is tested.
+     *
+     * @param string $filename The name of the file being tested.
+     *
+     * @return array
+     */
+    public function getCliValues($filename)
+    {
+        // Tab width setting is only needed for the tabbed file.
+        if ($filename === 'ScopeIndentUnitTest.2.inc') {
+            return array('--tabWidth=4');
+        }
+
+        return array('--tabWidth=0');
+
+    }//end getCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -101,5 +120,3 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

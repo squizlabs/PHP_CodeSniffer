@@ -40,7 +40,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     public $indent = 4;
 
     /**
-     * Does the indent need to be exactly right.
+     * Does the indent need to be exactly right?
      *
      * If TRUE, indent needs to be exactly $indent spaces. If FALSE,
      * indent needs to be at least $indent spaces (but can be more).
@@ -48,6 +48,24 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      * @var bool
      */
     public $exact = false;
+
+    /**
+     * Should tabs be used for indenting?
+     *
+     * If TRUE, fixes will be made using tabs instead of spaces.
+     * The size of each tab is important, so it should be specified
+     * using the --tab-width CLI argument.
+     *
+     * @var bool
+     */
+    public $tabIndent = false;
+
+    /**
+     * The --tab-width CLI value that is being used.
+     *
+     * @var int
+     */
+    private $_tabWidth = null;
 
     /**
      * List of tokens not needing to be checked for indentation.
@@ -102,6 +120,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        if ($this->_tabWidth === null) {
+            $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
+            if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
+                // We have no idea how wide tabs are, so assume 4 spaces for fixing.
+                // It shouldn't really matter because indent checks elsewhere in the
+                // standard should fix things up.
+                $this->_tabWidth = 4;
+            } else {
+                $this->_tabWidth = $cliValues['tabWidth'];
+            }
+        }
+
         $currentIndent = 0;
         $lastOpenTag   = $stackPtr;
         $lastOpener    = null;
@@ -167,7 +197,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 ) {
                     $padding = ($tokenIndent + $adjustments[$first]);
                     if ($padding > 0) {
-                        $padding = str_repeat(' ', $padding);
+                        if ((bool) $this->tabIndent === true) {
+                            $numTabs   = floor($padding / $this->_tabWidth);
+                            $numSpaces = ($padding - ($numTabs * $this->_tabWidth));
+                            $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                        } else {
+                            $padding = str_repeat(' ', $padding);
+                        }
                     } else {
                         $padding = '';
                     }
@@ -180,7 +216,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     $adjustments[$checkToken] = $adjustments[$first];
-                }
+                }//end if
             }//end if
 
             // Scope closers reset the required indent to the same level as the opening condition.
@@ -258,15 +294,30 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $type   = 'Incorrect';
                 }
 
-                $error .= '%s spaces, found %s';
-                $data   = array(
-                           $currentIndent,
-                           $tokenIndent,
-                          );
+                if ((bool) $this->tabIndent === true) {
+                    $error .= '%s tabs, found %s';
+                    $data   = array(
+                               floor($currentIndent / $this->_tabWidth),
+                               floor($tokenIndent / $this->_tabWidth),
+                              );
+                } else {
+                    $error .= '%s spaces, found %s';
+                    $data   = array(
+                               $currentIndent,
+                               $tokenIndent,
+                              );
+                }
 
                 $fix = $phpcsFile->addFixableError($error, $checkToken, $type, $data);
                 if ($fix === true) {
-                    $padding = str_repeat(' ', $currentIndent);
+                    if ((bool) $this->tabIndent === true) {
+                        $numTabs   = floor($currentIndent / $this->_tabWidth);
+                        $numSpaces = ($currentIndent - ($numTabs * $this->_tabWidth));
+                        $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                    } else {
+                        $padding = str_repeat(' ', $currentIndent);
+                    }
+
                     if ($checkToken === $i) {
                         $accepted = $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
                     } else {

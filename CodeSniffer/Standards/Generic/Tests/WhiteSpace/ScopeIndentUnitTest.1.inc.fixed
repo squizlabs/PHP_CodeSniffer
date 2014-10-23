@@ -1,5 +1,5 @@
+@codingStandardsChangeSetting Generic.WhiteSpace.ScopeIndent tabIndent false
 <?php
-
 class Test
 {
     function __construct()
