@@ -254,6 +254,10 @@ class PHP_CodeSniffer_CLI
      */
     public function getDefaults()
     {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            return array();
+        }
+
         // The default values for config settings.
         $defaults['files']           = array();
         $defaults['standard']        = null;
@@ -351,10 +355,6 @@ class PHP_CodeSniffer_CLI
      */
     public function getCommandLineValues()
     {
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-            return array();
-        }
-
         if (empty($this->values) === false) {
             return $this->values;
         }

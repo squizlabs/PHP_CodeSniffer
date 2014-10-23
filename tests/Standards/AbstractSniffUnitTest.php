@@ -131,7 +131,11 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
         $failureMessages = array();
         foreach ($testFiles as $testFile) {
+            $filename = basename($testFile);
+
             try {
+                $cliValues = $this->getCliValues($filename);
+                self::$phpcs->cli->setCommandLineValues($cliValues);
                 $phpcsFile = self::$phpcs->processFile($testFile);
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
@@ -145,7 +149,6 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 $phpcsFile->fixer->fixFile();
                 $fixable = $phpcsFile->getFixableCount();
                 if ($fixable > 0) {
-                    $filename          = basename($testFile);
                     $failureMessages[] = "Failed to fix $fixable fixable violations in $filename";
                 } else {
                     // Check for a .fixed file to check for accuracy of fixes.
@@ -368,6 +371,20 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         return $failureMessages;
 
     }//end generateFailureMessages()
+
+
+    /**
+     * Get a list of CLI values to set befor the file is tested.
+     *
+     * @param string $filename The name of the file being tested.
+     *
+     * @return array
+     */
+    public function getCliValues($filename)
+    {
+        return array();
+
+    }//end getCliValues()
 
 
     /**
