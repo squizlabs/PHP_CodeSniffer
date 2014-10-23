@@ -503,6 +503,14 @@ class PHP_CodeSniffer_CLI
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
         case 'config-set':
+            if (isset($this->_cliArgs[($pos + 1)]) === false
+                || isset($this->_cliArgs[($pos + 2)]) === false
+            ) {
+                echo 'ERROR: Setting a config option requires a name and value'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
             $key     = $this->_cliArgs[($pos + 1)];
             $value   = $this->_cliArgs[($pos + 2)];
             $current = PHP_CodeSniffer::getConfigData($key);
@@ -521,6 +529,12 @@ class PHP_CodeSniffer_CLI
             }
             exit(0);
         case 'config-delete':
+            if (isset($this->_cliArgs[($pos + 1)]) === false) {
+                echo 'ERROR: Deleting a config option requires the name of the option'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
             $key     = $this->_cliArgs[($pos + 1)];
             $current = PHP_CodeSniffer::getConfigData($key);
             if ($current === null) {
@@ -541,6 +555,14 @@ class PHP_CodeSniffer_CLI
             $this->printConfigData($data);
             exit(0);
         case 'runtime-set':
+            if (isset($this->_cliArgs[($pos + 1)]) === false
+                || isset($this->_cliArgs[($pos + 2)]) === false
+            ) {
+                echo 'ERROR: Setting a runtime config option requires a name and value'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
             $key   = $this->_cliArgs[($pos + 1)];
             $value = $this->_cliArgs[($pos + 2)];
             $this->_cliArgs[($pos + 1)] = '';
@@ -552,7 +574,7 @@ class PHP_CodeSniffer_CLI
                 $sniffs = explode(',', substr($arg, 7));
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
-                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid.'.PHP_EOL.PHP_EOL;
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
                         exit(2);
                     }
@@ -568,14 +590,14 @@ class PHP_CodeSniffer_CLI
                 }
 
                 if (is_dir($this->values['reportFile']) === true) {
-                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" is a directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
 
                 $dir = dirname($this->values['reportFile']);
                 if (is_dir($dir) === false) {
-                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory.'.PHP_EOL.PHP_EOL;
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
