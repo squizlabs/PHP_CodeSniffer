@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ScopeIndentSniff can now fix indents using tabs instead of spaces
     -- Set the tabIndent property to TRUE in your ruleset.xml file to enable this
     -- It is important to also set a tab-width setting, either in the ruleset or on the command line, for accuracy
+  - Generic DisallowSpaceIndentSniff is now able to replace space indents with tab indents during fixing
   - Support for phpcs-only and phpcbf-only attributes has been added to all ruleset.xml elements
     -- Allows parts of the ruleset to only apply when using a specific tool
     -- Useful for doing things like excluding indent fixes but still reporting indent errors
