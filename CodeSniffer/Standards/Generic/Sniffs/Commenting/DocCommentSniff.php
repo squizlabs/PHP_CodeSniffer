@@ -89,9 +89,18 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        // Check for additional blank lines at the end of the comment.
+        // The last line of the comment should just be the */ code.
         $prev = $phpcsFile->findPrevious($empty, ($commentEnd - 1), $stackPtr, true);
-        if ($tokens[$prev]['line'] !== ($tokens[$commentEnd]['line'] - 1)) {
+        if ($tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
+            $error = 'The close comment tag must be the only content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'ContentBeforeClose');
+            if ($fix === true) {
+                $phpcsFile->fixer->addNewlineBefore($commentEnd);
+            }
+        }
+
+        // Check for additional blank lines at the end of the comment.
+        if ($tokens[$prev]['line'] < ($tokens[$commentEnd]['line'] - 1)) {
             $error = 'Additional blank lines found at end of doc comment';
             $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'SpacingAfter');
             if ($fix === true) {

@@ -88,6 +88,14 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                 continue;
             }
 
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                // Can't process the close tag if it is not the first thing on the line.
+                $prev = $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, ($i - 1), $stackPtr, true);
+                if ($tokens[$prev]['line'] === $tokens[$i]['line']) {
+                    continue;
+                }
+            }
+
             if ($tokens[$i]['column'] !== $requiredColumn) {
                 $error = 'Expected %s space(s) before asterisk; %s found';
                 $data  = array(

@@ -41,6 +41,9 @@ class MyClass
     function myFunction() {}
 }
 
+/** @var Database $mockedDatabase */
+/** @var Container $mockedContainer */
+
 function myFunction()
 {
     echo 'hi';

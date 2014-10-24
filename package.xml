@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Sniffs that start checking at the open tag can only, normally, have properties set using a ruleset
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
+  - Generic DocCommentSniff now checks that the end comment tag is on a new line
+  - Squiz DocCommentAlignment sniff now has better checking for single line doc block
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
   - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
  </notes>

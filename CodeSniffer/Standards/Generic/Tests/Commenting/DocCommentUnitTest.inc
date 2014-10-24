@@ -166,3 +166,6 @@
 /**
  * @ var Comment
  */
+
+/** @var Database $mockedDatabase */
+/** @var Container $mockedContainer */
