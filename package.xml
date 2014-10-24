@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz DocCommentAlignment sniff now has better checking for single line doc block
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
   - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
+  - Fixed bug #302 : Fixing code in Squiz InlineComment sniff can remove some comment text
  </notes>
  <contents>
   <dir name="/">
@@ -1710,6 +1711,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="InlineCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="InlineCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="InlineCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="InlineCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
