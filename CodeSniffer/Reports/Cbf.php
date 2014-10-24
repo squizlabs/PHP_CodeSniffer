@@ -58,7 +58,6 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $width=80
     ) {
         $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-
         if (empty($cliValues['files']) === false) {
             ob_end_clean();
             $errors    = $phpcsFile->getFixableCount();

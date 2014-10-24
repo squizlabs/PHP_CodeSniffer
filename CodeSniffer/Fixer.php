@@ -142,6 +142,12 @@ class PHP_CodeSniffer_Fixer
             return false;
         }
 
+        $stdin     = false;
+        $cliValues = $this->_currentFile->phpcs->cli->getCommandLineValues();
+        if (empty($cliValues['files']) === true) {
+            $stdin = true;
+        }
+
         $this->enabled = true;
 
         $loops = 0;
@@ -173,7 +179,7 @@ class PHP_CodeSniffer_Fixer
 
             $loops++;
 
-            if (PHP_CODESNIFFER_CBF === true) {
+            if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
                 echo "\r".str_repeat(' ', 80)."\r";
                 echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $loops pass";
                 if ($loops > 1) {

@@ -664,6 +664,12 @@ class PHP_CodeSniffer_File
             return;
         }
 
+        $stdin     = false;
+        $cliValues = $this->phpcs->cli->getCommandLineValues();
+        if (empty($cliValues['files']) === true) {
+            $stdin = true;
+        }
+
         // Determine the tokenizer from the file extension.
         $fileParts = explode('.', $this->_file);
         $extension = array_pop($fileParts);
@@ -697,7 +703,7 @@ class PHP_CodeSniffer_File
             $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth);
         } catch (PHP_CodeSniffer_Exception $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo PHP_EOL;
@@ -723,7 +729,7 @@ class PHP_CodeSniffer_File
             $this->addWarning($error, 0, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {

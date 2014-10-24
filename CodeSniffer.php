@@ -1720,7 +1720,13 @@ class PHP_CodeSniffer
      */
     private function _processFile($file, $contents)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
+        $stdin     = false;
+        $cliValues = $this->cli->getCommandLineValues();
+        if (empty($cliValues['files']) === true) {
+            $stdin = true;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1737,7 +1743,7 @@ class PHP_CodeSniffer
 
         $phpcsFile->start($contents);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
             $timeTaken = ((microtime(true) - $startTime) * 1000);
             if ($timeTaken < 1000) {
                 $timeTaken = round($timeTaken);
