@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
   - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
   - Fixed bug #302 : Fixing code in Squiz InlineComment sniff can remove some comment text
+  - Fixed bug #303 : Open and close tag on same line can cause a PHP notice checking scope indent
  </notes>
  <contents>
   <dir name="/">

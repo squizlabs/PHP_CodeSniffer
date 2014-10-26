@@ -134,6 +134,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
         $currentIndent = 0;
         $lastOpenTag   = $stackPtr;
+        $lastCloseTag  = null;
         $lastOpener    = null;
         $adjustments   = array();
 
@@ -384,12 +385,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // Close tags reset the indent level, unless they are closing a tag
             // opened on the same line.
-            if ($tokens[$i]['code'] == T_CLOSE_TAG) {
+            if ($tokens[$i]['code'] === T_CLOSE_TAG) {
                 if ($tokens[$lastOpenTag]['line'] !== $tokens[$i]['line']) {
-                    $currentIndent    = ($tokens[$i]['column'] - 1);
-                    $this->_lastClose = $i;
+                    $currentIndent = ($tokens[$i]['column'] - 1);
+                    $lastCloseTag  = $i;
                 } else {
-                    $currentIndent = ($tokens[$this->_lastClose]['column'] - 1);
+                    if ($lastCloseTag === null) {
+                        $currentIndent = 0;
+                    } else {
+                        $currentIndent = ($tokens[$lastCloseTag]['column'] - 1);
+                    }
                 }
 
                 if (isset($adjustments[$i]) === true) {
