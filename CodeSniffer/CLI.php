@@ -441,7 +441,11 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'v' :
-            $this->values['verbosity']++;
+            if (isset($this->values['verbosity']) === false) {
+                $this->values['verbosity'] = 1;
+            } else {
+                $this->values['verbosity']++;
+            }
             break;
         case 'l' :
             $this->values['local'] = true;

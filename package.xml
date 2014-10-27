@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Thibaud Fabre for the patch
   - Generic DocCommentSniff now checks that the end comment tag is on a new line
   - Squiz DocCommentAlignment sniff now has better checking for single line doc block
+  - Running unit tests with the -v CLI argument no longer generates PHP errors
   - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
   - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
   - Fixed bug #302 : Fixing code in Squiz InlineComment sniff can remove some comment text
