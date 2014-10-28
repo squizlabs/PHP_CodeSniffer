@@ -1248,7 +1248,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
