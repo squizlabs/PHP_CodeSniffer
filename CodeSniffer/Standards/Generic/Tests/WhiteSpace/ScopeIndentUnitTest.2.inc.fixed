@@ -599,3 +599,14 @@ echo $string->append('foo')
 			);
 
 echo PHP_EOL;
+
+switch ($arg) {
+	case 1:
+		break;
+	case 2:
+		if ($arg2 == 'foo') {
+		}
+	case 3:
+	default:
+		echo 'default';
+}

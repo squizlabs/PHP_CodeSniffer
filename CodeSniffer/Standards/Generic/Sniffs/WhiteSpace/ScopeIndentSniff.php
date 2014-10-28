@@ -135,7 +135,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $currentIndent = 0;
         $lastOpenTag   = $stackPtr;
         $lastCloseTag  = null;
-        $lastOpener    = null;
+        $openScopes    = array();
         $adjustments   = array();
 
         $tokens        = $phpcsFile->getTokens();
@@ -233,8 +233,10 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $scopeCloser = $checkToken;
                 if ($scopeCloser === null) {
                     $scopeCloser = $i;
+                } else {
+                    array_pop($openScopes);
                 }
-                
+
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
                 $currentIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$tokens[$scopeCloser]['scope_condition']]) === true) {
@@ -259,6 +261,12 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 && isset($tokens[$checkToken]['scope_opener']) === true
             ) {
                 $exact = true;
+
+                $lastOpener = null;
+                if (empty($openScopes) === false) {
+                    end($openScopes);
+                    $lastOpener = current($openScopes);
+                }
 
                 // A scope opener that shares a closer with another token (like multiple
                 // CASEs using the same BREAK) needs to reduce the indent level so its
@@ -422,7 +430,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 && isset($tokens[$i]['scope_opener']) === true
             ) {
                 $currentIndent += $this->indent;
-                $lastOpener     = $i;
+                $openScopes[]   = $i;
                 $i = $tokens[$i]['scope_opener'];
                 continue;
             }
