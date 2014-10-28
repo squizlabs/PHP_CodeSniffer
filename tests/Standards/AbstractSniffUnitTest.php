@@ -150,16 +150,16 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                 $fixable = $phpcsFile->getFixableCount();
                 if ($fixable > 0) {
                     $failureMessages[] = "Failed to fix $fixable fixable violations in $filename";
-                } else {
-                    // Check for a .fixed file to check for accuracy of fixes.
-                    $fixedFile = $testFile.'.fixed';
-                    if (file_exists($fixedFile) === true) {
-                        $diff = $phpcsFile->fixer->generateDiff($fixedFile);
-                        if (trim($diff) !== '') {
-                            $filename          = basename($testFile);
-                            $fixedFilename     = basename($fixedFile);
-                            $failureMessages[] = "Fixed version of $filename does not match expected version in $fixedFilename; the diff is\n$diff";
-                        }
+                }
+
+                // Check for a .fixed file to check for accuracy of fixes.
+                $fixedFile = $testFile.'.fixed';
+                if (file_exists($fixedFile) === true) {
+                    $diff = $phpcsFile->fixer->generateDiff($fixedFile);
+                    if (trim($diff) !== '') {
+                        $filename          = basename($testFile);
+                        $fixedFilename     = basename($fixedFile);
+                        $failureMessages[] = "Fixed version of $filename does not match expected version in $fixedFilename; the diff is\n$diff";
                     }
                 }
             }
