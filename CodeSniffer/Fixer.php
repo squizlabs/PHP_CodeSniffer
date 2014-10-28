@@ -343,26 +343,29 @@ class PHP_CodeSniffer_Fixer
     {
         $this->_inChangeset = false;
 
-        $errors = array_intersect(array_keys($this->_changeset), array_keys($this->_fixedTokens));
-        if (empty($errors) === false) {
-            // At least one change cannot be applied.
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $fixes = count($this->_changeset);
-                $fails = count($errors);
-                @ob_end_clean();
-                echo "\t=> Changeset could not be applied: $fails of $fixes changes would not apply".PHP_EOL;
-                ob_start();
+        $success = true;
+        $applied = array();
+        foreach ($this->_changeset as $stackPtr => $content) {
+            $success = $this->replaceToken($stackPtr, $content);
+            if ($success === false) {
+                break;
+            } else {
+                $applied[] = $stackPtr;
+            }
+        }
+
+        if ($success === false) {
+            // Rolling back all changes.
+            foreach ($applied as $stackPtr) {
+                $this->revertToken($stackPtr);
             }
 
-            $this->_changeset = array();
-            return false;
-        }
-
-        foreach ($this->_changeset as $stackPtr => $content) {
-            $this->replaceToken($stackPtr, $content);
-        }
-
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                @ob_end_clean();
+                echo "\t=> Changeset failed to apply".PHP_EOL;
+                ob_start();
+            }
+        } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $fixes = count($this->_changeset);
             @ob_end_clean();
             echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
@@ -387,9 +390,14 @@ class PHP_CodeSniffer_Fixer
         if ($this->_inChangeset === false
             && isset($this->_fixedTokens[$stackPtr]) === true
         ) {
+            $indent = "\t";
+            if (empty($this->_changeset) === false) {
+                $indent .= "\t";
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 @ob_end_clean();
-                echo "\t* token $stackPtr has already been modified, skipping *".PHP_EOL;
+                echo "$indent* token $stackPtr has already been modified, skipping *".PHP_EOL;
                 ob_start();
             }
 
@@ -408,11 +416,11 @@ class PHP_CodeSniffer_Fixer
 
             $tokens     = $this->_currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = PHP_CodeSniffer::prepareForOutput($tokens[$stackPtr]['content']);
+            $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
             $newContent = PHP_CodeSniffer::prepareForOutput($content);
-            if (trim($tokens[$stackPtr]['content']) === '' && isset($tokens[($stackPtr + 1)]) === true) {
+            if (trim($this->_tokens[$stackPtr]) === '' && isset($this->_tokens[($stackPtr + 1)]) === true) {
                 // Add some context for whitespace only changes.
-                $append      = PHP_CodeSniffer::prepareForOutput($tokens[($stackPtr + 1)]['content']);
+                $append      = PHP_CodeSniffer::prepareForOutput($this->_tokens[($stackPtr + 1)]);
                 $oldContent .= $append;
                 $newContent .= $append;
             }
@@ -444,7 +452,8 @@ class PHP_CodeSniffer_Fixer
                     }
 
                     @ob_end_clean();
-                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff; ignoring change ****".PHP_EOL;
+                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff; ignoring the following change ****".PHP_EOL;
+                    echo "$indent**** replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
                     ob_start();
                 }
 
@@ -455,9 +464,9 @@ class PHP_CodeSniffer_Fixer
             $this->_oldTokenValues[$stackPtr][1] = $content;
         }//end if
 
-        $this->_tokens[$stackPtr] = $content;
+        $this->_fixedTokens[$stackPtr] = $this->_tokens[$stackPtr];
+        $this->_tokens[$stackPtr]      = $content;
         $this->_numFixes++;
-        $this->_fixedTokens[$stackPtr] = true;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $indent = "\t";
@@ -473,6 +482,61 @@ class PHP_CodeSniffer_Fixer
         return true;
 
     }//end replaceToken()
+
+
+    /**
+     * Reverts the previous fix made to a token.
+     *
+     * @param int $stackPtr The position of the token in the token stack.
+     *
+     * @return bool If a change was reverted.
+     */
+    public function revertToken($stackPtr)
+    {
+        if (isset($this->_fixedTokens[$stackPtr]) === false) {
+            return false;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $bt = debug_backtrace();
+            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                $sniff = $bt[2]['class'];
+                $line  = $bt[1]['line'];
+            } else {
+                $sniff = $bt[1]['class'];
+                $line  = $bt[0]['line'];
+            }
+
+            $tokens     = $this->_currentFile->getTokens();
+            $type       = $tokens[$stackPtr]['type'];
+            $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
+            $newContent = PHP_CodeSniffer::prepareForOutput($this->_fixedTokens[$stackPtr]);
+            if (trim($this->_tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
+                // Add some context for whitespace only changes.
+                $append      = PHP_CodeSniffer::prepareForOutput($this->_tokens[($stackPtr + 1)]);
+                $oldContent .= $append;
+                $newContent .= $append;
+            }
+        }
+
+        $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
+        unset($this->_fixedTokens[$stackPtr]);
+        $this->_numFixes--;
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $indent = "\t";
+            if (empty($this->_changeset) === false) {
+                $indent .= "\tR: ";
+            }
+
+            @ob_end_clean();
+            echo "$indent$sniff (line $line) reverted token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
+            ob_start();
+        }
+
+        return true;
+
+    }//end revertToken()
 
 
     /**
