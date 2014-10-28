@@ -517,7 +517,7 @@ class PHP_CodeSniffer_Fixer
                 $oldContent .= $append;
                 $newContent .= $append;
             }
-        }
+        }//end if
 
         $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
         unset($this->_fixedTokens[$stackPtr]);
