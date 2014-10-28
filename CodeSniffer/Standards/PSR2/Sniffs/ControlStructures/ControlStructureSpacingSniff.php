@@ -103,7 +103,12 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                      );
             $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
+                $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
+                if ($spaceAfterOpen === 0) {
+                    $phpcsFile->fixer->addContent($parenOpener, $padding);
+                } else {
+                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
+                }
             }
         }
 
@@ -123,10 +128,15 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                          );
                 $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
                 if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken(($parenCloser - 1), '');
+                    $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+                    if ($spaceBeforeClose === 0) {
+                        $phpcsFile->fixer->addContentBefore($parenCloser, $padding);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($parenCloser - 1), $padding);
+                    }
                 }
             }
-        }
+        }//end if
 
     }//end process()
 
