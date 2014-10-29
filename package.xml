@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
   - Fixed bug #280 : The --config-show option generates error when there is no config file
+  - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
  </notes>
  <contents>
   <dir name="/">

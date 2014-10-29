@@ -54,7 +54,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
     {
         $tokens = $phpcsFile->getTokens();
 
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+        for ($i = ($stackPtr + 1); $i < ($phpcsFile->numTokens - 1); $i++) {
             if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                 continue;
             }
