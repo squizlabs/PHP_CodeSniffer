@@ -54,7 +54,7 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
     {
         $tokens = $phpcsFile->getTokens();
 
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+        for ($i = ($stackPtr + 1); $i < ($phpcsFile->numTokens - 1); $i++) {
             if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                 continue;
             }
@@ -65,6 +65,10 @@ class PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff implements PHP_CodeSniffe
         // The $i var now points to the first token on the line after the
         // namespace declaration, which must be a blank line.
         $next = $phpcsFile->findNext(T_WHITESPACE, $i, $phpcsFile->numTokens, true);
+        if ($next === false) {
+            return;
+        }
+
         $diff = ($tokens[$next]['line'] - $tokens[$i]['line']);
         if ($diff === 1) {
             return;
