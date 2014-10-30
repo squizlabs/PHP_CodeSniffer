@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - JS tokenizer now detects xor statements correctly
   - The --config-show command now pretty-prints the config values
     -- Thanks to Ken Guest for the patch
   - Setting and removing config values now catches exceptions if the config file is not writable

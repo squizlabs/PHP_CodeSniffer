@@ -189,7 +189,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                               '*'         => 'T_MULTIPLY',
                               '%'         => 'T_MODULUS',
                               '/'         => 'T_DIVIDE',
-                              '^'         => 'T_POWER',
+                              '^'         => 'T_LOGICAL_XOR',
                               ','         => 'T_COMMA',
                               ';'         => 'T_SEMICOLON',
                               ':'         => 'T_COLON',

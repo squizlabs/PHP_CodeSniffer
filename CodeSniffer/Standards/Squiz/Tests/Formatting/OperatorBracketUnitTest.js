@@ -104,3 +104,9 @@ if (urlValue.search(/[a-zA-z]+:\/\/*/) !== 0) {
 if (!value || /^\s*$/.test(value)) {
     return true;
 }
+
+if (something === true
+    ^ somethingElse === true
+) {
+    return false;
+}
