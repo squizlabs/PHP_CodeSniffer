@@ -123,7 +123,13 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 $closer = $stackPtr;
             }
 
-            $phpcsFile->fixer->addContent($closer, ' { ');
+            if ($tokens[($closer + 1)]['code'] === T_WHITESPACE
+                || $tokens[($closer + 1)]['code'] === T_SEMICOLON
+            ) {
+                $phpcsFile->fixer->addContent($closer, ' {');
+            } else {
+                $phpcsFile->fixer->addContent($closer, ' { ');
+            }
 
             $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($closer + 1));
             $next      = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($semicolon + 1), true);
