@@ -54,3 +54,9 @@ switch (result) {
 
 result = x?y:z;
 result = x ? y : z;
+
+if (something === true
+    ^ somethingElse === true
+) {
+    return false;
+}

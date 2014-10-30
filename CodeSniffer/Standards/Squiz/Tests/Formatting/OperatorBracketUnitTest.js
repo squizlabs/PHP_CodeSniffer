@@ -106,3 +106,9 @@ if (!value || /^\s*$/.test(value)) {
 }
 
 parseInt(dfx.attr(selectors[idx], 'elemOffsetTop'), 10) - scrollCoords.y + 'px'
+
+if (something === true
+    ^ somethingElse === true
+) {
+    return false;
+}

@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - JS tokenizer now detects xor statements correctly
   - Generic ScopeIndentSniff can now fix indents using tabs instead of spaces
     -- Set the tabIndent property to TRUE in your ruleset.xml file to enable this
     -- It is important to also set a tab-width setting, either in the ruleset or on the command line, for accuracy
