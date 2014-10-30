@@ -69,12 +69,13 @@ class Squiz_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSni
                    99  => 1,
                    108 => 1,
                    112 => 1,
+                   115 => 1,
                   );
 
         if ($testFile === 'ControlSignatureUnitTest.inc') {
-            $errors[115] = 1;
-            $errors[117] = 1;
-            $errors[125] = 2;
+            $errors[120] = 1;
+            $errors[122] = 1;
+            $errors[130] = 2;
         }
         
         return $errors;
