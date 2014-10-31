@@ -476,6 +476,8 @@ final class PHP_CodeSniffer_Tokens
                                    T_DO        => T_DO,
                                    T_TRY       => T_TRY,
                                    T_CATCH     => T_CATCH,
+                                   T_PROPERTY  => T_PROPERTY,
+                                   T_OBJECT    => T_OBJECT,
                                   );
 
     /**
