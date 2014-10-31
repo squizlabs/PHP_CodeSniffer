@@ -33,6 +33,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The number of spaces code should be indented.
      *
      * @var int
@@ -162,16 +172,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
         }//end if
 
+        $this->exact     = (bool) $this->exact;
+        $this->tabIndent = (bool) $this->tabIndent;
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             $checkToken = null;
-            $exact      = (bool) $this->exact;
+            $exact      = $this->exact;
 
             // Detect line changes and figure out where the indent is.
             if ($tokens[$i]['column'] === 1) {
                 $trimmed = ltrim($tokens[$i]['content']);
                 if ($trimmed === '') {
-                    if (isset($tokens[($i + 1)]) !== false
+                    if (isset($tokens[($i + 1)]) === true
                         && $tokens[$i]['line'] === $tokens[($i + 1)]['line']
                     ) {
                         $checkToken  = ($i + 1);
@@ -198,7 +210,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 ) {
                     $padding = ($tokenIndent + $adjustments[$first]);
                     if ($padding > 0) {
-                        if ((bool) $this->tabIndent === true) {
+                        if ($this->tabIndent === true) {
                             $numTabs   = floor($padding / $this->_tabWidth);
                             $numSpaces = ($padding - ($numTabs * $this->_tabWidth));
                             $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
@@ -239,8 +251,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
                 $currentIndent = ($tokens[$first]['column'] - 1);
-                if (isset($adjustments[$tokens[$scopeCloser]['scope_condition']]) === true) {
-                    $currentIndent += $adjustments[$tokens[$scopeCloser]['scope_condition']];
+                if (isset($adjustments[$first]) === true) {
+                    $currentIndent += $adjustments[$first];
                 }
 
                 // Make sure it is divisable by our expected indent.
@@ -253,6 +265,37 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 } else {
                     $checkToken = null;
                 }
+            }//end if
+
+            // Handle scope for JS object notation.
+            if ($phpcsFile->tokenizerType === 'JS'
+                && (($checkToken !== null
+                && $tokens[$checkToken]['code'] === T_CLOSE_CURLY_BRACKET
+                && isset($tokens[$checkToken]['scope_condition']) === false
+                && isset($tokens[$checkToken]['bracket_closer']) === true
+                && $tokens[$checkToken]['bracket_closer'] === $checkToken)
+                || ($checkToken === null
+                && $tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                && isset($tokens[$i]['scope_condition']) === false
+                && isset($tokens[$i]['bracket_closer']) === true
+                && $tokens[$i]['bracket_closer'] === $i))
+            ) {
+                $scopeCloser = $checkToken;
+                if ($scopeCloser === null) {
+                    $scopeCloser = $i;
+                } else {
+                    array_pop($openScopes);
+                }
+
+                $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['bracket_opener'], true);
+                $currentIndent = ($tokens[$first]['column'] - 1);
+                if (isset($adjustments[$first]) === true) {
+                    $currentIndent += $adjustments[$first];
+                }
+
+                // Make sure it is divisable by our expected indent.
+                $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+                $exact         = true;
             }//end if
 
             if ($checkToken !== null
@@ -273,6 +316,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // indent is checked correctly. It will then increase the indent again
                 // (as all openers do) after being checked.
                 if ($lastOpener !== null
+                    && isset($tokens[$lastOpener]['scope_closer']) === true
                     && $tokens[$lastOpener]['level'] === $tokens[$checkToken]['level']
                     && $tokens[$lastOpener]['scope_closer'] === $tokens[$checkToken]['scope_closer']
                 ) {
@@ -282,12 +326,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 if ($tokens[$checkToken]['code'] === T_CLOSURE
                     && $tokenIndent > $currentIndent
                 ) {
-                    // The opener is indented more than needed, whcih is fine.
+                    // The opener is indented more than needed, which is fine.
                     // But just check that it is divisble by our expected indent.
                     $currentIndent = (int) (ceil($tokenIndent / $this->indent) * $this->indent);
                     $exact         = false;
                 }
             }//end if
+
+            // JS property indentation has to be exact or else if will break
+            // things like function and object indentation.
+            if ($checkToken !== null && $tokens[$checkToken]['code'] === T_PROPERTY) {
+                $exact = true;
+            }
 
             // Check the line indent.
             $adjusted = false;
@@ -303,7 +353,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $type   = 'Incorrect';
                 }
 
-                if ((bool) $this->tabIndent === true) {
+                if ($this->tabIndent === true) {
                     $error .= '%s tabs, found %s';
                     $data   = array(
                                floor($currentIndent / $this->_tabWidth),
@@ -319,7 +369,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 $fix = $phpcsFile->addFixableError($error, $checkToken, $type, $data);
                 if ($fix === true) {
-                    if ((bool) $this->tabIndent === true) {
+                    if ($this->tabIndent === true) {
                         $numTabs   = floor($currentIndent / $this->_tabWidth);
                         $numSpaces = ($currentIndent - ($numTabs * $this->_tabWidth));
                         $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
@@ -359,6 +409,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 || $tokens[$i]['code'] === T_DOUBLE_QUOTED_STRING
             ) {
                 $i = $phpcsFile->findNext($tokens[$i]['code'], ($i + 1), null, true);
+                $i--;
                 continue;
             }
 
@@ -418,6 +469,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if ($tokens[$i]['code'] === T_CLOSURE) {
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
                 $currentIndent = (($tokens[$first]['column'] - 1) + $this->indent);
+
                 // Make sure it is divisable by our expected indent.
                 $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
                 $i = $tokens[$i]['scope_opener'];
@@ -425,13 +477,29 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
 
             // Scope openers increase the indent level.
-            if (isset(PHP_CodeSniffer_Tokens::$scopeOpeners[$tokens[$i]['code']]) === true
-                && in_array($tokens[$i]['code'], $this->nonIndentingScopes) === false
+            if (isset($tokens[$i]['scope_condition']) === true
                 && isset($tokens[$i]['scope_opener']) === true
+                && $tokens[$i]['scope_opener'] === $i
+            ) {
+                $condition = $tokens[$tokens[$i]['scope_condition']]['code'];
+                if (isset(PHP_CodeSniffer_Tokens::$scopeOpeners[$condition]) === true
+                    && in_array($condition, $this->nonIndentingScopes) === false
+                ) {
+                    $currentIndent += $this->indent;
+                    $openScopes[]   = $tokens[$i]['scope_condition'];
+                    continue;
+                }
+            }
+
+            // JS objects increase the indent level.
+            if ($phpcsFile->tokenizerType === 'JS'
+                && $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
+                && isset($tokens[$i]['scope_condition']) === false
+                && isset($tokens[$i]['bracket_opener']) === true
+                && $tokens[$i]['bracket_opener'] === $i
             ) {
                 $currentIndent += $this->indent;
                 $openScopes[]   = $i;
-                $i = $tokens[$i]['scope_opener'];
                 continue;
             }
 

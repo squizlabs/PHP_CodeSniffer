@@ -610,3 +610,9 @@ switch ($arg) {
 	default:
 		echo 'default';
 }
+
+if ($tokens[$stackPtr]['content']{0} === '#') {
+} else if ($tokens[$stackPtr]['content']{0} === '/'
+	&& $tokens[$stackPtr]['content']{1} === '/'
+) {
+}
