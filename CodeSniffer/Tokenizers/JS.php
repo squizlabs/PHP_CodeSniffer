@@ -1016,6 +1016,11 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                 if ($tokens[$x]['code'] === T_EQUAL) {
                     for ($x--; $x >= 0; $x--) {
+                        if ($tokens[$x]['code'] === T_CLOSE_SQUARE_BRACKET) {
+                            $x = $tokens[$x]['bracket_opener'];
+                            continue;
+                        }
+
                         if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                             break;
                         }
@@ -1039,10 +1044,13 @@ class PHP_CodeSniffer_Tokenizers_JS
                         $closer = $tokens[$i]['bracket_closer'];
                         $tokens[$i]['scope_condition']      = $x;
                         $tokens[$i]['scope_closer']         = $closer;
+                        $tokens[$i]['scope_opener']         = $i;
                         $tokens[$closer]['scope_condition'] = $x;
                         $tokens[$closer]['scope_opener']    = $i;
+                        $tokens[$closer]['scope_closer']    = $closer;
                         $tokens[$x]['scope_opener']         = $i;
                         $tokens[$x]['scope_closer']         = $closer;
+                        $tokens[$x]['scope_condition']      = $x;
                         $tokens[$x]['code'] = T_OBJECT;
                         $tokens[$x]['type'] = 'T_OBJECT';
 
@@ -1095,7 +1103,9 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
                 }
 
-                if ($tokens[$label]['code'] !== T_STRING) {
+                if ($tokens[$label]['code'] !== T_STRING
+                    && $tokens[$label]['code'] !== T_CONSTANT_ENCAPSED_STRING
+                ) {
                     continue;
                 }
 
@@ -1119,12 +1129,12 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                     if ($tokens[$x]['code'] === T_OPEN_CURLY_BRACKET) {
                         $closer = $tokens[$x]['bracket_closer'];
-                        $tokens[$label]['scope_opener']     = $x;
-                        $tokens[$label]['scope_closer']     = $closer;
-                        $tokens[$x]['scope_condition']      = $label;
-                        $tokens[$x]['scope_closer']         = $closer;
-                        $tokens[$closer]['scope_condition'] = $label;
-                        $tokens[$closer]['scope_opener']    = $x;
+                        foreach (array($label, $closer, $x) as $token) {
+                            $tokens[$token]['scope_condition'] = $label;
+                            $tokens[$token]['scope_opener']    = $x;
+                            $tokens[$token]['scope_closer']    = $closer;
+                        }
+
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", count($classStack));
                             echo "\t* set scope opener ($x) and closer ($closer) for token $label *".PHP_EOL;
