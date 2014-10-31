@@ -123,6 +123,7 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                     83  => 1,
                     85  => 1,
                     86  => 1,
+                    100 => 1,
                    );
             break;
         default:

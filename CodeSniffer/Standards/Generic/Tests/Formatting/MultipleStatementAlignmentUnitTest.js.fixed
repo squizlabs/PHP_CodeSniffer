@@ -96,3 +96,9 @@ var conditions = array();
 
 var foo  = {};
 foo.blah = 'blah';
+
+var script    = document.createElement('script');
+script.onload = function()
+{
+    clearTimeout(t);
+};

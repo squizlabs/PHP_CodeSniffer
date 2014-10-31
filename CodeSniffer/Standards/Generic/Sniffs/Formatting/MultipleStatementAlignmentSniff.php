@@ -159,20 +159,6 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
                     break;
                 }
 
-                // The assignment's end token must be on the line directly
-                // below the current one to be in the same assignment block.
-                $lineEnd = $phpcsFile->findNext(T_SEMICOLON, ($assign + 1));
-
-                // And the end token must actually belong to this assignment.
-                $nextOpener = $phpcsFile->findNext(
-                    PHP_CodeSniffer_Tokens::$scopeOpeners,
-                    ($assign + 1)
-                );
-
-                if ($nextOpener !== false && $nextOpener < $lineEnd) {
-                    break;
-                }
-
                 // Make sure it is not assigned inside a condition (eg. IF, FOR).
                 if (isset($tokens[$assign]['nested_parenthesis']) === true) {
                     foreach ($tokens[$assign]['nested_parenthesis'] as $start => $end) {
