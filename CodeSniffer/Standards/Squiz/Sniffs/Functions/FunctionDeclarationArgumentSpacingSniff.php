@@ -170,7 +170,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
 
             // Take references into account when expecting the
             // location of whitespace.
-            if ($phpcsFile->isReference(($nextParam - 1)) === true) {
+            if ($phpcsFile->isReference(($nextParam - 1)) === true
+                || $tokens[($nextParam - 1)]['code'] === T_ELLIPSIS
+            ) {
                 $whitespace = ($nextParam - 2);
             } else {
                 $whitespace = ($nextParam - 1);

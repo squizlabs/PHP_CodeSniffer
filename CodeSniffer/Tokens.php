@@ -100,6 +100,11 @@ if (defined('T_FINALLY') === false) {
     define('T_FINALLY', 1059);
 }
 
+// Some PHP 5.6 tokens, replicated for lower versions.
+if (defined('T_ELLIPSIS') === false) {
+    define('T_ELLIPSIS', 1065);
+}
+
 /**
  * The Tokens class contains weightings for tokens based on their
  * probability of occurrence in a file.

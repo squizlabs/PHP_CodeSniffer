@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Thibaud Fabre for the patch
   - Fixed bug #280 : The --config-show option generates error when there is no config file
   - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
+  - Fixed bug #310 : Variadics not recognized by tokenizer
  </notes>
  <contents>
   <dir name="/">
