@@ -26,6 +26,15 @@ echo (TRUE)?'Hello':'Bye';
 $array = array(
     'one' => ($test == 1) ? true : false,
     'two' => (($test == 1) ? true : false),
+    'three' => (($test == 1) ? true : false)
 );
 $var = ($test == 1) ? true : false;
 $var = (myFunc(1,2,3) == 1) ? true : false;
+
+set('config', function() {
+    $foo = ($bar === "on") ? "1" : "2";
+});
+
+$config = function() {
+    $foo = ($bar === "on") ? "1" : "2";
+};
