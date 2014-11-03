@@ -535,10 +535,10 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 && $tokens[($stackPtr + 1)] === '.'
                 && $tokens[($stackPtr + 2)] === '.'
             ) {
-                $newToken = array();
-                $newToken['code']          = T_ELLIPSIS;
-                $newToken['type']          = 'T_ELLIPSIS';
-                $newToken['content']       = '...';
+                $newToken            = array();
+                $newToken['code']    = T_ELLIPSIS;
+                $newToken['type']    = 'T_ELLIPSIS';
+                $newToken['content'] = '...';
                 $finalTokens[$newStackPtr] = $newToken;
 
                 $newStackPtr++;
