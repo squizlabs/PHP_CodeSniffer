@@ -117,6 +117,11 @@ if (defined('T_YIELD') === false) {
     define('T_YIELD', 1064);
 }
 
+// Some PHP 5.6 tokens, replicated for lower versions.
+if (defined('T_ELLIPSIS') === false) {
+    define('T_ELLIPSIS', 1065);
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 1200);
 define('T_DOC_COMMENT_WHITESPACE', 1201);

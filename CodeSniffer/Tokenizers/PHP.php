@@ -523,6 +523,30 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
+                Before PHP 5.6, the ... operator was tokenized as three
+                T_STRING_CONCAT tokens in a row. So look for and combine
+                these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '.'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 1)] === '.'
+                && $tokens[($stackPtr + 2)] === '.'
+            ) {
+                $newToken = array();
+                $newToken['code']          = T_ELLIPSIS;
+                $newToken['type']          = 'T_ELLIPSIS';
+                $newToken['content']       = '...';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr += 2;
+                continue;
+            }
+
+            /*
                 PHP doesn't assign a token to goto labels, so we have to.
                 These are just string tokens with a single colon after them. Double
                 colons are already tokenized and so don't interfere with this check.
