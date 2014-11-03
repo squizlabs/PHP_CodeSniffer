@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #303 : Open and close tag on same line can cause a PHP notice checking scope indent
   - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
   - Fixed bug #307 : Conditional breaks in case statements get incorrect indentions
+  - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
   - Fixed bug #310 : Variadics not recognized by tokenizer
  </notes>
  <contents>
