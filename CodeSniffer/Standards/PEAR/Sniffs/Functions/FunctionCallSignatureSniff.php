@@ -111,14 +111,30 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if (($stackPtr + 1) !== $openBracket) {
             // Checking this: $value = my_function[*](...).
             $error = 'Space before opening parenthesis of function call prohibited';
-            $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeOpenBracket');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeOpenBracket');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($stackPtr + 1); $i < $openBracket; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
         }
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($tokens[$next]['code'] === T_SEMICOLON) {
             if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[($closeBracket + 1)]['code']]) === true) {
                 $error = 'Space after closing parenthesis of function call prohibited';
-                $phpcsFile->addError($error, $closeBracket, 'SpaceAfterCloseBracket');
+                $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceAfterCloseBracket');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($closeBracket + 1); $i < $next; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
         }
 
@@ -181,7 +197,10 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
             // Checking this: $value = my_function([*]...).
             $error = 'Space after opening parenthesis of function call prohibited';
-            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterOpenBracket');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterOpenBracket');
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken(($openBracket + 1), '');
+            }
         } else if ($this->requiredSpacesAfterOpen > 0) {
             $spaceAfterOpen = 0;
             if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
@@ -194,9 +213,17 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                           $this->requiredSpacesAfterOpen,
                           $spaceAfterOpen,
                          );
-                $phpcsFile->addError($error, $stackPtr, 'SpaceAfterOpenBracket', $data);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterOpenBracket', $data);
+                if ($fix === true) {
+                    $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
+                    if ($spaceAfterOpen === 0) {
+                        $phpcsFile->fixer->addContent($openBracket, $padding);
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($openBracket + 1), $padding);
+                    }
+                }
             }
-        }
+        }//end if
 
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
@@ -210,7 +237,15 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                       $this->requiredSpacesBeforeClose,
                       $spaceBeforeClose,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
+            if ($fix === true) {
+                $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+                if ($spaceBeforeClose === 0) {
+                    $phpcsFile->fixer->addContentBefore($closer, $padding);
+                } else {
+                    $phpcsFile->fixer->replaceToken(($closer - 1), $padding);
+                }
+            }
         }
 
     }//end processSingleLineCall()
@@ -359,7 +394,12 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         if ($foundIndent === 0) {
                             $phpcsFile->fixer->addContentBefore($i, $padding);
                         } else {
-                            $phpcsFile->fixer->replaceToken($i, $padding);
+                            if ($tokens[$i]['code'] === T_COMMENT) {
+                                $comment = $padding.ltrim($tokens[$i]['content']);
+                                $phpcsFile->fixer->replaceToken($i, $comment);
+                            } else {
+                                $phpcsFile->fixer->replaceToken($i, $padding);
+                            }
                         }
                     }
                 }//end if
@@ -389,9 +429,25 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     && $tokens[$i]['line'] === $tokens[$next]['line']
                 ) {
                     $error = 'Only one argument is allowed per line in a multi-line function call';
-                    $phpcsFile->addError($error, $next, 'MultipleArguments');
+                    $fix   = $phpcsFile->addFixableError($error, $next, 'MultipleArguments');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($x = ($next - 1); $x > $i; $x--) {
+                            if ($tokens[$x]['code'] !== T_WHITESPACE) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($x, '');
+                        }
+
+                        $phpcsFile->fixer->addContentBefore(
+                            $next,
+                            $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                        );
+                        $phpcsFile->fixer->endChangeset();
+                    }
                 }
-            }
+            }//end if
         }//end for
 
     }//end processMultiLineCall()
