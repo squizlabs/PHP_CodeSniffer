@@ -417,11 +417,20 @@ class PHP_CodeSniffer_File
 
         $foundCode = false;
         $ignoring  = false;
+        $ignoreLine = false;
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
+            // First check if this line should be ignored, due to a @codingStandardsIgnoreLine comment.
+            if ($ignoreLine) {
+                $ignoreLine = false;
+                $this->_ignoredLines[$token['line']] = true;
+                continue;
+            }
+
+            // Now check for other @codingStandards comments.
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
                     $ignoring = true;
@@ -443,6 +452,11 @@ class PHP_CodeSniffer_File
                     $sniffParts    = explode('.', $parts[0]);
                     $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
                     $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                } else if (strpos($token['content'], '@codingStandardsIgnoreLine') !== false) {
+                    // Set $ignoreLine = true so we ignore the next line, then skip this line.
+                    $ignoreLine = true;
+                    $this->_ignoredLines[$token['line']] = true;
+                    continue;
                 }
             }
 

@@ -119,6 +119,74 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
     }//end testSuppressWarning()
 
+    /**
+     * Test suppressing a single error using a single line ignore.
+     *
+     * @return void
+     */
+    public function testSuppressLine()
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->process(array(), 'Generic', array('Generic.PHP.LowerCaseConstant'));
+
+        // Process without suppression.
+        $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(2, $numErrors);
+        $this->assertEquals(2, count($errors));
+
+        // Process with suppression.
+        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+    }//end testSuppressLine()
+
+    /**
+     * Test that using a single line ignore does not interfere with other suppressions.
+     *
+     * @return void
+     */
+    public function testNestedSuppressLine()
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->process(array(), 'Generic', array('Generic.PHP.LowerCaseConstant'));
+
+        // Process with codingStandardsIgnore[Start|End] suppression and no single line suppression.
+        $content = '<?php '.PHP_EOL.
+            '// @codingStandardsIgnoreStart'.PHP_EOL.
+            '$var = FALSE;'.PHP_EOL.
+            '$var = TRUE;'.PHP_EOL.
+            '// @codingStandardsIgnoreEnd';
+        $file    = $phpcs->processFile('oneSuppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with codingStandardsIgnoreLine suppression nested within codingStandardsIgnore[Start|End] suppression.
+        $content = '<?php '.PHP_EOL.
+            '// @codingStandardsIgnoreStart'.PHP_EOL.
+            '// @codingStandardsIgnoreLine'.PHP_EOL.
+            '$var = FALSE;'.PHP_EOL.
+            '$var = TRUE;'.PHP_EOL.
+            '// @codingStandardsIgnoreEnd';
+        $file    = $phpcs->processFile('nestedSuppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+    }//end testNestedSuppressLine()
 
     /**
      * Test suppressing a whole file.
