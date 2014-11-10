@@ -121,6 +121,37 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Test suppressing a scope opener.
+     *
+     * @return void
+     */
+    public function testSuppressScope()
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->process(array(), 'PEAR', array('PEAR.NamingConventions.ValidVariableName'));
+
+        // Process without suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('noSuppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@codingStandardsIgnoreStart'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@codingStandardsIgnoreEnd'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+    }//end testSuppressScope()
+
+
+    /**
      * Test suppressing a whole file.
      *
      * @return void
