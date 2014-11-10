@@ -128,7 +128,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
     public function testSuppressScope()
     {
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->process(array(), 'PEAR', array('PEAR.NamingConventions.ValidVariableName'));
+        $phpcs->initStandard('PEAR', array('PEAR.NamingConventions.ValidVariableName'));
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
