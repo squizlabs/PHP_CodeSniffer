@@ -104,9 +104,8 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             break;
         }
 
-        $keyword      = $stackPtr;
-        $openingBrace = $tokens[$stackPtr]['scope_opener'];
-        $className    = $phpcsFile->findNext(T_STRING, $stackPtr);
+        $keyword   = $stackPtr;
+        $className = $phpcsFile->findNext(T_STRING, $stackPtr);
 
         $classOrInterface = strtolower($tokens[$keyword]['content']);
 
@@ -134,6 +133,13 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                      );
             $phpcsFile->addError($error, $stackPtr, 'SpaceAfterName', $data);
         }
+
+        // Just in case.
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
+        $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
         // Check positions of the extends and implements keywords.
         foreach (array('extends', 'implements') as $keywordType) {
@@ -300,6 +306,11 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
     public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // Just in case.
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
 
         // Check that the closing brace comes right after the code body.
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];
