@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-11-07</date>
  <time>08:18:00</time>
  <version>
-  <release>2.0.0RC4</release>
-  <api>2.0.0RC4</api>
+  <release>2.0.0RC5</release>
+  <api>2.0.0RC5</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,37 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - JS tokenizer now detects xor statements correctly
-  - Improved detection of properties and objects in the JS tokenizer
-  - Generic ScopeIndentSniff can now fix indents using tabs instead of spaces
-    -- Set the tabIndent property to TRUE in your ruleset.xml file to enable this
-    -- It is important to also set a tab-width setting, either in the ruleset or on the command line, for accuracy
-  - Generic ScopeIndentSniff now checks and auto-fixes JS files
-  - Generic DisallowSpaceIndentSniff is now able to replace space indents with tab indents during fixing
-  - Support for phpcs-only and phpcbf-only attributes has been added to all ruleset.xml elements
-    -- Allows parts of the ruleset to only apply when using a specific tool
-    -- Useful for doing things like excluding indent fixes but still reporting indent errors
-  - Unit tests can now set command line arguments during a test run
-    -- Override getCliValues() and pass an array of CLI arguments for each file being tested
-  - File-wide sniff properties can now be set using T_INLINE_HTML content during unit test runs
-    -- Sniffs that start checking at the open tag can only, normally, have properties set using a ruleset
   - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
     -- When the comment is found, the comment line and the following line will be ignored
     -- Thanks to Andy Bulford for the contribution
-  - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
-    -- Thanks to Thibaud Fabre for the patch
-  - Generic DocCommentSniff now checks that the end comment tag is on a new line
-  - Generic MultipleStatementAlignmentSniff no longer skips assignments for closures
-  - Squiz DocCommentAlignment sniff now has better checking for single line doc block
-  - Running unit tests with the -v CLI argument no longer generates PHP errors
-  - Fixed bug #295 : ScopeIndentSniff hangs when processing nested closures
-  - Fixed bug #298 : False positive in ScopeIndentSniff when anonymous functions are used with method chaining
-  - Fixed bug #302 : Fixing code in Squiz InlineComment sniff can remove some comment text
-  - Fixed bug #303 : Open and close tag on same line can cause a PHP notice checking scope indent
-  - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
-  - Fixed bug #307 : Conditional breaks in case statements get incorrect indentions
-  - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
-  - Fixed bug #310 : Variadics not recognized by tokenizer
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
  </notes>
  <contents>
