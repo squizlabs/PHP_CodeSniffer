@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #307 : Conditional breaks in case statements get incorrect indentions
   - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
   - Fixed bug #310 : Variadics not recognized by tokenizer
+  - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
  </notes>
  <contents>
   <dir name="/">

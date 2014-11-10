@@ -505,7 +505,6 @@ class PHP_CodeSniffer_File
 
             if ($ignoring === true) {
                 $this->_ignoredLines[$token['line']] = true;
-                continue;
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
