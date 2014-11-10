@@ -798,7 +798,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                             T_STRING               => T_STRING,
                            );
 
-                if (isset($allowed[$tokens[$x]['code']]) === false) {
+                if (isset($allowed[$tokens[$x]['code']]) === false
+                    && isset($tokens[$i]['bracket_closer']) === true
+                ) {
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
                     $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
 

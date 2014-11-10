@@ -56,7 +56,11 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
+
         $errorData = array(strtolower($tokens[$stackPtr]['content']));
 
         $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), ($tokens[$stackPtr]['scope_closer'] + 1));
