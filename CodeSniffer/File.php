@@ -417,7 +417,6 @@ class PHP_CodeSniffer_File
 
         $foundCode = false;
         $ignoring  = false;
-        $ignoreLine = false;
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
