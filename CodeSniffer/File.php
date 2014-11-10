@@ -485,6 +485,10 @@ class PHP_CodeSniffer_File
                     $ignoring = false;
                     // Ignore this comment too.
                     $this->_ignoredLines[$token['line']] = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreLine') !== false) {
+                    $this->_ignoredLines[($token['line'] + 1)] = true;
+                    // Ignore this comment too.
+                    $this->_ignoredLines[$token['line']] = true;
                 } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
                     // Ignoring the whole file, just a little late.
                     $this->_errors       = array();

@@ -40,6 +40,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Override getCliValues() and pass an array of CLI arguments for each file being tested
   - File-wide sniff properties can now be set using T_INLINE_HTML content during unit test runs
     -- Sniffs that start checking at the open tag can only, normally, have properties set using a ruleset
+  - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
+    -- When the comment is found, the comment line and the following line will be ignored
+    -- Thanks to Andy Bulford for the contribution
   - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
     -- Thanks to Thibaud Fabre for the patch
   - Generic DocCommentSniff now checks that the end comment tag is on a new line
