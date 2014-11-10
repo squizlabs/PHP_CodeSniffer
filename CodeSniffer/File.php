@@ -423,19 +423,15 @@ class PHP_CodeSniffer_File
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
-            // First check if this line should be ignored, due to a @codingStandardsIgnoreLine comment.
-            if ($ignoreLine) {
-                $ignoreLine = false;
-                $this->_ignoredLines[$token['line']] = true;
-                continue;
-            }
-
-            // Now check for other @codingStandards comments.
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
                     $ignoring = true;
                 } else if (strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
                     $ignoring = false;
+                    // Ignore this comment too.
+                    $this->_ignoredLines[$token['line']] = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreLine') !== false) {
+                    $this->_ignoredLines[($token['line'] + 1)] = true;
                     // Ignore this comment too.
                     $this->_ignoredLines[$token['line']] = true;
                 } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
@@ -452,11 +448,6 @@ class PHP_CodeSniffer_File
                     $sniffParts    = explode('.', $parts[0]);
                     $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
                     $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
-                } else if (strpos($token['content'], '@codingStandardsIgnoreLine') !== false) {
-                    // Set $ignoreLine = true so we ignore the next line, then skip this line.
-                    $ignoreLine = true;
-                    $this->_ignoredLines[$token['line']] = true;
-                    continue;
                 }
             }
 
