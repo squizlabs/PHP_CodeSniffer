@@ -80,7 +80,9 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
+        if (isset($tokens[$stackPtr]['parenthesis_opener']) === true
+            && isset($tokens[$stackPtr]['parenthesis_closer']) === true
+        ) {
             $parenOpener    = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
             $spaceAfterOpen = 0;
