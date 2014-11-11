@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <title>About - Analysis of Coding Conventions</title>
     <link rel="shortcut icon" type="image/png"  href="_assets/favicon.png">
-    <link rel="stylesheet" type="text/css" href="_assets/styles.css?v=1.3" />
-    <script src="_assets/Chart.min.js?v=2.0"></script>
-    <script src="_assets/scripts.js?v=1.1"></script>
+    <link rel="stylesheet" type="text/css" href="_assets/styles.css?v=2.0" />
+    <script src="_assets/scripts.js?v=2.0"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -78,7 +78,11 @@
                 <h2><a href="#graphs">Style Variation Graphs</a></h2>
                 <div style="margin-top:40px;">
                     <p style="width:290px;display:table-cell;vertical-align:top">
-                        <canvas style="position:relative;" id="pie1" width="150" height="150"></canvas>
+                        <svg width="150" height="150" style="overflow: hidden;">
+                        <path d="M75,33.75 L75,0 A75,75,0,0,1,75,150 L75,116.3 A41.25,41.25,0,0,0,75,33.75" stroke="#ffffff" stroke-width="1" fill="#2D3F50"></path>
+                        <path d="M75,116.3 L75,150 A75,75,0,0,1,3.7,51.8 L35.8,62.3 A41.25,41.25,0,0,0,75,116.3" stroke="#ffffff" stroke-width="1" fill="#91A2B2"></path>
+                        <path d="M35.8,62.3 L3.7,51.8 A75,75,0,0,1,75,0 L75,33.8 A41.25,41.25,0,0,0,35.8,62.3" stroke="#ffffff" stroke-width="1" fill="#D1D4DB"></path>
+                        </svg>
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
                         The different style variations that have been found for each coding convention are displayed in a pie graph. The most popular style variation is marked with a star in the graph legend.<br/><br/>
@@ -88,8 +92,16 @@
                 </div>
                 <div style="margin:40px 0;">
                     <p style="width:290px;display:table-cell;vertical-align:top">
-                        <canvas style="position:relative;" id="pie2" width="150" height="150"></canvas>
-                        <canvas style="position:relative;left:36px;top:-119px;" id="pie3" width="80" height="80"></canvas>
+                        <svg width="150" height="150" style="overflow: hidden;">
+                        <path d="M75,33.75 L75,0 A75,75,0,0,1,75,150 L75,116.3 A41.25,41.25,0,0,0,75,33.75" stroke="#ffffff" stroke-width="1" fill="#2D3F50"></path>
+                        <path d="M75,116.3 L75,150 A75,75,0,0,1,3.7,51.8 L35.8,62.3 A41.25,41.25,0,0,0,75,116.3" stroke="#ffffff" stroke-width="1" fill="#91A2B2"></path>
+                        <path d="M35.8,62.3 L3.7,51.8 A75,75,0,0,1,75,0 L75,33.8 A41.25,41.25,0,0,0,35.8,62.3" stroke="#ffffff" stroke-width="1" fill="#D1D4DB"></path>
+                        </svg>
+                        <svg width="80" height="80" style="overflow:hidden;position:relative;left:35px;top:-119px;">
+                        <path d="M40,18 L40,0 A40,40,0,0,1,72.4,63.5 L57.8,52.9 A22,22,0,0,0,40,18" stroke="#ffffff" stroke-width="1" fill="#2D3F50"></path>
+                        <path d="M57.8,52.9 L72.4,63.5 A40,40,0,0,1,0,40 L18,40 A22,22,0,0,0,57.8,52.9" stroke="#ffffff" stroke-width="1" fill="#91A2B2"></path>
+                        <path d="M18,40 L0,40 A40,40,0,0,1,40,0 L40,18 A22,22,0,0,0,18,40" stroke="#ffffff" stroke-width="1" fill="#D1D4DB"></path>
+                        </svg>
                     </p>
                     <p style="width:100%;display:table-cell;padding-left:50px;vertical-align:top;">
                         When viewing the <abbr title="The report showing a combined analysis of all included PHP projects">combined report</abbr>, a second pie graph is displayed within the main one. This inner pie graph shows the percentage of PHP projects that are using each style variation.<br/><br/>
@@ -117,23 +129,23 @@
             <div class="conventionDetails">
                 <h2><a href="#trends">Trends</a></h2>
                 <p>
-                    The style variations used for each coding convention are tracked over time so that trends can be identified in the data. New data is collected weekly and the results displayed in a line graph at the bottom of each coding convention. Each style variation is plotted on a separate line but uses the same colour as it does in the coding convention pie graphs. Hovering over the graph displays the values at each point in time.
+                    The style variations used for each coding convention are tracked over time so that trends can be identified in the data. New data is collected weekly and the results displayed in a line graph at the bottom of each coding convention. Each style variation is plotted on a separate line but uses the same colour as it does in the coding convention pie graphs. A light blue line is used to display the number of items that were checked each week. Hovering over the graph displays the values at each point in time.
                 </p>
                 <p style="width:290px;display:table-cell;vertical-align:top">
-                    <canvas class="chart-trend" id="line" width="900" height="150"></canvas>
+                    <div class="chart-trend" id="line" style="width:860px;height:250px;"><div class="placeholder"></div></div>
                 </p>
                 <p>
-                    If a large enough swing is detected for a week's data, the point on the line graph will be displayed slightly larger and the events that contributed to the swing will be listed under the graph. In the example above, large swings in the data were seen on the 13th Nov and the 18th Dec.
+                    If a large enough swing is detected for a week's data, the points on the line graph will be displayed slightly larger and the events that contributed to the swing will be listed under the graph. Hovering over one of the listed events will highlight the data points in the line graph. In the example above, large swings in the data were seen on the 13th Nov and the 18th Dec.
                 </p>
                 <div class="historicalEvents" style="margin-left:-35px;width:935px;">
                   <ul>
-                    <li class="historicalDate"><strong>13 Nov 2013</strong>: there was a 10% swing from <em>no</em> to <em>yes</em>
+                    <li onmouseover="line.setSelection([{row:1,column:null}]);" onmouseout="line.setSelection([]);" class="historicalDate"><strong>13 Nov 2013</strong>: there was a 10% swing from <em>no</em> to <em>yes</em>
                       <ul>
                         <li><a href="#" onclick="return false;">Project A</a> removed 20 lines of code using <em>no</em></li>
                         <li><a href="#" onclick="return false;">Project B</a> added 420 lines of code using <em>yes</em></li>
                       </ul>
                     </li>
-                    <li class="historicalDate"><strong>18 Dec 2013</strong>: there was a 10% swing from <em>yes</em> to <em>no</em>
+                    <li onmouseover="line.setSelection([{row:6,column:null}]);" onmouseout="line.setSelection([]);" class="historicalDate"><strong>18 Dec 2013</strong>: there was a 10% swing from <em>yes</em> to <em>no</em>
                       <ul>
                         <li><a href="#" onclick="return false;">Project A</a> saw a 70% swing from <em>yes</em> to <em>no</em></li>
                       </ul>
@@ -240,19 +252,41 @@
 </div>
 
 <script>
-    var data = [{value:50,color:"#2D3F50",label:"0"},{value:30,color:"#91A2B2",label:"1"},{value:20,color:"#D1D4DB",label:"2"}]
-    var c = document.getElementById("pie1").getContext("2d");
-    new Chart(c).Doughnut(data,valOptions);
-    var c = document.getElementById("pie2").getContext("2d");
-    new Chart(c).Doughnut(data,valOptions);
-    var data = [{value:35,color:"#2D3F50",label:"0"},{value:40,color:"#91A2B2",label:"1"},{value:25,color:"#D1D4DB",label:"2"}]
-    var c = document.getElementById("pie3").getContext("2d");
-    new Chart(c).Doughnut(data,repoOptions);
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart1);
+    var line = null;
+    function drawChart1() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Date");
+        data.addColumn('number', 'no');
+        data.addColumn({type:'boolean',role:'emphasis'});
+        data.addColumn({type:'string',role:'tooltip'});
+        data.addColumn('number', 'yes');
+        data.addColumn({type:'boolean',role:'emphasis'});
+        data.addColumn({type:'string',role:'tooltip'});
+        data.addColumn("number", "lines");
+        data.addColumn({type:'string',role:'tooltip'});
+        data.addRows([
+            ['06 Nov',80,false,'80%',20,false,'20%',1100,"1,100"],
+            ['13 Nov',70,true,'70%',30,true,'70%',1500,"1,500"],
+            ['20 Nov',76,false,'76%',28,false,'28%',1550,"1,550"],
+            ['27 Nov',72,false,'72%',23,false,'23%',1650,"1,650"],
+            ['04 Dec',80,false,'80%',20,false,'20%',1555,"1,555"],
+            ['11 Dec',80,false,'80%',20,false,'20%',1750,"1,750"],
+            ['18 Dec',90,true,'90%',10,true,'10%',1775,"1,775"]
+        ]);
+        line = new google.visualization.LineChart(document.getElementById("line"));
+        trendOptions.series = {2:itemSeries};
+        trendOptions.vAxes[1].title = "lines";
+        line.draw(data, trendOptions);
+    }
 
+/*
     var data = {labels:["06 Nov","13 Nov","20 Nov","27 Nov","04 Dec","11 Dec","18 Dec"],datasets:[{label:"no",strokeColor:"#2D3F50",pointStrokeColor:"#FFF",pointColor:"#2D3F50",pointHighlightFill:"#FFF",pointHighlightStroke:"#2D3F50",data:[80,70,76,72,80,80,90]},{label:"yes",strokeColor:"#91A2B2",pointStrokeColor:"#FFF",pointColor:"#91A2B2",pointHighlightFill:"#FFF",pointHighlightStroke:"#91A2B2",data:[20,30,28,23,20,20,10]}]};
     var c = document.getElementById("line").getContext("2d");
     var chart = new Chart(c).Line(data,trendOptions);
     highlightPoints(chart, ["13 Nov","18 Dec"]);
+    */
 </script>
 </body>
 </html>
