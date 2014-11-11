@@ -880,5 +880,12 @@
         "path": "web/concrete",
         "ignore": "*/3rdparty/*",
         "extensions": ""
+    },
+    {
+        "name": "Revive Adserver",
+        "url": "revive-adserver/revive-adserver",
+        "path": "",
+        "ignore": "*/lib/,*/etc/*,*/var/*",
+        "extensions": ""
     }
 ]
