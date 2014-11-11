@@ -118,7 +118,11 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
      */
     public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens     = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
+
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
 
         // Check that the closing brace has one blank line after it.

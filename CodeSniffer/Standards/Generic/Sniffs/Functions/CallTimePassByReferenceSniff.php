@@ -93,10 +93,18 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
             return;
         }
 
+        if (isset($tokens[$openBracket]['parenthesis_closer']) === false) {
+            return;
+        }
+
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $nextSeparator = $openBracket;
         while (($nextSeparator = $phpcsFile->findNext(T_VARIABLE, ($nextSeparator + 1), $closeBracket)) !== false) {
+            if (isset($tokens[$nextSeparator]['nested_parenthesis']) === false) {
+                continue;
+            }
+
             // Make sure the variable belongs directly to this function call
             // and is not inside a nested function call or array.
             $brackets    = $tokens[$nextSeparator]['nested_parenthesis'];
