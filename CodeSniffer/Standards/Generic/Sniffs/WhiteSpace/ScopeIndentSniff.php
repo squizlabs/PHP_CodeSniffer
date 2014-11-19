@@ -201,7 +201,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if ($checkToken !== null
                 && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
             ) {
-                $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['parenthesis_opener'], true);
+                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['parenthesis_opener'], true);
                 $checkIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$first]) === true) {
                     $checkIndent += $adjustments[$first];
@@ -209,7 +209,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Make sure it is divisable by our expected indent.
                 $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
-                $exact = false;
+                $exact       = false;
             }//end if
 
             // Adjust lines within scopes while auto-fixing.
