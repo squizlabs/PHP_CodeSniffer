@@ -127,7 +127,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
                         // Try and maintain indentation.
-                        if ($tokens[$i]['line'] === $braceLine) {
+                        if ($tokens[$i]['line'] === ($braceLine - 1)) {
                             break;
                         }
 
