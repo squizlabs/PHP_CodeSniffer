@@ -196,6 +196,23 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
             }
 
+            // Special case for closing parenthesis, which should just be indented
+            // to at least the same level as where they were opened (but can be more).
+            if ($checkToken !== null
+                && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
+            ) {
+                $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['parenthesis_opener'], true);
+                $checkIndent = ($tokens[$first]['column'] - 1);
+                if (isset($adjustments[$first]) === true) {
+                    $checkIndent += $adjustments[$first];
+                }
+
+                // Make sure it is divisable by our expected indent.
+                $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
+                $exact = false;
+            }//end if
+
+            // Adjust lines within scopes while auto-fixing.
             if ($checkToken !== null
                 && isset($tokens[$checkToken]['conditions']) === true
                 && empty($tokens[$checkToken]['conditions']) === false
@@ -499,6 +516,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Make sure it is divisable by our expected indent.
                 $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+
                 $i = $tokens[$i]['scope_opener'];
                 continue;
             }
@@ -541,7 +559,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             ) {
                 $prev = false;
                 if (isset($tokens[$i]['nested_parenthesis']) === true) {
-                    reset($tokens[$i]['nested_parenthesis']);
+                    end($tokens[$i]['nested_parenthesis']);
                     $parens = key($tokens[$i]['nested_parenthesis']);
 
                     $condition = 0;

@@ -76,3 +76,32 @@ a(
     }
 );
 
+(function() {
+    a = function() {
+        a(function() {
+            if (true) {
+                a = true;
+            }
+        });
+
+        a(
+            function() {
+                if (true) {
+                    if (true) {
+                        a = true;
+                    }
+                }
+            }
+        );
+
+        a(
+            function() {
+                if (true) {
+                    a = true;
+                }
+            }
+        );
+
+    };
+
+})();
