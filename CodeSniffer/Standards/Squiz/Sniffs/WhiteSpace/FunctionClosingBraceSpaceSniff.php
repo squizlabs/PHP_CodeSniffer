@@ -48,7 +48,10 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -94,18 +97,21 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
             return;
         }
 
+        $nestedFunction = false;
+        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+            || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true
+            || isset($tokens[$stackPtr]['nested_parenthesis']) === true
+        ) {
+            $nestedFunction = true;
+        }
+
         $braceLine = $tokens[$closeBrace]['line'];
         $prevLine  = $tokens[$prevContent]['line'];
         $found     = ($braceLine - $prevLine - 1);
 
         $afterKeyword  = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         $beforeKeyword = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($tokens[$afterKeyword]['code'] !== T_STRING
-            && $tokens[$beforeKeyword]['code'] !== T_EQUAL
-            && $tokens[$beforeKeyword]['code'] !== T_COLON
-            && strtolower($tokens[$beforeKeyword]['content']) !== 'new'
-        ) {
-            // Nested function.
+        if ($nestedFunction === true) {
             if ($found < 0) {
                 $error = 'Closing brace of nested function must be on a new line';
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'ContentBeforeClose');

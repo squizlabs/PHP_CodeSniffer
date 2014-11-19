@@ -63,9 +63,7 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='ScopeIndentUnitTest.inc')
     {
-        if ($testFile === 'ScopeIndentUnitTest.1.js'
-            || $testFile === 'ScopeIndentUnitTest.2.js'
-        ) {
+        if ($testFile === 'ScopeIndentUnitTest.1.js') {
             return array(
                     6  => 1,
                     14 => 1,
@@ -73,8 +71,12 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                     30 => 1,
                     32 => 1,
                     39 => 1,
+                    41 => 1,
                     42 => 1,
                     47 => 1,
+                    59 => 1,
+                    60 => 1,
+                    75 => 1,
                    );
         }
 
@@ -116,6 +118,7 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 524 => 1,
                 544 => 1,
                 545 => 1,
+                639 => 1,
                );
 
     }//end getErrorList()

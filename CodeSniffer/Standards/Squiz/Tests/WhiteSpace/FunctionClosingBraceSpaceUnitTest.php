@@ -57,13 +57,13 @@ class Squiz_Tests_WhiteSpace_FunctionClosingBraceSpaceUnitTest extends AbstractS
             break;
         case 'FunctionClosingBraceSpaceUnitTest.js':
             return array(
-                    13  => 1,
-                    25  => 1,
-                    32  => 1,
-                    53  => 1,
-                    59  => 1,
-                    84  => 1,
-                    114 => 1,
+                    13 => 1,
+                    25 => 1,
+                    32 => 1,
+                    53 => 1,
+                    59 => 1,
+                    67 => 1,
+                    84 => 1,
                    );
             break;
         default:
@@ -90,5 +90,3 @@ class Squiz_Tests_WhiteSpace_FunctionClosingBraceSpaceUnitTest extends AbstractS
 
 
 }//end class
-
-?>

@@ -47,3 +47,32 @@ Viper.prototype = {
     }
 
 };
+
+this.init = function(data) {
+    if (_pageListWdgt) {
+        GUI.getWidget('changedPagesList').addItemClickedCallback(
+            function(itemid, target) {
+                draftChangeTypeClicked(
+                    itemid,
+                    target,
+                    {
+                    reviewData: _reviewData,
+                    pageid: itemid
+                    }
+                );
+            }
+        );
+    }//end if
+
+};
+
+a(
+    function() {
+        var _a = function() {
+            b = false;
+
+        };
+    true
+    }
+);
+

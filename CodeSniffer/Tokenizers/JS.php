@@ -419,7 +419,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
             // Special case for T_DIVIDE which can actually be
             // the start of a regular expression.
-            if ($char === '/') {
+            if ($buffer === $char && $char === '/') {
                 $regex = $this->getRegexToken(
                     $i,
                     $string,
@@ -972,7 +972,7 @@ class PHP_CodeSniffer_Tokenizers_JS
     /**
      * Performs additional processing after main tokenizing.
      *
-     * This additional processing looks for properties, labels and objects.
+     * This additional processing looks for properties, closures, labels and objects.
      *
      * @param array  $tokens  The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -997,7 +997,37 @@ class PHP_CodeSniffer_Tokenizers_JS
                 echo "\tProcess token $i: $type => $content".PHP_EOL;
             }
 
-            if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
+            // Looking for functions that are actually closures.
+            if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                    $tokens[$i]['code'] = T_CLOSURE;
+                    $tokens[$i]['type'] = 'T_CLOSURE';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                    }
+
+                    for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
+                        if (isset($tokens[$x]['conditions'][$i]) === false) {
+                            continue;
+                        }
+
+                        $tokens[$x]['conditions'][$i] = T_CLOSURE;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$x]['type'];
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                        }
+                    }
+                }
+
+                continue;
+            } else if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
                 && isset($tokens[$i]['scope_condition']) === false
             ) {
                 $classStack[] = $i;

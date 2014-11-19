@@ -616,3 +616,26 @@ if ($tokens[$stackPtr]['content']{0} === '#') {
     && $tokens[$stackPtr]['content']{1} === '/'
 ) {
 }
+
+$var = call_user_func(
+    function() {
+        if ($foo) {
+            $new_var = function() {
+                if ($a > 0) {
+                    return $a++;
+                } else {
+                    return $a--;
+                }
+            }
+        }
+    }
+);
+
+a(
+    function() {
+        $a = function() {
+            $b = false;
+        };
+    true
+    }
+);

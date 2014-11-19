@@ -48,7 +48,10 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -104,63 +107,71 @@ class Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_Code
             }
         }
 
-        if ($phpcsFile->tokenizerType === 'JS') {
-            // Do some additional checking before the function brace.
-            $nestedFunction = ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true || isset($tokens[$stackPtr]['nested_parenthesis']) === true);
+        if ($phpcsFile->tokenizerType !== 'JS') {
+            return;
+        }
 
-            $functionLine   = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
-            $lineDifference = ($braceLine - $functionLine);
+        // Do some additional checking before the function brace.
+        $nestedFunction = false;
+        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+            || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true
+            || isset($tokens[$stackPtr]['nested_parenthesis']) === true
+        ) {
+            $nestedFunction = true;
+        }
 
-            if ($nestedFunction === true) {
-                if ($lineDifference > 0) {
-                    $error = 'Opening brace should be on the same line as the function keyword';
-                    $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpacingAfterNested');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
-                            if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                                break;
-                            }
+        $functionLine   = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
+        $lineDifference = ($braceLine - $functionLine);
 
-                            $phpcsFile->fixer->replaceToken($i, '');
+        if ($nestedFunction === true) {
+            if ($lineDifference > 0) {
+                $error = 'Opening brace should be on the same line as the function keyword';
+                $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpacingAfterNested');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
                         }
 
-                        $phpcsFile->fixer->addContentBefore($openBrace, ' ');
-                        $phpcsFile->fixer->endChangeset();
-                    }
-                }
-            } else {
-                if ($lineDifference === 0) {
-                    $error = 'Opening brace should be on a new line';
-                    $fix   = $phpcsFile->addFixableError($error, $openBrace, 'ContentBefore');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->addNewlineBefore($openBrace);
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    return;
+                    $phpcsFile->fixer->addContentBefore($openBrace, ' ');
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        } else {
+            if ($lineDifference === 0) {
+                $error = 'Opening brace should be on a new line';
+                $fix   = $phpcsFile->addFixableError($error, $openBrace, 'ContentBefore');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addNewlineBefore($openBrace);
                 }
 
-                if ($lineDifference > 1) {
-                    $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
-                    $data  = array(($lineDifference - 1));
-                    $fix   = $phpcsFile->addError($error, $openBrace, 'SpacingBefore', $data);
+                return;
+            }
 
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
-                            if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                                break;
-                            }
+            if ($lineDifference > 1) {
+                $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
+                $data  = array(($lineDifference - 1));
+                $fix   = $phpcsFile->addError($error, $openBrace, 'SpacingBefore', $data);
 
-                            $phpcsFile->fixer->replaceToken($i, '');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($openBrace - 1); $i > $stackPtr; $i--) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
                         }
 
-                        $phpcsFile->fixer->addNewlineBefore($openBrace);
-                        $phpcsFile->fixer->endChangeset();
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    return;
-                }//end if
+                    $phpcsFile->fixer->addNewlineBefore($openBrace);
+                    $phpcsFile->fixer->endChangeset();
+                }
+
+                return;
             }//end if
         }//end if
 

@@ -85,6 +85,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                        T_INTERFACE,
                        T_TRAIT,
                        T_FUNCTION,
+                       T_CLOSURE,
                        T_PUBLIC,
                        T_PRIVATE,
                        T_PROTECTED,
@@ -107,7 +108,9 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                     $ignore[]  = T_STRING;
                     $ignore[]  = T_OBJECT_OPERATOR;
                     $nextToken = $phpcsFile->findNext($ignore, ($nextToken + 1), null, true);
-                    if ($tokens[$nextToken]['code'] === T_FUNCTION) {
+                    if ($tokens[$nextToken]['code'] === T_FUNCTION
+                        || $tokens[$nextToken]['code'] === T_CLOSURE
+                    ) {
                         return;
                     }
                 }

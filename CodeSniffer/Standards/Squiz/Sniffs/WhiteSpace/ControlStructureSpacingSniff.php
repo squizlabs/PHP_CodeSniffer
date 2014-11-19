@@ -245,6 +245,14 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
                 return;
             }
 
+            if ($tokens[$owner]['code'] === T_CLOSURE
+                && ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+                || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true
+                || isset($tokens[$stackPtr]['nested_parenthesis']) === true)
+            ) {
+                return;
+            }
+
             if ($tokens[$trailingContent]['line'] !== ($tokens[$scopeCloser]['line'] + 1)) {
                 $error = 'Blank line found after control structure';
                 $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'LineAfterClose');

@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - JS tokenizer now sets functions as T_CLOSUREs if the function is anonymous
+  - Improved regular expression detection in the JS tokenizer
   - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
     -- When the comment is found, the comment line and the following line will be ignored
     -- Thanks to Andy Bulford for the contribution
