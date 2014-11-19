@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
     -- When the comment is found, the comment line and the following line will be ignored
     -- Thanks to Andy Bulford for the contribution
+  - Improved conflict detection during auto fixing
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
  </notes>
  <contents>
