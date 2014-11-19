@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- When the comment is found, the comment line and the following line will be ignored
     -- Thanks to Andy Bulford for the contribution
   - Improved conflict detection during auto fixing
+  - PEAR FunctionCallSignatureSniff now supports JS files
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
  </notes>
  <contents>
@@ -1024,6 +1025,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Functions">
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

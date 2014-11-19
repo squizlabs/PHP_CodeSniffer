@@ -29,6 +29,16 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The number of spaces code should be indented.
      *
      * @var int
@@ -417,10 +427,18 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
                     $exact    = false;
                     $exactEnd = $tokens[$i]['parenthesis_closer'];
+                } else if ($phpcsFile->tokenizerType === 'JS'
+                    && $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
+                    && isset($tokens[$i]['scope_condition']) === false
+                    && isset($tokens[$i]['bracket_opener']) === true
+                    && $tokens[$i]['bracket_opener'] === $i
+                ) {
+                    $exact    = false;
+                    $exactEnd = $tokens[$i]['bracket_closer'];
                 }
             } else {
                 continue;
-            }
+            }//end if
 
             if ($this->allowMultipleArguments === false && $tokens[$i]['code'] === T_COMMA) {
                 // Comma has to be the last token on the line.
