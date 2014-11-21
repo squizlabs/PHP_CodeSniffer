@@ -33,7 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andy Bulford for the contribution
   - Improved conflict detection during auto fixing
   - PEAR FunctionCallSignatureSniff now supports JS files
-  - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff 
+  - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
  </notes>

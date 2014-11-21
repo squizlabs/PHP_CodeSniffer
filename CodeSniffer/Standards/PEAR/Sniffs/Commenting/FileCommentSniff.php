@@ -218,7 +218,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($this->tags[$name]['allow_multiple'] === false && isset($tagTokens[$name]) === true) {
                 $error = 'Only one %s tag is allowed in a %s comment';
                 $data  = array(
-                          $name, $docBlock,
+                          $name,
+                          $docBlock,
                          );
                 $phpcsFile->addError($error, $tag, 'Duplicate'.ucfirst($name).'Tag', $data);
             }
@@ -230,7 +231,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($string === false || $tokens[$string]['line'] !== $tokens[$tag]['line']) {
                 $error = 'Content missing for %s tag in %s comment';
                 $data  = array(
-                          $name, $docBlock,
+                          $name,
+                          $docBlock,
                          );
                 $phpcsFile->addError($error, $tag, 'Empty'.ucfirst($name).'Tag', $data);
                 continue;
@@ -244,7 +246,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 if ($tagData['required'] === true) {
                     $error = 'Missing %s tag in %s comment';
                     $data  = array(
-                              $tag, $docBlock,
+                              $tag,
+                              $docBlock,
                              );
                     $phpcsFile->addError($error, $commentEnd, 'Missing'.ucfirst($tag).'Tag', $data);
                 }
