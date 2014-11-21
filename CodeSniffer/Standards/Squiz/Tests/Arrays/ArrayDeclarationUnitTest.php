@@ -100,6 +100,8 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                     182 => 1,
                     188 => 1,
                     207 => 1,
+                    212 => 1,
+                    214 => 1,
                    );
         case 'ArrayDeclarationUnitTest.2.inc':
             return array(

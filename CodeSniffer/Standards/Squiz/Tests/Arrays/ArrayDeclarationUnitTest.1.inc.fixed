@@ -4,11 +4,9 @@ function test()
 {
     $a = array();
 
-    $b = Array ();
+    $b = array();
 
-    $c = Array(
-            'a' => 1,
-         );
+    $c = array('a' => 1);
 }
 
 
@@ -19,73 +17,81 @@ class TestClass
                     'height' => '',
                    );
 
-    private $_bad = Array(
-                    'width' => '',
-                    'height' => ''
-                     );
+    private $_bad = array(
+                     'width'  => '',
+                     'height' => '',
+                    );
 
 
     public function test()
     {
         $truck = array(
-                 'width' => '',
+                  'width'  => '',
                   'height' => '',
                  );
 
-        $plane = Array(
-                'width' => '',
+        $plane = array(
+                  'width'  => '',
                   'height' => '',
                  );
 
         $car = array(
-                'width' => '',
+                'width'  => '',
                 'height' => '',
                );
 
         $bus = array(
-                'width'  =>   '',
-                'height' => ''
+                'width'  => '',
+                'height' => '',
                );
 
-        $train = array  (
-                   TRUE,
+        $train = array(
+                  TRUE,
                   FALSE,
-                  'aaa'
+                  'aaa',
                  );
 
-        $inline = array('aaa', 'bbb', 'ccc');
+        $inline = array(
+                   'aaa',
+                   'bbb',
+                   'ccc',
+                  );
         $inline = array('aaa');
-        $inline = Array('aaa');
+        $inline = array('aaa');
 
         $bigone = array(
-                   'name' => 'bigone',
-                   'children'   => Array(
-                                    '1a' => 'child',
-                                    '11b' => 'child',
-                                    '111c'      => 'child',
-                                    'children'  => Array(
-                                                    'child' => 'aaa',
-                                                   ),
+                   'name'       => 'bigone',
+                   'children'   => array(
+                                    '1a'       => 'child',
+                                    '11b'      => 'child',
+                                    '111c'     => 'child',
+                                    'children' => array('child' => 'aaa'),
                                    ),
-                   'short_name' => 'big'
+                   'short_name' => 'big',
                   );
     }
 
 }//end class
 
-$value = array ( );
-$value = array(  );
-$value = array('1'=>$one, '2'  =>  $two, '3'=> $three, '4' =>$four);
-$value = array('1'=>$one);
+$value = array();
+$value = array();
+$value = array(
+          '1' => $one,
+          '2' => $two,
+          '3' => $three,
+          '4' => $four,
+         );
+$value = array('1' => $one);
 
-if (in_array('1', array('1','2','3')) === TRUE) {
-    $value = in_array('1', array('1'  ,   '2',     '3','4'));
+if (in_array('1', array('1', '2', '3')) === TRUE) {
+    $value = in_array('1', array('1', '2', '3', '4'));
 }
 
 $value = array(
           '1'=> TRUE,
           FALSE,
-          '3' => 'aaa',);
+          '3' => 'aaa',
+         );
 
 $value = array(
           '1'=> TRUE,
@@ -97,14 +103,16 @@ $value = array(
           '1' => FALSE,
          );
 
-$value = array(1,
-          2 ,
-          3 ,
+$value = array(
+          1,
+          2,
+          3,
          );
 
-$value = array(1 => $one,
-          2 => $two ,
-          3 => $three ,
+$value = array(
+          1 => $one,
+          2 => $two,
+          3 => $three,
          );
 
 $value = array(
@@ -122,8 +130,8 @@ $expected = array(
 $expected = array(
              array(
               '1' => 1,
-              '1' => 2
-             )
+              '1' => 2,
+             ),
             );
 
 // Space in second arg.
@@ -138,23 +146,17 @@ $paths = array(
           Init::ROOT_DIR.'/Installer' => 'Systems',
          );
 
-$x = array(
-     );
+$x = array();
 
-$x = array('test'
-     );
-$x = array('test',
-     );
-$x = array('name' => 'test',
-     );
+$x = array('test');
+$x = array('test');
+$x = array('name' => 'test');
 
-$x = array(
-      $x,
-     );
+$x = array($x);
 
 $func = array(
          $x,
-         'get'.$x.'Replacement'
+         'get'.$x.'Replacement',
         );
 
 $array = array(
@@ -170,23 +172,23 @@ $array = array(
          );
 
 // Malformed
-$foo = array(1
-, 2);
+$foo = array(
+        1,
+        2,
+       );
 
 $listItems[$aliasPath] = array('itemContent' => implode('<br/>', $aliases));
 
 $listItems[$aliasPath] = array(
-                          'itemContent' => implode('<br/>', $aliases)
+                          'itemContent' => implode('<br/>', $aliases),
                          );
 
-$x = array
-  (
+$x = array(
       $x,
       $y,
      );
 
-$x = array
-(
+$x = array(
       $x,
       $y,
      );
@@ -204,13 +206,13 @@ $test = array(
          ),
         );
 
-$c = array('a' => 1,);
+$c = array('a' => 1);
 
 function b()
 {
     $a = array(
-            'a'   => a('a'),
+          'a' => a('a'),
 
-    );
+         );
 
 }
