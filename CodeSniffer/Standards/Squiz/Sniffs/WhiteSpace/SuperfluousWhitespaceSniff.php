@@ -228,33 +228,32 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 Check for multiple blanks lines in a function.
             */
 
-            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
-                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
-                    && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
-                ) {
-                    // This is an empty line and the line before this one is not
-                    // empty, so this could be the start of a multiple empty
-                    // line block.
-                    $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
-                    $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
-                    if ($lines > 1) {
-                        $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
-                        $data  = array($lines);
+            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+                && $tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
+                && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
+            ) {
+                // This is an empty line and the line before this one is not
+                // empty, so this could be the start of a multiple empty
+                // line block.
+                $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
+                $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
+                if ($lines > 1) {
+                    $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
+                    $data  = array($lines);
 
-                        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
-                        if ($fix === true) {
-                            $phpcsFile->fixer->beginChangeset();
-                            $i = $stackPtr;
-                            while ($tokens[$i]['line'] !== $tokens[$next]['line']) {
-                                $phpcsFile->fixer->replaceToken($i, '');
-                                $i++;
-                            }
-
-                            $phpcsFile->fixer->addNewlineBefore($i);
-                            $phpcsFile->fixer->endChangeset();
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $i = $stackPtr;
+                        while ($tokens[$i]['line'] !== $tokens[$next]['line']) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                            $i++;
                         }
+
+                        $phpcsFile->fixer->addNewlineBefore($i);
+                        $phpcsFile->fixer->endChangeset();
                     }
-                }//end if
+                }
             }//end if
         }//end if
 
