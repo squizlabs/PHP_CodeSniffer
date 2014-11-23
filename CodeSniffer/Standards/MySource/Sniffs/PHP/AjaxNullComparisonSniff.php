@@ -63,7 +63,6 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
             return;
         }
 
-
         // Find all the vars passed in as we are only interested in comparisons
         // to NULL for these specific variables.
         $foundVars = array();

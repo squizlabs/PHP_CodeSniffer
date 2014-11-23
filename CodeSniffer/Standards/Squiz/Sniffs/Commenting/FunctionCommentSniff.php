@@ -294,7 +294,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     $varLen = strlen($var);
                     if ($varLen > $maxVar) {
                         $maxVar = $varLen;
-                    } 
+                    }
 
                     if (isset($matches[4]) === true) {
                         $varSpace       = strlen($matches[3]);
@@ -341,7 +341,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $phpcsFile->addError($error, $tag, 'MissingParamType');
             }//end if
 
-            $params[] = array(   
+            $params[] = array(
                          'tag'          => $tag,
                          'type'         => $type,
                          'var'          => $var,

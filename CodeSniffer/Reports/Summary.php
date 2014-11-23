@@ -90,7 +90,7 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
     /**
      * Generates a summary of errors and warnings for each file processed.
-     * 
+     *
      * @param string  $cachedData    Any partial report data that was returned from
      *                               generateFileReport during the run.
      * @param int     $totalFiles    Total number of files processed during the run.

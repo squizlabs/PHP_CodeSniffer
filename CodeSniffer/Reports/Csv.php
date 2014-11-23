@@ -79,7 +79,7 @@ class PHP_CodeSniffer_Reports_Csv implements PHP_CodeSniffer_Report
 
     /**
      * Generates a csv report.
-     * 
+     *
      * @param string  $cachedData    Any partial report data that was returned from
      *                               generateFileReport during the run.
      * @param int     $totalFiles    Total number of files processed during the run.

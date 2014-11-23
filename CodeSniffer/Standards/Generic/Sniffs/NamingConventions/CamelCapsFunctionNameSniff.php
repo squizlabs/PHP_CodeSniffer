@@ -147,7 +147,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         if ($methodName === '_'.$className) {
             return;
         }
-        
+
         // Ignore first underscore in methods prefixed with "_".
         $methodName = ltrim($methodName, '_');
 
@@ -203,7 +203,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
 
             return;
         }
-        
+
         // Ignore first underscore in functions prefixed with "_".
         $functionName = ltrim($functionName, '_');
 

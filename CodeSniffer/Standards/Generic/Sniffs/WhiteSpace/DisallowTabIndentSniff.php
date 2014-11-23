@@ -119,7 +119,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                     $tabFound = true;
                 }
             }//end if
- 
+
             if ($tabFound === false) {
                 continue;
             }

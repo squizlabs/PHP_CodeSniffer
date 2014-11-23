@@ -73,12 +73,12 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
             // Function declaration, not a function call.
             return;
         }
-        
+
         if ($tokens[$prev]['code'] === T_NS_SEPARATOR) {
             // Namespaced class/function, not an inbuilt function.
             return;
         }
-        
+
         if ($tokens[$prev]['code'] === T_NEW) {
             // Object creation, not an inbuilt function.
             return;

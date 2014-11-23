@@ -3,7 +3,7 @@
  * Represents a PHP_CodeSniffer report.
  *
  * PHP version 5.
- * 
+ *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
@@ -55,7 +55,7 @@ interface PHP_CodeSniffer_Report
 
     /**
      * Generate the actual report.
-     * 
+     *
      * @param string  $cachedData    Any partial report data that was returned from
      *                               generateFileReport during the run.
      * @param int     $totalFiles    Total number of files processed during the run.

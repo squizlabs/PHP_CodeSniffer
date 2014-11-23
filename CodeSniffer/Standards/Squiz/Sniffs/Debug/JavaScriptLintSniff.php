@@ -80,7 +80,6 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
             throw new PHP_CodeSniffer_Exception("Failed invoking JavaScript Lint, retval was [$retval], output was [$msg]");
         }
 
-
         if (is_array($output) === true) {
             foreach ($output as $finding) {
                 $split   = strpos($finding, ':');
