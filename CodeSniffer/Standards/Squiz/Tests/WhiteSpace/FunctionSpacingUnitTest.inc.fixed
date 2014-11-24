@@ -19,6 +19,7 @@ function foo()
 {
 }//end foo()
 
+
 function func1() {
 
 }//end func1()
@@ -28,6 +29,7 @@ function func2() {
 
 }//end func2()
 
+
 function func3() {
 
 }//end func3()
@@ -35,34 +37,6 @@ function func3() {
 
 class MyClass
 {
-    function func1() {
-
-    }//end func1()
-
-
-    function func2() {
-
-    }//end func2()
-
-    function func3() {
-
-    }//end func3()
-}//end class
-
-
-interface MyInterface
-{
-    function func1();
-
-
-    function func2();
-
-    function func3();
-}//end interface
-
-
-class MyClass
-{
 
 
     function func1() {
@@ -73,7 +47,6 @@ class MyClass
     function func2() {
 
     }//end func2()
-
 
 
     function func3() {
@@ -94,6 +67,43 @@ interface MyInterface
     function func2();
 
 
+    function func3();
+
+
+}//end interface
+
+
+class MyClass
+{
+
+
+    function func1() {
+
+    }//end func1()
+
+
+    function func2() {
+
+    }//end func2()
+
+
+    function func3() {
+
+    }//end func3()
+
+
+}//end class
+
+
+interface MyInterface
+{
+
+
+    function func1();
+
+
+    function func2();
+
 
     function func3();
 
@@ -102,15 +112,23 @@ interface MyInterface
 
 class MyClass
 {
+
+
     function func1() {
 
     }//end func1()
+
+
 }//end class
 
 
 interface MyInterface
 {
+
+
     function func1();
+
+
 }//end interface
 
 
@@ -134,6 +152,7 @@ class MyClass
 
     }//end func1()
 
+
     /**
      * Function comment.
      *
@@ -153,11 +172,13 @@ class MyClass
 
     }//end func3()
 
+
 }//end class
 
 
 interface MyInterface
 {
+
 
     /**
      * Function comment.
@@ -165,7 +186,6 @@ interface MyInterface
      * @return boolean
      */
     function func1();
-
 
 
     /**
@@ -182,6 +202,7 @@ interface MyInterface
      * @return boolean
      */
     function func3();
+
 
 }//end interface
 
@@ -217,7 +238,6 @@ interface MyInterface
      */
     function func1();
 
-
     /**
      * Function comment.
      *
@@ -231,7 +251,6 @@ interface MyInterface
      * @return boolean
      */
     function func3();
-
 
 }//end interface
 
@@ -250,7 +269,6 @@ class MyClass
     function func1() {
 
     }//end func1()
-
 
 }//end class
 

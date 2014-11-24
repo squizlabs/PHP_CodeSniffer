@@ -150,15 +150,22 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $foundLines  = 0;
             $prevContent = 0;
         } else {
-            $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $prevLineToken, null, true);
+            $currentLine = $tokens[$stackPtr]['line'];
+
+            $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
+            if ($tokens[$prevContent]['code'] === T_DOC_COMMENT_CLOSE_TAG
+                && $tokens[$prevContent]['line'] === ($currentLine - 1)
+            ) {
+                // Account for function comments.
+                $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$prevContent]['comment_opener'] - 1), null, true);
+            }
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
             // the previous function and no blank lines before this one as well.
-            $currentLine = $tokens[$stackPtr]['line'];
-            $prevLine    = ($tokens[$prevContent]['line'] - 1);
-            $i           = ($stackPtr - 1);
-            $foundLines  = 0;
+            $prevLine   = ($tokens[$prevContent]['line'] - 1);
+            $i          = ($stackPtr - 1);
+            $foundLines = 0;
             while ($currentLine !== $prevLine && $currentLine > 1 && $i > 0) {
                 if (isset($tokens[$i]['scope_condition']) === true) {
                     $scopeCondition = $tokens[$i]['scope_condition'];

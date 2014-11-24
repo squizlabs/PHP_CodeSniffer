@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR FunctionCallSignatureSniff now supports JS files
   - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
+  - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
   - Fixed bug #320 : Code sniffer identation issue
  </notes>
@@ -2072,6 +2073,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
