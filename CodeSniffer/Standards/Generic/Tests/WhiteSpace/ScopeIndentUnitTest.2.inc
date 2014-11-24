@@ -639,3 +639,19 @@ a(
 	true
 	}
 );
+
+$var = [
+	[
+		'1' =>
+			function () {
+				return true;
+			},
+	],
+	[
+		'1' =>
+			function () {
+				return true;
+			},
+		'2' => true,
+	]
+];

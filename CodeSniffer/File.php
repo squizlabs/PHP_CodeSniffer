@@ -3042,8 +3042,18 @@ class PHP_CodeSniffer_File
                 }
             }
 
-            if ($local === true && $this->_tokens[$i]['code'] === T_SEMICOLON) {
-                break;
+            if ($local === true) {
+                if (isset($this->_tokens[$i]['scope_opener']) === true
+                    && $i === $this->_tokens[$i]['scope_closer']
+                ) {
+                    $i = $this->_tokens[$i]['scope_opener'];
+                } else if (isset($this->_tokens[$i]['bracket_opener']) === true
+                    && $i === $this->_tokens[$i]['bracket_opener']
+                ) {
+                    $i = $this->_tokens[$i]['bracket_opener'];
+                } else if ($this->_tokens[$i]['code'] === T_SEMICOLON) {
+                    break;
+                }
             }
         }//end for
 
