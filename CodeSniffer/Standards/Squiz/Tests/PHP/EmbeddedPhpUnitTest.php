@@ -64,6 +64,8 @@ class Squiz_Tests_PHP_EmbeddedPhpUnitTest extends AbstractSniffUnitTest
                 49 => 1,
                 59 => 1,
                 63 => 1,
+                93 => 1,
+                94 => 1,
                );
 
     }//end getErrorList()
