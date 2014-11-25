@@ -16,6 +16,7 @@
  <rule ref="Squiz.Commenting.InlineComment" />
  <rule ref="Squiz.Commenting.LongConditionClosingComment" />
  <rule ref="Squiz.Commenting.PostStatementComment" />
+ <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
  <rule ref="Squiz.WhiteSpace.FunctionSpacing" />

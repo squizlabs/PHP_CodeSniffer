@@ -81,7 +81,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $arrayStart = $tokens[$stackPtr]['parenthesis_opener'];
             $arrayEnd   = $tokens[$arrayStart]['parenthesis_closer'];
 
-            if ($arrayStart != ($stackPtr + 1)) {
+            if ($arrayStart !== ($stackPtr + 1)) {
                 $error = 'There must be no space between the "array" keyword and the opening parenthesis';
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
 

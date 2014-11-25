@@ -676,7 +676,7 @@ class PHP_CodeSniffer_CLI
                 );
                 foreach ($ignored as $pattern) {
                     $pattern = trim($pattern);
-                    if ($pattern == '') {
+                    if ($pattern === '') {
                         continue;
                     }
 
@@ -1071,7 +1071,7 @@ class PHP_CodeSniffer_CLI
             }
         }
 
-        if ($max == 0) {
+        if ($max === 0) {
             return;
         }
 

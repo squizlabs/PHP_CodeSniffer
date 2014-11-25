@@ -157,7 +157,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
                 $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr);
                 if ($first === false) {
-                    $first = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+                    $first  = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
                     $indent = (strlen($tokens[$first]['content']) - strlen(ltrim($tokens[$first]['content'])));
                 } else {
                     $indent = ($tokens[($first + 1)]['column'] - 1);
@@ -192,7 +192,7 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             if ($fix === true) {
                 $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr);
                 if ($first === false) {
-                    $first = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+                    $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
                     $padding = (strlen($tokens[$first]['content']) - strlen(ltrim($tokens[$first]['content'])));
                 } else {
                     $padding = ($tokens[($first + 1)]['column'] - 1);
