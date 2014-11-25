@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCBF now prints output when it is changing into directories
   - Improved conflict detection during auto fixing
   - The -vvv command line argument will now output the current file content for each loop during fixing
+  - Generic ScopeIndentSniff now checks that open/close PHP tags are aligned to the correct column
   - PEAR FunctionCallSignatureSniff now supports JS files
   - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error

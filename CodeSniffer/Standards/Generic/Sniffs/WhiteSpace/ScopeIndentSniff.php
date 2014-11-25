@@ -159,13 +159,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $currentIndent = ($tokens[$stackPtr]['column'] - 1);
 
         if (empty($this->_ignoreIndentationTokens) === true) {
-            $this->_ignoreIndentationTokens = array(
-                                               T_OPEN_TAG           => true,
-                                               T_OPEN_TAG_WITH_ECHO => true,
-                                               T_CLOSE_TAG          => true,
-                                               T_INLINE_HTML        => true,
-                                              );
-
+            $this->_ignoreIndentationTokens = array(T_INLINE_HTML => true);
             foreach ($this->ignoreIndentationTokens as $token) {
                 if (is_int($token) === false) {
                     if (defined($token) === false) {
@@ -427,6 +421,19 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $exact = true;
             }
 
+            // PHP tags needs to be indented to exact column positions
+            // so they don't cause problems with indent checks for the code
+            // within them, but they don't need to line up with the current indent.
+            if ($checkToken !== null
+                && ($tokens[$checkToken]['code'] === T_OPEN_TAG
+                || $tokens[$checkToken]['code'] === T_OPEN_TAG_WITH_ECHO
+                || $tokens[$checkToken]['code'] === T_CLOSE_TAG)
+            ) {
+                $exact       = true;
+                $checkIndent = ($tokens[$checkToken]['column'] - 1);
+                $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
+            }
+
             // Check the line indent.
             if ($checkIndent === null) {
                 $checkIndent = $currentIndent;
@@ -513,8 +520,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
 
             // Open tags reset the indent level.
-            if ($tokens[$i]['code'] == T_OPEN_TAG
-                || $tokens[$i]['code'] == T_OPEN_TAG_WITH_ECHO
+            if ($tokens[$i]['code'] === T_OPEN_TAG
+                || $tokens[$i]['code'] === T_OPEN_TAG_WITH_ECHO
             ) {
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
