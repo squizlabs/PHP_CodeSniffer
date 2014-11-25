@@ -160,16 +160,17 @@ class PHP_CodeSniffer_Fixer
         $this->_loops = 0;
         while ($this->_loops < 50) {
             ob_start();
+
             // Only needed once file content has changed.
             $contents = $this->getContents();
 
-            /*
-                Useful for debugging fixed contents.
+            if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 @ob_end_clean();
-                $debugContent = PHP_CodeSniffer::prepareForOutput($contents);
-                echo $debugContent;
+                echo '---START FILE CONTENT---'.PHP_EOL;
+                echo $contents;
+                echo '--- END FILE CONTENT ---'.PHP_EOL;
                 ob_start();
-            */
+            }
 
             $this->_currentFile->refreshTokenListeners();
             $this->_currentFile->start($contents);

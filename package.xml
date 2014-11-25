@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- When the comment is found, the comment line and the following line will be ignored
     -- Thanks to Andy Bulford for the contribution
   - Improved conflict detection during auto fixing
+  - The -vvv command line argument will now output the current file content for each loop during fixing
   - PEAR FunctionCallSignatureSniff now supports JS files
   - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
