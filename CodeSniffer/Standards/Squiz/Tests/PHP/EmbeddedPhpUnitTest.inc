@@ -97,4 +97,10 @@ function foo()
 
 ?>
 
+            <strong><?php
+            echo 'foo';
+            ?></strong>
+
+?>
+
 </html>

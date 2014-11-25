@@ -155,17 +155,24 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
                     }
                 }//end if
 
-                $startColumn   = ($tokens[$stackPtr]['column'] - 1);
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr);
+                if ($first === false) {
+                    $first = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+                    $indent = (strlen($tokens[$first]['content']) - strlen(ltrim($tokens[$first]['content'])));
+                } else {
+                    $indent = ($tokens[($first + 1)]['column'] - 1);
+                }
+
                 $contentColumn = ($tokens[$firstContent]['column'] - 1);
-                if ($contentColumn !== $startColumn) {
+                if ($contentColumn !== $indent) {
                     $error = 'First line of embedded PHP code must be indented %s spaces; %s found';
                     $data  = array(
-                              $startColumn,
+                              $indent,
                               $contentColumn,
                              );
                     $fix   = $phpcsFile->addFixableError($error, $firstContent, 'Indent', $data);
                     if ($fix === true) {
-                        $padding = str_repeat(' ', $startColumn);
+                        $padding = str_repeat(' ', $indent);
                         if ($contentColumn === 0) {
                             $phpcsFile->fixer->addContentBefore($firstContent, $padding);
                         } else {
@@ -183,8 +190,14 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             $error = 'Opening PHP tag must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeOpen');
             if ($fix === true) {
-                $first   = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr);
-                $padding = ($tokens[($first + 1)]['column'] - 1);
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr);
+                if ($first === false) {
+                    $first = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+                    $padding = (strlen($tokens[$first]['content']) - strlen(ltrim($tokens[$first]['content'])));
+                } else {
+                    $padding = ($tokens[($first + 1)]['column'] - 1);
+                }
+
                 $phpcsFile->fixer->addContentBefore($stackPtr, $phpcsFile->eolChar.str_repeat(' ', $padding));
             }
         } else {
@@ -226,15 +239,41 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closingTag - 1), ($stackPtr + 1), true);
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closingTag + 1), null, true);
+
+        if ($tokens[$lastContent]['line'] === $tokens[$closingTag]['line']) {
+            $error = 'Closing PHP tag must be on a line by itself';
+            $fix   = $phpcsFile->addFixableError($error, $closingTag, 'ContentBeforeEnd');
+            if ($fix === true) {
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $closingTag, true);
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->addContentBefore($closingTag, str_repeat(' ', ($tokens[$first]['column'] - 1)));
+                $phpcsFile->fixer->addNewlineBefore($closingTag);
+                $phpcsFile->fixer->endChangeset();
+            }
+        } else if ($tokens[$nextContent]['line'] === $tokens[$closingTag]['line']) {
+            $error = 'Closing PHP tag must be on a line by itself';
+            $fix   = $phpcsFile->addFixableError($error, $closingTag, 'ContentAfterEnd');
+            if ($fix === true) {
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $closingTag, true);
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->addNewline($closingTag);
+                $phpcsFile->fixer->addContent($closingTag, str_repeat(' ', ($tokens[$first]['column'] - 1)));
+                $phpcsFile->fixer->endChangeset();
+            }
+        }//end if
+
         $next = $phpcsFile->findNext(T_OPEN_TAG, ($closingTag + 1));
         if ($next === false) {
             return;
         }
 
         // Check for a blank line at the bottom.
-        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closingTag - 1), ($stackPtr + 1), true);
-        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closingTag + 1), null, true);
-        if ($tokens[$lastContent]['line'] < ($tokens[$closingTag]['line'] - 1)) {
+        if ((isset($tokens[$lastContent]['scope_closer']) === false
+            || $tokens[$lastContent]['scope_closer'] !== $lastContent)
+            && $tokens[$lastContent]['line'] < ($tokens[$closingTag]['line'] - 1)
+        ) {
             // Find a token on the blank line to throw the error on.
             $i = $closingTag;
             do {
@@ -257,34 +296,6 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
 
                 $phpcsFile->fixer->endChangeset();
             }
-
-            return;
-        }//end if
-
-        if ($tokens[$lastContent]['line'] === $tokens[$closingTag]['line']) {
-            $error = 'Closing PHP tag must be on a line by itself';
-            $fix   = $phpcsFile->addFixableError($error, $closingTag, 'ContentBeforeEnd');
-            if ($fix === true) {
-                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $closingTag, true);
-                $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addContentBefore($closingTag, str_repeat(' ', ($tokens[$first]['column'] - 1)));
-                $phpcsFile->fixer->addNewlineBefore($closingTag);
-                $phpcsFile->fixer->endChangeset();
-            }
-
-            return;
-        } else if ($tokens[$nextContent]['line'] === $tokens[$closingTag]['line']) {
-            $error = 'Closing PHP tag must be on a line by itself';
-            $fix   = $phpcsFile->addFixableError($error, $closingTag, 'ContentAfterEnd');
-            if ($fix === true) {
-                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $closingTag, true);
-                $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addNewline($closingTag);
-                $phpcsFile->fixer->addContent($closingTag, str_repeat(' ', ($tokens[$first]['column'] - 1)));
-                $phpcsFile->fixer->endChangeset();
-            }
-
-            return;
         }//end if
 
     }//end _validateMultilineEmbeddedPhp()
