@@ -175,15 +175,6 @@ class PHP_CodeSniffer_Fixer
             $this->_currentFile->start($contents);
             ob_end_clean();
 
-            /*
-                Possibly useful as a fail-safe, but may mask problems with the actual
-                fixes being performed.
-                $newContents = $this->getContents();
-                if ($newContents === $contents) {
-                    break;
-                }
-            */
-
             $this->_loops++;
 
             if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
