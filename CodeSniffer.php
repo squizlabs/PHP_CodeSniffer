@@ -605,7 +605,7 @@ class PHP_CodeSniffer
             $this->file = $file;
             $currDir    = dirname($file);
             if ($lastDir !== $currDir) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
                 }
 
