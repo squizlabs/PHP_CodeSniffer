@@ -83,6 +83,8 @@ class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSn
                 196 => 1,
                 223 => 1,
                 266 => 1,
+                282 => 1,
+                284 => 2,
                );
 
     }//end getErrorList()
@@ -94,10 +96,16 @@ class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSn
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='SwitchDeclarationUnitTest.inc')
     {
+        if ($testFile === 'SwitchDeclarationUnitTest.js') {
+            return array(273 => 1);
+        }
+
         return array();
 
     }//end getWarningList()

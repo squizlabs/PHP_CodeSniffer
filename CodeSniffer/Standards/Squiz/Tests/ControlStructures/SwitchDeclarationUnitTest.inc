@@ -278,3 +278,10 @@ switch ($something) {
         echo 'default';
     exit;
 }
+
+switch ($foo) {
+    case '1':
+        return; // comment
+    break;
+
+}

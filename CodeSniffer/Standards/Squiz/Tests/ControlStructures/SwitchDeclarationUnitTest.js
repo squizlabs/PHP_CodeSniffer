@@ -268,3 +268,20 @@ switch (something) {
     default:
     throw 'message';
 }
+
+switch (something) {
+    case '1';
+        print('one');
+    break;
+
+    default:
+        print('default');
+    return;
+}
+
+switch (foo) {
+    case '1':
+        return; // comment
+    break;
+
+}

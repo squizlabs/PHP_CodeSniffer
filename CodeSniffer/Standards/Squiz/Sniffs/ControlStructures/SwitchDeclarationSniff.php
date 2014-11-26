@@ -147,6 +147,12 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                 }
             }
 
+            if (isset($tokens[$nextCase]['scope_opener']) === false) {
+                $error = 'Possible parse error: CASE missing opening colon';
+                $phpcsFile->addWarning($error, $nextCase, 'MissingColon');
+                continue;
+            }
+
             $opener = $tokens[$nextCase]['scope_opener'];
             if ($tokens[($opener - 1)]['type'] === 'T_WHITESPACE') {
                 $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
@@ -207,14 +213,14 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                             $fix   = $phpcsFile->addFixableError($error, $nextBreak, 'SpacingAfterBreak');
                             if ($fix === true) {
                                 $phpcsFile->fixer->beginChangeset();
-                                for ($i = ($semicolon + 1); $i <= $tokens[$tokens[$stackPtr]['scope_closer']]; $i++) {
-                                    if ($tokens[$i]['line'] === $tokens[$semicolon]['line']) {
-                                        continue;
-                                    }
-
+                                for ($i = ($semicolon + 1); $i <= $tokens[$stackPtr]['scope_closer']; $i++) {
                                     if ($tokens[$i]['line'] === $nextLine) {
                                         $phpcsFile->fixer->addNewlineBefore($i);
                                         break;
+                                    }
+
+                                    if ($tokens[$i]['line'] === $tokens[$semicolon]['line']) {
+                                        continue;
                                     }
 
                                     $phpcsFile->fixer->replaceToken($i, '');

@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz EmbeddedPhpSniff now aligns open tags correctly when moving them onto a new line
   - Improved fixing of arrays with multiple values in Squiz ArrayDeclarationSniff
   - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
+  - Improved fixing of lines after cases statements in Squiz SwitchDeclarationSniff
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
   - Fixed bug #320 : Code sniffer identation issue
  </notes>
