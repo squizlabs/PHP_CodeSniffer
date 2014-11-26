@@ -661,3 +661,15 @@ if ($foo) {
  </p>
     <?php
 }
+
+function foo()
+{
+    $failingTests[$testName][] = array(
+                                  'comment'    => self::_replaceKeywords($failingComment, $result),
+                                  'screenshot' => Test::getScreenshotPath(
+                                      $projectid,
+                                      $result['class_name'],
+                                  ),
+                                 );
+
+}

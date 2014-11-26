@@ -213,9 +213,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $checkIndent += $adjustments[$first];
                 }
 
-                // Make sure it is divisable by our expected indent.
-                $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
-                $exact       = false;
+                $exact = false;
 
                 if ($this->_debug === true) {
                     echo "\t=> indent set to $currentIndent".PHP_EOL;
@@ -468,11 +466,14 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 $fix = $phpcsFile->addFixableError($error, $checkToken, $type, $data);
                 if ($fix === true) {
+                    $padding = '';
                     if ($this->tabIndent === true) {
-                        $numTabs   = floor($checkIndent / $this->_tabWidth);
-                        $numSpaces = ($checkIndent - ($numTabs * $this->_tabWidth));
-                        $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
-                    } else {
+                        $numTabs = floor($checkIndent / $this->_tabWidth);
+                        if ($numTabs > 0) {
+                            $numSpaces = ($checkIndent - ($numTabs * $this->_tabWidth));
+                            $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                        }
+                    } else if ($checkIndent > 0) {
                         $padding = str_repeat(' ', $checkIndent);
                     }
 
@@ -486,7 +487,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     if ($accepted === true) {
                         $adjustments[$checkToken] = ($checkIndent - $tokenIndent);
                     }
-                }
+                }//end if
             }//end if
 
             if ($checkToken !== null) {
