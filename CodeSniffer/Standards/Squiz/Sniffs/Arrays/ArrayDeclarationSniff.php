@@ -341,12 +341,16 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
         }//end if
 
         $nextToken  = $stackPtr;
-        $lastComma  = $stackPtr;
         $keyUsed    = false;
         $singleUsed = false;
-        $lastToken  = '';
         $indices    = array();
         $maxLength  = 0;
+
+        if ($tokens[$stackPtr]['code'] === T_ARRAY) {
+            $lastToken = $tokens[$stackPtr]['parenthesis_opener'];
+        } else {
+            $lastToken = $stackPtr;
+        }
 
         // Find all the double arrows that reside in this scope.
         for ($nextToken = ($stackPtr + 1); $nextToken < $arrayEnd; $nextToken++) {
@@ -364,6 +368,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 // Let subsequent calls of this test handle nested arrays.
                 $indices[] = array('value' => $nextToken);
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
                 continue;
             }
 
@@ -371,6 +376,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 // Let subsequent calls of this test handle nested arrays.
                 $indices[] = array('value' => $nextToken);
                 $nextToken = $tokens[$nextToken]['bracket_closer'];
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
                 continue;
             }
 
@@ -396,7 +402,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     continue;
                 }
 
-                if ($keyUsed === true && $lastToken === T_COMMA) {
+                if ($keyUsed === true && $tokens[$lastToken]['code'] === T_COMMA) {
                     $error = 'No key specified for array entry; first entry specifies key';
                     $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
                     return;
@@ -423,12 +429,12 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         }
                     }
 
-                    $valueContent = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $stackPtr, true);
+                    $valueContent = $phpcsFile->findNext(T_WHITESPACE, ($lastToken + 1), $nextToken, true);
                     $indices[]    = array('value' => $valueContent);
                     $singleUsed   = true;
                 }//end if
 
-                $lastToken = T_COMMA;
+                $lastToken = $nextToken;
                 continue;
             }//end if
 
@@ -464,7 +470,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
                 $currentEntry['value'] = $nextContent;
                 $indices[] = $currentEntry;
-                $lastToken = T_DOUBLE_ARROW;
+                $lastToken = $nextToken;
             }//end if
         }//end for
 
@@ -473,7 +479,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         if (empty($indices) === true) {
             $singleValue = true;
-        } else if (count($indices) === 1 && $lastToken === T_COMMA) {
+        } else if (count($indices) === 1 && $tokens[$lastToken]['code'] === T_COMMA) {
             // There may be another array value without a comma.
             $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
             $exclude[]   = T_COMMA;
@@ -553,7 +559,10 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     $error = 'Each value in a multi-line array must be on a new line';
                     $fix   = $phpcsFile->addFixableError($error, $value['value'], 'ValueNoNewline');
                     if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken(($value['value'] - 1), '');
+                        if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
+                            $phpcsFile->fixer->replaceToken(($value['value'] - 1), '');
+                        }
+
                         $phpcsFile->fixer->addNewlineBefore($value['value']);
                     }
                 } else if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {

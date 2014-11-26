@@ -214,3 +214,11 @@ function b()
     );
 
 }
+
+$foo = Array('[',']',':',"\n","\r");
+$bar = Array('&#91;','&#93;','&#58;','&#10;','&#13;');
+
+function foo()
+{
+    return array($a, $b->screen);
+}

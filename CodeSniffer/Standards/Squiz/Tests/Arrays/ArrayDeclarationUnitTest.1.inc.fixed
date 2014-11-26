@@ -216,3 +216,26 @@ function b()
          );
 
 }
+
+$foo = array(
+        '[',
+        ']',
+        ':',
+        "\n",
+        "\r",
+       );
+$bar = array(
+        '&#91;',
+        '&#93;',
+        '&#58;',
+        '&#10;',
+        '&#13;',
+       );
+
+function foo()
+{
+    return array(
+            $a,
+            $b->screen,
+           );
+}

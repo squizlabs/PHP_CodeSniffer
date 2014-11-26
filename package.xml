@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
   - Squiz EmbeddedPhpSniff no longer reports incorrect alignment of tags when they are not on new lines
   - Squiz EmbeddedPhpSniff now aligns open tags correctly when moving them onto a new line
+  - Improved fixing of arrays with multiple values in Squiz ArrayDeclarationSniff
   - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
   - Fixed bug #320 : Code sniffer identation issue
