@@ -167,7 +167,13 @@ class PHP_CodeSniffer_Fixer
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 @ob_end_clean();
                 echo '---START FILE CONTENT---'.PHP_EOL;
-                echo $contents;
+                $lines = explode($this->_currentFile->eolChar, $contents);
+                $max   = strlen(count($lines));
+                foreach ($lines as $lineNum => $line) {
+                    $lineNum++;
+                    echo str_pad($lineNum, $max, ' ', STR_PAD_LEFT).'|'.$line.PHP_EOL;
+                }
+
                 echo '--- END FILE CONTENT ---'.PHP_EOL;
                 ob_start();
             }
