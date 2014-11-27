@@ -397,10 +397,14 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $foundIndent = strlen($tokens[$i]['content']);
                 }
 
-                if ($foundIndent < $expectedIndent
-                    || ($exact === true
-                    && $expectedIndent !== $foundIndent)
-                ) {
+                $isNotIndentedCorrectly = (
+                    $foundIndent < $expectedIndent
+                    || ($exact === true && $expectedIndent !== $foundIndent)
+                );
+                if ($isNotIndentedCorrectly && !$this->requireIsolatedMultilineCallParentheses && $tokens[$nextCode]['code'] === T_CLOSE_CURLY_BRACKET) {
+                    $isNotIndentedCorrectly = false;
+                }
+                if ($isNotIndentedCorrectly) {
                     $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
                     $data  = array(
                               $expectedIndent,
