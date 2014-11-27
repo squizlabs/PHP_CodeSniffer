@@ -93,44 +93,45 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                        T_STATIC,
                        T_ABSTRACT,
                        T_CONST,
-                       T_OBJECT,
                        T_PROPERTY,
                       );
 
             if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
                 return;
-            } else {
-                if ($phpcsFile->tokenizerType === 'JS') {
-                    // We allow block comments if a function is being assigned
-                    // to a variable.
-                    $ignore    = PHP_CodeSniffer_Tokens::$emptyTokens;
-                    $ignore[]  = T_EQUAL;
-                    $ignore[]  = T_STRING;
-                    $ignore[]  = T_OBJECT_OPERATOR;
-                    $nextToken = $phpcsFile->findNext($ignore, ($nextToken + 1), null, true);
-                    if ($tokens[$nextToken]['code'] === T_FUNCTION
-                        || $tokens[$nextToken]['code'] === T_CLOSURE
-                    ) {
-                        return;
-                    }
-                }
+            }
 
-                $prevToken = $phpcsFile->findPrevious(
-                    PHP_CodeSniffer_Tokens::$emptyTokens,
-                    ($stackPtr - 1),
-                    null,
-                    true
-                );
-
-                if ($tokens[$prevToken]['code'] === T_OPEN_TAG) {
+            if ($phpcsFile->tokenizerType === 'JS') {
+                // We allow block comments if a function or object
+                // is being assigned to a variable.
+                $ignore    = PHP_CodeSniffer_Tokens::$emptyTokens;
+                $ignore[]  = T_EQUAL;
+                $ignore[]  = T_STRING;
+                $ignore[]  = T_OBJECT_OPERATOR;
+                $nextToken = $phpcsFile->findNext($ignore, ($nextToken + 1), null, true);
+                if ($tokens[$nextToken]['code'] === T_FUNCTION
+                    || $tokens[$nextToken]['code'] === T_CLOSURE
+                    || $tokens[$nextToken]['code'] === T_OBJECT
+                    || $tokens[$nextToken]['code'] === T_PROTOTYPE
+                ) {
                     return;
                 }
+            }
 
-                if ($tokens[$stackPtr]['content'] === '/**') {
-                    $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
-                    $phpcsFile->addError($error, $stackPtr, 'DocBlock');
-                }
-            }//end if
+            $prevToken = $phpcsFile->findPrevious(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($stackPtr - 1),
+                null,
+                true
+            );
+
+            if ($tokens[$prevToken]['code'] === T_OPEN_TAG) {
+                return;
+            }
+
+            if ($tokens[$stackPtr]['content'] === '/**') {
+                $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                $phpcsFile->addError($error, $stackPtr, 'DocBlock');
+            }
         }//end if
 
         if ($tokens[$stackPtr]['content']{0} === '#') {

@@ -105,3 +105,87 @@ a(
     };
 
 })();
+
+a.prototype = {
+
+    a: function()
+    {
+        var currentSize = null;
+        ViperUtil.addEvent(
+            header,
+            'safedblclick',
+            function() {},
+        );
+
+    if (topContent) {
+        ViperUtil.addClass(topContent, 'Viper-popup-top');
+        main.appendChild(topContent);
+    }
+
+        ViperUtil.addClass(midContent, 'Viper-popup-content');
+        main.appendChild(midContent);
+    }
+
+};
+
+a.prototype = {
+
+    a: function()
+    {
+        ViperUtil.addClass(midContent, 'Viper-popup-content');
+        main.appendChild(midContent);
+
+        var mouseUpAction  = function() {};
+        var preventMouseUp = false;
+        var self           = this;
+    if (clickAction) {
+    }
+    }
+
+};
+
+a.prototype = {
+
+    a: function()
+    {
+        var a = function() {
+            var a = 'foo';
+        };
+
+    if (true) {
+    }
+
+    },
+
+    b: function()
+    {
+        ViperUtil.addEvent(
+            function() {
+                if (fullScreen !== true) {
+                    currentSize = {
+                    };
+
+                showfullScreen();
+                }
+            }
+        );
+
+    },
+
+    c: function()
+    {
+        this.a(
+            {
+                a: function() {
+                    form.onsubmit = function() {
+                        return false;
+                    };
+
+                var a = true;
+                }
+            }
+        );
+
+    }
+
+};

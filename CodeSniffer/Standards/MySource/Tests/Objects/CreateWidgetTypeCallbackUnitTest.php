@@ -42,10 +42,6 @@ class MySource_Tests_Objects_CreateWidgetTypeCallbackUnitTest extends AbstractSn
      */
     public function getErrorList($testFile='CreateWidgetTypeCallbackUnitTest.js')
     {
-        if ($testFile !== 'CreateWidgetTypeCallbackUnitTest.js') {
-            return array();
-        }
-
         return array(
                 18  => 1,
                 23  => 2,

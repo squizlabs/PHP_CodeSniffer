@@ -53,73 +53,74 @@ define('T_REGULAR_EXPRESSION', 1034);
 define('T_PROPERTY', 1035);
 define('T_LABEL', 1036);
 define('T_OBJECT', 1037);
-define('T_COLOUR', 1038);
-define('T_HASH', 1039);
-define('T_URL', 1040);
-define('T_STYLE', 1041);
-define('T_ASPERAND', 1042);
-define('T_DOLLAR', 1043);
-define('T_TYPEOF', 1044);
-define('T_CLOSURE', 1045);
-define('T_BACKTICK', 1046);
-define('T_START_NOWDOC', 1047);
-define('T_NOWDOC', 1048);
-define('T_END_NOWDOC', 1049);
-define('T_OPEN_SHORT_ARRAY', 1050);
-define('T_CLOSE_SHORT_ARRAY', 1051);
-define('T_GOTO_LABEL', 1052);
-define('T_EMBEDDED_PHP', 1053);
+define('T_CLOSE_OBJECT', 1038);
+define('T_COLOUR', 1039);
+define('T_HASH', 1040);
+define('T_URL', 1041);
+define('T_STYLE', 1042);
+define('T_ASPERAND', 1043);
+define('T_DOLLAR', 1044);
+define('T_TYPEOF', 1045);
+define('T_CLOSURE', 1046);
+define('T_BACKTICK', 1047);
+define('T_START_NOWDOC', 1048);
+define('T_NOWDOC', 1049);
+define('T_END_NOWDOC', 1050);
+define('T_OPEN_SHORT_ARRAY', 1051);
+define('T_CLOSE_SHORT_ARRAY', 1052);
+define('T_GOTO_LABEL', 1053);
+define('T_EMBEDDED_PHP', 1054);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1054);
+    define('T_NAMESPACE', 1055);
 }
 
 if (defined('T_NS_C') === false) {
-    define('T_NS_C', 1055);
+    define('T_NS_C', 1056);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1056);
+    define('T_NS_SEPARATOR', 1057);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1057);
+    define('T_GOTO', 1058);
 }
 
 if (defined('T_DIR') === false) {
-    define('T_DIR', 1058);
+    define('T_DIR', 1059);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1059);
+    define('T_TRAIT', 1060);
 }
 
 if (defined('T_TRAIT_C') === false) {
-    define('T_TRAIT_C', 1060);
+    define('T_TRAIT_C', 1061);
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1061);
+    define('T_INSTEADOF', 1062);
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1062);
+    define('T_CALLABLE', 1063);
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1063);
+    define('T_FINALLY', 1064);
 }
 
 if (defined('T_YIELD') === false) {
-    define('T_YIELD', 1064);
+    define('T_YIELD', 1065);
 }
 
 // Some PHP 5.6 tokens, replicated for lower versions.
 if (defined('T_ELLIPSIS') === false) {
-    define('T_ELLIPSIS', 1065);
+    define('T_ELLIPSIS', 1066);
 }
 
 // Tokens used for parsing doc blocks.

@@ -27,6 +27,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - JS tokenizer now sets functions as T_CLOSUREs if the function is anonymous
+  - JS tokenizer now sets all objects to T_OBJECT
+    -- Object end braces are set to a new token T_CLOSE_OBJECT
+    -- T_OBJECT tokens no longer act like scopes; i.e., they have no condition/opener/closer
+    -- T_PROPERTY tokens no longer act like scopes; i.e., they have no condition/opener/closer
+    -- T_OBJECT tokens have a bracket_closer instead, which can be used to find the ending
+    -- T_CLOSE_OBJECT tokens have a bracket_opener
   - Improved regular expression detection in the JS tokenizer
   - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
     -- When the comment is found, the comment line and the following line will be ignored

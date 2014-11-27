@@ -59,15 +59,13 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
     {
         $tokens = $phpcsFile->getTokens();
 
-        $className = $tokens[$stackPtr]['content'];
-        if (substr(strtolower($className), -10) !== 'widgettype') {
+        $className = $phpcsFile->findPrevious(T_STRING, ($stackPtr - 1));
+        if (substr(strtolower($tokens[$className]['content']), -10) !== 'widgettype') {
             return;
         }
 
         // Search for a create method.
-        $start  = ($tokens[$stackPtr]['scope_opener'] + 1);
-        $end    = ($tokens[$stackPtr]['scope_closer'] - 1);
-        $create = $phpcsFile->findNext(T_PROPERTY, $start, $end, null, 'create');
+        $create = $phpcsFile->findNext(T_PROPERTY, $stackPtr, $tokens[$stackPtr]['bracket_closer'], null, 'create');
         if ($create === false) {
             return;
         }

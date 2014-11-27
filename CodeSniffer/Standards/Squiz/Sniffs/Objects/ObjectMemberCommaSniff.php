@@ -43,7 +43,7 @@ class Squiz_Sniffs_Objects_ObjectMemberCommaSniff implements PHP_CodeSniffer_Sni
      */
     public function register()
     {
-        return array(T_CLOSE_CURLY_BRACKET);
+        return array(T_CLOSE_OBJECT);
 
     }//end register()
 
@@ -60,15 +60,6 @@ class Squiz_Sniffs_Objects_ObjectMemberCommaSniff implements PHP_CodeSniffer_Sni
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Only interested in orphaned braces (which are objects)
-        // and object definitions.
-        if (isset($tokens[$stackPtr]['scope_condition']) === true) {
-            $condition = $tokens[$stackPtr]['scope_condition'];
-            if ($tokens[$condition]['code'] !== T_OBJECT) {
-                return;
-            }
-        }
 
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_COMMA) {

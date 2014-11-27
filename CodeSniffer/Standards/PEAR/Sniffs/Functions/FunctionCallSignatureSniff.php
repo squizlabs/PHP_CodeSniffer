@@ -373,7 +373,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $expectedIndent = ($functionIndent + $this->indent);
                 }
 
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                if ($tokens[$i]['code'] !== T_WHITESPACE
+                    && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
+                ) {
                     // Just check if it is a multi-line block comment. If so, we can
                     // calculate the indent from the whitespace before the content.
                     if ($tokens[$i]['code'] === T_COMMENT
@@ -424,14 +426,14 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 } else if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                     $exact    = false;
                     $exactEnd = $tokens[$i]['bracket_closer'];
+                } else if ($tokens[$i]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+                    $exact    = false;
+                    $exactEnd = $tokens[$i]['comment_closer'];
                 } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
                     $exact    = false;
                     $exactEnd = $tokens[$i]['parenthesis_closer'];
                 } else if ($phpcsFile->tokenizerType === 'JS'
-                    && $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
-                    && isset($tokens[$i]['scope_condition']) === false
-                    && isset($tokens[$i]['bracket_opener']) === true
-                    && $tokens[$i]['bracket_opener'] === $i
+                    && $tokens[$i]['code'] === T_OBJECT
                 ) {
                     $exact    = false;
                     $exactEnd = $tokens[$i]['bracket_closer'];

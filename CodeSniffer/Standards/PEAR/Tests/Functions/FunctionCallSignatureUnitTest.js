@@ -53,3 +53,28 @@ this.init = function(data) {
         );
     });
 };
+
+a.prototype = {
+
+    a: function()
+    {
+        this.addItem(
+            {
+            /**
+             * @return void
+             */
+            a: function()
+            {
+
+            },
+        /**
+ * @return void
+             */
+            a: function()
+            {
+
+            },
+            }
+        );
+    }
+};
