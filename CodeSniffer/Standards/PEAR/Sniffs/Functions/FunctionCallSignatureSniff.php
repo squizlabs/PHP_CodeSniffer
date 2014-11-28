@@ -401,7 +401,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $foundIndent < $expectedIndent
                     || ($exact === true && $expectedIndent !== $foundIndent)
                 );
-                if ($isNotIndentedCorrectly && !$this->requireIsolatedMultilineCallParentheses && $tokens[$nextCode]['code'] === T_CLOSE_CURLY_BRACKET) {
+                if ($isNotIndentedCorrectly && !$this->requireIsolatedMultilineCallParentheses && in_array($tokens[$nextCode]['code'], array(T_CLOSE_CURLY_BRACKET, T_CLOSE_PARENTHESIS))) {
                     $isNotIndentedCorrectly = false;
                 }
                 if ($isNotIndentedCorrectly) {
