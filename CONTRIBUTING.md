@@ -6,7 +6,7 @@ Before you contribute code to PHP\_CodeSniffer, please make sure it conforms to 
     cd PHP_CodeSniffer
     php scripts/phpcs . --standard=PHPCS -np
 
-Which should give you no output, indicating that there are no PEAR coding standard errors. And then:
+Which should give you no output, indicating that there are no coding standard errors. And then:
 
     phpunit
 
