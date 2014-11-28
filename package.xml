@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic ScopeIndentSniff now checks that open/close PHP tags are aligned to the correct column
   - PEAR FunctionCallSignatureSniff now supports JS files
   - PEAR MultiLineConditionSniff now supports JS files
+  - Squiz DocCommentAlignmentSniff now supports JS files
   - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
   - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
   - Squiz EmbeddedPhpSniff no longer reports incorrect alignment of tags when they are not on new lines
@@ -1721,6 +1722,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="DocCommentAlignmentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

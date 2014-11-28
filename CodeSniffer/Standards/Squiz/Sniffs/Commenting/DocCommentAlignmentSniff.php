@@ -30,6 +30,16 @@
 class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -57,7 +67,14 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
         $tokens = $phpcsFile->getTokens();
 
         // We are only interested in function/class/interface doc block comments.
-        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        $ignore = PHP_CodeSniffer_Tokens::$emptyTokens;
+        if ($phpcsFile->tokenizerType === 'JS') {
+            $ignore[] = T_EQUAL;
+            $ignore[] = T_STRING;
+            $ignore[] = T_OBJECT_OPERATOR;
+        }
+
+        $nextToken = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
         $ignore    = array(
                       T_CLASS     => true,
                       T_INTERFACE => true,
@@ -67,6 +84,9 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                       T_PROTECTED => true,
                       T_STATIC    => true,
                       T_ABSTRACT  => true,
+                      T_PROPERTY  => true,
+                      T_OBJECT    => true,
+                      T_PROTOTYPE => true,
                      );
 
         if (isset($ignore[$tokens[$nextToken]['code']]) === false) {
