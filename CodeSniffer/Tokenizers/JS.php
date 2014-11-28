@@ -274,6 +274,8 @@ class PHP_CodeSniffer_Tokenizers_JS
         $preStringBuffer = '';
         $cleanBuffer     = false;
 
+        $commentTokenizer = new PHP_CodeSniffer_Tokenizers_Comment();
+
         $tokens[] = array(
                      'code'    => T_OPEN_TAG,
                      'type'    => 'T_OPEN_TAG',
@@ -750,8 +752,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 }//end while
 
                 if ($token['code'] === T_DOC_COMMENT) {
-                    $tokenizer     = new PHP_CodeSniffer_Tokenizers_Comment();
-                    $commentTokens = $tokenizer->tokenizeString($newContent.$tokenContent, $eolChar, $newStackPtr);
+                    $commentTokens = $commentTokenizer->tokenizeString($newContent.$tokenContent, $eolChar, $newStackPtr);
                     foreach ($commentTokens as $commentToken) {
                         $finalTokens[$newStackPtr] = $commentToken;
                         $newStackPtr++;
