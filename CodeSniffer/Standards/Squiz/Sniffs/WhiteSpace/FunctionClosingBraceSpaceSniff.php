@@ -125,6 +125,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
 
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
+                    $changeMade = false;
                     for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
                         // Try and maintain indentation.
                         if ($tokens[$i]['line'] === ($braceLine - 1)) {
@@ -132,10 +133,17 @@ class Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff implements PHP_Code
                         }
 
                         $phpcsFile->fixer->replaceToken($i, '');
+                        $changeMade = true;
+                    }
+
+                    // Special case for when the last content contains the newline
+                    // token as well, like with a comment.
+                    if ($changeMade === false) {
+                        $phpcsFile->fixer->replaceToken(($prevContent + 1), '');
                     }
 
                     $phpcsFile->fixer->endChangeset();
-                }
+                }//end if
             }//end if
         } else {
             if ($found !== 1) {
