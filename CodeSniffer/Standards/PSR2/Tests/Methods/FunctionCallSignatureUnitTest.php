@@ -44,7 +44,7 @@ class PSR2_Tests_Methods_FunctionCallSignatureUnitTest extends AbstractSniffUnit
     {
         return array(
                 18 => 3,
-                21 => 2,
+                21 => 1,
                 48 => 1,
                );
 

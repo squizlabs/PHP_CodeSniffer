@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved conflict detection during auto fixing
   - The -vvv command line argument will now output the current file content for each loop during fixing
   - Generic ScopeIndentSniff now checks that open/close PHP tags are aligned to the correct column
+  - PEAR FunctionCallSignatureSniff now checks indent of closing parenthesis even if it is not on a line by itself
   - PEAR FunctionCallSignatureSniff now supports JS files
   - PEAR MultiLineConditionSniff now supports JS files
   - Squiz DocCommentAlignmentSniff now supports JS files
@@ -1254,6 +1255,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Methods">
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
