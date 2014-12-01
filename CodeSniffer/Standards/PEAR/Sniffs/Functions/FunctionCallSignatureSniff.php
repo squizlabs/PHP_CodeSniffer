@@ -66,6 +66,13 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public $requiredSpacesBeforeClose = 0;
 
+    /**
+     * Whether an opening parenthesis of a multi-line function call must be the last content on the line,
+     * and if a closing parenthesis must also be on a line by itself.
+     *
+     * @var bool
+     */
+    public $requireIsolatedMultilineCallParentheses = true;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -290,7 +297,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $functionIndent = strlen($tokens[$i]['content']);
         }
 
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+        if ($this->requireIsolatedMultilineCallParentheses && $tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
             if ($fix === true) {
@@ -303,7 +310,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $prev         = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBracket - 1), null, true);
-        if ($tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
+        if ($this->requireIsolatedMultilineCallParentheses && $tokens[$prev]['line'] === $tokens[$closeBracket]['line']) {
             $error = 'Closing parenthesis of a multi-line function call must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'CloseBracketLine');
             if ($fix === true) {
@@ -389,10 +396,14 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $foundIndent = strlen($tokens[$i]['content']);
                 }
 
-                if ($foundIndent < $expectedIndent
-                    || ($exact === true
-                    && $expectedIndent !== $foundIndent)
-                ) {
+                $isNotIndentedCorrectly = (
+                    $foundIndent < $expectedIndent
+                    || ($exact === true && $expectedIndent !== $foundIndent)
+                );
+                if ($isNotIndentedCorrectly && !$this->requireIsolatedMultilineCallParentheses && in_array($tokens[$nextCode]['code'], array(T_CLOSE_CURLY_BRACKET, T_CLOSE_PARENTHESIS))) {
+                    $isNotIndentedCorrectly = false;
+                }
+                if ($isNotIndentedCorrectly) {
                     $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
                     $data  = array(
                               $expectedIndent,
