@@ -60,3 +60,4 @@ function myFunc( ) {}
 // @codingStandardsChangeSetting Squiz.Functions.FunctionDeclarationArgumentSpacing requiredSpacesBeforeClose 0
 
 function myFunc($req, $opt=null, ...$params) {}
+function myFunc($param, &...$moreParams) {}
