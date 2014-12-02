@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved fixing of lines after cases statements in Squiz SwitchDeclarationSniff
   - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
   - Fixed bug #320 : Code sniffer identation issue
+  - Fixed bug #333 : Nested ternary operators causing problems
  </notes>
  <contents>
   <dir name="/">

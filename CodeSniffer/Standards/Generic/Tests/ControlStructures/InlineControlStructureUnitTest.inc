@@ -56,3 +56,9 @@ elseif ($something) :
 else:
     echo 'false';
 endif;
+
+function test()
+{
+    if ($a)
+        $a.=' '.($b ? 'b' : ($c ? ($d ? 'd' : 'c') : ''));
+}

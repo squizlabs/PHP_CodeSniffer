@@ -1836,10 +1836,11 @@ class PHP_CodeSniffer_File
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $tokens[$i]['type'];
+                $line    = $tokens[$i]['line'];
                 $content = PHP_CodeSniffer::prepareForOutput($tokens[$i]['content']);
 
                 echo str_repeat("\t", $depth);
-                echo "Process token $i [";
+                echo "Process token $i on line $line [";
                 if ($opener !== null) {
                     echo "opener:$opener;";
                 }
@@ -1851,11 +1852,30 @@ class PHP_CodeSniffer_File
                 echo "]: $type => $content".PHP_EOL;
             }//end if
 
+            if ($opener === null && $tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+                $i = $tokens[$i]['parenthesis_closer'];
+
+                // Because we might have skipped a bunch of lines, we can
+                // keep looking a little longer.
+                $startLine = $tokens[$i]['line'];
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type = $tokens[$stackPtr]['type'];
+                    echo str_repeat("\t", $depth);
+                    echo "* skipping parenthesis *".PHP_EOL;
+                }
+
+                continue;
+            }
+
             // Very special case for IF statements in PHP that can be defined without
             // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
             // If an IF statement below this one has an opener but no
             // keyword, the opener will be incorrectly assigned to this IF statement.
-            if (($currType === T_IF || $currType === T_ELSE) && $opener === null && $tokens[$i]['code'] === T_SEMICOLON) {
+            if (($currType === T_IF || $currType === T_ELSE)
+                && $opener === null
+                && $tokens[$i]['code'] === T_SEMICOLON
+            ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type = $tokens[$stackPtr]['type'];
                     echo str_repeat("\t", $depth);
@@ -1933,7 +1953,7 @@ class PHP_CodeSniffer_File
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
                         echo str_repeat("\t", $depth);
-                        echo "=> Couldn't find scope opener for $stackPtr:$type, bailing".PHP_EOL;
+                        echo "=> Found new opening condition before scope opener for $stackPtr:$type, bailing".PHP_EOL;
                     }
 
                     return $stackPtr;
