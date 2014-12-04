@@ -73,14 +73,14 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.0.0RC5';
+    const VERSION = '2.0.0';
 
     /**
      * Package stability; either stable, beta or alpha.
      *
      * @var string
      */
-    const STABILITY = 'beta';
+    const STABILITY = 'stable';
 
     /**
      * The file or directory that is currently being processed.

@@ -14,15 +14,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2014-11-07</date>
- <time>08:18:00</time>
+ <date>2014-12-05</date>
+ <time>09:52:00</time>
  <version>
-  <release>2.0.0RC5</release>
-  <api>2.0.0RC5</api>
+  <release>2.0.0</release>
+  <api>2.0.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
@@ -2316,6 +2316,49 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>2.0.0</release>
+    <api>2.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-12-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - JS tokenizer now sets functions as T_CLOSUREs if the function is anonymous
+    - JS tokenizer now sets all objects to T_OBJECT
+      -- Object end braces are set to a new token T_CLOSE_OBJECT
+      -- T_OBJECT tokens no longer act like scopes; i.e., they have no condition/opener/closer
+      -- T_PROPERTY tokens no longer act like scopes; i.e., they have no condition/opener/closer
+      -- T_OBJECT tokens have a bracket_closer instead, which can be used to find the ending
+      -- T_CLOSE_OBJECT tokens have a bracket_opener
+    - Improved regular expression detection in the JS tokenizer
+    - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
+      -- When the comment is found, the comment line and the following line will be ignored
+      -- Thanks to Andy Bulford for the contribution
+    - PHPCBF now prints output when it is changing into directories
+    - Improved conflict detection during auto fixing
+    - The -vvv command line argument will now output the current file content for each loop during fixing
+    - Generic ScopeIndentSniff now checks that open/close PHP tags are aligned to the correct column
+    - PEAR FunctionCallSignatureSniff now checks indent of closing parenthesis even if it is not on a line by itself
+    - PEAR FunctionCallSignatureSniff now supports JS files
+    - PEAR MultiLineConditionSniff now supports JS files
+    - Squiz DocCommentAlignmentSniff now supports JS files
+    - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
+    - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
+    - Squiz EmbeddedPhpSniff no longer reports incorrect alignment of tags when they are not on new lines
+    - Squiz EmbeddedPhpSniff now aligns open tags correctly when moving them onto a new line
+    - Improved fixing of arrays with multiple values in Squiz ArrayDeclarationSniff
+    - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
+    - Improved fixing of lines after cases statements in Squiz SwitchDeclarationSniff
+    - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
+    - Fixed bug #320 : Code sniffer identation issue
+    - Fixed bug #333 : Nested ternary operators causing problems
+    </notes>
+  </release>
+  <release>
+   <version>
     <release>2.0.0RC4</release>
     <api>2.0.0RC4</api>
    </version>
@@ -2657,6 +2700,36 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz ControlStructureSpacingSniff now checks TRY and CATCH statements as well
     - Removed MySource ChannelExceptionSniff
     </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.6</release>
+    <api>1.5.6</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-12-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - JS tokenizer now detects xor statements correctly
+    - The --config-show command now pretty-prints the config values
+      -- Thanks to Ken Guest for the patch
+    - Setting and removing config values now catches exceptions if the config file is not writable
+      -- Thanks to Ken Guest for the patch
+    - Setting and removing config values now prints a message to confirm the action and show old values
+    - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
+      -- When the comment is found, the comment line and the following line will be ignored
+      -- Thanks to Andy Bulford for the contribution
+    - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
+      -- Thanks to Thibaud Fabre for the patch
+    - Fixed bug #280 : The --config-show option generates error when there is no config file
+    - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
+    - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
+    - Fixed bug #310 : Variadics not recognized by tokenizer
+    - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
+   </notes>
   </release>
   <release>
    <version>
