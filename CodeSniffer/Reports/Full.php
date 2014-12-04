@@ -125,7 +125,10 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             }//end foreach
         }//end foreach
 
+        echo str_repeat('-', $width).PHP_EOL;
+        echo 'UPGRADE TO PHP_CODESNIFFER 2.0 TO FIX ERRORS AUTOMATICALLY'.PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+
         return true;
 
     }//end generateFileReport()
