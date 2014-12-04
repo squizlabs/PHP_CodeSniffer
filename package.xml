@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2014-09-25</date>
- <time>13:32:00</time>
+ <date>2014-12-05</date>
+ <time>09:30:00</time>
  <version>
   <release>1.5.6</release>
   <api>1.5.6</api>
@@ -2259,6 +2259,36 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>1.5.6</release>
+    <api>1.5.6</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-12-05</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - JS tokenizer now detects xor statements correctly
+    - The --config-show command now pretty-prints the config values
+      -- Thanks to Ken Guest for the patch
+    - Setting and removing config values now catches exceptions if the config file is not writable
+      -- Thanks to Ken Guest for the patch
+    - Setting and removing config values now prints a message to confirm the action and show old values
+    - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
+      -- When the comment is found, the comment line and the following line will be ignored
+      -- Thanks to Andy Bulford for the contribution
+    - Generic ConstructorNameSniff no longer errors for PHP4 style constructors when __construct() is present
+      -- Thanks to Thibaud Fabre for the patch
+    - Fixed bug #280 : The --config-show option generates error when there is no config file
+    - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
+    - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
+    - Fixed bug #310 : Variadics not recognized by tokenizer
+    - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.5.5</release>
