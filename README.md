@@ -15,6 +15,14 @@ The SVN pre-commit hook requires PHP version 5.2.4 or greater due to its use of 
 Installation
 ------------
 
+The easiest way to get started with PHP\_CodeSniffer is to download the [Phar](http://php.net/manual/en/intro.phar.php) files for each of the commands:
+
+    curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+    php phpcs.phar -h
+
+    curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
+    php phpcbf.phar -h
+
 If you use PEAR, you can install PHP\_CodeSniffer using the PEAR installer. This will make the `phpcs` and `phpcbf` commands immediately available for use. To install PHP\_CodeSniffer using the PEAR installer, first ensure you have [installed PEAR](http://pear.php.net/manual/en/installation.getting.php) and then run the following command:
 
     pear install PHP_CodeSniffer
@@ -38,7 +46,7 @@ You will then be able to run PHP_CodeSniffer from the vendor bin directory:
     ./vendor/bin/phpcs -h
     ./vendor/bin/phpcbf -h
 
-You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the GIT checkout:
+You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git checkout:
 
     git clone git://github.com/squizlabs/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
