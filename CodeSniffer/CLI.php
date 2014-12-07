@@ -934,7 +934,10 @@ class PHP_CodeSniffer_CLI
         // in something like an XML report. If we are printing to screen,
         // the report types would have already worked out who should
         // print the timer info.
-        if ($toScreen === false && PHP_CODESNIFFER_INTERACTIVE === false) {
+        if (PHP_CODESNIFFER_INTERACTIVE === false
+            && ($toScreen === false
+            || (($errors + $warnings) === 0 && $this->values['showProgress'] === true))
+        ) {
             PHP_CodeSniffer_Reporting::printRunTime();
         }
 

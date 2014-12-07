@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Time and memory output is now shown if progress information is also shown (request #335)
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
  </notes>
  <contents>
