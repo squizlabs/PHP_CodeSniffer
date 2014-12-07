@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Time and memory output is now shown if progress information is also shown (request #335)
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
+  - Fixed bug #342 : Nested ternary operators not tokenized correctly
  </notes>
  <contents>
   <dir name="/">

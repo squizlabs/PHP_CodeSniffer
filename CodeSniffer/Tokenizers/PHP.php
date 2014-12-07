@@ -298,7 +298,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
         $numTokens         = count($tokens);
         $lastNotEmptyToken = 0;
 
-        $insideInlineIf = false;
+        $insideInlineIf = array();
 
         $commentTokenizer = new PHP_CodeSniffer_Tokenizers_Comment();
 
@@ -675,9 +675,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
                 if ($newToken['code'] === T_INLINE_THEN) {
-                    $insideInlineIf = true;
-                } else if ($insideInlineIf === true && $newToken['code'] === T_COLON) {
-                    $insideInlineIf   = false;
+                    $insideInlineIf[] = $stackPtr;
+                } else if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
+                    array_pop($insideInlineIf);
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
                 }
