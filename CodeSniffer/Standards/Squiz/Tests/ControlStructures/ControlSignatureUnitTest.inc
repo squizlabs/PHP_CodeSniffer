@@ -130,3 +130,7 @@ foreach ($items as $item) {
 foreach($items as $item){
     echo $item;
 }
+
+if ($a && $b) // && $c)
+{
+}

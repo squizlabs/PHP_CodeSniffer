@@ -100,11 +100,12 @@ if ($i == 0) {
 }
 
 if ($i == 0) {
-// this is not ok
+ // this is not ok
     $i = 1;
 }
 
 if ($i == 0) {
+/* this is not ok */ 
 }
 
 try {
@@ -136,4 +137,8 @@ foreach ($items as $item) {
 
 foreach ($items as $item) {
     echo $item;
+}
+
+if ($a && $b) {
+// && $c)
 }

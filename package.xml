@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2014-12-05</date>
  <time>09:52:00</time>
  <version>
-  <release>2.0.0</release>
-  <api>2.0.0</api>
+  <release>2.0.1</release>
+  <api>2.0.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,35 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - JS tokenizer now sets functions as T_CLOSUREs if the function is anonymous
-  - JS tokenizer now sets all objects to T_OBJECT
-    -- Object end braces are set to a new token T_CLOSE_OBJECT
-    -- T_OBJECT tokens no longer act like scopes; i.e., they have no condition/opener/closer
-    -- T_PROPERTY tokens no longer act like scopes; i.e., they have no condition/opener/closer
-    -- T_OBJECT tokens have a bracket_closer instead, which can be used to find the ending
-    -- T_CLOSE_OBJECT tokens have a bracket_opener
-  - Improved regular expression detection in the JS tokenizer
-  - You can now get PHP_CodeSniffer to ignore a single line by putting @codingStandardsIgnoreLine in a comment
-    -- When the comment is found, the comment line and the following line will be ignored
-    -- Thanks to Andy Bulford for the contribution
-  - PHPCBF now prints output when it is changing into directories
-  - Improved conflict detection during auto fixing
-  - The -vvv command line argument will now output the current file content for each loop during fixing
-  - Generic ScopeIndentSniff now checks that open/close PHP tags are aligned to the correct column
-  - PEAR FunctionCallSignatureSniff now checks indent of closing parenthesis even if it is not on a line by itself
-  - PEAR FunctionCallSignatureSniff now supports JS files
-  - PEAR MultiLineConditionSniff now supports JS files
-  - Squiz DocCommentAlignmentSniff now supports JS files
-  - Fixed a problem correcting the closing brace line in Squiz ArrayDeclarationSniff
-  - Fixed a problem auto-fixing the Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeNestedClose error
-  - Squiz EmbeddedPhpSniff no longer reports incorrect alignment of tags when they are not on new lines
-  - Squiz EmbeddedPhpSniff now aligns open tags correctly when moving them onto a new line
-  - Improved fixing of arrays with multiple values in Squiz ArrayDeclarationSniff
-  - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
-  - Improved fixing of lines after cases statements in Squiz SwitchDeclarationSniff
-  - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
-  - Fixed bug #320 : Code sniffer identation issue
-  - Fixed bug #333 : Nested ternary operators causing problems
+  - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
  </notes>
  <contents>
   <dir name="/">
