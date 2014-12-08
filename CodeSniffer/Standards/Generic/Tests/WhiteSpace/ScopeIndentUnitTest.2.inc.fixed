@@ -673,3 +673,14 @@ function foo()
 								 );
 
 }
+
+$this->mockedDatabase
+	->with(
+		$this->callback(
+			function () {
+				return;
+			}
+		)
+	);
+
+$this->subject->recordLogin();

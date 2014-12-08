@@ -216,8 +216,42 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $exact = false;
 
                 if ($this->_debug === true) {
-                    echo "\t=> checking indent of $checkIndent; main indent remains at $currentIndent".PHP_EOL;
+                    $line = $tokens[$first]['line'];
+                    $type = $tokens[$first]['type'];
+                    echo "\t* first token on line $line is $type *".PHP_EOL;
                 }
+
+                if ($tokens[$first]['code'] === T_OBJECT_OPERATOR) {
+                    // This is not the start of the statement.
+                    $prev = $phpcsFile->findPrevious(T_VARIABLE, $first, null, false, null, true);
+                    if ($prev !== false) {
+                        if ($this->_debug === true) {
+                            $line = $tokens[$prev]['line'];
+                            $type = $tokens[$prev]['type'];
+                            echo "\t* previous is $type on line $line *".PHP_EOL;
+                        }
+
+                        $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                        if ($this->_debug === true) {
+                            $line = $tokens[$first]['line'];
+                            $type = $tokens[$first]['type'];
+                            echo "\t* amended first token is $type on line $line *".PHP_EOL;
+                        }
+
+                        $currentIndent = ($tokens[$first]['column'] - 1);
+
+                        // Make sure it is divisible by our expected indent.
+                        $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+
+                        if ($this->_debug === true) {
+                            echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                        }
+                    }//end if
+                } else {
+                    if ($this->_debug === true) {
+                        echo "\t=> checking indent of $checkIndent; main indent remains at $currentIndent".PHP_EOL;
+                    }
+                }//end if
             }//end if
 
             // Adjust lines within scopes while auto-fixing.
@@ -859,7 +893,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         if ($this->_debug === true) {
                             $line = $tokens[$first]['line'];
                             $type = $tokens[$first]['type'];
-                            echo "\t* amended first token on line $line is $type *".PHP_EOL;
+                            echo "\t* amended first token is $type on line $line *".PHP_EOL;
                         }
                     }
                 }
