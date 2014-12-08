@@ -684,3 +684,30 @@ $this->mockedDatabase
     );
 
 $this->subject->recordLogin();
+
+function a()
+{
+    if (true) {
+        static::$a[$b] =
+            static::where($c)
+                ->where($c)
+                ->where(
+                    function ($d) {
+                        $d->whereNull();
+                        $d->orWhere();
+                    }
+                )
+                ->first();
+
+        if (static::$a[$b] === null) {
+            static::$a[$b] = new static(
+                array(
+                    'a' => $a->id,
+                    'a' => $a->id,
+                )
+            );
+        }
+    }
+
+    return static::$a[$b];
+}

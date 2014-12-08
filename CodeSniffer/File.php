@@ -3068,9 +3068,13 @@ class PHP_CodeSniffer_File
                 ) {
                     $i = $this->_tokens[$i]['scope_opener'];
                 } else if (isset($this->_tokens[$i]['bracket_opener']) === true
-                    && $i === $this->_tokens[$i]['bracket_opener']
+                    && $i === $this->_tokens[$i]['bracket_closer']
                 ) {
                     $i = $this->_tokens[$i]['bracket_opener'];
+                } else if (isset($this->_tokens[$i]['parenthesis_opener']) === true
+                    && $i === $this->_tokens[$i]['parenthesis_closer']
+                ) {
+                    $i = $this->_tokens[$i]['parenthesis_opener'];
                 } else if ($this->_tokens[$i]['code'] === T_SEMICOLON) {
                     break;
                 }
