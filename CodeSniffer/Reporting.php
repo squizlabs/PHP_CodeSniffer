@@ -234,15 +234,13 @@ class PHP_CodeSniffer_Reporting
             }
         } else {
             if (isset($this->_tmpFiles[$report]) === true) {
-                $data        = stream_get_meta_data($this->_tmpFiles[$report]);
-                $filename    = $data['uri'];
-                $reportCache = file_get_contents($filename);
+                $reportCache = stream_get_contents($this->_tmpFiles[$report], -1, 0);
                 fclose($this->_tmpFiles[$report]);
             } else {
                 $reportCache = '';
-                $filename    = null;
             }
 
+            $filename = null;
             $toScreen = true;
         }//end if
 
