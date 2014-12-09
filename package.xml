@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Time and memory output is now shown if progress information is also shown (request #335)
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
+  - Squiz SuperfluousWhitespaceSniff now checks for extra blank lines inside closures
+    -- Thanks to Sertan Danis for the patch
   - Fixed bug #337 : False positive with anonymous functions in Generic_Sniffs_WhiteSpace_ScopeIndentSniff
   - Fixed bug #342 : Nested ternary operators not tokenized correctly
  </notes>
@@ -2116,12 +2118,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.1.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.2.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.2.js" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.2.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.3.css" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.3.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.3.js" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.3.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="SuperfluousWhitespaceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
