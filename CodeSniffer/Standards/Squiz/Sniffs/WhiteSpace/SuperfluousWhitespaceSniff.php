@@ -66,6 +66,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 T_WHITESPACE,
                 T_COMMENT,
                 T_DOC_COMMENT_WHITESPACE,
+                T_CLOSURE,
                );
 
     }//end register()
@@ -225,10 +226,11 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             }
 
             /*
-                Check for multiple blanks lines in a function.
+                Check for multiple blank lines in a function.
             */
 
-            if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+            if (($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
+                || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true)
                 && $tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
                 && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
             ) {

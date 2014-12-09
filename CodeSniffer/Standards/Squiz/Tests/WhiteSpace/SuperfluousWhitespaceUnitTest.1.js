@@ -32,6 +32,15 @@ function myFunction2()
 
 }
 
+MyFunction = function()
+{
+    alert('code here');
+
+
+    alert('code here');
+
+};
+
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
 
 function myFunction2()
