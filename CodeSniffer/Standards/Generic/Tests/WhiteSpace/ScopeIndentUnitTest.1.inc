@@ -711,3 +711,23 @@ function a()
 
     return static::$a[$b];
 }
+
+$foo->load(
+    array(
+        'bar' => function ($baz) {
+            $baz->call();
+        }
+    )
+);
+
+hello();
+
+$foo = array_unique(
+    array_map(
+        function ($entry) {
+            return $entry * 2;
+        },
+        array()
+    )
+);
+bar($foo);
