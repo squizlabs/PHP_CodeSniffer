@@ -237,21 +237,17 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             $type = $tokens[$first]['type'];
                             echo "\t* amended first token is $type on line $line *".PHP_EOL;
                         }
-
-                        $currentIndent = ($tokens[$first]['column'] - 1);
-
-                        // Make sure it is divisible by our expected indent.
-                        $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
-
-                        if ($this->_debug === true) {
-                            echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
-                        }
-                    }//end if
-                } else {
-                    if ($this->_debug === true) {
-                        echo "\t=> checking indent of $checkIndent; main indent remains at $currentIndent".PHP_EOL;
                     }
-                }//end if
+                }
+
+                $currentIndent = ($tokens[$first]['column'] - 1);
+
+                // Make sure it is divisible by our expected indent.
+                $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+
+                if ($this->_debug === true) {
+                    echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                }
             }//end if
 
             // Adjust lines within scopes while auto-fixing.
