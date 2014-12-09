@@ -6,7 +6,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Lars Heber (it-consulting@larsheber.de)
+ * @author    Lars Heber <it-consulting@larsheber.de>
  * @copyright 2014 Lars Heber
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -19,10 +19,11 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Lars Heber (it-consulting@larsheber.de)
+ * @author    Lars Heber <it-consulting@larsheber.de>
  * @copyright 2014 Lars Heber
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PHP_CodeSniffer_Sniff
 {
@@ -32,10 +33,10 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
      * @var array
      */
     public $supportedTokenizers = array(
-        'PHP',
-        'JS',
-        'CSS',
-    );
+                                   'PHP',
+                                   'JS',
+                                   'CSS',
+                                  );
 
     /**
      * The --tab-width CLI value that is being used.
@@ -60,7 +61,9 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
     public function register()
     {
         return array(T_OPEN_TAG);
-    }
+
+    }//end register()
+
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -74,7 +77,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         if ($this->_tabWidth === null || $this->_encoding === null) {
-            $this->initialize($phpcsFile);
+            $this->_initialize($phpcsFile);
         }
 
         $tokens = $phpcsFile->getTokens();
@@ -89,13 +92,13 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
 
             $fix = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
             if ($fix === true) {
-                // Calculate REAL start column after all relevant tabs have been converted
+                // Calculate REAL start column after all relevant tabs have been converted.
                 $firstOnLine = $phpcsFile->findFirstOnLine(array(), $i, true);
                 $startColumn = 1;
                 for ($k = $firstOnLine; $k < $i; $k++) {
                     $tmpContent = $tokens[$k]['content'];
                     if (strpos($tmpContent, "\t") !== false) {
-                        $startColumn += $this->convertTabs($tmpContent, $startColumn, false);
+                        $startColumn += $this->_convertTabs($tmpContent, $startColumn, false);
                     } else {
                         $startColumn += $tokens[$k]['length'];
                     }
@@ -105,62 +108,70 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
                 // Other sniffs can then correct the indent if they need to.
                 $phpcsFile->fixer->replaceToken(
                     $i,
-                    $this->convertTabs($tokens[$i]['content'], $startColumn, true)
+                    $this->_convertTabs($tokens[$i]['content'], $startColumn, true)
                 );
             }
-        }
+        }//end for
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
+
     /**
      * Convert tabs to spaces
      *
-     * @param string $text
-     * @param int $startColumn
-     * @param bool $replace true: Replace tabs in $text; false: calculate true length after conversion
+     * @param string $text        Text to be converted
+     * @param int    $startColumn Column #
+     * @param bool   $replace     true: Replace tabs in $text, false: calculate true length after conversion
+     *
      * @return int|string
      */
-    private function convertTabs($text, $startColumn, $replace)
+    private function _convertTabs($text, $startColumn, $replace)
     {
         $endColumn = $startColumn;
-        if ($replace) {
+        if ($replace === true) {
             $result = '';
         }
+
         for ($i = 0; $i < mb_strlen($text, $this->_encoding); $i++) {
             $c = mb_substr($text, $i, 1);
-            if ($c != "\t") {
+            if ($c !== "\t") {
                 $endColumn++;
-                if ($replace) {
+                if ($replace === true) {
                     $result .= $c;
                 }
             } else {
                 $countSpaces = $this->_tabWidth - ($endColumn-1) % $this->_tabWidth;
-                $endColumn += $countSpaces;
-                if ($replace) {
+                $endColumn  += $countSpaces;
+                if ($replace === true) {
                     $result .= str_repeat(' ', $countSpaces);
                 }
             }
         }
-        if ($replace) {
+
+        if ($replace === true) {
             return $result;
         } else {
             return $endColumn - $startColumn;
         }
-    }
+
+    }//end _convertTabs()
+
 
     /**
      * Initialize sniffer
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
+     *
+     * @return void
      */
-    private function initialize(PHP_CodeSniffer_File $phpcsFile)
+    private function _initialize(PHP_CodeSniffer_File $phpcsFile)
     {
         $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
         if ($this->_tabWidth === null) {
-            if (empty($cliValues['tabWidth'])) {
+            if (empty($cliValues['tabWidth']) === true) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
                 // It shouldn't really matter because indent checks elsewhere in the
                 // standard should fix things up.
@@ -168,13 +179,17 @@ class Generic_Sniffs_WhiteSpace_DisallowTextAlignmentWithTabsSniff implements PH
             } else {
                 $this->_tabWidth = $cliValues['tabWidth'];
             }
-         }
-         if ($this->_encoding === null) {
-            if (empty($cliValues['encoding'])) {
+        }
+
+        if ($this->_encoding === null) {
+            if (empty($cliValues['encoding']) === true) {
                 $this->_encoding = 'utf-8';
             } else {
                 $this->_encoding = $cliValues['encoding'];
             }
         }
-    }
-}
+
+    }//end _initialize()
+
+
+}//end class
