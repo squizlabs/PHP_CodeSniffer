@@ -2169,6 +2169,12 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
+        if (substr($standard, 0, 2) == '~/' && is_dir($fromHome = getenv('HOME') . substr($standard, 1))) {
+            if (is_file($path = self::realpath($fromHome.DIRECTORY_SEPARATOR.'ruleset.xml'))) {
+                return $path;
+            }
+            $standard = $fromHome;
+        }
         $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
             $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
