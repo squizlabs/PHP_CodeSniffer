@@ -731,3 +731,17 @@ $foo = array_unique(
     )
 );
 bar($foo);
+
+class PHP_CodeSniffer_Tokenizers_JS
+{
+
+    public $scopeOpeners = array(
+                            T_CASE => array(
+                                       'end'    => array(
+                                                    T_BREAK    => T_BREAK,
+                                                    T_RETURN   => T_RETURN,
+                                                   ),
+                                       'strict' => true,
+                                      ),
+                           );
+}
