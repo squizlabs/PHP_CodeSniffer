@@ -69,7 +69,8 @@ class Squiz_Tests_WhiteSpace_SuperfluousWhitespaceUnitTest extends AbstractSniff
                     15 => 1,
                     22 => 1,
                     29 => 1,
-                    47 => 1,
+                    38 => 1,
+                    56 => 1,
                    );
             break;
         case 'SuperfluousWhitespaceUnitTest.1.css':
