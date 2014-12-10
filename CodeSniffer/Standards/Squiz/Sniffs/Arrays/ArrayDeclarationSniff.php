@@ -354,15 +354,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
         // Find all the double arrows that reside in this scope.
         for ($nextToken = ($stackPtr + 1); $nextToken < $arrayEnd; $nextToken++) {
-            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
-                && $tokens[$nextToken]['code'] !== T_COMMA
-                && $tokens[$nextToken]['code'] !== T_ARRAY
-                && $tokens[$nextToken]['code'] !== T_OPEN_SHORT_ARRAY
+            // Skip bracketed statements, like function calls.
+            if ($tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS
+                && (isset($tokens[$nextToken]['parenthesis_owner']) === false
+                || $tokens[$nextToken]['parenthesis_owner'] !== $stackPtr)
             ) {
+                $nextToken = $tokens[$nextToken]['parenthesis_closer'];
                 continue;
             }
-
-            $currentEntry = array();
 
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
@@ -379,6 +378,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
                 continue;
             }
+
+            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
+                && $tokens[$nextToken]['code'] !== T_COMMA
+            ) {
+                continue;
+            }
+
+            $currentEntry = array();
 
             if ($tokens[$nextToken]['code'] === T_COMMA) {
                 $stackPtrCount = 0;
