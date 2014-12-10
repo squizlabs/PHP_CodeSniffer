@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sertan Danis for the patch
   - Fixed bug #337 : False positive with anonymous functions in Generic_Sniffs_WhiteSpace_ScopeIndentSniff
   - Fixed bug #342 : Nested ternary operators not tokenized correctly
+  - Fixed bug #345 : Javascript regex not tokenized when inside array
  </notes>
  <contents>
   <dir name="/">
