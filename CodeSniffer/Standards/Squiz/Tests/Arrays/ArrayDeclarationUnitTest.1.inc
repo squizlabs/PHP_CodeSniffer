@@ -222,3 +222,11 @@ function foo()
 {
     return array($a, $b->screen);
 }
+
+$array = array(
+          'name'       => 'contactSubject',
+          'required'   => TRUE,
+          'validators' => array(
+                           new \Zend\Validator\InArray(array('haystack' => array_keys($aSubjects))),
+                          ),
+         );
