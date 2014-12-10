@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Time and memory output is now shown if progress information is also shown (request #335)
+  - A tilde can now be used to reference a user's home directory in a path to a standard (request #353)
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
   - Squiz SuperfluousWhitespaceSniff now checks for extra blank lines inside closures
     -- Thanks to Sertan Danis for the patch
