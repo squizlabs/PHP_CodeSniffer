@@ -146,3 +146,8 @@ function
 myFunction()
 {
 }
+
+use function foo\bar;
+
+use
+    function bar\baz;
