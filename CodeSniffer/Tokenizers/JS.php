@@ -852,21 +852,23 @@ class PHP_CodeSniffer_Tokenizers_JS
     public function getRegexToken($char, $string, $chars, $tokens, $eolChar)
     {
         $beforeTokens = array(
-                         T_EQUAL            => true,
-                         T_OPEN_PARENTHESIS => true,
-                         T_RETURN           => true,
-                         T_BOOLEAN_OR       => true,
-                         T_BOOLEAN_AND      => true,
-                         T_BITWISE_OR       => true,
-                         T_BITWISE_AND      => true,
-                         T_COMMA            => true,
-                         T_COLON            => true,
-                         T_TYPEOF           => true,
+                         T_EQUAL               => true,
+                         T_OPEN_PARENTHESIS    => true,
+                         T_OPEN_SQUARE_BRACKET => true,
+                         T_RETURN              => true,
+                         T_BOOLEAN_OR          => true,
+                         T_BOOLEAN_AND         => true,
+                         T_BITWISE_OR          => true,
+                         T_BITWISE_AND         => true,
+                         T_COMMA               => true,
+                         T_COLON               => true,
+                         T_TYPEOF              => true,
                         );
 
         $afterTokens = array(
                         ','      => true,
                         ')'      => true,
+                        ']'      => true,
                         ';'      => true,
                         ' '      => true,
                         '.'      => true,
