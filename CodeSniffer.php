@@ -527,10 +527,13 @@ class PHP_CodeSniffer
             $installed = $this->getInstalledStandardPath($standard);
             if ($installed !== null) {
                 $standard = $installed;
-            } else if (is_dir($standard) === true
-                && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
-            ) {
-                $standard = self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
+            } else {
+                $standard = self::realpath($standard);
+                if (is_dir($standard) === true
+                    && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
+                ) {
+                    $standard = self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
+                }
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
@@ -925,6 +928,19 @@ class PHP_CodeSniffer
         // the normal checks and have it fail as normal.
         if (substr($ref, 0, 1) === '.') {
             $realpath = self::realpath($rulesetDir.'/'.$ref);
+            if ($realpath !== false) {
+                $ref = $realpath;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> $ref".PHP_EOL;
+                }
+            }
+        }
+
+        // As sniffs can't begin with a tilde, assume references in
+        // this format at relative to the user's home directory.
+        if (substr($ref, 0, 2) === '~/') {
+            $realpath = self::realpath($ref);
             if ($realpath !== false) {
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -2137,19 +2153,23 @@ class PHP_CodeSniffer
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
-            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
-            if (is_file($ruleset) === true) {
-                return true;
-            }
+            $standard = self::realPath($standard);
 
-            // Might also be an actual ruleset file itself.
+            // Might be an actual ruleset file itself.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
                 && substr(strtolower($standard), -4) === '.xml'
             ) {
                 return true;
             }
-        }
+
+            // If it is a directory with a ruleset.xml file in it,
+            // it is a standard.
+            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
+            if (is_file($ruleset) === true) {
+                return true;
+            }
+        }//end if
 
         return false;
 
@@ -2339,6 +2359,15 @@ class PHP_CodeSniffer
      */
     public static function realpath($path)
     {
+        // Support the path replacement of ~ with the user's home directory.
+        if (substr($path, 0, 2) === '~/') {
+            $homeDir = getenv('HOME');
+            if ($homeDir !== false) {
+                $path = $homeDir.substr($path, 1);
+            }
+        }
+
+        // No extra work needed if this is not a phar file.
         if (self::isPharFile($path) === false) {
             return realpath($path);
         }
