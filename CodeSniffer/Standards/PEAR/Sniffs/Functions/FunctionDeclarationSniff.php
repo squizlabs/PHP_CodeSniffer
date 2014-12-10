@@ -64,6 +64,13 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Ignore 'use function'.
+        for ($i = $stackPtr - 1; $i >= 0 && $tokens[$i]['code'] === T_WHITESPACE; --$i)
+            ;
+        if ($tokens[$i]['code'] === T_USE) {
+            return;
+        }
+
         if ($tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar) {
             $spaces = 'newline';
         } else {
