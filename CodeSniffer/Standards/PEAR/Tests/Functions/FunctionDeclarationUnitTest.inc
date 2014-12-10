@@ -146,3 +146,14 @@ function
 myFunction()
 {
 }
+
+
+use function foo\bar;
+
+use
+    function bar\baz;
+
+namespace {
+    use function Name\Space\f;
+    f();
+}

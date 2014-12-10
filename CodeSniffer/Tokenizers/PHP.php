@@ -708,6 +708,17 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $newToken['type'] = 'T_STRING';
                 }
 
+                // This is a special case for PHP 5.6 use function and use const
+                // where "function" and "const" should be T_STRING instead of T_FUNCTION
+                // and T_CONST.
+                if (($newToken['code'] === T_FUNCTION
+                    || $newToken['code'] === T_CONST)
+                    && $finalTokens[$lastNotEmptyToken]['code'] === T_USE
+                ) {
+                    $newToken['code'] = T_STRING;
+                    $newToken['type'] = 'T_STRING';
+                }
+
                 $finalTokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
             }//end if
