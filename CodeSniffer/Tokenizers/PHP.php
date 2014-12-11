@@ -193,12 +193,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                                ),
                             T_SWITCH        => array(
                                                 'start'  => array(
-                                                            T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET,
-                                                            T_COLON              => T_COLON,
+                                                             T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET,
+                                                             T_COLON              => T_COLON,
                                                             ),
                                                 'end'    => array(
-                                                            T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
-                                                            T_ENDSWITCH => T_ENDSWITCH,
+                                                             T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+                                                             T_ENDSWITCH           => T_ENDSWITCH,
                                                             ),
                                                 'strict' => true,
                                                 'shared' => false,
