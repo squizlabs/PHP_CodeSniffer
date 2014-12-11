@@ -3154,6 +3154,55 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Returns the position of the first non-whitespace token in a statement.
+     *
+     * @param int $start The position to start searching from in the token stack.
+     *
+     * @return int
+     */
+    public function findStartOfStatement($start)
+    {
+        $endTokens = PHP_CodeSniffer_Tokens::$blockOpeners;
+
+        $endTokens[T_COLON]     = true;
+        $endTokens[T_SEMICOLON] = true;
+        $endTokens[T_OPEN_TAG]  = true;
+        $endTokens[T_CLOSE_TAG] = true;
+
+        $lastNotEmpty = $start;
+
+        for ($i = $start; $i >= 0; $i--) {
+            if (isset($endTokens[$this->_tokens[$i]['code']]) === true) {
+                // Found the end of the previous statement.
+                return $lastNotEmpty;
+            }
+
+            if ($this->_tokens[$i]['code'] !== T_WHITESPACE) {
+                $lastNotEmpty = $i;
+            }
+
+            // Skip nested statements.
+            if (isset($this->_tokens[$i]['scope_opener']) === true
+                && $i === $this->_tokens[$i]['scope_closer']
+            ) {
+                $i = $this->_tokens[$i]['scope_opener'];
+            } else if (isset($this->_tokens[$i]['bracket_opener']) === true
+                && $i === $this->_tokens[$i]['bracket_closer']
+            ) {
+                $i = $this->_tokens[$i]['bracket_opener'];
+            } else if (isset($this->_tokens[$i]['parenthesis_opener']) === true
+                && $i === $this->_tokens[$i]['parenthesis_closer']
+            ) {
+                $i = $this->_tokens[$i]['parenthesis_opener'];
+            }
+        }//end for
+
+        return 0;
+
+    }//end findStartOfStatement()
+
+
+    /**
      * Returns the position of the first token on a line, matching given type.
      *
      * Returns false if no token can be found.

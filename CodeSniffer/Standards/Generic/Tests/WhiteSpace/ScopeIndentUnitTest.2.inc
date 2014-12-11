@@ -745,3 +745,27 @@ class PHP_CodeSniffer_Tokenizers_JS
 									  ),
 						   );
 }
+
+echo $string->
+		append('foo')->
+		appaend('bar')->
+		appaend('baz')->
+		outputUsing(
+			function ()
+			{
+			}
+		);
+
+$str = 'the items I want to show are: ' .
+	implode(
+		', ',
+		array('a', 'b', 'c')
+	);
+
+echo $str;
+
+$str = 'foo'
+		. '1'
+		. '2';
+
+echo $str;

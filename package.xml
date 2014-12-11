@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Time and memory output is now shown if progress information is also shown (request #335)
   - A tilde can now be used to reference a user's home directory in a path to a standard (request #353)
+  - Added PHP_CodeSniffer_File::findStartOfStatement() to find the first non-whitespace token in a statement
+    -- Possible alternative for code using PHP_CodeSniffer_File::findPrevious() with the local flag set
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
   - Squiz SuperfluousWhitespaceSniff now checks for extra blank lines inside closures
     -- Thanks to Sertan Danis for the patch
@@ -35,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #337 : False positive with anonymous functions in Generic_Sniffs_WhiteSpace_ScopeIndentSniff
   - Fixed bug #342 : Nested ternary operators not tokenized correctly
   - Fixed bug #345 : Javascript regex not tokenized when inside array
+  - Fixed bug #358 : False positives for Generic_Sniffs_WhiteSpace_ScopeIndentSniff
   - Fixed bug #364 : Don't interpret "use function" as declaration
  </notes>
  <contents>
