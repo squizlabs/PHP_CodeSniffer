@@ -1258,7 +1258,7 @@ class PHP_CodeSniffer
         // For sniff classes using a PHP namespace a prefix can be defined. Example:
         // 'Acme\' for a namespace 'Acme\MyStandard\Sniffs\Commenting'.
         $cliValues = $this->cli->getCommandLineValues();
-        $nsPrefix = isset($cliValues['nsPrefix']) ? $cliValues['nsPrefix'] : '';
+        $nsPrefix  = isset($cliValues['nsPrefix']) === true ? $cliValues['nsPrefix'] : '';
 
         foreach ($files as $file) {
             // Work out where the position of /StandardName/Sniffs/... is
