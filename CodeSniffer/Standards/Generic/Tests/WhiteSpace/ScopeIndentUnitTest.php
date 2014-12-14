@@ -43,7 +43,7 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
     {
         // Tab width setting is only needed for the tabbed file.
         if ($testFile === 'ScopeIndentUnitTest.2.inc') {
-            return array('--tabWidth=4');
+            return array('--tab-width=4');
         }
 
         return array();

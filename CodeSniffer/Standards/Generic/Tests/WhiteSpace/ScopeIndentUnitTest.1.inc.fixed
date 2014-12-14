@@ -769,3 +769,21 @@ $str = 'foo'
         . '2';
 
 echo $str;
+
+bar([
+    'foo' => foo(function () {
+        return 'foo';
+    })
+]);
+
+$domains = array_unique(
+    array_map(
+        function ($url) {
+            $urlObject = new \Purl\Url($url);
+            return $urlObject->registerableDomain;
+        },
+        $sites
+    )
+);
+
+return $domains;

@@ -549,6 +549,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
                                    T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
                                    T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
+                                   T_OBJECT              => T_OBJECT,
                                   );
 
     /**
