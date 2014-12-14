@@ -696,14 +696,19 @@ class PHP_CodeSniffer_File
 
         try {
             $tabWidth = null;
+            $encoding = null;
             if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
                 $cliValues = $this->phpcs->cli->getCommandLineValues();
                 if (isset($cliValues['tabWidth']) === true) {
                     $tabWidth = $cliValues['tabWidth'];
                 }
+
+                if (isset($cliValues['encoding']) === true) {
+                    $encoding = $cliValues['encoding'];
+                }
             }
 
-            $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth);
+            $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth, $encoding);
         } catch (PHP_CodeSniffer_Exception $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
@@ -1398,11 +1403,12 @@ class PHP_CodeSniffer_File
      * @param object $tokenizer A tokenizer class to use to tokenize the string.
      * @param string $eolChar   The EOL character to use for splitting strings.
      * @param int    $tabWidth  The number of spaces each tab respresents.
+     * @param string $encoding  The charset of the sniffed file.
      *
      * @throws PHP_CodeSniffer_Exception If the file cannot be processed.
      * @return array
      */
-    public static function tokenizeString($string, $tokenizer, $eolChar='\n', $tabWidth=null)
+    public static function tokenizeString($string, $tokenizer, $eolChar='\n', $tabWidth=null, $encoding=null)
     {
         // Minified files often have a very large number of characters per line
         // and cause issues when tokenizing.
@@ -1417,16 +1423,15 @@ class PHP_CodeSniffer_File
 
         $tokens = $tokenizer->tokenizeString($string, $eolChar);
 
-        // If we know the width of each tab, convert tabs
-        // into spaces so sniffs can use one method of checking.
         if ($tabWidth === null) {
             $tabWidth = PHP_CODESNIFFER_TAB_WIDTH;
         }
 
-        if ($tabWidth > 0) {
-            self::_convertTabs($tokens, $tokenizer, $eolChar, $tabWidth);
+        if ($encoding === null) {
+            $encoding = PHP_CODESNIFFER_ENCODING;
         }
 
+        self::_createPositionMap($tokens, $tokenizer, $eolChar, $encoding, $tabWidth);
         self::_createTokenMap($tokens, $tokenizer, $eolChar);
         self::_createParenthesisNestingMap($tokens, $tokenizer, $eolChar);
         self::_createScopeMap($tokens, $tokenizer, $eolChar);
@@ -1442,35 +1447,57 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Converts tabs into spaces.
+     * Sets token position information.
      *
-     * Each tab can represent between 1 and $width spaces, so
-     * this cannot be a straight string replace.
+     * Can also convert tabs into spaces. Each tab can represent between
+     * 1 and $width spaces, so this cannot be a straight string replace.
      *
      * @param array  $tokens    The array of tokens to process.
      * @param object $tokenizer The tokenizer being used to process this file.
      * @param string $eolChar   The EOL character to use for splitting strings.
+     * @param string $encoding  The charset of the sniffed file.
      * @param int    $tabWidth  The number of spaces that each tab represents.
+     *                          Set to 0 to disable tab replacement.
      *
      * @return void
      */
-    private static function _convertTabs(&$tokens, $tokenizer, $eolChar, $tabWidth)
+    private static function _createPositionMap(&$tokens, $tokenizer, $eolChar, $encoding, $tabWidth)
     {
-        $currColumn = 1;
-        $count      = count($tokens);
-        $eolLen     = (strlen($eolChar) * -1);
+        $currColumn    = 1;
+        $lineNumber    = 1;
+        $eolLen        = (strlen($eolChar) * -1);
+        $tokenizerType = get_class($tokenizer);
 
-        for ($i = 0; $i < $count; $i++) {
-            $tokenContent = $tokens[$i]['content'];
+        $numTokens = count($tokens);
+        for ($i = 0; $i < $numTokens; $i++) {
+            $tokens[$i]['line']   = $lineNumber;
+            $tokens[$i]['column'] = $currColumn;
 
-            if (strpos($tokenContent, "\t") === false) {
-                // There are no tabs in this content.
-                $currColumn += strlen($tokenContent);
+            if ($tabWidth === 0 || strpos($tokens[$i]['content'], "\t") === false) {
+                // There are no tabs in this content, or we aren't replacing them.
+                if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
+                    && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
+                ) {
+                    $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
+                } else {
+                    if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+                        // Not using the default encoding, so take a bit more care.
+                        $length = iconv_strlen($tokens[$i]['content'], $encoding);
+                        if ($length === false) {
+                            // String contained invalid characters, so revert to default.
+                            $length = strlen($tokens[$i]['content']);
+                        }
+                    } else {
+                        $length = strlen($tokens[$i]['content']);
+                    }
+                }
+
+                $currColumn += $length;
             } else {
                 // We need to determine the length of each tab.
                 $tabs = preg_split(
                     "|(\t)|",
-                    $tokenContent,
+                    $tokens[$i]['content'],
                     -1,
                     PREG_SPLIT_DELIM_CAPTURE
                 );
@@ -1478,6 +1505,7 @@ class PHP_CodeSniffer_File
                 $tabNum       = 0;
                 $tabsToSpaces = array();
                 $newContent   = '';
+                $length       = 0;
 
                 foreach ($tabs as $content) {
                     if ($content === '') {
@@ -1486,8 +1514,21 @@ class PHP_CodeSniffer_File
 
                     if (strpos($content, "\t") === false) {
                         // This piece of content is not a tab.
-                        $currColumn += strlen($content);
                         $newContent .= $content;
+
+                        if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+                            // Not using the default encoding, so take a bit more care.
+                            $contentLength = iconv_strlen($content, $encoding);
+                            if ($contentLength === false) {
+                                // String contained invalid characters, so revert to default.
+                                $contentLength = strlen($content);
+                            }
+                        } else {
+                            $contentLength = strlen($content);
+                        }
+
+                        $currColumn += $contentLength;
+                        $length     += $contentLength;
                     } else {
                         $lastCurrColumn = $currColumn;
                         $tabNum++;
@@ -1506,8 +1547,8 @@ class PHP_CodeSniffer_File
                             $currColumn++;
                         }
 
-                        $length      = ($currColumn - $lastCurrColumn);
-                        $newContent .= str_repeat(' ', $length);
+                        $length     += ($currColumn - $lastCurrColumn);
+                        $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
                     }//end if
                 }//end foreach
 
@@ -1515,12 +1556,18 @@ class PHP_CodeSniffer_File
                 $tokens[$i]['content']      = $newContent;
             }//end if
 
+            $tokens[$i]['length'] = $length;
+
             if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
+                $lineNumber++;
                 $currColumn = 1;
+
+                // Newline chars are not counted in the token length.
+                $tokens[$i]['length'] += $eolLen;
             }
         }//end for
 
-    }//end _convertTabs()
+    }//end _createPositionMap()
 
 
     /**
@@ -1541,51 +1588,11 @@ class PHP_CodeSniffer_File
         $squareOpeners = array();
         $curlyOpeners  = array();
         $numTokens     = count($tokens);
-        $tokenizerType = get_class($tokenizer);
 
         $openers   = array();
         $openOwner = null;
 
-        $currColumn = 1;
-        $lineNumber = 1;
-        $eolLen     = (strlen($eolChar) * -1);
-
         for ($i = 0; $i < $numTokens; $i++) {
-            /*
-                Column and line values.
-            */
-
-            $tokens[$i]['line']   = $lineNumber;
-            $tokens[$i]['column'] = $currColumn;
-
-            if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
-                && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
-            ) {
-                $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
-            } else {
-                if (PHP_CODESNIFFER_ENCODING !== 'iso-8859-1'
-                    && function_exists('iconv_strlen') === true
-                ) {
-                    // Not using the default encoding, so take a bit more care.
-                    $length = iconv_strlen($tokens[$i]['content'], PHP_CODESNIFFER_ENCODING);
-                    if ($length === false) {
-                        // String contained invalid characters, so revert to default.
-                        $length = strlen($tokens[$i]['content']);
-                    }
-                } else {
-                    $length = strlen($tokens[$i]['content']);
-                }
-            }
-
-            $tokens[$i]['length'] = $length;
-            $currColumn          += $length;
-
-            if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
-                $lineNumber++;
-                $currColumn            = 1;
-                $tokens[$i]['length'] += $eolLen;
-            }
-
             /*
                 Parenthesis mapping.
             */
@@ -2203,11 +2210,13 @@ class PHP_CodeSniffer_File
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type = $tokens[$i]['type'];
                 $line = $tokens[$i]['line'];
+                $len  = $tokens[$i]['length'];
+                $col  = $tokens[$i]['column'];
 
                 $content = PHP_CodeSniffer::prepareForOutput($tokens[$i]['content']);
 
                 echo str_repeat("\t", ($level + 1));
-                echo "Process token $i on line $line [lvl:$level;";
+                echo "Process token $i on line $line [col:$col;len:$len;lvl:$level;";
                 if (empty($conditions) !== true) {
                     $condString = 'conds;';
                     foreach ($conditions as $condition) {
