@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - A tilde can now be used to reference a user's home directory in a path to a standard (request #353)
   - Added PHP_CodeSniffer_File::findStartOfStatement() to find the first non-whitespace token in a statement
     -- Possible alternative for code using PHP_CodeSniffer_File::findPrevious() with the local flag set
+  - Generic DisallowTabIndentSniff now replaces tabs everywhere it finds them, except in here/nowdocs
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
   - Squiz SuperfluousWhitespaceSniff now checks for extra blank lines inside closures
     -- Thanks to Sertan Danis for the patch
@@ -711,8 +712,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="DisallowTabIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

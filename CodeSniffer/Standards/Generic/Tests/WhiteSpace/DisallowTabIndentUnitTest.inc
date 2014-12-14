@@ -2,7 +2,7 @@
 
 class ExampleClass
 {
-	function exampleFunction() {}
+	function exampleFunction()	{}
 
 }
 
@@ -21,8 +21,14 @@ class MyClass
 	 *
 	 * @return	void
 	 */
-    public function myFunction() {}
+    public function 	myFunction() {	}
 }
 
 $str = 'hello
 		there';
+
+$foo = array(
+	'Česká republika'   => 'Czech republic',
+	'România'			=> 'Romania',
+	'Magyarország'	   	=> 'Hungary',
+);

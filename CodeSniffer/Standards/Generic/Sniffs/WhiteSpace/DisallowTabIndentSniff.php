@@ -65,32 +65,37 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        $error  = 'Spaces must be used to indent lines; tabs are not allowed';
+        $tokens    = $phpcsFile->getTokens();
+        $error     = 'Spaces must be used to indent lines; tabs are not allowed';
+        $errorCode = 'TabsUsed';
+
+        $checkTokens = array(
+                        T_WHITESPACE               => true,
+                        T_CONSTANT_ENCAPSED_STRING => true,
+                        T_DOC_COMMENT_WHITESPACE   => true,
+                        T_DOC_COMMENT_STRING       => true,
+                       );
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            // We always checks doc comments for tabs, but only whitespace
-            // at the start of a line for everything else.
-            $inComment = false;
-            if ($tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
-                && $tokens[$i]['code'] !== T_DOC_COMMENT_STRING
-            ) {
-                if ($tokens[$i]['column'] !== 1
-                    || ($tokens[$i]['code'] !== T_WHITESPACE
-                    && $tokens[$i]['code'] !== T_CONSTANT_ENCAPSED_STRING)
-                ) {
-                    continue;
-                }
-            } else {
-                $inComment = true;
+            if (isset($checkTokens[$tokens[$i]['code']]) === false) {
+                continue;
             }
 
             // If tabs are being converted to spaces by PHPCS, the
-            // original content should be used instead of the converted content.
+            // original content should be checked instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];
             } else {
                 $content = $tokens[$i]['content'];
+            }
+
+            if ($content === '') {
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
+                // Ignore file/class-level DocBlock, especially for recording metrics.
+                continue;
             }
 
             $tabFound = false;
@@ -99,11 +104,6 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                     $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                     $tabFound = true;
                 } else if ($content[0] === ' ') {
-                    if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                        // Ignore file/class-level DocBlock.
-                        continue;
-                    }
-
                     if (strpos($content, "\t") !== false) {
                         $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                         $tabFound = true;
@@ -116,7 +116,9 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                 // record any metrics about them because they aren't
                 // line indent tokens.
                 if (strpos($content, "\t") !== false) {
-                    $tabFound = true;
+                    $tabFound  = true;
+                    $error     = 'Spaces must be used for alignment; tabs are not allowed';
+                    $errorCode = 'NonIndentTabsUsed';
                 }
             }//end if
 
@@ -124,7 +126,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
                 continue;
             }
 
-            $fix = $phpcsFile->addFixableError($error, $i, 'TabsUsed');
+            $fix = $phpcsFile->addFixableError($error, $i, $errorCode);
             if ($fix === true) {
                 if (isset($tokens[$i]['orig_content']) === true) {
                     // Use the replacement that PHPCS has already done.
