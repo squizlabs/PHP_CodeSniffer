@@ -545,7 +545,14 @@ class PHP_CodeSniffer_File
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
                 foreach ($listenerData['ignore'] as $pattern) {
-                    $pattern = '{'.$pattern.'}i';
+                    // We assume a / directory separator, as do the exclude rules
+                    // most developers write, so we need a special case for any system
+                    // that is different.
+                    if (DIRECTORY_SEPARATOR === '\\') {
+                        $pattern = str_replace('/', '\\\\', $pattern);
+                    }
+
+                    $pattern = '`'.$pattern.'`i';
                     if (preg_match($pattern, $this->_file) === 1) {
                         continue(2);
                     }
@@ -1195,7 +1202,14 @@ class PHP_CodeSniffer_File
                              '*'   => '.*',
                             );
 
-            $pattern = '{'.strtr($pattern, $replacements).'}i';
+            // We assume a / directory separator, as do the exclude rules
+            // most developers write, so we need a special case for any system
+            // that is different.
+            if (DIRECTORY_SEPARATOR === '\\') {
+                $replacements['/'] = '\\\\';
+            }
+
+            $pattern = '`'.strtr($pattern, $replacements).'`i';
             if (preg_match($pattern, $this->_file) === 1) {
                 return false;
             }
