@@ -47,6 +47,8 @@ class PEAR_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTes
                 14  => 1,
                 15  => 1,
                 28  => 1,
+                76  => 1,
+                87  => 1,
                 103 => 1,
                 109 => 1,
                 112 => 1,

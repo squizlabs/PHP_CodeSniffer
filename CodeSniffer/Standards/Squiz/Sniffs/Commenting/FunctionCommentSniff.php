@@ -92,89 +92,85 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }
         }
 
-        if ($isSpecialMethod === false && $methodName !== $className) {
-            if ($return !== null) {
-                $content = $tokens[($return + 2)]['content'];
-                if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
-                    $error = 'Return type missing for @return tag in function comment';
-                    $phpcsFile->addError($error, $return, 'MissingReturnType');
-                } else {
-                    // Check return type (can be multiple, separated by '|').
-                    $typeNames      = explode('|', $content);
-                    $suggestedNames = array();
-                    foreach ($typeNames as $i => $typeName) {
-                        $suggestedName = PHP_CodeSniffer::suggestType($typeName);
-                        if (in_array($suggestedName, $suggestedNames) === false) {
-                            $suggestedNames[] = $suggestedName;
+        if ($isSpecialMethod === true) {
+            return;
+        }
+
+        if ($return !== null) {
+            $content = $tokens[($return + 2)]['content'];
+            if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
+                $error = 'Return type missing for @return tag in function comment';
+                $phpcsFile->addError($error, $return, 'MissingReturnType');
+            } else {
+                // Check return type (can be multiple, separated by '|').
+                $typeNames      = explode('|', $content);
+                $suggestedNames = array();
+                foreach ($typeNames as $i => $typeName) {
+                    $suggestedName = PHP_CodeSniffer::suggestType($typeName);
+                    if (in_array($suggestedName, $suggestedNames) === false) {
+                        $suggestedNames[] = $suggestedName;
+                    }
+                }
+
+                $suggestedType = implode('|', $suggestedNames);
+                if ($content !== $suggestedType) {
+                    $error = 'Function return type "%s" is invalid';
+                    $error = 'Expected "%s" but found "%s" for function return type';
+                    $data  = array(
+                              $suggestedType,
+                              $content,
+                             );
+                    $phpcsFile->addError($error, $return, 'InvalidReturn', $data);
+                }
+
+                // If the return type is void, make sure there is
+                // no return statement in the function.
+                if ($content === 'void') {
+                    if (isset($tokens[$stackPtr]['scope_closer']) === true) {
+                        $endToken = $tokens[$stackPtr]['scope_closer'];
+                        for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
+                            if ($tokens[$returnToken]['code'] === T_CLOSURE) {
+                                $returnToken = $tokens[$returnToken]['scope_closer'];
+                                continue;
+                            }
+
+                            if ($tokens[$returnToken]['code'] === T_RETURN) {
+                                break;
+                            }
                         }
-                    }
 
-                    $suggestedType = implode('|', $suggestedNames);
-                    if ($content !== $suggestedType) {
-                        $error = 'Function return type "%s" is invalid';
-                        $error = 'Expected "%s" but found "%s" for function return type';
-                        $data  = array(
-                                  $suggestedType,
-                                  $content,
-                                 );
-                        $phpcsFile->addError($error, $return, 'InvalidReturn', $data);
-                    }
-
-                    // If the return type is void, make sure there is
-                    // no return statement in the function.
-                    if ($content === 'void') {
-                        if (isset($tokens[$stackPtr]['scope_closer']) === true) {
-                            $endToken = $tokens[$stackPtr]['scope_closer'];
-                            for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
-                                if ($tokens[$returnToken]['code'] === T_CLOSURE) {
-                                    $returnToken = $tokens[$returnToken]['scope_closer'];
-                                    continue;
-                                }
-
-                                if ($tokens[$returnToken]['code'] === T_RETURN) {
-                                    break;
-                                }
-                            }
-
-                            if ($returnToken !== $endToken) {
-                                // If the function is not returning anything, just
-                                // exiting, then there is no problem.
-                                $semicolon = $phpcsFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
-                                if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
-                                    $error = 'Function return type is void, but function contains return statement';
-                                    $phpcsFile->addError($error, $return, 'InvalidReturnVoid');
-                                }
-                            }
-                        }//end if
-                    } else if ($content !== 'mixed') {
-                        // If return type is not void, there needs to be a return statement
-                        // somewhere in the function that returns something.
-                        if (isset($tokens[$stackPtr]['scope_closer']) === true) {
-                            $endToken    = $tokens[$stackPtr]['scope_closer'];
-                            $returnToken = $phpcsFile->findNext(T_RETURN, $stackPtr, $endToken);
-                            if ($returnToken === false) {
-                                $error = 'Function return type is not void, but function has no return statement';
-                                $phpcsFile->addError($error, $return, 'InvalidNoReturn');
-                            } else {
-                                $semicolon = $phpcsFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
-                                if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
-                                    $error = 'Function return type is not void, but function is returning void here';
-                                    $phpcsFile->addError($error, $returnToken, 'InvalidReturnNotVoid');
-                                }
+                        if ($returnToken !== $endToken) {
+                            // If the function is not returning anything, just
+                            // exiting, then there is no problem.
+                            $semicolon = $phpcsFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
+                            if ($tokens[$semicolon]['code'] !== T_SEMICOLON) {
+                                $error = 'Function return type is void, but function contains return statement';
+                                $phpcsFile->addError($error, $return, 'InvalidReturnVoid');
                             }
                         }
                     }//end if
+                } else if ($content !== 'mixed') {
+                    // If return type is not void, there needs to be a return statement
+                    // somewhere in the function that returns something.
+                    if (isset($tokens[$stackPtr]['scope_closer']) === true) {
+                        $endToken    = $tokens[$stackPtr]['scope_closer'];
+                        $returnToken = $phpcsFile->findNext(T_RETURN, $stackPtr, $endToken);
+                        if ($returnToken === false) {
+                            $error = 'Function return type is not void, but function has no return statement';
+                            $phpcsFile->addError($error, $return, 'InvalidNoReturn');
+                        } else {
+                            $semicolon = $phpcsFile->findNext(T_WHITESPACE, ($returnToken + 1), null, true);
+                            if ($tokens[$semicolon]['code'] === T_SEMICOLON) {
+                                $error = 'Function return type is not void, but function is returning void here';
+                                $phpcsFile->addError($error, $returnToken, 'InvalidReturnNotVoid');
+                            }
+                        }
+                    }
                 }//end if
-            } else {
-                $error = 'Missing @return tag in function comment';
-                $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
             }//end if
         } else {
-            // No return tag for constructor and destructor.
-            if ($return !== null) {
-                $error = '@return tag is not required for constructor and destructor';
-                $phpcsFile->addError($error, $return, 'ReturnNotRequired');
-            }
+            $error = 'Missing @return tag in function comment';
+            $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
         }//end if
 
     }//end processReturn()

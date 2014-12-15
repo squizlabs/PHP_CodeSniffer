@@ -164,23 +164,19 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-        if ($isSpecialMethod === false && $methodName !== $className) {
-            if ($return !== null) {
-                $content = $tokens[($return + 2)]['content'];
-                if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
-                    $error = 'Return type missing for @return tag in function comment';
-                    $phpcsFile->addError($error, $return, 'MissingReturnType');
-                }
-            } else {
-                $error = 'Missing @return tag in function comment';
-                $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
-            }//end if
-        } else {
-            // No return tag for constructor and destructor.
-            if ($return !== null) {
-                $error = '@return tag is not required for constructor and destructor';
-                $phpcsFile->addError($error, $return, 'ReturnNotRequired');
+        if ($isSpecialMethod === true) {
+            return;
+        }
+
+        if ($return !== null) {
+            $content = $tokens[($return + 2)]['content'];
+            if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
+                $error = 'Return type missing for @return tag in function comment';
+                $phpcsFile->addError($error, $return, 'MissingReturnType');
             }
+        } else {
+            $error = 'Missing @return tag in function comment';
+            $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
         }//end if
 
     }//end processReturn()

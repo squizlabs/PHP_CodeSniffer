@@ -31,6 +31,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added PHP_CodeSniffer_File::findStartOfStatement() to find the first non-whitespace token in a statement
     -- Possible alternative for code using PHP_CodeSniffer_File::findPrevious() with the local flag set
   - Generic DisallowTabIndentSniff now replaces tabs everywhere it finds them, except in here/nowdocs
+  - PEAR and Squiz FunctionCommentSniffs no longer ban @return tags for constructors and destructors
+    -- Removed message PEAR.Commenting.FunctionComment.ReturnNotRequired
+    -- Removed message Squiz.Commenting.FunctionComment.ReturnNotRequired
+    -- Change initiated by request #324 and request #369
   - Squiz ControlSignatureSniff fixes now retain comments between the closing parenthesis and open brace
   - Squiz SuperfluousWhitespaceSniff now checks for extra blank lines inside closures
     -- Thanks to Sertan Danis for the patch
