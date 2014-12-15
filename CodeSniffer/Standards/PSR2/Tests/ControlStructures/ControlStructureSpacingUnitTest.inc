@@ -43,3 +43,7 @@ foreach ( $something as $blah => $that ) {}
 foreach (  $something as $blah => $that  ) {}
 // @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 0
 // @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
+
+if (foo($a, b"
+$c
+")) {}

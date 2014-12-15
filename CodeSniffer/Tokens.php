@@ -69,58 +69,59 @@ define('T_END_NOWDOC', 1050);
 define('T_OPEN_SHORT_ARRAY', 1051);
 define('T_CLOSE_SHORT_ARRAY', 1052);
 define('T_GOTO_LABEL', 1053);
-define('T_EMBEDDED_PHP', 1054);
+define('T_BINARY_CAST', 1054);
+define('T_EMBEDDED_PHP', 1055);
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1055);
+    define('T_NAMESPACE', 1100);
 }
 
 if (defined('T_NS_C') === false) {
-    define('T_NS_C', 1056);
+    define('T_NS_C', 1101);
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1057);
+    define('T_NS_SEPARATOR', 1102);
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1058);
+    define('T_GOTO', 1103);
 }
 
 if (defined('T_DIR') === false) {
-    define('T_DIR', 1059);
+    define('T_DIR', 1104);
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1060);
+    define('T_TRAIT', 1105);
 }
 
 if (defined('T_TRAIT_C') === false) {
-    define('T_TRAIT_C', 1061);
+    define('T_TRAIT_C', 1106);
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1062);
+    define('T_INSTEADOF', 1107);
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1063);
+    define('T_CALLABLE', 1108);
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1064);
+    define('T_FINALLY', 1109);
 }
 
 if (defined('T_YIELD') === false) {
-    define('T_YIELD', 1065);
+    define('T_YIELD', 1110);
 }
 
 // Some PHP 5.6 tokens, replicated for lower versions.
 if (defined('T_ELLIPSIS') === false) {
-    define('T_ELLIPSIS', 1066);
+    define('T_ELLIPSIS', 1111);
 }
 
 // Tokens used for parsing doc blocks.
@@ -438,6 +439,7 @@ final class PHP_CodeSniffer_Tokens
                                  T_BOOL_CAST   => T_BOOL_CAST,
                                  T_OBJECT_CAST => T_OBJECT_CAST,
                                  T_UNSET_CAST  => T_UNSET_CAST,
+                                 T_BINARY_CAST => T_BINARY_CAST,
                                 );
 
     /**

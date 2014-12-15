@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #364 : Don't interpret "use function" as declaration
   - Fixed bug #366 : phpcbf with PSR2 errors on control structure alternative syntax
   - Fixed bug #367 : Nested Anonymous Functions Causing False Negative
+  - Fixed bug #371 : Shorthand binary cast causes tokenizer errors
+    -- New token T_BINARY_CAST added for the b"string" cast format (the 'b' is the T_BINARY_CAST token)
  </notes>
  <contents>
   <dir name="/">

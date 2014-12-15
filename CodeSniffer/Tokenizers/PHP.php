@@ -316,7 +316,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $content  = PHP_CodeSniffer::prepareForOutput($token[0]);
                 }
 
-                echo "\tProcess token $stackPtr: $type => $content";
+                echo "\tProcess token ";
+                if ($tokenIsArray === true) {
+                    echo "[$stackPtr]";
+                } else {
+                    echo " $stackPtr ";
+                }
+
+                echo ": $type => $content";
             }//end if
 
             if ($newStackPtr > 0 && $finalTokens[($newStackPtr - 1)]['code'] !== T_WHITESPACE) {
@@ -379,7 +386,17 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 provide a single string.
             */
 
-            if ($tokenIsArray === false && $token[0] === '"') {
+            if ($tokenIsArray === false && ($token[0] === '"' || $token[0] === 'b"')) {
+                // Binary casts need a special token.
+                if ($token[0] === 'b"') {
+                    $finalTokens[$newStackPtr] = array(
+                                                  'code'    => T_BINARY_CAST,
+                                                  'type'    => 'T_BINARY_CAST',
+                                                  'content' => 'b',
+                                                 );
+                    $newStackPtr++;
+                }
+
                 $tokenContent = '"';
                 $nestedVars   = array();
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
