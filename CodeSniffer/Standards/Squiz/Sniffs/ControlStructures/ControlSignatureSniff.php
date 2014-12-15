@@ -189,7 +189,10 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
         } else if ($tokens[$stackPtr]['code'] === T_ELSE
             || $tokens[$stackPtr]['code'] === T_ELSEIF
         ) {
-            $closer = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, ($stackPtr - 1));
+            $closer = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            if ($closer === false || $tokens[$closer]['code'] !== T_CLOSE_CURLY_BRACKET) {
+                return;
+            }
         } else {
             return;
         }

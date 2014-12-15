@@ -286,15 +286,17 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // Scope closers reset the required indent to the same level as the opening condition.
             if (($checkToken !== null
-                && isset($tokens[$checkToken]['scope_condition']) === true
+                && isset($openScopes[$checkToken]) === true
+                || (isset($tokens[$checkToken]['scope_condition']) === true
                 && isset($tokens[$checkToken]['scope_closer']) === true
                 && $tokens[$checkToken]['scope_closer'] === $checkToken
-                && $tokens[$checkToken]['line'] !== $tokens[$tokens[$checkToken]['scope_opener']]['line'])
+                && $tokens[$checkToken]['line'] !== $tokens[$tokens[$checkToken]['scope_opener']]['line']))
                 || ($checkToken === null
-                && isset($tokens[$i]['scope_condition']) === true
+                && isset($openScopes[$i]) === true
+                || (isset($tokens[$i]['scope_condition']) === true
                 && isset($tokens[$i]['scope_closer']) === true
                 && $tokens[$i]['scope_closer'] === $i
-                && $tokens[$i]['line'] !== $tokens[$tokens[$i]['scope_opener']]['line'])
+                && $tokens[$i]['line'] !== $tokens[$tokens[$i]['scope_opener']]['line']))
             ) {
                 if ($this->_debug === true) {
                     if ($checkToken === null) {
@@ -723,7 +725,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     $currentIndent += $this->indent;
-                    $openScopes[]   = $tokens[$i]['scope_condition'];
+                    $openScopes[$tokens[$i]['scope_closer']] = $tokens[$i]['scope_condition'];
 
                     if ($this->_debug === true) {
                         echo "\t=> indent set to $currentIndent".PHP_EOL;

@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #345 : Javascript regex not tokenized when inside array
   - Fixed bug #358 : False positives for Generic_Sniffs_WhiteSpace_ScopeIndentSniff
   - Fixed bug #364 : Don't interpret "use function" as declaration
+  - Fixed bug #366 : phpcbf with PSR2 errors on control structure alternative syntax
   - Fixed bug #367 : Nested Anonymous Functions Causing False Negative
  </notes>
  <contents>
