@@ -52,6 +52,8 @@ class Generic_Tests_CodeAnalysis_EmptyStatementUnitTest extends AbstractSniffUni
                 47 => 1,
                 52 => 1,
                 55 => 1,
+                64 => 1,
+                68 => 1,
                 72 => 2,
                );
 
@@ -68,10 +70,7 @@ class Generic_Tests_CodeAnalysis_EmptyStatementUnitTest extends AbstractSniffUni
      */
     public function getWarningList()
     {
-        return array(
-                64 => 1,
-                68 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 
