@@ -1933,36 +1933,84 @@ class PHP_CodeSniffer_File
                         echo "=> Ignoring non-curly scope closer for $stackPtr:$type".PHP_EOL;
                     }
                 } else {
+                    $scopeCloser = $i;
+                    $todo        = array(
+                                    $stackPtr,
+                                    $opener,
+                                   );
+
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type       = $tokens[$stackPtr]['type'];
-                        $closerType = $tokens[$i]['type'];
+                        $closerType = $tokens[$scopeCloser]['type'];
                         echo str_repeat("\t", $depth);
-                        echo "=> Found scope closer ($i:$closerType) for $stackPtr:$type".PHP_EOL;
+                        echo "=> Found scope closer ($scopeCloser:$closerType) for $stackPtr:$type".PHP_EOL;
                     }
 
-                    foreach (array($stackPtr, $opener, $i) as $token) {
-                        $tokens[$token]['scope_condition'] = $stackPtr;
-                        $tokens[$token]['scope_opener']    = $opener;
-                        $tokens[$token]['scope_closer']    = $i;
-                    }
+                    $validCloser = true;
+                    if (($tokens[$stackPtr]['code'] === T_IF || $tokens[$stackPtr]['code'] === T_ELSEIF)
+                        && ($tokenType === T_ELSE || $tokenType === T_ELSEIF)
+                    ) {
+                        // To be a closer, this token must have an opener.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "* closer needs to be tested *".PHP_EOL;
+                        }
 
-                    if ($tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
-                        // As we are going back to where we started originally, restore
-                        // the ignore value back to its original value.
-                        $ignore = $originalIgnore;
-                        return $opener;
-                    } else if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
-                        // Unset scope_condition here or else the token will appear to have
-                        // already been processed, and it will be skipped. Normally we want that,
-                        // but in this case, the token is both a closer and an opener, so
-                        // it needs to act like an opener. This is also why we return the
-                        // token before this one; so the closer has a chance to be processed
-                        // a second time, but as an opener.
-                        unset($tokens[$i]['scope_condition']);
-                        return ($i - 1);
+                        $i = self::_recurseScopeMap(
+                            $tokens,
+                            $numTokens,
+                            $tokenizer,
+                            $eolChar,
+                            $i,
+                            ($depth + 1),
+                            $ignore
+                        );
+
+                        if (isset($tokens[$scopeCloser]['scope_opener']) === false) {
+                            $validCloser = false;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", $depth);
+                                echo "* closer is not valid *".PHP_EOL;
+                            }
+                        } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "* closer was valid *".PHP_EOL;
+                        }
                     } else {
-                        return $i;
-                    }
+                        // The closer was not processed, so we need to
+                        // complete that token as well.
+                        $todo[] = $scopeCloser;
+                    }//end if
+
+                    if ($validCloser === true) {
+                        foreach ($todo as $token) {
+                            $tokens[$token]['scope_condition'] = $stackPtr;
+                            $tokens[$token]['scope_opener']    = $opener;
+                            $tokens[$token]['scope_closer']    = $scopeCloser;
+                        }
+
+                        if ($tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
+                            // As we are going back to where we started originally, restore
+                            // the ignore value back to its original value.
+                            $ignore = $originalIgnore;
+                            return $opener;
+                        } else if ($scopeCloser === $i
+                            && isset($tokenizer->scopeOpeners[$tokenType]) === true
+                        ) {
+                            // Unset scope_condition here or else the token will appear to have
+                            // already been processed, and it will be skipped. Normally we want that,
+                            // but in this case, the token is both a closer and an opener, so
+                            // it needs to act like an opener. This is also why we return the
+                            // token before this one; so the closer has a chance to be processed
+                            // a second time, but as an opener.
+                            unset($tokens[$scopeCloser]['scope_condition']);
+                            return ($i - 1);
+                        } else {
+                            return $i;
+                        }
+                    } else {
+                        continue;
+                    }//end if
                 }//end if
             }//end if
 

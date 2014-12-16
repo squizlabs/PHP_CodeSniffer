@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #367 : Nested Anonymous Functions Causing False Negative
   - Fixed bug #371 : Shorthand binary cast causes tokenizer errors
     -- New token T_BINARY_CAST added for the b"string" cast format (the 'b' is the T_BINARY_CAST token)
+  - Fixed bug #20196 : 1.5.2 breaks scope_closer position
  </notes>
  <contents>
   <dir name="/">

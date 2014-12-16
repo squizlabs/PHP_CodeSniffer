@@ -200,7 +200,7 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
         if ($tokens[$trailingContent]['code'] === T_COMMENT) {
             // Special exception for code where the comment about
-            // and ELSE or ELSEIF is written between the control structures.
+            // an ELSE or ELSEIF is written between the control structures.
             $nextCode = $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($scopeCloser + 1),
@@ -236,6 +236,8 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
         if (isset($tokens[$trailingContent]['scope_condition']) === true
             && $tokens[$trailingContent]['scope_condition'] !== $trailingContent
+            && isset($tokens[$trailingContent]['scope_opener']) === true
+            && $tokens[$trailingContent]['scope_opener'] !== $trailingContent
         ) {
             // Another control structure's closing brace.
             $owner = $tokens[$trailingContent]['scope_condition'];

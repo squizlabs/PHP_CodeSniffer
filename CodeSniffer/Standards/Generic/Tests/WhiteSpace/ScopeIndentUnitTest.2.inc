@@ -797,3 +797,8 @@ elseif ($a == 6) :
 else :
 	echo "a is neither 5 nor 6";
 endif;
+
+if ($foo):
+if ($bar) $foo = 1;
+elseif ($baz) $foo = 2;
+endif;
