@@ -68,7 +68,6 @@ class Generic_Tests_WhiteSpace_DisallowTabIndentUnitTest extends AbstractSniffUn
                     22 => 2,
                     23 => 1,
                     24 => 2,
-                    28 => 1,
                     31 => 1,
                     32 => 2,
                     33 => 2,

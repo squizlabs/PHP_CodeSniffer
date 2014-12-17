@@ -25,10 +25,12 @@ class MyClass
 }
 
 $str = 'hello
-        there';
+		there';
 
 $foo = array(
     'Česká republika'   => 'Czech republic',
     'România'           => 'Romania',
     'Magyarország'      => 'Hungary',
 );
+
+$var = "$hello	$there";

@@ -32,3 +32,5 @@ $foo = array(
 	'România'			=> 'Romania',
 	'Magyarország'	   	=> 'Hungary',
 );
+
+$var = "$hello	$there";
