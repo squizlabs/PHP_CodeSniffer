@@ -70,9 +70,9 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
         $errorCode = 'TabsUsed';
 
         $checkTokens = array(
-                        T_WHITESPACE               => true,
-                        T_DOC_COMMENT_WHITESPACE   => true,
-                        T_DOC_COMMENT_STRING       => true,
+                        T_WHITESPACE             => true,
+                        T_DOC_COMMENT_WHITESPACE => true,
+                        T_DOC_COMMENT_STRING     => true,
                        );
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
