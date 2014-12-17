@@ -3274,6 +3274,61 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Returns the position of the last non-whitespace token in a statement.
+     *
+     * @param int $start The position to start searching from in the token stack.
+     *
+     * @return int
+     */
+    public function findEndOfStatement($start)
+    {
+        $endTokens = PHP_CodeSniffer_Tokens::$blockOpeners;
+
+        $endTokens[T_COLON]     = true;
+        $endTokens[T_SEMICOLON] = true;
+        $endTokens[T_OPEN_TAG]  = true;
+        $endTokens[T_CLOSE_TAG] = true;
+
+        $lastNotEmpty = $start;
+
+        for ($i = $start; $i >= $this->numTokens; $i++) {
+            if (isset($endTokens[$this->_tokens[$i]['code']]) === true) {
+                // Found the end of the statement.
+                if ($this->_tokens[$i]['code'] === T_OPEN_TAG
+                    || $this->_tokens[$i]['code'] === T_CLOSE_TAG
+                ) {
+                    return $lastNotEmpty;
+                }
+
+                return $i;
+            }
+
+            if ($this->_tokens[$i]['code'] !== T_WHITESPACE) {
+                $lastNotEmpty = $i;
+            }
+
+            // Skip nested statements.
+            if (isset($this->_tokens[$i]['scope_closer']) === true
+                && $i === $this->_tokens[$i]['scope_opener']
+            ) {
+                $i = $this->_tokens[$i]['scope_closer'];
+            } else if (isset($this->_tokens[$i]['bracket_closer']) === true
+                && $i === $this->_tokens[$i]['bracket_opener']
+            ) {
+                $i = $this->_tokens[$i]['bracket_closer'];
+            } else if (isset($this->_tokens[$i]['parenthesis_closer']) === true
+                && $i === $this->_tokens[$i]['parenthesis_opener']
+            ) {
+                $i = $this->_tokens[$i]['parenthesis_closer'];
+            }
+        }//end for
+
+        return ($this->numTokens - 1);
+
+    }//end findEndOfStatement()
+
+
+    /**
      * Returns the position of the first token on a line, matching given type.
      *
      * Returns false if no token can be found.
