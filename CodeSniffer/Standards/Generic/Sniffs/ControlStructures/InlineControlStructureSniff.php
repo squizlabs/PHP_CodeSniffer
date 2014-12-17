@@ -131,11 +131,21 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 $phpcsFile->fixer->addContent($closer, ' { ');
             }
 
-            $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($closer + 1));
-            $next      = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($semicolon + 1), true);
+            for ($end = ($closer + 1); $end < $phpcsFile->numTokens; $end++) {
+                if ($tokens[$end]['code'] === T_SEMICOLON) {
+                    break;
+                }
+
+                if (isset($tokens[$end]['scope_opener']) === true) {
+                    $end = $tokens[$end]['scope_closer'];
+                    break;
+                }
+            }
+
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
 
             // Account for a comment on the end of the line.
-            for ($endLine = $semicolon; $endLine < $phpcsFile->numTokens; $endLine++) {
+            for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
                 if (isset($tokens[($endLine + 1)]) === false
                     || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
                 ) {
@@ -144,22 +154,22 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             }
 
             if ($tokens[$endLine]['code'] !== T_COMMENT) {
-                $endLine = $semicolon;
+                $endLine = $end;
             }
 
-            if ($next !== $semicolon) {
-                if ($endLine !== $semicolon) {
+            if ($next !== $end) {
+                if ($endLine !== $end) {
                     $phpcsFile->fixer->addContent($endLine, '}');
                 } else {
-                    $phpcsFile->fixer->addContent($semicolon, ' }');
+                    $phpcsFile->fixer->addContent($end, ' }');
                 }
             } else {
-                if ($endLine !== $semicolon) {
-                    $phpcsFile->fixer->replaceToken($semicolon, '');
+                if ($endLine !== $end) {
+                    $phpcsFile->fixer->replaceToken($end, '');
                     $phpcsFile->fixer->addNewlineBefore($endLine);
                     $phpcsFile->fixer->addContent($endLine, '}');
                 } else {
-                    $phpcsFile->fixer->replaceToken($semicolon, '}');
+                    $phpcsFile->fixer->replaceToken($end, '}');
                 }
             }
 

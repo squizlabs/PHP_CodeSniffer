@@ -62,3 +62,13 @@ function test()
     if ($a)
         $a.=' '.($b ? 'b' : ($c ? ($d ? 'd' : 'c') : ''));
 }
+
+if ($a)
+    foreach ($b as $c) {
+        if ($d) {
+            $e=$f;
+            $g=$h;
+        } elseif ($i==0) {
+            $j=$k;
+        }
+    }
