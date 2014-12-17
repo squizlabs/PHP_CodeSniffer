@@ -52,6 +52,7 @@ class Squiz_Tests_Strings_DoubleQuoteUsageUnitTest extends AbstractSniffUnitTest
                 18 => 1,
                 19 => 1,
                 21 => 1,
+                26 => 1,
                );
 
     }//end getErrorList()

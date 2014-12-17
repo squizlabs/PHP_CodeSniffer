@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #371 : Shorthand binary cast causes tokenizer errors
     -- New token T_BINARY_CAST added for the b"string" cast format (the 'b' is the T_BINARY_CAST token)
   - Fixed bug #372 : phpcbf parse problem, wrong brace placement for inline IF
+  - Fixed bug #373 : Double quote usage fix removing too many double quotes
   - Fixed bug #20196 : 1.5.2 breaks scope_closer position
  </notes>
  <contents>
@@ -2066,6 +2067,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DoubleQuoteUsageUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DoubleQuoteUsageUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="DoubleQuoteUsageUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
