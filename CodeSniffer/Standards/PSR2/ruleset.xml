@@ -58,7 +58,7 @@
  <!-- Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting. -->
  <rule ref="Generic.WhiteSpace.ScopeIndent">
   <properties>
-   <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"/>
+   <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
   </properties>
  </rule>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
