@@ -63,6 +63,15 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
+        if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
+            $error = 'Opening brace must be the last content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
+            if ($fix === true) {
+                $phpcsFile->fixer->addNewline($openingBrace);
+            }
+        }
+
         // The end of the function occurs at the end of the argument list. Its
         // like this because some people like to break long function declarations
         // over multiple lines.

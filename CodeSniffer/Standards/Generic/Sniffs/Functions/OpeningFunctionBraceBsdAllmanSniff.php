@@ -63,6 +63,15 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
+        if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
+            $error = 'Opening brace must be the last content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
+            if ($fix === true) {
+                $phpcsFile->fixer->addNewline($openingBrace);
+            }
+        }
+
         // The end of the function occurs at the end of the argument list. Its
         // like this because some people like to break long function declarations
         // over multiple lines.
@@ -112,15 +121,15 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
         $lineStart = $stackPtr;
-        while (($lineStart = $phpcsFile->findPrevious(array(T_WHITESPACE), ($lineStart - 1), null, false)) !== false) {
+        while (($lineStart = $phpcsFile->findPrevious(T_WHITESPACE, ($lineStart - 1), null, false)) !== false) {
             if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
                 break;
             }
         }
 
-        // We found a new line, now go forward and find the first non-whitespace
-        // token.
-        $lineStart = $phpcsFile->findNext(array(T_WHITESPACE), $lineStart, null, true);
+        // We found a new line, now go forward and find the first
+        // non-whitespace token.
+        $lineStart = $phpcsFile->findNext(T_WHITESPACE, $lineStart, null, true);
 
         // The opening brace is on the correct line, now it needs to be
         // checked to be correctly indented.
