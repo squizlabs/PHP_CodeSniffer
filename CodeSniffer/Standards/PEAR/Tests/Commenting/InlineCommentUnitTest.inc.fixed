@@ -12,7 +12,7 @@ function test()
 {
     // Some code goes here.
 
-    # This comment is banned.
+    // This comment is banned.
 
 }//end test()
 
@@ -21,9 +21,9 @@ function test()
     It spans multiple lines.
 */
 
-# This is a long comment
-# that is banned.
+// This is a long comment
+// that is banned.
 
-### use the code from the regex
-### over hre
-### ok?
+// use the code from the regex
+// over hre
+// ok?
