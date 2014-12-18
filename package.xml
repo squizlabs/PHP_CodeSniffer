@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sertan Danis for the patch
   - Squiz ArrayDeclarationSniff now skips function calls while checking multi-line arrays
   - Fixed bug #337 : False positive with anonymous functions in Generic_Sniffs_WhiteSpace_ScopeIndentSniff
+  - Fixed bug #339 : reformatting brace location can result in broken code
   - Fixed bug #342 : Nested ternary operators not tokenized correctly
   - Fixed bug #345 : Javascript regex not tokenized when inside array
   - Fixed bug #346 : PHP path can't be determined in some cases in "phpcs.bat" (on Windows XP)
