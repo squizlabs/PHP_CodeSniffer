@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds
+  - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
  </notes>
  <contents>
   <dir name="/">
