@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="PSR2">
  <description>The PSR-2 coding standard.</description>
+ <arg name="tab-width" value="4"/>
 
  <!-- 2. General -->
 
