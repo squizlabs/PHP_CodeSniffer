@@ -20,13 +20,21 @@ if (empty($filterRepos) === true) {
     $repoCount = count($filterRepos);
 }
 
-$totalFilename = __DIR__.'/results.json';
-$totals        = json_decode(file_get_contents($totalFilename), true);
+$progressFile = __DIR__.'/progress.json';
+if (is_file($progressFile) === true) {
+    $progress = json_decode(file_get_contents($progressFile), true);
+} else {
+    $progress = array();
+}
 
 $repoNum = 0;
 foreach ($repos as $repo) {
     if (empty($filterRepos) === false && in_array($repo->url, $filterRepos) === false) {
         continue;
+    }
+
+    if (isset($progress[$repo->url]) === false) {
+        $progress[$repo->url] = array();
     }
 
     $repoNum++;
@@ -55,6 +63,11 @@ foreach ($repos as $repo) {
     foreach ($dates as $date) {
         $dateNum++;
 
+        if (isset($progress[$repo->url][$date]) === true) {
+            echo 'Already processed '.$repo->name." ($repoNum / $repoCount) $date ($dateNum / $dateCount)".PHP_EOL;
+            continue;
+        }
+
         echo 'Processing '.$repo->name." ($repoNum / $repoCount) $date ($dateNum / $dateCount)".PHP_EOL;
         processRepo($repo, $date, true, true, $sniffs, $tempFile);
         $newResults = json_decode(file_get_contents($tempFile), true);
@@ -68,16 +81,6 @@ foreach ($repos as $repo) {
             } else if (isset($results['metrics'][$metric]['trends'][$date]) === false) {
                 echo "\t\t* new trend date detected; setting initial repo values *".PHP_EOL;
                 $results['metrics'][$metric]['trends'][$date] = array();
-            }
-
-            if (isset($totals[$metric]) === false) {
-                echo "\t\t* new metric detected; setting initial total values *".PHP_EOL;
-                $totals[$metric]           = $data;
-                $totals[$metric]['trends'] = array();
-                $totals[$metric]['trends'][$date] = array();
-            } else if (isset($totals[$metric]['trends'][$date]) === false) {
-                echo "\t\t* new trend date detected; setting initial total values *".PHP_EOL;
-                $totals[$metric]['trends'][$date] = array();
             }
 
             $old = $results['metrics'][$metric]['trends'][$date];
@@ -95,23 +98,29 @@ foreach ($repos as $repo) {
                 }
 
                 $results['metrics'][$metric]['trends'][$date][$value] = $count;
-
-                if (isset($totals[$metric]['trends'][$date][$value]) === true) {
-                    echo "\t\t* change total $metric ($value) from ".$totals[$metric]['trends'][$date][$value];
-                    $totals[$metric]['trends'][$date][$value] += ($count - $old[$value]);
-                    echo ' to '.$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
-                } else {
-                    $totals[$metric]['trends'][$date][$value] = $count;
-                    echo "\t\t* added total $metric ($value) with count ".$totals[$metric]['trends'][$date][$value].' *'.PHP_EOL;
-                }
             }//end foreach
+
+            foreach ($old as $value => $count) {
+                if (isset($new[$value]) === true) {
+                    continue;
+                }
+
+                echo "\t\t* remove $metric ($value); previous was $count".PHP_EOL;
+                unset($results['metrics'][$metric]['trends'][$date][$value]);
+            }
         }//end foreach
+
+        // Update the repo's result file.
+        file_put_contents($resultFile, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
+        unlink($tempFile);
+
+        // Save the progress of the run.
+        $progress[$repo->url][$date] = true;
+        file_put_contents($progressFile, jsonpp(json_encode($progress, JSON_FORCE_OBJECT)));
     }//end foreach
 
-    file_put_contents($resultFile, jsonpp(json_encode($results, JSON_FORCE_OBJECT)));
-    unlink($tempFile);
     echo PHP_EOL;
 
 }//end foreach
 
-file_put_contents($totalFilename, jsonpp(json_encode($totals, JSON_FORCE_OBJECT)));
+unlink($progressFile);
