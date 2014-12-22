@@ -123,7 +123,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $infoReportPath    = __DIR__.'/PHPCSInfoReport.php';
         $summaryReportPath = __DIR__.'/PHPCSSummaryReport.php';
         //$cmd  = 'phpcs';
-        $cmd  = 'hhvm /Users/gsherwood/Sites/Projects/PHP_CodeSniffer/scripts/phpcs';
+        $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/scripts/phpcs';
         $cmd .= ' -d memory_limit=512M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
