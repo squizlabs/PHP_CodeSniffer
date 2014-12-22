@@ -27,7 +27,9 @@ if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerators_Generator {
+class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerators_Generator
+{
+
 
     /**
      * Generates the documentation for a standard.
@@ -54,7 +56,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         ob_end_clean();
 
         echo $content;
+
     }//end generate()
+
 
     /**
      * Print the markdown header.
@@ -66,7 +70,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         $standard = $this->getStandard();
 
         echo "# $standard Coding Standard".PHP_EOL;
+
     }//end printHeader()
+
 
     /**
      * Print the markdown footer.
@@ -80,7 +86,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         error_reporting(0);
         echo 'Documentation generated on '.date('r');
         echo ' by [PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'](http://pear.php.net/package/PHP_CodeSniffer/ \"PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'\") ';
+
     }//end printFooter()
+
 
     /**
      * Process the documentation for a single sniff.
@@ -103,7 +111,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
                 $this->printCodeComparisonBlock($node);
             }
         }
+
     }//end processSniff()
+
 
     /**
      * Print a text block found in a standard.
@@ -121,7 +131,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         $content = str_replace('&lt;/em&gt;', '*', $content);
 
         echo "$content".PHP_EOL;
+
     }//end printTextBlock()
+
 
     /**
      * Print a code comparison block found in a standard.
@@ -150,7 +162,6 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         $second      = str_replace('<em>', '<strong>', $second);
         $second      = str_replace('</em>', '</strong>', $second);
 
-
         echo '  <table>'.PHP_EOL;
         echo '   <tr>'.PHP_EOL;
         echo "    <td>$firstTitle</td>".PHP_EOL;
@@ -161,6 +172,8 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         echo "    <td>$second</td>".PHP_EOL;
         echo '   </tr>'.PHP_EOL;
         echo '  </table>'.PHP_EOL;
+
     }//end printCodeComparisonBlock()
+
+
 }//end class
- 
