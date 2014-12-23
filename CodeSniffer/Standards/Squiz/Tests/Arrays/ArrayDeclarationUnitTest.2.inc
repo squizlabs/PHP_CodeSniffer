@@ -222,3 +222,9 @@ $array = [
                            new \Zend\Validator\InArray(['haystack' => array_keys($aSubjects)]),
                           ],
          ];
+
+$var = [
+        'ViewHelper',
+        ['Foo'],
+        'Errors',
+       ];

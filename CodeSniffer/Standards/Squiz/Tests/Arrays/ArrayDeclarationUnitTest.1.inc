@@ -230,3 +230,9 @@ $array = array(
                            new \Zend\Validator\InArray(array('haystack' => array_keys($aSubjects))),
                           ),
          );
+
+$var = array(
+        'ViewHelper',
+        array('Foo'),
+        'Errors',
+       );

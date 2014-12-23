@@ -366,16 +366,30 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
                 $indices[] = array('value' => $nextToken);
+                $lastToken = $nextToken;
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
+                if ($tokens[$nextToken]['code'] !== T_COMMA) {
+                    $nextToken--;
+                } else {
+                    $lastToken = $nextToken;
+                }
+
                 continue;
             }
 
             if ($tokens[$nextToken]['code'] === T_OPEN_SHORT_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
                 $indices[] = array('value' => $nextToken);
+                $lastToken = $nextToken;
                 $nextToken = $tokens[$nextToken]['bracket_closer'];
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), null, true);
+                if ($tokens[$nextToken]['code'] !== T_COMMA) {
+                    $nextToken--;
+                } else {
+                    $lastToken = $nextToken;
+                }
+
                 continue;
             }
 
