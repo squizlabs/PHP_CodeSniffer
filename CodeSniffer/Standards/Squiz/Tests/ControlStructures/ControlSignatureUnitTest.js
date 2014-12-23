@@ -116,3 +116,14 @@ if (i === 0) {
 
     i = 1
 }
+
+if (window.jQuery)(function($) {
+    $.fn.reset = function() {
+        return this.each(function() {
+            try {
+                this.reset();
+            } catch (e) {
+            }
+        });
+    };
+})(jQuery);

@@ -1873,22 +1873,6 @@ class PHP_CodeSniffer_File
                 echo "]: $type => $content".PHP_EOL;
             }//end if
 
-            if ($opener === null && $tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                $i = $tokens[$i]['parenthesis_closer'];
-
-                // Because we might have skipped a bunch of lines, we can
-                // keep looking a little longer.
-                $startLine = $tokens[$i]['line'];
-
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $type = $tokens[$stackPtr]['type'];
-                    echo str_repeat("\t", $depth);
-                    echo "* skipping parenthesis *".PHP_EOL;
-                }
-
-                continue;
-            }
-
             // Very special case for IF statements in PHP that can be defined without
             // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
             // If an IF statement below this one has an opener but no
