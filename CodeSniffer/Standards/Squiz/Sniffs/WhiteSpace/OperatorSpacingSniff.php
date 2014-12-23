@@ -105,8 +105,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
         // Skip short ternary such as: "$foo = $bar ?: true;".
         if (($tokens[$stackPtr]['code'] === T_INLINE_THEN
-            && $tokens[$stackPtr + 1]['code'] === T_INLINE_ELSE)
-            || ($tokens[$stackPtr - 1]['code'] === T_INLINE_THEN
+            && $tokens[($stackPtr + 1)]['code'] === T_INLINE_ELSE)
+            || ($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN
             && $tokens[$stackPtr]['code'] === T_INLINE_ELSE)
         ) {
                 return;

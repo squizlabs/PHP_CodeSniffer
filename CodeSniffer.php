@@ -644,7 +644,7 @@ class PHP_CodeSniffer
             if ($dots === 60) {
                 $padding = ($maxLength - strlen($numProcessed));
                 echo str_repeat(' ', $padding);
-                $percent = round($numProcessed / $numFiles * 100);
+                $percent = round(($numProcessed / $numFiles) * 100);
                 echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
                 $dots = 0;
             }

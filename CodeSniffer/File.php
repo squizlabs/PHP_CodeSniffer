@@ -499,7 +499,7 @@ class PHP_CodeSniffer_File
                     return;
                 } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
                     $start         = strpos($token['content'], '@codingStandardsChangeSetting');
-                    $comment       = substr($token['content'], $start + 30);
+                    $comment       = substr($token['content'], ($start + 30));
                     $parts         = explode(' ', $comment);
                     $sniffParts    = explode('.', $parts[0]);
                     $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';

@@ -1037,7 +1037,7 @@ class PHP_CodeSniffer_CLI
                 ob_end_clean();
 
                 echo PHP_EOL.$lastStandard.' ('.$lastCount.' sniffs)'.PHP_EOL;
-                echo str_repeat('-', strlen($lastStandard.$lastCount) + 10);
+                echo str_repeat('-', (strlen($lastStandard.$lastCount) + 10));
                 echo PHP_EOL;
                 echo $sniffList;
 

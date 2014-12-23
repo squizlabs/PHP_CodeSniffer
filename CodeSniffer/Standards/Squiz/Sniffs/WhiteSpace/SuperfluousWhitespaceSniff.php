@@ -221,7 +221,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             ) {
                 $fix = $phpcsFile->addFixableError('Whitespace found at end of line', ($stackPtr - 1), 'EndLine');
                 if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($stackPtr - 1, rtrim($tokens[($stackPtr - 1)]['content']));
+                    $phpcsFile->fixer->replaceToken(($stackPtr - 1), rtrim($tokens[($stackPtr - 1)]['content']));
                 }
             }
 
@@ -238,7 +238,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 // empty, so this could be the start of a multiple empty
                 // line block.
                 $next  = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
-                $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
+                $lines = ($tokens[$next]['line'] - $tokens[$stackPtr]['line']);
                 if ($lines > 1) {
                     $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
                     $data  = array($lines);
