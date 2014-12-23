@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR2 standard now sets a default tab width of 4 spaces
   - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
   - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
+  - Fixed bug #386 : Undefined offset in Squiz.FunctionComment sniff when param has no comment
  </notes>
  <contents>
   <dir name="/">

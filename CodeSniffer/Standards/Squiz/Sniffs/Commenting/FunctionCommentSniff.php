@@ -374,7 +374,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $content .= str_repeat(' ', $param['type_space']);
                         $content .= $param['var'];
                         $content .= str_repeat(' ', $param['var_space']);
-                        $content .= $param['commentLines'][0]['comment'];
+                        if (isset($param['commentLines'][0]) === true) {
+                            $content .= $param['commentLines'][0]['comment'];
+                        }
+
                         $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                     }
                 } else if (count($typeNames) === 1) {
