@@ -137,19 +137,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $tokens = $phpcsFile->getTokens();
 
         // Skip constructor and destructor.
-        $className = '';
-        foreach ($tokens[$stackPtr]['conditions'] as $condPtr => $condition) {
-            if ($condition === T_CLASS || $condition === T_INTERFACE) {
-                $className = $phpcsFile->getDeclarationName($condPtr);
-                $className = strtolower(ltrim($className, '_'));
-            }
-        }
-
         $methodName      = $phpcsFile->getDeclarationName($stackPtr);
         $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
-        if ($methodName !== '_') {
-            $methodName = strtolower(ltrim($methodName, '_'));
-        }
 
         $return = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
