@@ -114,7 +114,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 
                 $suggestedType = implode('|', $suggestedNames);
                 if ($content !== $suggestedType) {
-                    $error = 'Function return type "%s" is invalid';
                     $error = 'Expected "%s" but found "%s" for function return type';
                     $data  = array(
                               $suggestedType,
