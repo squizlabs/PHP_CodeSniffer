@@ -61,8 +61,8 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
-        $commentEnd   = $phpcsFile->findNext(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr + 1));
-        $commentStart = $tokens[$commentEnd]['comment_opener'];
+        $commentStart = $stackPtr;
+        $commentEnd   = $tokens[$stackPtr]['comment_closer'];
 
         $empty = array(
                   T_DOC_COMMENT_WHITESPACE,
