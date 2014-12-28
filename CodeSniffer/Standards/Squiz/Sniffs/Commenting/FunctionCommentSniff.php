@@ -23,6 +23,9 @@ if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false)
  * Verifies that :
  * <ul>
  *  <li>A comment exists</li>
+ *  <li>Unicode safe for short and long comments</li>
+ *  <li>Doc comment starts with /**</li>
+ *  <li>Doc comment open comment tag is the only content on the line</li>
  *  <li>There is a blank newline after the short description</li>
  *  <li>There is a blank newline between the long and short description</li>
  *  <li>There is a blank newline between the long description and tags</li>

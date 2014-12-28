@@ -19,6 +19,9 @@
  * Verifies that :
  * <ul>
  *  <li>A comment exists</li>
+ *  <li>Unicode safe for short and long comments</li>
+ *  <li>Doc comment starts with /**</li>
+ *  <li>Doc comment open comment tag is the only content on the line</li>
  *  <li>There is a blank newline after the short description.</li>
  *  <li>There is a blank newline between the long and short description.</li>
  *  <li>There is a blank newline between the long description and tags.</li>
@@ -72,6 +75,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
+
+        $empty = array(
+                  T_DOC_COMMENT_WHITESPACE,
+                  T_DOC_COMMENT_STAR,
+                 );
+
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             // Inline comments might just be closing comments for
             // control structures or functions instead of function comments
@@ -104,6 +113,176 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
+        $short        = $phpcsFile->findNext($empty, $commentStart + 1, $commentEnd, true);
+        if ($short === false) {
+            $error = 'Doc comment is empty';
+            $phpcsFile->addError($error, $commentStart, 'Empty');
+            return;
+        }
+
+        // The first line of the comment should just be the /** code.
+        if ($tokens[$short]['line'] === $tokens[$commentStart]['line']) {
+            $error = 'The open comment tag must be the only content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $commentStart, 'ContentAfterOpen');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->addNewline($commentStart);
+                $phpcsFile->fixer->addContentBefore($short, '* ');
+                $phpcsFile->fixer->endChangeset();
+            }
+        }
+
+        // The last line of the comment should just be the */ code.
+        $prev = $phpcsFile->findPrevious($empty, ($commentEnd - 1), $commentStart, true);
+        if ($tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
+            $error = 'The close comment tag must be the only content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'ContentBeforeClose');
+            if ($fix === true) {
+                $phpcsFile->fixer->addNewlineBefore($commentEnd);
+            }
+        }
+
+        // Check for additional blank lines at the end of the comment.
+        if ($tokens[$prev]['line'] < ($tokens[$commentEnd]['line'] - 1)) {
+            $error = 'Additional blank lines found at end of doc comment';
+            $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'SpacingAfter');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($prev + 1); $i < $commentEnd; $i++) {
+                    if ($tokens[($i + 1)]['line'] === $tokens[$commentEnd]['line']) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+        }
+
+        // Check for a comment description.
+        if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
+            $error = 'Missing short description in doc comment';
+            $phpcsFile->addError($error, $short, 'MissingShort');
+            return;
+        }
+
+        // No extra newline before short description.
+        if ($tokens[$short]['line'] !== ($tokens[$commentStart]['line'] + 1)) {
+            $error = 'Doc comment short description must be on the first line';
+            $fix   = $phpcsFile->addFixableError($error, $short, 'SpacingBeforeShort');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = $commentStart; $i < $short; $i++) {
+                    if ($tokens[$i]['line'] === $tokens[$commentStart]['line']) {
+                        continue;
+                    } else if ($tokens[$i]['line'] === $tokens[$short]['line']) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+        }
+
+        // Account for the fact that a short description might cover
+        // multiple lines.
+        $shortContent = $tokens[$short]['content'];
+        $shortEnd     = $short;
+        for ($i = ($short + 1); $i < $commentEnd; $i++) {
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
+                    $shortContent .= $tokens[$i]['content'];
+                    $shortEnd      = $i;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        mb_internal_encoding('UTF-8');
+        $firstCharIsLetter   = preg_match('|(*UTF8)\P{L}|u', mb_substr($shortContent, 0, 1)) === 0 ? true : false;
+        $fistCharIsLowercase = preg_match('|(*UTF8)\p{Ll}|u', mb_substr($shortContent, 0, 1)) === 1 ? true: false;
+        if ($firstCharIsLetter === true && $fistCharIsLowercase === true) {
+            $error = 'Doc comment short description must start with a capital letter';
+            $fix   = $phpcsFile->addFixableError($error, $short, 'ShortNotCapital');
+
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($short, ucfirst($tokens[$short]['content']));
+                $phpcsFile->fixer->endChangeset();
+            }
+        } else if ($firstCharIsLetter === false) {
+            $error = 'Doc comment short description must start with a capital letter, but a non-letter char found';
+            $phpcsFile->addError($error, $short, 'ShortNotStartWithLetter');
+        }
+
+        $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
+        if ($long !== false) {
+            if ($tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
+                if ($tokens[$long]['line'] !== ($tokens[$shortEnd]['line'] + 2)) {
+                    $error = 'There must be exactly one blank line between descriptions in a doc comment';
+                    $fix   = $phpcsFile->addFixableError($error, $long, 'SpacingBetween');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($shortEnd + 1); $i < $long; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$shortEnd]['line']) {
+                                continue;
+                            } else if ($tokens[$i]['line'] === ($tokens[$long]['line'] - 1)) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+
+                $longContent         = $tokens[$long]['content'];
+                $firstCharIsLetter   = preg_match('|(*UTF8)\P{L}|u', mb_substr($longContent, 0, 1)) === 0 ? true : false;
+                $fistCharIsLowercase = preg_match('|(*UTF8)\p{Ll}|u', mb_substr($longContent, 0, 1)) === 1 ? true: false;
+                if ($firstCharIsLetter === true && $fistCharIsLowercase === true) {
+                    $error = 'Doc comment long description must start with a capital letter';
+                    $fix   = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->replaceToken($long, ucfirst($tokens[$long]['content']));
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                } else if ($firstCharIsLetter === false) {
+                    $error = 'Doc comment long description must start with a capital letter, but a non-letter char found';
+                    $phpcsFile->addError($error, $long, 'LongNotStartWithLetter');
+                }
+            }//end if
+        }//end if
+
+        if (empty($tokens[$commentStart]['comment_tags']) === false) {
+            $firstTag = $tokens[$commentStart]['comment_tags'][0];
+            $prev     = $phpcsFile->findPrevious($empty, ($firstTag - 1), $commentStart, true);
+            if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
+                $error = 'There must be exactly one blank line before the tags in a doc comment';
+                $fix   = $phpcsFile->addFixableError($error, $firstTag, 'SpacingBeforeTags');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($prev + 1); $i < $firstTag; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$firstTag]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $indent = str_repeat(' ', $tokens[$commentStart]['column']);
+                    $phpcsFile->fixer->addContent($prev, $phpcsFile->eolChar.$indent.'*'.$phpcsFile->eolChar);
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        }//end if
+
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@see') {
                 // Make sure the tag isn't empty.
@@ -128,7 +307,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -170,13 +350,19 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if ($return !== null) {
             $content = $tokens[($return + 2)]['content'];
-            if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
+            if (empty($content) === true
+                || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING
+            ) {
                 $error = 'Return type missing for @return tag in function comment';
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             }
         } else {
             $error = 'Missing @return tag in function comment';
-            $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
+            $phpcsFile->addError(
+                $error,
+                $tokens[$commentStart]['comment_closer'],
+                'MissingReturn'
+            );
         }//end if
 
     }//end processReturn()
@@ -188,7 +374,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -206,7 +393,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = null;
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^\s]+)(?:\s+(.*))?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match(
+                    '/([^\s]+)(?:\s+(.*))?/',
+                    $tokens[($tag + 2)]['content'],
+                    $matches
+                );
                 $exception = $matches[1];
                 if (isset($matches[2]) === true) {
                     $comment = $matches[2];
@@ -228,7 +419,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -251,7 +443,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = '';
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match(
+                    '/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/',
+                    $tokens[($tag + 2)]['content'],
+                    $matches
+                );
 
                 $typeLen   = strlen($matches[1]);
                 $type      = trim($matches[1]);
@@ -326,7 +522,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                           $param['type_space'],
                          );
 
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
+                $fix = $phpcsFile->addFixableError(
+                    $error,
+                    $param['tag'],
+                    'SpacingAfterParamType',
+                    $data
+                );
                 if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $spaces);
@@ -335,7 +536,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $content .= $param['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                 }
-            }
+            }//end if
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
@@ -376,7 +577,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                           $param['var_space'],
                          );
 
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
+                $fix = $phpcsFile->addFixableError(
+                    $error,
+                    $param['tag'],
+                    'SpacingAfterParamName',
+                    $data
+                );
                 if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $param['type_space']);
@@ -385,7 +591,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $content .= $param['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                 }
-            }
+            }//end if
         }//end foreach
 
         $realNames = array();

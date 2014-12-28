@@ -176,7 +176,7 @@ function tagBeforeComment()
 
 
 /**
- * no return tag
+ * No return tag
  *
  *
  *
@@ -273,3 +273,71 @@ public function foo(&$tokens, $tokenizer, $eolChar)
 public function _() {
     return $foo;
 }
+
+/**
+ *
+ * Short Comment.
+ *
+ * Long comment which is longer than the short comment
+ *
+ * @param \other\ns\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
+
+/**
+ * Short Comment.
+ * Long comment which is longer than the short comment
+ *
+ * @param \other\ns\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
+
+/**
+ * Short Comment.
+ * @param \other\ns\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
+
+/**
+ * Short Comment.
+ *
+ * Long comment which is longer than the short comment
+ * @param \other\ns\item $test An argument.
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
+
+/** Short Comment.
+ *
+ *
+ * Long comment which is longer than the short comment
+ * @param \other\ns\item $test An argument.
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
