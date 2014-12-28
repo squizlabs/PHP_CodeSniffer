@@ -307,7 +307,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -349,13 +350,19 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if ($return !== null) {
             $content = $tokens[($return + 2)]['content'];
-            if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
+            if (empty($content) === true
+                || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING
+            ) {
                 $error = 'Return type missing for @return tag in function comment';
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             }
         } else {
             $error = 'Missing @return tag in function comment';
-            $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
+            $phpcsFile->addError(
+                $error,
+                $tokens[$commentStart]['comment_closer'],
+                'MissingReturn'
+            );
         }//end if
 
     }//end processReturn()
@@ -367,7 +374,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -385,7 +393,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = null;
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^\s]+)(?:\s+(.*))?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match(
+                    '/([^\s]+)(?:\s+(.*))?/',
+                    $tokens[($tag + 2)]['content'],
+                    $matches
+                );
                 $exception = $matches[1];
                 if (isset($matches[2]) === true) {
                     $comment = $matches[2];
@@ -407,7 +419,8 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
      * @param int                  $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param int                  $commentStart The position in the stack where
+     *                                           the comment started.
      *
      * @return void
      */
@@ -430,7 +443,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = '';
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match(
+                    '/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/',
+                    $tokens[($tag + 2)]['content'],
+                    $matches
+                );
 
                 $typeLen   = strlen($matches[1]);
                 $type      = trim($matches[1]);
@@ -505,7 +522,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                           $param['type_space'],
                          );
 
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
+                $fix = $phpcsFile->addFixableError(
+                    $error,
+                    $param['tag'],
+                    'SpacingAfterParamType',
+                    $data
+                );
                 if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $spaces);
@@ -514,7 +536,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $content .= $param['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                 }
-            }
+            }//end if
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
@@ -555,7 +577,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                           $param['var_space'],
                          );
 
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
+                $fix = $phpcsFile->addFixableError(
+                    $error,
+                    $param['tag'],
+                    'SpacingAfterParamName',
+                    $data
+                );
                 if ($fix === true) {
                     $content  = $param['type'];
                     $content .= str_repeat(' ', $param['type_space']);
@@ -564,7 +591,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $content .= $param['comment'];
                     $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
                 }
-            }
+            }//end if
         }//end foreach
 
         $realNames = array();
