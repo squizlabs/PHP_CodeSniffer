@@ -77,9 +77,9 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         $empty = array(
-            T_DOC_COMMENT_WHITESPACE,
-            T_DOC_COMMENT_STAR
-        );
+                  T_DOC_COMMENT_WHITESPACE,
+                  T_DOC_COMMENT_STAR,
+                 );
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             // Inline comments might just be closing comments for
@@ -113,7 +113,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
-        $short = $phpcsFile->findNext($empty, $commentStart + 1, $commentEnd, true);
+        $short        = $phpcsFile->findNext($empty, $commentStart + 1, $commentEnd, true);
         if ($short === false) {
             $error = 'Doc comment is empty';
             $phpcsFile->addError($error, $commentStart, 'Empty');
@@ -203,11 +203,11 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
         }
 
         mb_internal_encoding('UTF-8');
-        $firstCharIsLetter = preg_match('|(*UTF8)\P{L}|u', mb_substr($shortContent, 0, 1)) === 0 ? true : false;
+        $firstCharIsLetter   = preg_match('|(*UTF8)\P{L}|u', mb_substr($shortContent, 0, 1)) === 0 ? true : false;
         $fistCharIsLowercase = preg_match('|(*UTF8)\p{Ll}|u', mb_substr($shortContent, 0, 1)) === 1 ? true: false;
         if ($firstCharIsLetter === true && $fistCharIsLowercase === true) {
             $error = 'Doc comment short description must start with a capital letter';
-            $fix = $phpcsFile->addFixableError($error, $short, 'ShortNotCapital');
+            $fix   = $phpcsFile->addFixableError($error, $short, 'ShortNotCapital');
 
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
@@ -241,12 +241,12 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     }
                 }
 
-                $longContent = $tokens[$long]['content'];
-                $firstCharIsLetter = preg_match('|(*UTF8)\P{L}|u', mb_substr($longContent, 0, 1)) === 0 ? true : false;
+                $longContent         = $tokens[$long]['content'];
+                $firstCharIsLetter   = preg_match('|(*UTF8)\P{L}|u', mb_substr($longContent, 0, 1)) === 0 ? true : false;
                 $fistCharIsLowercase = preg_match('|(*UTF8)\p{Ll}|u', mb_substr($longContent, 0, 1)) === 1 ? true: false;
                 if ($firstCharIsLetter === true && $fistCharIsLowercase === true) {
                     $error = 'Doc comment long description must start with a capital letter';
-                    $fix = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
+                    $fix   = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
 
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
@@ -258,7 +258,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $phpcsFile->addError($error, $long, 'LongNotStartWithLetter');
                 }
             }//end if
-        }
+        }//end if
 
         if (empty($tokens[$commentStart]['comment_tags']) === false) {
             $firstTag = $tokens[$commentStart]['comment_tags'][0];
@@ -281,7 +281,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $phpcsFile->fixer->endChangeset();
                 }
             }
-        }
+        }//end if
 
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@see') {
