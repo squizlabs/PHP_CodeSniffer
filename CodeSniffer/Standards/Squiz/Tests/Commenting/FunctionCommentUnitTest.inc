@@ -107,7 +107,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * no return tag.
+     * No return tag.
      *
      */
     public function noReturn($one)
@@ -177,7 +177,7 @@ function tagBeforeComment()
 
 
 /**
- * no return tag.
+ * No return tag.
  *
  * @see    FunctionCommentSniff.php
  */
@@ -470,7 +470,6 @@ function test($test)
 /** Comment.
  *
  * @return mixed
- *
  */
 function test()
 {
@@ -650,3 +649,19 @@ public function foo(SomeClass $someclass, \OtherVendor\Package\SomeClass2 $somec
 public function _() {
     return $foo;
 }
+
+/**
+ *
+ * Short Comment.
+ *
+ * Long comment which is longer than the short comment
+ *
+ * @param \other\ns\item $test An argument.
+ *
+ * @return mixed
+ */
+function test(\other\ns\item $test)
+{
+   return $test;
+
+}//end test()
