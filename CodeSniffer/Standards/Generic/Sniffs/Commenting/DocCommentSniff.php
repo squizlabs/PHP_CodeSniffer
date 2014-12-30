@@ -250,7 +250,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                     || ($paramGroupid !== null
                     && $paramGroupid !== $groupid)
                 ) {
-                    $error = 'Paramater tags must be grouped together in a doc commment';
+                    $error = 'Parameter tags must be grouped together in a doc commment';
                     $phpcsFile->addError($error, $tag, 'ParamGroup');
                 }
 
@@ -258,7 +258,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                     $paramGroupid = $groupid;
                 }
             } else if ($groupid === $paramGroupid) {
-                $error = 'Tag cannot be grouped with paramater tags in a doc comment';
+                $error = 'Tag cannot be grouped with Parameter tags in a doc comment';
                 $phpcsFile->addError($error, $tag, 'NonParamGroup');
             }//end if
 
@@ -328,7 +328,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
 
         // If there is a param group, it needs to be first.
         if ($paramGroupid !== null && $paramGroupid !== 0) {
-            $error = 'Paramater tags must be defined first in a doc commment';
+            $error = 'Parameter tags must be defined first in a doc commment';
             $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
         }
 
