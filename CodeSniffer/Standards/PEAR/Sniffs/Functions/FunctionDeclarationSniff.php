@@ -192,7 +192,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 
 
     /**
-     * Processes mutli-line declarations.
+     * Processes multi-line declarations.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token
@@ -326,7 +326,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
         }//end for
 
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
-            // The openning brace needs to be one space away
+            // The opening brace needs to be one space away
             // from the closing parenthesis.
             $next = $tokens[($closeBracket + 1)];
             if ($next['code'] !== T_WHITESPACE) {

@@ -2571,7 +2571,7 @@ class PHP_CodeSniffer_File
      *        )
      * </code>
      *
-     * Parameters with default values have and additional array indice of
+     * Parameters with default values have an additional array index of
      * 'default' with the value of the default as a string.
      *
      * @param int $stackPtr The position in the stack of the T_FUNCTION token

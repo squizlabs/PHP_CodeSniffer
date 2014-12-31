@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * PHP_CodeSniffer tokenizes PHP code and detects violations of a
  * defined set of coding standards.
  *
  * PHP version 5

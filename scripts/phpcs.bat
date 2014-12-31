@@ -1,5 +1,5 @@
 @echo off
-REM PHP_CodeSniffer tokenises PHP code and detects violations of a
+REM PHP_CodeSniffer tokenizes PHP code and detects violations of a
 REM defined set of coding standards.
 REM 
 REM PHP version 5

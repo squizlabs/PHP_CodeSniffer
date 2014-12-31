@@ -125,10 +125,10 @@ class PHP_CodeSniffer_File
      * @param missing
      * @param
      */
-    public function missingDescroption($threeSpaces)
+    public function missingDescription($threeSpaces)
     {
 
-    }//end missingDescroption()
+    }//end missingDescription()
 
 
     /**

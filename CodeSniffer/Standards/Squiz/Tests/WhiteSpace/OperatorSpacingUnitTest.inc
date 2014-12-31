@@ -108,7 +108,7 @@ $x = $test ? -1 : 1;
 $y = $test ? 1 : -1;
 $z = $test ?: false;
 
-$closureWithDefaultParamter = function (array $testArray=array()) {};
+$closureWithDefaultParameter = function (array $testArray=array()) {};
 
 switch ($foo) {
 	case -1:

@@ -169,7 +169,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *
      * @param array $pattern The pattern to acquire the listener for.
      *
-     * @return int The postition in the pattern that this test should register
+     * @return int The position in the pattern that this test should register
      *             as the listener.
      * @throws PHP_CodeSniffer_Exception If we could not determine a token
      *                                         to listen for.
@@ -195,8 +195,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * Processes the test.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token occured.
-     * @param int                  $stackPtr  The postion in the tokens stack
+     *                                        token occurred.
+     * @param int                  $stackPtr  The position in the tokens stack
      *                                        where the listening token type was
      *                                        found.
      *
@@ -265,8 +265,8 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      *                                          parsed token representation of the
      *                                          pattern.
      * @param PHP_CodeSniffer_File $phpcsFile   The PHP_CodeSniffer file where the
-     *                                          token occured.
-     * @param int                  $stackPtr    The postion in the tokens stack where
+     *                                          token occurred.
+     * @param int                  $stackPtr    The position in the tokens stack where
      *                                          the listening token type was found.
      *
      * @return array
@@ -598,7 +598,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                     );
 
                     if ($next === false) {
-                        // Couldn't find the next token, sowe we must
+                        // Couldn't find the next token, so we must
                         // be using the wrong pattern.
                         return false;
                     }
@@ -744,7 +744,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
      * Registers any supplementary tokens that this test might wish to process.
      *
      * A sniff may wish to register supplementary tests when it wishes to group
-     * an arbitary validation that cannot be performed using a pattern, with
+     * an arbitrary validation that cannot be performed using a pattern, with
      * other pattern tests.
      *
      * @return int[]

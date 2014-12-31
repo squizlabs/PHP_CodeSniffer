@@ -120,7 +120,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             if ($token['code'] === T_GOTO_LABEL) {
-                // Convert these back to T_STRING folowed by T_COLON so we can
+                // Convert these back to T_STRING followed by T_COLON so we can
                 // more easily process style definitions.
                 $finalTokens[$newStackPtr] = array(
                                               'type'    => 'T_STRING',

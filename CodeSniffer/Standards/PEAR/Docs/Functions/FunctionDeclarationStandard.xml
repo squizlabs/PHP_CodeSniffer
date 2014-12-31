@@ -19,7 +19,7 @@ $foo = function<em></em>()<em></em>use<em></em>($bar)<em></em>{
         </code>
     </code_comparison>
     <code_comparison>
-        <code title="Valid: Multiline function declaration formatted properly.">
+        <code title="Valid: Multi-line function declaration formatted properly.">
         <![CDATA[
 function foo(
 <em>    </em>$bar,

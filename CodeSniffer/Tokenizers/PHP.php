@@ -380,7 +380,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
-                If this is a double quoted string, PHP will tokenise the whole
+                If this is a double quoted string, PHP will tokenize the whole
                 thing which causes problems with the scope map when braces are
                 within the string. So we need to merge the tokens together to
                 provide a single string.
@@ -455,7 +455,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
-                If this is a heredoc, PHP will tokenise the whole
+                If this is a heredoc, PHP will tokenize the whole
                 thing which causes problems when heredocs don't
                 contain real PHP code, which is almost never.
                 We want to leave the start and end heredoc tokens

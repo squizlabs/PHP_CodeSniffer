@@ -1,7 +1,7 @@
 <documentation title="Empty Statements">
     <standard>
     <![CDATA[
-    Control Structures must have at least one statment inside of the body.
+    Control Structures must have at least one statement inside of the body.
     ]]>
     </standard>
     <code_comparison>

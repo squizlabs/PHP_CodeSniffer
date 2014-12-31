@@ -128,7 +128,7 @@ class PHP_CodeSniffer_File
     public function missingDescription($threeSpaces)
     {
 
-    }//end missingDescroption()
+    }//end missingDescription()
 
 
     /**

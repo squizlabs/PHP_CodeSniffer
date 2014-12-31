@@ -45,7 +45,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
                                  );
 
     /**
-     * A cache of forbidden function names, for faster lookups.
+     * A cache of forbidden function names, for faster lookup's.
      *
      * @var array(string)
      */

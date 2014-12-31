@@ -374,7 +374,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Get a list of CLI values to set befor the file is tested.
+     * Get a list of CLI values to set before the file is tested.
      *
      * @param string $filename The name of the file being tested.
      *

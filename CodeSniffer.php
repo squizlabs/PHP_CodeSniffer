@@ -1,6 +1,6 @@
 <?php
 /**
- * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * PHP_CodeSniffer tokenizes PHP code and detects violations of a
  * defined set of coding standards.
  *
  * PHP version 5
@@ -41,7 +41,7 @@ if (interface_exists('PHP_CodeSniffer_Sniff', true) === false) {
 }
 
 /**
- * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * PHP_CodeSniffer tokenizes PHP code and detects violations of a
  * defined set of coding standards.
  *
  * Standards are specified by classes that implement the PHP_CodeSniffer_Sniff
@@ -2028,7 +2028,7 @@ class PHP_CodeSniffer
      * Prepares token content for output to screen.
      *
      * Replaces invisible characters so they are visible. On non-Windows
-     * OSes it will also colour the invisble characters.
+     * OSes it will also colour the invisible characters.
      *
      * @param string $content The content to prepare.
      *

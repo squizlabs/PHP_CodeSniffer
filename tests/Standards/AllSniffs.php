@@ -71,7 +71,7 @@ class PHP_CodeSniffer_Standards_AllSniffs
             $standards = PHP_CodeSniffer::getInstalledStandards(true, $path);
 
             // If the test is running PEAR installed, the built-in standards
-            // are split inot different directories; one for the sniffs and
+            // are split into different directories; one for the sniffs and
             // a different file system location for tests.
             if ($isInstalled === true
                 && is_dir($path.DIRECTORY_SEPARATOR.'Generic') === true
