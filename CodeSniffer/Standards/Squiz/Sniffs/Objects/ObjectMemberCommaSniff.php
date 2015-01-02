@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Objects_ObjectInstantiationSniff.
+ * Squiz_Sniffs_Objects_ObjectMemberCommaSniff.
  *
  * PHP version 5
  *
@@ -13,9 +13,9 @@
  */
 
 /**
- * Squiz_Sniffs_Objects_ObjectInstantiationSniff.
+ * Squiz_Sniffs_Objects_ObjectMemberCommaSniff.
  *
- * Ensures objects are assigned to a variable when instantiated.
+ * Ensures the last member of an object is not followed by a comma.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
