@@ -650,3 +650,14 @@ public function foo(SomeClass $someclass, \OtherVendor\Package\SomeClass2 $somec
 public function _() {
     return $foo;
 }
+
+class Baz {
+    /**
+     * The PHP5 constructor
+     *
+     * No return tag
+     */
+    public function __construct() {
+
+    }
+}
