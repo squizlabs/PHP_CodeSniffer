@@ -139,7 +139,7 @@ class Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_Code
                           $this->requiredSpacesBeforeClose,
                           $spaceBeforeClose,
                          );
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeClose');
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeClose', $data);
                 if ($fix === true) {
                     $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
                     if ($spaceBeforeClose === 0) {
