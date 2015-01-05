@@ -90,7 +90,7 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             // should be done by an EOF sniff.
             $foundLines = $this->spacing;
         } else {
-            $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextLineToken + 1), null, true);
+            $nextContent = $phpcsFile->findNext(T_WHITESPACE, $nextLineToken, null, true);
             if ($nextContent === false) {
                 // We are at the end of the file.
                 // Don't check spacing after the function because this

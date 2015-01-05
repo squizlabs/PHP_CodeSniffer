@@ -43,8 +43,8 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                20   => 1,
-                29   => 1,
+                20  => 1,
+                29  => 1,
                 38  => 1,
                 45  => 1,
                 49  => 1,
@@ -53,9 +53,9 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
                 60  => 1,
                 75  => 1,
                 94  => 1,
-                105  => 1,
-                107  => 1,
-                113  => 2,
+                105 => 1,
+                107 => 1,
+                113 => 2,
                 135 => 1,
                 154 => 1,
                 167 => 2,
@@ -63,6 +63,8 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
                 218 => 1,
                 233 => 1,
                 252 => 1,
+                275 => 1,
+                276 => 1,
                );
 
     }//end getErrorList()
@@ -84,5 +86,3 @@ class Squiz_Tests_WhiteSpace_FunctionSpacingUnitTest extends AbstractSniffUnitTe
 
 
 }//end class
-
-?>

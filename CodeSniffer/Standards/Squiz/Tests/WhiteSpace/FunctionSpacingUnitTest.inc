@@ -270,6 +270,12 @@ $callback = function ($bar) use ($foo)
                 $bar += $foo;
             };
 
+class MyClass
+{
+    function func1() {
+    }
+}
+
 
 function test() {
 
