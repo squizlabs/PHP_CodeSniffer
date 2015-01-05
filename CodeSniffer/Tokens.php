@@ -390,6 +390,8 @@ final class PHP_CodeSniffer_Tokens
                                        T_PLUS_EQUAL   => T_PLUS_EQUAL,
                                        T_XOR_EQUAL    => T_XOR_EQUAL,
                                        T_DOUBLE_ARROW => T_DOUBLE_ARROW,
+                                       T_SL_EQUAL     => T_SL_EQUAL,
+                                       T_SR_EQUAL     => T_SR_EQUAL,
                                       );
 
     /**
@@ -536,6 +538,8 @@ final class PHP_CodeSniffer_Tokens
                                 T_POWER       => T_POWER,
                                 T_BITWISE_AND => T_BITWISE_AND,
                                 T_BITWISE_OR  => T_BITWISE_OR,
+                                T_SL          => T_SL,
+                                T_SR          => T_SR,
                                );
 
     /**
