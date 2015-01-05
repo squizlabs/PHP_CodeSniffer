@@ -130,8 +130,11 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
 
             if ($origBrackets === $brackets && $origConditions === $conditions) {
                 // Make sure it starts a line, otherwise dont check indent.
+                $prev   = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), $stackPtr, true);
                 $indent = $tokens[($next - 1)];
-                if ($indent['code'] === T_WHITESPACE) {
+                if ($tokens[$prev]['line'] !== $tokens[$next]['line']
+                    && $indent['code'] === T_WHITESPACE
+                ) {
                     if ($indent['line'] === $tokens[$next]['line']) {
                         $foundIndent = strlen($indent['content']);
                     } else {
