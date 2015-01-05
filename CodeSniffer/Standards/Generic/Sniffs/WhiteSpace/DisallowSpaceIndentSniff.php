@@ -126,7 +126,16 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
                     $phpcsFile->fixer->replaceToken($i, $padding.$trimmed);
                 }
             } else if ($content[0] === "\t") {
-                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                $multipleWhitespaces = preg_match('/\t(\s{2,})/', $content) === 1 ? true : false;
+                if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $multipleWhitespaces === true) {
+                    $phpcsFile->addError(
+                        'Multiple spaces used in doc comment.',
+                        $i,
+                        'MultipleSpacesInDocComment'
+                    );
+                } else {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                }
             }//end if
         }//end for
 

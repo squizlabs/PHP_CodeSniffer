@@ -28,7 +28,7 @@ EOF;
 	/**
 	 * CVS revision for HTTP headers.
      *
-	  * @var string
+	 * @var string
 	 * @access private
 	 */
 	/**
@@ -41,6 +41,6 @@ $str = 'hello
 /**
  * This PHP DocBlock should be fine, even though there is a single space at the beginning.
  *
- * @var int $x
+  * @var int $x
  */
 $x = 1;
