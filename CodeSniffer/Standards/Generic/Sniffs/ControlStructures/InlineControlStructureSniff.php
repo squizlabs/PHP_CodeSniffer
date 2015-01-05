@@ -131,14 +131,24 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 $phpcsFile->fixer->addContent($closer, ' { ');
             }
 
+            $lastNonEmpty = $closer;
             for ($end = ($closer + 1); $end < $phpcsFile->numTokens; $end++) {
                 if ($tokens[$end]['code'] === T_SEMICOLON) {
+                    break;
+                }
+
+                if ($tokens[$end]['code'] === T_CLOSE_TAG) {
+                    $end = $lastNonEmpty;
                     break;
                 }
 
                 if (isset($tokens[$end]['scope_opener']) === true) {
                     $end = $tokens[$end]['scope_closer'];
                     break;
+                }
+
+                if ($tokens[$end]['code'] !== T_WHITESPACE) {
+                    $lastNonEmpty = $end;
                 }
             }
 
