@@ -152,7 +152,7 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test that using a single line ignore does not interfere with other suppression's.
+     * Test that using a single line ignore does not interfere with other suppressions.
      *
      * @return void
      */
