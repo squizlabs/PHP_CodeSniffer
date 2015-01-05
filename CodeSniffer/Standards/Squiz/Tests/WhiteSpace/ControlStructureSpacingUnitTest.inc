@@ -190,3 +190,10 @@ switch ($moo)
 
     return $moo;
 }
+
+try {
+    // Something
+}
+catch (Exception $e) {
+    // Something
+}
