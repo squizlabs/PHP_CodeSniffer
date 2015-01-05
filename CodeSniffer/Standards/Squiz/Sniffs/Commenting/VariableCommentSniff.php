@@ -20,15 +20,6 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
 /**
  * Parses and verifies the variable doc comment.
  *
- * Verifies that :
- * <ul>
- *  <li>A variable doc comment exists.</li>
- *  <li>Short description ends with a full stop.</li>
- *  <li>There is a blank line after the short description.</li>
- *  <li>There is a blank line between the description and the tags.</li>
- *  <li>Check the order, indentation and content of each tag.</li>
- * </ul>
- *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>

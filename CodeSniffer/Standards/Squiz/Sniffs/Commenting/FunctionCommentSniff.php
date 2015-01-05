@@ -20,23 +20,6 @@ if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false)
 /**
  * Parses and verifies the doc comments for functions.
  *
- * Verifies that :
- * <ul>
- *  <li>A comment exists</li>
- *  <li>There is a blank newline after the short description</li>
- *  <li>There is a blank newline between the long and short description</li>
- *  <li>There is a blank newline between the long description and tags</li>
- *  <li>Parameter names represent those in the method</li>
- *  <li>Parameter comments are in the correct order</li>
- *  <li>Parameter comments are complete</li>
- *  <li>A type hint is provided for array and custom class</li>
- *  <li>Type hint matches the actual variable/class type</li>
- *  <li>A blank line is present before the first and after the last parameter</li>
- *  <li>A return type exists</li>
- *  <li>Any throw tag must have a comment</li>
- *  <li>The tag order and indentation are correct</li>
- * </ul>
- *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>

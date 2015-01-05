@@ -16,18 +16,6 @@
 /**
  * Parses and verifies the file doc comment.
  *
- * Verifies that :
- * <ul>
- *  <li>A file doc comment exists.</li>
- *  <li>There is no blank line between the open tag and the file comment.</li>
- *  <li>Short description ends with a full stop.</li>
- *  <li>There is a blank line after the short description.</li>
- *  <li>Each paragraph of the long description ends with a full stop.</li>
- *  <li>There is a blank line between the description and the tags.</li>
- *  <li>Check the order, indentation and content of each tag.</li>
- *  <li>There is exactly one blank line after the file comment.</li>
- * </ul>
- *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
