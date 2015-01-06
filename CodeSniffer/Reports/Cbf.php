@@ -58,14 +58,17 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $width=80
     ) {
         $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-        if (empty($cliValues['files']) === false) {
-            ob_end_clean();
-            $errors    = $phpcsFile->getFixableCount();
-            $startTime = microtime(true);
-            echo "\t=> Fixing file: $errors/$errors violations remaining";
-        }
+        $errors    = $phpcsFile->getFixableCount();
+        if ($errors !== 0) {
+            if (empty($cliValues['files']) === false) {
+                ob_end_clean();
+                $errors    = $phpcsFile->getFixableCount();
+                $startTime = microtime(true);
+                echo "\t=> Fixing file: $errors/$errors violations remaining";
+            }
 
-        $fixed = $phpcsFile->fixer->fixFile();
+            $fixed = $phpcsFile->fixer->fixFile();
+        }
 
         if (empty($cliValues['files']) === true) {
             // Replacing STDIN, so output current file to STDOUT
@@ -74,6 +77,10 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
             echo $phpcsFile->fixer->getContents();
             ob_end_flush();
             exit(1);
+        }
+
+        if ($errors === 0) {
+            return false;
         }
 
         if ($fixed === false) {
