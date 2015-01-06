@@ -802,3 +802,15 @@ if ($foo):
 	if ($bar) $foo = 1;
 	elseif ($baz) $foo = 2;
 endif;
+
+function foo()
+{
+	$foo = array(
+	);
+
+	if ($foo) {
+		echo 'foo';
+	}
+
+	return false;
+}

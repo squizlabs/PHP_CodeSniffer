@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
   - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
   - Fixed bug #386 : Undefined offset in Squiz.FunctionComment sniff when param has no comment
+  - Fixed bug #390 : Indentation of non-control structures isn't adjusted when containing structure is fixed
   - Fixed bug #400 : InlineControlStructureSniff fails to fix when statement has no semicolon
   - Fixed bug #401 : PHPCBF no-patch option shows an error when there are no fixable violations in a file
   - Fixed bug #405 : The "Squiz.WhiteSpace.FunctionSpacing" sniff removes class "}" during fixing
