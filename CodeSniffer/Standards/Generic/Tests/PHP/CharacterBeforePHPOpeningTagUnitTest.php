@@ -42,7 +42,6 @@ class Generic_Tests_PHP_CharacterBeforePHPOpeningTagUnitTest extends AbstractSni
     {
         return array(
                 2 => 1,
-                7 => 1,
                );
 
     }//end getErrorList()

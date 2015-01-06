@@ -55,6 +55,10 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
             $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
+        // Skip the rest of the file so we don't pick up additional
+        // open tags, typically embedded in HTML.
+        return ($phpcsFile->numTokens - 1);
+
     }//end process()
 
 
