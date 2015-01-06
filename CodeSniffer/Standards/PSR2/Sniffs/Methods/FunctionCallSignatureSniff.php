@@ -50,50 +50,25 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
     public function isMultiLineCall(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-        $compareLine  = $tokens[$openBracket]['line'];
 
-        for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['code'] === T_WHITESPACE) {
-                continue;
-            }
-
-            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                // Array arguments.
-                $i           = $tokens[$i]['parenthesis_closer'];
-                $compareLine = $tokens[$i]['line'];
-                continue;
-            } else if ($tokens[$i]['code'] === T_CLOSURE) {
-                // Closure arguments.
-                $i           = $tokens[$i]['scope_closer'];
-                $compareLine = $tokens[$i]['line'];
-                continue;
-            } else if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
-                // Array arguments (short syntax).
-                $i           = $tokens[$i]['bracket_closer'];
-                $compareLine = $tokens[$i]['line'];
-                continue;
-            } else if ($tokens[$i]['code'] === T_CONSTANT_ENCAPSED_STRING) {
-                // Multi-line string arguments.
-                if ($tokens[($i + 1)]['code'] === T_CONSTANT_ENCAPSED_STRING) {
-                    $compareLine = $tokens[($i + 1)]['line'];
-                }
-
-                continue;
-            } else if ($tokens[$i]['code'] === T_STRING_CONCAT) {
-                // Multi-line string concat.
-                $compareLine = $tokens[$i]['line'];
-                continue;
-            } else if ($tokens[$i]['code'] === T_INLINE_THEN) {
-                // Inline IF statements.
-                $i           = $phpcsFile->findEndOfStatement($i);
-                $compareLine = $tokens[$i]['line'];
-                continue;
-            }//end if
-
-            if ($tokens[$i]['line'] !== $compareLine) {
+        $end = $phpcsFile->findEndOfStatement($openBracket + 1);
+        while ($tokens[$end]['code'] === T_COMMA) {
+            // If the next bit of code is not on the same line, this is a
+            // multi-line function call.
+            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+            if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
                 return true;
             }
-        }//end for
+
+            $end = $phpcsFile->findEndOfStatement($next);
+        }
+
+        // We've reached the last argument, so see if the next content
+        // (should be the close bracket) is also on the same line.
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+        if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
+            return true;
+        }
 
         return false;
 
