@@ -80,6 +80,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                           T_STATIC    => true,
                           T_ABSTRACT  => true,
                           T_CONST     => true,
+                          T_VAR       => true,
                          );
             if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
                 return;

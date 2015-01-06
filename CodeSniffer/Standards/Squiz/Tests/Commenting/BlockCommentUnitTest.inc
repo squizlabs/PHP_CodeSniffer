@@ -187,3 +187,15 @@ if (Permission::hasPermission($projectid, 'project.metadata.add') === FALSE) {
     Comment goes here
 */
 $two = (1 + 1);  // I'm not a comment closer!
+
+class Foo
+{
+
+    /**
+     * Comment here.
+     *
+     * @var array
+     */
+    var $bar = array();
+
+}

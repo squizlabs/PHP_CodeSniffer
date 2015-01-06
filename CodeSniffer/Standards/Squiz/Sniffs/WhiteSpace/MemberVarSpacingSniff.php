@@ -46,6 +46,7 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         $tokens = $phpcsFile->getTokens();
 
         $ignore   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $ignore[] = T_VAR;
         $ignore[] = T_WHITESPACE;
 
         $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
