@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PSR2 standard now sets a default tab width of 4 spaces
   - PEAR ObjectOperatorIndentSniff now only checks object operators at the start of a line
   - Squiz ControlStructureSpacingSniff no longer enforces a blank line before CATCH statements
+  - Fixed bug #379 : Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast incorrectly detects comments
   - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
   - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
   - Fixed bug #386 : Undefined offset in Squiz.FunctionComment sniff when param has no comment

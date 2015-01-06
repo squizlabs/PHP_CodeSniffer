@@ -321,7 +321,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->fixer->addNewlineBefore($arrayEnd);
             }
         } else if ($tokens[$arrayEnd]['column'] !== $keywordStart) {
-            // Check the closing bracket is lined up under the a in array.
+            // Check the closing bracket is lined up under the "a" in array.
             $expected = ($keywordStart - 1);
             $found    = ($tokens[$arrayEnd]['column'] - 1);
             $error    = 'Closing parenthesis not aligned correctly; expected %s space(s) but found %s';
@@ -555,7 +555,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $count     = count($indices);
             $lastIndex = $indices[($count - 1)]['value'];
 
-            $trailingContent = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), $lastIndex, true);
+            $trailingContent = $phpcsFile->findPrevious(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($arrayEnd - 1),
+                $lastIndex,
+                true
+            );
+
             if ($tokens[$trailingContent]['code'] !== T_COMMA) {
                 $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'no');
                 $error = 'Comma required after last value in array declaration';
