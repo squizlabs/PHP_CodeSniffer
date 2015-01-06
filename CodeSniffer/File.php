@@ -3220,7 +3220,13 @@ class PHP_CodeSniffer_File
         $endTokens = PHP_CodeSniffer_Tokens::$blockOpeners;
 
         $endTokens[T_COLON]     = true;
+        $endTokens[T_COMMA]     = true;
         $endTokens[T_SEMICOLON] = true;
+
+        $endTokens[T_OPEN_PARENTHESIS]    = true;
+        $endTokens[T_OPEN_SQUARE_BRACKET] = true;
+        $endTokens[T_OPEN_CURLY_BRACKET]  = true;
+
         $endTokens[T_OPEN_TAG]  = true;
         $endTokens[T_CLOSE_TAG] = true;
 
@@ -3269,16 +3275,25 @@ class PHP_CodeSniffer_File
         $endTokens = PHP_CodeSniffer_Tokens::$blockOpeners;
 
         $endTokens[T_COLON]     = true;
+        $endTokens[T_COMMA]     = true;
         $endTokens[T_SEMICOLON] = true;
+
+        $endTokens[T_CLOSE_PARENTHESIS]    = true;
+        $endTokens[T_CLOSE_SQUARE_BRACKET] = true;
+        $endTokens[T_CLOSE_CURLY_BRACKET]  = true;
+
         $endTokens[T_OPEN_TAG]  = true;
         $endTokens[T_CLOSE_TAG] = true;
 
         $lastNotEmpty = $start;
 
-        for ($i = $start; $i >= $this->numTokens; $i++) {
+        for ($i = $start; $i <= $this->numTokens; $i++) {
             if (isset($endTokens[$this->_tokens[$i]['code']]) === true) {
                 // Found the end of the statement.
-                if ($this->_tokens[$i]['code'] === T_OPEN_TAG
+                if ($this->_tokens[$i]['code'] === T_CLOSE_PARENTHESIS
+                    || $this->_tokens[$i]['code'] === T_CLOSE_SQUARE_BRACKET
+                    || $this->_tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                    || $this->_tokens[$i]['code'] === T_OPEN_TAG
                     || $this->_tokens[$i]['code'] === T_CLOSE_TAG
                 ) {
                     return $lastNotEmpty;

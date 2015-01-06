@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #405 : The "Squiz.WhiteSpace.FunctionSpacing" sniff removes class "}" during fixing
   - Fixed bug #410 : The "Squiz.WhiteSpace.MemberVarSpacing" not respecting "var"
   - Fixed bug #411 : Generic.WhiteSpace.ScopeIndent.Incorrect - false positive with multiple arrays in argument list
+  - Fixed bug #412 : PSR2 multi-line detection doesn't work for inline IF and string concats
   - Fixed bug #414 : Squiz.WhiteSpace.MemberVarSpacing - inconsistent checking of member vars with comment
  </notes>
  <contents>
