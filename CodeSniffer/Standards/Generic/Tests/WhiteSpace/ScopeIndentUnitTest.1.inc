@@ -803,6 +803,15 @@ if ($bar) $foo = 1;
 elseif ($baz) $foo = 2;
 endif;
 
+$this
+    ->method(array(
+        'foo' => 'bar',
+    ), 'arg', array(
+        'foo' => 'bar',
+    ));
+
+foo();
+
     function foo()
     {
         $foo = array(

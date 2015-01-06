@@ -231,6 +231,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                    $prev  = $phpcsFile->findStartOfStatement($first);
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                     if ($this->_debug === true) {
                         $line = $tokens[$first]['line'];
                         $type = $tokens[$first]['type'];
