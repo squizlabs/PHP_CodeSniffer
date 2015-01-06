@@ -51,26 +51,29 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
 
         $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$prev]['code']]) === true) {
-            // Assume the comment belongs to the member var.
-            // Check the spacing, but then skip it.
-            $foundLines = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
-            if ($foundLines > 0) {
-                $error = 'Expected 0 blank lines after member var comment; %s found';
-                $data  = array($foundLines);
-                $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($prev + 1); $i <= $stackPtr; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
-                            break;
+            // Assume the comment belongs to the member var if it is on a line by itself.
+            $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
+            if ($tokens[$prevContent]['line'] !== $tokens[$prev]['line']) {
+                // Check the spacing, but then skip it.
+                $foundLines = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
+                if ($foundLines > 0) {
+                    $error = 'Expected 0 blank lines after member var comment; %s found';
+                    $data  = array($foundLines);
+                    $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($prev + 1); $i <= $stackPtr; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        $phpcsFile->fixer->replaceToken($i, '');
+                        $phpcsFile->fixer->addNewline($prev);
+                        $phpcsFile->fixer->endChangeset();
                     }
-
-                    $phpcsFile->fixer->addNewline($prev);
-                    $phpcsFile->fixer->endChangeset();
-                }
+                }//end if
             }//end if
 
             $start = $prev;

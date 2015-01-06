@@ -115,4 +115,24 @@ class MyClass
     protected $actions = array();
 
 }//end class
-?>
+
+class Foo
+{
+
+    private $foo; // comment
+
+    private $bar;
+
+}
+
+class Foo
+{
+
+    private $foo; // comment
+
+    /**
+     * @var type
+     */
+    private $bar;
+
+}

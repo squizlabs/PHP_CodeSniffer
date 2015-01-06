@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #401 : PHPCBF no-patch option shows an error when there are no fixable violations in a file
   - Fixed bug #405 : The "Squiz.WhiteSpace.FunctionSpacing" sniff removes class "}" during fixing
   - Fixed bug #410 : The "Squiz.WhiteSpace.MemberVarSpacing" not respecting "var"
+  - Fixed bug #414 : Squiz.WhiteSpace.MemberVarSpacing - inconsistent checking of member vars with comment
  </notes>
  <contents>
   <dir name="/">
