@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ControlStructureSpacingSniff no longer enforces a blank line before CATCH statements
   - Squiz FunctionCommentSniff now fixes the return type in the @return tag (request #392)
   - PSR2 ControlStructureSpacingSniff now checks for, and fixes, newlines after the opening parenthesis
+  - Added a markdown document generator (--generator=markdown to use)
+    -- Thanks to Stefano Kowalke for the contribution
   - Fixed bug #379 : Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast incorrectly detects comments
   - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
   - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
@@ -119,6 +121,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="HTML.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file baseinstalldir="PHP" name="Markdown.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="PHP" name="Text.php" role="php">

@@ -191,7 +191,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         error_reporting(0);
         echo '  <div class="tag-line">';
         echo 'Documentation generated on '.date('r');
-        echo ' by <a href="http://pear.php.net/package/PHP_CodeSniffer">PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'</a>';
+        echo ' by <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'</a>';
         echo '</div>'.PHP_EOL;
         error_reporting(E_ALL | E_STRICT);
 
