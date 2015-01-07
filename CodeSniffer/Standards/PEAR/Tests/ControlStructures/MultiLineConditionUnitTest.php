@@ -43,6 +43,7 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
     public function getErrorList()
     {
         return array(
+                21  => 1,
                 22  => 1,
                 35  => 1,
                 40  => 1,
@@ -51,9 +52,12 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
                 43  => 1,
                 49  => 1,
                 54  => 1,
+                57  => 1,
                 58  => 1,
                 59  => 1,
                 61  => 1,
+                67  => 1,
+                87  => 1,
                 88  => 1,
                 89  => 1,
                 90  => 1,
@@ -61,6 +65,8 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
                 101 => 1,
                 109 => 2,
                 125 => 1,
+                145 => 1,
+                153 => 1,
                );
 
     }//end getErrorList()
@@ -82,5 +88,3 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
 
 
 }//end class
-
-?>

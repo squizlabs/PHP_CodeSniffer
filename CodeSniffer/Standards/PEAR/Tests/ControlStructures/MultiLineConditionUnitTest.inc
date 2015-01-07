@@ -141,3 +141,16 @@ if (true) :
     $foo = true;
 endif;
 
+if ($IPP->errorCode() == 401 || // comment
+    $IPP->errorCode() == 3200)  /* long comment
+                                   here
+                                 */
+{
+    return false;
+}
+
+if ($IPP->errorCode() == 401 || // comment
+    $IPP->errorCode() == 3200)  // long comment here
+{
+    return false;
+}

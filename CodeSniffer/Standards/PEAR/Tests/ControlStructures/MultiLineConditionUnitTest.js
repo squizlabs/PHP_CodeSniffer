@@ -141,3 +141,16 @@ if (true) {
     foo = true;
 };
 
+if (foo == 401 || // comment
+    bar == 3200)  /* long comment
+                     here
+                   */
+{
+    return false;
+}
+
+if (foo == 401 || // comment
+    bar == 3200)  // long comment here
+{
+    return false;
+}
