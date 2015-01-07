@@ -28,8 +28,7 @@ foreach ($blah as $var) {
     }
 }
 
-if (
-    $defaultPageDesign === 0
+if ($defaultPageDesign === 0
     && $defaultCascade === TRUE
     && $defaultChildDesign === 0
 ) {

@@ -92,7 +92,11 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
         $parenCloser    = $tokens[$stackPtr]['parenthesis_closer'];
         $spaceAfterOpen = 0;
         if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-            $spaceAfterOpen = strlen(rtrim($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar));
+            if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
+                $spaceAfterOpen = 'newline';
+            } else {
+                $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
+            }
         }
 
         $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
@@ -108,6 +112,8 @@ class PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff implements PHP_
                 $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
                 if ($spaceAfterOpen === 0) {
                     $phpcsFile->fixer->addContent($parenOpener, $padding);
+                } else if ($spaceAfterOpen === 'newline') {
+                    $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
                 } else {
                     $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
                 }

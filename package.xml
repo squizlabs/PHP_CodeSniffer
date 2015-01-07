@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic CharacterBeforePHPOpeningTagSniff now only checks the first PHP tag it finds (request #423)
   - PEAR ObjectOperatorIndentSniff now only checks object operators at the start of a line
   - Squiz ControlStructureSpacingSniff no longer enforces a blank line before CATCH statements
+  - PSR2 ControlStructureSpacingSniff now checks for, and fixes, newlines after the opening parenthesis
   - Fixed bug #379 : Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast incorrectly detects comments
   - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
   - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
