@@ -61,3 +61,6 @@ $this->setFoo(true
 $this->setFoo('some'
     . 'long'
     . 'text', 'string');
+
+foo(bar(), $a);
+foo();bar();

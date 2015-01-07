@@ -56,7 +56,11 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
             // If the next bit of code is not on the same line, this is a
             // multi-line function call.
             $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
-            if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
+            if ($next === false) {
+                return false;
+            }
+
+            if ($tokens[$next]['line'] !== $tokens[$end]['line']) {
                 return true;
             }
 
