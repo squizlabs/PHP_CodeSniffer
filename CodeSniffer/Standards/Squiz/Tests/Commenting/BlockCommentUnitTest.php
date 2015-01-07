@@ -44,7 +44,6 @@ class Squiz_Tests_Commenting_BlockCommentUnitTest extends AbstractSniffUnitTest
     {
         $errors = array(
                    8   => 1,
-                   19  => 1,
                    20  => 1,
                    24  => 1,
                    30  => 1,

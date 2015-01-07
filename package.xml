@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR ObjectOperatorIndentSniff now only checks object operators at the start of a line
   - Squiz ControlStructureSpacingSniff no longer enforces a blank line before CATCH statements
   - Squiz FunctionCommentSniff now fixes the return type in the @return tag (request #392)
+  - Squiz BlockCommentSniff now only disallows lowercase letters at the start of the comment
   - PSR2 ControlStructureSpacingSniff now checks for, and fixes, newlines after the opening parenthesis
   - Added a markdown document generator (--generator=markdown to use)
     -- Thanks to Stefano Kowalke for the contribution

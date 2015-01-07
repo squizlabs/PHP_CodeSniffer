@@ -16,7 +16,7 @@
 */
 
 /*
-    - This is not valid:
+    - This is valid:
    Not indented correctly.
 */
 

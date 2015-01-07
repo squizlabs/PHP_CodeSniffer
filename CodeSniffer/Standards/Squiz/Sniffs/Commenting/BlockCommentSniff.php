@@ -211,7 +211,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            if (preg_match('|\p{Lu}|u', $commentText[0]) === 0) {
+            if (preg_match('/\p{Lu}|\P{L}/u', $commentText[0]) === 0) {
                 $error = 'Block comments must start with a capital letter';
                 $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
             }
