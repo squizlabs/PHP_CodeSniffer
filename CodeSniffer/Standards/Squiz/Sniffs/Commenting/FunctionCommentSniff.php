@@ -91,7 +91,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                               $suggestedType,
                               $content,
                              );
-                    $phpcsFile->addError($error, $return, 'InvalidReturn', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $return, 'InvalidReturn', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($return + 2), $suggestedType);
+                    }
                 }
 
                 // If the return type is void, make sure there is
