@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
   - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
   - PSR2 standard now sets a default tab width of 4 spaces
+  - Generic DocCommentSniff now only disallows lowercase letters at the start of a long/short comment (request #377)
+    -- All non-letter characters are now allowed, including markdown special characters and numbers
   - Generic DisallowMultipleStatementsSniff now allows multiple open/close tags on the same line (request #423)
   - Generic CharacterBeforePHPOpeningTagSniff now only checks the first PHP tag it finds (request #423)
   - PEAR ObjectOperatorIndentSniff now only checks object operators at the start of a line

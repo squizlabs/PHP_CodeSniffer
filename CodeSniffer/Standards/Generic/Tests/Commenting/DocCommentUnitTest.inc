@@ -169,3 +169,7 @@
 
 /** @var Database $mockedDatabase */
 /** @var Container $mockedContainer */
+
+/**
+ * 这是一条测试评论.
+ */

@@ -159,7 +159,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        if (preg_match('|\p{Lu}|u', $shortContent[0]) === 0) {
+        if (preg_match('/\p{Lu}|\P{L}/u', $shortContent[0]) === 0) {
             $error = 'Doc comment short description must start with a capital letter';
             $phpcsFile->addError($error, $short, 'ShortNotCapital');
         }
@@ -189,7 +189,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            if (preg_match('|\p{Lu}|u', $tokens[$long]['content'][0]) === 0) {
+            if (preg_match('/\p{Lu}|\P{L}/u', $tokens[$long]['content'][0]) === 0) {
                 $error = 'Doc comment long description must start with a capital letter';
                 $phpcsFile->addError($error, $long, 'LongNotCapital');
             }
