@@ -236,7 +236,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
-        if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
+        if ($tokens[$closer]['line'] > $tokens[$openBracket]['line']) {
+            $spaceBeforeClose = 'newline';
+        } else if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
             $spaceBeforeClose = strlen($tokens[($closer - 1)]['content']);
         }
 
