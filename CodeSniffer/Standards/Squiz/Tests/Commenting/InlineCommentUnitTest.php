@@ -53,7 +53,6 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
                        32  => 2,
                        36  => 1,
                        44  => 2,
-                       54  => 1,
                        58  => 1,
                        61  => 1,
                        64  => 1,
@@ -75,7 +74,6 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
             return array(
                     31  => 1,
                     36  => 2,
-                    44  => 1,
                     48  => 1,
                     51  => 1,
                     54  => 1,
