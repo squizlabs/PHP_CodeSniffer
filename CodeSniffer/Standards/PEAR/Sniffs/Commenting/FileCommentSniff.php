@@ -237,7 +237,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                               $tag,
                               $docBlock,
                              );
-                    $phpcsFile->addError($error, $commentEnd, 'Missing'.ucfirst($tag).'Tag', $data);
+                    $phpcsFile->addError($error, $commentEnd, 'Missing'.ucfirst(substr($tag, 1)).'Tag', $data);
                 }
 
                 continue;
