@@ -69,9 +69,9 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
 
         if (PHP_CODESNIFFER_CBF === true) {
             if ($fixed === false) {
-                echo 'ERROR';
+                echo "\033[31mERROR\033[0m";
             } else {
-                echo 'DONE';
+                echo "\033[32mDONE\033[0m";
             }
 
             $timeTaken = ((microtime(true) - $startTime) * 1000);
@@ -95,7 +95,13 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
             return false;
         }
 
-        $diff = $phpcsFile->fixer->generateDiff();
+        if (PHP_CODESNIFFER_CBF === true) {
+            // Diff without colours.
+            $diff = $phpcsFile->fixer->generateDiff(null, false);
+        } else {
+            $diff = $phpcsFile->fixer->generateDiff();
+        }
+
         if ($diff === '') {
             // Nothing to print.
             return false;

@@ -120,7 +120,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
 
         ksort($this->_metricCache);
 
-        echo PHP_EOL.'PHP CODE SNIFFER INFORMATION REPORT'.PHP_EOL;
+        echo PHP_EOL."\033[1m".'PHP CODE SNIFFER INFORMATION REPORT'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
         foreach ($this->_metricCache as $metric => $values) {
@@ -136,7 +136,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
             }
 
             $winPercent = round(($winnerCount / $totalCount * 100), 2);
-            echo "$metric: $winner [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
+            echo "$metric: \033[4m$winner\033[0m [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
 
             asort($values);
             $values = array_reverse($values, true);

@@ -121,8 +121,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         asort($this->_sourceCache);
         $this->_sourceCache = array_reverse($this->_sourceCache);
 
-        echo PHP_EOL.'PHP CODE SNIFFER VIOLATION SOURCE SUMMARY'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL;
+        echo PHP_EOL."\033[1mPHP CODE SNIFFER VIOLATION SOURCE SUMMARY\033[0m".PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL."\033[1m";
         if ($showSources === true) {
             if ($totalFixable > 0) {
                 echo '    SOURCE'.str_repeat(' ', ($width - 15)).'COUNT'.PHP_EOL;
@@ -137,7 +137,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             }
         }
 
-        echo str_repeat('-', $width).PHP_EOL;
+        echo "\033[0m".str_repeat('-', $width).PHP_EOL;
 
         $fixableSources = 0;
         $maxSniffWidth  = 37;
@@ -207,7 +207,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.($totalErrors + $totalWarnings).' SNIFF VIOLATION';
+        echo "\033[1m".'A TOTAL OF '.($totalErrors + $totalWarnings).' SNIFF VIOLATION';
         if (($totalErrors + $totalWarnings) > 1) {
             echo 'S';
         }
@@ -217,9 +217,11 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             echo 'S';
         }
 
+        echo "\033[0m";
+
         if ($totalFixable > 0) {
             echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
-            echo "PHPCBF CAN FIX THE $fixableSources MARKED SOURCES AUTOMATICALLY ($totalFixable VIOLATIONS IN TOTAL)";
+            echo "\033[1mPHPCBF CAN FIX THE $fixableSources MARKED SOURCES AUTOMATICALLY ($totalFixable VIOLATIONS IN TOTAL)\033[0m";
         }
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;

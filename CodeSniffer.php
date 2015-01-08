@@ -584,6 +584,7 @@ class PHP_CodeSniffer
         $files        = (array) $files;
         $cliValues    = $this->cli->getCommandLineValues();
         $showProgress = $cliValues['showProgress'];
+        $useColors    = $cliValues['colors'];
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Creating file list... ';
@@ -632,13 +633,25 @@ class PHP_CodeSniffer
                 $errors   = $phpcsFile->getErrorCount();
                 $warnings = $phpcsFile->getWarningCount();
                 if ($errors > 0) {
+                    if ($useColors === true) {
+                        echo "\033[31m";
+                    }
+
                     echo 'E';
                 } else if ($warnings > 0) {
+                    if ($useColors === true) {
+                        echo "\033[33m";
+                    }
+
                     echo 'W';
                 } else {
                     echo '.';
                 }
-            }
+
+                if ($useColors === true) {
+                    echo "\033[0m";
+                }
+            }//end if
 
             $dots++;
             if ($dots === 60) {

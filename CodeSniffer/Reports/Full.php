@@ -61,17 +61,17 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         $width = max($width, 70);
         $file  = $report['filename'];
 
-        echo PHP_EOL.'FILE: ';
+        echo PHP_EOL."\033[1mFILE: ";
         if (strlen($file) <= ($width - 9)) {
             echo $file;
         } else {
             echo '...'.substr($file, (strlen($file) - ($width - 9)));
         }
 
-        echo PHP_EOL;
+        echo "\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        echo 'FOUND '.$report['errors'].' ERROR';
+        echo "\033[1m".'FOUND '.$report['errors'].' ERROR';
         if ($report['errors'] !== 1) {
             echo 'S';
         }
@@ -88,7 +88,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             echo 'S';
         }
 
-        echo PHP_EOL;
+        echo "\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
         // Work out the max line number for formatting.
@@ -119,7 +119,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                 foreach ($colErrors as $error) {
                     $message = $error['message'];
                     if ($showSources === true) {
-                        $message .= ' ('.$error['source'].')';
+                        $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
                     }
 
                     // The padding that goes on the front of the line.
@@ -130,11 +130,14 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                         PHP_EOL.$paddingLine2
                     );
 
-                    echo ' '.str_repeat(' ', $padding).$line.' | '.$error['type'];
+                    echo ' '.str_repeat(' ', $padding).$line.' | ';
                     if ($error['type'] === 'ERROR') {
+                        echo "\033[31mERROR\033[0m";
                         if ($report['warnings'] > 0) {
                             echo '  ';
                         }
+                    } else {
+                        echo "\033[33mWARNING\033[0m";
                     }
 
                     echo ' | ';
@@ -156,7 +159,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
         echo str_repeat('-', $width).PHP_EOL;
         if ($report['fixable'] > 0) {
-            echo 'PHPCBF CAN FIX THE '.$report['fixable'].' MARKED SNIFF VIOLATIONS AUTOMATICALLY'.PHP_EOL;
+            echo "\033[1m".'PHPCBF CAN FIX THE '.$report['fixable'].' MARKED SNIFF VIOLATIONS AUTOMATICALLY'."\033[0m".PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
 

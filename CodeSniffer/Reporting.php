@@ -106,7 +106,8 @@ class PHP_CodeSniffer_Reporting
             // This is a path to a custom report class.
             $filename = realpath($type);
             if ($filename === false) {
-                throw new PHP_CodeSniffer_Exception('Custom report "'.$type.'" not found.');
+                echo 'ERROR: Custom report "'.$type.'" not found'.PHP_EOL;
+                exit(2);
             }
 
             $reportClassName = 'PHP_CodeSniffer_Reports_'.basename($filename);
@@ -116,7 +117,8 @@ class PHP_CodeSniffer_Reporting
             $filename        = $type.'.php';
             $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
             if (class_exists($reportClassName, true) === false) {
-                throw new PHP_CodeSniffer_Exception('Report type "'.$type.'" not found.');
+                echo 'ERROR: Report type "'.$type.'" not found'.PHP_EOL;
+                exit(2);
             }
         }//end if
 
@@ -208,6 +210,7 @@ class PHP_CodeSniffer_Reporting
      *
      * @param string  $report      Report type.
      * @param boolean $showSources Show sources?
+     * @param array   $cliValues   An array of command line arguments.
      * @param string  $reportFile  Report file to generate.
      * @param integer $reportWidth Report max width.
      *
@@ -216,6 +219,7 @@ class PHP_CodeSniffer_Reporting
     public function printReport(
         $report,
         $showSources,
+        array $cliValues,
         $reportFile='',
         $reportWidth=80
     ) {
@@ -225,7 +229,6 @@ class PHP_CodeSniffer_Reporting
         if ($reportFile !== null) {
             $filename = $reportFile;
             $toScreen = false;
-            ob_start();
 
             if (file_exists($filename) === true) {
                 $reportCache = file_get_contents($filename);
@@ -246,6 +249,7 @@ class PHP_CodeSniffer_Reporting
             $toScreen = true;
         }//end if
 
+        ob_start();
         $reportClass->generate(
             $reportCache,
             $this->totalFiles,
@@ -256,18 +260,24 @@ class PHP_CodeSniffer_Reporting
             $reportWidth,
             $toScreen
         );
+        $generatedReport = ob_get_contents();
+        ob_end_clean();
+
+        if ($cliValues['colors'] !== true || $reportFile !== null) {
+            $generatedReport = preg_replace('`\033\[[0-9]+m`', '', $generatedReport);
+        }
 
         if ($reportFile !== null) {
-            $generatedReport = ob_get_contents();
-            ob_end_clean();
-
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo $generatedReport;
             }
 
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
-        } else if ($filename !== null && file_exists($filename) === true) {
-            unlink($filename);
+        } else {
+            echo $generatedReport;
+            if ($filename !== null && file_exists($filename) === true) {
+                unlink($filename);
+            }
         }
 
         return array(

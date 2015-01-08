@@ -181,8 +181,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $width = max($width, 70);
         arsort($this->_authorCache);
 
-        echo PHP_EOL.'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL;
+        echo PHP_EOL."\033[1m".'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'."\033[0m".PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL."\033[1m";
         if ($showSources === true) {
             echo 'AUTHOR   SOURCE'.str_repeat(' ', ($width - 43)).'(Author %) (Overall %) COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
@@ -190,6 +190,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             echo 'AUTHOR'.str_repeat(' ', ($width - 34)).'(Author %) (Overall %) COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
+
+        echo "\033[0m";
 
         foreach ($this->_authorCache as $author => $count) {
             if ($this->_praiseCache[$author]['good'] === 0) {
@@ -225,7 +227,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION';
+        echo "\033[1m".'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION';
         if ($errorsShown !== 1) {
             echo 'S';
         }
@@ -235,9 +237,11 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             echo 'S';
         }
 
+        echo "\033[0m";
+
         if ($totalFixable > 0) {
             echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
-            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+            echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
         }
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;

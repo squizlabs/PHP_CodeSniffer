@@ -263,6 +263,7 @@ class PHP_CodeSniffer_CLI
         $defaults['standard']        = null;
         $defaults['verbosity']       = 0;
         $defaults['interactive']     = false;
+        $defaults['colors']          = false;
         $defaults['explain']         = false;
         $defaults['local']           = false;
         $defaults['showSources']     = false;
@@ -330,6 +331,13 @@ class PHP_CodeSniffer_CLI
             $defaults['showProgress'] = false;
         } else {
             $defaults['showProgress'] = (bool) $showProgress;
+        }
+
+        $colors = PHP_CodeSniffer::getConfigData('colors');
+        if ($colors === null) {
+            $defaults['colors'] = false;
+        } else {
+            $defaults['colors'] = (bool) $colors;
         }
 
         if (PHP_CodeSniffer::isPharFile(dirname(dirname(__FILE__))) === true) {
@@ -506,6 +514,9 @@ class PHP_CodeSniffer_CLI
             echo 'PHP_CodeSniffer version '.PHP_CodeSniffer::VERSION.' ('.PHP_CodeSniffer::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
+        case 'colors':
+            $this->values['colors'] = true;
+            break;
         case 'config-set':
             if (isset($this->_cliArgs[($pos + 1)]) === false
                 || isset($this->_cliArgs[($pos + 2)]) === false
@@ -921,6 +932,7 @@ class PHP_CodeSniffer_CLI
             $result = $phpcs->reporting->printReport(
                 $report,
                 $showSources,
+                $this->values,
                 $output,
                 $reportWidth
             );
@@ -1110,7 +1122,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -1130,6 +1142,7 @@ class PHP_CodeSniffer_CLI
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
+        echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;

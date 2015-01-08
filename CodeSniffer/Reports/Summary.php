@@ -78,9 +78,19 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         }
 
         echo $file.str_repeat(' ', $padding).'  ';
-        echo $report['errors'];
-        echo str_repeat(' ', (8 - strlen((string) $report['errors'])));
-        echo $report['warnings'];
+        if ($report['errors'] !== 0) {
+            echo "\033[31m".$report['errors']."\033[0m";
+            echo str_repeat(' ', (8 - strlen((string) $report['errors'])));
+        } else {
+            echo '0       ';
+        }
+
+        if ($report['warnings'] !== 0) {
+            echo "\033[33m".$report['warnings']."\033[0m";
+        } else {
+            echo '0';
+        }
+
         echo PHP_EOL;
 
         return true;
@@ -117,15 +127,15 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             return;
         }
 
-        echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
+        echo PHP_EOL."\033[1m".'PHP CODE SNIFFER REPORT SUMMARY'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
+        echo "\033[1m".'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
         echo $cachedData;
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$totalErrors.' ERROR';
+        echo "\033[1mA TOTAL OF $totalErrors ERROR";
         if ($totalErrors !== 1) {
             echo 'S';
         }
@@ -140,9 +150,11 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             echo 'S';
         }
 
+        echo "\033[0m";
+
         if ($totalFixable > 0) {
             echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
-            echo 'PHPCBF CAN FIX '.$totalFixable.' OF THESE SNIFF VIOLATIONS AUTOMATICALLY';
+            echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
         }
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
