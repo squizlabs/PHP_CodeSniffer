@@ -939,7 +939,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         }//end for
 
         // Don't process the rest of the file.
-        return ($phpcsFile->numTokens - 1);
+        return $phpcsFile->numTokens;
 
     }//end process()
 
