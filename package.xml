@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Interative mode no longer breaks if you also specify a report type on the command line
   - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
   - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
   - PSR2 standard now sets a default tab width of 4 spaces

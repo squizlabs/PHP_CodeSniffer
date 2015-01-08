@@ -308,22 +308,24 @@ class PHP_CodeSniffer_File
         $this->phpcs      = $phpcs;
         $this->fixer      = new PHP_CodeSniffer_Fixer();
 
-        $cliValues = $phpcs->cli->getCommandLineValues();
-        if (isset($cliValues['showSources']) === true
-            && $cliValues['showSources'] !== true
-        ) {
-            $recordErrors = false;
-            foreach ($cliValues['reports'] as $report => $output) {
-                $reportClass = $phpcs->reporting->factory($report);
-                if (property_exists($reportClass, 'recordErrors') === false
-                    || $reportClass->recordErrors === true
-                ) {
-                    $recordErrors = true;
-                    break;
+        if (PHP_CODESNIFFER_INTERACTIVE === false) {
+            $cliValues = $phpcs->cli->getCommandLineValues();
+            if (isset($cliValues['showSources']) === true
+                && $cliValues['showSources'] !== true
+            ) {
+                $recordErrors = false;
+                foreach ($cliValues['reports'] as $report => $output) {
+                    $reportClass = $phpcs->reporting->factory($report);
+                    if (property_exists($reportClass, 'recordErrors') === false
+                        || $reportClass->recordErrors === true
+                    ) {
+                        $recordErrors = true;
+                        break;
+                    }
                 }
-            }
 
-            $this->_recordErrors = $recordErrors;
+                $this->_recordErrors = $recordErrors;
+            }
         }
 
     }//end __construct()
