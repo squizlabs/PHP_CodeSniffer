@@ -15,7 +15,8 @@
         }
     ],
     "support": {
-        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
+        "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
     "autoload": {
