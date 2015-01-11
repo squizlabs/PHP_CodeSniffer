@@ -323,7 +323,7 @@ class PHP_CodeSniffer_CLI
         if ($reportWidth === null) {
             $defaults['reportWidth'] = 80;
         } else {
-            $defaults['reportWidth'] = (int) $reportWidth;
+            $defaults['reportWidth'] = $reportWidth;
         }
 
         $showProgress = PHP_CodeSniffer::getConfigData('show_progress');
@@ -373,6 +373,16 @@ class PHP_CodeSniffer_CLI
         array_shift($args);
 
         $this->setCommandLineValues($args);
+
+        // Support auto temrinal width.
+        if ($this->values['reportWidth'] === 'auto'
+            && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
+        ) {
+            $this->values['reportWidth'] = (int) $matches[1];
+        } else {
+            $this->values['reportWidth'] = (int) $this->values['reportWidth'];
+        }
+
         return $this->values;
 
     }//end getCommandLineValues()
@@ -517,6 +527,9 @@ class PHP_CodeSniffer_CLI
         case 'colors':
             $this->values['colors'] = true;
             break;
+        case 'no-colors':
+            $this->values['colors'] = false;
+            break;
         case 'config-set':
             if (isset($this->_cliArgs[($pos + 1)]) === false
                 || isset($this->_cliArgs[($pos + 2)]) === false
@@ -628,7 +641,7 @@ class PHP_CodeSniffer_CLI
                     }
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
-                $this->values['reportWidth'] = (int) substr($arg, 13);
+                $this->values['reportWidth'] = substr($arg, 13);
             } else if (substr($arg, 0, 7) === 'report='
                 || substr($arg, 0, 7) === 'report-'
             ) {
@@ -1122,7 +1135,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -1131,7 +1144,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
+        echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
@@ -1143,6 +1156,7 @@ class PHP_CodeSniffer_CLI
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
+        echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
@@ -1158,6 +1172,7 @@ class PHP_CodeSniffer_CLI
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
+        echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
