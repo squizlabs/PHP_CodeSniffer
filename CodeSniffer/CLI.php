@@ -320,10 +320,11 @@ class PHP_CodeSniffer_CLI
         }
 
         $reportWidth = PHP_CodeSniffer::getConfigData('report_width');
-        if ($reportWidth === null) {
-            $defaults['reportWidth'] = 80;
-        } else {
+        if ($reportWidth !== null) {
             $defaults['reportWidth'] = $reportWidth;
+        } else {
+            // Use function defaults.
+            $defaults['reportWidth'] = null;
         }
 
         $showProgress = PHP_CodeSniffer::getConfigData('show_progress');
@@ -375,12 +376,14 @@ class PHP_CodeSniffer_CLI
         $this->setCommandLineValues($args);
 
         // Support auto temrinal width.
-        if ($this->values['reportWidth'] === 'auto'
-            && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
-        ) {
-            $this->values['reportWidth'] = (int) $matches[1];
-        } else {
-            $this->values['reportWidth'] = (int) $this->values['reportWidth'];
+        if (isset($this->values['reportWidth']) === true) {
+            if ($this->values['reportWidth'] === 'auto'
+                && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
+            ) {
+                $this->values['reportWidth'] = (int) $matches[1];
+            } else {
+                $this->values['reportWidth'] = (int) $this->values['reportWidth'];
+            }
         }
 
         return $this->values;
