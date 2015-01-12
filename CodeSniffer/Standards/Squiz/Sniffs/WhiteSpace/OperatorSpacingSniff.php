@@ -277,9 +277,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         $operator = $tokens[$stackPtr]['content'];
 
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-            $error = "%s before \"$operator\"; 0 found";
-            $data  = array($this->expectedSpaceMessage);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore', $data);
+            $error = $this->expectedSpaceMessage . " before \"$operator\"; 0 found";
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
             if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
@@ -322,9 +321,8 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-            $error = "%s after \"$operator\"; 0 found";
-            $data  = array($this->expectedSpaceMessage);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter', $data);
+            $error = $this->expectedSpaceMessage . " after \"$operator\"; 0 found";
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
