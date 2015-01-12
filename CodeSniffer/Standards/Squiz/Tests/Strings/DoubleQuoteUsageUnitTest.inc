@@ -24,3 +24,4 @@ $string = 'Hello
 there';
 
 echo "window.location = \"".$url."\";\n";
+echo ""

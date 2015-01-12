@@ -53,6 +53,7 @@ class Squiz_Tests_Strings_DoubleQuoteUsageUnitTest extends AbstractSniffUnitTest
                 19 => 1,
                 21 => 1,
                 26 => 1,
+                27 => 1,
                );
 
     }//end getErrorList()
@@ -74,5 +75,3 @@ class Squiz_Tests_Strings_DoubleQuoteUsageUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>
