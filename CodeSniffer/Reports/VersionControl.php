@@ -178,6 +178,22 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             return;
         }
 
+        // Make sure the report width isn't too big.
+        $maxLength = 0;
+        foreach ($this->_authorCache as $author => $count) {
+            $maxLength = max($maxLength, strlen($author));
+            if ($showSources === true && isset($this->_sourceCache[$author]) === true) {
+                foreach ($this->_sourceCache[$author] as $source => $count) {
+                    if ($source === 'count') {
+                        continue;
+                    }
+
+                    $maxLength = max($maxLength, (strlen($source) + 9));
+                }
+            }
+        }
+
+        $width = min($width, ($maxLength + 30));
         $width = max($width, 70);
         arsort($this->_authorCache);
 
@@ -207,6 +223,10 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             $line           = str_repeat(' ', (12 - strlen($overallPercent))).$overallPercent.$line;
             $line           = str_repeat(' ', (11 - strlen($authorPercent))).$authorPercent.$line;
             $line           = $author.str_repeat(' ', ($width - strlen($author) - strlen($line))).$line;
+
+            if ($showSources === true) {
+                $line = "\033[1m$line\033[0m";
+            }
 
             echo $line.PHP_EOL;
 

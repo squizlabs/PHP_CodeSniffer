@@ -58,14 +58,25 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             return false;
         }
 
+        // Work out the max line number for formatting.
+        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
+
+        // Make sure the report width isn't too big.
+        $file       = $report['filename'];
+        $fileLength = strlen($file);
+        if ($fileLength > $maxLineLength) {
+            $width = min($width, ($fileLength + 6));
+        } else {
+            $width = min($width, ($maxLineLength + 21));
+        }
+
         $width = max($width, 70);
-        $file  = $report['filename'];
 
         echo PHP_EOL."\033[1mFILE: ";
-        if (strlen($file) <= ($width - 9)) {
+        if ($fileLength <= ($width - 6)) {
             echo $file;
         } else {
-            echo '...'.substr($file, (strlen($file) - ($width - 9)));
+            echo '...'.substr($file, ($fileLength - ($width - 6)));
         }
 
         echo "\033[0m".PHP_EOL;
@@ -90,9 +101,6 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
         echo "\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
-
-        // Work out the max line number for formatting.
-        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
 
         // The length of the word ERROR or WARNING; used for padding.
         if ($report['warnings'] > 0) {

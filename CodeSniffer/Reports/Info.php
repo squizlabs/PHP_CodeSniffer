@@ -111,8 +111,6 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $width = max($width, 70);
-
         if (empty($this->_metricCache) === true) {
             // Nothing to show.
             return;
@@ -121,7 +119,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
         ksort($this->_metricCache);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER INFORMATION REPORT'."\033[0m".PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL;
+        echo str_repeat('-', 70).PHP_EOL;
 
         foreach ($this->_metricCache as $metric => $values) {
             $winner      = '';
@@ -152,7 +150,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
             echo PHP_EOL;
         }//end foreach
 
-        echo str_repeat('-', $width).PHP_EOL;
+        echo str_repeat('-', 70).PHP_EOL;
 
         if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
             PHP_CodeSniffer_Reporting::printRunTime();
