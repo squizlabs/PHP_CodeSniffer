@@ -70,16 +70,41 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                 foreach ($colErrors as $error) {
                     $source = $error['source'];
                     if (isset($this->_sourceCache[$source]) === false) {
+                        if ($showSources === true) {
+                            $parts = null;
+                            $sniff = $source;
+                        } else {
+                            $parts = explode('.', $source);
+                            if ($parts[0] === 'Internal') {
+                                $parts[2] = $parts[1];
+                                $parts[1] = '';
+                            }
+
+                            $parts[1] = $this->makeFriendlyName($parts[1]);
+
+                            $sniff = $this->makeFriendlyName($parts[2]);
+                            if (isset($parts[3]) === true) {
+                                $name    = $this->makeFriendlyName($parts[3]);
+                                $name[0] = strtolower($name[0]);
+                                $sniff  .= ' '.$name;
+                                unset($parts[3]);
+                            }
+
+                            $parts[2] = $sniff;
+                        }//end if
+
                         $this->_sourceCache[$source] = array(
                                                         'count'   => 1,
                                                         'fixable' => $error['fixable'],
+                                                        'parts'   => $parts,
+                                                        'strlen'  => strlen($sniff),
                                                        );
                     } else {
                         $this->_sourceCache[$source]['count']++;
-                    }
-                }
-            }
-        }
+                    }//end if
+                }//end foreach
+            }//end foreach
+        }//end foreach
 
         return true;
 
@@ -111,12 +136,24 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        $width = max($width, 70);
-
         if (empty($this->_sourceCache) === true) {
             // Nothing to show.
             return;
         }
+
+        // Make sure the report width isn't too big.
+        $maxLength = 0;
+        foreach ($this->_sourceCache as $source => $data) {
+            $maxLength = max($maxLength, $data['strlen']);
+        }
+
+        if ($showSources === true) {
+            $width = min($width, ($maxLength + 11));
+        } else {
+            $width = min($width, ($maxLength + 41));
+        }
+
+        $width = max($width, 70);
 
         asort($this->_sourceCache);
         $this->_sourceCache = array_reverse($this->_sourceCache);
@@ -166,11 +203,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                     echo str_repeat(' ', ($width - 5 - strlen($source)));
                 }
             } else {
-                $parts = explode('.', $source);
-                if ($parts[0] === 'Internal') {
-                    $parts[2] = $parts[1];
-                    $parts[1] = '';
-                }
+                $parts = $sourceData['parts'];
 
                 if (strlen($parts[0]) > 8) {
                     $parts[0] = substr($parts[0], 0, ((strlen($parts[0]) - 8) * -1));
@@ -178,20 +211,14 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
                 echo $parts[0].str_repeat(' ', (10 - strlen($parts[0])));
 
-                $category = $this->makeFriendlyName($parts[1]);
+                $category = $parts[1];
                 if (strlen($category) > 18) {
                     $category = substr($category, 0, ((strlen($category) - 18) * -1));
                 }
 
                 echo $category.str_repeat(' ', (20 - strlen($category)));
 
-                $sniff = $this->makeFriendlyName($parts[2]);
-                if (isset($parts[3]) === true) {
-                    $name    = $this->makeFriendlyName($parts[3]);
-                    $name[0] = strtolower($name[0]);
-                    $sniff  .= ' '.$name;
-                }
-
+                $sniff = $parts[2];
                 if (strlen($sniff) > ($width - $maxSniffWidth)) {
                     $sniff = substr($sniff, 0, ($width - $maxSniffWidth - strlen($sniff)));
                 }

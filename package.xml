@@ -33,7 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for using the full terminal width for report output
     -- Use the --report-width=auto command line argument to auto-size the reports
     -- Use the command "phpcs --config-set report_width auto" to use auto-sizing by default
-  - Summary report will now size to fit inside the report width setting instead of always using padding to fill the space
+  - Summary and Source reports will now size to fit inside the report width setting instead of always using padding to fill the space
   - Interactive mode no longer breaks if you also specify a report type on the command line
   - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
   - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
