@@ -143,10 +143,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                     $found = $tokens[($stackPtr - 1)]['length'];
                 }
 
+                $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
                 if ($this->treatNewlineAsWhitespace === false
                     || ($found !== 'newline' && $this->treatNewlineAsWhitespace === true)
                 ) {
-                    $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
                     if ($found !== 1) {
                         $error = 'Expected 1 space before "&" operator; %s found';
                         $data  = array($found);
@@ -254,10 +254,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 $found = $tokens[($stackPtr - 1)]['length'];
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
             if ($this->treatNewlineAsWhitespace === false
                 || ($found !== 'newline' && $this->treatNewlineAsWhitespace === true)
             ) {
-                $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
                 if ($found !== 1) {
                     $error = 'Expected 1 space before "%s"; %s found';
                     $data  = array(
@@ -287,10 +287,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 $found = $tokens[($stackPtr + 1)]['length'];
             }
 
+            $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
             if ($this->treatNewlineAsWhitespace === false
                 || ($found !== 'newline' && $this->treatNewlineAsWhitespace === true)
             ) {
-                $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
                 if ($found !== 1) {
                     $error = 'Expected 1 space after "%s"; %s found';
                     $data  = array(
