@@ -76,7 +76,11 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        $inCondition = (count($tokens[$stackPtr]['conditions']) !== 0) ? true : false;
+        if (count($tokens[$stackPtr]['conditions']) !== 0) {
+            $inCondition = true;
+        } else {
+            $inCondition = false;
+        }
 
         // Check to see if this including statement is within the parenthesis
         // of a condition. If that's the case then we need to process it as being

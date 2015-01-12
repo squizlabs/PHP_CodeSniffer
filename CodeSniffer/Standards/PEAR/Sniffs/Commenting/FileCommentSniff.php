@@ -191,8 +191,14 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processTags(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
-        $tokens     = $phpcsFile->getTokens();
-        $docBlock   = (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') ? 'file' : 'class';
+        $tokens = $phpcsFile->getTokens();
+
+        if (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') {
+            $docBlock = 'file';
+        } else {
+            $docBlock = 'class';
+        }
+
         $commentEnd = $tokens[$commentStart]['comment_closer'];
 
         $foundTags = array();

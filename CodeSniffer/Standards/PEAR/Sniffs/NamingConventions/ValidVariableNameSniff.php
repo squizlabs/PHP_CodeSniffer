@@ -53,9 +53,14 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
         }
 
         $memberName     = ltrim($tokens[$stackPtr]['content'], '$');
-        $isPublic       = ($memberProps['scope'] === 'private') ? false : true;
         $scope          = $memberProps['scope'];
         $scopeSpecified = $memberProps['scope_specified'];
+
+        if ($memberProps['scope'] === 'private') {
+            $isPublic = false;
+        } else {
+            $isPublic = true;
+        }
 
         // If it's a private member, it must have an underscore on the front.
         if ($isPublic === false && $memberName{0} !== '_') {

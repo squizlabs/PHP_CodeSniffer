@@ -196,12 +196,15 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
             if ($leadingSpace !== $starColumn) {
-                $expected  = $starColumn;
-                $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $data      = array(
-                              $expected,
-                              $leadingSpace,
-                             );
+                $expected = $starColumn.' space';
+                if ($starColumn !== 1) {
+                    $expected .= 's';
+                }
+
+                $data = array(
+                         $expected,
+                         $leadingSpace,
+                        );
 
                 $error = 'First line of comment not aligned correctly; expected %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'FirstLineIndent', $data);
@@ -236,12 +239,15 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($leadingSpace < $starColumn) {
-                $expected  = $starColumn;
-                $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $data      = array(
-                              $expected,
-                              $leadingSpace,
-                             );
+                $expected = $starColumn.' space';
+                if ($starColumn !== 1) {
+                    $expected .= 's';
+                }
+
+                $data = array(
+                         $expected,
+                         $leadingSpace,
+                        );
 
                 $error = 'Comment line indented incorrectly; expected at least %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $line, 'LineIndent', $data);
@@ -263,17 +269,22 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
             if ($leadingSpace !== ($tokens[$stackPtr]['column'] - 1)) {
-                $expected  = ($tokens[$stackPtr]['column'] - 1);
-                $expected .= ($expected === 1) ? ' space' : ' spaces';
-                $data      = array(
-                              $expected,
-                              $leadingSpace,
-                             );
+                $expected = ($tokens[$stackPtr]['column'] - 1);
+                if ($expected === 1) {
+                    $expected .= ' space';
+                } else {
+                    $expected .= ' spaces';
+                }
+
+                $data = array(
+                         $expected,
+                         $leadingSpace,
+                        );
 
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
                 $phpcsFile->addError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
             }
-        }
+        }//end if
 
         // Check that the lines before and after this comment are blank.
         $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
