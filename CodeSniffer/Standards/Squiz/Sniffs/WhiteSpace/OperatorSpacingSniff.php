@@ -144,8 +144,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
             // Check there is one space before the & operator.
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-                $error = sprintf('%s before "&" operator; 0 found', $this->expectedSpaceMessage);
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBeforeAmp');
+                $error ='%s before "&" operator; 0 found';
+                $data  = array($this->expectedSpaceMessage);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBeforeAmp', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
                 }
@@ -186,8 +187,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
             // Check there is one space after the & operator.
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-                $error = sprintf('%s after "&" operator; 0 found', $this->expectedSpaceMessage);
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterAmp');
+                $error = '%s after "&" operator; 0 found';
+                $data  = array($this->expectedSpaceMessage);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterAmp', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->addContent($stackPtr, ' ');
                 }
@@ -275,8 +277,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         $operator = $tokens[$stackPtr]['content'];
 
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-            $error = sprintf("%s before \"$operator\"; 0 found", $this->expectedSpaceMessage);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
+            $error = "%s before \"$operator\"; 0 found";
+            $data  = array($this->expectedSpaceMessage);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
             }
@@ -319,8 +322,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-            $error = sprintf("%s after \"$operator\"; 0 found", $this->expectedSpaceMessage);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
+            $error = "%s after \"$operator\"; 0 found";
+            $data  = array($this->expectedSpaceMessage);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
