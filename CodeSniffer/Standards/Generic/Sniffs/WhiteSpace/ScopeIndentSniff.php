@@ -177,6 +177,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $this->tabIndent = (bool) $this->tabIndent;
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+            if ($i === false) {
+                // Something has gone very wrong; maybe a parse error.
+                break;
+            }
+
             $checkToken  = null;
             $checkIndent = null;
             $exact       = $this->exact;

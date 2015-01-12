@@ -823,3 +823,5 @@ foo();
 
         return false;
     }
+
+echo ""
