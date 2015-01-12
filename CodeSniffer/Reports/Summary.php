@@ -39,6 +39,13 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
      */
     public $recordErrors = false;
 
+    /**
+     * An array of process files and their error data.
+     *
+     * @var boolean
+     */
+    private $_reportFiles = array();
+
 
     /**
      * Generate a partial report for a single processed file.
@@ -68,30 +75,11 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             return false;
         }
 
-        $width = max($width, 70);
-        $file  = $report['filename'];
-
-        $padding = ($width - 18 - strlen($file));
-        if ($padding < 0) {
-            $file    = '...'.substr($file, (($padding * -1) + 3));
-            $padding = 0;
-        }
-
-        echo $file.str_repeat(' ', $padding).'  ';
-        if ($report['errors'] !== 0) {
-            echo "\033[31m".$report['errors']."\033[0m";
-            echo str_repeat(' ', (8 - strlen((string) $report['errors'])));
-        } else {
-            echo '0       ';
-        }
-
-        if ($report['warnings'] !== 0) {
-            echo "\033[33m".$report['warnings']."\033[0m";
-        } else {
-            echo '0';
-        }
-
-        echo PHP_EOL;
+        $this->_reportFiles[$report['filename']] = array(
+                                                    'errors'   => $report['errors'],
+                                                    'warnings' => $report['warnings'],
+                                                    'strlen'   => strlen($report['filename']),
+                                                   );
 
         return true;
 
@@ -123,16 +111,48 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        if ($cachedData === '') {
+
+        if (empty($this->_reportFiles) === true) {
             return;
         }
+
+        // Make sure the report width isn't too big.
+        $maxLength = 0;
+        foreach ($this->_reportFiles as $file => $data) {
+            $maxLength = max($maxLength, $data['strlen']);
+        }
+
+        $width = min($width, ($maxLength + 21));
+        $width = max($width, 70);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER REPORT SUMMARY'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
         echo "\033[1m".'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        echo $cachedData;
+        foreach ($this->_reportFiles as $file => $data) {
+            $padding = ($width - 18 - $data['strlen']);
+            if ($padding < 0) {
+                $file    = '...'.substr($file, (($padding * -1) + 3));
+                $padding = 0;
+            }
+
+            echo $file.str_repeat(' ', $padding).'  ';
+            if ($data['errors'] !== 0) {
+                echo "\033[31m".$data['errors']."\033[0m";
+                echo str_repeat(' ', (8 - strlen((string) $data['errors'])));
+            } else {
+                echo '0       ';
+            }
+
+            if ($data['warnings'] !== 0) {
+                echo "\033[33m".$data['warnings']."\033[0m";
+            } else {
+                echo '0';
+            }
+
+            echo PHP_EOL;
+        }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
         echo "\033[1mA TOTAL OF $totalErrors ERROR";
