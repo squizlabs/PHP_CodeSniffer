@@ -58,16 +58,22 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             return false;
         }
 
-        // Work out the max line number for formatting.
-        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
-
         // Make sure the report width isn't too big.
+        $maxErrorLength = 0;
+        foreach ($report['messages'] as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $maxErrorLength = max($maxErrorLength, strlen($error['message']));
+                }
+            }
+        }
+
         $file       = $report['filename'];
         $fileLength = strlen($file);
-        if ($fileLength > $maxLineLength) {
+        if (($fileLength + 6) > ($maxErrorLength + 21)) {
             $width = min($width, ($fileLength + 6));
         } else {
-            $width = min($width, ($maxLineLength + 21));
+            $width = min($width, ($maxErrorLength + 21));
         }
 
         $width = max($width, 70);
@@ -108,6 +114,9 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         } else {
             $typeLength = 5;
         }
+
+        // Work out the max line number length for formatting.
+        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
 
         // The padding that all lines will require that are
         // printing an error message overflow.
