@@ -481,31 +481,39 @@ class PHP_CodeSniffer_File
                 || (defined('PHP_CODESNIFFER_IN_TESTS') === true
                 && $token['code'] === T_INLINE_HTML)
             ) {
-                if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
-                    $ignoring = true;
-                } else if ($ignoring === true && strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
-                    $ignoring = false;
-                    // Ignore this comment too.
-                    $this->_ignoredLines[$token['line']] = true;
-                } else if (strpos($token['content'], '@codingStandardsIgnoreLine') !== false) {
-                    $this->_ignoredLines[($token['line'] + 1)] = true;
-                    // Ignore this comment too.
-                    $this->_ignoredLines[$token['line']] = true;
-                } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
-                    // Ignoring the whole file, just a little late.
-                    $this->_errors       = array();
-                    $this->_warnings     = array();
-                    $this->_errorCount   = 0;
-                    $this->_warningCount = 0;
-                    $this->_fixableCount = 0;
-                    return;
-                } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                    $start         = strpos($token['content'], '@codingStandardsChangeSetting');
-                    $comment       = substr($token['content'], ($start + 30));
-                    $parts         = explode(' ', $comment);
-                    $sniffParts    = explode('.', $parts[0]);
-                    $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
-                    $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                if (strpos($token['content'], '@codingStandards') !== false) {
+                    if ($ignoring === false
+                        && strpos($token['content'], '@codingStandardsIgnoreStart') !== false
+                    ) {
+                        $ignoring = true;
+                    } else if ($ignoring === true
+                        && strpos($token['content'], '@codingStandardsIgnoreEnd') !== false
+                    ) {
+                        $ignoring = false;
+                        // Ignore this comment too.
+                        $this->_ignoredLines[$token['line']] = true;
+                    } else if ($ignoring === false
+                        && strpos($token['content'], '@codingStandardsIgnoreLine') !== false
+                    ) {
+                        $this->_ignoredLines[($token['line'] + 1)] = true;
+                        // Ignore this comment too.
+                        $this->_ignoredLines[$token['line']] = true;
+                    } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                        // Ignoring the whole file, just a little late.
+                        $this->_errors       = array();
+                        $this->_warnings     = array();
+                        $this->_errorCount   = 0;
+                        $this->_warningCount = 0;
+                        $this->_fixableCount = 0;
+                        return;
+                    } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
+                        $start         = strpos($token['content'], '@codingStandardsChangeSetting');
+                        $comment       = substr($token['content'], ($start + 30));
+                        $parts         = explode(' ', $comment);
+                        $sniffParts    = explode('.', $parts[0]);
+                        $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
+                        $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                    }//end if
                 }//end if
             }//end if
 
@@ -560,7 +568,7 @@ class PHP_CodeSniffer_File
                     }
                 }
 
-                $this->setActiveListener($class);
+                $this->_activeListener = $class;
 
                 if (PHP_CODESNIFFER_VERBOSITY > 2) {
                     $startTime = microtime(true);
