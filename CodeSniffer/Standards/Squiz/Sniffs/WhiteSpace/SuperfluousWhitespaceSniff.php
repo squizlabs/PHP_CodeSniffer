@@ -197,7 +197,9 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
             */
 
             // Ignore whitespace that is not at the end of a line.
-            if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
+            if (isset($tokens[($stackPtr + 1)]['line']) === true
+                && $tokens[($stackPtr + 1)]['line'] === $tokens[$stackPtr]['line']
+            ) {
                 return;
             }
 
@@ -241,9 +243,7 @@ class Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff implements PHP_CodeSnif
                 $lines = ($tokens[$next]['line'] - $tokens[$stackPtr]['line']);
                 if ($lines > 1) {
                     $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
-                    $data  = array($lines);
-
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', $data);
+                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', array($lines));
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         $i = $stackPtr;
