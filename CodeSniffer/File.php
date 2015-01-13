@@ -1484,55 +1484,65 @@ class PHP_CodeSniffer_File
         $eolLen        = (strlen($eolChar) * -1);
         $tokenizerType = get_class($tokenizer);
 
+        $checkEncoding = false;
+        if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+            $checkEncoding = true;
+        }
+
+        $tokensWithTabs = array(
+                           T_WHITESPACE               => true,
+                           T_COMMENT                  => true,
+                           T_DOC_COMMENT              => true,
+                           T_DOC_COMMENT_WHITESPACE   => true,
+                           T_DOC_COMMENT_STRING       => true,
+                           T_CONSTANT_ENCAPSED_STRING => true,
+                           T_DOUBLE_QUOTED_STRING     => true,
+                           T_HEREDOC                  => true,
+                           T_NOWDOC                   => true,
+                           T_INLINE_HTML              => true,
+                          );
+
         $numTokens = count($tokens);
         for ($i = 0; $i < $numTokens; $i++) {
             $tokens[$i]['line']   = $lineNumber;
             $tokens[$i]['column'] = $currColumn;
 
-            if ($tabWidth === 0 || strpos($tokens[$i]['content'], "\t") === false) {
+            if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
+                && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
+            ) {
+                // There are no tabs in the tokens we know the length of.
+                $length      = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
+                $currColumn += $length;
+            } else if ($tabWidth === 0
+                || isset($tokensWithTabs[$tokens[$i]['code']]) === false
+                || strpos($tokens[$i]['content'], "\t") === false
+            ) {
                 // There are no tabs in this content, or we aren't replacing them.
-                if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
-                    && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
-                ) {
-                    $length = PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']];
-                } else {
-                    if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
-                        // Not using the default encoding, so take a bit more care.
-                        $length = iconv_strlen($tokens[$i]['content'], $encoding);
-                        if ($length === false) {
-                            // String contained invalid characters, so revert to default.
-                            $length = strlen($tokens[$i]['content']);
-                        }
-                    } else {
+                if ($checkEncoding === true) {
+                    // Not using the default encoding, so take a bit more care.
+                    $length = iconv_strlen($tokens[$i]['content'], $encoding);
+                    if ($length === false) {
+                        // String contained invalid characters, so revert to default.
                         $length = strlen($tokens[$i]['content']);
                     }
+                } else {
+                    $length = strlen($tokens[$i]['content']);
                 }
 
                 $currColumn += $length;
             } else {
                 // We need to determine the length of each tab.
-                $tabs = preg_split(
-                    "|(\t)|",
-                    $tokens[$i]['content'],
-                    -1,
-                    PREG_SPLIT_DELIM_CAPTURE
-                );
+                $tabs = explode("\t", $tokens[$i]['content']);
 
-                $tabNum       = 0;
-                $tabsToSpaces = array();
-                $newContent   = '';
-                $length       = 0;
+                $numTabs    = (count($tabs) - 1);
+                $tabNum     = 0;
+                $newContent = '';
+                $length     = 0;
 
                 foreach ($tabs as $content) {
-                    if ($content === '') {
-                        continue;
-                    }
-
-                    if (strpos($content, "\t") === false) {
-                        // This piece of content is not a tab.
+                    if ($content !== '') {
                         $newContent .= $content;
-
-                        if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+                        if ($checkEncoding === true) {
                             // Not using the default encoding, so take a bit more care.
                             $contentLength = iconv_strlen($content, $encoding);
                             if ($contentLength === false) {
@@ -1545,27 +1555,33 @@ class PHP_CodeSniffer_File
 
                         $currColumn += $contentLength;
                         $length     += $contentLength;
+                    }
+
+                    // The last piece of content does not have a tab after it.
+                    if ($tabNum === $numTabs) {
+                        break;
+                    }
+
+                    // Process the tab that comes after the content.
+                    $lastCurrColumn = $currColumn;
+                    $tabNum++;
+
+                    // Move the pointer to the next tab stop.
+                    if (($currColumn % $tabWidth) === 0) {
+                        // This is the first tab, and we are already at a
+                        // tab stop, so this tab counts as a single space.
+                        $currColumn++;
                     } else {
-                        $lastCurrColumn = $currColumn;
-                        $tabNum++;
-
-                        // Move the pointer to the next tab stop.
-                        if (($currColumn % $tabWidth) === 0) {
-                            // This is the first tab, and we are already at a
-                            // tab stop, so this tab counts as a single space.
-                            $currColumn++;
-                        } else {
-                            $currColumn++;
-                            while (($currColumn % $tabWidth) != 0) {
-                                $currColumn++;
-                            }
-
+                        $currColumn++;
+                        while (($currColumn % $tabWidth) != 0) {
                             $currColumn++;
                         }
 
-                        $length     += ($currColumn - $lastCurrColumn);
-                        $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
-                    }//end if
+                        $currColumn++;
+                    }
+
+                    $length     += ($currColumn - $lastCurrColumn);
+                    $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
                 }//end foreach
 
                 $tokens[$i]['orig_content'] = $tokens[$i]['content'];
