@@ -1,49 +1,49 @@
 
 
 result = 1 + 2;
-result = 1  + 2;
-result = 1  +   2;
-result = 1 +2;
-result = 1+ 2;
-result = 1+2;
+result = 1 + 2;
+result = 1 + 2;
+result = 1 + 2;
+result = 1 + 2;
+result = 1 + 2;
 
 result = 1 - 2;
-result = 1  - 2;
-result = 1  -   2;
-result = 1 -2;
-result = 1- 2;
-result = 1-2;
+result = 1 - 2;
+result = 1 - 2;
+result = 1 - 2;
+result = 1 - 2;
+result = 1 - 2;
 
 result = 1 * 2;
-result = 1  * 2;
-result = 1  *   2;
-result = 1 *2;
-result = 1* 2;
-result = 1*2;
+result = 1 * 2;
+result = 1 * 2;
+result = 1 * 2;
+result = 1 * 2;
+result = 1 * 2;
 
 result = 1 / 2;
-result = 1  / 2;
-result = 1  /   2;
-result = 1 /2;
-result = 1/ 2;
-result = 1/2;
+result = 1 / 2;
+result = 1 / 2;
+result = 1 / 2;
+result = 1 / 2;
+result = 1 / 2;
 
 result = 1 % 2;
-result = 1  % 2;
-result = 1  %   2;
-result = 1 %2;
-result = 1% 2;
-result = 1%2;
+result = 1 % 2;
+result = 1 % 2;
+result = 1 % 2;
+result = 1 % 2;
+result = 1 % 2;
 result = '100%';
 
 result += 4;
-result+=4;
+result += 4;
 result -= 4;
-result-=4;
+result -= 4;
 result /= 4;
-result/=4;
-result *=4;
-result*=4;
+result /= 4;
+result *= 4;
+result *= 4;
 
 $.localScroll({offset: {top: -32}});
 
@@ -52,7 +52,7 @@ switch (result) {
 		break;
 }
 
-result = x?y:z;
+result = x ? y : z;
 result = x ? y : z;
 
 if (something === true
@@ -61,17 +61,11 @@ if (something === true
     return false;
 }
 
-y = 1
-  + 2  
-  - 3;
+y = 1 + 2 - 3;
 
-y = 1 + 
-    2 - 
-    3;
+y = 1 + 2 - 3;
 
-y = 1
-+ 2
-- 3;
+y = 1 + 2 - 3;
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.OperatorSpacing ignoreNewlines true
 y = 1

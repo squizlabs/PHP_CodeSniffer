@@ -52,6 +52,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz FunctionCommentSniff now fixes the return type in the @return tag (request #392)
   - Squiz BlockCommentSniff now only disallows lowercase letters at the start of the comment
   - Squiz InlineCommentSniff now only disallows lowercase letters at the start of the comment
+  - Squiz OperatorSpacingSniff now has a setting to ignore newline characters around operators (request #348)
+    -- Default remains FALSE, so newlines are not allowed
+    -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
   - PSR2 ControlStructureSpacingSniff now checks for, and fixes, newlines after the opening parenthesis
   - Added a markdown document generator (--generator=markdown to use)
     -- Thanks to Stefano Kowalke for the contribution
@@ -2133,7 +2136,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="OperatorSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
