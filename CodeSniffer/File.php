@@ -471,6 +471,7 @@ class PHP_CodeSniffer_File
         $foundCode = false;
         $ignoring  = false;
         $listeners = $this->phpcs->getSniffs();
+        $inTests   = defined('PHP_CODESNIFFER_IN_TESTS');
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -478,8 +479,7 @@ class PHP_CodeSniffer_File
             // Check for ignored lines.
             if ($token['code'] === T_COMMENT
                 || $token['code'] === T_DOC_COMMENT
-                || (defined('PHP_CODESNIFFER_IN_TESTS') === true
-                && $token['code'] === T_INLINE_HTML)
+                || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
                     if ($ignoring === false
