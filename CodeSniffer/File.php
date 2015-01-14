@@ -212,11 +212,18 @@ class PHP_CodeSniffer_File
     private $_recordErrors = true;
 
     /**
-     * And array of lines being ignored by PHP_CodeSniffer.
+     * An array of lines being ignored by PHP_CodeSniffer.
      *
      * @var array()
      */
     private $_ignoredLines = array();
+
+    /**
+     * An array of message codes that are being ignored.
+     *
+     * @var array()
+     */
+    private $_ignoredCodes = array();
 
     /**
      * The total number of errors raised.
@@ -252,16 +259,6 @@ class PHP_CodeSniffer_File
      * @var string
      */
     private $_activeListener = '';
-
-    /**
-     * An array of sniffs that are ignoring tokens for the current file.
-     *
-     * The sniff's process() method can return a token to ignore up to
-     * so the sniff will not be run again until that token is reached.
-     *
-     * @var array()
-     */
-    private $_listenerIgnoreTo = array();
 
     /**
      * An array of sniffs being processed and how long they took.
@@ -408,8 +405,7 @@ class PHP_CodeSniffer_File
     public function refreshTokenListeners()
     {
         $this->phpcs->populateTokenListeners();
-        $this->_listeners        = $this->phpcs->getTokenSniffs();
-        $this->_listenerIgnoreTo = null;
+        $this->_listeners = $this->phpcs->getTokenSniffs();
 
     }//end refreshTokenListeners()
 
@@ -468,10 +464,12 @@ class PHP_CodeSniffer_File
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
-        $foundCode = false;
-        $ignoring  = false;
-        $listeners = $this->phpcs->getSniffs();
-        $inTests   = defined('PHP_CODESNIFFER_IN_TESTS');
+        $foundCode        = false;
+        $ignoring         = false;
+        $listeners        = $this->phpcs->getSniffs();
+        $ignoredListeners = array();
+        $listenerIgnoreTo = array();
+        $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -536,10 +534,11 @@ class PHP_CodeSniffer_File
             }
 
             foreach ($this->_listeners[$token['code']] as $listenerData) {
-                if (isset($this->_listenerIgnoreTo[$listenerData['class']]) === true
-                    && $this->_listenerIgnoreTo[$listenerData['class']] > $stackPtr
+                if (isset($ignoredListeners[$listenerData['class']]) === true
+                    || (isset($listenerIgnoreTo[$listenerData['class']]) === true
+                    && $listenerIgnoreTo[$listenerData['class']] > $stackPtr)
                 ) {
-                    // This sniff is ignoring past this token.
+                    // This sniff is ignoring past this token, or the whole file.
                     continue;
                 }
 
@@ -564,6 +563,7 @@ class PHP_CodeSniffer_File
 
                     $pattern = '`'.$pattern.'`i';
                     if (preg_match($pattern, $this->_file) === 1) {
+                        $ignoredListeners[$class] = true;
                         continue(2);
                     }
                 }
@@ -577,7 +577,7 @@ class PHP_CodeSniffer_File
 
                 $ignoreTo = $listeners[$class]->process($this, $stackPtr);
                 if ($ignoreTo !== null) {
-                    $this->_listenerIgnoreTo[$this->_activeListener] = $ignoreTo;
+                    $listenerIgnoreTo[$this->_activeListener] = $ignoreTo;
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 2) {
@@ -656,15 +656,14 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Remove vars stored in this sniff that are no longer required.
+     * Remove vars stored in this file that are no longer required.
      *
      * @return void
      */
     public function cleanUp()
     {
-        $this->_tokens           = null;
-        $this->_listeners        = null;
-        $this->_listenerIgnoreTo = null;
+        $this->_tokens    = null;
+        $this->_listeners = null;
 
     }//end cleanUp()
 
@@ -1041,6 +1040,11 @@ class PHP_CodeSniffer_File
             }
         }//end if
 
+        // If we know this sniff code is being ignored for this file, return early.
+        if (isset($this->_ignoredCodes[$sniffCode]) === true) {
+            return false;
+        }
+
         // Make sure this message type has not been set to "warning".
         if (isset($this->ruleset[$sniffCode]['type']) === true
             && $this->ruleset[$sniffCode]['type'] === 'warning'
@@ -1083,6 +1087,7 @@ class PHP_CodeSniffer_File
 
             $pattern = '`'.strtr($pattern, $replacements).'`i';
             if (preg_match($pattern, $this->_file) === 1) {
+                $this->_ignoredCodes[$sniffCode] = true;
                 return false;
             }
         }
@@ -1101,7 +1106,7 @@ class PHP_CodeSniffer_File
             return true;
         }
 
-        // Work out the warning message.
+        // Work out the error message.
         if (isset($this->ruleset[$sniffCode]['message']) === true) {
             $error = $this->ruleset[$sniffCode]['message'];
         }
@@ -1179,6 +1184,11 @@ class PHP_CodeSniffer_File
             }
         }//end if
 
+        // If we know this sniff code is being ignored for this file, return early.
+        if (isset($this->_ignoredCodes[$sniffCode]) === true) {
+            return false;
+        }
+
         // Make sure this message type has not been set to "error".
         if (isset($this->ruleset[$sniffCode]['type']) === true
             && $this->ruleset[$sniffCode]['type'] === 'error'
@@ -1221,6 +1231,7 @@ class PHP_CodeSniffer_File
 
             $pattern = '`'.strtr($pattern, $replacements).'`i';
             if (preg_match($pattern, $this->_file) === 1) {
+                $this->_ignoredCodes[$sniffCode] = true;
                 return false;
             }
         }
