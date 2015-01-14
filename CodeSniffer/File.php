@@ -1090,7 +1090,7 @@ class PHP_CodeSniffer_File
                 $this->_ignoredCodes[$sniffCode] = true;
                 return false;
             }
-        }
+        }//end foreach
 
         $this->_errorCount++;
         if ($fixable === true) {
@@ -1234,7 +1234,7 @@ class PHP_CodeSniffer_File
                 $this->_ignoredCodes[$sniffCode] = true;
                 return false;
             }
-        }
+        }//end foreach
 
         $this->_warningCount++;
         if ($fixable === true) {
