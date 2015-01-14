@@ -1539,58 +1539,69 @@ class PHP_CodeSniffer_File
 
                 $currColumn += $length;
             } else {
-                // We need to determine the length of each tab.
-                $tabs = explode("\t", $tokens[$i]['content']);
+                if (str_replace("\t", '', $tokens[$i]['content']) === '') {
+                    // String only contains tabs, so we can shortcut the process.
+                    $numTabs = strlen($tokens[$i]['content']);
 
-                $numTabs    = (count($tabs) - 1);
-                $tabNum     = 0;
-                $newContent = '';
-                $length     = 0;
+                    $newContent   = '';
+                    $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
+                    $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
+                    $currColumn  += $length;
+                    $newContent   = str_repeat(' ', $length);
+                } else {
+                    // We need to determine the length of each tab.
+                    $tabs = explode("\t", $tokens[$i]['content']);
 
-                foreach ($tabs as $content) {
-                    if ($content !== '') {
-                        $newContent .= $content;
-                        if ($checkEncoding === true) {
-                            // Not using the default encoding, so take a bit more care.
-                            $contentLength = iconv_strlen($content, $encoding);
-                            if ($contentLength === false) {
-                                // String contained invalid characters, so revert to default.
+                    $numTabs    = (count($tabs) - 1);
+                    $tabNum     = 0;
+                    $newContent = '';
+                    $length     = 0;
+
+                    foreach ($tabs as $content) {
+                        if ($content !== '') {
+                            $newContent .= $content;
+                            if ($checkEncoding === true) {
+                                // Not using the default encoding, so take a bit more care.
+                                $contentLength = iconv_strlen($content, $encoding);
+                                if ($contentLength === false) {
+                                    // String contained invalid characters, so revert to default.
+                                    $contentLength = strlen($content);
+                                }
+                            } else {
                                 $contentLength = strlen($content);
                             }
-                        } else {
-                            $contentLength = strlen($content);
+
+                            $currColumn += $contentLength;
+                            $length     += $contentLength;
                         }
 
-                        $currColumn += $contentLength;
-                        $length     += $contentLength;
-                    }
+                        // The last piece of content does not have a tab after it.
+                        if ($tabNum === $numTabs) {
+                            break;
+                        }
 
-                    // The last piece of content does not have a tab after it.
-                    if ($tabNum === $numTabs) {
-                        break;
-                    }
+                        // Process the tab that comes after the content.
+                        $lastCurrColumn = $currColumn;
+                        $tabNum++;
 
-                    // Process the tab that comes after the content.
-                    $lastCurrColumn = $currColumn;
-                    $tabNum++;
+                        // Move the pointer to the next tab stop.
+                        if (($currColumn % $tabWidth) === 0) {
+                            // This is the first tab, and we are already at a
+                            // tab stop, so this tab counts as a single space.
+                            $currColumn++;
+                        } else {
+                            $currColumn++;
+                            while (($currColumn % $tabWidth) !== 0) {
+                                $currColumn++;
+                            }
 
-                    // Move the pointer to the next tab stop.
-                    if (($currColumn % $tabWidth) === 0) {
-                        // This is the first tab, and we are already at a
-                        // tab stop, so this tab counts as a single space.
-                        $currColumn++;
-                    } else {
-                        $currColumn++;
-                        while (($currColumn % $tabWidth) != 0) {
                             $currColumn++;
                         }
 
-                        $currColumn++;
-                    }
-
-                    $length     += ($currColumn - $lastCurrColumn);
-                    $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
-                }//end foreach
+                        $length     += ($currColumn - $lastCurrColumn);
+                        $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
+                    }//end foreach
+                }//end if
 
                 $tokens[$i]['orig_content'] = $tokens[$i]['content'];
                 $tokens[$i]['content']      = $newContent;
@@ -1598,7 +1609,9 @@ class PHP_CodeSniffer_File
 
             $tokens[$i]['length'] = $length;
 
-            if (substr($tokens[$i]['content'], $eolLen) === $eolChar) {
+            if (isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === false
+                && strpos($tokens[$i]['content'], $eolChar) !== false
+            ) {
                 $lineNumber++;
                 $currColumn = 1;
 
