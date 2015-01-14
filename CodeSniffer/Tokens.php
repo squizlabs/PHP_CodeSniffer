@@ -246,7 +246,6 @@ final class PHP_CodeSniffer_Tokens
                                    T_CLASS                    => 5,
                                    T_CLASS_C                  => 9,
                                    T_CLONE                    => 5,
-                                   T_CLOSE_TAG                => 2,
                                    T_CONCAT_EQUAL             => 2,
                                    T_CONST                    => 5,
                                    T_CONTINUE                 => 8,
