@@ -212,11 +212,18 @@ class PHP_CodeSniffer_File
     private $_recordErrors = true;
 
     /**
-     * An array of lines being ignored by PHP_CodeSniffer.
+     * An array of lines that are being ignored.
      *
      * @var array()
      */
     private $_ignoredLines = array();
+
+    /**
+     * An array of sniffs that are being ignored.
+     *
+     * @var array()
+     */
+    private $_ignoredListeners = array();
 
     /**
      * An array of message codes that are being ignored.
@@ -438,6 +445,10 @@ class PHP_CodeSniffer_File
         $this->_warningCount = 0;
         $this->_fixableCount = 0;
 
+        // Reset the ignored lines because lines numbers may have changed
+        // if we are fixing this file.
+        $this->_ignoredLines = array();
+
         try {
             $this->eolChar = self::detectLineEndings($this->_file, $contents);
         } catch (PHP_CodeSniffer_Exception $e) {
@@ -467,7 +478,6 @@ class PHP_CodeSniffer_File
         $foundCode        = false;
         $ignoring         = false;
         $listeners        = $this->phpcs->getSniffs();
-        $ignoredListeners = array();
         $listenerIgnoreTo = array();
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
 
@@ -534,7 +544,7 @@ class PHP_CodeSniffer_File
             }
 
             foreach ($this->_listeners[$token['code']] as $listenerData) {
-                if (isset($ignoredListeners[$listenerData['class']]) === true
+                if (isset($this->_ignoredListeners[$listenerData['class']]) === true
                     || (isset($listenerIgnoreTo[$listenerData['class']]) === true
                     && $listenerIgnoreTo[$listenerData['class']] > $stackPtr)
                 ) {
@@ -563,7 +573,7 @@ class PHP_CodeSniffer_File
 
                     $pattern = '`'.$pattern.'`i';
                     if (preg_match($pattern, $this->_file) === 1) {
-                        $ignoredListeners[$class] = true;
+                        $this->_ignoredListeners[$class] = true;
                         continue(2);
                     }
                 }
@@ -722,6 +732,11 @@ class PHP_CodeSniffer_File
                 if (isset($cliValues['encoding']) === true) {
                     $encoding = $cliValues['encoding'];
                 }
+            } else if ($this->fixer->loops > 0) {
+                // No need to replace tabs with spaces on the second
+                // time around as this would have been done on the first
+                // parse.
+                $tabWidth = 0;
             }
 
             $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth, $encoding);

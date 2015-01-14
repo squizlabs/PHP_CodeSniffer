@@ -41,6 +41,13 @@ class PHP_CodeSniffer_Fixer
     public $enabled = false;
 
     /**
+     * The number of times we have looped over a file.
+     *
+     * @var int
+     */
+    public $loops = 0;
+
+    /**
      * The file being fixed.
      *
      * @var PHP_CodeSniffer_File
@@ -102,13 +109,6 @@ class PHP_CodeSniffer_Fixer
      */
     private $_numFixes = 0;
 
-    /**
-     * The number of times we have looped over a file.
-     *
-     * @var int
-     */
-    private $_loops = 0;
-
 
     /**
      * Starts fixing a new file.
@@ -157,8 +157,8 @@ class PHP_CodeSniffer_Fixer
 
         $this->enabled = true;
 
-        $this->_loops = 0;
-        while ($this->_loops < 50) {
+        $this->loops = 0;
+        while ($this->loops < 50) {
             ob_start();
 
             // Only needed once file content has changed.
@@ -182,12 +182,12 @@ class PHP_CodeSniffer_Fixer
             $this->_currentFile->start($contents);
             ob_end_clean();
 
-            $this->_loops++;
+            $this->loops++;
 
             if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
                 echo "\r".str_repeat(' ', 80)."\r";
-                echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $this->_loops pass";
-                if ($this->_loops > 1) {
+                echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $this->loops pass";
+                if ($this->loops > 1) {
                     echo 'es';
                 }
 
@@ -198,7 +198,7 @@ class PHP_CodeSniffer_Fixer
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t* fixed $this->_numFixes violations, starting loop ".($this->_loops + 1).' *'.PHP_EOL;
+                echo "\t* fixed $this->_numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
             }
         }//end while
 
@@ -476,11 +476,11 @@ class PHP_CodeSniffer_Fixer
             $this->_oldTokenValues[$stackPtr] = array(
                                                  'curr' => $content,
                                                  'prev' => $this->_tokens[$stackPtr],
-                                                 'loop' => $this->_loops,
+                                                 'loop' => $this->loops,
                                                 );
         } else {
             if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
-                && $this->_oldTokenValues[$stackPtr]['loop'] >= ($this->_loops - 1)
+                && $this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)
             ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $indent = "\t";
@@ -501,7 +501,7 @@ class PHP_CodeSniffer_Fixer
 
             $this->_oldTokenValues[$stackPtr]['prev'] = $this->_oldTokenValues[$stackPtr]['curr'];
             $this->_oldTokenValues[$stackPtr]['curr'] = $content;
-            $this->_oldTokenValues[$stackPtr]['loop'] = $this->_loops;
+            $this->_oldTokenValues[$stackPtr]['loop'] = $this->loops;
         }//end if
 
         $this->_fixedTokens[$stackPtr] = $this->_tokens[$stackPtr];
