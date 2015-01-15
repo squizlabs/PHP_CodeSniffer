@@ -72,6 +72,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #412 : PSR2 multi-line detection doesn't work for inline IF and string concats
   - Fixed bug #414 : Squiz.WhiteSpace.MemberVarSpacing - inconsistent checking of member vars with comment
   - Fixed bug #433 : Wrong detection of Squiz.Arrays.ArrayDeclaration.KeyNotAligned when key contains space
+  - Fixed bug #434 : False positive for spacing around "=>" in inline array within foreach
   - Fixed bug #20482 : Scope indent sniff can get into infinite loop when processing a parse error
  </notes>
  <contents>
@@ -1801,6 +1802,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ForEachLoopDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ForEachLoopDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ForEachLoopDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

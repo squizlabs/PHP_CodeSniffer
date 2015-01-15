@@ -306,3 +306,9 @@ $weightings = array(
 
                T_IS_GREATER_OR_EQUAL => 5,
               );
+
+foreach (array(
+          'foo'    => 'bar',
+          'foobaz' => 'bazzy',
+         ) as $key => $value) {
+}

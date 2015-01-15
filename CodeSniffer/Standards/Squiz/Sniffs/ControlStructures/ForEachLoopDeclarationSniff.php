@@ -152,7 +152,7 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             }
         }
 
-        $doubleArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $openingBracket, $closingBracket);
+        $doubleArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $asToken, $closingBracket);
 
         if ($doubleArrow !== false) {
             if ($tokens[($doubleArrow - 1)]['code'] !== T_WHITESPACE) {

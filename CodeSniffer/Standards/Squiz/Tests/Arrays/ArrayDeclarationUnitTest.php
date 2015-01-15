@@ -106,6 +106,9 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                     219 => 2,
                     223 => 1,
                     255 => 1,
+                    294 => 1,
+                    295 => 1,
+                    296 => 1,
                    );
         case 'ArrayDeclarationUnitTest.2.inc':
             return array(
@@ -161,6 +164,9 @@ class Squiz_Tests_Arrays_ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                     211 => 1,
                     215 => 1,
                     247 => 1,
+                    286 => 1,
+                    287 => 1,
+                    288 => 1,
                    );
         default:
             return array();

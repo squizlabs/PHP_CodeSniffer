@@ -300,3 +300,9 @@ $weightings = [
 
                T_IS_GREATER_OR_EQUAL => 5,
               ];
+
+foreach ([
+          'foo'    => 'bar',
+          'foobaz' => 'bazzy',
+         ] as $key => $value) {
+}
