@@ -3315,7 +3315,7 @@ class PHP_CodeSniffer_File
                 $i = $this->_tokens[$i]['parenthesis_opener'];
             }
 
-            if ($this->_tokens[$i]['code'] !== T_WHITESPACE) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$this->_tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;
             }
         }//end for
@@ -3379,7 +3379,7 @@ class PHP_CodeSniffer_File
                 $i = $this->_tokens[$i]['parenthesis_closer'];
             }
 
-            if ($this->_tokens[$i]['code'] !== T_WHITESPACE) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$this->_tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;
             }
         }//end for

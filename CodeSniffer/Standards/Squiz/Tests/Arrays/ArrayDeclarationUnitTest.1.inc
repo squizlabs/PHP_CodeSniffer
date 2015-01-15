@@ -265,3 +265,27 @@ $foo = array(
         $this->getViewName() . '.id',
         $this->getViewName() . '.title',
        );
+
+$weightings = array(
+               T_CLOSURE             => 100,
+
+               /*
+                   Conditions.
+               */
+
+               T_WHILE               => 50,
+
+               /*
+                   Operators and arithmetic.
+               */
+
+               T_BITWISE_AND         => 8,
+
+               T_BOOLEAN_AND         => 5,
+
+               /*
+                   Equality.
+               */
+
+               T_IS_GREATER_OR_EQUAL => 5,
+              );
