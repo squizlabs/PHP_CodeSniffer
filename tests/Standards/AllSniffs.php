@@ -114,9 +114,8 @@ class PHP_CodeSniffer_Standards_AllSniffs
                     include_once $sniffPath;
 
                     include_once $filePath;
-                    $class = new $className('getErrorList');
-                    $class->standardsDir = $path;
-                    $suite->addTest($class);
+                    $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $path;
+                    $suite->addTestSuite($className);
                 }//end foreach
             }//end foreach
         }//end foreach

@@ -49,9 +49,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
     protected static $phpcs = null;
 
     /**
-     * The PHP_CodeSniffer object used for testing.
+     * The path to the directory under which the sniff's standard lives.
      *
-     * @var PHP_CodeSniffer
+     * @var string
      */
     public $standardsDir = null;
 
@@ -66,6 +66,9 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         if (self::$phpcs === null) {
             self::$phpcs = new PHP_CodeSniffer();
         }
+
+        $class = get_class($this);
+        $this->standardsDir = $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$class];
 
     }//end setUp()
 
@@ -88,7 +91,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      * @return void
      * @throws PHPUnit_Framework_Error
      */
-    protected final function runTest()
+    public final function testSniff()
     {
         // Skip this test if we can't run in this environment.
         if ($this->shouldSkipTest() === true) {
