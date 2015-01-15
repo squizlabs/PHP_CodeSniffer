@@ -63,7 +63,12 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $maxErrorLength = max($maxErrorLength, strlen($error['message']));
+                    $length = strlen($error['message']);
+                    if ($showSources === true) {
+                        $length += (strlen($error['source']) + 3);
+                    }
+
+                    $maxErrorLength = max($maxErrorLength, $length);
                 }
             }
         }
