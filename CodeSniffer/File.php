@@ -3284,11 +3284,13 @@ class PHP_CodeSniffer_File
     {
         $endTokens = PHP_CodeSniffer_Tokens::$blockOpeners;
 
-        $endTokens[T_COLON]     = true;
-        $endTokens[T_COMMA]     = true;
-        $endTokens[T_SEMICOLON] = true;
-        $endTokens[T_OPEN_TAG]  = true;
-        $endTokens[T_CLOSE_TAG] = true;
+        $endTokens[T_COLON]            = true;
+        $endTokens[T_COMMA]            = true;
+        $endTokens[T_DOUBLE_ARROW]     = true;
+        $endTokens[T_SEMICOLON]        = true;
+        $endTokens[T_OPEN_TAG]         = true;
+        $endTokens[T_CLOSE_TAG]        = true;
+        $endTokens[T_OPEN_SHORT_ARRAY] = true;
 
         $lastNotEmpty = $start;
 
@@ -3335,10 +3337,12 @@ class PHP_CodeSniffer_File
         $endTokens = array(
                       T_COLON                => true,
                       T_COMMA                => true,
+                      T_DOUBLE_ARROW         => true,
                       T_SEMICOLON            => true,
                       T_CLOSE_PARENTHESIS    => true,
                       T_CLOSE_SQUARE_BRACKET => true,
                       T_CLOSE_CURLY_BRACKET  => true,
+                      T_CLOSE_SHORT_ARRAY    => true,
                       T_OPEN_TAG             => true,
                       T_CLOSE_TAG            => true,
                      );

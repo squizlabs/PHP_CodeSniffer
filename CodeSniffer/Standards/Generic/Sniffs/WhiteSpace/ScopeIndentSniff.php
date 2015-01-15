@@ -121,6 +121,10 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     public function register()
     {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            $this->_debug = false;
+        }
+
         return array(T_OPEN_TAG);
 
     }//end register()
@@ -202,8 +206,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
             }
 
-            // Special case for closing parenthesis, which should just be indented
-            // to at least the same level as where they were opened (but can be more).
+            // Closing parenthesis should just be indented to at least
+            // the same level as where they were opened (but can be more).
             if ($checkToken !== null
                 && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
             ) {
@@ -247,6 +251,61 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Don't force current indent to divisible because there could be custom
                 // rules in place between parenthesis, such as with arrays.
+                $currentIndent = ($tokens[$first]['column'] - 1);
+                if (isset($adjustments[$first]) === true) {
+                    $currentIndent += $adjustments[$first];
+                }
+
+                if ($this->_debug === true) {
+                    echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                }
+            }//end if
+
+            // Closing parenthesis should just be indented to at least
+            // the same level as where they were opened (but can be more).
+            if ($checkToken !== null
+                && $tokens[$checkToken]['code'] === T_CLOSE_SHORT_ARRAY
+            ) {
+                if ($this->_debug === true) {
+                    $line = $tokens[$i]['line'];
+                    echo "Closing short array bracket found on line $line".PHP_EOL;
+                }
+
+                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['bracket_opener'], true);
+                $checkIndent = ($tokens[$first]['column'] - 1);
+                if (isset($adjustments[$first]) === true) {
+                    $checkIndent += $adjustments[$first];
+                }
+
+                $exact = false;
+
+                if ($this->_debug === true) {
+                    $line = $tokens[$first]['line'];
+                    $type = $tokens[$first]['type'];
+                    echo "\t* first token on line $line is $type *".PHP_EOL;
+                }
+
+                $prev = $phpcsFile->findStartOfStatement($first);
+                if ($prev !== $first) {
+                    // This is not the start of the statement.
+                    if ($this->_debug === true) {
+                        $line = $tokens[$prev]['line'];
+                        $type = $tokens[$prev]['type'];
+                        echo "\t* previous is $type on line $line *".PHP_EOL;
+                    }
+
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                    $prev  = $phpcsFile->findStartOfStatement($first);
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                    if ($this->_debug === true) {
+                        $line = $tokens[$first]['line'];
+                        $type = $tokens[$first]['type'];
+                        echo "\t* amended first token is $type on line $line *".PHP_EOL;
+                    }
+                }
+
+                // Don't force current indent to be divisible because there could be custom
+                // rules in place for arrays.
                 $currentIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$first]) === true) {
                     $currentIndent += $adjustments[$first];
