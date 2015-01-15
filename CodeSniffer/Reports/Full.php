@@ -58,6 +58,28 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
             return false;
         }
 
+        // The length of the word ERROR or WARNING; used for padding.
+        if ($report['warnings'] > 0) {
+            $typeLength = 7;
+        } else {
+            $typeLength = 5;
+        }
+
+        // Work out the max line number length for formatting.
+        $maxLineNumLength = max(array_map('strlen', array_keys($report['messages'])));
+
+        // The padding that all lines will require that are
+        // printing an error message overflow.
+        $paddingLine2  = str_repeat(' ', ($maxLineNumLength + 1));
+        $paddingLine2 .= ' | ';
+        $paddingLine2 .= str_repeat(' ', $typeLength);
+        $paddingLine2 .= ' | ';
+        if ($report['fixable'] > 0) {
+            $paddingLine2 .= '    ';
+        }
+
+        $paddingLength = strlen($paddingLine2);
+
         // Make sure the report width isn't too big.
         $maxErrorLength = 0;
         foreach ($report['messages'] as $line => $lineErrors) {
@@ -68,17 +90,17 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                         $length += (strlen($error['source']) + 3);
                     }
 
-                    $maxErrorLength = max($maxErrorLength, $length);
+                    $maxErrorLength = max($maxErrorLength, ($length + 1));
                 }
             }
         }
 
         $file       = $report['filename'];
         $fileLength = strlen($file);
-        if (($fileLength + 6) > ($maxErrorLength + 21)) {
+        if (($fileLength + 6) > ($maxErrorLength + $paddingLength)) {
             $width = min($width, ($fileLength + 6));
         } else {
-            $width = min($width, ($maxErrorLength + 21));
+            $width = min($width, ($maxErrorLength + $paddingLength));
         }
 
         $width = max($width, 70);
@@ -113,28 +135,8 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
         echo "\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        // The length of the word ERROR or WARNING; used for padding.
-        if ($report['warnings'] > 0) {
-            $typeLength = 7;
-        } else {
-            $typeLength = 5;
-        }
-
-        // Work out the max line number length for formatting.
-        $maxLineLength = max(array_map('strlen', array_keys($report['messages'])));
-
-        // The padding that all lines will require that are
-        // printing an error message overflow.
-        $paddingLine2  = str_repeat(' ', ($maxLineLength + 1));
-        $paddingLine2 .= ' | ';
-        $paddingLine2 .= str_repeat(' ', $typeLength);
-        $paddingLine2 .= ' | ';
-        if ($report['fixable'] > 0) {
-            $paddingLine2 .= '    ';
-        }
-
         // The maximum amount of space an error message can use.
-        $maxErrorSpace = ($width - strlen($paddingLine2) - 1);
+        $maxErrorSpace = ($width - $paddingLength - 1);
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
@@ -145,10 +147,10 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                     }
 
                     // The padding that goes on the front of the line.
-                    $padding  = ($maxLineLength - strlen($line));
+                    $padding  = ($maxLineNumLength - strlen($line));
                     $errorMsg = wordwrap(
                         $message,
-                        $maxErrorSpace,
+                        ($maxErrorSpace + 8),
                         PHP_EOL.$paddingLine2
                     );
 
