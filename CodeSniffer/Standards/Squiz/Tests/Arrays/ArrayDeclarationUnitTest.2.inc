@@ -247,3 +247,13 @@ $data = [
          'second'
          //'third',
         ];
+
+$foo = [
+        $this->getViewName() . '.id'    => 'value',
+        $this->getViewName() . '.title' => 'value',
+       ];
+
+$foo = [
+        $this->getViewName() . '.id',
+        $this->getViewName() . '.title',
+       ];

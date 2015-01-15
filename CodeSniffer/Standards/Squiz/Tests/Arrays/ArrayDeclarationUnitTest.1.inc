@@ -255,3 +255,13 @@ $data = array(
          'second'
          //'third',
         );
+
+$foo = array(
+        $this->getViewName() . '.id'    => 'value',
+        $this->getViewName() . '.title' => 'value',
+       );
+
+$foo = array(
+        $this->getViewName() . '.id',
+        $this->getViewName() . '.title',
+       );

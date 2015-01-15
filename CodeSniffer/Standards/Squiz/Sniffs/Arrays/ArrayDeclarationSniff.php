@@ -471,16 +471,15 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 // Find the start of index that uses this double arrow.
                 $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), $arrayStart, true);
-                $indexStart = $phpcsFile->findPrevious(T_WHITESPACE, $indexEnd, $arrayStart);
+                $indexStart = $phpcsFile->findStartOfStatement($indexEnd);
 
-                if ($indexStart === false) {
-                    $index = $indexEnd;
+                if ($indexStart === $indexEnd) {
+                    $currentEntry['index']         = $indexEnd;
+                    $currentEntry['index_content'] = $tokens[$indexEnd]['content'];
                 } else {
-                    $index = ($indexStart + 1);
+                    $currentEntry['index']         = $indexStart;
+                    $currentEntry['index_content'] = $phpcsFile->getTokensAsString($indexStart, ($indexEnd - $indexStart + 1));
                 }
-
-                $currentEntry['index']         = $index;
-                $currentEntry['index_content'] = $phpcsFile->getTokensAsString($index, ($indexEnd - $index + 1));
 
                 $indexLength = strlen($currentEntry['index_content']);
                 if ($maxLength < $indexLength) {
@@ -488,7 +487,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 // Find the value of this index.
-                $nextContent           = $phpcsFile->findNext(array(T_WHITESPACE), ($nextToken + 1), $arrayEnd, true);
+                $nextContent           = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), $arrayEnd, true);
                 $currentEntry['value'] = $nextContent;
                 $indices[] = $currentEntry;
                 $lastToken = $nextToken;
