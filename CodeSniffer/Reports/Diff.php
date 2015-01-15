@@ -139,6 +139,9 @@ class PHP_CodeSniffer_Reports_Diff implements PHP_CodeSniffer_Report
         $toScreen=true
     ) {
         echo $cachedData;
+        if ($toScreen === true) {
+            echo PHP_EOL;
+        }
 
     }//end generate()
 
