@@ -825,21 +825,6 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
-        $fileContents = '';
-        if (empty($values['files']) === true) {
-            // Check if they are passing in the file contents.
-            $handle       = fopen('php://stdin', 'r');
-            $fileContents = stream_get_contents($handle);
-            fclose($handle);
-
-            if ($fileContents === '') {
-                // No files and no content passed in.
-                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(2);
-            }
-        }
-
         $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
         $phpcs->setCli($this);
         $phpcs->initStandard($values['standard'], $values['sniffs']);
@@ -880,8 +865,22 @@ class PHP_CodeSniffer_CLI
 
         $phpcs->processFiles($values['files'], $values['local']);
 
-        if ($fileContents !== '') {
-            $phpcs->processFile('STDIN', $fileContents);
+        if (empty($values['files']) === true) {
+            // Check if they are passing in the file contents.
+            $handle       = fopen('php://stdin', 'r');
+            $fileContents = stream_get_contents($handle);
+            fclose($handle);
+
+            if ($fileContents === '') {
+                // No files and no content passed in.
+                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            } else {
+                if ($fileContents !== '') {
+                    $phpcs->processFile('STDIN', $fileContents);
+                }
+            }
         }
 
         // Interactive runs don't require a final report and it doesn't really
@@ -997,6 +996,14 @@ class PHP_CodeSniffer_CLI
     {
         if ($standards === null) {
             // They did not supply a standard to use.
+            // Looks for a ruleset in the current directory.
+            if (empty($this->values['files']) === true) {
+                $default = getcwd().DIRECTORY_SEPARATOR.'ruleset.xml';
+                if (is_file($default) === true) {
+                    return array($default);
+                }
+            }
+
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
             if ($standard === null) {

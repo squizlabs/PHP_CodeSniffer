@@ -702,6 +702,7 @@ class PHP_CodeSniffer
         $ownSniffs      = array();
         $includedSniffs = array();
         $excludedSniffs = array();
+        $cliValues      = $this->cli->getCommandLineValues();
 
         $rulesetDir          = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
@@ -772,7 +773,10 @@ class PHP_CodeSniffer
             }
 
             if (isset($arg['name']) === true) {
-                $argString = '--'.(string) $arg['name'].'='.(string) $arg['value'];
+                $argString = '--'.(string) $arg['name'];
+                if (isset($arg['value']) === true) {
+                    $argString .= '='.(string) $arg['value'];
+                }
             } else {
                 $argString = '-'.(string) $arg['value'];
             }
@@ -782,6 +786,18 @@ class PHP_CodeSniffer
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> set command line value $argString".PHP_EOL;
+            }
+        }//end foreach
+
+        if (empty($cliValues['files']) === true) {
+            // Process hard-coded file paths.
+            foreach ($ruleset->{'file'} as $file) {
+                $file      = (string) $file;
+                $cliArgs[] = $file;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t=> added \"$file\" to the file list".PHP_EOL;
+                }
             }
         }
 
