@@ -69,7 +69,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing %s comment', $stackPtr, 'Missing', $errorData);
+            $phpcsFile->addError('Missing %s doc comment', $stackPtr, 'Missing', $errorData);
             $phpcsFile->recordMetric($stackPtr, '%s has doc comment', 'no', array(ucfirst($type)));
             return;
         } else {
