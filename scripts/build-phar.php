@@ -61,7 +61,7 @@ foreach ($scripts as $script) {
 /**
  * Build from a package list.
  *
- * @param object &$phar The Phar class.
+ * @param object $phar The Phar class.
  *
  * @return void
  */
@@ -93,7 +93,7 @@ function buildFromPackage(&$phar)
 /**
  * Add from a node.
  *
- * @param object &$phar  The Phar class.
+ * @param object $phar   The Phar class.
  * @param object $node   The node to add.
  * @param string $prefix The prefix of the structure.
  *
