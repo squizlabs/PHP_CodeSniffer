@@ -4,6 +4,9 @@
 
  <file>CodeSniffer.php</file>
  <file>CodeSniffer</file>
+ <file>scripts</file>
+
+ <exclude-pattern>*/Tests/*</exclude-pattern>
 
  <arg name="report" value="summary"/>
  <arg value="np"/>

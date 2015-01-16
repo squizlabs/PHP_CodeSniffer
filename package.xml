@@ -34,9 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Use the --report-width=auto command line argument to auto-size the reports
     -- Use the command "phpcs --config-set report_width auto" to use auto-sizing by default
   - Reports will now size to fit inside the report width setting instead of always using padding to fill the space
-  - If no files or standards are specified, PHPCS will now look for a ruleset.xml file in the current directory
+  - If no files or standards are specified, PHPCS will now look for a phpcs.xml file in the current directory
     -- This file has the same format as a standard ruleset.xml file
-    -- The ruleset.xml file should specify (at least) files to process and a standard/sniffs to use
+    -- The phpcs.xml file should specify (at least) files to process and a standard/sniffs to use
     -- Useful for running the phpcs and phpcbf commands without any arguments at the top of a repository
   - Default file paths can now be specified in a ruleset.xml file using the "file" tag
     -- File paths are only processed if no files were specified on the command line

@@ -998,7 +998,7 @@ class PHP_CodeSniffer_CLI
             // They did not supply a standard to use.
             // Looks for a ruleset in the current directory.
             if (empty($this->values['files']) === true) {
-                $default = getcwd().DIRECTORY_SEPARATOR.'ruleset.xml';
+                $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
                 if (is_file($default) === true) {
                     return array($default);
                 }
