@@ -196,7 +196,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         if (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') {
             $docBlock = 'file';
         } else {
-            $docBlock = 'class';
+            $docBlock = strtolower($tokens[$stackPtr]['content']);
         }
 
         $commentEnd = $tokens[$commentStart]['comment_closer'];
