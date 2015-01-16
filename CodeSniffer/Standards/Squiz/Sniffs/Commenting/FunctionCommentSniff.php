@@ -184,7 +184,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             if ($exception === null) {
                 $error = 'Exception type and comment missing for @throws tag in function comment';
                 $phpcsFile->addError($error, $tag, 'InvalidThrows');
-            } else if ($comment === null) {
+            } else if (empty($comment) === true) {
                 $error = 'Comment missing for @throws tag in function comment';
                 $phpcsFile->addError($error, $tag, 'EmptyThrows');
             } else {
