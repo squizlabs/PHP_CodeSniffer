@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+ <description>The coding standard for PHP_CodeSniffer itself.</description>
+
+ <file>CodeSniffer.php</file>
+ <file>CodeSniffer</file>
+
+ <arg name="report" value="summary"/>
+ <arg value="np"/>
+
+ <rule ref="PHPCS"/>
+</ruleset>
