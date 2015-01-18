@@ -10,6 +10,7 @@
  <!-- Include the whole PSR-2 standard -->
  <rule ref="PSR2">
   <exclude name="PSR2.Methods.MethodDeclaration"/>
+  <exclude name="PSR2.Classes.PropertyDeclaration"/>
  </rule>
 
  <!-- 2.2 Files -->
@@ -109,7 +110,7 @@
  <!-- Method names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
  <!-- checked in Methods/MethodDeclarationSniff -->
  <rule ref="YL1.Methods.MethodDeclaration"/> 
- 
+ <rule ref="YL1.Classes.PropertyDeclaration"/> 
  
  <!-- Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
  <rule ref="Squiz.Functions.FunctionDeclaration"/>
