@@ -39,7 +39,7 @@
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
   <properties>
    <property name="ignoreBlankLines" value="true"/>
-   </properties>
+  </properties>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
   <severity>0</severity>
