@@ -208,7 +208,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                     if ($type === 'Case') {
                         // Ensure the BREAK statement is followed by
                         // a single blank line, or the end switch brace.
-                        if ($nextLine !== ($breakLine + 2) && $i !== $tokens[$stackPtr]['scope_closer']) {
+                        if ($nextLine !== ($tokens[$semicolon]['line'] + 2) && $i !== $tokens[$stackPtr]['scope_closer']) {
                             $error = 'Case breaking statements must be followed by a single blank line';
                             $fix   = $phpcsFile->addFixableError($error, $nextBreak, 'SpacingAfterBreak');
                             if ($fix === true) {
