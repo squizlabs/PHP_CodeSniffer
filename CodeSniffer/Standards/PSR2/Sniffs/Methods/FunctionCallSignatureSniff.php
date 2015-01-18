@@ -49,6 +49,13 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
      */
     public function isMultiLineCall(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
+        // If the first argument is on a new line, this is a multi-line
+        // function call, even if there is only one argument.
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+        if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
+            return true;
+        }
+
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $end = $phpcsFile->findEndOfStatement($openBracket + 1);

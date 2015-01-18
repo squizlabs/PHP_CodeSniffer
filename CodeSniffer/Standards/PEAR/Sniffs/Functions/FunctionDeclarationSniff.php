@@ -29,6 +29,16 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The number of spaces code should be indented.
      *
      * @var int

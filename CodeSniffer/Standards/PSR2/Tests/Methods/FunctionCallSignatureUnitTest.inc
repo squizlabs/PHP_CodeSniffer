@@ -64,3 +64,7 @@ $this->setFoo('some'
 
 foo(bar(), $a);
 foo();bar();
+
+foo(
+    true
+);
