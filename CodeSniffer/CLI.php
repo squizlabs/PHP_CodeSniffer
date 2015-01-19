@@ -1160,7 +1160,7 @@ class PHP_CodeSniffer_CLI
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
-        echo '        -v[v][v]      Print verbose output'.PHP_EOL;
+        echo '        -v[v[v]]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
