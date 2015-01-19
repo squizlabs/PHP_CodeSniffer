@@ -61,11 +61,9 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $error['message'] = str_replace('\\', '\\\\', $error['message']);
-                    $error['message'] = str_replace('"', '\"', $error['message']);
-                    $error['message'] = str_replace('/', '\/', $error['message']);
+                     $error['message'] = json_encode($error['message']);
 
-                    $messages .= '{"message":"'.$error['message'].'",';
+                    $messages .= '{"message":'.$error['message'].',';
                     $messages .= '"source":"'.$error['source'].'",';
                     $messages .= '"severity":'.$error['severity'].',';
                     $messages .= '"type":"'.$error['type'].'",';
