@@ -842,7 +842,8 @@ class PHP_CodeSniffer_CLI
 
         // Set ignore patterns if they were specified.
         if (empty($values['ignored']) === false) {
-            $phpcs->setIgnorePatterns($values['ignored']);
+            $ignorePatterns = array_merge($phpcs->getIgnorePatterns(), $values['ignored']);
+            $phpcs->setIgnorePatterns($ignorePatterns);
         }
 
         // Set some convenience member vars.

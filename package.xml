@@ -86,6 +86,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #414 : Squiz.WhiteSpace.MemberVarSpacing - inconsistent checking of member vars with comment
   - Fixed bug #433 : Wrong detection of Squiz.Arrays.ArrayDeclaration.KeyNotAligned when key contains space
   - Fixed bug #434 : False positive for spacing around "=>" in inline array within foreach
+  - Fixed bug #452 : Ruleset exclude-pattern for specific sniff code ignored when using CLI --ignore option
   - Fixed bug #20482 : Scope indent sniff can get into infinite loop when processing a parse error
  </notes>
  <contents>
