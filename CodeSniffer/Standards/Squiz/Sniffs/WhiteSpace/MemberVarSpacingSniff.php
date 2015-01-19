@@ -49,7 +49,8 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         $ignore[] = T_VAR;
         $ignore[] = T_WHITESPACE;
 
-        $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        $start = $stackPtr;
+        $prev  = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$prev]['code']]) === true) {
             // Assume the comment belongs to the member var if it is on a line by itself.
             $prevContent = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
@@ -74,37 +75,27 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
                         $phpcsFile->fixer->endChangeset();
                     }
                 }//end if
-            }//end if
 
-            $start = $prev;
-        } else {
-            $start = $stackPtr;
+                $start = $prev;
+            }//end if
         }//end if
 
         // There needs to be 1 blank line before the var, not counting comments.
-        $prevLineToken = null;
-        for ($i = ($start - 1); $i > 0; $i--) {
-            if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
-                // Skip comments.
-                continue;
-            } else if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
-                // Not the end of the line.
-                continue;
-            } else {
-                $prevLineToken = $i;
-                break;
+        if ($start === $stackPtr) {
+            // No comment found.
+            $first = $phpcsFile->findFirstOnLine(PHP_CodeSniffer_Tokens::$emptyTokens, $start, true);
+            if ($first === false) {
+                $first = $start;
             }
+        } else if ($tokens[$start]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            $first = $tokens[$start]['comment_opener'];
+        } else {
+            $first = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($start - 1), null, true);
+            $first = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$commentTokens, ($first + 1));
         }
 
-        if (is_null($prevLineToken) === true) {
-            // Never found the previous line, which means
-            // there are 0 blank lines before the member var.
-            $foundLines = 0;
-        } else {
-            $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
-            $foundLines  = ($tokens[$prevLineToken]['line'] - $tokens[$prevContent]['line']);
-        }//end if
-
+        $prev       = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($first - 1), null, true);
+        $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
         if ($foundLines === 1) {
             return;
         }
@@ -113,17 +104,21 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
         $data  = array($foundLines);
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
         if ($fix === true) {
-            if ($foundLines === 0) {
-                $phpcsFile->fixer->addNewline($prevLineToken);
-            } else {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = ($prevContent + 1); $i <= $prevLineToken; $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
+            $phpcsFile->fixer->beginChangeset();
+            for ($i = ($prev + 1); $i < $first; $i++) {
+                if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
+                    continue;
                 }
 
-                $phpcsFile->fixer->addNewline($prevLineToken);
-                $phpcsFile->fixer->endChangeset();
+                if ($tokens[$i]['line'] === $tokens[$first]['line']) {
+                    $phpcsFile->fixer->addNewline(($i - 1));
+                    break;
+                }
+
+                $phpcsFile->fixer->replaceToken($i, '');
             }
+
+            $phpcsFile->fixer->endChangeset();
         }//end if
 
     }//end processMemberVar()

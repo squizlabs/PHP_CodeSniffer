@@ -1,8 +1,8 @@
 <?php
 class MyClass
 {
-    public $var1 = 'value';
 
+    public $var1 = 'value';
 
     public $var2 = 'value';
 
@@ -16,7 +16,6 @@ interface MyInterface
 
     public $var1 = 'value';
 
-
     public $var2 = 'value';
 
     protected $var3 = 'value';
@@ -26,11 +25,9 @@ interface MyInterface
 class MyClass
 {
 
-
     public $var1 = 'value';
 
     private $var2 = 'value';
-
 
     protected $var3 = 'value';
 
@@ -41,12 +38,14 @@ class MyClass
 
 class MyClass
 {
+
     public $var1 = 'value';
 }//end class
 
 
 interface MyInterface
 {
+
     public $var1 = 'value';
     function myFunction();
 }//end interface
@@ -63,7 +62,6 @@ class MyClass
      */
     protected $actions = array();
 
-
     /**
      * TRUE if this step should be performed after the asset is created.
      *
@@ -77,6 +75,7 @@ class MyClass
 
 class MyClass
 {
+
     /**
      * The actions that this wizard step requires.
      *
@@ -104,8 +103,8 @@ class MyClass
      * @var   array
      * @since 4.0.0
      */
-
     protected $actions = array();
+
     /**
      * The actions that this wizard step requires.
      *
