@@ -55,7 +55,7 @@ class MySource_Sniffs_Channels_UnusedSystemSniff implements PHP_CodeSniffer_Snif
         // Check if this is a call to includeSystem, includeAsset or includeWidget.
         $methodName = strtolower($tokens[($stackPtr + 1)]['content']);
         if ($methodName === 'includesystem'
-            || $methodName ===  'includeasset'
+            || $methodName === 'includeasset'
             || $methodName === 'includewidget'
         ) {
             $systemName = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 3), null, true);

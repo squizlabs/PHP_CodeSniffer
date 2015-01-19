@@ -98,7 +98,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $this->version = str_replace(
             'notify-send ',
             '',
-            exec($this->path . ' --version')
+            exec($this->path.' --version')
         );
 
     }//end __construct()

@@ -20,9 +20,11 @@
  <rule ref="Squiz.Formatting.OperatorBracket" />
  <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
  <rule ref="Squiz.PHP.DisallowInlineIf" />
+ <rule ref="Squiz.Strings.ConcatenationSpacing" />
  <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
  <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
  <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
+ <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
  <rule ref="Generic.Commenting.Todo"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
