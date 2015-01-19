@@ -732,11 +732,6 @@ class PHP_CodeSniffer_File
                 if (isset($cliValues['encoding']) === true) {
                     $encoding = $cliValues['encoding'];
                 }
-            } else if ($this->fixer->loops > 0) {
-                // No need to replace tabs with spaces on the second
-                // time around as this would have been done on the first
-                // parse.
-                $tabWidth = 0;
             }
 
             $this->_tokens = self::tokenizeString($contents, $tokenizer, $this->eolChar, $tabWidth, $encoding);
