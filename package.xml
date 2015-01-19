@@ -42,6 +42,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- File paths are only processed if no files were specified on the command line
   - Squiz coding standard now requires lowercase PHP constants (true, false and null)
     -- Removed Squiz.NamingConventions.ConstantCase sniff as the rule is now consistent across PHP and JS files
+  - Squiz FunctionOpeningBraceSpaceSniff no longer does additional checks for JS functions
+    -- PHP and JS functions and closures are now treated the same way
   - Interactive mode no longer breaks if you also specify a report type on the command line
   - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
   - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
