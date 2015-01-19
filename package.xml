@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Removed Squiz.NamingConventions.ConstantCase sniff as the rule is now consistent across PHP and JS files
   - Squiz FunctionOpeningBraceSpaceSniff no longer does additional checks for JS functions
     -- PHP and JS functions and closures are now treated the same way
+  - Squiz MultiLineFunctionDeclarationSniff now supports JS files
   - Interactive mode no longer breaks if you also specify a report type on the command line
   - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
   - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
@@ -1954,6 +1955,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="MultiLineFunctionDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
