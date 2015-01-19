@@ -686,7 +686,7 @@ class PHP_CodeSniffer_CLI
                     $this->values['standard'] = explode(',', $standards);
                 }
             } else if (substr($arg, 0, 11) === 'extensions=') {
-                $this->values['extensions'] = explode(',', substr($arg, 11));
+                $this->values['extensions'] = array_merge($this->values['extensions'], explode(',', substr($arg, 11)));
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->values['errorSeverity']   = (int) substr($arg, 9);
                 $this->values['warningSeverity'] = $this->values['errorSeverity'];

@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Useful for running the phpcs and phpcbf commands without any arguments at the top of a repository
   - Default file paths can now be specified in a ruleset.xml file using the "file" tag
     -- File paths are only processed if no files were specified on the command line
+  - Extensions specified on the CLI are now merged with those set in ruleset.xml files
+    -- Previously, the ruleset.xml file setting replaced the CLI setting completely
   - Squiz coding standard now requires lowercase PHP constants (true, false and null)
     -- Removed Squiz.NamingConventions.ConstantCase sniff as the rule is now consistent across PHP and JS files
   - Squiz FunctionOpeningBraceSpaceSniff no longer does additional checks for JS functions
