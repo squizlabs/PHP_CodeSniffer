@@ -150,7 +150,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                     $padding  = ($maxLineNumLength - strlen($line));
                     $errorMsg = wordwrap(
                         $message,
-                        ($maxErrorSpace + 8),
+                        $maxErrorSpace,
                         PHP_EOL.$paddingLine2
                     );
 
