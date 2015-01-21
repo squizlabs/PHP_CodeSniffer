@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Formatting_DisallowObEndFlushSniff.
+ * Squiz_Sniffs_Formatting_DisallowInlineIfSniff.
  *
  * PHP version 5
  *
