@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2015-01-22</date>
  <time>09:42:00</time>
  <version>
-  <release>2.2.0</release>
-  <api>2.2.0</api>
+  <release>2.2.1</release>
+  <api>2.2.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,68 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added (hopefully) tastefully used colors to report and progress output for the phpcs command
-    -- Use the --colors command line argument to use colors in output
-    -- Use the command "phpcs --config-set colors true" to turn colors on by default
-    -- Use the --no-colors command line argument to turn colors off when the config value is set
-  - Added support for using the full terminal width for report output
-    -- Use the --report-width=auto command line argument to auto-size the reports
-    -- Use the command "phpcs --config-set report_width auto" to use auto-sizing by default
-  - Reports will now size to fit inside the report width setting instead of always using padding to fill the space
-  - If no files or standards are specified, PHPCS will now look for a phpcs.xml file in the current directory
-    -- This file has the same format as a standard ruleset.xml file
-    -- The phpcs.xml file should specify (at least) files to process and a standard/sniffs to use
-    -- Useful for running the phpcs and phpcbf commands without any arguments at the top of a repository
-  - Default file paths can now be specified in a ruleset.xml file using the "file" tag
-    -- File paths are only processed if no files were specified on the command line
-  - Extensions specified on the CLI are now merged with those set in ruleset.xml files
-    -- Previously, the ruleset.xml file setting replaced the CLI setting completely
-  - Squiz coding standard now requires lowercase PHP constants (true, false and null)
-    -- Removed Squiz.NamingConventions.ConstantCase sniff as the rule is now consistent across PHP and JS files
-  - Squiz FunctionOpeningBraceSpaceSniff no longer does additional checks for JS functions
-    -- PHP and JS functions and closures are now treated the same way
-  - Squiz MultiLineFunctionDeclarationSniff now supports JS files
-  - Interactive mode no longer breaks if you also specify a report type on the command line
-  - PEAR InlineCommentSniff now fixes the Perl-style comments that it finds (request #375)
-  - PSR2 standard no longer fixes the placement of docblock open tags as comments are excluded from this standard
-  - PSR2 standard now sets a default tab width of 4 spaces
-  - Generic DocCommentSniff now only disallows lowercase letters at the start of a long/short comment (request #377)
-    -- All non-letter characters are now allowed, including markdown special characters and numbers
-  - Generic DisallowMultipleStatementsSniff now allows multiple open/close tags on the same line (request #423)
-  - Generic CharacterBeforePHPOpeningTagSniff now only checks the first PHP tag it finds (request #423)
-  - Generic CharacterBeforePHPOpeningTagSniff now allows a shebang line at the start of the file (request #20481)
-  - Generic InlineHTMLUnitTest now allows a shebang line at the start of the file (request #20481)
-  - PEAR ObjectOperatorIndentSniff now only checks object operators at the start of a line
-  - PEAR FileComment and ClassComment sniffs no longer have @ in their error codes
-    -- E.g., PEAR.Commenting.FileComment.Missing@categoryTag becomes PEAR.Commenting.FileComment.MissingCategoryTag
-    -- Thanks to Grzegorz Rygielski for the patch
-  - Squiz ControlStructureSpacingSniff no longer enforces a blank line before CATCH statements
-  - Squiz FunctionCommentSniff now fixes the return type in the @return tag (request #392)
-  - Squiz BlockCommentSniff now only disallows lowercase letters at the start of the comment
-  - Squiz InlineCommentSniff now only disallows lowercase letters at the start of the comment
-  - Squiz OperatorSpacingSniff now has a setting to ignore newline characters around operators (request #348)
-    -- Default remains FALSE, so newlines are not allowed
-    -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
-  - PSR2 ControlStructureSpacingSniff now checks for, and fixes, newlines after the opening parenthesis
-  - Added a markdown document generator (--generator=markdown to use)
-    -- Thanks to Stefano Kowalke for the contribution
-  - Fixed bug #379 : Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast incorrectly detects comments
-  - Fixed bug #382 : JS tokenizer incorrect for inline conditionally created immediately invoked anon function
-  - Fixed bug #383 : Squiz.Arrays.ArrayDeclaration.ValueNoNewline incorrectly detects nested arrays
-  - Fixed bug #386 : Undefined offset in Squiz.FunctionComment sniff when param has no comment
-  - Fixed bug #390 : Indentation of non-control structures isn't adjusted when containing structure is fixed
-  - Fixed bug #400 : InlineControlStructureSniff fails to fix when statement has no semicolon
-  - Fixed bug #401 : PHPCBF no-patch option shows an error when there are no fixable violations in a file
-  - Fixed bug #405 : The "Squiz.WhiteSpace.FunctionSpacing" sniff removes class "}" during fixing
-  - Fixed bug #407 : PEAR.ControlStructures.MultiLineCondition doesn't account for comments at the end of lines
-  - Fixed bug #410 : The "Squiz.WhiteSpace.MemberVarSpacing" not respecting "var"
-  - Fixed bug #411 : Generic.WhiteSpace.ScopeIndent.Incorrect - false positive with multiple arrays in argument list
-  - Fixed bug #412 : PSR2 multi-line detection doesn't work for inline IF and string concats
-  - Fixed bug #414 : Squiz.WhiteSpace.MemberVarSpacing - inconsistent checking of member vars with comment
-  - Fixed bug #433 : Wrong detection of Squiz.Arrays.ArrayDeclaration.KeyNotAligned when key contains space
-  - Fixed bug #434 : False positive for spacing around "=>" in inline array within foreach
-  - Fixed bug #452 : Ruleset exclude-pattern for specific sniff code ignored when using CLI --ignore option
-  - Fixed bug #20482 : Scope indent sniff can get into infinite loop when processing a parse error
+  - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
  </notes>
  <contents>
   <dir name="/">
@@ -1237,6 +1176,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ClosingTagSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EndFileNewlineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1288,6 +1230,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="ClosingTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
