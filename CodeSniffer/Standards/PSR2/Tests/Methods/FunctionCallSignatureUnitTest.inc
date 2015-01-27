@@ -68,3 +68,24 @@ foo();bar();
 foo(
     true
 );
+
+myFunction(<<<END
+Foo
+END
+);
+
+var_dump(array(<<<'EOD'
+foobar!
+EOD
+));
+
+myFunction(<<<END
+Foo
+END
+, 'bar');
+
+myFunction(<<<END
+Foo
+END
+,
+'bar');

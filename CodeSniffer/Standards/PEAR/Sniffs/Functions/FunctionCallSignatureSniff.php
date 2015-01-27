@@ -237,6 +237,11 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($closer - 1), $openBracket, true);
+        if ($tokens[$prev]['code'] === T_END_HEREDOC || $tokens[$prev]['code'] === T_END_NOWDOC) {
+            // Need a newline after these tokens, so ignore this rule.
+            return;
+        }
+
         if ($tokens[$prev]['line'] !== $tokens[$closer]['line']) {
             $spaceBeforeClose = 'newline';
         } else if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
