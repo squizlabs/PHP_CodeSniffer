@@ -97,8 +97,11 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
         $file       = $report['filename'];
         $fileLength = strlen($file);
-        $maxWidth   = max(($fileLength + 6), ($maxErrorLength + $paddingLength), 70);
+        $maxWidth   = max(($fileLength + 6), ($maxErrorLength + $paddingLength));
         $width      = min($width, $maxWidth);
+        if ($width < 80) {
+            $width = 80;
+        }
 
         echo PHP_EOL."\033[1mFILE: ";
         if ($fileLength <= ($width - 6)) {
