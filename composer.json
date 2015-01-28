@@ -48,7 +48,8 @@
     },
     "require": {
         "php": ">=5.1.2",
-        "ext-tokenizer": "*"
+        "ext-tokenizer": "*",
+        "ext-xmlwriter": "*"
     },
     "bin": [
         "scripts/phpcs",
