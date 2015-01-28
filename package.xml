@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
+  - Generic OpeningFunctionBraceKernighanRitchieSniff now ignores empty functions with braces next to each other
+  - Generic OpeningFunctionBraceBsdAllmanSniff now ignores empty functions with braces next to each other
+  - Improved auto report width for the "full" report
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
  </notes>

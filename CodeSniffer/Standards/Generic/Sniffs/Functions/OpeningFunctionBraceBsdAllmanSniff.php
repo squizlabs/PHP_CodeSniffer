@@ -62,9 +62,13 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
-
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
+        $next         = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
+            if ($next === $tokens[$stackPtr]['scope_closer']) {
+                // Ignore empty functions.
+                return;
+            }
+
             $error = 'Opening brace must be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
             if ($fix === true) {

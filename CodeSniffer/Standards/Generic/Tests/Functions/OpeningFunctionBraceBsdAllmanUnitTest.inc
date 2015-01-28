@@ -154,3 +154,7 @@ function myFunction(
                     $arg6
                     ) {
 }
+
+function myFunction() {}
+function myFunction()
+{}
