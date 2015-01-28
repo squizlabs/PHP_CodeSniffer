@@ -5,16 +5,16 @@ function myFunction() {
 }
 
 // Brace should be on same line.
-function myFunction()
-{
+function myFunction() {
+
 }
 
 // Too many spaces.
-function myFunction()   {
+function myFunction() {
 }
 
 // Uses tab.
-function myFunction()	{
+function myFunction() {
 }
 
 
@@ -25,16 +25,16 @@ class myClass()
     }
     
     // Brace should be on same line.
-    function myFunction()
-    {
+    function myFunction() {
+    
     }
     
     // Too many spaces.
-    function myFunction()   {
+    function myFunction() {
     }
     
     // Uses tab.
-    function myFunction()	{
+    function myFunction() {
     }
 }
 
@@ -49,18 +49,18 @@ function myFunction($variable1, $variable2,
 
 // Brace should be on same line.
 function myFunction($variable1, $variable2,
-    $variable3, $variable4)
-{
+    $variable3, $variable4) {
+
 }
 
 // Too many spaces.
 function myFunction($variable1, $variable2,
-    $variable3, $variable4)   {
+    $variable3, $variable4) {
 }
 
 // Uses tab.
 function myFunction($variable1, $variable2,
-    $variable3, $variable4)	{
+    $variable3, $variable4) {
 }
 
 
@@ -73,18 +73,18 @@ class myClass()
     
     // Brace should be on same line.
     function myFunction($variable1, $variable2,
-        $variable3, $variable4)
-    {
+        $variable3, $variable4) {
+    
     }
     
     // Too many spaces.
     function myFunction($variable1, $variable2,
-        $variable3, $variable4)   {
+        $variable3, $variable4) {
     }
     
     // Uses tab.
     function myFunction($variable1, $variable2,
-        $variable3, $variable4)	{
+        $variable3, $variable4) {
     }
 }
 
@@ -100,8 +100,8 @@ function myFunction(
                     $arg4,
                     $arg5,
                     $arg6
-                    )
-{
+                    ) {
+
 }
 
 function myFunction(

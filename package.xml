@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
  </notes>
@@ -610,10 +611,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceBsdAllmanUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="OpeningFunctionBraceKernighanRitchieUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

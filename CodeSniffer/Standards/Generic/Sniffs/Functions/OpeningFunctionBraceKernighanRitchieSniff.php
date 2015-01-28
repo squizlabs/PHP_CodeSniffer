@@ -81,11 +81,21 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         $lineDifference = ($braceLine - $functionLine);
 
         if ($lineDifference > 0) {
-            $error = 'Opening brace should be on the same line as the declaration';
-            $phpcsFile->addError($error, $openingBrace, 'BraceOnNewLine');
             $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'new line');
+            $error = 'Opening brace should be on the same line as the declaration';
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnNewLine');
+            if ($fix === true) {
+                $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->addContent($closeBracket, ' {');
+                $phpcsFile->fixer->replaceToken($openingBrace, '');
+                $phpcsFile->fixer->endChangeset();
+            }
+
             return;
         }
+
+        $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
 
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
@@ -99,27 +109,15 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         if ($length !== 1) {
             $error = 'Expected 1 space after closing parenthesis; found %s';
             $data  = array($length);
-            $phpcsFile->addError($error, $closeBracket, 'SpaceAfterBracket', $data);
-            return;
+            $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceAfterBracket', $data);
+            if ($fix === true) {
+                if ($length === 0 || $length === '\t') {
+                    $phpcsFile->fixer->addContent($closeBracket, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($closeBracket + 1), ' ');
+                }
+            }
         }
-
-        $closeBrace = $tokens[$stackPtr]['scope_opener'];
-        if ($tokens[($closeBrace - 1)]['code'] !== T_WHITESPACE) {
-            $length = 0;
-        } else if ($tokens[($closeBrace - 1)]['content'] === "\t") {
-            $length = '\t';
-        } else {
-            $length = strlen($tokens[($closeBrace - 1)]['content']);
-        }
-
-        if ($length !== 1) {
-            $error = 'Expected 1 space before opening brace; found %s';
-            $data  = array($length);
-            $phpcsFile->addError($error, $openingBrace, 'SpaceBeforeBrace', $data);
-            return;
-        }
-
-        $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
 
     }//end process()
 
