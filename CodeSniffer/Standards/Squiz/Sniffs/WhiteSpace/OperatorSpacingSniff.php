@@ -83,7 +83,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * 
      * @var bool|string
      */
-    public $allowNewLineAfter = '/(?<!=)=$/';
+    public $allowNewLineAfter = false;
 	
 	/**
      * Allow newlines instead of spaces for all cases.
@@ -101,7 +101,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * 
      * @var bool
      */
-    public $allowMultispaceForAssignmentAlignment = true;
+    public $allowMultispaceForAssignmentAlignment = false;
     
     /**
      * The list of tokens that says that there must not be a space after minus.
