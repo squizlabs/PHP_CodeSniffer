@@ -112,7 +112,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * Here is the unary minus. It must not require space after himself.
      * @var array
      */
-    protected $tokensThatMayGoBeforeUnaryMinus = [];
+    protected $tokensThatMayGoBeforeUnaryMinus = array();
     
 
     public function __construct() {
