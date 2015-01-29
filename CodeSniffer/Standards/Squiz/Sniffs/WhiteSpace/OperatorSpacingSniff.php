@@ -32,6 +32,16 @@
  */
 class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sniff
 {
+
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+    */
+    public $supportedTokenizers = array(
+          'PHP',
+          'JS',
+    );
     
     /**
      * Allow newline before the operator. 
@@ -107,7 +117,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
     public function __construct() {
         $this->tokensThatMayGoBeforeUnaryMinus = array_merge(
-            [
+            array(
                 T_RETURN, // return -1;
                 T_COMMA, // foo(1, -1);
                 T_OPEN_PARENTHESIS, // foo(-1)
@@ -117,7 +127,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 T_INLINE_THEN, // ? -1
                 T_INLINE_ELSE, // : -1;
                 T_CASE, // case -1:
-            ], 
+            ), 
             PHP_CodeSniffer_Tokens::$operators, // $a * -1
             PHP_CodeSniffer_Tokens::$booleanOperators, //$a || -1 === $b
             PHP_CodeSniffer_Tokens::$comparisonTokens, // $a === -1
