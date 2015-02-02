@@ -103,6 +103,13 @@ class PHP_CodeSniffer_Fixer
     private $_inChangeset = false;
 
     /**
+     * Is the current fixing loop in conflict?
+     *
+     * @var boolean
+     */
+    private $_inConflict = false;
+
+    /**
      * The number of fixes that have been performed.
      *
      * @var int
@@ -178,6 +185,7 @@ class PHP_CodeSniffer_Fixer
                 ob_start();
             }
 
+            $this->_inConflict = false;
             $this->_currentFile->refreshTokenListeners();
             $this->_currentFile->start($contents);
             ob_end_clean();
@@ -194,7 +202,7 @@ class PHP_CodeSniffer_Fixer
                 echo ']... ';
             }
 
-            if ($this->_numFixes === 0) {
+            if ($this->_numFixes === 0 && $this->_inConflict === false) {
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -352,6 +360,10 @@ class PHP_CodeSniffer_Fixer
      */
     public function beginChangeset()
     {
+        if ($this->_inConflict === true) {
+            return false;
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $bt    = debug_backtrace();
             $sniff = $bt[1]['class'];
@@ -375,6 +387,10 @@ class PHP_CodeSniffer_Fixer
      */
     public function endChangeset()
     {
+        if ($this->_inConflict === true) {
+            return false;
+        }
+
         $this->_inChangeset = false;
 
         $success = true;
@@ -421,6 +437,10 @@ class PHP_CodeSniffer_Fixer
      */
     public function replaceToken($stackPtr, $content)
     {
+        if ($this->_inConflict === true) {
+            return false;
+        }
+
         if ($this->_inChangeset === false
             && isset($this->_fixedTokens[$stackPtr]) === true
         ) {
@@ -479,9 +499,7 @@ class PHP_CodeSniffer_Fixer
                                                  'loop' => $this->loops,
                                                 );
         } else {
-            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
-                && $this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)
-            ) {
+            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $indent = "\t";
                     if (empty($this->_changeset) === false) {
@@ -491,13 +509,23 @@ class PHP_CodeSniffer_Fixer
                     $loop = $this->_oldTokenValues[$stackPtr]['loop'];
 
                     @ob_end_clean();
-                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff on loop $loop; ignoring the following change ****".PHP_EOL;
+                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
                     echo "$indent**** replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
+                }
+
+                if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
+                    $this->_inConflict = true;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "$indent**** ignoring all changes until next loop ****".PHP_EOL;
+                    }
+                }
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     ob_start();
                 }
 
                 return false;
-            }
+            }//end if
 
             $this->_oldTokenValues[$stackPtr]['prev'] = $this->_oldTokenValues[$stackPtr]['curr'];
             $this->_oldTokenValues[$stackPtr]['curr'] = $content;
