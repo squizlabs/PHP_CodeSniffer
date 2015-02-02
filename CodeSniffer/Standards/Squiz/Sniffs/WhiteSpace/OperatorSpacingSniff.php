@@ -206,6 +206,11 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 return;
             }
 
+            if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+                // Just trying to compare a negative value; eg. ($var || -1 === $b).
+                return;
+            }
+
             if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
                 // Just trying to assign a negative value; eg. ($var = -1).
                 return;

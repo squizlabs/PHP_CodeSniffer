@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic OpeningFunctionBraceKernighanRitchieSniff now ignores empty functions with braces next to each other
   - Generic OpeningFunctionBraceBsdAllmanSniff now ignores empty functions with braces next to each other
   - Improved auto report width for the "full" report
+  - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
   - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon

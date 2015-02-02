@@ -153,3 +153,6 @@ $y = 1
 + 2
 - 3;
 // @codingStandardsChangeSetting Squiz.WhiteSpace.OperatorSpacing ignoreNewlines false
+
+if (true || -1 == $b) {
+}
