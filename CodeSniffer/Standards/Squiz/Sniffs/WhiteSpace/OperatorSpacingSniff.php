@@ -14,6 +14,7 @@
  */
 
 /**
+
  * Sniffs_Squiz_WhiteSpace_OperatorSpacingSniff.
  *
  * Verifies that operators have valid spacing surrounding them.
@@ -26,6 +27,8 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
+
+
  */
 class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sniff
 {
@@ -34,40 +37,119 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
      * A list of tokenizers this sniff supports.
      *
      * @var array
-     */
+    */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
-
+          'PHP',
+          'JS',
+    );
+    
     /**
-     * Allow newlines instead of spaces.
+     * Allow newline before the operator. 
+     * - false means deny the newline before all of checked operators.
+     * - true means allow the newline before all of checked operators.
+     * - string with regexp allows the newline only before operators matching this regexp.
+     * Examples: 
+     *      /(?[=]|^\+\+)$/ - allow the newline before the increment and after any kind of assignment.
+     *      /[^*]/ - allow the newline before any operator except *.
+     *      /^(?!([+-])\1)/ - allow the newline before any operator except ++ and --.
+     * 
+     * If switched on then the indentation spaces between the newline and Operator will not be incorrect.
+     * So 
+     *  $val = 7 * 38
+     *          + 25 / 99
+     *   ;
+     * is correct.
+     * 
+     * @var bool|string
+     */
+    public $allowNewLineBefore = false;
+    
+    /**
+     * Allow newLine after the operator.
+     * - false means deny the newline after all of checked operators.
+     * - true means allow the newline after all of checked operators.
+     * - string with regexp allows the newline only after operators matching this regexp.
+     * Examples: 
+     *      /(?(?<!=)[=]|^\+\+)$/ - allow the newline after the increment and after any kind of assignment (ends with =, but not ==).
+     *      /[^*]/ - allow the newline after any operator except *.
+     *      /^(?!([+-])\1)/ - allow the newline after any operator except ++ and --.
+     * 
+     * If switched on then the newline characted is allowed right after Operator.
+     * So 
+     *  $val = 7 * 38 +
+     *          25 / 99
+     *   ;
+     * is correct.
+     * 
+     * @var bool|string
+     */
+    public $allowNewLineAfter = false;
+	
+	/**
+     * Allow newlines instead of spaces for all cases.
      *
      * @var boolean
-     */
-    public $ignoreNewlines = false;
-
-
+	*/
+	public $ignoreNewlines = false;
+    
     /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
+     * Allows multispaces before the assignment operators (for the alignment purpose).
+     * So
+     *  $veryLongVariable = 123;
+     *  $shortvariable    = 456;
+     * is correct;
+     * 
+     * @var bool
      */
+    public $allowMultispaceForAssignmentAlignment = false;
+    
+    /**
+     * The list of tokens that says that there must not be a space after minus.
+     * For example:
+     *      return -1;
+     *      $a * -1;
+     *      $someBool || -1 * $v > 10
+     * Here is the unary minus. It must not require space after himself.
+     * @var array
+     */
+    protected $tokensThatMayGoBeforeUnaryMinus = array();
+    
+
+    public function __construct() {
+        $this->tokensThatMayGoBeforeUnaryMinus = array_merge(
+            array(
+                T_RETURN, // return -1;
+                T_COMMA, // foo(1, -1);
+                T_OPEN_PARENTHESIS, // foo(-1)
+                T_OPEN_SQUARE_BRACKET, // $arr[-1]
+                T_DOUBLE_ARROW, // [1 => -1]
+                T_COLON, // : -1;
+                T_INLINE_THEN, // ? -1
+                T_INLINE_ELSE, // : -1;
+                T_CASE, // case -1:
+            ), 
+            PHP_CodeSniffer_Tokens::$operators, // $a * -1
+            PHP_CodeSniffer_Tokens::$booleanOperators, //$a || -1 === $b
+            PHP_CodeSniffer_Tokens::$comparisonTokens, // $a === -1
+            PHP_CodeSniffer_Tokens::$assignmentTokens // $a = -1
+        );
+    }
+
     public function register()
     {
         $comparison = PHP_CodeSniffer_Tokens::$comparisonTokens;
         $operators  = PHP_CodeSniffer_Tokens::$operators;
         $assignment = PHP_CodeSniffer_Tokens::$assignmentTokens;
         $inlineIf   = array(
-                       T_INLINE_THEN,
-                       T_INLINE_ELSE,
-                      );
-
+           T_INLINE_THEN,
+           T_INLINE_ELSE,
+        
+        );
         return array_unique(
             array_merge($comparison, $operators, $assignment, $inlineIf)
         );
+    } //end register()
 
-    }//end register()
 
 
     /**
@@ -143,9 +225,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 }
 
                 $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
-                if ($found !== 1
-                    && ($found !== 'newline' || $this->ignoreNewlines === false)
-                ) {
+                if (!$this->isSpaceCountOk('&', $found, $this->allowNewLineBefore)) {
                     $error = 'Expected 1 space before "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeAmp', $data);
@@ -172,9 +252,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                 }
 
                 $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
-                if ($found !== 1
-                    && ($found !== 'newline' || $this->ignoreNewlines === false)
-                ) {
+                if (!$this->isSpaceCountOk('&', $found, $this->allowNewLineAfter)) {
                     $error = 'Expected 1 space after "&" operator; %s found';
                     $data  = array($found);
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterAmp', $data);
@@ -191,43 +269,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             // Check minus spacing, but make sure we aren't just assigning
             // a minus value or returning one.
             $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-            if ($tokens[$prev]['code'] === T_RETURN) {
-                // Just returning a negative value; eg. (return -1).
+            
+            // It is a unary minus.
+            if (false !== array_search($tokens[$prev]['code'], $this->tokensThatMayGoBeforeUnaryMinus)) {
                 return;
             }
 
-            if (isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$prev]['code']]) === true) {
-                // Just trying to operate on a negative value; eg. ($var * -1).
-                return;
-            }
-
-            if (isset(PHP_CodeSniffer_Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var === -1).
-                return;
-            }
-
-            if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to assign a negative value; eg. ($var = -1).
-                return;
-            }
-
-            // A list of tokens that indicate that the token is not
-            // part of an arithmetic operation.
-            $invalidTokens = array(
-                              T_COMMA               => true,
-                              T_OPEN_PARENTHESIS    => true,
-                              T_OPEN_SQUARE_BRACKET => true,
-                              T_DOUBLE_ARROW        => true,
-                              T_COLON               => true,
-                              T_INLINE_THEN         => true,
-                              T_INLINE_ELSE         => true,
-                              T_CASE                => true,
-                             );
-
-            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to use a negative value; eg. myFunction($var, -2).
-                return;
-            }
         }//end if
 
         $operator = $tokens[$stackPtr]['content'];
@@ -240,9 +287,12 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
-        } else if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$stackPtr]['code']]) === false) {
+        } elseif (
             // Don't throw an error for assignments, because other standards allow
             // multiple spaces there to align multiple assignments.
+            !isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$stackPtr]['code']]) 
+            || !$this->allowMultispaceForAssignmentAlignment
+        ) {
             if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
                 $found = 'newline';
             } else {
@@ -250,9 +300,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space before operator', $found);
-            if ($found !== 1
-                && ($found !== 'newline' || $this->ignoreNewlines === false)
-            ) {
+            if (!$this->isSpaceCountOk($operator, $found, $this->allowNewLineBefore)) {
                 $error = 'Expected 1 space before "%s"; %s found';
                 $data  = array(
                           $operator,
@@ -260,19 +308,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBefore', $data);
                 if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    if ($found === 'newline') {
-                        $i = ($stackPtr - 2);
-                        while ($tokens[$i]['code'] === T_WHITESPACE) {
-                            $phpcsFile->fixer->replaceToken($i, '');
-                            $i--;
-                        }
-                    }
-
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
-                    $phpcsFile->fixer->endChangeset();
                 }
-            }//end if
+            }
         }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
@@ -291,9 +329,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Space after operator', $found);
-            if ($found !== 1
-                && ($found !== 'newline' || $this->ignoreNewlines === false)
-            ) {
+            if (!$this->isSpaceCountOk($operator, $found, $this->allowNewLineAfter)) {
                 $error = 'Expected 1 space after "%s"; %s found';
                 $data  = array(
                           $operator,
@@ -307,6 +343,28 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
         }//end if
 
     }//end process()
+    
+    /**
+     * Checks if spaces count around an operator is ok.
+     * 
+     * @param string $operator
+     * @param int $found
+     * @param bool $isNewlineAllowed
+     * @return bool
+     */
+    protected function isSpaceCountOk($operator, $found, $isNewlineAllowed) {
+        if ($found === 1) {
+            return true;
+        }
+        if ($found !== 'newline') {
+            return false;
+        }
+		
+        if (is_bool($isNewlineAllowed)) {
+            return $isNewlineAllowed || $this->ignoreNewlines;
+        }
+        return preg_match($isNewlineAllowed, $operator);
+    }//end isSpaceCountOk()
 
 
 }//end class
