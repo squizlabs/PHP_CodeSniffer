@@ -196,7 +196,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TabBefore', $data);
             } else if ($spaceCount === 0) {
-                $error = 'No space before comment text; expected "// %s" but found "%s"';
+                $error = 'No space found before comment text; expected "// %s" but found "%s"';
                 $data  = array(
                           substr($comment, 2),
                           $comment,
