@@ -54,7 +54,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         $filename = str_replace('\\', '\\\\', $report['filename']);
         $filename = str_replace('"', '\"', $filename);
         $filename = str_replace('/', '\/', $filename);
-        echo "\"$filename\":{";
+        echo '"'.$filename.'":{';
         echo '"errors":'.$report['errors'].',"warnings":'.$report['warnings'].',"messages":[';
 
         $messages = '';
