@@ -82,7 +82,7 @@ class Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff implements PHP_CodeSniff
                 if ($tokens[($colon + 1)]['code'] === T_WHITESPACE) {
                     $phpcsFile->fixer->replaceToken(($colon + 1), ' ');
                 } else {
-                    $phpcsFile->fixer->addContent(($colon + 1), ' ');
+                    $phpcsFile->fixer->addContent($colon, ' ');
                 }
             }
         }

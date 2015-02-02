@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved auto report width for the "full" report
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
+  - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon
  </notes>
  <contents>
   <dir name="/">
@@ -2110,6 +2111,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="PropertyLabelSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="PropertyLabelSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="PropertyLabelSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
