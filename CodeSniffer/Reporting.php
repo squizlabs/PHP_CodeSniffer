@@ -230,7 +230,9 @@ class PHP_CodeSniffer_Reporting
             $filename = $reportFile;
             $toScreen = false;
 
-            if (file_exists($filename) === true) {
+            if (file_exists($filename) === true
+                && isset($this->_cachedReports[$report]) === true
+            ) {
                 $reportCache = file_get_contents($filename);
             } else {
                 $reportCache = '';
