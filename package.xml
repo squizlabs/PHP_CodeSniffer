@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved auto report width for the "full" report
   - Improved conflict detection during auto fixing
   - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
+  - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
   - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon

@@ -610,6 +610,45 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
+                HHVM 3.5 tokenizes "else[\s]+if" as a T_ELSEIF token while PHP
+                proper only tokenizes "elseif" as a T_ELSEIF token. So split
+                up the HHVM token to make it looks like proper PHP.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_ELSEIF
+                && strtolower($token[1]) !== 'elseif'
+            ) {
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => substr($token[1], 0, 4),
+                                              'code'    => T_ELSE,
+                                              'type'    => 'T_ELSE',
+                                             );
+
+                $newStackPtr++;
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => substr($token[1], 4, -2),
+                                              'code'    => T_WHITESPACE,
+                                              'type'    => 'T_WHITESPACE',
+                                             );
+
+                $newStackPtr++;
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => substr($token[1], -2),
+                                              'code'    => T_IF,
+                                              'type'    => 'T_IF',
+                                             );
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_ELSEIF to T_ELSE/T_WHITESPACE/T_IF".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }//end if
+
+            /*
                 If this token has newlines in its content, split each line up
                 and create a new token for each line. We do this so it's easier
                 to ascertain where errors occur on a line.
