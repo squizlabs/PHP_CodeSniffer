@@ -644,7 +644,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 $newStackPtr++;
-                $stackPtr++;
                 continue;
             }//end if
 
