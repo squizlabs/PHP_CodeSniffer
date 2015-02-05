@@ -215,7 +215,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                           $name,
                           $docBlock,
                          );
-                $phpcsFile->addError($error, $tag, 'Duplicate'.ucfirst($name).'Tag', $data);
+                $phpcsFile->addError($error, $tag, 'Duplicate'.ucfirst(substr($name, 1)).'Tag', $data);
             }
 
             $foundTags[]        = $name;
@@ -228,7 +228,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                           $name,
                           $docBlock,
                          );
-                $phpcsFile->addError($error, $tag, 'Empty'.ucfirst($name).'Tag', $data);
+                $phpcsFile->addError($error, $tag, 'Empty'.ucfirst(substr($name, 1)).'Tag', $data);
                 continue;
             }
         }//end foreach
@@ -265,7 +265,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                           ($pos + 1),
                           $tag,
                          );
-                $phpcsFile->addError($error, $tokens[$commentStart]['comment_tags'][$pos], ucfirst($tag).'TagOrder', $data);
+                $phpcsFile->addError($error, $tokens[$commentStart]['comment_tags'][$pos], ucfirst(substr($tag, 1)).'TagOrder', $data);
             }
 
             // Account for multiple tags.

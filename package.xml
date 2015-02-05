@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PEAR and Squiz FileComment sniffs no longer have @ in their error codes
+    -- E.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
+    -- E.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
   - Generic ForbiddenFunctionsSniff now supports setting null replacements in ruleset files (request #263)
   - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
   - Generic OpeningFunctionBraceKernighanRitchieSniff now ignores empty functions with braces next to each other
