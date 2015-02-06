@@ -933,14 +933,11 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
     {
         // Don't add a space after the closing php tag as it will add a new
         // whitespace token.
-        $tokens = token_get_all('<?php '.$str.'?>');
+        $tokenizer = new PHP_CodeSniffer_Tokenizers_PHP();
+        $tokens    = $tokenizer->tokenizeString('<?php '.$str.'?>');
 
         // Remove the <?php tag from the front and the end php tag from the back.
         $tokens = array_slice($tokens, 1, (count($tokens) - 2));
-
-        foreach ($tokens as &$token) {
-            $token = PHP_CodeSniffer_Tokenizers_PHP::standardiseToken($token);
-        }
 
         $patterns = array();
         foreach ($tokens as $patternInfo) {
