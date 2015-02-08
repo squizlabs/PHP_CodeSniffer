@@ -457,8 +457,8 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         true
                     );
 
-                    $indices[]    = array('value' => $valueContent);
-                    $singleUsed   = true;
+                    $indices[]  = array('value' => $valueContent);
+                    $singleUsed = true;
                 }//end if
 
                 $lastToken = $nextToken;
