@@ -295,3 +295,8 @@ foreach (array(
         'foobaz' => 'bazzy',
     ) as $key => $value) {
 }
+
+$ids = array(
+        '1', // Foo.
+        '13', // Bar.
+       );

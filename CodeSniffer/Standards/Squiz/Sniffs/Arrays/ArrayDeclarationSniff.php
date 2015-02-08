@@ -450,7 +450,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                         }
                     }
 
-                    $valueContent = $phpcsFile->findNext(T_WHITESPACE, ($lastToken + 1), $nextToken, true);
+                    $valueContent = $phpcsFile->findNext(
+                        PHP_CodeSniffer_Tokens::$emptyTokens,
+                        ($lastToken + 1),
+                        $nextToken,
+                        true
+                    );
+
                     $indices[]    = array('value' => $valueContent);
                     $singleUsed   = true;
                 }//end if
@@ -487,7 +493,13 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 // Find the value of this index.
-                $nextContent           = $phpcsFile->findNext(T_WHITESPACE, ($nextToken + 1), $arrayEnd, true);
+                $nextContent = $phpcsFile->findNext(
+                    PHP_CodeSniffer_Tokens::$emptyTokens,
+                    ($nextToken + 1),
+                    $arrayEnd,
+                    true
+                );
+
                 $currentEntry['value'] = $nextContent;
                 $indices[] = $currentEntry;
                 $lastToken = $nextToken;
