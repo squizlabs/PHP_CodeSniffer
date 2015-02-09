@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic OpeningFunctionBraceBsdAllmanSniff now ignores empty functions with braces next to each other
   - Improved auto report width for the "full" report
   - Improved conflict detection during auto fixing
+  - Generic ScopeIndentSniff is no longer confused by empty closures
   - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
   - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
   - Squiz ArrayDeclarationSniff is no longer tricked by comments after array values

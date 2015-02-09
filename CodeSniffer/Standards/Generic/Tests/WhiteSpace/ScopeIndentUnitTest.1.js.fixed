@@ -189,3 +189,13 @@ a.prototype = {
     }
 
 };
+
+a.prototype = {
+    init: function()
+    {},
+
+    _b: function()
+    {
+    }
+
+};

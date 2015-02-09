@@ -870,7 +870,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if (isset($tokens[$i]['scope_condition']) === true
                 && $tokens[$i]['scope_closer'] === $i
                 && $tokens[$tokens[$i]['scope_condition']]['code'] === T_CLOSURE
-                && $tokens[$i]['line'] !== $tokens[$tokens[$i]['scope_opener']]['line']
             ) {
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
