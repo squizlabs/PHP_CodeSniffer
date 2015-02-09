@@ -1319,6 +1319,12 @@ class PHP_CodeSniffer
                 $className = $classNameNS;
             }
 
+            // Skip abstract classes.
+            $reflection = new ReflectionClass($className);
+            if ($reflection->isAbstract() === true) {
+                continue;
+            }
+
             $listeners[$className] = $className;
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
