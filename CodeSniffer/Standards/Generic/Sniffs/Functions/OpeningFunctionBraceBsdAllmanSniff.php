@@ -61,24 +61,10 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
             return;
         }
 
-        $openingBrace = $tokens[$stackPtr]['scope_opener'];
-        $next         = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
-        if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
-            if ($next === $tokens[$stackPtr]['scope_closer']) {
-                // Ignore empty functions.
-                return;
-            }
-
-            $error = 'Opening brace must be the last content on the line';
-            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
-            if ($fix === true) {
-                $phpcsFile->fixer->addNewline($openingBrace);
-            }
-        }
-
         // The end of the function occurs at the end of the argument list. Its
         // like this because some people like to break long function declarations
         // over multiple lines.
+        $openingBrace = $tokens[$stackPtr]['scope_opener'];
         $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
@@ -89,8 +75,8 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                $indent = $phpcsFile->findFirstOnLine(T_WHITESPACE, $openingBrace);
-                if ($indent !== false) {
+                $indent = $phpcsFile->findFirstOnLine(array(), $openingBrace);
+                if ($tokens[$indent]['code'] === T_WHITESPACE) {
                     $phpcsFile->fixer->addContentBefore($openingBrace, $tokens[$indent]['content']);
                 }
 
@@ -99,10 +85,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
-            return;
-        }
-
-        if ($lineDifference > 1) {
+        } else if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
             $data  = array(($lineDifference - 1));
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceSpacing', $data);
@@ -116,7 +99,24 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
             }
+        }//end if
 
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
+        if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
+            if ($next === $tokens[$stackPtr]['scope_closer']) {
+                // Ignore empty functions.
+                return;
+            }
+
+            $error = 'Opening brace must be the last content on the line';
+            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
+            if ($fix === true) {
+                $phpcsFile->fixer->addNewline($openingBrace);
+            }
+        }
+
+        // Only continue checking if the opening brace looks good.
+        if ($lineDifference !== 1) {
             return;
         }
 

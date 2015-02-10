@@ -62,6 +62,7 @@ class Generic_Tests_Functions_OpeningFunctionBraceBsdAllmanUnitTest extends Abst
                 122 => 1,
                 128 => 1,
                 155 => 1,
+                158 => 1,
                );
 
     }//end getErrorList()
@@ -83,5 +84,3 @@ class Generic_Tests_Functions_OpeningFunctionBraceBsdAllmanUnitTest extends Abst
 
 
 }//end class
-
-?>

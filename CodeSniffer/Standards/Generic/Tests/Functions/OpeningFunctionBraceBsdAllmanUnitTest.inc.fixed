@@ -160,6 +160,7 @@ function myFunction(
 {
 }
 
-function myFunction() {}
+function myFunction() 
+{}
 function myFunction()
 {}
