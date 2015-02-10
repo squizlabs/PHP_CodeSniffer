@@ -27,6 +27,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The existence of the main config file is now cached to reduce is_file() calls when it doesn't exist (request #486)
+  - Abstract classes inside the Sniffs directory are now ignored even if they are named [Name]Sniff.php (request #476)
+    -- Thanks to David Vernet for the patch
   - PEAR and Squiz FileComment sniffs no longer have @ in their error codes
     -- E.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
     -- E.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
