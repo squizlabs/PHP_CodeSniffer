@@ -2349,6 +2349,7 @@ class PHP_CodeSniffer
         }
 
         if (is_file($configFile) === false) {
+            $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'] = array();
             return array();
         }
 
