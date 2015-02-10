@@ -661,3 +661,11 @@ class Baz {
 
     }
 }
+
+/**
+ * Test
+ *
+ * @return void
+ * @throws E 
+ */
+function myFunction() {}

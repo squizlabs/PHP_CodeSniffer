@@ -176,7 +176,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $matches = array();
                 preg_match('/([^\s]+)(?:\s+(.*))?/', $tokens[($tag + 2)]['content'], $matches);
                 $exception = $matches[1];
-                if (isset($matches[2]) === true) {
+                if (isset($matches[2]) === true && trim($matches[2]) !== '') {
                     $comment = $matches[2];
                 }
             }
