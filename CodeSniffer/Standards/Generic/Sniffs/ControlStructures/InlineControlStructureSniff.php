@@ -171,6 +171,10 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 if ($endLine !== $end) {
                     $phpcsFile->fixer->addContent($endLine, '}');
                 } else {
+                    if (in_array($tokens[$end]['code'], array(T_SEMICOLON, T_CLOSE_CURLY_BRACKET)) === false) {
+                        $phpcsFile->fixer->addContent($end, ';');
+                    }
+
                     $phpcsFile->fixer->addContent($end, ' }');
                 }
             } else {
