@@ -810,6 +810,20 @@ $this
 		'foo' => 'bar',
 	));
 
+class Foo
+{
+	use Bar {
+		myMethod as renamedMethod;
+	}
+}
+
+class Foo
+{
+	use Bar {
+	myMethod as renamedMethod;
+	}
+}
+
 foo();
 
 	function foo()

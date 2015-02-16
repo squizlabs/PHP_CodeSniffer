@@ -2061,6 +2061,13 @@ class PHP_CodeSniffer_File
             // Is this an opening condition ?
             if (isset($tokenizer->scopeOpeners[$tokenType]) === true) {
                 if ($opener === null) {
+                    if ($tokenType === T_USE) {
+                        // PHP use keywords are special because they can be
+                        // used as blocks but also inline in function definitions.
+                        // So if we find them nested inside another opener, just skip them.
+                        continue;
+                    }
+
                     // Found another opening condition but still haven't
                     // found our opener, so we are never going to find one.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
