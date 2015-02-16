@@ -76,5 +76,5 @@ if ($a) {
 
 ?>
 <div style="text-align: right;">
-    <?php if ($model->scenario == 'simple') { $widget->renderPager() } ?>
+    <?php if ($model->scenario == 'simple') { $widget->renderPager(); } ?>
 </div>
