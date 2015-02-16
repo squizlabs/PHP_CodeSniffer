@@ -49,6 +49,7 @@ class PSR1_Tests_Methods_CamelCapsMethodNameUnitTest extends AbstractSniffUnitTe
                 17 => 1,
                 21 => 1,
                 25 => 1,
+                26 => 1,
                );
 
     }//end getErrorList()
