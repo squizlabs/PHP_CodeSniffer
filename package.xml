@@ -30,8 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Abstract classes inside the Sniffs directory are now ignored even if they are named [Name]Sniff.php (request #476)
     -- Thanks to David Vernet for the patch
   - PEAR and Squiz FileComment sniffs no longer have @ in their error codes
-    -- E.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
-    -- E.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
+    -- e.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
+    -- e.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
   - Generic ForbiddenFunctionsSniff now supports setting null replacements in ruleset files (request #263)
   - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
   - Generic OpeningFunctionBraceKernighanRitchieSniff now allows empty functions with braces next to each other
@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved auto report width for the "full" report
   - Improved conflict detection during auto fixing
   - Generic ScopeIndentSniff is no longer confused by empty closures
+  - Squiz ControlSignatureSniff now always ignores comments (fixes bug #490)
+    -- Include the Squiz.Commenting.PostStatementComment sniff in your ruleset.xml to ban these comments again
   - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
   - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
   - Squiz ArrayDeclarationSniff is no longer tricked by comments after array values

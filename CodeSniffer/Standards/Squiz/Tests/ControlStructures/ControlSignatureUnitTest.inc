@@ -79,24 +79,24 @@ if ($i == 0) {
 
 if ($i == 0) { $i = 1; } else if ($i == 2) { $i = 0; }
 
-if ($i == 0) { // comments are not allowed
+if ($i == 0) { // comments are allowed
     $i = 1;
 }
 
-if ($i == 0) {// comments are not allowed
+if ($i == 0) {// comments are allowed
     $i = 1;
 }
 
-if ($i == 0) { /* comments are not allowed*/
+if ($i == 0) { /* comments are allowed*/
     $i = 1;
 }
 
 if ($i == 0)
-{ // this is not ok
+{ // this is ok
     $i = 1;
 }
 
-if ($i == 0) /* this is not ok */ {
+if ($i == 0) /* this is ok */ {
 }
 
 try {

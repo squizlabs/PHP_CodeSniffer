@@ -139,8 +139,27 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
         // Single newline after opening brace.
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
             $opener = $tokens[$stackPtr]['scope_opener'];
-            $next   = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
-            $found  = ($tokens[$next]['line'] - $tokens[$opener]['line']);
+            for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
+                $code = $tokens[$next]['code'];
+
+                // Skip all whitespace.
+                if ($code === T_WHITESPACE) {
+                    continue;
+                }
+
+                // Skip all empty tokens on the same line as the opener.
+                if ($tokens[$next]['line'] === $tokens[$opener]['line']
+                    && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                ) {
+                    continue;
+                }
+
+                // We found the first bit of a code, or a comment on the
+                // following line.
+                break;
+            }
+
+            $found = ($tokens[$next]['line'] - $tokens[$opener]['line']);
             if ($found !== 1) {
                 $error = 'Expected 1 newline after opening brace; %s found';
                 $data  = array($found);
