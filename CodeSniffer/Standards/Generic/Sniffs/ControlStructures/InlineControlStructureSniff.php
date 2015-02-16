@@ -171,7 +171,9 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 if ($endLine !== $end) {
                     $phpcsFile->fixer->addContent($endLine, '}');
                 } else {
-                    if (in_array($tokens[$end]['code'], array(T_SEMICOLON, T_CLOSE_CURLY_BRACKET)) === false) {
+                    if ($tokens[$end]['code'] !== T_SEMICOLON
+                        && $tokens[$end]['code'] !== T_CLOSE_CURLY_BRACKET
+                    ) {
                         $phpcsFile->fixer->addContent($end, ';');
                     }
 
@@ -185,7 +187,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 } else {
                     $phpcsFile->fixer->replaceToken($end, '}');
                 }
-            }
+            }//end if
 
             $phpcsFile->fixer->endChangeset();
         }//end if

@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon
   - Fixed bug #473 : Writing a report for an empty folder to existing file includes the existing contents
   - Fixed bug #485 : PHP notice in Squiz.Commenting.FunctionComment when checking malformed @throws comment
+  - Fixed bug #491 : Generic InlineControlStructureSniff can correct with missing semicolon
+    -- Thanks to Jesse Donat for the patch
  </notes>
  <contents>
   <dir name="/">
