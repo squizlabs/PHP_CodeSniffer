@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #485 : PHP notice in Squiz.Commenting.FunctionComment when checking malformed @throws comment
   - Fixed bug #491 : Generic InlineControlStructureSniff can correct with missing semicolon
     -- Thanks to Jesse Donat for the patch
+  - Fixed bug #493 : PSR1_Sniffs_Methods_CamelCapsMethodNameSniff false positives for some magic method detection
+    -- Thanks to Andreas Möller for the patch
  </notes>
  <contents>
   <dir name="/">
