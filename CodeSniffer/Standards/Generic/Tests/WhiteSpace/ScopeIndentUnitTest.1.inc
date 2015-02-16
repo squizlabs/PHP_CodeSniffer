@@ -824,4 +824,13 @@ foo();
         return false;
     }
 
-echo ""
+echo "";
+
+class IndentationResetter {
+}
+
+class Test4 {
+    use TestTrait {
+       testTraitMethod as renamedTraitMethod;
+    }
+}
