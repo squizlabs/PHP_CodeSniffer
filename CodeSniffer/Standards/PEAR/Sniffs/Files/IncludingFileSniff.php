@@ -71,7 +71,12 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($tokens[$nextToken]['parenthesis_closer'], '');
-                $phpcsFile->fixer->replaceToken($nextToken, '');
+                if ($tokens[($nextToken - 1)]['code'] !== T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken($nextToken, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken($nextToken, '');
+                }
+
                 $phpcsFile->fixer->endChangeset();
             }
         }

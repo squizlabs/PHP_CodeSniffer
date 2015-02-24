@@ -1,20 +1,20 @@
 <?php
 
 // These are statements and should not have brackets.
-require_once('blank.inc');
-require('blank.inc');
+require_once 'blank.inc';
+require 'blank.inc';
 
 $test = true;
 
 // Conditionally including a class file: use include_once
 if ($test) {
-    require_once 'blank.inc';
-    require 'blank.inc';
+    include_once 'blank.inc';
+    include 'blank.inc';
 }
 
 // Unconditionally including a class file: use require_once
-include_once 'blank.inc';
-include 'blank.inc';
+require_once 'blank.inc';
+require 'blank.inc';
 
 
 // These are ok
@@ -30,8 +30,8 @@ require 'blank.inc';
 <pre>
 Some content goes here.
 <?php
-include_once 'blank.inc';
-include 'blank.inc';
+require_once 'blank.inc';
+require 'blank.inc';
 require_once 'blank.inc';
 require 'blank.inc';
 ?>
@@ -44,8 +44,8 @@ if (include_once 'blank.inc') {
     }
 }
 
-if (require_once 'blank.inc') {
-    $var = require_once 'blank.inc';
+if (include_once 'blank.inc') {
+    $var = include_once 'blank.inc';
     if ($var === true) {
     }
 }
@@ -61,8 +61,8 @@ function get_some_value()
         include 'blank.inc';
     }
 
-    require_once 'blank.inc';
-    require 'blank.inc';
+    include_once 'blank.inc';
+    include 'blank.inc';
 
     ?>
     <pre>
@@ -70,8 +70,8 @@ function get_some_value()
     <?php
     include_once 'blank.inc';
     include 'blank.inc';
-    require_once 'blank.inc';
-    require 'blank.inc';
+    include_once 'blank.inc';
+    include 'blank.inc';
     ?>
     </pre>
     <?php
@@ -82,8 +82,8 @@ function get_some_value()
         }
     }
     
-    if (require_once 'blank.inc') {
-        $var = require_once 'blank.inc';
+    if (include_once 'blank.inc') {
+        $var = include_once 'blank.inc';
         if ($var === true) {
         }
     }
@@ -95,5 +95,5 @@ if ($var == false) {
 
 }
 
-require_once ('blank.inc');
-include_once ('blank.inc');
+require_once 'blank.inc';
+require_once 'blank.inc';

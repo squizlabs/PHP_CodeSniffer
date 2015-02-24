@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
   - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
   - Squiz ArrayDeclarationSniff is no longer tricked by comments after array values
+  - PEAR IncludingFileSniff no longer produces invalid code when removing parenthesis from require/include statements
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
   - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon
@@ -1048,6 +1049,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP" name="IncludingFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="IncludingFileUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="IncludingFileUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
