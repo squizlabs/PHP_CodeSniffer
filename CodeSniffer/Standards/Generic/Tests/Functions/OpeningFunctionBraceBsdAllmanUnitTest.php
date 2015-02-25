@@ -63,6 +63,8 @@ class Generic_Tests_Functions_OpeningFunctionBraceBsdAllmanUnitTest extends Abst
                 128 => 1,
                 155 => 1,
                 158 => 1,
+                164 => 1,
+                168 => 1,
                );
 
     }//end getErrorList()

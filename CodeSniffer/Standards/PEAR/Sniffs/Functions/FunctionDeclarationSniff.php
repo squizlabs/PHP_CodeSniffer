@@ -216,6 +216,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff();
         }
 
+        $sniff->checkClosures = true;
         $sniff->process($phpcsFile, $stackPtr);
 
     }//end processSingleLineDeclaration()

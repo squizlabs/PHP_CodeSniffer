@@ -158,3 +158,19 @@ function myFunction(
 function myFunction() {}
 function myFunction()
 {}
+
+// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 1
+
+$closureWithArgs = function ($arg1, $arg2) {
+    // body
+};
+
+$closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+    // body
+};
+
+// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 0
+
+$closureWithArgs = function ($arg1, $arg2) {
+    // body
+};

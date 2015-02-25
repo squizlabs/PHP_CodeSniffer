@@ -31,6 +31,20 @@
 class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * Should this sniff check function braces?
+     *
+     * @var bool
+     */
+    public $checkFunctions = true;
+
+    /**
+     * Should this sniff check closure braces?
+     *
+     * @var bool
+     */
+    public $checkClosures = false;
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -61,6 +75,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
+        if (($tokens[$stackPtr]['code'] === T_FUNCTION
+            && (bool) $this->checkFunctions === false)
+            || ($tokens[$stackPtr]['code'] === T_CLOSURE
+            && (bool) $this->checkClosures === false)
+        ) {
             return;
         }
 
