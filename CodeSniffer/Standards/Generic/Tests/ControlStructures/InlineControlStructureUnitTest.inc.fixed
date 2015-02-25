@@ -78,3 +78,13 @@ if ($a) {
 <div style="text-align: right;">
     <?php if ($model->scenario == 'simple') { $widget->renderPager(); } ?>
 </div>
+
+<?php
+switch ($this->error):
+    case Shop_Customer :: ERROR_INVALID_GENDER: ?>
+        Ung&uuml;ltiges Geschlecht!
+    <?php break;
+    case Shop_Customer :: ERROR_EMAIL_IN_USE: ?>
+        Die eingetragene E-Mail-Adresse ist bereits registriert.
+    <?php break;
+endswitch;

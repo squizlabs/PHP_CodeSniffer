@@ -59,6 +59,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #493 : PSR1_Sniffs_Methods_CamelCapsMethodNameSniff false positives for some magic method detection
     -- Thanks to Andreas Möller for the patch
   - Fixed bug #496 : Closures in PSR2 are not checked for a space after the function keyword
+  - Fixed bug #497 : Generic InlineControlStructureSniff does not support alternative SWITCH syntax
  </notes>
  <contents>
   <dir name="/">
