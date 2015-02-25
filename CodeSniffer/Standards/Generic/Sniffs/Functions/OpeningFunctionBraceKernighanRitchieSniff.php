@@ -39,7 +39,10 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -61,9 +64,6 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             return;
         }
 
-        // The end of the function occurs at the end of the argument list. Its
-        // like this because some people like to break long function declarations
-        // over multiple lines.
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
         $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
@@ -105,6 +105,14 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
         }
 
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+            }
+        }
+
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
             $length = 0;
         } else if ($tokens[($closeBracket + 1)]['content'] === "\t") {

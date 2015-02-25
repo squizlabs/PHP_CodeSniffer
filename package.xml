@@ -33,6 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- e.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
     -- e.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
   - Generic ForbiddenFunctionsSniff now supports setting null replacements in ruleset files (request #263)
+  - Generic opening function brace sniffs now support checking of closures
+    -- Affects OpeningFunctionBraceBsdAllmanSniff and OpeningFunctionBraceKernighanRitchieSniff
+    -- Also now supported in PEAR FunctionDeclarationSniff and Squiz MultiLineFunctionDeclarationSniff
   - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
   - Generic OpeningFunctionBraceKernighanRitchieSniff now allows empty functions with braces next to each other
   - Generic OpeningFunctionBraceBsdAllmanSniff now allows empty functions with braces next to each other
@@ -2425,7 +2428,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Possible alternative for code using PHP_CodeSniffer_File::findPrevious() with the local flag set
     - Added PHP_CodeSniffer_File::findEndOfStatement() to find the last non-whitespace token in a statement
       -- Possible alternative for code using PHP_CodeSniffer_File::findNext() with the local flag set
-    - Generic opening function brace sniff now ensure the opening brace is the last content on the line
+    - Generic opening function brace sniffs now ensure the opening brace is the last content on the line
       -- Affects OpeningFunctionBraceBsdAllmanSniff and OpeningFunctionBraceKernighanRitchieSniff
       -- Also enforced in PEAR FunctionDeclarationSniff and Squiz MultiLineFunctionDeclarationSniff
     - Generic DisallowTabIndentSniff now replaces tabs everywhere it finds them, except in strings and here/now docs

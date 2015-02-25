@@ -39,7 +39,10 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -61,9 +64,6 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
             return;
         }
 
-        // The end of the function occurs at the end of the argument list. Its
-        // like this because some people like to break long function declarations
-        // over multiple lines.
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
         $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
