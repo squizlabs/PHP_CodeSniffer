@@ -300,3 +300,22 @@ $ids = array(
         '1', // Foo.
         '13', // Bar.
        );
+
+array(
+ 'key1' => function($bar) {
+    return $bar;
+ },
+ 'key2' => function($foo) {
+    return $foo;
+ },
+ 'key3' => function($bar) {
+    return $bar;
+ }
+);
+
+array(
+ 'key1' => array(
+            '1',
+            '2',
+           )
+);
