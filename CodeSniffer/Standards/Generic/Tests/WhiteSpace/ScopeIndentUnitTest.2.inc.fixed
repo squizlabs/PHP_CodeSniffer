@@ -826,6 +826,15 @@ class Foo
 
 foo();
 
+array(
+ 'key1' => function ($bar) {
+	return $bar;
+ },
+ 'key2' => function ($foo) {
+	return $foo;
+ },
+);
+
 function foo()
 {
 	$foo = array(

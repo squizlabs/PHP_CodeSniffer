@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #496 : Closures in PSR2 are not checked for a space after the function keyword
   - Fixed bug #497 : Generic InlineControlStructureSniff does not support alternative SWITCH syntax
   - Fixed bug #500 : Functions not supported as values in Squiz ArrayDeclaration sniff
+  - Fixed bug #501 : ScopeClosingBrace and ScopeIndent conflict with closures used as array values
+    -- Generic ScopeIndentSniff may now report fewer errors for closures, but perform the same fixes
  </notes>
  <contents>
   <dir name="/">

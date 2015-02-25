@@ -73,7 +73,6 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                     33  => 1,
                     34  => 1,
                     39  => 1,
-                    41  => 1,
                     42  => 1,
                     47  => 1,
                     59  => 1,
@@ -113,10 +112,9 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 349 => 1,
                 380 => 1,
                 386 => 1,
-                387 => 1,
                 388 => 1,
-                389 => 1,
                 390 => 1,
+                391 => 1,
                 397 => 1,
                 419 => 1,
                 420 => 1,
@@ -133,8 +131,8 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 802 => 1,
                 803 => 1,
                 823 => 1,
-                829 => 1,
-                841 => 1,
+                838 => 1,
+                850 => 1,
                );
 
     }//end getErrorList()
