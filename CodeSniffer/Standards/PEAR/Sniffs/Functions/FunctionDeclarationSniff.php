@@ -64,10 +64,16 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
     {
         $tokens = $phpcsFile->getTokens();
 
+        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+
+        // Must be one space after the FUNCTION keyword.
         if ($tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar) {
             $spaces = 'newline';
-        } else {
+        } else if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
             $spaces = strlen($tokens[($stackPtr + 1)]['content']);
+        } else {
+            $spaces = 0;
         }
 
         if ($spaces !== 1) {
@@ -75,13 +81,37 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             $data  = array($spaces);
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterFunction', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                if ($spaces === 0) {
+                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
             }
         }
 
+        // Must be one space before the opening parenthesis. For closures, this is
+        // enforced by the first check because there is no content between the keywords
+        // and the opening parenthesis.
+        if ($tokens[$stackPtr]['code'] === T_FUNCTION) {
+            if ($tokens[($openBracket - 1)]['content'] === $phpcsFile->eolChar) {
+                $spaces = 'newline';
+            } else if ($tokens[($openBracket - 1)]['code'] === T_WHITESPACE) {
+                $spaces = strlen($tokens[($openBracket - 1)]['content']);
+            } else {
+                $spaces = 0;
+            }
+
+            if ($spaces !== 0) {
+                $error = 'Expected 0 spaces before opening parenthesis; %s found';
+                $data  = array($spaces);
+                $fix   = $phpcsFile->addFixableError($error, $openBracket, 'SpaceBeforeOpenParen', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken(($openBracket - 1), '');
+                }
+            }
+        }//end if
+
         // Must be one space before and after USE keyword for closures.
-        $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
-        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
             $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
