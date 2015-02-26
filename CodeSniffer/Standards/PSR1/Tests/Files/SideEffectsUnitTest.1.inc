@@ -7,6 +7,12 @@ const CONSTANT2 = 2;
 use Something;
 use SomethingElse;
 
+declare(ticks=1);
+
+declare(ticks=1) {
+    // Code.
+}
+
 define("MAXSIZE", 100);
 if (defined('MINSIZE') === false) {
     define("MINSIZE", 10);

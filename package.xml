@@ -64,6 +64,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #500 : Functions not supported as values in Squiz ArrayDeclaration sniff
   - Fixed bug #501 : ScopeClosingBrace and ScopeIndent conflict with closures used as array values
     -- Generic ScopeIndentSniff may now report fewer errors for closures, but perform the same fixes
+  - Fixed bug #502 : PSR1 SideEffectsSniff sees declare() statements as side effects
  </notes>
  <contents>
   <dir name="/">

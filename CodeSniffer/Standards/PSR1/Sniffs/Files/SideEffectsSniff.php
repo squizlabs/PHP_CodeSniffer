@@ -119,23 +119,19 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            // Ignore entire namespace, const and use statements.
-            if ($tokens[$i]['code'] === T_NAMESPACE) {
-                $next = $phpcsFile->findNext(array(T_SEMICOLON, T_OPEN_CURLY_BRACKET), ($i + 1));
-                if ($next === false) {
-                    $next = $i++;
-                } else if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET) {
-                    $next = $tokens[$next]['bracket_closer'];
-                }
-
-                $i = $next;
-                continue;
-            } else if ($tokens[$i]['code'] === T_USE
+            // Ignore entire namespace, declare, const and use statements.
+            if ($tokens[$i]['code'] === T_NAMESPACE
+                || $tokens[$i]['code'] === T_USE
+                || $tokens[$i]['code'] === T_DECLARE
                 || $tokens[$i]['code'] === T_CONST
             ) {
-                $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
-                if ($semicolon !== false) {
-                    $i = $semicolon;
+                if (isset($tokens[$i]['scope_opener']) === true) {
+                    $i = $tokens[$i]['scope_closer'];
+                } else {
+                    $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                    if ($semicolon !== false) {
+                        $i = $semicolon;
+                    }
                 }
 
                 continue;
