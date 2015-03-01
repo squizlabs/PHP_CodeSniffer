@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PEAR and Squiz FileComment sniffs no longer have @ in their error codes
     -- e.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
     -- e.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
+  - PEAR MultiLineConditionSniff now allows comment lines inside multi-line IF statement conditions
+    -- Thanks to Klaus Purer for the patch
   - Generic ForbiddenFunctionsSniff now supports setting null replacements in ruleset files (request #263)
   - Generic opening function brace sniffs now support checking of closures
     -- Set the checkClosures property to TRUE (default is FALSE) in your ruleset.xml file to enable this
