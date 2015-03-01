@@ -2376,6 +2376,7 @@ class PHP_CodeSniffer_File
                         reset($tokenizer->scopeOpeners[$thisType]['end']);
                         reset($tokenizer->scopeOpeners[$tokens[$opener]['code']]['end']);
                         $sameEnd = (current($tokenizer->scopeOpeners[$thisType]['end']) === current($tokenizer->scopeOpeners[$tokens[$opener]['code']]['end']));
+
                         if ($isShared === true && $sameEnd === true) {
                             $badToken = $opener;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -2475,8 +2476,7 @@ class PHP_CodeSniffer_File
                             // Make sure this closer actually belongs to us.
                             // Either the condition also has to think this is the
                             // closer, or it has to allow sharing with us.
-                            $condition
-                                = $tokens[$tokens[$i]['scope_condition']]['code'];
+                            $condition = $tokens[$tokens[$i]['scope_condition']]['code'];
                             if ($condition !== $oldCondition) {
                                 if (isset($tokenizer->scopeOpeners[$oldCondition]['with'][$condition]) === false) {
                                     $badToken = $tokens[$oldOpener]['scope_condition'];

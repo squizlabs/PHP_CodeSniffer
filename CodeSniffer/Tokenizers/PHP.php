@@ -277,6 +277,11 @@ class PHP_CodeSniffer_Tokenizers_PHP
      */
     public $endScopeTokens = array(
                               T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+                              T_ENDIF               => T_ENDIF,
+                              T_ENDFOR              => T_ENDFOR,
+                              T_ENDFOREACH          => T_ENDFOREACH,
+                              T_ENDWHILE            => T_ENDWHILE,
+                              T_ENDSWITCH           => T_ENDSWITCH,
                               T_BREAK               => T_BREAK,
                               T_END_HEREDOC         => T_END_HEREDOC,
                              );

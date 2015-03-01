@@ -88,3 +88,14 @@ switch ($this->error):
         Die eingetragene E-Mail-Adresse ist bereits registriert.
     <?php break;
 endswitch;
+
+if ($this->allowShopping !== true):
+    if ($this->status != Shop_Cart :: OK):
+        switch ($this->status):
+            case Shop_Cart :: NOT_FOUND:
+            echo 'foo';
+        endswitch;
+    endif;
+else:
+    echo 'foo';
+endif;
