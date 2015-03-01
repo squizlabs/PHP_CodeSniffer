@@ -19,6 +19,11 @@
         "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
     "autoload": {
         "classmap": [
             "CodeSniffer.php",
