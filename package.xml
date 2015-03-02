@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
   - Squiz ArrayDeclarationSniff is no longer tricked by comments after array values
   - PEAR IncludingFileSniff no longer produces invalid code when removing parenthesis from require/include statements
+  - Fixed bug #432 : Properties of custom sniffs cannot be configured
   - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
   - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
   - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon

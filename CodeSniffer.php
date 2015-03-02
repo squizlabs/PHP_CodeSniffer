@@ -979,7 +979,13 @@ class PHP_CodeSniffer
             }
         }
 
-        if (is_file($ref) === false) {
+        if (is_file($ref) === true) {
+            if (substr($ref, -9) === 'Sniff.php') {
+                // A single external sniff.
+                self::$rulesetDirs[] = dirname(dirname(dirname($ref)));
+                return array($ref);
+            }
+        } else {
             // See if this is a whole standard being referenced.
             $path = $this->getInstalledStandardPath($ref);
             if (self::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
