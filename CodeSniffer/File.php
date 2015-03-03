@@ -216,7 +216,7 @@ class PHP_CodeSniffer_File
      *
      * @var array()
      */
-    private $_ignoredLines = array();
+    private static $_ignoredLines = array();
 
     /**
      * An array of sniffs that are being ignored.
@@ -447,7 +447,7 @@ class PHP_CodeSniffer_File
 
         // Reset the ignored lines because lines numbers may have changed
         // if we are fixing this file.
-        $this->_ignoredLines = array();
+        self::$_ignoredLines = array();
 
         try {
             $this->eolChar = self::detectLineEndings($this->_file, $contents);
@@ -476,7 +476,6 @@ class PHP_CodeSniffer_File
         }
 
         $foundCode        = false;
-        $ignoring         = false;
         $listeners        = $this->phpcs->getSniffs();
         $listenerIgnoreTo = array();
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
@@ -490,23 +489,7 @@ class PHP_CodeSniffer_File
                 || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
-                    if ($ignoring === false
-                        && strpos($token['content'], '@codingStandardsIgnoreStart') !== false
-                    ) {
-                        $ignoring = true;
-                    } else if ($ignoring === true
-                        && strpos($token['content'], '@codingStandardsIgnoreEnd') !== false
-                    ) {
-                        $ignoring = false;
-                        // Ignore this comment too.
-                        $this->_ignoredLines[$token['line']] = true;
-                    } else if ($ignoring === false
-                        && strpos($token['content'], '@codingStandardsIgnoreLine') !== false
-                    ) {
-                        $this->_ignoredLines[($token['line'] + 1)] = true;
-                        // Ignore this comment too.
-                        $this->_ignoredLines[$token['line']] = true;
-                    } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                    if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
                         // Ignoring the whole file, just a little late.
                         $this->_errors       = array();
                         $this->_warnings     = array();
@@ -524,10 +507,6 @@ class PHP_CodeSniffer_File
                     }//end if
                 }//end if
             }//end if
-
-            if ($ignoring === true) {
-                $this->_ignoredLines[$token['line']] = true;
-            }
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
@@ -604,33 +583,6 @@ class PHP_CodeSniffer_File
 
                 $this->_activeListener = '';
             }//end foreach
-        }//end foreach
-
-        // Remove errors and warnings for ignored lines.
-        foreach ($this->_ignoredLines as $line => $ignore) {
-            if (isset($this->_errors[$line]) === true) {
-                if ($this->_recordErrors === false) {
-                    $this->_errorCount -= $this->_errors[$line];
-                } else {
-                    foreach ($this->_errors[$line] as $col => $errors) {
-                        $this->_errorCount -= count($errors);
-                    }
-                }
-
-                unset($this->_errors[$line]);
-            }
-
-            if (isset($this->_warnings[$line]) === true) {
-                if ($this->_recordErrors === false) {
-                    $this->_errorCount -= $this->_warnings[$line];
-                } else {
-                    foreach ($this->_warnings[$line] as $col => $warnings) {
-                        $this->_warningCount -= count($warnings);
-                    }
-                }
-
-                unset($this->_warnings[$line]);
-            }
         }//end foreach
 
         if ($this->_recordErrors === false) {
@@ -1028,6 +980,10 @@ class PHP_CodeSniffer_File
      */
     private function _addError($error, $line, $column, $code, $data, $severity, $fixable)
     {
+        if (isset(self::$_ignoredLines[$line]) === true) {
+            return false;
+        }
+
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -1172,6 +1128,10 @@ class PHP_CodeSniffer_File
      */
     private function _addWarning($warning, $line, $column, $code, $data, $severity, $fixable)
     {
+        if (isset(self::$_ignoredLines[$line]) === true) {
+            return false;
+        }
+
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -1385,7 +1345,7 @@ class PHP_CodeSniffer_File
      */
     public function getIgnoredLines()
     {
-        return $this->_ignoredLines;
+        return self::$_ignoredLines;
 
     }//end getIgnoredLines()
 
@@ -1512,6 +1472,8 @@ class PHP_CodeSniffer_File
         $lineNumber    = 1;
         $eolLen        = (strlen($eolChar) * -1);
         $tokenizerType = get_class($tokenizer);
+        $ignoring      = false;
+        $inTests       = defined('PHP_CODESNIFFER_IN_TESTS');
 
         $checkEncoding = false;
         if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
@@ -1638,6 +1600,35 @@ class PHP_CodeSniffer_File
 
                 // Newline chars are not counted in the token length.
                 $tokens[$i]['length'] += $eolLen;
+            }
+
+            if ($tokens[$i]['code'] === T_COMMENT
+                || $tokens[$i]['code'] === T_DOC_COMMENT
+                || ($inTests === true && $tokens[$i]['code'] === T_INLINE_HTML)
+            ) {
+                if (strpos($tokens[$i]['content'], '@codingStandards') !== false) {
+                    if ($ignoring === false
+                        && strpos($tokens[$i]['content'], '@codingStandardsIgnoreStart') !== false
+                    ) {
+                        $ignoring = true;
+                    } else if ($ignoring === true
+                        && strpos($tokens[$i]['content'], '@codingStandardsIgnoreEnd') !== false
+                    ) {
+                        $ignoring = false;
+                        // Ignore this comment too.
+                        self::$_ignoredLines[$tokens[$i]['line']] = true;
+                    } else if ($ignoring === false
+                        && strpos($tokens[$i]['content'], '@codingStandardsIgnoreLine') !== false
+                    ) {
+                        self::$_ignoredLines[($tokens[$i]['line'] + 1)] = true;
+                        // Ignore this comment too.
+                        self::$_ignoredLines[$tokens[$i]['line']] = true;
+                    }
+                }
+            }//end if
+
+            if ($ignoring === true) {
+                self::$_ignoredLines[$tokens[$i]['line']] = true;
             }
         }//end for
 
