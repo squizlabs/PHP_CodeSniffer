@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2015-01-22</date>
  <time>09:42:00</time>
  <version>
-  <release>2.3.0</release>
-  <api>2.3.0</api>
+  <release>2.3.1</release>
+  <api>2.3.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,49 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - The existence of the main config file is now cached to reduce is_file() calls when it doesn't exist (request #486)
-  - Abstract classes inside the Sniffs directory are now ignored even if they are named [Name]Sniff.php (request #476)
-    -- Thanks to David Vernet for the patch
-  - PEAR and Squiz FileComment sniffs no longer have @ in their error codes
-    -- e.g., PEAR.Commenting.FileComment.Duplicate@categoryTag becomes PEAR.Commenting.FileComment.DuplicateCategoryTag
-    -- e.g., Squiz.Commenting.FileComment.Missing@categoryTag becomes Squiz.Commenting.FileComment.MissingCategoryTag
-  - PEAR MultiLineConditionSniff now allows comment lines inside multi-line IF statement conditions
-    -- Thanks to Klaus Purer for the patch
-  - Generic ForbiddenFunctionsSniff now supports setting null replacements in ruleset files (request #263)
-  - Generic opening function brace sniffs now support checking of closures
-    -- Set the checkClosures property to TRUE (default is FALSE) in your ruleset.xml file to enable this
-    -- Can also set the checkFunctions property to FALSE (default is TRUE) in your ruleset.xml file to only check closures
-    -- Affects OpeningFunctionBraceBsdAllmanSniff and OpeningFunctionBraceKernighanRitchieSniff
-  - Generic OpeningFunctionBraceKernighanRitchieSniff can now fix all the errors it finds
-  - Generic OpeningFunctionBraceKernighanRitchieSniff now allows empty functions with braces next to each other
-  - Generic OpeningFunctionBraceBsdAllmanSniff now allows empty functions with braces next to each other
-  - Improved auto report width for the "full" report
-  - Improved conflict detection during auto fixing
-  - Generic ScopeIndentSniff is no longer confused by empty closures
-  - Squiz ControlSignatureSniff now always ignores comments (fixes bug #490)
-    -- Include the Squiz.Commenting.PostStatementComment sniff in your ruleset.xml to ban these comments again
-  - Squiz OperatorSpacingSniff no longer throws errors for code in the form ($foo || -1 === $bar)
-  - Fixed errors tokenizing T_ELSEIF tokens on HHVM 3.5
-  - Squiz ArrayDeclarationSniff is no longer tricked by comments after array values
-  - PEAR IncludingFileSniff no longer produces invalid code when removing parenthesis from require/include statements
-  - Fixed bug #415 : The @codingStandardsIgnoreStart has no effect during fixing
-  - Fixed bug #432 : Properties of custom sniffs cannot be configured
-  - Fixed bug #453 : PSR2 standard does not allow closing tag for mixed PHP/HTML files
-  - Fixed bug #457 : FunctionCallSignature sniffs do not support here/nowdoc syntax and can cause syntax error when fixing
-  - Fixed bug #466 : PropertyLabelSpacing JS fixer issue when there is no space after colon
-  - Fixed bug #473 : Writing a report for an empty folder to existing file includes the existing contents
-  - Fixed bug #485 : PHP notice in Squiz.Commenting.FunctionComment when checking malformed @throws comment
-  - Fixed bug #491 : Generic InlineControlStructureSniff can correct with missing semicolon
-    -- Thanks to Jesse Donat for the patch
-  - Fixed bug #492 : Use statements don't increase the scope indent
-  - Fixed bug #493 : PSR1_Sniffs_Methods_CamelCapsMethodNameSniff false positives for some magic method detection
-    -- Thanks to Andreas Möller for the patch
-  - Fixed bug #496 : Closures in PSR2 are not checked for a space after the function keyword
-  - Fixed bug #497 : Generic InlineControlStructureSniff does not support alternative SWITCH syntax
-  - Fixed bug #500 : Functions not supported as values in Squiz ArrayDeclaration sniff
-  - Fixed bug #501 : ScopeClosingBrace and ScopeIndent conflict with closures used as array values
-    -- Generic ScopeIndentSniff may now report fewer errors for closures, but perform the same fixes
-  - Fixed bug #502 : PSR1 SideEffectsSniff sees declare() statements as side effects
+  - Fixed bug #479 : Yielded values are not recognised as returned values in Squiz FunctionComment sniff
  </notes>
  <contents>
   <dir name="/">

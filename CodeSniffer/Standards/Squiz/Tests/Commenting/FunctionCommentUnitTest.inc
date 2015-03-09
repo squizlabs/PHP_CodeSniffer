@@ -669,3 +669,27 @@ class Baz {
  * @throws E 
  */
 function myFunction() {}
+
+/**
+ * Yield test
+ *
+ * @return integer
+ */
+function yieldTest()
+{
+    for ($i = 0; $i < 5; $i++) {
+        yield $i;
+    }
+}
+
+/**
+ * Yield test
+ *
+ * @return void
+ */
+function yieldTest()
+{
+    for ($i = 0; $i < 5; $i++) {
+        yield $i;
+    }
+}
