@@ -892,7 +892,7 @@
         "name": "QuickAppsCMS",
         "url": "quickapps/cms",
         "path": "",
-        "ignore": "*Lib/*,*tests/*,*config/*",
+        "ignore": "*Lib/*,*tests/*,*config/*,*Composer/*",
         "extensions": ""
     }
 ]
