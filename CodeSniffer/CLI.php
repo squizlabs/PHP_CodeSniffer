@@ -972,14 +972,24 @@ class PHP_CodeSniffer_CLI
         // They should all return the same value, so it
         // doesn't matter which return value we end up using.
         $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
-        if ($ignoreWarnings !== null) {
-            $ignoreWarnings = (bool) $ignoreWarnings;
-            if ($ignoreWarnings === true) {
-                return $errors;
+        $ignoreErrors   = PHP_CodeSniffer::getConfigData('ignore_errors_on_exit');
+
+        $return = ($errors + $warnings);
+        if ($ignoreErrors !== null) {
+            $ignoreErrors = (bool) $ignoreErrors;
+            if ($ignoreErrors === true) {
+                $return -= $errors;
             }
         }
 
-        return ($errors + $warnings);
+        if ($ignoreWarnings !== null) {
+            $ignoreWarnings = (bool) $ignoreWarnings;
+            if ($ignoreWarnings === true) {
+                $return -= $warnings;
+            }
+        }
+
+        return $return;
 
     }//end printErrorReport()
 
