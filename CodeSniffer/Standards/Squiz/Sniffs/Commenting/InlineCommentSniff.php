@@ -257,7 +257,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        // If the first chatacter is now uppercase and is not
+        // If the first character is now uppercase and is not
         // a non-letter character, throw an error.
         // \p{Lu} : an uppercase letter that has a lowercase variant.
         // \P{L}  : a non-letter character.
@@ -267,7 +267,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         // Only check the end of comment character if the start of the comment
-        // is a leter, indicating that the comment is just standard text.
+        // is a letter, indicating that the comment is just standard text.
         if (preg_match('/\P{L}/u', $commentText[0]) === 0) {
             $commentCloser   = $commentText[(strlen($commentText) - 1)];
             $acceptedClosers = array(
