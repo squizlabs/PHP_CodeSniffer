@@ -161,3 +161,14 @@ if ($IPP->errorCode() == 401
 ) {
     return false;
 }
+
+?>
+<?php foreach ($blah as $boo) : ?>
+    <?php if ($foo): ?>
+        <?php
+            if ($bar) {
+            } else {
+            }
+        ?>
+    <?php endif; ?>
+<?php endforeach; ?>

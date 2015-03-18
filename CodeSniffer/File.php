@@ -2005,7 +2005,15 @@ class PHP_CodeSniffer_File
                             $validCloser = false;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 echo str_repeat("\t", $depth);
-                                echo "* closer is not valid *".PHP_EOL;
+                                echo "* closer is not valid (no opener found) *".PHP_EOL;
+                            }
+                        } else if ($tokens[$tokens[$scopeCloser]['scope_opener']]['code'] !== $tokens[$opener]['code']) {
+                            $validCloser = false;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", $depth);
+                                $type       = $tokens[$tokens[$scopeCloser]['scope_opener']]['type'];
+                                $openerType = $tokens[$opener]['type'];
+                                echo "* closer is not valid (mismatched opener type; $type != $openerType) *".PHP_EOL;
                             }
                         } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
