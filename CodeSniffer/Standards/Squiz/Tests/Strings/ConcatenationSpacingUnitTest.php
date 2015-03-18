@@ -46,10 +46,14 @@ class Squiz_Tests_Strings_ConcatenationSpacingUnitTest extends AbstractSniffUnit
                 3  => 5,
                 5  => 1,
                 6  => 1,
-                10 => 5,
-                12 => 1,
-                13 => 1,
-                14 => 1,
+                9  => 1,
+                10 => 1,
+                14 => 5,
+                16 => 1,
+                17 => 1,
+                18 => 1,
+                34 => 2,
+                36 => 1,
                );
 
     }//end getErrorList()

@@ -38,6 +38,13 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
      */
     public $spacing = 0;
 
+    /**
+     * Allow newlines instead of spaces.
+     *
+     * @var boolean
+     */
+    public $ignoreNewlines = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -88,7 +95,9 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
         $phpcsFile->recordMetric($stackPtr, 'Spacing before string concat', $before);
         $phpcsFile->recordMetric($stackPtr, 'Spacing after string concat', $after);
 
-        if ($before === $this->spacing && $after === $this->spacing) {
+        if (($before === $this->spacing || ($before === 'newline' && $this->ignoreNewlines === true))
+            && ($after === $this->spacing || ($after === 'newline' && $this->ignoreNewlines === true))
+        ) {
             return;
         }
 
@@ -109,16 +118,20 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
 
         if ($fix === true) {
             $padding = str_repeat(' ', $this->spacing);
-            if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
-                $phpcsFile->fixer->replaceToken(($stackPtr - 1), $padding);
-            } else if ($this->spacing > 0) {
-                $phpcsFile->fixer->addContent(($stackPtr - 1), $padding);
+            if ($before !== 'newline' || $this->ignoreNewlines === false) {
+                if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr - 1), $padding);
+                } else if ($this->spacing > 0) {
+                    $phpcsFile->fixer->addContent(($stackPtr - 1), $padding);
+                }
             }
 
-            if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), $padding);
-            } else if ($this->spacing > 0) {
-                $phpcsFile->fixer->addContent($stackPtr, $padding);
+            if ($after !== 'newline' || $this->ignoreNewlines === false) {
+                if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), $padding);
+                } else if ($this->spacing > 0) {
+                    $phpcsFile->fixer->addContent($stackPtr, $padding);
+                }
             }
         }
 

@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS can now exit with 0 even if errors are found
     -- Set the ignore_errors_on_exit config variable to 1 to set this behaviour
     -- Use with the ignore_warnings_on_exit config variable to never return a non-zero exit code
+  - Squiz ConcatenationSpacingSniff now has a setting to ignore newline characters around operators (request #511)
+      -- Default remains FALSE, so newlines are not allowed
+      -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
   - Fixed bug #479 : Yielded values are not recognised as returned values in Squiz FunctionComment sniff
   - Fixed bug #512 : Endless loop whilst parsing mixture of control structure styles
   - Fixed bug #515 : Spaces in JS block incorrectly flagged as indentation error
@@ -2044,6 +2047,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Strings">
         <file baseinstalldir="PHP" name="ConcatenationSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ConcatenationSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ConcatenationSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
