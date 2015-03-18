@@ -29,6 +29,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS can now exit with 0 even if errors are found
     -- Set the ignore_errors_on_exit config variable to 1 to set this behaviour
     -- Use with the ignore_warnings_on_exit config variable to never return a non-zero exit code
+  - Added Generic DisallowLongArraySyntaxSniff to enforce the use of the PHP short array syntax (request #483)
+    -- Thanks to Xaver Loppenstedt for helping with tests
+  - Added Generic DisallowShortArraySyntaxSniff to ban the use of the PHP short array syntax (request #483)
+    -- Thanks to Xaver Loppenstedt for helping with tests
   - Squiz ConcatenationSpacingSniff now has a setting to ignore newline characters around operators (request #511)
       -- Default remains FALSE, so newlines are not allowed
       -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
@@ -256,6 +260,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Sniffs">
+       <dir name="Arrays">
+        <file baseinstalldir="PHP" name="DisallowLongArraySyntaxSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowShortArraySyntaxSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Classes">
         <file baseinstalldir="PHP" name="DuplicateClassNameSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
@@ -451,6 +463,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
       </dir>
       <dir name="Tests">
+       <dir name="Arrays">
+        <file baseinstalldir="PHP" name="DisallowLongArraySyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowLongArraySyntaxUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="DisallowLongArraySyntaxUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowShortArraySyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowShortArraySyntaxUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="DisallowShortArraySyntaxUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <dir name="Classes">
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.2.inc" role="test" />
