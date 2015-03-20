@@ -51,7 +51,8 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         $report,
         PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
-        $width=80
+        $width=80,
+        $reportRelativePath=false
     ) {
         $out = new XMLWriter;
         $out->openMemory();
@@ -63,7 +64,11 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         }
 
         $out->startElement('file');
-        $out->writeAttribute('name', $report['filename']);
+        if ($reportRelativePath) {
+            $out->writeAttribute('name', str_replace(getcwd() . '/', '', $report['filename']));
+        } else {
+            $out->writeAttribute('name', $report['filename']);
+        }
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
