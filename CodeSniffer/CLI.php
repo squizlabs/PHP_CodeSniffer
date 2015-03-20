@@ -327,6 +327,14 @@ class PHP_CodeSniffer_CLI
             $defaults['reportWidth'] = null;
         }
 
+        $reportRelativePath = PHP_CodeSniffer::getConfigData('report_relative_path');
+        if ($reportRelativePath !== null) {
+            $defaults['reportRelativePath'] = $reportRelativePath;
+        } else {
+            // Use function defaults.
+            $defaults['reportRelativePath'] = false;
+        }
+
         $showProgress = PHP_CodeSniffer::getConfigData('show_progress');
         if ($showProgress === null) {
             $defaults['showProgress'] = false;
@@ -643,6 +651,8 @@ class PHP_CodeSniffer_CLI
                         $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
                     }
                 }
+            } else if ($arg === 'report-relative-path') {
+                $this->values['reportRelativePath'] = true;
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->values['reportWidth'] = substr($arg, 13);
             } else if (substr($arg, 0, 7) === 'report='
@@ -1158,7 +1168,8 @@ class PHP_CodeSniffer_CLI
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
-        echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '    [--report-width=<reportWidth>] [--report-relative-path] '.PHP_EOL;
+        echo '    [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
@@ -1178,6 +1189,7 @@ class PHP_CodeSniffer_CLI
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
+        echo '        --report-relative-path Generate report with relative paths for files'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;

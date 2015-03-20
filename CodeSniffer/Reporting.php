@@ -157,7 +157,7 @@ class PHP_CodeSniffer_Reporting
             $report      = get_class($reportClass);
 
             ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth'], $cliValues['reportRelativePath']);
             if ($result === true) {
                 $errorsShown = true;
             }
