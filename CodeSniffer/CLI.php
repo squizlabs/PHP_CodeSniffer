@@ -326,7 +326,7 @@ class PHP_CodeSniffer_CLI
             // Use function defaults.
             $defaults['reportWidth'] = null;
         }
-        
+
         $reportRelativePath = PHP_CodeSniffer::getConfigData('report_relative_path');
         if ($reportRelativePath !== null) {
             $defaults['reportRelativePath'] = $reportRelativePath;
@@ -1168,7 +1168,7 @@ class PHP_CodeSniffer_CLI
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
-        echo '    [--report-width=<reportWidth>] [--report-relative-path] '.PHP_EOL; 
+        echo '    [--report-width=<reportWidth>] [--report-relative-path] '.PHP_EOL;
         echo '    [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;

@@ -40,10 +40,11 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array                $report      Prepared report data.
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
-     * @param boolean              $showSources Show sources?
-     * @param int                  $width       Maximum allowed line width.
+     * @param array                $report             Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile          The file being reported on.
+     * @param boolean              $showSources        Show sources?
+     * @param int                  $width              Maximum allowed line width.
+     * @param boolean              $reportRelativePath Output relative path?
      *
      * @return boolean
      */
@@ -64,8 +65,8 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         }
 
         $out->startElement('file');
-        if ($reportRelativePath) {
-            $out->writeAttribute('name', str_replace(getcwd() . '/', '', $report['filename']));
+        if ($reportRelativePath === true) {
+            $out->writeAttribute('name', str_replace(getcwd().'/', '', $report['filename']));
         } else {
             $out->writeAttribute('name', $report['filename']);
         }
