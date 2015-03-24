@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Generic_Sniffs_Files_ByteOrderMarkSniff.

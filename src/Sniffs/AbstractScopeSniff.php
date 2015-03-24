@@ -1,8 +1,7 @@
 <?php
 
-namespace PHP_CodeSniffer\Standards;
+namespace PHP_CodeSniffer\Sniffs;
 
-use PHP_CodeSniffer\Sniff;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**

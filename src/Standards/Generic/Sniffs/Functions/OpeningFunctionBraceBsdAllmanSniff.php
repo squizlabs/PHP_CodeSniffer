@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Generic_Sniffs_Methods_OpeningMethodBraceBsdAllmanSniff.

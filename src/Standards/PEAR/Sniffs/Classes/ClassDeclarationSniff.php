@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Classes;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Class Declaration Test.

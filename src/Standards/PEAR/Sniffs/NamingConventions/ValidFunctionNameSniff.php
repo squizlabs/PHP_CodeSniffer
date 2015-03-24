@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
 
-use PHP_CodeSniffer\Standards\AbstractScopeSniff;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Common;
 
 /**

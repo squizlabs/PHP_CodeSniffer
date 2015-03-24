@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Ensures doc blocks follow basic formatting.

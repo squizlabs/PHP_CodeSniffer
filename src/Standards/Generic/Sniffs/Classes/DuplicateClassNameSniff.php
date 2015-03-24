@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Classes;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Reports errors if the same class or interface name is used in multiple files.

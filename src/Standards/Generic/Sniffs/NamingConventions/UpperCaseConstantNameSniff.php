@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff.

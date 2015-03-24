@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
 
-use PHP_CodeSniffer\Standards\AbstractVariableSniff;
+use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 
 /**
  * PEAR_Sniffs_NamingConventions_ValidVariableNameSniff.

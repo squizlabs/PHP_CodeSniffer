@@ -1,6 +1,6 @@
 <?php
 
-namespace PHP_CodeSniffer;
+namespace PHP_CodeSniffer\Sniffs;
 
 /**
  * Represents a PHP_CodeSniffer sniff for sniffing coding standards.

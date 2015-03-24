@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Formatting;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PEAR_Sniffs_Functions_FunctionDeclarationSniff.

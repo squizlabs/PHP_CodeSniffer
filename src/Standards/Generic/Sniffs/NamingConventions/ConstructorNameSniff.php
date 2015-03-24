@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
-use PHP_CodeSniffer\Standards\AbstractScopeSniff;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 
 /**
  * Generic_Sniffs_NamingConventions_ConstructorNameSniff.

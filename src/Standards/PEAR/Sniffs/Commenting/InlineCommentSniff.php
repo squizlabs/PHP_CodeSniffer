@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
-use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PHP_CodeSniffer_Sniffs_PEAR_Commenting_InlineCommentSniff.

@@ -2,7 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer\Standards\AbstractPatternSniff;
+use PHP_CodeSniffer\Sniffs\AbstractPatternSniff;
 
 /**
  * Verifies that control statements conform to their coding standards.
