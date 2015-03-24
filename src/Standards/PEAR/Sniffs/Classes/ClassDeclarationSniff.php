@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Classes;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Class Declaration Test.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
+class ClassDeclarationSniff implements Sniff
 {
 
     /**
@@ -63,7 +68,7 @@ class PEAR_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $errorData = array(strtolower($tokens[$stackPtr]['content']));

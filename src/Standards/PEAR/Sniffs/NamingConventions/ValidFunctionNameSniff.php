@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
+
+use PHP_CodeSniffer\Standards\AbstractScopeSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff.
  *
@@ -12,10 +18,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
-}
 
 /**
  * PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff.
@@ -32,7 +34,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class ValidFunctionNameSniff extends AbstractScopeSniff
 {
 
     /**
@@ -85,7 +87,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -160,7 +162,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             $testMethodName = substr($methodName, 1);
         }
 
-        if (PHP_CodeSniffer::isCamelCaps($testMethodName, false, $isPublic, false) === false) {
+        if (Common::isCamelCaps($testMethodName, false, $isPublic, false) === false) {
             if ($scopeSpecified === true) {
                 $error = '%s method name "%s" is not in camel caps format';
                 $data  = array(
@@ -188,7 +190,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {
@@ -256,7 +258,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         $newCamelCapsPart = $camelCapsPart;
 
         // Every function must have a camel caps part, so check that first.
-        if (PHP_CodeSniffer::isCamelCaps($camelCapsPart, false, true, false) === false) {
+        if (Common::isCamelCaps($camelCapsPart, false, true, false) === false) {
             $validName        = false;
             $newCamelCapsPart = strtolower($camelCapsPart{0}).substr($camelCapsPart, 1);
         }

@@ -1,4 +1,11 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceBsdAllmanSniff;
+
 /**
  * PEAR_Sniffs_Functions_FunctionDeclarationSniff.
  *
@@ -25,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_Sniff
+class FunctionDeclarationSniff implements Sniff
 {
 
     /**
@@ -60,7 +67,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -200,20 +207,12 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function processSingleLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
+    public function processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens)
     {
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-            if (class_exists('Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff', true) === false) {
-                throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff not found');
-            }
-
-            $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff();
+            $sniff = new OpeningFunctionBraceKernighanRitchieSniff();
         } else {
-            if (class_exists('Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff', true) === false) {
-                throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff not found');
-            }
-
-            $sniff = new Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff();
+            $sniff = new OpeningFunctionBraceBsdAllmanSniff();
         }
 
         $sniff->checkClosures = true;
@@ -233,7 +232,7 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function processMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
+    public function processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens)
     {
         // We need to work out how far indented the function
         // declaration itself is, so we can work out how far to

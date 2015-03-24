@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ClassDeclaration sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
+class ClassDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffer_Sniff
+class ObjectOperatorIndentSniff implements Sniff
 {
 
     /**
@@ -58,7 +63,7 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

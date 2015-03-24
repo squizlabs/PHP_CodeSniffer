@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * PEAR_Sniffs_ControlStructures_MultiLineConditionSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeSniffer_Sniff
+class MultiLineConditionSniff implements Sniff
 {
 
     /**
@@ -70,7 +76,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -129,7 +135,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                             if ($tokens[$next]['code'] !== T_COMMENT) {
                                 $phpcsFile->fixer->addNewlineBefore($closeBracket);
                             } else {
-                                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+                                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
                                 $phpcsFile->fixer->beginChangeset();
                                 $phpcsFile->fixer->replaceToken($closeBracket, '');
                                 $phpcsFile->fixer->addContentBefore($next, ')');
@@ -178,13 +184,13 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
                 }
 
                 if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
-                    $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $i, null, true);
-                    if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
+                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
+                    if (isset(Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
                         $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
                         if ($fix === true) {
-                            $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($i - 1), $openBracket, true);
-                            if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+                            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), $openBracket, true);
+                            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
                                 $phpcsFile->fixer->beginChangeset();
                                 $phpcsFile->fixer->replaceToken($prev, '');
                                 $phpcsFile->fixer->addContentBefore($next, $tokens[$prev]['content'].' ');

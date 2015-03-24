@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Tests\WhiteSpace;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ObjectOperatorIndent sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_WhiteSpace_ObjectOperatorIndentUnitTest extends AbstractSniffUnitTest
+class ObjectOperatorIndentUnitTest extends AbstractSniffUnitTest
 {
 
 

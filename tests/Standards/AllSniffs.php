@@ -87,7 +87,7 @@ class AllSniffs
 
 
 
-if ($standard !== 'Generic') continue;
+if ($standard !== 'Generic' && $standard !== 'PEAR') continue;
 
                 $testsDir = $path.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 

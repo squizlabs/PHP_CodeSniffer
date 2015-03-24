@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
  * A class to find T_VARIABLE tokens.
  *
@@ -12,11 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * A class to find T_VARIABLE tokens.
@@ -36,7 +36,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+abstract class AbstractVariableSniff extends AbstractScopeSniff
 {
 
     /**
@@ -95,7 +95,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * @return void
      */
     protected final function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr,
         $currScope
     ) {
@@ -171,7 +171,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * @return void
      */
     protected final function processTokenOutsideScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr
     ) {
         $tokens = $phpcsFile->getTokens();
@@ -201,7 +201,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * @return void
      */
     abstract protected function processMemberVar(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr
     );
 
@@ -216,7 +216,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * @return void
      */
     abstract protected function processVariable(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr
     );
 
@@ -235,7 +235,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
      * @return void
      */
     abstract protected function processVariableInString(
-        PHP_CodeSniffer_File
         $phpcsFile,
         $stackPtr
     );

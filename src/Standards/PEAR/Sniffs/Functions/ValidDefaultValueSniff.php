@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * PEAR_Sniffs_Functions_ValidDefaultValueSniff.
  *
@@ -28,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sniff
+class ValidDefaultValueSniff implements Sniff
 {
 
 
@@ -53,7 +59,7 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -94,10 +100,10 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return bool
      */
-    private static function _argHasDefault(PHP_CodeSniffer_File $phpcsFile, $argPtr)
+    private static function _argHasDefault($phpcsFile, $argPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($argPtr + 1), null, true);
+        $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($argPtr + 1), null, true);
         if ($tokens[$nextToken]['code'] !== T_EQUAL) {
             return false;
         }

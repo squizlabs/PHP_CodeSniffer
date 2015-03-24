@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace;
+
+use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\ScopeIndentSniff as GenericScopeIndentSniff;
+
 /**
  * PEAR_Sniffs_Whitespace_ScopeIndentSniff.
  *
@@ -12,11 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true) === false) {
-    $error = 'Class Generic_Sniffs_WhiteSpace_ScopeIndentSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * PEAR_Sniffs_Whitespace_ScopeIndentSniff.
@@ -33,7 +33,7 @@ if (class_exists('Generic_Sniffs_WhiteSpace_ScopeIndentSniff', true) === false) 
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_WhiteSpace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace_ScopeIndentSniff
+class ScopeIndentSniff extends GenericScopeIndentSniff
 {
 
     /**

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Tests\ControlStructures;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ControlSignature sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSniffUnitTest
+class ControlSignatureUnitTest extends AbstractSniffUnitTest
 {
 
 

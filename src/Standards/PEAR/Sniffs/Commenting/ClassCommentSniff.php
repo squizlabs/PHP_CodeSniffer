@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Parses and verifies the doc comments for classes.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_FileCommentSniff
+class ClassCommentSniff extends FileCommentSniff
 {
 
 
@@ -53,7 +58,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $this->currentFile = $phpcsFile;
 
@@ -61,7 +66,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         $type      = strtolower($tokens[$stackPtr]['content']);
         $errorData = array($type);
 
-        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
@@ -114,7 +119,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
      *
      * @return void
      */
-    protected function processVersion(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processVersion($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {

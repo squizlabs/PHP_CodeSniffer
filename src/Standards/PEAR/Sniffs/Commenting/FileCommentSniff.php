@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * Parses and verifies the doc comments for files.
  *
@@ -26,7 +32,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
+class FileCommentSniff implements Sniff
 {
 
     /**
@@ -103,7 +109,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return int
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -189,11 +195,11 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processTags(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    protected function processTags($phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (get_class($this) === 'PEAR_Sniffs_Commenting_FileCommentSniff') {
+        if (get_class($this) === 'PHP_CodeSniffer\Standard\PEAR\Sniffs\Commenting\FileCommentSniff') {
             $docBlock = 'file';
         } else {
             $docBlock = 'class';
@@ -286,7 +292,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processCategory(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processCategory($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -296,7 +302,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+            if (Common::isUnderscoreName($content) !== true) {
                 $newContent = str_replace(' ', '_', $content);
                 $nameBits   = explode('_', $newContent);
                 $firstBit   = array_shift($nameBits);
@@ -328,7 +334,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processPackage(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processPackage($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -338,7 +344,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (PHP_CodeSniffer::isUnderscoreName($content) === true) {
+            if (Common::isUnderscoreName($content) === true) {
                 continue;
             }
 
@@ -374,7 +380,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processSubpackage(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processSubpackage($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -384,7 +390,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (PHP_CodeSniffer::isUnderscoreName($content) === true) {
+            if (Common::isUnderscoreName($content) === true) {
                 continue;
             }
 
@@ -418,7 +424,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processAuthor(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processAuthor($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -448,7 +454,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processCopyright(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processCopyright($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -489,7 +495,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processLicense(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processLicense($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {
@@ -518,7 +524,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processVersion(PHP_CodeSniffer_File $phpcsFile, array $tags)
+    protected function processVersion($phpcsFile, array $tags)
     {
         $tokens = $phpcsFile->getTokens();
         foreach ($tags as $tag) {

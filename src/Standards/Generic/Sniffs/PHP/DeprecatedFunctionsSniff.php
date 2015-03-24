@@ -2,8 +2,6 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
-use PHP_CodeSniffer\Sniff;
-
 /**
  * Generic_Sniffs_PHP_DeprecatedFunctionsSniff.
  *
@@ -34,7 +32,7 @@ use PHP_CodeSniffer\Sniff;
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff
+class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
 {
 
     /**
@@ -58,7 +56,7 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
         $functions = get_defined_functions();
 
         foreach ($functions['internal'] as $functionName) {
-            $function = new ReflectionFunction($functionName);
+            $function = new \ReflectionFunction($functionName);
             if (method_exists($function, 'isDeprecated') === false) {
                 break;
             }

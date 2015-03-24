@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
+
+use PHP_CodeSniffer\Standards\AbstractVariableSniff;
+
 /**
  * PEAR_Sniffs_NamingConventions_ValidVariableNameSniff.
  *
@@ -11,11 +16,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
-    $error = 'Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * PEAR_Sniffs_NamingConventions_ValidVariableNameSniff.
@@ -30,7 +30,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class ValidVariableNameSniff extends AbstractVariableSniff
 {
 
 
@@ -43,7 +43,7 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processMemberVar($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -92,7 +92,7 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariable($phpcsFile, $stackPtr)
     {
         /*
             We don't care about normal variables.
@@ -109,7 +109,7 @@ class PEAR_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariableInString($phpcsFile, $stackPtr)
     {
         /*
             We don't care about normal variables.

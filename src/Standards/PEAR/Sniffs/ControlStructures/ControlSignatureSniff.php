@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer\Standards\AbstractPatternSniff;
+
 /**
  * Verifies that control statements conform to their coding standards.
  *
@@ -13,10 +18,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractPatternSniff not found');
-}
-
 /**
  * Verifies that control statements conform to their coding standards.
  *
@@ -29,7 +30,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === fal
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffer_Standards_AbstractPatternSniff
+class ControlSignatureSniff extends AbstractPatternSniff
 {
 
     /**
