@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Tokenizers;
+
+use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Config;
+
 /**
  * Tokenizes CSS code.
  *
@@ -12,10 +18,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Tokenizers_PHP', true) === false) {
-    throw new Exception('Class PHP_CodeSniffer_Tokenizers_PHP not found');
-}
-
 /**
  * Tokenizes CSS code.
  *
@@ -27,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_Tokenizers_PHP', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
+class CSS extends PHP
 {
 
 
@@ -37,11 +39,11 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      * Uses the PHP tokenizer to do all the tricky work
      *
      * @param string $string  The string to tokenize.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return array
      */
-    public function tokenizeString($string, $eolChar='\n')
+    public function tokenize($string)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START CSS TOKENIZING ***".PHP_EOL;
@@ -50,14 +52,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         // If the content doesn't have an EOL char on the end, add one so
         // the open and close tags we add are parsed correctly.
         $eolAdded = false;
-        if (substr($string, (strlen($eolChar) * -1)) !== $eolChar) {
-            $string  .= $eolChar;
+        if (substr($string, (strlen($this->eolChar) * -1)) !== $this->eolChar) {
+            $string  .= $this->eolChar;
             $eolAdded = true;
         }
 
         $string = str_replace('<?php', '^PHPCS_CSS_T_OPEN_TAG^', $string);
         $string = str_replace('?>', '^PHPCS_CSS_T_CLOSE_TAG^', $string);
-        $tokens = parent::tokenizeString('<?php '.$string.'?>', $eolChar);
+        $tokens = parent::tokenize('<?php '.$string.'?>');
 
         $finalTokens    = array();
         $finalTokens[0] = array(
@@ -82,7 +84,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $token['type'];
-                $content = PHP_CodeSniffer::prepareForOutput($token['content']);
+                $content = Util\Common::prepareForOutput($token['content']);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -105,7 +107,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t\t=> Found embedded PHP code: ";
-                    $cleanContent = PHP_CodeSniffer::prepareForOutput($content);
+                    $cleanContent = Util\Common::prepareForOutput($content);
                     echo $cleanContent.PHP_EOL;
                 }
 
@@ -163,8 +165,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 || $token['content']{0} === '#')
             ) {
                 $content       = ltrim($token['content'], '#/');
-                $commentTokens
-                    = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
+                $commentTokens = parent::tokenize('<?php '.$content.'?>');
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
@@ -300,7 +301,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 for ($x = ($stackPtr - 1); $x >= 0; $x--) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
+                    if (isset(Util\Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                         break;
                     }
                 }
@@ -312,7 +313,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 if (strtolower($token['content']) === 'url') {
                     // Find the next content.
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
+                        if (isset(Util\Tokens::$emptyTokens[$finalTokens[$x]['code']]) === false) {
                             break;
                         }
                     }
@@ -324,7 +325,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // Make sure the content isn't empty.
                     for ($y = ($x + 1); $y < $numTokens; $y++) {
-                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$finalTokens[$y]['code']]) === false) {
+                        if (isset(Util\Tokens::$emptyTokens[$finalTokens[$y]['code']]) === false) {
                             break;
                         }
                     }
@@ -374,7 +375,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             $finalTokens[($numTokens - 2)]['content'] = substr(
                 $finalTokens[($numTokens - 2)]['content'],
                 0,
-                (strlen($eolChar) * -1)
+                (strlen($this->eolChar) * -1)
             );
 
             if ($finalTokens[($numTokens - 2)]['content'] === '') {
@@ -397,11 +398,11 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
      * Performs additional processing after main tokenizing.
      *
      * @param array  $tokens  The array of tokens to process.
-     * @param string $eolChar The EOL character to use for splitting strings.
+     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
-    public function processAdditional(&$tokens, $eolChar)
+    public function processAdditional()
     {
         /*
             We override this method because we don't want the PHP version to

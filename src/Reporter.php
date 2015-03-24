@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer;
+
+use PHP_CodeSniffer\Reports\Report;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
  * A class to manage reporting.
  *
@@ -6,9 +12,7 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
@@ -19,15 +23,13 @@
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reporting
+class Reporter
 {
 
     /**
@@ -85,6 +87,7 @@ class PHP_CodeSniffer_Reporting
      * @var array
      */
     private $_tmpFiles = array();
+    protected $config = null;
 
 
     /**
@@ -95,40 +98,41 @@ class PHP_CodeSniffer_Reporting
      * @return PHP_CodeSniffer_Report
      * @throws PHP_CodeSniffer_Exception If report is not available.
      */
-    public function factory($type)
+    public function __construct(Config $config)
     {
-        $type = ucfirst($type);
-        if (isset($this->_reports[$type]) === true) {
-            return $this->_reports[$type];
-        }
+        $this->config = $config;
 
-        if (strpos($type, '.') !== false) {
-            // This is a path to a custom report class.
-            $filename = realpath($type);
-            if ($filename === false) {
-                echo 'ERROR: Custom report "'.$type.'" not found'.PHP_EOL;
-                exit(2);
+        foreach ($config->reports as $type => $output) {
+            $type = ucfirst($type);
+
+            if ($output === null) {
+                $output = $config->reportFile;
             }
 
-            $reportClassName = 'PHP_CodeSniffer_Reports_'.basename($filename);
-            $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
-            include_once $filename;
-        } else {
-            $filename        = $type.'.php';
-            $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
-            if (class_exists($reportClassName, true) === false) {
-                echo 'ERROR: Report type "'.$type.'" not found'.PHP_EOL;
-                exit(2);
+            if (strpos($type, '.') !== false) {
+                // This is a path to a custom report class.
+                $filename = realpath($type);
+                if ($filename === false) {
+                    echo "ERROR: Custom report \"$type\" not found".PHP_EOL;
+                    exit(2);
+                }
+
+                $reportClassName = 'PHP_CodeSniffer\Reports\\'.basename($filename);
+                $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
+            } else {
+                $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
             }
-        }//end if
 
-        $reportClass = new $reportClassName();
-        if (false === ($reportClass instanceof PHP_CodeSniffer_Report)) {
-            throw new PHP_CodeSniffer_Exception('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer_Report" interface.');
+            $reportClass = new $reportClassName();
+            if (false === ($reportClass instanceof Report)) {
+                throw new RuntimeException('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer\Report" interface.');
+            }
+
+            $this->_reports[$type] = array(
+                                    'output' => $output,
+                                    'class' => $reportClass,
+                                    );
         }
-
-        $this->_reports[$type] = $reportClass;
-        return $this->_reports[$type];
 
     }//end factory()
 
@@ -141,9 +145,9 @@ class PHP_CodeSniffer_Reporting
      *
      * @return void
      */
-    public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
+    public function cacheFileReport($phpcsFile)
     {
-        if (isset($cliValues['reports']) === false) {
+        if (isset($this->config->reports) === false) {
             // This happens during unit testing, or any time someone just wants
             // the error data and not the printed report.
             return;
@@ -152,12 +156,11 @@ class PHP_CodeSniffer_Reporting
         $reportData  = $this->prepareFileReport($phpcsFile);
         $errorsShown = false;
 
-        foreach ($cliValues['reports'] as $report => $output) {
-            $reportClass = $this->factory($report);
-            $report      = get_class($reportClass);
+        foreach ($this->_reports as $type => $report) {
+            $reportClass = $report['class'];
 
             ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources, $this->config->reportWidth);
             if ($result === true) {
                 $errorsShown = true;
             }
@@ -165,30 +168,21 @@ class PHP_CodeSniffer_Reporting
             $generatedReport = ob_get_contents();
             ob_end_clean();
 
-            if ($output === null && $cliValues['reportFile'] !== null) {
-                $output = $cliValues['reportFile'];
-            }
-
-            if ($output === null) {
+            if ($report['output'] === null) {
                 // Using a temp file.
-                if (isset($this->_tmpFiles[$report]) === false) {
-                    if (function_exists('sys_get_temp_dir') === true) {
-                        // This is needed for HHVM support, but only available from 5.2.1.
-                        $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
-                    } else {
-                        $this->_tmpFiles[$report] = tmpfile();
-                    }
+                if (isset($this->_tmpFiles[$type]) === false) {
+                    $this->_tmpFiles[$type] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
                 }
 
-                fwrite($this->_tmpFiles[$report], $generatedReport);
+                fwrite($this->_tmpFiles[$type], $generatedReport);
             } else {
                 $flags = FILE_APPEND;
-                if (isset($this->_cachedReports[$report]) === false) {
-                    $this->_cachedReports[$report] = true;
+                if (isset($this->_cachedReports[$type]) === false) {
+                    $this->_cachedReports[$type] = true;
                     $flags = null;
                 }
 
-                file_put_contents($output, $generatedReport, $flags);
+                file_put_contents($report['output'], $generatedReport, $flags);
             }//end if
         }//end foreach
 
@@ -216,15 +210,10 @@ class PHP_CodeSniffer_Reporting
      *
      * @return int[]
      */
-    public function printReport(
-        $report,
-        $showSources,
-        array $cliValues,
-        $reportFile='',
-        $reportWidth=80
-    ) {
-        $reportClass = $this->factory($report);
-        $report      = get_class($reportClass);
+    public function printReport($report, $reportFile=null)
+    {
+        $report = ucfirst($report);
+        $reportClass = $this->_reports[$report]['class'];
 
         if ($reportFile !== null) {
             $filename = $reportFile;
@@ -258,14 +247,15 @@ class PHP_CodeSniffer_Reporting
             $this->totalErrors,
             $this->totalWarnings,
             $this->totalFixable,
-            $showSources,
-            $reportWidth,
+            $this->config->showSources,
+            $this->config->reportWidth,
+            $this->config->interactive,
             $toScreen
         );
         $generatedReport = ob_get_contents();
         ob_end_clean();
 
-        if ($cliValues['colors'] !== true || $reportFile !== null) {
+        if ($this->config->colors !== true || $reportFile !== null) {
             $generatedReport = preg_replace('`\033\[[0-9]+m`', '', $generatedReport);
         }
 
@@ -282,12 +272,22 @@ class PHP_CodeSniffer_Reporting
             }
         }
 
-        return array(
-                'errors'   => $this->totalErrors,
-                'warnings' => $this->totalWarnings,
-               );
-
     }//end printReport()
+
+
+    public function printReports()
+    {
+        $toScreen = false;
+        foreach ($this->config->reports as $type => $report) {
+            if ($report['output'] === null) {
+                $toScreen = true;
+            }
+
+            $this->printReport($type, $report['output']);
+        }
+
+        return $toScreen;
+    }
 
 
     /**
@@ -299,7 +299,7 @@ class PHP_CodeSniffer_Reporting
      *
      * @return array
      */
-    public function prepareFileReport(PHP_CodeSniffer_File $phpcsFile)
+    public function prepareFileReport($phpcsFile)
     {
         $report = array(
                    'filename' => $phpcsFile->getFilename(),
@@ -379,47 +379,6 @@ class PHP_CodeSniffer_Reporting
         return $report;
 
     }//end prepareFileReport()
-
-
-    /**
-     * Start recording time for the run.
-     *
-     * @return void
-     */
-    public static function startTiming()
-    {
-
-        self::$startTime = microtime(true);
-
-    }//end startTiming()
-
-
-    /**
-     * Print information about the run.
-     *
-     * @return void
-     */
-    public static function printRunTime()
-    {
-        $time = ((microtime(true) - self::$startTime) * 1000);
-
-        if ($time > 60000) {
-            $mins = floor($time / 60000);
-            $secs = round((($time % 60000) / 1000), 2);
-            $time = $mins.' mins';
-            if ($secs !== 0) {
-                $time .= ", $secs secs";
-            }
-        } else if ($time > 1000) {
-            $time = round(($time / 1000), 2).' secs';
-        } else {
-            $time = round($time).'ms';
-        }
-
-        $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'Mb';
-        echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
-
-    }//end printRunTime()
 
 
 }//end class

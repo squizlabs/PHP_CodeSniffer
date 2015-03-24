@@ -25,31 +25,7 @@
         }
     },
     "autoload": {
-        "classmap": [
-            "CodeSniffer.php",
-            "CodeSniffer/CLI.php",
-            "CodeSniffer/Exception.php",
-            "CodeSniffer/File.php",
-            "CodeSniffer/Fixer.php",
-            "CodeSniffer/Report.php",
-            "CodeSniffer/Reporting.php",
-            "CodeSniffer/Sniff.php",
-            "CodeSniffer/Tokens.php",
-            "CodeSniffer/Reports/",
-            "CodeSniffer/Tokenizers/",
-            "CodeSniffer/DocGenerators/",
-            "CodeSniffer/Standards/AbstractPatternSniff.php",
-            "CodeSniffer/Standards/AbstractScopeSniff.php",
-            "CodeSniffer/Standards/AbstractVariableSniff.php",
-            "CodeSniffer/Standards/IncorrectPatternException.php",
-            "CodeSniffer/Standards/Generic/Sniffs/",
-            "CodeSniffer/Standards/MySource/Sniffs/",
-            "CodeSniffer/Standards/PEAR/Sniffs/",
-            "CodeSniffer/Standards/PSR1/Sniffs/",
-            "CodeSniffer/Standards/PSR2/Sniffs/",
-            "CodeSniffer/Standards/Squiz/Sniffs/",
-            "CodeSniffer/Standards/Zend/Sniffs/"
-        ]
+        "psr-4": {"PHP_CodeSniffer\\": "src/"}
     },
     "require": {
         "php": ">=5.1.2",
@@ -57,7 +33,6 @@
         "ext-xmlwriter": "*"
     },
     "bin": [
-        "scripts/phpcs",
-        "scripts/phpcbf"
+        "bin/phpcs"
     ]
 }

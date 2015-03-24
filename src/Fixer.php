@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer;
+
 /**
  * A helper class for fixing errors.
  *
@@ -26,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Fixer
+class Fixer
 {
 
     /**

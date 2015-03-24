@@ -1,11 +1,16 @@
 <?php
+
+namespace PHP_CodeSniffer\Tokenizers;
+
+use PHP_CodeSniffer\Util;
+
 /**
  * Tokenizes doc block comments.
  *
  * PHP version 5
  *
  * @category  PHP
- * @package   PHP_CodeSniffer
+ * @package   FeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Tokenizers_Comment
+class Comment
 {
 
 
@@ -71,7 +76,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
         $stackPtr++;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $content = PHP_CodeSniffer::prepareForOutput($openTag);
+            $content = Util::prepareForOutput($openTag);
             echo "\t\tCreate comment token: T_DOC_COMMENT_OPEN_TAG => $content".PHP_EOL;
         }
 
@@ -107,7 +112,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
             foreach ($lineTokens as $lineToken) {
                 $tokens[$stackPtr] = $lineToken;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = PHP_CodeSniffer::prepareForOutput($lineToken['content']);
+                    $content = Util::prepareForOutput($lineToken['content']);
                     $type    = $lineToken['type'];
                     echo "\t\tCreate comment token: $type => $content".PHP_EOL;
                 }
@@ -130,7 +135,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
                 $tokens[$stackPtr] = $space;
                 $stackPtr++;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = PHP_CodeSniffer::prepareForOutput($space['content']);
+                    $content = Util::prepareForOutput($space['content']);
                     $type    = $lineToken['type'];
                     echo "\t\tCreate comment token: T_DOC_COMMENT_WHITESPACE => $content".PHP_EOL;
                 }
@@ -164,7 +169,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
         $tokens[$stackPtr] = $closeTag;
         $tokens[$openPtr]['comment_closer'] = $stackPtr;
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $content = PHP_CodeSniffer::prepareForOutput($closeTag['content']);
+            $content = Util::prepareForOutput($closeTag['content']);
             echo "\t\tCreate comment token: T_DOC_COMMENT_CLOSE_TAG => $content".PHP_EOL;
         }
 
