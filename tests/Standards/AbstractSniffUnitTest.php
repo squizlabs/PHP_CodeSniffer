@@ -142,9 +142,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
             $filename = basename($testFile);
 
             try {
-#$cliValues = $this->getCliValues($filename);
-#self::$phpcs->cli->setCommandLineValues($cliValues);
-
+                $this->setCliValues($filename, $config);
 
                 $parts = explode('.', $testFile);
                 $extension = strtoupper(array_pop($parts));
@@ -398,9 +396,9 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function getCliValues($filename)
+    public function setCliValues($filename, Config $config)
     {
-        return array();
+        return;
 
     }//end getCliValues()
 

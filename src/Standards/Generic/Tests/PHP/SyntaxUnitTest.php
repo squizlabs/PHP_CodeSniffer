@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\PHP;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
@@ -43,8 +44,8 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-return;
-        $phpPath = PHP_CodeSniffer::getConfigData('php_path');
+        $config = new Config();
+        $phpPath = $config->getConfigData('php_path');
         return (is_null($phpPath));
 
     }//end shouldSkipTest()
