@@ -236,6 +236,10 @@ class Runner
             define('PHP_CODESNIFFER_VERBOSITY', $config->verbosity);
         }
 
+        // Create this class so it is autoloaded and sets up a bunch
+        // if PHP_CodeSniffer-specific token type constants.
+        $tokens = new Util\Tokens();
+
         // Print a list of sniffs in each of the supplied standards.
         // We fudge the config here so that each standard is explained in isolation.
         if ($config->explain === true) {
@@ -255,10 +259,6 @@ class Runner
 
         // The class manages all reporter for the run.
         $reporter  = new Reporter($config);
-
-        // Create this class so it is autoloaded and sets up a bunch
-        // if PHP_CodeSniffer-specific token type constants.
-        $tokens = new Util\Tokens();
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Creating file list... ';
