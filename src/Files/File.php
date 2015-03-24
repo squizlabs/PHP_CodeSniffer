@@ -1488,7 +1488,7 @@ class File
                 $scopeSpecified = true;
                 break;
             case T_PRIVATE:
-                $scope          = 'protected';
+                $scope          = 'private';
                 $scopeSpecified = true;
                 break;
             case T_PROTECTED:
@@ -1598,7 +1598,7 @@ class File
                 $scopeSpecified = true;
                 break;
             case T_PRIVATE:
-                $scope          = 'protected';
+                $scope          = 'private';
                 $scopeSpecified = true;
                 break;
             case T_PROTECTED:
