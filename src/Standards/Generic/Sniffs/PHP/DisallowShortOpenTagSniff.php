@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_PHP_DisallowShortOpenTagSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sniff
+class DisallowShortOpenTagSniff implements Sniff
 {
 
 
@@ -55,7 +61,7 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens  = $phpcsFile->getTokens();
         $openTag = $tokens[$stackPtr];
@@ -70,7 +76,7 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
         }
 
         if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {
-            $nextVar = $tokens[$phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
+            $nextVar = $tokens[$phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
             $error   = 'Short PHP opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $data    = array(
                         $nextVar['content'],

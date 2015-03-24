@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_Files_ByteOrderMarkSniff.
  *
@@ -27,7 +32,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  * @see       http://en.wikipedia.org/wiki/Byte_order_mark
  */
-class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
+class ByteOrderMarkSniff implements Sniff
 {
 
     /**
@@ -65,7 +70,7 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         // The BOM will be the very first token in the file.
         if ($stackPtr !== 0) {

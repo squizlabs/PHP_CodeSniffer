@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Files;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Generic_Tests_Files_OneTraitPerFileUnitTest.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Files_OneTraitPerFileUnitTest extends AbstractSniffUnitTest
+class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_PHP_DeprecatedFunctionsSniff.
  *

@@ -37,6 +37,7 @@ abstract class Tokenizer
     protected $config = null;
     protected $tokens = array();
     public $knownLengths = array();
+    public $ignoredLines = array();
 
     public function __construct($content, Config $config, $eolChar='\n')
     {

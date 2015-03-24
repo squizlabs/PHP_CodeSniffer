@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Functions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the FunctionCallArgumentSpacing sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
+class FunctionCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
 {
 
 

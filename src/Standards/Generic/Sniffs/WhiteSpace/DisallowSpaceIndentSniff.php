@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSniffer_Sniff
+class DisallowSpaceIndentSniff implements Sniff
 {
 
     /**
@@ -68,17 +73,16 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         if ($this->_tabWidth === null) {
-            $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-            if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
+            if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
                 // It shouldn't really matter because indent checks elsewhere in the
                 // standard should fix things up.
                 $this->_tabWidth = 4;
             } else {
-                $this->_tabWidth = $cliValues['tabWidth'];
+                $this->_tabWidth = $phpcsFile->config->tabWidth;
             }
         }
 

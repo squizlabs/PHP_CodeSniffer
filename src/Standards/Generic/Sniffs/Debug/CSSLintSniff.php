@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_Debug_CSSLintSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
+class CSSLintSniff implements Sniff
 {
 
     /**
@@ -57,7 +62,7 @@ class Generic_Sniffs_Debug_CSSLintSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName = $phpcsFile->getFilename();
 

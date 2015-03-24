@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
@@ -36,7 +42,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_CodeSniffer_Sniff
+class UselessOverridingMethodSniff implements Sniff
 {
 
 
@@ -61,7 +67,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -86,7 +92,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
+            if (isset(Tokens::$emptyTokens[$code]) === true) {
                 continue;
             } else if ($code === T_RETURN) {
                 continue;
@@ -101,7 +107,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be double colon.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
 
         // Skip for invalid code.
         if ($next === false || $tokens[$next]['code'] !== T_DOUBLE_COLON) {
@@ -109,7 +115,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be the function name.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
 
         // Skip for invalid code or other method.
         if ($next === false || $tokens[$next]['content'] !== $methodName) {
@@ -117,7 +123,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         }
 
         // Find next non empty token index, should be the open parenthesis.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
 
         // Skip for invalid code.
         if ($next === false || $tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
@@ -142,7 +148,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
                 --$parenthesisCount;
             } else if ($parenthesisCount === 1 && $code === T_COMMA) {
                 $parameters[] = '';
-            } else if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === false) {
+            } else if (isset(Tokens::$emptyTokens[$code]) === false) {
                 $parameters[(count($parameters) - 1)] .= $tokens[$next]['content'];
             }
 
@@ -151,7 +157,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
             }
         }//end for
 
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
         if ($next === false || $tokens[$next]['code'] !== T_SEMICOLON) {
             return;
         }
@@ -160,7 +166,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (++$next; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
             // Skip for any other content.
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === false) {
+            if (isset(Tokens::$emptyTokens[$code]) === false) {
                 return;
             }
         }

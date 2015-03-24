@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
+
+use PHP_CodeSniffer\Standards\AbstractScopeSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff.
  *
@@ -12,10 +18,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
-}
 
 /**
  * Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff.
@@ -32,7 +34,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 {
 
     /**
@@ -113,7 +115,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -151,7 +153,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         $methodName = ltrim($methodName, '_');
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-        if (PHP_CodeSniffer::isCamelCaps($methodName, false, true, $this->strict) === false) {
+        if (Common::isCamelCaps($methodName, false, true, $this->strict) === false) {
             if ($methodProps['scope_specified'] === true) {
                 $error = '%s method name "%s" is not in camel caps format';
                 $data  = array(
@@ -182,7 +184,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
      *
      * @return void
      */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {
@@ -206,7 +208,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         // Ignore first underscore in functions prefixed with "_".
         $functionName = ltrim($functionName, '_');
 
-        if (PHP_CodeSniffer::isCamelCaps($functionName, false, true, $this->strict) === false) {
+        if (Common::isCamelCaps($functionName, false, true, $this->strict) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');

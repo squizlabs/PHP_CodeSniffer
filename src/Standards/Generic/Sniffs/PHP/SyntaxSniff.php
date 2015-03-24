@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_PHP_SyntaxSniff.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
+class SyntaxSniff implements Sniff
 {
 
 
@@ -52,8 +57,9 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
+        return;
         $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         if ($phpPath === null) {
             return;

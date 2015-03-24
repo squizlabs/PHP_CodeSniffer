@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
@@ -41,7 +47,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_CodeSniffer_Sniff
+class UnconditionalIfStatementSniff implements Sniff
 {
 
 
@@ -69,7 +75,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -86,7 +92,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
+            if (isset(Tokens::$emptyTokens[$code]) === true) {
                 continue;
             } else if ($code !== T_TRUE && $code !== T_FALSE) {
                 $goodCondition = true;

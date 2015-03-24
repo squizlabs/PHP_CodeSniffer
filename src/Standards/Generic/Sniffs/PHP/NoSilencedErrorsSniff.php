@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_PHP_NoSilencedErrorsSniff
  *
@@ -30,7 +35,7 @@
  * @version  Release: @package_version@
  * @link     http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
+class NoSilencedErrorsSniff implements Sniff
 {
 
     /**
@@ -62,7 +67,7 @@ class Generic_Sniffs_PHP_NoSilencedErrorsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $error = 'Silencing errors is forbidden';
         if ($this->error === true) {

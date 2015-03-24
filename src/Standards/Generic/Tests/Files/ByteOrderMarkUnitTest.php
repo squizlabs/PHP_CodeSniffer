@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Files;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ByteOrderMark sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Files_ByteOrderMarkUnitTest extends AbstractSniffUnitTest
+class ByteOrderMarkUnitTest extends AbstractSniffUnitTest
 {
 
 

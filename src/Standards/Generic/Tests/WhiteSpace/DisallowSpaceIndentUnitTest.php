@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\WhiteSpace;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DisallowSpaceIndent sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_WhiteSpace_DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
+class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
 {
 
 

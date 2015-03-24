@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Strings;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Strings_UnnecessaryStringConcatSniff.
  *
@@ -26,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSniffer_Sniff
+class UnnecessaryStringConcatSniff implements Sniff
 {
 
     /**
@@ -71,7 +77,7 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         // Work out which type of file this is for.
         $tokens = $phpcsFile->getTokens();
@@ -91,8 +97,8 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             return;
         }
 
-        if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$prev]['code']]) === true
-            && isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$next]['code']]) === true
+        if (isset(Tokens::$stringTokens[$tokens[$prev]['code']]) === true
+            && isset(Tokens::$stringTokens[$tokens[$next]['code']]) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
                 // Before we throw an error for PHP, allow strings to be

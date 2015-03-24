@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
+
+use PHP_CodeSniffer\Standards\AbstractScopeSniff;
+
 /**
  * Generic_Sniffs_NamingConventions_ConstructorNameSniff.
  *
@@ -13,11 +18,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
-
 /**
  * Generic_Sniffs_NamingConventions_ConstructorNameSniff.
  *
@@ -31,7 +31,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version  Release: @package_version@
  * @link     http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class ConstructorNameSniff extends AbstractScopeSniff
 {
 
     /**
@@ -70,7 +70,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
      * @return void
      */
     protected function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr,
         $currScope
     ) {
@@ -128,7 +128,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
      *
      * @return void
      */
-    protected function loadFunctionNamesInScope(PHP_CodeSniffer_File $phpcsFile, $currScope)
+    protected function loadFunctionNamesInScope($phpcsFile, $currScope)
     {
         $this->_functionList = array();
         $tokens = $phpcsFile->getTokens();

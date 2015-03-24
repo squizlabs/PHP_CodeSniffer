@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Commenting_FixmeSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
+class FixmeSniff implements Sniff
 {
 
     /**
@@ -48,7 +54,7 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$commentTokens;
+        return Tokens::$commentTokens;
 
     }//end register()
 
@@ -62,7 +68,7 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

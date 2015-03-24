@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Strings;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the UnnecessaryStringConcat sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Strings_UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
+class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
 {
 
 

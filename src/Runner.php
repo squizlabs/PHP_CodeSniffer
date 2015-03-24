@@ -304,6 +304,7 @@ $stdin = false;
 
             try {
                 $file->process();
+                $file->cleanUp();
 
                 if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
                     $timeTaken = ((microtime(true) - $startTime) * 1000);

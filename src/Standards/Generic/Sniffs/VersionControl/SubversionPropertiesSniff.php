@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\VersionControl;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_VersionControl_SubversionPropertiesSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_CodeSniffer_Sniff
+class SubversionPropertiesSniff implements Sniff
 {
 
     /**
@@ -64,7 +69,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

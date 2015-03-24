@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Commenting;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the Todo sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Commenting_TodoUnitTest extends AbstractSniffUnitTest
+class TodoUnitTest extends AbstractSniffUnitTest
 {
 
 

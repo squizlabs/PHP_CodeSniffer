@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
@@ -31,7 +37,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_CodeSniffer_Sniff
+class UnusedFunctionParameterSniff implements Sniff
 {
 
 
@@ -56,7 +62,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -82,14 +88,14 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                          T_END_NOWDOC           => T_END_NOWDOC,
                          T_DOUBLE_QUOTED_STRING => T_DOUBLE_QUOTED_STRING,
                         );
-        $validTokens += PHP_CodeSniffer_Tokens::$emptyTokens;
+        $validTokens += Tokens::$emptyTokens;
 
         for (; $next <= $end; ++$next) {
             $token = $tokens[$next];
             $code  = $token['code'];
 
             // Ignorable tokens.
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
+            if (isset(Tokens::$emptyTokens[$code]) === true) {
                 continue;
             }
 
@@ -101,7 +107,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
                 // A return statement as the first content indicates an interface method.
                 if ($code === T_RETURN) {
-                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
+                    $tmp = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
                     if ($tmp === false) {
                         return;
                     }
@@ -111,7 +117,7 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
                         return;
                     }
 
-                    $tmp = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($tmp + 1), null, true);
+                    $tmp = $phpcsFile->findNext(Tokens::$emptyTokens, ($tmp + 1), null, true);
                     if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
                         // There is a return <token>.
                         return;

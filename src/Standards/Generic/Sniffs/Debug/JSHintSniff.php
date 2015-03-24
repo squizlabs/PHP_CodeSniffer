@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_Debug_JSHintSniff.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
+class JSHintSniff implements Sniff
 {
 
     /**
@@ -60,7 +65,7 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jshint.js could not be run
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName = $phpcsFile->getFilename();
 

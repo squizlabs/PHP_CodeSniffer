@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_CodeSniffer_Sniff
+class MultipleStatementAlignmentSniff implements Sniff
 {
 
     /**
@@ -66,7 +72,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      */
     public function register()
     {
-        $tokens = PHP_CodeSniffer_Tokens::$assignmentTokens;
+        $tokens = Tokens::$assignmentTokens;
         unset($tokens[T_DOUBLE_ARROW]);
         return $tokens;
 
@@ -82,7 +88,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      *
      * @return int
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -110,7 +116,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
      *
      * @return int
      */
-    public function checkAlignment(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function checkAlignment($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -122,13 +128,13 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
         $lastCode    = $stackPtr;
         $lastSemi    = null;
 
-        $find = PHP_CodeSniffer_Tokens::$assignmentTokens;
+        $find = Tokens::$assignmentTokens;
         unset($find[T_DOUBLE_ARROW]);
 
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
             if (isset($find[$tokens[$assign]['code']]) === false) {
                 // A blank line indicates that the assignment block has ended.
-                if (isset(PHP_CodeSniffer_tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
+                if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {
                         break;
                     }
@@ -170,7 +176,7 @@ class Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_C
             }//end if
 
             $var = $phpcsFile->findPrevious(
-                PHP_CodeSniffer_Tokens::$emptyTokens,
+                Tokens::$emptyTokens,
                 ($assign - 1),
                 null,
                 true

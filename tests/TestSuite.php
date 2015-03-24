@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer\Tests;
+
 /**
  * A PHP_CodeSniffer specific test suite for PHPUnit.
  *
@@ -27,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
+class TestSuite extends \PHPUnit_Framework_TestSuite
 {
 
 
@@ -39,21 +42,22 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
      *
      * @return PHPUnit_Framework_TestResult
      */
-    public function run(PHPUnit_Framework_TestResult $result=null, $filter=false)
+    public function run(\PHPUnit_Framework_TestResult $result=null, $filter=false)
     {
         $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
         $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
 
-        spl_autoload_register(array('PHP_CodeSniffer', 'autoload'));
+        #spl_autoload_register(array('PHP_CodeSniffer', 'autoload'));
         $result = parent::run($result, $filter);
-        spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
+        #spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
 
         $codes   = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
         $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
-        $percent = round(($fixes / $codes * 100), 2);
-
-        echo PHP_EOL.PHP_EOL;
-        echo "Tests generated $codes unique error codes; $fixes were fixable ($percent%)";
+        if ($codes > 0) {
+            $percent = round(($fixes / $codes * 100), 2);
+            echo PHP_EOL.PHP_EOL;
+            echo "Tests generated $codes unique error codes; $fixes were fixable ($percent%)";
+        }
 
         return $result;
 

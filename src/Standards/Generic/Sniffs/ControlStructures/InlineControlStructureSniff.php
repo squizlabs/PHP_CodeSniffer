@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_ControlStructures_InlineControlStructureSniff.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PHP_CodeSniffer_Sniff
+class InlineControlStructureSniff implements Sniff
 {
 
     /**
@@ -77,7 +82,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Bans the use of the PHP long array syntax.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Arrays_DisallowLongArraySyntaxSniff implements PHP_CodeSniffer_Sniff
+class DisallowLongArraySyntaxSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class Generic_Sniffs_Arrays_DisallowLongArraySyntaxSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'no');
 

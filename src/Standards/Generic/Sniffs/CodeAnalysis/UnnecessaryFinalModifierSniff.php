@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
@@ -37,7 +43,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_CodeSniffer_Sniff
+class UnnecessaryFinalModifierSniff implements Sniff
 {
 
 
@@ -62,7 +68,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -73,7 +79,7 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
         }
 
         // Fetch previous token.
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
         // Skip for non final class.
         if ($prev === false || $tokens[$prev]['code'] !== T_FINAL) {

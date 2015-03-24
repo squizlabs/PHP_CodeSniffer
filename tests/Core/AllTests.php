@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Tests\Core;
+
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * A test class for testing the core.
  *
@@ -17,16 +22,21 @@ if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
     define('PHP_CODESNIFFER_IN_TESTS', true);
 }
 
+if (defined('PHP_CODESNIFFER_CBF') === false) {
+    define('PHP_CODESNIFFER_CBF', false);
+}
+
+if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+    define('PHP_CODESNIFFER_VERBOSITY', 0);
+}
+
+require_once 'vendor/autoload.php';
+
+$tokens = new Tokens();
+
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
-
-if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
-    // We are not installed.
-    include_once dirname(__FILE__).'/../../CodeSniffer.php';
-} else {
-    include_once 'PHP/CodeSniffer.php';
-}
 
 /**
  * A test class for testing the core.
@@ -43,7 +53,7 @@ if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Core_AllTests
+class AllTests
 {
 
 
@@ -54,7 +64,7 @@ class PHP_CodeSniffer_Core_AllTests
      */
     public static function main()
     {
-        PHPUnit2_TextUI_TestRunner::run(self::suite());
+        \PHPUnit2_TextUI_TestRunner::run(self::suite());
 
     }//end main()
 
@@ -66,10 +76,10 @@ class PHP_CodeSniffer_Core_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
-        $suite->addTestSuite('Core_IsCamelCapsTest');
-        $suite->addTestSuite('Core_ErrorSuppressionTest');
-        $suite->addTestSuite('Core_File_GetMethodParametersTest');
+        $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\IsCamelCapsTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ErrorSuppressionTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
         return $suite;
 
     }//end suite()

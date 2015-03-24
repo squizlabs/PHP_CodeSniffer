@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Checks the cyclomatic complexity (McCabe) for functions.
  *
@@ -29,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffer_Sniff
+class CyclomaticComplexitySniff implements Sniff
 {
 
     /**
@@ -68,7 +73,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $this->currentFile = $phpcsFile;
 

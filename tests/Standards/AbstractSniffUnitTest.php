@@ -1,4 +1,11 @@
 <?php
+
+namespace PHP_CodeSniffer\Tests\Standards;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\LocalFile;
+
 /**
  * An abstract class that all sniff unit tests must extend.
  *
@@ -29,7 +36,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
+abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -63,10 +70,6 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        if (self::$phpcs === null) {
-            self::$phpcs = new PHP_CodeSniffer();
-        }
-
         $class = get_class($this);
         $this->standardsDir = $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$class];
 
@@ -99,23 +102,21 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         }
 
         // The basis for determining file locations.
-        $basename = substr(get_class($this), 0, -8);
-
-        // The name of the coding standard we are testing.
-        $standardName = substr($basename, 0, strpos($basename, '_'));
+        $basename = substr(get_class($this), 26, -8);
 
         // The code of the sniff we are testing.
-        $parts     = explode('_', $basename);
-        $sniffCode = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        $parts        = explode('\\', $basename);
+        $standardName = $parts[0];
+        $sniffCode    = $parts[0].'.'.$parts[2].'.'.$parts[3];
 
-        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
+        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
 
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.
         $testFiles = array();
 
         $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
-        $di  = new DirectoryIterator($dir);
+        $di  = new \DirectoryIterator($dir);
 
         foreach ($di as $file) {
             $path = $file->getPathname();
@@ -129,24 +130,37 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
         // Get them in order.
         sort($testFiles);
 
-        self::$phpcs->initStandard($standardName, array($sniffCode));
-        self::$phpcs->setIgnorePatterns(array());
+        $config = new Config();
+        $config->standards = array($standardName);
+        $config->sniffs = array($sniffCode);
+        $config->ignored = array();
+
+        $ruleset = new Ruleset($config);
 
         $failureMessages = array();
         foreach ($testFiles as $testFile) {
             $filename = basename($testFile);
 
             try {
-                $cliValues = $this->getCliValues($filename);
-                self::$phpcs->cli->setCommandLineValues($cliValues);
-                $phpcsFile = self::$phpcs->processFile($testFile);
+#$cliValues = $this->getCliValues($filename);
+#self::$phpcs->cli->setCommandLineValues($cliValues);
+
+
+                $parts = explode('.', $testFile);
+                $extension = strtoupper(array_pop($parts));
+                if ($extension === 'INC') {
+                    $extension = 'PHP';
+                }
+
+                $phpcsFile = new LocalFile($testFile, $extension, $ruleset, $config);
+                $phpcsFile->process();
             } catch (Exception $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
             $failures        = $this->generateFailureMessages($phpcsFile);
             $failureMessages = array_merge($failureMessages, $failures);
-
+/*
             if ($phpcsFile->getFixableCount() > 0) {
                 // Attempt to fix the errors.
                 $phpcsFile->fixer->fixFile();
@@ -166,6 +180,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
                     }
                 }
             }
+        */
         }//end foreach
 
         if (empty($failureMessages) === false) {
@@ -183,7 +198,7 @@ abstract class AbstractSniffUnitTest extends PHPUnit_Framework_TestCase
      * @return array
      * @throws PHP_CodeSniffer_Exception
      */
-    public function generateFailureMessages(PHP_CodeSniffer_File $file)
+    public function generateFailureMessages(LocalFile $file)
     {
         $testFile = $file->getFilename();
 

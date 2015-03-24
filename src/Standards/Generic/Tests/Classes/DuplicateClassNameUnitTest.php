@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DuplicateClassName multi-file sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Classes_DuplicateClassNameUnitTest extends AbstractSniffUnitTest
+class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
 {
 
 

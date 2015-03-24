@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
@@ -38,7 +44,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer_Sniff
+class EmptyStatementSniff implements Sniff
 {
 
 
@@ -74,7 +80,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
@@ -85,7 +91,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
         }
 
         $next = $phpcsFile->findNext(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            Tokens::$emptyTokens,
             ($token['scope_opener'] + 1),
             ($token['scope_closer'] - 1),
             true

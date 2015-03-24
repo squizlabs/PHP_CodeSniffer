@@ -106,8 +106,9 @@ class Common
      * @return string
      * @throws RuntimeException If $file could not be opened.
      */
-    public static function detectLineEndings($file, $contents=null)
+    public static function detectLineEndings($contents)
     {
+        /*
         if ($contents === null) {
             // Determine the newline character being used in this file.
             // Will be either \r, \r\n or \n.
@@ -138,13 +139,14 @@ class Common
                 $eolChar = "\n";
             }
         } else {
+            */
             if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
                 // Assuming there are no newlines.
                 $eolChar = "\n";
             } else {
                 $eolChar = $matches[0];
             }
-        }//end if
+        //}//end if
 
         return $eolChar;
 
@@ -176,5 +178,197 @@ class Common
         return $content;
 
     }//end prepareForOutput()
+
+    /**
+     * Returns true if the specified string is in the camel caps format.
+     *
+     * @param string  $string      The string the verify.
+     * @param boolean $classFormat If true, check to see if the string is in the
+     *                             class format. Class format strings must start
+     *                             with a capital letter and contain no
+     *                             underscores.
+     * @param boolean $public      If true, the first character in the string
+     *                             must be an a-z character. If false, the
+     *                             character must be an underscore. This
+     *                             argument is only applicable if $classFormat
+     *                             is false.
+     * @param boolean $strict      If true, the string must not have two capital
+     *                             letters next to each other. If false, a
+     *                             relaxed camel caps policy is used to allow
+     *                             for acronyms.
+     *
+     * @return boolean
+     */
+    public static function isCamelCaps(
+        $string,
+        $classFormat=false,
+        $public=true,
+        $strict=true
+    ) {
+        // Check the first character first.
+        if ($classFormat === false) {
+            $legalFirstChar = '';
+            if ($public === false) {
+                $legalFirstChar = '[_]';
+            }
+
+            if ($strict === false) {
+                // Can either start with a lowercase letter, or multiple uppercase
+                // in a row, representing an acronym.
+                $legalFirstChar .= '([A-Z]{2,}|[a-z])';
+            } else {
+                $legalFirstChar .= '[a-z]';
+            }
+        } else {
+            $legalFirstChar = '[A-Z]';
+        }
+
+        if (preg_match("/^$legalFirstChar/", $string) === 0) {
+            return false;
+        }
+
+        // Check that the name only contains legal characters.
+        $legalChars = 'a-zA-Z0-9';
+        if (preg_match("|[^$legalChars]|", substr($string, 1)) > 0) {
+            return false;
+        }
+
+        if ($strict === true) {
+            // Check that there are not two capital letters next to each other.
+            $length          = strlen($string);
+            $lastCharWasCaps = $classFormat;
+
+            for ($i = 1; $i < $length; $i++) {
+                $ascii = ord($string{$i});
+                if ($ascii >= 48 && $ascii <= 57) {
+                    // The character is a number, so it cant be a capital.
+                    $isCaps = false;
+                } else {
+                    if (strtoupper($string{$i}) === $string{$i}) {
+                        $isCaps = true;
+                    } else {
+                        $isCaps = false;
+                    }
+                }
+
+                if ($isCaps === true && $lastCharWasCaps === true) {
+                    return false;
+                }
+
+                $lastCharWasCaps = $isCaps;
+            }
+        }//end if
+
+        return true;
+
+    }//end isCamelCaps()
+
+
+    /**
+     * Returns true if the specified string is in the underscore caps format.
+     *
+     * @param string $string The string to verify.
+     *
+     * @return boolean
+     */
+    public static function isUnderscoreName($string)
+    {
+        // If there are space in the name, it can't be valid.
+        if (strpos($string, ' ') !== false) {
+            return false;
+        }
+
+        $validName = true;
+        $nameBits  = explode('_', $string);
+
+        if (preg_match('|^[A-Z]|', $string) === 0) {
+            // Name does not begin with a capital letter.
+            $validName = false;
+        } else {
+            foreach ($nameBits as $bit) {
+                if ($bit === '') {
+                    continue;
+                }
+
+                if ($bit{0} !== strtoupper($bit{0})) {
+                    $validName = false;
+                    break;
+                }
+            }
+        }
+
+        return $validName;
+
+    }//end isUnderscoreName()
+
+
+    /**
+     * Returns a valid variable type for param/var tag.
+     *
+     * If type is not one of the standard type, it must be a custom type.
+     * Returns the correct type name suggestion if type name is invalid.
+     *
+     * @param string $varType The variable type to process.
+     *
+     * @return string
+     */
+    public static function suggestType($varType)
+    {
+        if ($varType === '') {
+            return '';
+        }
+
+        if (in_array($varType, self::$allowedTypes) === true) {
+            return $varType;
+        } else {
+            $lowerVarType = strtolower($varType);
+            switch ($lowerVarType) {
+            case 'bool':
+                return 'boolean';
+            case 'double':
+            case 'real':
+                return 'float';
+            case 'int':
+                return 'integer';
+            case 'array()':
+                return 'array';
+            }//end switch
+
+            if (strpos($lowerVarType, 'array(') !== false) {
+                // Valid array declaration:
+                // array, array(type), array(type1 => type2).
+                $matches = array();
+                $pattern = '/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i';
+                if (preg_match($pattern, $varType, $matches) !== 0) {
+                    $type1 = '';
+                    if (isset($matches[1]) === true) {
+                        $type1 = $matches[1];
+                    }
+
+                    $type2 = '';
+                    if (isset($matches[3]) === true) {
+                        $type2 = $matches[3];
+                    }
+
+                    $type1 = self::suggestType($type1);
+                    $type2 = self::suggestType($type2);
+                    if ($type2 !== '') {
+                        $type2 = ' => '.$type2;
+                    }
+
+                    return "array($type1$type2)";
+                } else {
+                    return 'array';
+                }//end if
+            } else if (in_array($lowerVarType, self::$allowedTypes) === true) {
+                // A valid type, but not lower cased.
+                return $lowerVarType;
+            } else {
+                // Must be a custom type name.
+                return $varType;
+            }//end if
+        }//end if
+
+    }//end suggestType()
 
 }

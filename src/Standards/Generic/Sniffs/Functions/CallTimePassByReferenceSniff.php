@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Functions_CallTimePassByReferenceSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeSniffer_Sniff
+class CallTimePassByReferenceSniff implements Sniff
 {
 
 
@@ -53,7 +59,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -63,7 +69,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
         // function or method *call*.
         $functionName = $stackPtr;
         $findTokens   = array_merge(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            Tokens::$emptyTokens,
             array(T_BITWISE_AND)
         );
 
@@ -83,7 +89,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
         // If the next non-whitespace token after the function or method call
         // is not an opening parenthesis then it cant really be a *call*.
         $openBracket = $phpcsFile->findNext(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            Tokens::$emptyTokens,
             ($functionName + 1),
             null,
             true
@@ -115,7 +121,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
 
             // Checking this: $value = my_function(...[*]$arg...).
             $tokenBefore = $phpcsFile->findPrevious(
-                PHP_CodeSniffer_Tokens::$emptyTokens,
+                Tokens::$emptyTokens,
                 ($nextSeparator - 1),
                 null,
                 true
@@ -124,7 +130,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
             if ($tokens[$tokenBefore]['code'] === T_BITWISE_AND) {
                 // Checking this: $value = my_function(...[*]&$arg...).
                 $tokenBefore = $phpcsFile->findPrevious(
-                    PHP_CodeSniffer_Tokens::$emptyTokens,
+                    Tokens::$emptyTokens,
                     ($tokenBefore - 1),
                     null,
                     true

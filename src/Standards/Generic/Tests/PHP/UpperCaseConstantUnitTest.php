@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\PHP;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the UpperCaseConstant sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_PHP_UpperCaseConstantUnitTest extends AbstractSniffUnitTest
+class UpperCaseConstantUnitTest extends AbstractSniffUnitTest
 {
 
 

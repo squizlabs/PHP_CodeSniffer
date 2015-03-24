@@ -1,4 +1,11 @@
 <?php
+
+namespace PHP_CodeSniffer\Tests\Core\File;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
+
 /**
  * Tests for the PHP_CodeSniffer_File:getMethodParameters method.
  *
@@ -27,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
+class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -35,7 +42,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_phpcsFile;
+    private $phpcsFile;
 
 
     /**
@@ -48,16 +55,14 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $phpcs            = new PHP_CodeSniffer();
-        $this->_phpcsFile = new PHP_CodeSniffer_File(
-            __FILE__,
-            array(),
-            array(),
-            $phpcs
-        );
+        $config = new Config();
+        $config->standards = array('Generic');
+        $config->sniffs = array('Generic.None.None');
 
-        $contents = file_get_contents(__FILE__);
-        $this->_phpcsFile->start($contents);
+        $ruleset = new Ruleset($config);
+
+        $this->phpcsFile = new DummyFile(file_get_contents(__FILE__), 'PHP', $ruleset, $config);
+        $this->phpcsFile->process();
 
     }//end setUp()
 
@@ -69,7 +74,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_phpcsFile);
+        unset($this->phpcsFile);
 
     }//end tearDown()
 
@@ -88,8 +93,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => '',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -97,7 +102,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testPassByReference */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -117,8 +122,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => 'array',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -126,7 +131,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testArrayHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -152,8 +157,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => 'bar',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -161,7 +166,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testTypeHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -181,8 +186,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => '',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -190,7 +195,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testVariable */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -211,8 +216,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => '',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -220,7 +225,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testSingleDefaultValue */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testSingleDefaultValue()
@@ -247,8 +252,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'type_hint'         => '',
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -256,7 +261,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testDefaultValues */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
         $this->assertSame($expected, $found);
 
     }//end testDefaultValues()

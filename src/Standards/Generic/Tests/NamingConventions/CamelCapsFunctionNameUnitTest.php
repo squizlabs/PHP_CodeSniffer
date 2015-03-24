@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the CamelCapsFunctionName sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_NamingConventions_CamelCapsFunctionNameUnitTest extends AbstractSniffUnitTest
+class CamelCapsFunctionNameUnitTest extends AbstractSniffUnitTest
 {
 
 

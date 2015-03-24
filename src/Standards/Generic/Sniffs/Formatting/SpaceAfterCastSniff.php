@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Formatting_SpaceAfterCastSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_Sniff
+class SpaceAfterCastSniff implements Sniff
 {
 
 
@@ -38,7 +44,7 @@ class Generic_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_S
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$castTokens;
+        return Tokens::$castTokens;
 
     }//end register()
 
@@ -52,7 +58,7 @@ class Generic_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_S
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

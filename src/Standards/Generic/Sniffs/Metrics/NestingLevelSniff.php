@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Checks the nesting level for methods.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
+class NestingLevelSniff implements Sniff
 {
 
     /**
@@ -64,7 +69,7 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

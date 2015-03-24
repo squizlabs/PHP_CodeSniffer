@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniff;
+
 /**
  * Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSniffer_Sniff
+class CharacterBeforePHPOpeningTagSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff implements PHP_CodeSn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $expected = 0;
         if ($stackPtr > 0) {

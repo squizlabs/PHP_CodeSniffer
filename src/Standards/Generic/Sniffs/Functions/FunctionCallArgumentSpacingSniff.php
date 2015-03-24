@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
+class FunctionCallArgumentSpacingSniff implements Sniff
 {
 
 
@@ -52,7 +58,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -62,7 +68,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
         // "myFunction" is T_STRING but we should skip because it is not a
         // function or method *call*.
         $functionName    = $stackPtr;
-        $ignoreTokens    = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $ignoreTokens    = Tokens::$emptyTokens;
         $ignoreTokens[]  = T_BITWISE_AND;
         $functionKeyword = $phpcsFile->findPrevious($ignoreTokens, ($stackPtr - 1), null, true);
         if ($tokens[$functionKeyword]['code'] === T_FUNCTION || $tokens[$functionKeyword]['code'] === T_CLASS) {
@@ -71,7 +77,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
 
         // If the next non-whitespace token after the function or method call
         // is not an opening parenthesis then it cant really be a *call*.
-        $openBracket = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($functionName + 1), null, true);
+        $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($functionName + 1), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             return;
         }
@@ -111,7 +117,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
 
             if ($tokens[$nextSeparator]['code'] === T_COMMA) {
                 if ($tokens[($nextSeparator - 1)]['code'] === T_WHITESPACE) {
-                    if (isset(PHP_CodeSniffer_Tokens::$heredocTokens[$tokens[($nextSeparator - 2)]['code']]) === false) {
+                    if (isset(Tokens::$heredocTokens[$tokens[($nextSeparator - 2)]['code']]) === false) {
                         $error = 'Space found before comma in function call';
                         $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'SpaceBeforeComma');
                         if ($fix === true) {
@@ -143,7 +149,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
                 }//end if
             } else {
                 // Token is a variable.
-                $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextSeparator + 1), $closeBracket, true);
+                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextSeparator + 1), $closeBracket, true);
                 if ($nextToken !== false) {
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
                         if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {

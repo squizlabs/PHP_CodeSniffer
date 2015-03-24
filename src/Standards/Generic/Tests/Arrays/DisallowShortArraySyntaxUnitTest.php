@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Arrays;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DisallowShortArraySyntax sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Arrays_DisallowShortArraySyntaxUnitTest extends AbstractSniffUnitTest
+class DisallowShortArraySyntaxUnitTest extends AbstractSniffUnitTest
 {
 
 

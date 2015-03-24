@@ -104,8 +104,11 @@ class Config
 
             $this->setCommandLineValues($cliArgs);
         } else {
+            exit('not done');
+            /*
             $values       = array_merge($this->getDefaults(), $values);
             $this->values = $values;
+            */
         }
 
         // Support auto terminal width.
@@ -166,11 +169,11 @@ class Config
      */
     public function setCommandLineValues($args)
     {
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-            $this->values = array();
-        } else if (empty($this->values) === true) {
+        #if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+        #    $this->values = array();
+        #} else if (empty($this->values) === true) {
             $this->restoreDefaults();
-        }
+        #}
 
         $this->cliArgs = $args;
         $numArgs        = count($args);
@@ -213,9 +216,9 @@ class Config
      */
     public function restoreDefaults()
     {
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-            return array();
-        }
+        #if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+        #    return array();
+        #}
 
         // The default values for config settings.
         $this->files = array();

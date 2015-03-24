@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards;
+
+use PHP_CodeSniffer\Sniff;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
  * An AbstractScopeTest allows for tests that extend from this class to
  * listen for tokens within a particular scope.
@@ -44,7 +50,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeSniffer_Sniff
+abstract class AbstractScopeSniff implements Sniff
 {
 
     /**
@@ -90,19 +96,19 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
     ) {
         if (empty($scopeTokens) === true) {
             $error = 'The scope tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Exception($error);
+            throw new RuntimeException($error);
         }
 
         if (empty($tokens) === true) {
             $error = 'The tokens list cannot be empty';
-            throw new PHP_CodeSniffer_Exception($error);
+            throw new RuntimeException($error);
         }
 
         $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);
             $error   = "Scope tokens [$invalid] cant be in the tokens array";
-            throw new PHP_CodeSniffer_Exception($error);
+            throw new RuntimeException($error);
         }
 
         $this->_listenOutside = $listenOutside;
@@ -139,7 +145,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @return void
      * @see    processTokenWithinScope()
      */
-    public final function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public final function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -172,7 +178,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @return void
      */
     protected abstract function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr,
         $currScope
     );
@@ -189,7 +195,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
      * @return void
      */
     protected function processTokenOutsideScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr
     ) {
 
