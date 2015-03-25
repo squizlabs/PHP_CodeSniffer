@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR1\Tests\Methods;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the CamelCapsMethodName sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR1_Tests_Methods_CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
+class CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
 {
 
 

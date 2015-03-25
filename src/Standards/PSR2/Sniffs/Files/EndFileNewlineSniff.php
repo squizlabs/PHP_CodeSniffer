@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Files;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Generic_Sniffs_Files_EndFileNewlineSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
+class EndFileNewlineSniff implements Sniff
 {
 
 
@@ -50,7 +55,7 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
             return ($phpcsFile->numTokens + 1);

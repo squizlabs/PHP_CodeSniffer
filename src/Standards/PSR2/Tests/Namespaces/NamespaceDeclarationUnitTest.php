@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Tests\Namespaces;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the NamespaceDeclaration sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Tests_Namespaces_NamespaceDeclarationUnitTest extends AbstractSniffUnitTest
+class NamespaceDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -41,7 +46,7 @@ class PSR2_Tests_Namespaces_NamespaceDeclarationUnitTest extends AbstractSniffUn
     public function getErrorList()
     {
         return array(
-                6  => 1,
+                6 => 1,
                 9 => 1,
                );
 

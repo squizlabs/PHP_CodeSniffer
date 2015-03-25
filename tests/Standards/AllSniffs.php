@@ -18,10 +18,6 @@ use PHP_CodeSniffer\Util;
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-// Require this here so that the unit tests don't have to try and find the
-// abstract class once it is installed into the PEAR tests directory.
-#require_once 'AbstractSniffUnitTest.php';
-
 /**
  * A test class for testing all sniffs for installed standards.
  *
@@ -87,7 +83,7 @@ class AllSniffs
 
 
 
-if ($standard !== 'Generic' && $standard !== 'PEAR') continue;
+if ($standard !== 'Generic' && $standard !== 'PEAR' && $standard !== 'PSR1' && $standard !== 'PSR2') continue;
 
                 $testsDir = $path.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 

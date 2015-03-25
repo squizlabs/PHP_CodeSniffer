@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Files;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * PSR1_Sniffs_Files_SideEffectsSniff.
  *
@@ -26,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
+class SideEffectsSniff implements Sniff
 {
 
 
@@ -51,7 +57,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $result = $this->_searchForConflict($phpcsFile, 0, ($phpcsFile->numTokens - 1), $tokens);
@@ -89,7 +95,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return array
      */
-    private function _searchForConflict(PHP_CodeSniffer_File $phpcsFile, $start, $end, $tokens)
+    private function _searchForConflict($phpcsFile, $start, $end, $tokens)
     {
         $symbols = array(
                     T_CLASS     => T_CLASS,
@@ -108,7 +114,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
         $firstEffect = null;
         for ($i = $start; $i <= $end; $i++) {
             // Ignore whitespace and comments.
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                 continue;
             }
 
@@ -138,7 +144,7 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Ignore function/class prefixes.
-            if (isset(PHP_CodeSniffer_Tokens::$methodPrefixes[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$methodPrefixes[$tokens[$i]['code']]) === true) {
                 continue;
             }
 

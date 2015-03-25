@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Class Declaration Test.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
+class ClassDeclarationSniff implements Sniff
 {
 
 
@@ -54,7 +59,7 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {
@@ -72,15 +77,13 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->recordMetric($stackPtr, 'One class per file', 'yes');
         }
 
-        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-            $namespace = $phpcsFile->findNext(array(T_NAMESPACE, T_CLASS, T_INTERFACE, T_TRAIT), 0);
-            if ($tokens[$namespace]['code'] !== T_NAMESPACE) {
-                $error = 'Each %s must be in a namespace of at least one level (a top-level vendor name)';
-                $phpcsFile->addError($error, $stackPtr, 'MissingNamespace', $errorData);
-                $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'no');
-            } else {
-                $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'yes');
-            }
+        $namespace = $phpcsFile->findNext(array(T_NAMESPACE, T_CLASS, T_INTERFACE, T_TRAIT), 0);
+        if ($tokens[$namespace]['code'] !== T_NAMESPACE) {
+            $error = 'Each %s must be in a namespace of at least one level (a top-level vendor name)';
+            $phpcsFile->addError($error, $stackPtr, 'MissingNamespace', $errorData);
+            $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'yes');
         }
 
     }//end process()

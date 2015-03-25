@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes;
+
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Classes\ClassDeclarationSniff as PEARClassDeclarationSniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Class Declaration Test.
  *
@@ -11,11 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PEAR_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
-    $error = 'Class PEAR_Sniffs_Classes_ClassDeclarationSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * Class Declaration Test.
@@ -30,7 +31,7 @@ if (class_exists('PEAR_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_ClassDeclarationSniff
+class ClassDeclarationSniff extends PEARClassDeclarationSniff
 {
 
 
@@ -43,7 +44,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         // We want all the errors from the PEAR standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
@@ -62,7 +63,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
      *
      * @return void
      */
-    public function processOpen(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processOpen($phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
         $stackPtrType = strtolower($tokens[$stackPtr]['content']);
@@ -218,7 +219,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         $implements          = $phpcsFile->findNext($keywordTokenType, ($stackPtr + 1), $openingBrace);
         $multiLineImplements = false;
         if ($implements !== false) {
-            $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($openingBrace - 1), $implements, true);
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openingBrace - 1), $implements, true);
             if ($tokens[$prev]['line'] !== $tokens[$implements]['line']) {
                 $multiLineImplements = true;
             }
@@ -405,7 +406,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
      *
      * @return void
      */
-    public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processClose($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

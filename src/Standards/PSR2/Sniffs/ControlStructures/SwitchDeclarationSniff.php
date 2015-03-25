@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
+class SwitchDeclarationSniff implements Sniff
 {
 
     /**
@@ -57,7 +62,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -186,7 +191,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
      *
      * @return int | bool
      */
-    private function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end)
+    private function _findNextCase($phpcsFile, $stackPtr, $end)
     {
         $tokens = $phpcsFile->getTokens();
         while (($stackPtr = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), $stackPtr, $end)) !== false) {

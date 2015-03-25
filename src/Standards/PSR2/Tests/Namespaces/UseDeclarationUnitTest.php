@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Tests\Namespaces;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the UseDeclaration sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
+class UseDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -43,16 +48,6 @@ class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'UseDeclarationUnitTest.1.inc':
-            // The trait test will only work in PHP versions where traits exist
-            // and will throw errors in earlier versions.
-            if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-                return array(
-                        30 => 2,
-                       );
-            }
-
-            return array();
         case 'UseDeclarationUnitTest.2.inc':
             return array(
                     4  => 1,

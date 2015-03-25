@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods;
+
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\FunctionCallSignatureSniff as PEARFunctionCallSignatureSniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * PSR2_Sniffs_Methods_FunctionCallSignatureSniff.
  *
@@ -23,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functions_FunctionCallSignatureSniff
+class FunctionCallSignatureSniff extends PEARFunctionCallSignatureSniff
 {
 
     /**
@@ -47,11 +53,11 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
      *
      * @return void
      */
-    public function isMultiLineCall(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function isMultiLineCall($phpcsFile, $stackPtr, $openBracket, $tokens)
     {
         // If the first argument is on a new line, this is a multi-line
         // function call, even if there is only one argument.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
         if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             return true;
         }
@@ -62,7 +68,7 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
         while ($tokens[$end]['code'] === T_COMMA) {
             // If the next bit of code is not on the same line, this is a
             // multi-line function call.
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
             if ($next === false) {
                 return false;
             }
@@ -76,7 +82,7 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
 
         // We've reached the last argument, so see if the next content
         // (should be the close bracket) is also on the same line.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
         if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
             return true;
         }

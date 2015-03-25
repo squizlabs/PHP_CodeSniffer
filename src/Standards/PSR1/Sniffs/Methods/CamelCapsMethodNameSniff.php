@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods;
+
+use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff as GenericCamelCapsFunctionNameSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
  *
@@ -11,10 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff not found');
-}
 
 /**
  * PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
@@ -29,7 +31,7 @@ if (class_exists('Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff', 
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
+class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
 {
 
 
@@ -53,7 +55,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -72,7 +74,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
         }
 
         $testName = ltrim($methodName, '_');
-        if (PHP_CodeSniffer::isCamelCaps($testName, false, true, false) === false) {
+        if (Common::isCamelCaps($testName, false, true, false) === false) {
             $error     = 'Method name "%s" is not in camel caps format';
             $className = $phpcsFile->getDeclarationName($currScope);
             $errorData = array($className.'::'.$methodName);
@@ -94,7 +96,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
      *
      * @return void
      */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
     {
 
     }//end processTokenOutsideScope()
