@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Zend\Tests\Debug;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Config;
+
 /**
  * Unit test class for the CodeAnalyzer sniff.
  *
@@ -28,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Zend_Tests_Debug_CodeAnalyzerUnitTest extends AbstractSniffUnitTest
+class CodeAnalyzerUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -39,7 +45,8 @@ class Zend_Tests_Debug_CodeAnalyzerUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
+        $config = new Config();
+        $analyzerPath = $config->getConfigData('zend_ca_path');
         return (is_null($analyzerPath));
 
     }//end shouldSkipTest()

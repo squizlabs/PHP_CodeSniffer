@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Zend\Sniffs\NamingConventions;
+
+use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * Squiz_Sniffs_NamingConventions_ValidVariableNameSniff.
  *
@@ -12,10 +18,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
-}
 
 /**
  * Squiz_Sniffs_NamingConventions_ValidVariableNameSniff.
@@ -31,7 +33,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class ValidVariableNameSniff extends AbstractVariableSniff
 {
 
     /**
@@ -54,7 +56,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariable($phpcsFile, $stackPtr)
     {
         $tokens  = $phpcsFile->getTokens();
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
@@ -98,7 +100,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                         $objVarName = substr($objVarName, 1);
                     }
 
-                    if (PHP_CodeSniffer::isCamelCaps($objVarName, false, true, false) === false) {
+                    if (Common::isCamelCaps($objVarName, false, true, false) === false) {
                         $error = 'Variable "%s" is not in valid camel caps format';
                         $data  = array($originalVarName);
                         $phpcsFile->addError($error, $var, 'NotCamelCaps', $data);
@@ -130,7 +132,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
             }
         }
 
-        if (PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false) {
+        if (Common::isCamelCaps($varName, false, true, false) === false) {
             $error = 'Variable "%s" is not in valid camel caps format';
             $data  = array($originalVarName);
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
@@ -152,7 +154,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processMemberVar($phpcsFile, $stackPtr)
     {
         $tokens      = $phpcsFile->getTokens();
         $varName     = ltrim($tokens[$stackPtr]['content'], '$');
@@ -179,7 +181,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
             }
         }
 
-        if (PHP_CodeSniffer::isCamelCaps($varName, false, $public, false) === false) {
+        if (Common::isCamelCaps($varName, false, $public, false) === false) {
             $error = 'Member variable "%s" is not in valid camel caps format';
             $data  = array($varName);
             $phpcsFile->addError($error, $stackPtr, 'MemberVarNotCamelCaps', $data);
@@ -201,7 +203,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariableInString($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -227,7 +229,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                     continue;
                 }
 
-                if (PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false) {
+                if (Common::isCamelCaps($varName, false, true, false) === false) {
                     $error = 'Variable "%s" is not in valid camel caps format';
                     $data  = array($varName);
                     $phpcsFile->addError($error, $stackPtr, 'StringVarNotCamelCaps', $data);

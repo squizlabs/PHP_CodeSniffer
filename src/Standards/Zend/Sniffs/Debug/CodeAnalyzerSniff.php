@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Zend\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
  * Zend_Sniffs_Debug_CodeAnalyzerSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
+class CodeAnalyzerSniff implements Sniff
 {
 
 
@@ -52,10 +58,10 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
      *
      * @return int
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName     = $phpcsFile->getFilename();
-        $analyzerPath = PHP_CodeSniffer::getConfigData('zend_ca_path');
+        $analyzerPath = $phpcsFile->config->getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {
             return;
         }
@@ -79,7 +85,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
                 $msg = join('\n', $output);
             }
 
-            throw new PHP_CodeSniffer_Exception("Failed invoking ZendCodeAnalyzer, exitcode was [$exitCode], retval was [$retval], output was [$msg]");
+            throw new RuntimeException("Failed invoking ZendCodeAnalyzer, exitcode was [$exitCode], retval was [$retval], output was [$msg]");
         }
 
         if (is_array($output) === true) {
