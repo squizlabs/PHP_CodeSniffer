@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Objects;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ObjectInstantiation sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Objects_ObjectInstantiationUnitTest extends AbstractSniffUnitTest
+class ObjectInstantiationUnitTest extends AbstractSniffUnitTest
 {
 
 

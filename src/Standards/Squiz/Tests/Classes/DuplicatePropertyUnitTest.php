@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DuplicateProperty sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Classes_DuplicatePropertyUnitTest extends AbstractSniffUnitTest
+class DuplicatePropertyUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the LowercaseClassKeywords sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Classes_LowercaseClassKeywordsUnitTest extends AbstractSniffUnitTest
+class LowercaseClassKeywordsUnitTest extends AbstractSniffUnitTest
 {
 
 

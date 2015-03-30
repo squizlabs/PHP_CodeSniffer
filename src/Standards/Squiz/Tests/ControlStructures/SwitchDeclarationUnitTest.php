@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\ControlStructures;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the SwitchDeclaration sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSniffUnitTest
+class SwitchDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\NamingConventions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ValidFunctionName sniff.
  *
@@ -28,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSniffUnitTest
+class ValidFunctionNameUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Functions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the MultiLineFunctionDeclaration sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
+class MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 

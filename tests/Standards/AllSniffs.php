@@ -80,11 +80,6 @@ class AllSniffs
             #}
 
             foreach ($standards as $standard) {
-
-
-
-if ($standard === 'Squiz') continue;
-
                 $testsDir = $path.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 
                 if (is_dir($testsDir) === false) {

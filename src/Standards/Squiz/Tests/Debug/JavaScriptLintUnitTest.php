@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Debug;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Config;
+
 /**
  * Unit test class for the JavaScriptLint sniff.
  *
@@ -26,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Debug_JavaScriptLintUnitTest extends AbstractSniffUnitTest
+class JavaScriptLintUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -37,7 +43,8 @@ class Squiz_Tests_Debug_JavaScriptLintUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        $jslPath = PHP_CodeSniffer::getConfigData('jsl_path');
+        $config  = new Config();
+        $jslPath = $config->getConfigData('jsl_path');
         return (is_null($jslPath));
 
     }//end shouldSkipTest()

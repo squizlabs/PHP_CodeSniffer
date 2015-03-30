@@ -81,7 +81,7 @@ class LowercaseDeclarationSniff implements Sniff
                       $content,
                      );
 
-            $fix = $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundUppercase', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
             }

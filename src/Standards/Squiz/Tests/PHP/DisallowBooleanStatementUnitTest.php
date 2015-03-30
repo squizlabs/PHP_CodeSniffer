@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\PHP;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DisallowBooleanStatement sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_PHP_DisallowBooleanStatementUnitTest extends AbstractSniffUnitTest
+class DisallowBooleanStatementUnitTest extends AbstractSniffUnitTest
 {
 
 

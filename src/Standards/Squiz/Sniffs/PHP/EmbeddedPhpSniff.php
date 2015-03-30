@@ -332,7 +332,7 @@ class EmbeddedPhpSniff implements Sniff
 
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
-            $fix   = $phpcsFile->addError($error, $stackPtr, 'Empty');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = $stackPtr; $i <= $closeTag; $i++) {

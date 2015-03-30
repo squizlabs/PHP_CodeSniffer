@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\CSS;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ClassDefinitionNameSpacing sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_CSS_ClassDefinitionNameSpacingUnitTest extends AbstractSniffUnitTest
+class ClassDefinitionNameSpacingUnitTest extends AbstractSniffUnitTest
 {
 
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Objects;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the ObjectMemberComma sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_Objects_ObjectMemberCommaUnitTest extends AbstractSniffUnitTest
+class ObjectMemberCommaUnitTest extends AbstractSniffUnitTest
 {
 
 
