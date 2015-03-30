@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * Parses and verifies the variable doc comment.
  *
@@ -13,10 +19,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
-}
-
 /**
  * Parses and verifies the variable doc comment.
  *
@@ -30,7 +32,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class VariableCommentSniff extends AbstractVariableSniff
 {
 
 
@@ -43,7 +45,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processMemberVar($phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
         $commentToken = array(
@@ -119,7 +121,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         }
 
         $varType       = $tokens[($foundVar + 2)]['content'];
-        $suggestedType = PHP_CodeSniffer::suggestType($varType);
+        $suggestedType = Common::suggestType($varType);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
             $data  = array(
@@ -143,7 +145,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariable($phpcsFile, $stackPtr)
     {
 
     }//end processVariable()
@@ -160,7 +162,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      *
      * @return void
      */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processVariableInString($phpcsFile, $stackPtr)
     {
 
     }//end processVariableInString()

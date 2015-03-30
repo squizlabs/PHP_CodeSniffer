@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSniffer_Sniff
+class DisallowSizeFunctionsInLoopsSniff implements Sniff
 {
 
     /**
@@ -77,7 +82,7 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
         $tokenizer    = $phpcsFile->tokenizerType;

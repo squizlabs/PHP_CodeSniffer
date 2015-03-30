@@ -76,7 +76,7 @@ class Comment
         $stackPtr++;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $content = Util::prepareForOutput($openTag);
+            $content = Util\Common::prepareForOutput($openTag);
             echo "\t\tCreate comment token: T_DOC_COMMENT_OPEN_TAG => $content".PHP_EOL;
         }
 
@@ -112,7 +112,7 @@ class Comment
             foreach ($lineTokens as $lineToken) {
                 $tokens[$stackPtr] = $lineToken;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = Util::prepareForOutput($lineToken['content']);
+                    $content = Util\Common::prepareForOutput($lineToken['content']);
                     $type    = $lineToken['type'];
                     echo "\t\tCreate comment token: $type => $content".PHP_EOL;
                 }
@@ -135,7 +135,7 @@ class Comment
                 $tokens[$stackPtr] = $space;
                 $stackPtr++;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = Util::prepareForOutput($space['content']);
+                    $content = Util\Common::prepareForOutput($space['content']);
                     $type    = $lineToken['type'];
                     echo "\t\tCreate comment token: T_DOC_COMMENT_WHITESPACE => $content".PHP_EOL;
                 }
@@ -169,7 +169,7 @@ class Comment
         $tokens[$stackPtr] = $closeTag;
         $tokens[$openPtr]['comment_closer'] = $stackPtr;
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $content = Util::prepareForOutput($closeTag['content']);
+            $content = Util\Common::prepareForOutput($closeTag['content']);
             echo "\t\tCreate comment token: T_DOC_COMMENT_CLOSE_TAG => $content".PHP_EOL;
         }
 

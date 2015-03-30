@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Operators;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_Operators_IncrementDecrementUsageSniff.
  *
@@ -28,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSniffer_Sniff
+class IncrementDecrementUsageSniff implements Sniff
 {
 
 
@@ -59,7 +65,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -81,7 +87,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    protected function processIncDec(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processIncDec($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -93,18 +99,18 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             $start = ($stackPtr + 2);
         }
 
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $start, null, true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, $start, null, true);
         if ($next === false) {
             return;
         }
 
-        if (isset(PHP_CodeSniffer_Tokens::$arithmeticTokens[$tokens[$next]['code']]) === true) {
+        if (isset(Tokens::$arithmeticTokens[$tokens[$next]['code']]) === true) {
             $error = 'Increment and decrement operators cannot be used in an arithmetic operation';
             $phpcsFile->addError($error, $stackPtr, 'NotAllowed');
             return;
         }
 
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($start - 3), null, true);
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($start - 3), null, true);
         if ($prev === false) {
             return;
         }
@@ -127,7 +133,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
      *
      * @return void
      */
-    protected function processAssignment(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processAssignment($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

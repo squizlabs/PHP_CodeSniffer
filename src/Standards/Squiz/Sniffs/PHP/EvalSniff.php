@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Squiz_Sniffs_PHP_EvalSniff.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_EvalSniff implements PHP_CodeSniffer_Sniff
+class EvalSniff implements Sniff
 {
 
 
@@ -52,7 +57,7 @@ class Squiz_Sniffs_PHP_EvalSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $error = 'Use of eval() is discouraged';
         $phpcsFile->addWarning($error, $stackPtr, 'Discouraged');

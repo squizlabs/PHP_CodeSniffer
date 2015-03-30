@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_PHP_DisallowBooleanStatementSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_DisallowBooleanStatementSniff implements PHP_CodeSniffer_Sniff
+class DisallowBooleanStatementSniff implements Sniff
 {
 
 
@@ -36,7 +42,7 @@ class Squiz_Sniffs_PHP_DisallowBooleanStatementSniff implements PHP_CodeSniffer_
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$booleanOperators;
+        return Tokens::$booleanOperators;
 
     }//end register()
 
@@ -50,7 +56,7 @@ class Squiz_Sniffs_PHP_DisallowBooleanStatementSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {

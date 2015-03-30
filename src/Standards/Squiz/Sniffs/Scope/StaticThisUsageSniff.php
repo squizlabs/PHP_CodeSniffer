@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope;
+
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+
 /**
  * Squiz_Sniffs_Scope_StaticThisUsageSniff.
  *
@@ -12,10 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
-}
 
 /**
  * Squiz_Sniffs_Scope_StaticThisUsageSniff.
@@ -32,7 +33,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class StaticThisUsageSniff extends AbstractScopeSniff
 {
 
 
@@ -56,7 +57,7 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
      *
      * @return void
      */
-    public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    public function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
     {
         $tokens   = $phpcsFile->getTokens();
         $function = $tokens[($stackPtr + 2)];

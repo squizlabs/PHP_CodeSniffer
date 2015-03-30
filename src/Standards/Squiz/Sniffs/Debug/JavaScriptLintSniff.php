@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
  * Squiz_Sniffs_Debug_JavaScriptLintSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
+class JavaScriptLintSniff implements Sniff
 {
 
     /**
@@ -57,11 +63,11 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName = $phpcsFile->getFilename();
 
-        $jslPath = PHP_CodeSniffer::getConfigData('jsl_path');
+        $jslPath = $phpcsFile->config->getConfigData('jsl_path');
         if (is_null($jslPath) === true) {
             return;
         }
@@ -77,7 +83,7 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
                 $msg = join('\n', $output);
             }
 
-            throw new PHP_CodeSniffer_Exception("Failed invoking JavaScript Lint, retval was [$retval], output was [$msg]");
+            throw new RuntimeException("Failed invoking JavaScript Lint, retval was [$retval], output was [$msg]");
         }
 
         if (is_array($output) === true) {

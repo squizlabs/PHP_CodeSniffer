@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
+
+use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\ClassDeclarationSniff as PSR2ClassDeclarationSniff;
+
 /**
  * Class Declaration Test.
  *
@@ -12,11 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PSR2_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
-    $error = 'Class PSR2_Sniffs_Classes_ClassDeclarationSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * Class Declaration Test.
@@ -32,7 +32,7 @@ if (class_exists('PSR2_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_ClassDeclarationSniff
+class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
 {
 
 
@@ -45,7 +45,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         // We want all the errors from the PSR2 standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
@@ -72,7 +72,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
      *
      * @return void
      */
-    public function processOpen(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processOpen($phpcsFile, $stackPtr)
     {
         parent::processOpen($phpcsFile, $stackPtr);
 
@@ -116,7 +116,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
      *
      * @return void
      */
-    public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processClose($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {

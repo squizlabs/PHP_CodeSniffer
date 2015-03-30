@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_Formatting_OperationBracketSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sniff
+class OperatorBracketSniff implements Sniff
 {
 
     /**
@@ -48,7 +54,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
      */
     public function register()
     {
-        return PHP_CodeSniffer_Tokens::$operators;
+        return Tokens::$operators;
 
     }//end register()
 
@@ -62,7 +68,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -82,7 +88,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         // the minus sign being used to assign a negative number to a variable.
         if ($tokens[$stackPtr]['code'] === T_MINUS) {
             // Check to see if we are trying to return -n.
-            $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prev]['code'] === T_RETURN) {
                 return;
             }
@@ -91,9 +97,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             if ($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER) {
                 $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($previous !== false) {
-                    $isAssignment = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens);
-                    $isEquality   = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$equalityTokens);
-                    $isComparison = in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens);
+                    $isAssignment = in_array($tokens[$previous]['code'], Tokens::$assignmentTokens);
+                    $isEquality   = in_array($tokens[$previous]['code'], Tokens::$equalityTokens);
+                    $isComparison = in_array($tokens[$previous]['code'], Tokens::$comparisonTokens);
                     if ($isAssignment === true || $isEquality === true || $isComparison === true) {
                         // This is a negative assignment or comparison.
                         // We need to check that the minus and the number are
@@ -171,7 +177,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                     }
                 }//end if
 
-                if (in_array($prevCode, PHP_CodeSniffer_Tokens::$scopeOpeners) === true) {
+                if (in_array($prevCode, Tokens::$scopeOpeners) === true) {
                     // This operation is inside a control structure like FOREACH
                     // or IF, but has no bracket of it's own.
                     // The only control structure allowed to do this is SWITCH.
@@ -237,7 +243,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             return;
         }//end if
 
-        $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
+        $lastAssignment = $phpcsFile->findPrevious(Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {
             $this->addMissingBracketsError($phpcsFile, $stackPtr);
         }
@@ -254,7 +260,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function addMissingBracketsError(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function addMissingBracketsError($phpcsFile, $stackPtr)
     {
         $error = 'Arithmetic operation must be bracketed';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
@@ -286,9 +292,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 break;
             }
 
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$before]['code']]) === true
-                || isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$before]['code']]) === true
-                || isset(PHP_CodeSniffer_Tokens::$castTokens[$tokens[$before]['code']]) === true
+            if (isset(Tokens::$emptyTokens[$tokens[$before]['code']]) === true
+                || isset(Tokens::$operators[$tokens[$before]['code']]) === true
+                || isset(Tokens::$castTokens[$tokens[$before]['code']]) === true
                 || isset($allowed[$tokens[$before]['code']]) === true
             ) {
                 continue;
@@ -307,7 +313,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             break;
         }//end for
 
-        $before = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($before + 1), null, true);
+        $before = $phpcsFile->findNext(Tokens::$emptyTokens, ($before + 1), null, true);
 
         // Find the last token in the expression.
         for ($after = ($stackPtr + 1); $after < $phpcsFile->numTokens; $after++) {
@@ -317,9 +323,9 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                 break;
             }
 
-            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$after]['code']]) === true
-                || isset(PHP_CodeSniffer_Tokens::$operators[$tokens[$after]['code']]) === true
-                || isset(PHP_CodeSniffer_Tokens::$castTokens[$tokens[$after]['code']]) === true
+            if (isset(Tokens::$emptyTokens[$tokens[$after]['code']]) === true
+                || isset(Tokens::$operators[$tokens[$after]['code']]) === true
+                || isset(Tokens::$castTokens[$tokens[$after]['code']]) === true
                 || isset($allowed[$tokens[$after]['code']]) === true
             ) {
                 continue;
@@ -338,7 +344,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
             break;
         }//end for
 
-        $after = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($after - 1), null, true);
+        $after = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($after - 1), null, true);
 
         // Can only fix this error if both tokens are available for fixing.
         // Adding one bracket without the other will create parse errors.

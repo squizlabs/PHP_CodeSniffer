@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+
 /**
  * Verifies that a @throws tag exists for a function that throws exceptions.
  * Verifies the number of @throws tags and the number of throw tokens matches.
@@ -15,11 +20,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
-
 /**
  * Verifies that a @throws tag exists for a function that throws exceptions.
  * Verifies the number of @throws tags and the number of throw tokens matches.
@@ -34,7 +34,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class FunctionCommentThrowTagSniff extends AbstractScopeSniff
 {
 
 
@@ -57,7 +57,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
     {
         // Is this the first throw token within the current function scope?
         // If so, we have to validate other throw tokens within the same scope.

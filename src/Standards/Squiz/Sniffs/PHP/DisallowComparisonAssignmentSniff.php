@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSniffer_Sniff
+class DisallowComparisonAssignmentSniff implements Sniff
 {
 
 
@@ -50,7 +56,7 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -102,13 +108,13 @@ class Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff implements PHP_CodeSnif
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
-            if (isset(PHP_CodeSniffer_Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true) {
                 $error = 'The value of a comparison must not be assigned to a variable';
                 $phpcsFile->addError($error, $stackPtr, 'AssignedComparison');
                 break;
             }
 
-            if (isset(PHP_CodeSniffer_Tokens::$booleanOperators[$tokens[$i]['code']]) === true
+            if (isset(Tokens::$booleanOperators[$tokens[$i]['code']]) === true
                 || $tokens[$i]['code'] === T_BOOLEAN_NOT
             ) {
                 $error = 'The value of a boolean operation must not be assigned to a variable';

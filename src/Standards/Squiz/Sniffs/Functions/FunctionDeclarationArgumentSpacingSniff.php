@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff.
  *
@@ -27,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
+class FunctionDeclarationArgumentSpacingSniff implements Sniff
 {
 
     /**
@@ -76,7 +81,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $this->equalsSpacing           = (int) $this->equalsSpacing;
         $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
@@ -106,7 +111,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
      *
      * @return void
      */
-    public function processBracket(PHP_CodeSniffer_File $phpcsFile, $openBracket)
+    public function processBracket($phpcsFile, $openBracket)
     {
         $tokens       = $phpcsFile->getTokens();
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];

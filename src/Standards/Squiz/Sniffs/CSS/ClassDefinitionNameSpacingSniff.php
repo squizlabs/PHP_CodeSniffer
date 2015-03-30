@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\CSS;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffer_Sniff
+class ClassDefinitionNameSpacingSniff implements Sniff
 {
 
     /**
@@ -57,7 +63,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -74,7 +80,7 @@ class Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff implements PHP_CodeSniffe
                        T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
                        T_OPEN_TAG            => T_OPEN_TAG,
                       );
-        $endTokens += PHP_CodeSniffer_Tokens::$commentTokens;
+        $endTokens += Tokens::$commentTokens;
 
         $foundContent = false;
         $currentLine  = $tokens[$stackPtr]['line'];

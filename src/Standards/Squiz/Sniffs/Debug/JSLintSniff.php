@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Squiz_Sniffs_Debug_JSLintSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
+class JSLintSniff implements Sniff
 {
 
     /**
@@ -58,12 +63,12 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jslint.js could not be run
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName = $phpcsFile->getFilename();
 
-        $rhinoPath  = PHP_CodeSniffer::getConfigData('rhino_path');
-        $jslintPath = PHP_CodeSniffer::getConfigData('jslint_path');
+        $rhinoPath  = $phpcsFile->config->getConfigData('rhino_path');
+        $jslintPath = $phpcsFile->config->getConfigData('jslint_path');
         if ($rhinoPath === null || $jslintPath === null) {
             return;
         }

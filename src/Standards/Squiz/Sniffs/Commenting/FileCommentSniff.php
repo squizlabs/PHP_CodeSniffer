@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Parses and verifies the file doc comment.
  *
@@ -26,7 +31,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
+class FileCommentSniff implements Sniff
 {
 
     /**
@@ -61,7 +66,7 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return int
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $this->currentFile = $phpcsFile;
 

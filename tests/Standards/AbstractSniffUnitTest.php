@@ -5,6 +5,7 @@ namespace PHP_CodeSniffer\Tests\Standards;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
+use PHP_CodeSniffer\RuntimeException;
 
 /**
  * An abstract class that all sniff unit tests must extend.
@@ -152,7 +153,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
                 $phpcsFile = new LocalFile($testFile, $extension, $ruleset, $config);
                 $phpcsFile->process();
-            } catch (Exception $e) {
+            } catch (RuntimeException $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
@@ -206,11 +207,11 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         $expectedWarnings = $this->getWarningList(basename($testFile));
 
         if (is_array($expectedErrors) === false) {
-            throw new PHP_CodeSniffer_Exception('getErrorList() must return an array');
+            throw new RuntimeException('getErrorList() must return an array');
         }
 
         if (is_array($expectedWarnings) === false) {
-            throw new PHP_CodeSniffer_Exception('getWarningList() must return an array');
+            throw new RuntimeException('getWarningList() must return an array');
         }
 
         /*

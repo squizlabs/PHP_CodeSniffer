@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Squiz_Sniffs_PHP_CommentedOutCodeSniff.
  *
@@ -27,7 +33,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
+class CommentedOutCodeSniff implements Sniff
 {
 
     /**
@@ -69,7 +75,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -141,7 +147,9 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // of errors that don't mean anything, so ignore them.
         $oldErrors = ini_get('error_reporting');
         ini_set('error_reporting', 0);
-        $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        $tokenizerClass = get_class($phpcsFile->tokenizer);
+        $tokenizer      = new $tokenizerClass($content, $phpcsFile->config, $phpcsFile->eolChar);
+        $stringTokens   = $tokenizer->getTokens();
         ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
@@ -176,7 +184,7 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
         if ($phpcsFile->tokenizerType === 'PHP'
-            && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
+            && isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
         ) {
             return;
         }
@@ -189,8 +197,8 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
             if (isset($emptyTokens[$stringTokens[$i]['code']]) === true) {
                 // Looks like comment.
                 $numComment++;
-            } else if (in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true
-                || in_array($stringTokens[$i]['code'], PHP_CodeSniffer_Tokens::$arithmeticTokens) === true
+            } else if (in_array($stringTokens[$i]['code'], Tokens::$comparisonTokens) === true
+                || in_array($stringTokens[$i]['code'], Tokens::$arithmeticTokens) === true
             ) {
                 // Commented out HTML/XML and other docs contain a lot of these
                 // characters, so it is best to not use them directly.

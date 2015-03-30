@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
+
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\FunctionDeclarationSniff as PEARFunctionDeclarationSniff;
+
 /**
  * Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff.
  *
@@ -11,11 +16,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PEAR_Sniffs_Functions_FunctionDeclarationSniff', true) === false) {
-    $error = 'Class PEAR_Sniffs_Functions_FunctionDeclarationSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
 
 /**
  * Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff.
@@ -30,7 +30,7 @@ if (class_exists('PEAR_Sniffs_Functions_FunctionDeclarationSniff', true) === fal
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Sniffs_Functions_FunctionDeclarationSniff
+class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 {
 
     /**
@@ -55,7 +55,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
      *
      * @return void
      */
-    public function processMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens)
+    public function processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens)
     {
         // We do everything the parent sniff does, and a bit more.
         parent::processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens);
@@ -98,7 +98,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
      *
      * @return void
      */
-    public function processBracket(PHP_CodeSniffer_File $phpcsFile, $openBracket, $tokens, $type='function')
+    public function processBracket($phpcsFile, $openBracket, $tokens, $type='function')
     {
         $errorPrefix = '';
         if ($type === 'use') {
