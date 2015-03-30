@@ -2,7 +2,6 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\WhiteSpace;
 
-use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
@@ -45,7 +44,7 @@ class ScopeIndentUnitTest extends AbstractSniffUnitTest
      *
      * @return array
      */
-    public function setCliValues($testFile, Config $config)
+    public function setCliValues($testFile, $config)
     {
         // Tab width setting is only needed for the tabbed file.
         if ($testFile === 'ScopeIndentUnitTest.2.inc') {

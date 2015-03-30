@@ -187,7 +187,7 @@ class File
      *
      * @var array
      */
-    protected $ruleset = array();
+    public $ruleset = array();
 
 
     /**
@@ -207,9 +207,9 @@ class File
     public function __construct($fileType, Ruleset $ruleset, Config $config)
     {
         $this->ruleset       = $ruleset;
-        $this->config           = $config;
+        $this->config        = $config;
         $this->tokenizerType = $fileType;
-        $this->fixer = new Fixer();
+        $this->fixer         = new Fixer();
 /*
         if ($this->config->interactive === false) {
             $cliValues = $phpcs->config->getCommandLineValues();
@@ -282,7 +282,7 @@ class File
 */
         $this->parse();
 
-        #$this->fixer->startFile($this);
+        $this->fixer->startFile($this);
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
@@ -459,9 +459,9 @@ class File
 */
 
         try {
+            /*
             $tabWidth = null;
             $encoding = null;
-            /*
             if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
                 $cliValues = $this->phpcs->cli->getCommandLineValues();
                 if (isset($cliValues['tabWidth']) === true) {
@@ -563,10 +563,31 @@ class File
      */
     public function refreshTokenListeners()
     {
-        $this->phpcs->populateTokenListeners();
+        $this->ruleset->populateTokenListeners();
         $this->listeners = $this->phpcs->getTokenSniffs();
 
     }//end refreshTokenListeners()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -581,8 +602,6 @@ class File
     }//end getTokens()
 
 
-    
-
     /**
      * Remove vars stored in this file that are no longer required.
      *
@@ -594,6 +613,7 @@ class File
         $this->content = null;
         $this->tokens = null;
         $this->tokenizer = null;
+        $this->fixer = null;
 
     }//end cleanUp()
 

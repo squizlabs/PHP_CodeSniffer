@@ -867,7 +867,9 @@ class Ruleset
         // Construct a list of listeners indexed by token being listened for.
         $this->tokenListeners = array();
 
-        foreach ($this->sniffs as $sniffClass) {
+        foreach ($this->sniffs as $sniffClass => $sniffObject) {
+            $this->sniffs[$sniffClass] = null;
+
             // Work out the internal code for this sniff.
             $parts = explode('\\', $sniffClass);
             $code = $parts[2].'.'.$parts[4].'.'.$parts[5];

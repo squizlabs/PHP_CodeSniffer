@@ -237,7 +237,7 @@ class Runner
         }
 
         // Create this class so it is autoloaded and sets up a bunch
-        // if PHP_CodeSniffer-specific token type constants.
+        // of PHP_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
 
         // Print a list of sniffs in each of the supplied standards.
@@ -255,16 +255,16 @@ class Runner
 
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.
-        $ruleset  = new Ruleset($config);
+        $ruleset = new Ruleset($config);
 
         // The class manages all reporter for the run.
-        $reporter  = new Reporter($config);
+        $reporter = new Reporter($config);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Creating file list... ';
         }
 
-        $todo = new FileList($config, $ruleset);
+        $todo     = new FileList($config, $ruleset);
         $numFiles = count($todo);
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -304,7 +304,6 @@ $stdin = false;
 
             try {
                 $file->process();
-                $file->cleanUp();
 
                 if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
                     $timeTaken = ((microtime(true) - $startTime) * 1000);
@@ -362,8 +361,8 @@ $stdin = false;
             }//end try
 
             if ($config->interactive === false) {
-// Cache the report data for this file so we can unset it to save memory.
-$reporter->cacheFileReport($file, $config);
+                // Cache the report data for this file so we can unset it to save memory.
+                $reporter->cacheFileReport($file, $config);
             } else {
                 /*
                     Running interactively.
@@ -404,6 +403,8 @@ $reporter->cacheFileReport($file, $config);
                 }//end while
             }
 
+            // Clean up the file to save (a lot of) memory.
+            $file->cleanUp();
 
             $numProcessed++;
 

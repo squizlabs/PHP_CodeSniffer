@@ -55,7 +55,7 @@ class Fixer
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_currentFile = null;
+    private $currentFile = null;
 
     /**
      * The list of tokens that make up the file contents.
@@ -129,7 +129,7 @@ class Fixer
      */
     public function startFile($phpcsFile)
     {
-        $this->_currentFile = $phpcsFile;
+        $this->currentFile = $phpcsFile;
         $this->_numFixes    = 0;
         $this->_fixedTokens = array();
 
@@ -153,15 +153,14 @@ class Fixer
      */
     public function fixFile()
     {
-        $fixable = $this->_currentFile->getFixableCount();
+        $fixable = $this->currentFile->getFixableCount();
         if ($fixable === 0) {
             // Nothing to fix.
             return false;
         }
 
-        $stdin     = false;
-        $cliValues = $this->_currentFile->phpcs->cli->getCommandLineValues();
-        if (empty($cliValues['files']) === true) {
+        $stdin = false;
+        if (empty($this->currentFile->config->files) === true) {
             $stdin = true;
         }
 
@@ -177,7 +176,7 @@ class Fixer
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 @ob_end_clean();
                 echo '---START FILE CONTENT---'.PHP_EOL;
-                $lines = explode($this->_currentFile->eolChar, $contents);
+                $lines = explode($this->currentFile->eolChar, $contents);
                 $max   = strlen(count($lines));
                 foreach ($lines as $lineNum => $line) {
                     $lineNum++;
@@ -189,8 +188,9 @@ class Fixer
             }
 
             $this->_inConflict = false;
-            $this->_currentFile->refreshTokenListeners();
-            $this->_currentFile->start($contents);
+            $this->currentFile->ruleset->populateTokenListeners();
+            $this->currentFile->setContent($contents);
+            $this->currentFile->process();
             ob_end_clean();
 
             $this->loops++;
@@ -243,7 +243,7 @@ class Fixer
     public function generateDiff($filePath=null, $colors=true)
     {
         if ($filePath === null) {
-            $filePath = $this->_currentFile->getFilename();
+            $filePath = $this->currentFile->getFilename();
         }
 
         $cwd      = getcwd().DIRECTORY_SEPARATOR;
@@ -471,7 +471,7 @@ class Fixer
                 $line  = $bt[0]['line'];
             }
 
-            $tokens     = $this->_currentFile->getTokens();
+            $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
             $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
             $newContent = PHP_CodeSniffer::prepareForOutput($content);
@@ -578,7 +578,7 @@ class Fixer
                 $line  = $bt[0]['line'];
             }
 
-            $tokens     = $this->_currentFile->getTokens();
+            $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
             $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
             $newContent = PHP_CodeSniffer::prepareForOutput($this->_fixedTokens[$stackPtr]);
@@ -645,7 +645,7 @@ class Fixer
     public function addNewline($stackPtr)
     {
         $current = $this->getTokenContent($stackPtr);
-        return $this->replaceToken($stackPtr, $current.$this->_currentFile->eolChar);
+        return $this->replaceToken($stackPtr, $current.$this->currentFile->eolChar);
 
     }//end addNewline()
 
@@ -660,7 +660,7 @@ class Fixer
     public function addNewlineBefore($stackPtr)
     {
         $current = $this->getTokenContent($stackPtr);
-        return $this->replaceToken($stackPtr, $this->_currentFile->eolChar.$current);
+        return $this->replaceToken($stackPtr, $this->currentFile->eolChar.$current);
 
     }//end addNewlineBefore()
 

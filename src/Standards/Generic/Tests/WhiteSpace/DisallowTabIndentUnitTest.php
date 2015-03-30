@@ -43,9 +43,9 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
      *
      * @return array
      */
-    public function getCliValues($testFile)
+    public function setCliValues($testFile, $config)
     {
-        return array('--tab-width=4', '--encoding=utf-8');
+        $config->tabWidth = 4;
 
     }//end getCliValues()
 

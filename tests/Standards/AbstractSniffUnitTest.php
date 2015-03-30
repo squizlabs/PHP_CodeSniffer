@@ -159,7 +159,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
             $failures        = $this->generateFailureMessages($phpcsFile);
             $failureMessages = array_merge($failureMessages, $failures);
-/*
+
             if ($phpcsFile->getFixableCount() > 0) {
                 // Attempt to fix the errors.
                 $phpcsFile->fixer->fixFile();
@@ -179,7 +179,6 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
                     }
                 }
             }
-        */
         }//end foreach
 
         if (empty($failureMessages) === false) {
