@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
+
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Ensures that systems, asset types and libs are included before they are used.
  *
@@ -12,11 +18,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
-
 /**
  * Ensures that systems, asset types and libs are included before they are used.
  *
@@ -28,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class IncludeSystemSniff extends AbstractScopeSniff
 {
 
     /**
@@ -76,7 +77,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      * @return void
      */
     protected function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $stackPtr,
         $currScope
     ) {
@@ -219,7 +220,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      *
      * @return void
      */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -307,7 +308,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
      * @return string
      */
     protected function getIncludedClassFromToken(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         array $tokens,
         $stackPtr
     ) {
@@ -319,7 +320,7 @@ class MySource_Sniffs_Channels_IncludeSystemSniff extends PHP_CodeSniffer_Standa
             $typeName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $typeName = trim($tokens[$typeName]['content'], " '");
             return strtolower($typeName).'assettype';
-        } else if (isset(PHP_CodeSniffer_Tokens::$includeTokens[$tokens[$stackPtr]['code']]) === true) {
+        } else if (isset(Tokens::$includeTokens[$tokens[$stackPtr]['code']]) === true) {
             $filePath = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $filePath = $tokens[$filePath]['content'];
             $filePath = trim($filePath, " '");

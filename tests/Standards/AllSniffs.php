@@ -83,7 +83,7 @@ class AllSniffs
 
 
 
-if ($standard !== 'Generic' && $standard !== 'PEAR' && $standard !== 'PSR1' && $standard !== 'PSR2' && $standard !== 'Zend') continue;
+if ($standard === 'Squiz') continue;
 
                 $testsDir = $path.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 

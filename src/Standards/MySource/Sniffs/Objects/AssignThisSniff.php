@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Objects;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Ensures this is not assigned to any other var but self.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
+class AssignThisSniff implements Sniff
 {
 
     /**
@@ -55,7 +60,7 @@ class MySource_Sniffs_Objects_AssignThisSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

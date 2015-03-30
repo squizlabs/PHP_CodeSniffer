@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Tests\Objects;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DisallowNewWidget sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Tests_Objects_DisallowNewWidgetUnitTest extends AbstractSniffUnitTest
+class DisallowNewWidgetUnitTest extends AbstractSniffUnitTest
 {
 
 

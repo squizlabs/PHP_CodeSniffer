@@ -32,6 +32,24 @@ class Common
 {
 
     /**
+     * An array of variable types for param/var we will check.
+     *
+     * @var array(string)
+     */
+    public static $allowedTypes = array(
+                                   'array',
+                                   'boolean',
+                                   'float',
+                                   'integer',
+                                   'mixed',
+                                   'object',
+                                   'string',
+                                   'resource',
+                                   'callable',
+                                  );
+    
+
+    /**
      * Return TRUE, if the path is a phar file.
      *
      * @param string $path The path to use.

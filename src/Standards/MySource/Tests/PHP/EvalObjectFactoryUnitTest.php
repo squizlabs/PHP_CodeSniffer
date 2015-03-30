@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Tests\PHP;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the EvalObjectFactory sniff.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Tests_PHP_EvalObjectFactoryUnitTest extends AbstractSniffUnitTest
+class EvalObjectFactoryUnitTest extends AbstractSniffUnitTest
 {
 
 

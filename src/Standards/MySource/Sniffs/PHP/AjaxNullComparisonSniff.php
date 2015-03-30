@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Ensures that values submitted via JS are not compared to NULL.
  *
@@ -26,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sniff
+class AjaxNullComparisonSniff implements Sniff
 {
 
 
@@ -51,7 +56,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEARFunctionCommentSniff;
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * Parses and verifies the doc comments for functions.
  *
@@ -13,10 +19,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PEAR_Sniffs_Commenting_FunctionCommentSniff not found');
-}
-
 /**
  * Parses and verifies the doc comments for functions.
  *
@@ -29,7 +31,7 @@ if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false)
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_FunctionCommentSniff
+class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
 
 
@@ -43,7 +45,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      *
      * @return void
      */
-    protected function processReturn(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    protected function processReturn($phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -78,7 +80,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $typeNames      = explode('|', $content);
                 $suggestedNames = array();
                 foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = PHP_CodeSniffer::suggestType($typeName);
+                    $suggestedName = Common::suggestType($typeName);
                     if (in_array($suggestedName, $suggestedNames) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
@@ -162,7 +164,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      *
      * @return void
      */
-    protected function processThrows(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    protected function processThrows($phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -231,7 +233,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      *
      * @return void
      */
-    protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    protected function processParams($phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -336,7 +338,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             // Check the param type value.
             $typeNames = explode('|', $param['type']);
             foreach ($typeNames as $typeName) {
-                $suggestedName = PHP_CodeSniffer::suggestType($typeName);
+                $suggestedName = Common::suggestType($typeName);
                 if ($typeName !== $suggestedName) {
                     $error = 'Expected "%s" but found "%s" for parameter type';
                     $data  = array(
@@ -363,7 +365,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $suggestedTypeHint = 'array';
                     } else if (strpos($suggestedName, 'callable') !== false) {
                         $suggestedTypeHint = 'callable';
-                    } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
+                    } else if (in_array($typeName, Common::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
                     }
 

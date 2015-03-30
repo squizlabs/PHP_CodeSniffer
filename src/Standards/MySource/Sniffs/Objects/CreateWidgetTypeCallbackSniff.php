@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Objects;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Ensures the create() method of widget types properly uses callbacks.
  *
@@ -23,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeSniffer_Sniff
+class CreateWidgetTypeCallbackSniff implements Sniff
 {
 
     /**
@@ -55,7 +61,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -155,7 +161,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
                 $bracket    = key($tokens[$i]['nested_parenthesis']);
 
                 $prev = $phpcsFile->findPrevious(
-                    PHP_CodeSniffer_Tokens::$emptyTokens,
+                    Tokens::$emptyTokens,
                     ($bracket - 1),
                     null,
                     true
@@ -189,7 +195,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
             for ($next = $endBracket; $next <= $end; $next++) {
                 // Skip whitespace so we find the next content after the call.
-                if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$next]['code']]) === true) {
+                if (isset(Tokens::$emptyTokens[$tokens[$next]['code']]) === true) {
                     continue;
                 }
 

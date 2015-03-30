@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Objects;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Ensures that widgets are not manually created.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Objects_DisallowNewWidgetSniff implements PHP_CodeSniffer_Sniff
+class DisallowNewWidgetSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class MySource_Sniffs_Objects_DisallowNewWidgetSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

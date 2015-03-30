@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\PHP;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Warns when function values are returned directly.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_PHP_ReturnFunctionValueSniff implements PHP_CodeSniffer_Sniff
+class ReturnFunctionValueSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class MySource_Sniffs_PHP_ReturnFunctionValueSniff implements PHP_CodeSniffer_Sn
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

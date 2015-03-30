@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Ensures that self and static are not used to call public methods in action classes.
  *
@@ -23,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniffer_Sniff
+class DisallowSelfActionsSniff implements Sniff
 {
 
 
@@ -48,7 +54,7 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -75,7 +81,7 @@ class MySource_Sniffs_Channels_DisallowSelfActionsSniff implements PHP_CodeSniff
                 if ($tokens[$i]['code'] === T_FUNCTION) {
                     // Cache the function information.
                     $funcName  = $phpcsFile->findNext(T_STRING, ($i + 1));
-                    $funcScope = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, ($i - 1));
+                    $funcScope = $phpcsFile->findPrevious(Tokens::$scopeModifiers, ($i - 1));
 
                     $foundFunctions[$tokens[$funcName]['content']] = strtolower($tokens[$funcScope]['content']);
                 }

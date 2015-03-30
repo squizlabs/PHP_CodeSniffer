@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Debug;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Warns about the use of debug code.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
+class DebugCodeSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class MySource_Sniffs_Debug_DebugCodeSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

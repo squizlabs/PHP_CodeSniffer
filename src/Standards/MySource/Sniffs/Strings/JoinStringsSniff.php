@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Strings;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Ensures that strings are not joined using array.join().
  *
@@ -23,7 +29,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
+class JoinStringsSniff implements Sniff
 {
 
     /**
@@ -55,7 +61,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -63,12 +69,12 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
             return;
         }
 
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
         if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
             $opener = $tokens[$prev]['bracket_opener'];
             if ($tokens[($opener - 1)]['code'] !== T_STRING) {

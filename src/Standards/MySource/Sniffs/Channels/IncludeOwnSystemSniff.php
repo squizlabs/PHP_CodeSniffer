@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * Ensures that a system does not include itself.
  *
@@ -23,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_Sniff
+class IncludeOwnSystemSniff implements Sniff
 {
 
 
@@ -48,7 +53,7 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         $fileName = $phpcsFile->getFilename();
         $matches  = array();
@@ -96,7 +101,7 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
      * @return string
      */
     protected function getIncludedClassFromToken(
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         array $tokens,
         $stackPtr
     ) {

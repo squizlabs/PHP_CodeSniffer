@@ -1,4 +1,10 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FunctionCommentSniff as SquizFunctionCommentSniff;
+use PHP_CodeSniffer\Util\Tokens;
+
 /**
  * Parses and verifies the doc comments for functions.
  *
@@ -13,11 +19,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('Squiz_Sniffs_Commenting_FunctionCommentSniff', true) === false) {
-    $error = 'Class Squiz_Sniffs_Commenting_FunctionCommentSniff not found';
-    throw new PHP_CodeSniffer_Exception($error);
-}
-
 /**
  * Parses and verifies the doc comments for functions.
  *
@@ -31,7 +32,7 @@ if (class_exists('Squiz_Sniffs_Commenting_FunctionCommentSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Commenting_FunctionCommentSniff
+class FunctionCommentSniff extends SquizFunctionCommentSniff
 {
 
 
@@ -44,12 +45,12 @@ class MySource_Sniffs_Commenting_FunctionCommentSniff extends Squiz_Sniffs_Comme
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         parent::process($phpcsFile, $stackPtr);
 
         $tokens = $phpcsFile->getTokens();
-        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);

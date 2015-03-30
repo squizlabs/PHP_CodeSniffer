@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Standards\MySource\Sniffs\CSS;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 /**
  * MySource_Sniffs_CSS_BrowserSpecificStylesSniff.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_Sniff
+class BrowserSpecificStylesSniff implements Sniff
 {
 
     /**
@@ -74,7 +79,7 @@ class MySource_Sniffs_CSS_BrowserSpecificStylesSniff implements PHP_CodeSniffer_
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process($phpcsFile, $stackPtr)
     {
         // Ignore files with browser-specific suffixes.
         $filename  = $phpcsFile->getFilename();
