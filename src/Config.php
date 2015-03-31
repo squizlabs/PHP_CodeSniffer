@@ -568,7 +568,7 @@ class Config
                     $this->standards = explode(',', $standards);
                 }
 
-                $this->overriddenDefaults['reports'] = true;
+                $this->overriddenDefaults['standards'] = true;
             } else if (substr($arg, 0, 11) === 'extensions=') {
                 $this->extensions = explode(',', substr($arg, 11));
                 $this->overriddenDefaults['extensions'] = true;
