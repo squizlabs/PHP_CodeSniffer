@@ -273,7 +273,7 @@ class Runner
 
         $numProcessed = 0;
         $dots         = 0;
-        $maxLength    = count($todo);
+        $maxLength    = strlen($numFiles);
         $lastDir      = '';
 
 
